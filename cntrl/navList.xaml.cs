@@ -1,5 +1,4 @@
-﻿using entity;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace cntrl
@@ -23,7 +22,7 @@ namespace cntrl
 
                 if (IsActive == true)
                 {
-                    Status = "Approved";
+                    SetValue(StatusProperty, "Approved");
                 }
             }
         }

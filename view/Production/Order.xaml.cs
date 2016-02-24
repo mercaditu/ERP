@@ -492,6 +492,7 @@ namespace Cognitivo.Production
                 itemDataGrid.ItemsSource = list.ToList();
             }
         }
+
         private void item_Select(object sender, EventArgs e)
         {
             if (sbxItem.ItemID > 0)
@@ -539,12 +540,9 @@ namespace Cognitivo.Production
 
                     production_order.production_order_detail.Add(production_order_detail_output);
                     filter_task();
-
+                
                 }
             }
         }
-      
-
-
     }
 }

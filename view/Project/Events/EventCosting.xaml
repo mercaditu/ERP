@@ -15,7 +15,6 @@
       lex:LocalizeDictionary.DesignCulture="en-US" 
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
 	  Loaded="project_costing_Loaded">
-
     <Page.CommandBindings>
         <CommandBinding Command="customcmd:CustomCommands.Delete" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed"/>
     </Page.CommandBindings>

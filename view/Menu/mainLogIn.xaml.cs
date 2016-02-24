@@ -161,8 +161,9 @@ namespace Cognitivo.Menu
                         
                 }
             }
-            catch (Exception ex) {
-                throw ex;
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message, "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {

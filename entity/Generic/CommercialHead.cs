@@ -136,10 +136,24 @@ namespace entity
                             if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
                             {
                                 app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
-                                Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
-                                Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
-                                Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
-                                 Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                             
+                                if (db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
+                                }
+                                if (db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                }
+                                if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                                }
+                                if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                }
+
                                 NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
                                 RaisePropertyChanged("NumberWatermark");
                             }

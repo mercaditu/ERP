@@ -67,7 +67,7 @@
                     </StackPanel>
                     <Grid Background="WhiteSmoke" Margin="0,10,0,0">
                         <Button x:Name="saveOrder" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="saveOrder_Click"/>
+                                FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="saveOrder_Click"/>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -178,93 +178,68 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="56"/>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
+                        
+                        <TabControl Grid.RowSpan="2">
+                            <TabControl.Background>
+                                <SolidColorBrush Color="White" Opacity="0.64"/>
+                            </TabControl.Background>
+                            <TabItem Header="{lex:Loc ServicesperPerson}">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <StackPanel>
+                                        <ItemsControl x:Name="project_event_template_variable_detailsDataGrid"
+                                                    ItemsSource="{Binding Source={StaticResource project_costingproject_event_template_variable_detailsViewSource}}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Margin="4" Orientation="Horizontal"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
 
-                        <StackPanel Grid.Column="0" Grid.Row="1">
-                            <TextBlock Text="{lex:Loc ServicesperPerson}" Style="{StaticResource text_Data}" Margin="4"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Grid.Row="1">
-                            <TextBlock Text="{lex:Loc ServicesperEvent}" Style="{StaticResource text_Data}" Margin="4"/>
-                        </StackPanel>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1" Background="LightGray">
-                            <StackPanel>
-                                <ItemsControl x:Name="project_event_template_variable_detailsDataGrid"
-                                  ItemsSource="{Binding Source={StaticResource project_costingproject_event_template_variable_detailsViewSource}}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Margin="4"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ToggleButton x:Name="chkisIncluded" Tag="{Binding}" IsChecked="{Binding is_included, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="6"
-                                                          Checked="chkisIncluded_Checked" Unchecked="chkisIncluded_Checked" Height="100" Width="256" Cursor="Hand" Background="{StaticResource AccentColor_Introvert}"
-                                                          IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
-                                                <ToggleButton.Content>
-                                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="14"/>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="*"/>
-                                                        </Grid.RowDefinitions>
-                                                        <TextBlock Text="{Binding item_tag.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
-                                                        <TextBlock Text="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Foreground="White" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
-                                                        <StackPanel Orientation="Horizontal" Grid.Row="2">
-                                                            <StackPanel Margin="2">
-                                                                <TextBlock Text="Adult" FontSize="9"/>
-                                                                <TextBox Text="{Binding adult_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="Consumption_KeyUp" Width="40"/>
-                                                            </StackPanel>
-                                                            <StackPanel Margin="2">
-                                                                <TextBlock Text="Child" FontSize="9"/>
-                                                                <TextBox Text="{Binding child_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="Consumption_KeyUp" Width="40"/>
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </ToggleButton.Content>
-                                            </ToggleButton>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </ScrollViewer>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1" Background="LightGray">
-                            <StackPanel>
-                                <ItemsControl x:Name="services_per_event_detailsDataGrid"
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </TabItem>
+                            <TabItem Header="{lex:Loc ServicesperEvent}">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1">
+                                    <StackPanel>
+                                        <ItemsControl x:Name="services_per_event_detailsDataGrid"
                                   ItemsSource="{Binding Source={StaticResource project_costingservices_per_event_detailsViewSource}}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Margin="4"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ToggleButton x:Name="chkisIncluded" Tag="{Binding}" IsChecked="{Binding is_included, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="6"
-                                              Checked="chkisIncluded_Checked" Unchecked="chkisIncluded_Checked" BorderThickness="0" Height="100" Width="100" Background="{StaticResource AccentColor_Introvert}" Foreground="White" Cursor="Hand"
-                                              IsEnabled = "{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
-                                                <ToggleButton.Content>
-                                                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="14"/>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="*"/>
-                                                        </Grid.RowDefinitions>
-                                                        <TextBlock Text="{Binding item_tag.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Foreground="WhiteSmoke" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
-                                                        <TextBlock Text="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Foreground="White" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
-                                                        <StackPanel Grid.Row="2">
-                                                            <TextBlock Text="Consumption" FontSize="9"/>
-                                                            <TextBox Text="{Binding consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="Consumption_KeyUp" Width="60"/>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </ToggleButton.Content>
-                                            </ToggleButton>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </ScrollViewer>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Margin="4" Orientation="Horizontal"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ToggleButton x:Name="chkisIncluded" Tag="{Binding}" IsChecked="{Binding is_included, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="6"
+                                                                  Checked="chkisIncluded_Checked" Unchecked="chkisIncluded_Checked" BorderThickness="0" Height="100" Width="256" Background="{StaticResource AccentColor_Introvert}" Cursor="Hand"
+                                                                  IsEnabled = "{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
+                                                        <ToggleButton.Content>
+                                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="14"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <TextBlock Text="{Binding item_tag.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0"  FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
+                                                                <TextBlock Text="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
+                                                                <StackPanel Grid.Row="2">
+                                                                    <TextBlock Text="Consumption" FontSize="9"/>
+                                                                    <TextBox Text="{Binding consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" KeyUp="Consumption_KeyUp" Width="128"/>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </ToggleButton.Content>
+                                                    </ToggleButton>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </TabItem>
+                        </TabControl>
                     </Grid>
                 </TabItem>
             </TabControl>

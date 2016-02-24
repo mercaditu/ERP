@@ -33,7 +33,7 @@ namespace Cognitivo.Project.Development
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             projectViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("projectViewSource")));
-            entity.db.projects.Where(a => a.id_company == _entity.company_ID).Load();
+            entity.db.projects.Where(a => a.is_active && a.id_company == _entity.company_ID).Load();
             projectViewSource.Source = entity.db.projects.Local;
 
             CollectionViewSource itemViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("itemViewSource")));

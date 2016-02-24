@@ -67,7 +67,7 @@
                       SelectionChanged="cbxApplication_SelectionChanged"/>
             <TextBlock Style="{StaticResource text_Instructions}" Text="Limit the amount of rows a Document can have. 0 = UnLimited"/>
             <Label Content="{lex:Loc DocumentRowLimit}" Style="{DynamicResource input_label}"/>
-            <TextBox Text="{Binding linelimit, Mode=TwoWay, NotifyOnValidationError=true, FallbackValue=0, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+            <TextBox Text="{Binding line_limit, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
             <Label Content="{lex:Loc Document}" Style="{DynamicResource input_label}"/>
             <RadioButton Content="{lex:Loc StylePrinter}" x:Name="rbtnStylePrinter"
                       IsChecked="{Binding style_printer, Mode=TwoWay, FallbackValue=false, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_radiobutton}"/>

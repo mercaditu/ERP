@@ -153,10 +153,15 @@ namespace entity.Brillo.Document
             {
                 reportDataSource.Name = "DataSet1";
                 List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
-                for (int i = sales_invoice_detail.Count; i < 15; i++)
+                if (sales_invoice_detail.Count < sales_invoice.app_document_range.app_document.line_limit)
                 {
-                    sales_invoice_detail _sales_invoice_detail = new entity.sales_invoice_detail();
-                    sales_invoice_detail.Add(_sales_invoice_detail);
+
+
+                    for (int i = sales_invoice_detail.Count; i < sales_invoice.app_document_range.app_document.line_limit; i++)
+                    {
+                        sales_invoice_detail _sales_invoice_detail = new entity.sales_invoice_detail();
+                        sales_invoice_detail.Add(_sales_invoice_detail);
+                    }
                 }
                 reportDataSource.Value = sales_invoice_detail.Select(g => new
                 {

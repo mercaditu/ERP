@@ -21,7 +21,7 @@
   
     <Page.Resources>
           <CollectionViewSource x:Key="ProjectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
-       
+        <converter:ActiveToStatus x:Key="ActiveToStatus"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource ProjectViewSource}" Background="White">
         <Grid.ColumnDefinitions>
@@ -42,7 +42,8 @@
 						recordSecondaryName="{Binding priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                           IsActive="{Binding is_active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"          />
+                           Status="{Binding is_active,Converter={StaticResource ActiveToStatus},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
+                                   IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

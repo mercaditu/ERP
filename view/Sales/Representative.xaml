@@ -33,6 +33,9 @@
         <Grid Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="5"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1" Background="White" Grid.ColumnSpan="2">
             <StackPanel x:Name="stackMain" Margin="10,5,0,0" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                <TextBox  Style="{StaticResource input_textbox}"
+						Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
                 <StackPanel x:Name="stackType">
                     <Label x:Name="lblType" Content="{lex:Loc SalesmanType}" Style="{StaticResource input_label}"/>
                     <ComboBox x:Name="cbxSalesRepType" Style="{StaticResource input_combobox}" 

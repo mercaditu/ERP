@@ -135,11 +135,14 @@ namespace Cognitivo.Project.Development
         private void Activate_Click(object sender, RoutedEventArgs e)
         {
             ProjectDB.ActivateProject();
+            ProjectViewSource.View.Refresh();
+            
         }
 
         private void DeActivate_Click(object sender, RoutedEventArgs e)
         {
             ProjectDB.DeActivateProject();
+            ProjectViewSource.View.Refresh();
         }
     }
 }

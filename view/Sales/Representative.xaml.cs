@@ -61,7 +61,11 @@ namespace Cognitivo.Sales
         {
             try
             {
-                dbContext.SaveChanges();
+                IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
+                 if (validationresult.Count() == 0)
+                 {
+                     dbContext.SaveChanges();
+                 }
                 sales_repViewSource.View.Refresh();
                 toolBar.msgSaved();
             }

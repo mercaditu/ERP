@@ -362,6 +362,7 @@
     <Compile Include="Converters\HierarchyConverter.cs" />
     <Compile Include="Converters\BooleanToIsIssuedConverter.cs" />
     <Compile Include="Converters\ChartOfAccountSelectionConverter.cs" />
+    <Compile Include="Converters\ActiveToStatus.cs" />
     <Compile Include="Converters\Type2Enable.cs" />
     <Compile Include="Converters\Status2Enable.cs" />
     <Compile Include="Converters\Status_Production_2ColorConverter.cs" />

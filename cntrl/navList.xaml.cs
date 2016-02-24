@@ -12,20 +12,7 @@ namespace cntrl
             set { SetValue(StateProperty, value); }
         }
 
-        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(navList), new UIPropertyMetadata(false));
-        public bool IsActive
-        {
-            get { return (bool)GetValue(IsActiveProperty); }
-            set
-            {
-                SetValue(IsActiveProperty, value);
-
-                if (IsActive == true)
-                {
-                    SetValue(StatusProperty, "Approved");
-                }
-            }
-        }
+       
 
         public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(System.Data.Entity.EntityState), typeof(navList), new UIPropertyMetadata(System.Data.Entity.EntityState.Unchanged));
         public System.Data.Entity.EntityState State

@@ -36,10 +36,16 @@ namespace entity
         public int quantity_child { get; set; }
         public DateTime trans_date { get; set; }
         public bool is_active { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        public int id_currencyfx { get; set; }
 
         public virtual item item { get; set; }
         public virtual project_event_template project_event_template { get; set; }
         public virtual contact contact { get; set; }
+       
         public virtual ICollection<project_event_fixed> project_event_fixed { get; set; }
         public virtual ICollection<project_event_variable> project_event_variable { get; set; }
 

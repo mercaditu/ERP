@@ -55,11 +55,11 @@ namespace Cognitivo.Project.Development
             app_measurementViewSource.Source = _entity.db.app_measurement.Local;
 
             //Loading Products
-            _entity.db.items.Where(a => a.id_company == _Setting.company_ID).OrderBy(b => b.name).Load();
+            //_entity.db.items.Where(a => a.id_company == _Setting.company_ID).OrderBy(b => b.name).Load();
 
            
-            itemSearchViewSource = ((CollectionViewSource)(FindResource("itemSearchViewSource")));
-            itemSearchViewSource.Source = _entity.db.items.Local;
+            //itemSearchViewSource = ((CollectionViewSource)(FindResource("itemSearchViewSource")));
+            //itemSearchViewSource.Source = _entity.db.items.Local;
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
 
             //Filter to remove all items that are not top level.
@@ -134,14 +134,14 @@ namespace Cognitivo.Project.Development
         {
 
             stpcode.IsEnabled = true;
-            itemSearchViewSource.View.Filter = i =>
-            {
-                item item = (item)i;
-                if (item.is_active == true)
-                    return true;
-                else
-                    return false;
-            };
+            //itemSearchViewSource.View.Filter = i =>
+            //{
+            //    item item = (item)i;
+            //    if (item.is_active == true)
+            //        return true;
+            //    else
+            //        return false;
+            //};
 
             project project = projectViewSource.View.CurrentItem as project;
             project_task project_task = treeProject.SelectedItem as project_task;
@@ -228,7 +228,8 @@ namespace Cognitivo.Project.Development
             {
 
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
-                itemSearchViewSource.Source = _entity.db.items.Where(x =>x.id_company==_Setting.company_ID && x.id_item_type == Item_Type).ToList();
+                sbxItem.item_types = Item_Type;
+               // itemSearchViewSource.Source = _entity.db.items.Where(x =>x.id_company==_Setting.company_ID && x.id_item_type == Item_Type).ToList();
 
 
                 if (Item_Type == entity.item.item_type.Task)
@@ -398,53 +399,11 @@ namespace Cognitivo.Project.Development
             //project_task_dimension.id_project_task = project_task.id_project_task;
             project_task.project_task_dimension.Add(project_task_dimension);
         }
-
-        private void cbxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void item_Select(object sender, RoutedEventArgs e)
         {
-            item item = (item)cbxItem.Data;
-            cbxItem.focusGrid = false;
-            cbxItem.Text = ((item)cbxItem.Data).name;
-            if (item.item_dimension != null)
+            if (sbxItem.ItemID > 0)
             {
-                project_task project_task = (project_task)treeProject.SelectedItem;
-                project_task.items = item;
-                foreach (item_dimension _item_dimension in item.item_dimension)
-                {
-                    project_task_dimension project_task_dimension = new project_task_dimension();
-                    project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
-                    project_task_dimension.value = _item_dimension.value;
-                    project_task_dimension.id_measurement = _item_dimension.id_measurement;
-                    project_task_dimension.id_project_task = project_task.id_project_task;
-                    project_task_dimension.project_task = project_task;
-                    _entity.db.project_task_dimension.Add(project_task_dimension);
-                    project_task_dimensionViewSource.View.MoveCurrentToLast();
-                }
-
-
-            }
-        }
-
-        private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
-        {
-            ViewAll = !ViewAll;
-            RaisePropertyChanged("ViewAll");
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string prop)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
-        }
-
-        private void cbxItem_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                item item = (item)cbxItem.Data;
-                cbxItem.focusGrid = false;
-                cbxItem.Text = ((item)cbxItem.Data).name;
+                item item = _entity.db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                 if (item.item_dimension != null)
                 {
                     project_task project_task = (project_task)treeProject.SelectedItem;
@@ -463,8 +422,76 @@ namespace Cognitivo.Project.Development
 
 
                 }
+               
+
             }
         }
+        //private void cbxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    item item = (item)cbxItem.Data;
+        //    cbxItem.focusGrid = false;
+        //    cbxItem.Text = ((item)cbxItem.Data).name;
+        //    if (item.item_dimension != null)
+        //    {
+        //        project_task project_task = (project_task)treeProject.SelectedItem;
+        //        project_task.items = item;
+        //        foreach (item_dimension _item_dimension in item.item_dimension)
+        //        {
+        //            project_task_dimension project_task_dimension = new project_task_dimension();
+        //            project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
+        //            project_task_dimension.value = _item_dimension.value;
+        //            project_task_dimension.id_measurement = _item_dimension.id_measurement;
+        //            project_task_dimension.id_project_task = project_task.id_project_task;
+        //            project_task_dimension.project_task = project_task;
+        //            _entity.db.project_task_dimension.Add(project_task_dimension);
+        //            project_task_dimensionViewSource.View.MoveCurrentToLast();
+        //        }
+
+
+        //    }
+        //}
+
+        private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
+        {
+            ViewAll = !ViewAll;
+            RaisePropertyChanged("ViewAll");
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+
+        //private void cbxItem_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        item item = (item)cbxItem.Data;
+        //        cbxItem.focusGrid = false;
+        //        cbxItem.Text = ((item)cbxItem.Data).name;
+        //        if (item.item_dimension != null)
+        //        {
+        //            project_task project_task = (project_task)treeProject.SelectedItem;
+        //            project_task.items = item;
+        //            foreach (item_dimension _item_dimension in item.item_dimension)
+        //            {
+        //                project_task_dimension project_task_dimension = new project_task_dimension();
+        //                project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
+        //                project_task_dimension.value = _item_dimension.value;
+        //                project_task_dimension.id_measurement = _item_dimension.id_measurement;
+        //                project_task_dimension.id_project_task = project_task.id_project_task;
+        //                project_task_dimension.project_task = project_task;
+        //                _entity.db.project_task_dimension.Add(project_task_dimension);
+        //                project_task_dimensionViewSource.View.MoveCurrentToLast();
+        //            }
+
+
+        //        }
+        //    }
+        //}
 
         private void toolBar_Mini_btnNew_Click(object sender)
         {
@@ -495,6 +522,51 @@ namespace Cognitivo.Project.Development
         {
 
         }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            project_taskViewSource.View.Filter = null;
+            List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+            _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
+
+           
+            foreach (project_task project_task in _project_task)
+            {
+                if (project_task.status ==Status.Project.Pending)
+                {
+                    if (project_task.ProjectStatus == Status.ProjectStatus.Pending || project_task.ProjectStatus == null)
+                    {
+                        project_task.ProjectStatus = Status.ProjectStatus.Approved;
+                    }
+                }
+               
+
+                project_task.IsSelected = false;
+            }
+            _entity.db.SaveChanges();
+            filter_task();
+        }
+
+        private void Label_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            project_taskViewSource.View.Filter = null;
+            List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
+            project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+            foreach (project_task project_task in project_taskLIST)
+            {
+                //if (project_task.Error == null)
+                //{
+                project_task.ProjectStatus = Status.ProjectStatus.Rejected;
+                project_task.IsSelected = false;
+
+                //}
+            }
+            _entity.db.SaveChanges();
+            toolBar.msgDone("Yay!");
+            filter_task();
+        }
+
+        
 
        
     }

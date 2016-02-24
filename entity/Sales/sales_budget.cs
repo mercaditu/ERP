@@ -112,10 +112,10 @@ namespace entity
                 // apply property level validation rules
                 if (columnName == "id_contact")
                 {
-                    //if (id_contact == 0)
-                    //    return "Contact needs to be selected";
-                    if (contact == null)
+                    if (id_contact == 0)
                         return "Contact needs to be selected";
+                    //if (contact == null)
+                    //    return "Contact needs to be selected";
                 }
                 if (columnName == "id_branch")
                 {

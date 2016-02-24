@@ -526,6 +526,7 @@ namespace Cognitivo.Production
                     }
                     production_order.production_order_detail.Add(production_order_detail_output);
                     filter_task();
+<<<<<<< HEAD
                 }
                 else
                 {
@@ -554,6 +555,21 @@ namespace Cognitivo.Production
                     }
                     production_order.production_order_detail.Add(production_order_detail_output);
                     filter_task();
+=======
+                }
+                else
+                {
+                    production_order_detail production_order_detail_output = new production_order_detail();
+                    production_order_detail_output.quantity = 1;
+                    production_order_detail_output.name = item.name;
+                    production_order_detail_output.id_item = item.id_item;
+                    production_order_detail_output.item = item;
+                    production_order_detail_output.is_input = true;
+
+                
+                    production_order.production_order_detail.Add(production_order_detail_output);
+                    filter_task();
+>>>>>>> origin/master
                 }
             }
         }

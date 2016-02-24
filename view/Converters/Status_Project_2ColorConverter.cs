@@ -28,6 +28,7 @@ namespace Cognitivo.Converters
                 {
                     return Brushes.Crimson;
                 }
+             
                 else
                 { //Pending
                     return Brushes.WhiteSmoke;

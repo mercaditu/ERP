@@ -45,6 +45,15 @@ namespace entity
             Executed = 4,
             Rejected = 5
         }
+       public enum ProjectStatus
+        {
+            Pending = 1,
+            Approved = 2,
+            InProcess = 3,
+            Executed = 4,
+            Rejected = 5
+          
+        }
 
         public enum Stock
         {

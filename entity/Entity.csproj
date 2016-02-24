@@ -325,6 +325,14 @@
     <Compile Include="Migrations\201602230848592_AdddimensionTable.Designer.cs">
       <DependentUpon>201602230848592_AdddimensionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602240902127_updatestatusTaskview.cs" />
+    <Compile Include="Migrations\201602240902127_updatestatusTaskview.Designer.cs">
+      <DependentUpon>201602240902127_updatestatusTaskview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602241050596_updatecurrencyfxEventcosting.cs" />
+    <Compile Include="Migrations\201602241050596_updatecurrencyfxEventcosting.Designer.cs">
+      <DependentUpon>201602241050596_updatecurrencyfxEventcosting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -718,6 +726,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602230848592_AdddimensionTable.resx">
       <DependentUpon>201602230848592_AdddimensionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602240902127_updatestatusTaskview.resx">
+      <DependentUpon>201602240902127_updatestatusTaskview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602241050596_updatecurrencyfxEventcosting.resx">
+      <DependentUpon>201602241050596_updatecurrencyfxEventcosting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

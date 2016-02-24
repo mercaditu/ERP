@@ -68,7 +68,7 @@ namespace Cognitivo.Project
             project_costingservices_per_event_detailsViewSource = FindResource("project_costingservices_per_event_detailsViewSource") as CollectionViewSource;
 
 
-            IDcurrencyfx = EventDB.app_currency.Where(a => a.is_active == true && a.is_priority == true && a.id_company == _settings.company_ID).FirstOrDefault().app_currencyfx.Where(c => c.is_active == true).FirstOrDefault().id_currencyfx;
+            IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
 
             EstimateCost();
         }
@@ -315,7 +315,7 @@ namespace Cognitivo.Project
         #region Plase Order
         private void btnPlaceOrder_Click(object sender, RoutedEventArgs e)
         {
-            txtOrderNumber.Text = string.Empty;
+            txtBudgetNumber.Text = string.Empty;
             id_conditionComboBox.SelectedIndex = -1;
             id_contractComboBox.SelectedIndex = -1;
             crud_modal.Visibility = System.Windows.Visibility.Visible;
@@ -352,7 +352,7 @@ namespace Cognitivo.Project
                     sales_budget.id_condition = app_condition.id_condition;
                     sales_budget.id_contract = app_contract.id_contract;
                     sales_budget.id_currencyfx = db.app_currency.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_priority == true).FirstOrDefault().app_currencyfx.Where(b => b.is_active == true).FirstOrDefault().id_currencyfx;
-                    sales_budget.number = txtOrderNumber.Text;
+                    sales_budget.number = txtBudgetNumber.Text;
 
                     foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
                     {
@@ -566,5 +566,14 @@ namespace Cognitivo.Project
             //throw new NotImplementedException();
             EventDB.Dispose();
         }
+
+        private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
+        {
+            IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
+
+            EstimateCost();
+        }
+
+       
     }
 }

@@ -536,22 +536,7 @@ namespace Cognitivo.Production
                     production_order_detail_output.item = item;
                     production_order_detail_output.is_input = true;
 
-                    foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
-                    {
-                        production_order_detail production_order_detail = new production_order_detail();
-
-                        production_order_detail.name = item_recepie_detail.item.name;
-                        production_order_detail.id_item = item_recepie_detail.item.id_item;
-                        production_order_detail.item = item_recepie_detail.item;
-                        if (item_recepie_detail.quantity > 0)
-                        {
-                            production_order_detail.quantity = (decimal)item_recepie_detail.quantity;
-                        }
-
-                        production_order_detail.is_input = false ;
-
-                        production_order_detail_output.child.Add(production_order_detail);
-                    }
+                
                     production_order.production_order_detail.Add(production_order_detail_output);
                     filter_task();
                 }

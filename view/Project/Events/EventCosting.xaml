@@ -6,6 +6,7 @@
       xmlns:entity="clr-namespace:entity;assembly=entity"  
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+          xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl" 
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -50,14 +51,14 @@
                             <Image Source="/cntrl;component/Images/Outline_White/signature_filled-100.png" 
                        Height="32" Opacity="0.64"/>
                         </Border>
-                        <Label x:Name="lblTitle" Content="{lex:Loc SalesOrder}" FontSize="25" Margin="50,0,0,0"/>
+                        <Label x:Name="lblTitle" Content="{lex:Loc SalesBudget}" FontSize="25" Margin="50,0,0,0"/>
                         <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                         HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
                     </Grid>
-                    <TextBlock Text="Place Sales Order." Style="{StaticResource text_Instructions}"/>
+                    <TextBlock Text="Place Sales Budget." Style="{StaticResource text_Instructions}"/>
                     <StackPanel HorizontalAlignment="Center">
-                        <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtOrderNumber" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc BudgetNumber}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtBudgetNumber" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
                         <ComboBox Style="{DynamicResource input_combobox}" x:Name="id_conditionComboBox" SelectionChanged="id_conditionComboBox_SelectionChanged"
                                 DisplayMemberPath="name" SelectedValuePath="id_condition" ItemsSource="{Binding Source={StaticResource conditionViewSource}}"/>
@@ -143,6 +144,7 @@
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
+                           
                             <StackPanel Margin="0,4">
                                 <Label Content="{lex:Loc Saloon}" Style="{StaticResource input_label}"/>
                                 <ComboBox x:Name="id_itemComboBox"
@@ -150,6 +152,12 @@
                                           ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
                                           SelectedValue="{Binding id_item, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                           Style="{StaticResource input_combobox}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,4">
+                                <Label Content="{lex:Loc currency}" Style="{StaticResource input_label}"/>
+                                <Controls:CurrencyBox x:Name="cbxCurrency" LostFocus="cbxCurrency_LostFocus"
+                                          SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                          />
                             </StackPanel>
                             <Button x:Name="btnGetDetails" Click="GetServices" Content="{lex:Loc Calculate}" 
                                 Style="{StaticResource btn_green}" HorizontalAlignment="Left" Margin="4"/>

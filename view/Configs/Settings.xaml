@@ -1,0 +1,64 @@
+﻿<Page Title="appConfig" x:Class="Cognitivo.Configs.Settings" 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:prop="clr-namespace:entity.Properties;assembly=entity"
+      
+        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US"
+      
+      mc:Ignorable="d">
+    <Page.Resources>
+        <CollectionViewSource x:Key="app_companyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_company}, CreateList=True}"/>
+        <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_companyapp_branchViewSource" Source="{Binding app_branch, Source={StaticResource app_companyViewSource}}"/>
+        <CollectionViewSource x:Key="app_companyapp_branchapp_terminalViewSource" Source="{Binding app_terminal, Source={StaticResource app_companyapp_branchViewSource}}"/>
+        <CollectionViewSource x:Key="app_companyapp_branchapp_terminalapp_accountViewSource" Source="{Binding app_account, Source={StaticResource app_companyapp_branchapp_terminalViewSource}}"/>
+    </Page.Resources>
+
+    <StackPanel Margin="32" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <Label Content="{lex:Loc Settings}" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
+        <Rectangle Height="1" Margin="15" Fill="Silver"/>
+
+        <Label Style="{StaticResource H3}" Content="{lex:Loc Company}" HorizontalAlignment="Center"/>
+        <ComboBox Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
+                  DisplayMemberPath="alias" SelectedValuePath="id_company"
+                  SelectedValue="{Binding company_ID, Mode=TwoWay, Source={x:Static prop:Settings.Default}}"
+                  Text="{Binding company_Name, Mode=OneWayToSource, Source={x:Static prop:Settings.Default}}"
+                  ItemsSource="{Binding Source={StaticResource app_companyViewSource}}" />
+
+        <Label Style="{StaticResource H3}" Content="{lex:Loc Branch}" HorizontalAlignment="Center"/>
+        <ComboBox Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
+                  ItemsSource="{Binding Source={StaticResource app_companyapp_branchViewSource}}"
+                  SelectedValue="{Binding branch_ID, Mode=TwoWay, Source={x:Static prop:Settings.Default}}"
+                  Text="{Binding branch_Name, Mode=OneWayToSource, Source={x:Static prop:Settings.Default}}"
+                  DisplayMemberPath="name"  SelectedValuePath="id_branch"/>
+
+        <Label Style="{StaticResource H3}" Content="{lex:Loc Terminal}" HorizontalAlignment="Center"/>
+        <ComboBox Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
+                  ItemsSource="{Binding Source={StaticResource app_companyapp_branchapp_terminalViewSource}}"
+                  DisplayMemberPath="name" SelectedValuePath="id_terminal" 
+                  SelectedValue="{Binding terminal_ID, Mode=TwoWay, Source={x:Static prop:Settings.Default}}"
+                  Text="{Binding terminal_Name, Mode=OneWayToSource, Source={x:Static prop:Settings.Default}}"/>
+
+        <Label Style="{StaticResource H3}" Content="{lex:Loc Account}" HorizontalAlignment="Center"/>
+        <ComboBox Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
+                  ItemsSource="{Binding Source={StaticResource app_companyapp_branchapp_terminalapp_accountViewSource}}"
+                  DisplayMemberPath="name" SelectedValuePath="id_account" 
+                  Text="{Binding account_Name, Mode=OneWayToSource, Source={x:Static prop:Settings.Default}}"
+                  SelectedValue="{Binding account_ID, Mode=TwoWay, Source={x:Static prop:Settings.Default}}"/>
+        <Label Style="{StaticResource H3}" Content="{lex:Loc User}" HorizontalAlignment="Center"/>
+        <ComboBox Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
+                  ItemsSource="{Binding Source={StaticResource security_userViewSource}}"
+                  DisplayMemberPath="name" SelectedValuePath="id_user" 
+                  Text="{Binding user_Name, Mode=OneWayToSource, Source={x:Static prop:Settings.Default}}"
+                  SelectedValue="{Binding user_ID, Mode=TwoWay, Source={x:Static prop:Settings.Default}}"/>
+        <Rectangle Height="1" Margin="15" Fill="Silver"/>
+        <Button Style="{StaticResource btn_green}" Content="{lex:Loc Save}" Click="ButtonSave_Click"/>
+
+    </StackPanel>
+</Page>

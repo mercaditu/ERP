@@ -1,0 +1,174 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+         xmlns:local="clr-namespace:cntrl;assembly=cntrl"
+       xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
+         xmlns:entity="clr-namespace:entity;assembly=entity"
+    x:Class="Cognitivo.Sales.PointOfSale" 
+      mc:Ignorable="d" 
+xmlns:setting="clr-namespace:Cognitivo.Sales"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+    
+      d:DesignHeight="450" d:DesignWidth="600" Loaded="Page_Loaded"
+	Title="Point Of Sale">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemitem_tag_detailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+        <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
+        <CollectionViewSource x:Key="conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid DataContext="{StaticResource itemViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="4" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+        <Grid Name="setting" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="4" Grid.ColumnSpan="2" Panel.ZIndex="5">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Width="300" >
+                <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name" TabIndex="4"
+					SelectedValue="{Binding Path=id_condition, Mode=TwoWay, NotifyOnValidationError=True, Source={x:Static setting:POS.Default},
+                   ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ItemsSource="{Binding Source={StaticResource conditionViewSource}}"
+					SelectedValuePath="id_condition" Grid.Row="1" SelectionChanged="cbxCondition_SelectionChanged">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
+                <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name" 
+					SelectedValuePath="id_contract" TabIndex="5" x:Name="cbxContract"
+					SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, Source={x:Static setting:POS.Default}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+					ItemsSource="{Binding Source={StaticResource contractViewSource}}" >
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                <!--<Controls:cbxCurrency Width="256" x:Name="ctrlCurrency" TabIndex="6"
+                                      ItemSource="{Binding Source={StaticResource app_currencyViewSource}}" 
+                                        idCurrencyfx="{Binding id_currencyfx, Source={StaticResource sales_invoiceViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                      SelectedItem="{Binding app_currencyfx.id_currency, Source={StaticResource sales_invoiceViewSource}}"
+                                              
+                                      Margin="4,0,4,4"/>-->
+                <ComboBox x:Name="cbxCurrency" Style="{StaticResource input_combobox}"
+					DisplayMemberPath="app_currency.name" 
+					SelectedValuePath="id_currencyfx" 
+					ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
+					SelectedValue="{Binding id_currencyfx, Mode=TwoWay, NotifyOnValidationError=True, Source={x:Static setting:POS.Default},ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="app_accountComboBox"
+                            DisplayMemberPath="name" SelectedValuePath="id_account"
+                            Style="{StaticResource input_combobox}"
+                            ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
+                            SelectedValue="{Binding Source={x:Static setting:POS.Default},Path=id_account, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <StackPanel HorizontalAlignment="Right">
+                <Button Content="{lex:Loc Save}" Style="{StaticResource btn_green}" HorizontalAlignment="Left"
+                            Click="Button_Click" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,15,0">
+            <TextBlock Margin="5,0" HorizontalAlignment="left"><Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">
+                            <Run Text="Settings"/></Hyperlink></TextBlock>
+            
+            <Grid Margin="0,0,470,0"></Grid>
+            <TextBlock x:Name="txtBlockTotal" FontSize="24" FontFamily="Arial" FontWeight="Medium" Text="0"></TextBlock>
+            <TextBlock FontSize="24" FontFamily="Arial" FontWeight="Medium" Text=" INR"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--<ComboBox x:Name="itemComboBox" Height="50" Width="480"
+                      DisplayMemberPath="name" ItemsSource="{Binding}" SelectedValuePath="id_item" KeyDown="itemComboBox_KeyDown" IsEditable="True">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel>
+
+                        </VirtualizingStackPanel>
+
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>-->
+            <Label Content="Select Customer"/>
+            <StackPanel Orientation="Horizontal">
+                <local:SearchableTextbox  x:Name="contactComboBox" Height="50" Width="480" CollectionViewSource="{StaticResource contactViewSource}"></local:SearchableTextbox>
+                <!--<local:CustComboBox x:Name="contactComboBox" DisplayMemberPath="name" Height="50" Width="480" ItemsSource="{Binding Source={StaticResource contactViewSource}}" SelectedValuePath="id_contact"   IsSynchronizedWithCurrentItem="False" IsEditable="True" TextBoxBase.TextChanged="contactComboBoxTextChanged"  IsTextSearchEnabled="True">
+                    <DataGridTextColumn Header="HeaderTitle1" Binding="{Binding name, Mode=Default}" />
+                    <DataGridTextColumn Header="HeaderTitle2" Binding="{Binding code, Mode=Default}"/>
+                    <DataGridTextColumn Header="HeaderTitle2" Binding="{Binding alias, Mode=Default}"/>
+                    <DataGridTextColumn Header="HeaderTitle2" Binding="{Binding gov_code, Mode=Default}"/>
+                </local:CustComboBox>-->
+                <!--<TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink PreviewMouseUp="btnNewContact">
+                            <Run Text="{lex:Loc AddNew}"/></Hyperlink></TextBlock>-->
+            </StackPanel>
+            <Label Content="Select product"/>
+            <local:SearchableTextbox  x:Name="itemComboBox" Height="50" Width="480" CollectionViewSource="{StaticResource itemViewSource}" KeyDown="itemComboBox_KeyDown"></local:SearchableTextbox>
+            <!--<local:CustComboBox x:Name="itemComboBox" DisplayMemberPath="name" Height="50" Width="480" ItemsSource="{Binding }" KeyDown="itemComboBox_KeyDown"  SelectedValuePath="id_item"   IsSynchronizedWithCurrentItem="False" IsEditable="True" TextBoxBase.TextChanged="itemComboBoxTextChanged"  IsTextSearchEnabled="True" HorizontalAlignment="Left">
+                <DataGridTextColumn Header="HeaderTitle1" Binding="{Binding name, Mode=Default}" />
+                <DataGridTextColumn Header="HeaderTitle2" Binding="{Binding code, Mode=Default}"/>
+                <DataGridTextColumn Header="HeaderTitle2" Binding="{Binding tag, Mode=Default}"/>
+            </local:CustComboBox>-->
+            <!--<ComboBox x:Name="itemComboBox1" Height="50" Width="480"
+                   IsEditable="True">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel>
+                            <Label Content="asfd"></Label>
+                        </VirtualizingStackPanel>
+
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>-->
+
+        </StackPanel>
+
+        <DataGrid x:Name="dgItemDesc" VerticalAlignment="Top" Margin="57,10,60,0" HorizontalAlignment="Center" AutoGenerateColumns="False" CellEditEnding="dgItemDesc_CellEditEnding" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Quantity" Width="SizeToHeader"/>
+                <DataGridTextColumn Binding="{Binding Code}" Header="Code" Width="SizeToHeader" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Product}" Header="Product" Width="150" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Price}" Header="Price" Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding SubTotal, Mode=TwoWay, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Sub Total" Width="100" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Grid Margin="0,0,120,0"></Grid>
+            <Label Content="{lex:Loc PaymentType}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+            <ComboBox x:Name="cbxPamentType" VerticalAlignment="Center"
+                              DisplayMemberPath="name" SelectedValuePath="id_payment_type"
+                              ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
+                              SelectedValue="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                              Style="{StaticResource input_combobox}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" HorizontalAlignment="Left"
+                            Click="btnInsert_Click" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Page>

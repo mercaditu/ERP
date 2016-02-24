@@ -1,0 +1,125 @@
+﻿<Page 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      xmlns:curd="clr-namespace:cntrl.Curd"
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      xmlns:Curd="clr-namespace:cntrl.Curd;assembly=cntrl" x:Class="Cognitivo.Sales.Representative" 
+      mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="700"
+    
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+	 Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+        <CollectionViewSource x:Key="sales_repViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid DataContext="{StaticResource sales_repViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="175*"/>
+            <ColumnDefinition Width="421*"/>
+            <ColumnDefinition Width="104*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="5"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1" Background="White" Grid.ColumnSpan="2">
+            <StackPanel x:Name="stackMain" Margin="10,5,0,0" HorizontalAlignment="Left" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <StackPanel x:Name="stackType">
+                    <Label x:Name="lblType" Content="{lex:Loc SalesmanType}" Style="{StaticResource input_label}"/>
+                    <ComboBox x:Name="cbxSalesRepType" Style="{StaticResource input_combobox}" 
+						SelectedValue="{Binding enum_type, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" SelectionChanged="cbxSalesRepType_SelectionChanged"/>
+                </StackPanel>
+                <StackPanel x:Name="stackContact" Background="White">
+                    <Grid>
+                        <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
+                                   Style="{StaticResource btn_Label}"/>
+                            <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditCust_PreviewMouseUp" 
+                                   Style="{StaticResource btn_Label}"/>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal">
+                                  <cntrl:SearchableTextbox x:Name="contactComboBox" KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref"
+                                                 CollectionViewSource="{StaticResource contactViewSource}"
+                                                 IsDisplayed="True" 
+                                                 Data="{Binding contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="254">
+                            <cntrl:SearchableTextbox.Columns>
+                                <cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
+                                <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
+                                <cntrl:SmartBoxColumn Header="GovId" ForProperty="gov_code" Binding="{Binding gov_code, Mode=Default}" EnableSearch="True"/>
+                                <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
+                                <cntrl:SmartBoxColumn Header="Telephone" ForProperty="telephone" Binding="{Binding telephone, Mode=Default}" Hide="True"/>
+                            </cntrl:SearchableTextbox.Columns>
+                        </cntrl:SearchableTextbox>
+                        <TextBlock x:Name="txtblkAddContact" Visibility="Collapsed" Margin="2"><Hyperlink PreviewMouseDown="Hyperlink_PreviewMouseDown"><Run Text="Add New Contact"/></Hyperlink></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel x:Name="stackExisting">
+                    <Label Content="{lex:Loc CommisionBase}" Style="{StaticResource input_label}"/>
+                    <TextBox x:Name="commision_baseTextBox" Style="{StaticResource input_textbox}"
+						Text="{Binding commision_base, Mode=TwoWay, StringFormat={}{0:N0}, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
+                    <Label Content="{lex:Loc CommisionTemplate}" Style="{StaticResource input_label}"/>
+                    <TextBox x:Name="commision_calculationTextBox" Style="{StaticResource input_textbox}"
+						Text="{Binding commision_calculation, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
+                    <CheckBox x:Name="is_activeCheckBox" 
+                              Content="{lex:Loc Active}" 
+                              FlowDirection="LeftToRight" 
+                              Style="{StaticResource input_checkbox}"
+						      IsChecked="{Binding is_active, Mode=TwoWay, 
+                              NotifyOnValidationError=true, 
+                              UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, 
+                              ValidatesOnExceptions=true}"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+			btnNew_Click="toolBar_btnNew_Click" 
+			btnSave_Click="toolBar_btnSave_Click" 
+            btnEdit_Click="toolBar_btnEdit_Click"
+			btnDelete_Click="toolBar_btnDelete_Click" 
+			btnCancel_Click="toolBar_btnCancel_Click"
+            State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <DataGrid x:Name="sales_repDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Background="White"
+			EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" 
+			RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="sales_repDataGrid_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding name}" Header="name" Width="*"/>
+                    <DataGridTextColumn x:Name="codeColumn" Binding="{Binding code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="code" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="typeColumn" Binding="{Binding enum_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Type" Width="100"/>
+                    <DataGridTextColumn x:Name="commision_baseColumn" Binding="{Binding commision_base, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="commision base" Width="SizeToHeader"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            
+            
+        </ScrollViewer>-->
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <ListBox x:Name="sales_repDataGrid" Background="{StaticResource AccentColor_Brush}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <cntrl:navList recordCode="{Binding timestamp, StringFormat=d}" 
+                                   recordSecondaryName="{Binding enum_type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   recordName="{Binding name}"
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox> 
+        </ScrollViewer>
+    </Grid>
+</Page>

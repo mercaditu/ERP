@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="cntrl.toolBar" x:Name="_toolBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+                xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+                lex:LocalizeDictionary.DesignCulture="en-US" 
+                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
+                lex:ResxLocalizationProvider.DefaultDictionary="strings"
+             Height="40" MinWidth="500" Loaded="UserControl_Loaded">
+    <Grid Name="gridButtons" Background="White">
+        <Grid.Effect>
+            <DropShadowEffect ShadowDepth="3" Direction="270" Opacity="0.32" />
+        </Grid.Effect>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Name="gridSearch" Grid.Column="0" Background="{DynamicResource AccentColor_Brush}">
+            <TextBox Name="tbxSearch" Padding="24,0,0,0" TextChanged="tbxSearchTextChanged"
+                BorderBrush="Transparent" BorderThickness="0" Background="Transparent"
+                FontSize="16" Foreground="Black" Margin="4"
+                metro:TextBoxHelper.SelectAllOnFocus="True"
+                metro:ControlsHelper.MouseOverBorderBrush="Transparent"
+                metro:ControlsHelper.FocusBorderBrush="Transparent"
+                metro:TextBoxHelper.ClearTextButton="True">
+            </TextBox>
+            <TextBlock Text="L" FontFamily="/cntrl;component/Resources/#cognitivo"
+                       FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="Black" Opacity="0.75"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+
+        <Grid Grid.Column="1" >
+            <StackPanel Name="stackMain" Orientation="Horizontal" HorizontalAlignment="Left" />
+            <StackPanel Name="stackSide" Orientation="Horizontal" HorizontalAlignment="Right" />
+        </Grid>
+        
+        <ProgressBar Grid.ColumnSpan="2" VerticalAlignment="Bottom" Background="Transparent" Height="2" BorderThickness="0"
+                     IsIndeterminate="{Binding IsIndeterminate, UpdateSourceTrigger=PropertyChanged, ElementName=_toolBar}" 
+                     Visibility="{Binding ProgressBar, UpdateSourceTrigger=PropertyChanged, ElementName=_toolBar}"
+                     Maximum="{Binding Maximum, FallbackValue=100, UpdateSourceTrigger=PropertyChanged, ElementName=_toolBar}" 
+                     Value="{Binding Value, FallbackValue=0, UpdateSourceTrigger=PropertyChanged, ElementName=_toolBar}">
+        </ProgressBar>
+        
+        <Popup HorizontalAlignment="Right" Name="popMessages" AllowsTransparency="True">
+            <StackPanel Name="stackMessages" Margin="0,5" Width="{Binding ActualWidth, ElementName=gridButtons, Mode=OneWay}"/>
+        </Popup>
+    </Grid>
+</UserControl>

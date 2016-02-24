@@ -1,0 +1,146 @@
+﻿<Page x:Class="Cognitivo.Security.UserRole"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:entity="clr-namespace:entity;assembly=entity" 
+      xmlns:cls="clr-namespace:Cognitivo.Class"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
+      mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+      Background="{StaticResource winBackground}"
+	 Loaded="Page_Loaded">
+    <Page.Resources>
+        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+        <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}"/>
+        <CollectionViewSource x:Key="security_roleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_role}, CreateList=True}"/>
+        <CollectionViewSource x:Key="security_privilageViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_privilage}, CreateList=True}"/>
+        <CollectionViewSource x:Key="security_rolesecurity_curdViewSource" Source="{Binding security_curd, Source={StaticResource security_roleViewSource}}"/>
+        <CollectionViewSource x:Key="security_rolesecurity_role_privilageViewSource" Source="{Binding security_role_privilage, Source={StaticResource security_roleViewSource}}"/>
+    </Page.Resources>
+    <Grid DataContext="{StaticResource security_roleViewSource}" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Name="crud_modal" Background="#7FC0C0C0" 
+              Grid.ColumnSpan="2" Grid.RowSpan="2" Panel.ZIndex="1" Visibility="Hidden"/>
+        <Grid />
+        <ListBox x:Name="security_roleDataGrid"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentColor_Brush}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding Source={StaticResource security_roleViewSource}, IsAsync=True}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding security_user.Count}" 
+                                   recordName="{Binding name}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="32,16">
+            <Label Style="{StaticResource input_label}" Content="{lex:Loc UserRole}"/>
+            <TextBox Style="{StaticResource input_textbox}"
+                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            <Label Style="{StaticResource input_label}" Content="{lex:Loc Department}"/>
+            <ComboBox x:Name="id_departmentComboBox" ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" Style="{StaticResource input_combobox}" 
+                      SelectedValuePath="id_department" DisplayMemberPath="name" SelectedValue="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+        </StackPanel>     
+        
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="0,134,0,0">
+            <TabItem Header="{lex:Loc List}">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="{lex:Loc Basic}">
+                <Grid>
+                    <DataGrid x:Name="security_curdDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
+                              IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
+                                                   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                              ItemsSource="{Binding Source={StaticResource security_rolesecurity_curdViewSource}}" Grid.Row="1" CanUserDeleteRows="False" CanUserAddRows="False"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" FontSize="16" SelectionUnit="Cell">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding id_application}" Header="{lex:Loc Cognitivo:local:Application}" IsReadOnly="True" Width="*"/>
+                            <DataGridCheckBoxColumn Binding="{Binding can_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="{lex:Loc Cognitivo:local:View}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding can_create, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="{lex:Loc Cognitivo:local:Create}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding can_update, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="{lex:Loc Cognitivo:local:Edit}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding can_delete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="{lex:Loc Cognitivo:local:Delete}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding can_approve, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="{lex:Loc Cognitivo:local:Approve}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding can_annul, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="{lex:Loc Cognitivo:local:Annul}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding has_full_control, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    Header="{lex:Loc Cognitivo:local:All}" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{lex:Loc Special}">
+                <Grid>
+                    <DataGrid x:Name="security_role_privilageDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                              ItemsSource="{Binding Source={StaticResource security_rolesecurity_role_privilageViewSource}}" 
+                              RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding id_privilage}" Visibility="Collapsed" Header="ID" Width="SizeToHeader"/>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource security_privilageViewSource}}" 
+						                                SelectedValueBinding="{Binding id_privilage, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+						                                DisplayMemberPath="name" 
+						                                SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privalge}" Width="*"/>
+                            <DataGridCheckBoxColumn Binding="{Binding has_privilage}" Header="{lex:Loc Cognitivo:local:Allow}" Width="SizeToHeader"/>
+                            <DataGridTextColumn Binding="{Binding value_max}" Header="{lex:Loc Cognitivo:local:Value}" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" 
+                       btnSearch_Click="toolBar_btnSearch_Click"
+                       btnNew_Click="New_Click" 
+                       btnSave_Click="Save_Click" 
+                       btnDelete_Click="toolBar_btnDelete_Click" 
+                       btnCancel_Click="toolBar_btnCancel_Click" 
+                       btnEdit_Click="toolBar_btnEdit_Click" 
+                       State="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Grid.ColumnSpan="2" />
+
+    </Grid>
+</Page>

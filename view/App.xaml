@@ -1,0 +1,509 @@
+﻿<Application x:Class="Cognitivo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:my="clr-namespace:System;assembly=mscorlib" 
+             xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
+             StartupUri="Menu/MainWindow.xaml" 
+             ShutdownMode="OnMainWindowClose"
+             Startup="Application_Startup"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException" >
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Steel.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="AccentColor_Brush" Color="WhiteSmoke"/>
+            <SolidColorBrush x:Key="AccentColor_Brush2" Color="RoyalBlue"/>
+            <SolidColorBrush x:Key="AccentColor_Introvert" Color="#CC647687"/>
+            
+            <SolidColorBrush x:Key="appConfig" Color="Black" Opacity="0.05"/>
+            <SolidColorBrush x:Key="winBackground" Color="White" Opacity="0.80"/>
+            
+            <SolidColorBrush x:Key="Label_ImportantColor" Color="#FF0066"/>
+            <SolidColorBrush x:Key="Modal_BackgroundColor" Color="Black" Opacity="0.64"/>
+            
+            <Style x:Key="main_Datagrid" BasedOn="{StaticResource MetroDataGrid}" TargetType="DataGrid">
+                <Setter Property="Background" Value="WhiteSmoke"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="EnableRowVirtualization" Value="True"/>
+                <Setter Property="EnableColumnVirtualization" Value="True"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="RowBackground" Value="WhiteSmoke"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="LightSteelBlue" />
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="Number_CellStyle" BasedOn="{StaticResource MetroDataGridCell}" TargetType="DataGridCell">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="Width" Value="Auto"/>
+            </Style>
+
+            <Style x:Key="detail_Datagrid" BasedOn="{StaticResource MetroDataGrid}" TargetType="DataGrid">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="EnableRowVirtualization" Value="True"/>
+                <Setter Property="EnableColumnVirtualization" Value="True"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="RowBackground" Value="WhiteSmoke"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+            
+            <Style x:Key="nav_List" TargetType="ListBox">
+                <Setter Property="Background" Value="#444444"/>
+            </Style>
+
+            <Style x:Key="btn_Label" TargetType="Label">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FontFamily" Value="/Cognitivo;component/Resources/#cognitivo"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
+            <Style x:Key="ico_Label" TargetType="Label">
+                <Setter Property="FontFamily" Value="/Cognitivo;component/Resources/#cognitivo"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Width" Value="24"/>
+            </Style>
+
+            <Style x:Key="line_Bar" TargetType="Rectangle">
+                <Setter Property="Margin" Value="16,4"/>
+                <Setter Property="Fill" Value="Silver"/>
+                <Setter Property="Height" Value="1"/>
+            </Style>
+            
+            <Style x:Key="nav_ListSelection" TargetType="ListBoxItem">
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="Selector.IsSelectionActive" Value="False" />
+                            <Condition Property="IsSelected" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="DarkOrange" />
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="Selector.IsSelectionActive" Value="True" />
+                            <Condition Property="IsSelected" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" Value="OrangeRed" />
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="EditableLinkStyle" TargetType="{x:Type Hyperlink}">
+                
+            </Style>
+
+            <Style x:Key="EditableLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Label}">
+                            <Grid>
+                                <TextBox Name="textBox"
+                                         Grid.ZIndex="1"
+                                         Padding="1,3,0,0"
+                                         FontSize="12"
+                                         Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Label}}, Path=Content, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                         Opacity="0"/>
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                        BorderThickness="{TemplateBinding BorderThickness}" 
+                                        Background="{TemplateBinding Background}" 
+                                        Padding="{TemplateBinding Padding}" 
+                                        SnapsToDevicePixels="true">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                      RecognizesAccessKey="True" 
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="textBox" Property="Opacity" Value="1"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TextToLabelStyle" BasedOn="{StaticResource MetroTextBox}" TargetType="{x:Type TextBox}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border CornerRadius="4" Background="WhiteSmoke" Height="22"
+                                    HorizontalAlignment="Right" Padding="5,0" BorderBrush="Silver" BorderThickness="0.25">
+                                <Grid>
+                                    <TextBlock x:Name="lbl2tbx" Grid.ZIndex="1" Opacity="1"
+                                               FontSize="12" FontWeight="Medium" TextTrimming="CharacterEllipsis"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                                               Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, 
+                                                              Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                    <TextBox x:Name="tbx2lbl" Opacity="0" Grid.ZIndex="2" IsTabStop="False"
+                                             Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, 
+                                             Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                        <TextBox.Background>
+                                            <SolidColorBrush Color="White" Opacity="0.64"/>
+                                        </TextBox.Background>
+                                    </TextBox>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="lbl2tbx" Property="Opacity" Value="0"/>
+                                    <Setter TargetName="tbx2lbl" Property="Opacity" Value="1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ComboToLabelStyle" BasedOn="{StaticResource MetroComboBox}" TargetType="{x:Type ComboBox}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                            <Grid>
+                                <TextBlock x:Name="MyLabel" Grid.ZIndex="1" Opacity="1" 
+                                           Margin="5" FontSize="12" FontWeight="Medium" TextTrimming="CharacterEllipsis"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                <ComboBox x:Name = "MyCombo" Opacity="0" Grid.ZIndex="2"  IsTabStop="False"
+                                          DisplayMemberPath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=DisplayMemberPath}" 
+                                          SelectedValuePath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=SelectedValuePath}" 
+                                          SelectedValue = "{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=SelectedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+						                  ItemsSource = "{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=ItemsSource}"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="MyLabel" Property="Opacity" Value="0"/>
+                                    <Setter TargetName="MyCombo" Property="Opacity" Value="1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TextboxToLabelStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Margin" Value="4,0,4,4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Grid>
+                                <TextBox Name="txt" Grid.ZIndex="2"
+                                         FontSize="11"
+                                         Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                         Opacity="1"/>
+                                <Label Name="label" IsTabStop="False"
+                                         Grid.ZIndex="1"
+                                         FontSize="11"
+                                         Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type TextBox}}, Path=Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                         Opacity="0"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="label" Property="Opacity" Value="1"/>
+                                    <Setter TargetName="txt" Property="Opacity" Value="0"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="input_textbox"
+                                      BasedOn="{StaticResource MetroTextBox}"
+                   TargetType="{x:Type TextBox}" >
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="4,0,4,4" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="BorderBrush" Value="Silver"/>
+            </Style>
+            
+            <Style x:Key="input_password" 
+                   BasedOn="{StaticResource MetroPasswordBox}" 
+                   TargetType="{x:Type PasswordBox}">
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="4,0,4,4" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="BorderBrush" Value="Silver"/>  
+            </Style>
+            
+            <Style x:Key="input_Errortextbox" 
+                   BasedOn="{StaticResource MetroTextBox}"
+                   TargetType="{x:Type TextBox}" >
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="4,0,4,4" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="BorderBrush" Value="Red"/>
+            </Style>
+
+            <Style x:Key="text_Instructions" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="FontStyle" Value="Italic"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="Foreground" Value="DimGray"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="text_H3" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="text_Data" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="text_Label" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="text_HyperLinks" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="Foreground" Value="RoyalBlue"/>
+                <Setter Property="TextDecorations" Value="Underline"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="generic_Label" 
+                   TargetType="{x:Type Label}" >
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="H1" TargetType="{x:Type Label}" >
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="FontSize" Value="32"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="H2"
+                   TargetType="{x:Type Label}" >
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="H3"
+                   TargetType="{x:Type Label}" >
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="H2Textbox"
+                   TargetType="{x:Type TextBox}" >
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+
+            <Style x:Key="TextAreaH2" 
+                   TargetType="{x:Type TextBlock}" >
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+
+            <Style x:Key="input_label"
+                   TargetType="{x:Type Label}" >
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="11"/>
+            </Style>
+
+            <Style x:Key="input_radiobutton" 
+                   BasedOn="{StaticResource MetroRadioButton}"
+                   TargetType="{x:Type RadioButton}" >
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="Margin" Value="4,0,4,4"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="FontWeight" Value="Medium"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="input_combobox"
+                   BasedOn="{StaticResource MetroComboBox}"
+                   TargetType="{x:Type ComboBox}">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="4,0,4,4" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="26"/>
+            </Style>
+
+            <Style x:Key="input_datepicker"
+                   BasedOn="{StaticResource MetroDatePicker}"
+                   TargetType="{x:Type DatePicker}" >
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="4,0,4,4" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="26"/>
+            </Style>
+
+            <Style x:Key="input_checkbox"
+                                      BasedOn="{StaticResource MetroCheckBox}"
+                   TargetType="{x:Type CheckBox}">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="26"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="FontWeight" Value="Medium"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="input_togglebutton"
+                   BasedOn="{StaticResource MetroToggleButton}"
+                   TargetType="{x:Type RadioButton}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="WhiteSmoke"/>
+                        <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="btn_green" 
+                   BasedOn="{StaticResource MetroButton}"
+                   TargetType="{x:Type Button}">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="MinWidth" Value="128"/>
+                <Setter Property="Background" Value="PaleGreen"/>
+            </Style>
+
+            <Style x:Key="img_Config" 
+                   TargetType="{x:Type Image}">
+                <Setter Property="Width" Value="83" />
+                <Setter Property="Height" Value="83"/>
+                <Setter Property="Margin" Value="0,50,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="dgv_Currency" TargetType="DataGridCell">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+
+            <!--Happy-->
+            <Style x:Key="btnDeleteChildStyle" TargetType="Button">
+                <Setter Property="Content" Value="d"/>
+                <Setter Property="ToolTip" Value="Delete"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="/Cognitivo;component/Resources/#cognitivo"/>
+                <Setter Property="Margin" Value="4"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="border" 
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    CornerRadius="5"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" Value="Gainsboro" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Opacity" Value="0.25" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

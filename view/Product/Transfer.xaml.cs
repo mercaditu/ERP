@@ -1,0 +1,187 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Data.Entity;
+using entity;
+using System.Data;
+using System.Data.Entity.Validation;
+using System.ComponentModel;
+using System.Threading.Tasks;
+
+namespace Cognitivo.Product
+{
+    public partial class Transfer : Page
+    {
+        //dbContext. entity = new dbContext.();
+        ProductTransferDB dbContext = new ProductTransferDB();
+
+        CollectionViewSource item_transferViewSource, transfercostViewSource;
+        entity.Properties.Settings _entity = new entity.Properties.Settings();
+        List<Class.transfercost> clsTotalGrid = null;
+        public Transfer()
+        {
+            InitializeComponent();
+        }
+
+
+        private void toolBar_btnNew_Click(object sender)
+        {
+            item_transfer item_transfer = new item_transfer();
+            item_transfer.State = System.Data.Entity.EntityState.Added;
+            item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
+            item_transfer.IsSelected = true;
+
+            dbContext.Entry(item_transfer).State = EntityState.Added;
+       
+            item_transferViewSource.View.MoveCurrentToLast();
+         }
+
+        private void toolBar_btnSave_Click(object sender)
+        {
+            try
+            {
+                item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+                item_transfer.app_branch_origin = (app_branch)id_branch_originComboBox.SelectedItem;
+                item_transfer.app_branch_destination = (app_branch)id_branch_destinComboBox.SelectedItem;
+                item_transfer.app_location_origin = ((app_branch)id_branch_originComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
+                item_transfer.app_location_destination = ((app_branch)id_branch_destinComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
+
+                IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
+                if (validationresult.Count() == 0)
+                {
+                    for (int i = 0; i < item_transfer_detailDataGrid.Items.Count - 1; i++)
+                    {
+
+                        item_transfer_detail item = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
+
+                        item_movement item_movement_origin = new item_movement();
+                        item_movement_origin.debit = 0;
+                        item_movement_origin.credit = item.quantity_origin;
+                        item_movement_origin.id_application = global::entity.App.Names.SalesInvoice;
+                        item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
+                        item_movement_origin.transaction_id = 0;
+                        item_movement_origin.status = Status.Stock.InStock;
+                        item_movement_origin.trans_date = item.item_transfer.trans_date;
+                        if (item.item_product.id_item_product != 0)
+                        {
+                            if (dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
+                            {
+                                item_movement_origin.id_item_product = dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
+                            }
+                        }
+                        
+                        dbContext.item_movement.Add(item_movement_origin);
+                        item_movement item_movement_dest = new item_movement();
+                        item_movement_dest.debit = item.quantity_destination;
+                        item_movement_dest.credit = 0;
+                        item_movement_dest.id_application = global::entity.App.Names.PurchaseInvoice;
+                        item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
+                        item_movement_dest.transaction_id = 0;
+                        item_movement_dest.status = Status.Stock.InStock;
+                        item_movement_dest.trans_date = item.item_transfer.trans_date;
+                        if (item.item_product.id_item_product != 0)
+                        {
+                            if (dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
+                            {
+                                item_movement_dest.id_item_product = dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
+                            }
+
+                        }
+                        clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
+                        foreach (Class.transfercost _clsTotalGrid in clsTotalGrid)
+                        {
+                            if (item.quantity_origin == 0)
+                            {
+                                item_movement_value item_movement_detail = new item_movement_value();
+                                item_movement_detail.unit_value = _clsTotalGrid.cost / item.quantity_destination;
+                                item_movement_detail.id_currencyfx = 0;
+                                item_movement_detail.comment = String.Format("Transaction from transfer");
+                                item_movement_origin.item_movement_value.Add(item_movement_detail);
+                            }
+
+                        }
+                        dbContext.item_movement.Add(item_movement_dest);
+                    }
+
+                    dbContext.SaveChangesAsync();
+                 
+                    toolBar.msgSaved();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
+
+        private void toolBar_btnDelete_Click(object sender)
+        {
+
+            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
+            {
+                //dbContext.item_transfer.Remove((item_transfer)item_transferDataGrid.SelectedItem);
+                //item_transferViewSource.View.MoveCurrentToFirst();
+                //toolBar_btnSave_Click(sender);
+            }
+
+        }
+
+        private void toolBar_btnCancel_Click(object sender)
+        {
+            dbContext.CancelAllChanges();
+        }
+
+        private void toolBar_btnEdit_Click(object sender)
+        {
+            if (itemDataGrid.SelectedItem != null)
+            {
+                item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
+                item_transfer.IsSelected = true;
+                item_transfer.State = System.Data.Entity.EntityState.Modified;
+                dbContext.Entry(item_transfer).State = EntityState.Modified;
+            }
+            else
+            {
+                toolBar.msgWarning("Please Select an Item");
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+
+            item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
+            dbContext.item_transfer.Where(a => a.id_company == _entity.company_ID && a.transfer_type==item_transfer.Transfer_type.transfer).Include("item_transfer_detail").Load();
+            item_transferViewSource.Source = dbContext.item_transfer.Local;
+
+            CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
+            dbContext.app_branch.Where(a => a.is_active == true).OrderBy(a => a.name).Load();
+            branch_originViewSource.Source = dbContext.app_branch.Local;
+
+            CollectionViewSource branch_destViewSource = ((CollectionViewSource)(this.FindResource("branch_destViewSource")));
+            branch_destViewSource.Source = dbContext.app_branch.Local;
+
+            CollectionViewSource security_userViewSource = ((CollectionViewSource)(this.FindResource("security_userViewSource")));
+            dbContext.security_user.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            security_userViewSource.Source = dbContext.security_user.Local;
+
+            CollectionViewSource itemViewSource = ((CollectionViewSource)(this.FindResource("itemViewSource")));
+            dbContext.item_product.Where(a => a.id_company == _entity.company_ID
+          ).Load();
+            itemViewSource.Source = dbContext.item_product.Local;
+
+
+            clsTotalGrid = new List<Class.transfercost>();
+            transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
+            transfercostViewSource.Source = clsTotalGrid;
+        }
+    }
+
+
+}

@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="cntrl.toolIcon_Mini" x:Name="_toolIcon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Button FontWeight="Medium" FocusVisualStyle="{x:Null}" Focusable="False" 
+            Margin="4,0" Height="32" Padding="0" BorderThickness="0" 
+            Click="toolIcon_Click" Background="White">
+        
+            <Label Content="{Binding imgSource, ElementName=_toolIcon}" FontFamily="/cntrl;component/Resources/#cognitivo" 
+                   Foreground="{Binding icoColor, ElementName=_toolIcon}" FontSize="12" 
+                   ToolTip="{Binding icoName, ElementName=_toolIcon}"/>
+    </Button>
+</UserControl>

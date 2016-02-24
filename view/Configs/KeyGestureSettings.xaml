@@ -1,0 +1,110 @@
+﻿<Page x:Class="Cognitivo.Configs.KeyGestureSettings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:prop="clr-namespace:Cognitivo"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
+      mc:Ignorable="d" 
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+      lex:ResxLocalizationProvider.DefaultDictionary="local"
+      lex:LocalizeDictionary.DesignCulture="en-US" 
+      MinHeight="400" MinWidth="600" Margin="0"
+	  Title="{lex:Loc KeyboardShortcuts}" Loaded="Page_Loaded"
+      >
+    <Page.Resources>
+        <converter:ValueToEnumConverter x:Key="ValueToEnum"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Background="{StaticResource appConfig}">
+            <Image Style="{StaticResource img_Config}"
+                    Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png"/>
+            <Label Content="{lex:Loc KeyboardShortcuts}" HorizontalAlignment="Center" Style="{StaticResource H1}"/>
+            <Button x:Name="btnSave" Content="{lex:Loc Save}" Margin="15"
+                        Style="{StaticResource btn_green}" Click="btnSave_Click"/>
+            <TextBlock Text="Customize key combinations that are used in entire system for CRUD operations." 
+                            HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"
+                            Style="{StaticResource text_Instructions}"/>
+            <TextBlock Text="Note: Changes get affected only after you restart the application." 
+                            HorizontalAlignment="Center" TextTrimming="CharacterEllipsis"
+                            Style="{StaticResource text_Instructions}"/>
+        </StackPanel>
+        <WrapPanel Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
+            <StackPanel Height="60" MinWidth="268" Margin="15" Background="White" Orientation="Horizontal">
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="0"/>
+                </StackPanel.Effect>
+                <Border Background="RoyalBlue" Width="70" HorizontalAlignment="Left">
+                    <TextBlock Text="{lex:Loc Save}" FontWeight="Medium" Foreground="White" Opacity="0.80" FontSize="18" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <ComboBox x:Name="cbxSaveKeyModifier" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" FontSize="14"
+                        DisplayMemberPath="ModifierName" SelectedValuePath="ModifierValue" Margin="10"  
+                        SelectedValue="{Binding Source={x:Static prop:GestureSettings.Default}, Path=SaveModifier, Mode=TwoWay}"/>
+                <TextBlock Text="+" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="cbxSaveKey" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Height="30" FontSize="14"
+                        SelectedItem="{Binding Source={x:Static prop:GestureSettings.Default}, Path=SaveKey, Mode=TwoWay, Converter={StaticResource ValueToEnum}}"/>
+            </StackPanel>
+            <StackPanel Height="60" MinWidth="268" Margin="15" Background="White" Orientation="Horizontal">
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="0"/>
+                </StackPanel.Effect>
+                <Border Background="RoyalBlue" Width="70" HorizontalAlignment="Left">
+                    <TextBlock Text="{lex:Loc New}" FontWeight="Medium" Foreground="White" Opacity="0.80" FontSize="18" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <ComboBox x:Name="cbxNewKeyModifier" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" FontSize="14"
+                        DisplayMemberPath="ModifierName" SelectedValuePath="ModifierValue" Margin="10"  
+                        SelectedValue="{Binding Source={x:Static prop:GestureSettings.Default}, Path=NewModifier, Mode=TwoWay}"/>
+                <TextBlock Text="+" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="cbxNewKey" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Height="30" FontSize="14"
+                        SelectedItem="{Binding Source={x:Static prop:GestureSettings.Default}, Path=NewKey, Mode=TwoWay, Converter={StaticResource ValueToEnum}}"/>
+            </StackPanel>
+            <StackPanel Height="60" MinWidth="268" Margin="15" Background="White" Orientation="Horizontal">
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="0"/>
+                </StackPanel.Effect>
+                <Border Background="RoyalBlue" Width="70" HorizontalAlignment="Left">
+                    <TextBlock Text="{lex:Loc Delete}" FontWeight="Medium" Foreground="White" Opacity="0.80" FontSize="18" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <ComboBox x:Name="cbxDeleteKeyModifier" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" FontSize="14"
+                        DisplayMemberPath="ModifierName" SelectedValuePath="ModifierValue" Margin="10"  
+                        SelectedValue="{Binding Source={x:Static prop:GestureSettings.Default}, Path=DeleteModifier, Mode=TwoWay}"/>
+                <TextBlock Text="+" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="cbxDeleteKey" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Height="30" FontSize="14"
+                        SelectedItem="{Binding Source={x:Static prop:GestureSettings.Default}, Path=DeleteKey, Mode=TwoWay, Converter={StaticResource ValueToEnum}}"/>
+            </StackPanel>
+            <StackPanel Height="60" MinWidth="268" Margin="15" Background="White" Orientation="Horizontal">
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="0"/>
+                </StackPanel.Effect>
+                <Border Background="RoyalBlue" Width="70" HorizontalAlignment="Left">
+                    <TextBlock Text="{lex:Loc Cancel}" FontWeight="Medium" Foreground="White" Opacity="0.80" FontSize="18" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <ComboBox x:Name="cbxCancelKeyModifier" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" FontSize="14"
+                        DisplayMemberPath="ModifierName" SelectedValuePath="ModifierValue" Margin="10"  
+                        SelectedValue="{Binding Source={x:Static prop:GestureSettings.Default}, Path=CancelModifier, Mode=TwoWay}"/>
+                <TextBlock Text="+" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="cbxCancelKey" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Height="30" FontSize="14"
+                        SelectedItem="{Binding Source={x:Static prop:GestureSettings.Default}, Path=CancelKey, Mode=TwoWay, Converter={StaticResource ValueToEnum}}"/>
+            </StackPanel>
+            <StackPanel Height="60" MinWidth="268" Margin="15" Background="White" Orientation="Horizontal">
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="0"/>
+                </StackPanel.Effect>
+                <Border Background="RoyalBlue" Width="70" HorizontalAlignment="Left">
+                    <TextBlock Text="{lex:Loc Edit}" FontWeight="Medium" Foreground="White" Opacity="0.80" FontSize="18" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <ComboBox x:Name="cbxEditKeyModifier" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" FontSize="14"
+                        DisplayMemberPath="ModifierName" SelectedValuePath="ModifierValue" Margin="10"  
+                        SelectedValue="{Binding Source={x:Static prop:GestureSettings.Default}, Path=EditModifier, Mode=TwoWay}"/>
+                <TextBlock Text="+" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                <ComboBox x:Name="cbxEditKey" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Height="30" FontSize="14"
+                        SelectedItem="{Binding Source={x:Static prop:GestureSettings.Default}, Path=EditKey, Mode=TwoWay, Converter={StaticResource ValueToEnum}}"/>
+            </StackPanel>
+        </WrapPanel>
+    </Grid>
+</Page>

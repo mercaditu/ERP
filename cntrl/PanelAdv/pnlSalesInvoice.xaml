@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="cntrl.PanelAdv.pnlSalesInvoice"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:cntrl="clr-namespace:cntrl.Controls"
+        xmlns:local="clr-namespace:cntrl.PanelAdv"
+          xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+          lex:ResxLocalizationProvider.DefaultDictionary="local"
+          lex:LocalizeDictionary.DesignCulture="en-US"
+        xmlns:entity="clr-namespace:entity;assembly=entity" 
+        mc:Ignorable="d" Background="White"
+        Height="512" Width="512" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}"/>
+    </UserControl.Resources>
+    <UserControl.Effect>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
+    </UserControl.Effect>
+    <StackPanel DataContext="{StaticResource sales_invoiceViewSource}" Background="WhiteSmoke">
+        <Grid>
+            <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Introvert}">
+                <Image Source="/cntrl;component/Images/Outline_White/import-26.png" Margin="4"/>
+                <Label Foreground="White" Content="{lex:Loc SalesInvoice}" Style="{StaticResource H3}"/>
+            </StackPanel>
+            <Label Content="c" FontSize="22" VerticalAlignment="Center" Margin="0"
+				HorizontalAlignment="Right" MouseDown="btnCancel_Click" Foreground="White" 
+				FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+        </Grid>
+        <Grid Margin="8">
+            <StackPanel Orientation="Horizontal" >
+                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="300"/>
+            </StackPanel>
+            <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp"/>
+        </Grid>
+        <DataGrid x:Name="sales_invocieDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_invocieDatagrid_LoadingRowDetails"
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False"  >
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="SizeToHeader" />
+                <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="SizeToHeader" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding order_Total}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True"/>
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <!--<StackPanel Background="Gainsboro" Opacity="0.64">
+                        <Label Content="{lex:Loc Details}" Style="{StaticResource H3}" Foreground="White"/>-->
+                    <DataGrid AutoGenerateColumns="False" Margin="16">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding name}" Header="{lex:Loc Cognitivo:local:name}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding balance}" Header="{lex:Loc Cognitivo:local:Balance}" Width="SizeToHeader" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!--</StackPanel>-->
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+    </StackPanel>
+</UserControl>

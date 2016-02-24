@@ -1,0 +1,69 @@
+﻿<metro:MetroWindow x:Class="Cognitivo.ExceptionBox" x:Name="_ExceptionBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:Cognitivo" mc:Ignorable="d" Title="Cognitivo ERP" Style="{DynamicResource MyCleanWindowStyle}"
+        GlowBrush="Crimson" Topmost="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+        Width="512" MaxHeight="512" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" SizeToContent="Height">
+    <metro:MetroWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Style x:Key="MyCleanWindowStyle" TargetType="{x:Type metro:MetroWindow}" 
+               BasedOn="{StaticResource CleanWindowStyleKey}" />
+    </metro:MetroWindow.Resources>
+    <StackPanel VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="Images/space_invaders.png" Width="45"/>
+            <Label Content="Un-Handled Error" Style="{StaticResource H2}"/>
+        </StackPanel>
+        <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" Margin="5,0" Text="This is embarrasing! There has been an error we weren't prepred for." TextAlignment="Justify"/>
+        <CheckBox x:Name="chbxShare" Content="Share with Cognitivo" Width="auto" Style="{StaticResource input_checkbox}"/>
+        <StackPanel VerticalAlignment="Top" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=chbxShare}" >
+            <TextBlock VerticalAlignment="Top" TextWrapping="Wrap" Margin="5,0" Style="{StaticResource text_Instructions}"
+                   Text="Please take a few seconds to explain your steps, and if you check the email option at the botton, we will try to get this fixed by the next update." TextAlignment="Justify"/>
+            <TextBox VerticalAlignment="Top" x:Name="tbxUserMessage" TextWrapping="Wrap" Margin="5" MinHeight="64"/>
+        </StackPanel>
+        <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{StaticResource text_Instructions}" Text="Since this is unchartered territory, we recomend you restart since we don't know what went wrong." TextAlignment="Justify"/>
+        <StackPanel VerticalAlignment="Top">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button Content="Continue" IsDefault="True" Margin="5,0" Style="{StaticResource btn_green}" Background="WhiteSmoke" Click="btnContinue_Click"/>
+                    <Button Content="Restart" Margin="5,0" Style="{StaticResource btn_green}" Background="Crimson" Foreground="White" Click="btnRestart_Click"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <ToggleButton x:Name="btnShowErrors" Width="28" Height="28" FontSize="16"
+                          VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Padding="2"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" 
+                          FontFamily="/Cognitivo;component/Resources/#cognitivo">
+                    </ToggleButton>
+                    <TextBlock Text="Peel Slowly and See..." VerticalAlignment="Center" Style="{StaticResource text_Instructions}"/>
+                </StackPanel>
+            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Visibility="{Binding ElementName=btnShowErrors, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Label Content="Message" Style="{StaticResource input_label}"/>
+                    <Border Background="WhiteSmoke" CornerRadius="4" Padding="5" Margin="5,0,5,5" VerticalAlignment="Top">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding errMessage, Mode=OneWay, ElementName=_ExceptionBox, FallbackValue=---}"/>
+                    </Border>
+                    <Label Content="Inner Exception" Style="{StaticResource input_label}"/>
+                    <Border Background="WhiteSmoke" CornerRadius="4" Padding="5" Margin="5,0,5,5" VerticalAlignment="Top">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding errInner, Mode=OneWay, ElementName=_ExceptionBox, FallbackValue=---}"/>
+                    </Border>
+                    <Label Content="Stack Trace" Style="{StaticResource input_label}"/>
+                    <Border Background="WhiteSmoke" CornerRadius="4" Padding="5" Margin="5,0,5,5" VerticalAlignment="Top">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding errStack, ElementName=_ExceptionBox, FallbackValue=---}"/>
+                    </Border>
+                    <Label Content="Source" Style="{StaticResource input_label}"/>
+                    <Border Background="WhiteSmoke" CornerRadius="4" Padding="5" Margin="5,0,5,5" VerticalAlignment="Top">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding errSoruce, ElementName=_ExceptionBox, FallbackValue=---}"/>
+                    </Border>
+                    <Label Content="Data" Style="{StaticResource input_label}"/>
+                    <Border Background="WhiteSmoke" CornerRadius="4" Padding="5" Margin="5,0,5,5" VerticalAlignment="Top">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding errData, ElementName=_ExceptionBox, FallbackValue=---}"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </StackPanel>
+</metro:MetroWindow>

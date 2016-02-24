@@ -1,0 +1,132 @@
+﻿<Page x:Name="pageUser" Title="{lex:Loc User}"
+      x:Class="Cognitivo.Security.User" 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+      
+      xmlns:entity="clr-namespace:entity;assembly=entity" 
+      xmlns:cls="clr-namespace:Cognitivo.Class"
+      mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+	 Loaded="Page_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+        <CollectionViewSource x:Key="securityQuesViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_question}, CreateList=True}"/>
+        <CollectionViewSource x:Key="securityRoleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_role}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid DataContext="{StaticResource security_userViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Name="crud_modal" Background="White" 
+              Grid.ColumnSpan="2" Grid.RowSpan="2" Panel.ZIndex="1" Visibility="Hidden" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
+
+        <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="security_userDataGrid"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding Source={StaticResource security_userViewSource}, IsAsync=True}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding id_user}" 
+                                   recordSecondaryName="{Binding name}"
+                                   recordName="{Binding name_full}" 
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <StackPanel Grid.Column="1" Grid.Row="1" Background="White" Orientation="Horizontal">
+            <StackPanel VerticalAlignment="Top" Margin="0,32">
+                <Label Content="{Binding name}" Style="{StaticResource H1}"/>
+                <Label Content="{Binding alias}" Style="{StaticResource H2}"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <Grid Grid.Row="1" Grid.Column="1" Background="White" >
+            <TabControl Custom:TabControlHelper.IsUnderlined="True" Margin="0,75,0,0">
+                <TabItem Header="{lex:Loc User}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Margin="32,16">
+                        <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" HorizontalAlignment="Center">
+                            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                            <TextBox Style="{StaticResource input_textbox}"
+                                     Text="{Binding name_full, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            
+                            <Label Content="{lex:Loc User}" Style="{StaticResource input_label}"/>
+                            <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+                            <Label Content="{lex:Loc Password}" Style="{StaticResource input_label}"/>
+                            <PasswordBox cls:PasswordHelper.Attach="True" Style="{StaticResource input_password}"
+                                         cls:PasswordHelper.Password="{Binding password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+
+                            <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
+                            <TextBox Text="{Binding email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+                            <Rectangle Height="1" Fill="Silver" Margin="16" />
+                            <Grid>
+                                <Label Content="{lex:Loc UserRole}" Style="{StaticResource input_label}"/>
+                                <Label Content="+" VerticalAlignment="Center" HorizontalAlignment="Right" ToolTip="{lex:Loc Edit}" 
+                                       PreviewMouseUp="CreateRole_PreviewMouseUp" Style="{StaticResource btn_Label}"/>
+                                <Label Content="+" VerticalAlignment="Center" HorizontalAlignment="Right" ToolTip="{lex:Loc Edit}" 
+                                       PreviewMouseUp="CreateRole_PreviewMouseUp" Style="{StaticResource btn_Label}"/>
+                            </Grid>
+                            <ComboBox Style="{StaticResource input_combobox}"
+                                          DisplayMemberPath="name" SelectedValuePath="id_role" 
+                                          SelectedValue="{Binding id_role, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
+                                          UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                          ItemsSource="{Binding Source={StaticResource securityRoleViewSource}}"/>
+                            <CheckBox Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
+                                      IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, 
+                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="{lex:Loc Email}">
+                    <StackPanel>
+                        <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Password}" Style="{StaticResource input_label}"/>
+                        <PasswordBox cls:PasswordHelper.Attach="True" Style="{StaticResource input_password}"
+                                         cls:PasswordHelper.Password="{Binding email_password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+
+                        <Label Content="{lex:Loc IMAPServer}" Style="{StaticResource input_label}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding email_imap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Custom:TextBoxHelper.Watermark="{Binding app_company.email_imap}"
+                                 Style="{StaticResource input_textbox}"/>
+                            <TextBox Text="{Binding email_port_in, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" Width="32"/>
+                        </StackPanel>
+                        <Label Content="{lex:Loc SMTPServer}" Style="{StaticResource input_label}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding email_smtp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Custom:TextBoxHelper.Watermark="{Binding app_company.email_imap}"
+                                 Style="{StaticResource input_textbox}"/>
+                            <TextBox Text="{Binding email_port_out, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" Width="32"/>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" 
+                       btnNew_Click="toolBar_btnNew_Click" 
+                       btnSave_Click="toolBar_btnSave_Click" 
+                       btnEdit_Click="toolBar_btnEdit_Click"
+                       btnDelete_Click="toolBar_btnDelete_Click" 
+                       btnSearch_Click="toolBar_btnSearch_Click"
+                       btnCancel_Click="toolBar_btnCancel_Click"
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+    </Grid>
+</Page>

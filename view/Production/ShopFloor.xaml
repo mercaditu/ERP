@@ -1,0 +1,74 @@
+﻿<Page x:Class="Cognitivo.Production.ShopFloor" Title="Shop Floor"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+      
+      mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1" Background="WhiteSmoke">
+
+            <StackPanel VerticalAlignment="Top" Height="400">
+                <Label Content="Production Order List" Foreground="Purple" FontWeight="Medium" Margin="5"/>
+                <Border Background="Gainsboro" Width="100" Height="30" Margin="5" CornerRadius="8">
+                    <Label Content="Fab Anillo 55''" VerticalAlignment="Center" FontWeight="Medium"/>
+                </Border>
+                <Border Background="Gainsboro" Width="100" Height="30" Margin="5" CornerRadius="8">
+                    <Label Content="Fondo 50''" VerticalAlignment="Center" FontWeight="Medium"/>
+                </Border>
+                <Border Background="Gainsboro" Width="100" Height="30" Margin="5" CornerRadius="8">
+                    <Label Content="Tapa 60''" VerticalAlignment="Center" FontWeight="Medium"/>
+                </Border>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Height="256">
+                <StackPanel Orientation="Horizontal" Margin="3,0">
+                    <Border Background="PaleGreen" Width="16" Height="16"/>
+                    <Label Content="Free Resource" VerticalAlignment="Center" FontSize="10"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="3,0">
+                    <Border Background="Gold" Width="16" Height="16"/>
+                    <Label Content="In-Use Resource" VerticalAlignment="Center" FontSize="10"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="3,0">
+                    <Border Background="Crimson" Width="16" Height="16"/>
+                    <Label Content="In-Maintainance Resource" VerticalAlignment="Center" FontSize="10"/>
+                </StackPanel>
+
+                <Label Content="Capital Resource List" Foreground="Purple" FontWeight="Medium" Margin="5"/>
+                <Border Background="#FFBDCBF1" Width="100" Height="30" Margin="5" CornerRadius="8">
+                    <Label Content="MAQ 5" VerticalAlignment="Center" FontWeight="Medium"/>
+                </Border>
+                <Border Background="#FFBDCBF1" Width="100" Height="30" Margin="5" CornerRadius="8">
+                    <Label Content="MAQ 6" VerticalAlignment="Center" FontWeight="Medium"/>
+                </Border>
+                <Border Background="#FFBDCBF1" Width="100" Height="30" Margin="5" CornerRadius="8">
+                    <Label Content="MAQ 7" VerticalAlignment="Center" FontWeight="Medium"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+        <Canvas Background="#323232" AllowDrop="True">
+            <Label Content="Shop Floor Plan" Foreground="WhiteSmoke" FontWeight="Medium" FontSize="16"/>
+            <Border Background="Crimson" Width="102" Height="315" CornerRadius="14" Canvas.Left="81" Canvas.Top="130">
+                <Label Content="LINEA B" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Medium"/>
+            </Border>
+            <Border Background="PaleGreen" Width="111" Height="315" CornerRadius="14" Canvas.Left="364" Canvas.Top="130">
+                <Label Content="LINEA A" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Medium"/>
+            </Border>
+            <Border Background="Gold" Width="102" Height="315" CornerRadius="14" Canvas.Left="223" Canvas.Top="130">
+                <Label Content="LINEA C" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Medium"/>
+            </Border>
+        </Canvas>
+
+    </Grid>
+</Page>

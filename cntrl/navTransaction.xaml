@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="cntrl.navTransaction"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="44">
+    
+    <Grid>
+        <Border Background="Khaki" CornerRadius="32" HorizontalAlignment="Left"
+                Width="32" Height="32" Margin="7,0">
+            <TextBlock Foreground="DimGray" Opacity="1" Text="k" 
+                       FontFamily="/cntrl;component/Resources/#cognitivo"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       FontSize="20"/>
+        </Border>
+
+        <TextBlock VerticalAlignment="Top" Foreground="WhiteSmoke" FontWeight="Thin"
+                   Margin="44,4,8,4" TextTrimming="CharacterEllipsis">
+            <Run>001-001-0001231</Run>
+            <Run>-</Run>
+            <Run Foreground="Khaki">100.000</Run>
+            <Run Foreground="Khaki">PYG</Run>
+        </TextBlock>
+        
+        <TextBlock Margin="44,4,8,4" Style="{StaticResource text_H3}" Foreground="WhiteSmoke"
+                   VerticalAlignment="Bottom" FontWeight="Medium"
+                   TextTrimming="CharacterEllipsis">
+            <Run Text="12/01/2015"/>
+            <Run>-</Run>
+            <Run Foreground="White" Text="Distribuidora Bravo S.A."/>
+        </TextBlock>
+    </Grid>
+</UserControl>

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="cntrl.Controls.TextBox_Template"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="27" d:DesignWidth="256">
+    <Grid>
+        <TextBox Text=""/>
+        <Popup>
+            <StackPanel Background="WhiteSmoke">
+                <StackPanel.Effect>
+                    <DropShadowEffect BlurRadius="8" Direction="270" ShadowDepth="1" />
+                </StackPanel.Effect>
+                <Label Content="Template" Style="{StaticResource input_label}"/>
+                <ComboBox Style="{StaticResource input_combobox}"/>
+                <Rectangle Margin="16,4" Height="1" Fill="Silver"/>
+                <StackPanel>
+                    <Label Content="Perfile" Style="{StaticResource input_label}"/>
+                    <TextBox Style="{StaticResource input_textbox}"/>
+                    <Label Content="Perfile" Style="{StaticResource input_label}"/>
+                    <TextBox Style="{StaticResource input_textbox}"/>
+                    <Label Content="Perfile" Style="{StaticResource input_label}"/>
+                    <TextBox Style="{StaticResource input_textbox}"/>
+                </StackPanel>
+            </StackPanel>
+        </Popup>
+    </Grid>
+</UserControl>

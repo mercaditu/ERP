@@ -1,0 +1,344 @@
+namespace entity
+{
+    using Brillo;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+
+    public partial class CommercialPurchaseDetail : Audit
+    {
+        /// <summary>
+        /// Location ID. Nullable, because
+        /// 1) We can sell non stockable items.
+        /// 2) Location is irrelevant until we approve.
+        /// </summary>
+        public int? id_location { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int id_cost_center
+        {
+            get { return _id_cost_center; }
+            set
+            {
+                _id_cost_center = value;
+                RaisePropertyChanged("id_cost_center");
+            }
+        }
+        private int _id_cost_center;
+
+        /// <summary>
+        /// Item ID related to this Detail.
+        /// </summary>
+        public int? id_item
+        {
+            get { return _id_item; }
+            set
+            {
+                if (value > 0 && value != _id_item)
+                {
+                    _id_item = value;
+                    RaisePropertyChanged("id_item");
+
+                    //If Item Exist, then load up Data.
+                    if (item != null)
+                    {
+                        id_vat_group = Vat.getItemVat(item);
+                        RaisePropertyChanged("id_vat_group");
+                        item_description = item.name;
+                        RaisePropertyChanged("item_description");
+                    }
+
+                    //Update Cost based
+                    update_UnitCost();
+                }
+            }
+        }
+        private int? _id_item;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string item_description
+        {
+            get
+            {
+                return _item_description;
+            }
+            set
+            {
+                if (value != _item_description)
+                {
+                    _item_description = value;
+                    RaisePropertyChanged("item_description");
+                }
+            }
+        }
+        private string _item_description;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        public decimal quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                if (_quantity != value)
+                {
+                    _quantity = value;
+                    RaisePropertyChanged("quantity");
+
+                    update_SubTotal();
+                }
+            }
+        }
+        private decimal _quantity;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string lot_number { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? expiration_date { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+        public int? id_vat_group
+        {
+            get { return _id_vat_group; }
+            set
+            {
+                if (value!=null)
+                {
+                    if (_id_vat_group != value)
+                    {
+                        _id_vat_group = (int)value;
+                        RaisePropertyChanged("id_vat_group");
+
+                        update_UnitPriceVAT();
+                    }
+                }
+              
+            }
+        }
+        private int _id_vat_group;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public int CurrencyFX_ID
+        {
+            get
+            {
+                return _CurrencyFX_ID;
+            }
+            set
+            {
+                _CurrencyFX_ID = value;
+
+                if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                {
+                    unit_cost = Currency.convert_Value(unit_cost, CurrencyFX_ID, App.Modules.Purchase);
+                    RaisePropertyChanged("unit_cost");
+                }
+            }
+        }
+        private int _CurrencyFX_ID;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        public decimal unit_cost
+        {
+            get { return _unit_cost; }
+            set
+            {
+                if (_unit_cost != value)
+                {
+                    _unit_cost = value;
+                    RaisePropertyChanged("unit_cost");
+
+                    update_UnitPriceVAT();
+                    update_SubTotal();
+                }
+            }
+        }
+        private decimal _unit_cost;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal UnitCost_Vat
+        {
+            get { return _UnitCost_Vat; }
+            set
+            {
+                if (_UnitCost_Vat != value)
+                {
+                    if (_UnitCost_Vat == 0)
+                    {
+                        _UnitCost_Vat = value;
+                        RaisePropertyChanged("UnitCost_Vat");
+                    }
+                    else
+                    {
+                        _UnitCost_Vat = value;
+                        RaisePropertyChanged("UnitCost_Vat");
+                        update_UnitPrice_WithoutVAT();
+                    }
+                }
+                update_SubTotalVAT();
+            }
+        }
+        private decimal _UnitCost_Vat;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal discount
+        {
+            get { return _discount; }
+            set
+            {
+                if (_discount != value) // && value <= unit_cost
+                {
+                    decimal new_discount = _discount - value;
+
+                    _discount = value;
+                    RaisePropertyChanged("discount");
+
+                    unit_cost = unit_cost + new_discount;
+                    RaisePropertyChanged("unit_cost");
+                }
+            }
+        }
+        private decimal _discount;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal DiscountPercentage
+        {
+            get { return _DiscountPercentage; }
+            set
+            {
+                _DiscountPercentage = value;
+                RaisePropertyChanged("DiscountPercentage");
+            }
+        }
+        private decimal _DiscountPercentage;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string comment { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal SubTotal
+        {
+            get { return _SubTotal; }
+            set
+            {
+                _SubTotal = value;
+                RaisePropertyChanged("SubTotal");
+                update_SubTotalVAT();
+            }
+        }
+        private decimal _SubTotal;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal SubTotal_Vat
+        {
+            get { return _SubTotal_Vat; }
+            set
+            {
+                _SubTotal_Vat = value;
+                RaisePropertyChanged("SubTotal_Vat");
+
+                RaisePropertyChanged("GrandTotal");
+            }
+        }
+        private decimal _SubTotal_Vat;
+
+        #region "Foreign Key"
+        public virtual app_vat_group app_vat_group { get; set; }
+        public virtual app_cost_center app_cost_center { get; set; }
+        public virtual app_location app_location { get; set; }
+        public virtual item item { get; set; }
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void update_UnitCost()
+        {
+            if(State != System.Data.Entity.EntityState.Unchanged)
+            {
+                if (item != null && item.unit_cost != null)
+                {
+                    unit_cost = (decimal)item.unit_cost;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void update_UnitPrice_WithoutVAT()
+        {
+            
+            unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
+            RaisePropertyChanged("unit_cost");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void update_UnitPriceVAT()
+        {
+            UnitCost_Vat = Vat.return_ValueWithVAT((int)id_vat_group, _unit_cost);
+            RaisePropertyChanged("UnitCost_Vat");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void update_SubTotal()
+        {
+            SubTotal = _unit_cost * _quantity;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void update_SubTotalVAT()
+        {
+            SubTotal_Vat = _UnitCost_Vat * _quantity;
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,295 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace entity
+{
+    public partial class SalesInvoiceDB : BaseDB
+    {
+        public sales_invoice New()
+        {
+            sales_invoice sales_invoice = new sales_invoice();
+            sales_invoice.State = EntityState.Added;
+            sales_invoice.id_range = Brillo.GetDefault.Range(App.Names.SalesInvoice);
+            sales_invoice.status = Status.Documents_General.Pending;
+            sales_invoice.trans_date = DateTime.Now;
+
+       
+            sales_invoice.IsSelected = true;
+
+            return sales_invoice;
+        }
+
+        public override int SaveChanges()
+        {
+            validate_Invoice();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            validate_Invoice();
+            return base.SaveChangesAsync();
+        }
+
+        private void validate_Invoice()
+        {
+            IList<sales_invoice> sales_invoiceLIST = base.sales_invoice.Local.ToList();
+
+            foreach (sales_invoice invoice in sales_invoiceLIST)
+            {
+                if(invoice.Error == null)
+                {
+                    if (invoice.State == EntityState.Added)
+                    {
+                        invoice.timestamp = DateTime.Now;
+                        invoice.State = EntityState.Unchanged;
+                        Entry(invoice).State = EntityState.Added;
+                        add_CRM(invoice);
+                    }
+                    else if (invoice.State == EntityState.Modified)
+                    {
+                        invoice.timestamp = DateTime.Now;
+                        //invoice.is_head = false;
+                        //base.sales_invoice.Local.Add(new_Version(invoice));
+                        invoice.State = EntityState.Unchanged;
+                        Entry(invoice).State = EntityState.Modified;
+                    }
+                    else if (invoice.State == EntityState.Deleted)
+                    {
+                        invoice.timestamp = DateTime.Now;
+                        invoice.is_head = false;
+                        invoice.State = EntityState.Deleted;
+                        Entry(invoice).State = EntityState.Modified;
+                    }
+                }
+                else if (invoice.State > 0)
+                {
+                    if (invoice.State != EntityState.Unchanged)
+                    {
+                        Entry(invoice).State = EntityState.Unchanged;
+                    }
+                }
+            }
+        }
+
+        private sales_invoice new_Version(sales_invoice old_invoice)
+        {
+            sales_invoice sales_invoice = new sales_invoice();
+
+            return sales_invoice;
+        }
+
+        private void add_CRM(sales_invoice invoice)
+        {
+            if (invoice.id_sales_order == 0 || invoice.id_sales_order == null)
+            {
+                crm_opportunity crm_opportunity = new crm_opportunity();
+                crm_opportunity.id_contact = invoice.id_contact;
+                crm_opportunity.id_currency = invoice.id_currencyfx;
+                crm_opportunity.value = invoice.GrandTotal;
+
+                crm_opportunity.sales_invoice.Add(invoice);
+                base.crm_opportunity.Add(crm_opportunity);
+            }
+            else
+            {
+                crm_opportunity crm_opportunity = sales_order.Where(x => x.id_sales_order == invoice.id_sales_order).FirstOrDefault().crm_opportunity;
+                crm_opportunity.sales_invoice.Add(invoice);
+                base.crm_opportunity.Attach(crm_opportunity);
+            }
+        }
+
+        public void Approve()
+        {
+            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x => 
+                                                x.status != Status.Documents_General.Approved
+                                                        && x.IsSelected && x.Error == null))
+            {
+                SpiltInvoice(invoice);
+            }
+
+            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x => 
+                                                x.status != Status.Documents_General.Approved
+                                                        && x.IsSelected && x.Error == null))
+            {
+                if (invoice.CreditLimit >= 0)
+                {
+                    if (invoice.id_sales_invoice == 0)
+                    {
+                        SaveChanges();
+                    }
+
+                    //Logic
+                    List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                    Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                    payment_schedualList = _Payment.insert_Schedual(invoice);
+
+                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                    List<item_movement> item_movementList = new List<item_movement>();
+                    item_movementList = _Stock.insert_Stock(this, invoice);
+
+                    if (payment_schedualList != null && payment_schedualList.Count > 0)
+                    {
+                        payment_schedual.AddRange(payment_schedualList);
+                    }
+
+                    if (item_movementList != null && item_movementList.Count > 0)
+                    {
+                        item_movement.AddRange(item_movementList);
+                    }
+
+
+                    if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range >0)
+                    {
+                        invoice.is_issued = true;
+
+                        Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
+                        Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
+                        app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
+                        invoice.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                        invoice.RaisePropertyChanged("number");
+
+                        Brillo.Document.Start.Automatic(invoice, app_document_range);
+                    }
+                    else
+                    {
+                        invoice.is_issued = false;
+                    }
+
+                    invoice.status = Status.Documents_General.Approved;
+                    SaveChanges();
+
+                    if (invoice.Error != null)
+                    {
+                        invoice.HasErrors = true;
+                    }
+                }
+                    
+            }
+        }
+
+        /// <summary>
+        /// Split Invoice from the particular invoice
+        /// </summary>
+        /// <param name="invoice">object for the sales invoice</param>
+        public void SpiltInvoice(sales_invoice invoice)
+        {
+            if ((invoice.number == null || invoice.number == string.Empty) && invoice.app_document_range != null)
+            {
+                int document_line_limit = 0;
+
+                if (invoice.app_document_range.app_document.line_limit != null)
+                {
+                document_line_limit = (int)invoice.app_document_range.app_document.line_limit;
+                }
+        
+                if (document_line_limit > 0 && invoice.sales_invoice_detail.Count > document_line_limit)
+                {
+                    int NoOfInvoice = (int)Math.Ceiling(invoice.sales_invoice_detail.Count / (decimal)document_line_limit);
+
+                    //Counter Variable for not loosing place in Detail
+                    int position = 0;
+
+                    for (int i = 1; i <= NoOfInvoice; i++)
+                    {
+                        sales_invoice _invoice = new sales_invoice();
+                        _invoice.code = invoice.code;
+                        _invoice.comment = invoice.comment;
+                        _invoice.CreditLimit = invoice.CreditLimit;
+                        _invoice.id_branch = invoice.id_branch;
+                        _invoice.id_company = invoice.id_company;
+                        _invoice.id_condition = invoice.id_condition;
+                        _invoice.id_contact = invoice.id_contact;
+                        _invoice.id_contract = invoice.id_contract;
+                        _invoice.id_currencyfx = invoice.id_currencyfx;
+                        _invoice.id_opportunity = invoice.id_opportunity;
+                        _invoice.id_project = invoice.id_project;
+                        _invoice.id_range = invoice.id_range;
+                        _invoice.id_sales_order = invoice.id_sales_order;
+                        _invoice.id_sales_rep = invoice.id_sales_rep;
+                        _invoice.id_terminal = invoice.id_terminal;
+                        _invoice.id_user = invoice.id_user;
+                        _invoice.id_weather = invoice.id_weather;
+                        _invoice.number = invoice.number;
+                        _invoice.GrandTotal = invoice.GrandTotal;
+                        _invoice.accounting_journal = invoice.accounting_journal;
+                        _invoice.is_head = invoice.is_head;
+                        _invoice.is_issued = invoice.is_issued;
+                        _invoice.IsSelected = invoice.IsSelected;
+                        _invoice.State = EntityState.Added;
+                        _invoice.status = Status.Documents_General.Pending;
+
+
+                        foreach (sales_invoice_detail detail in invoice.sales_invoice_detail.Skip(position).Take(document_line_limit))
+                        {
+                            sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                            sales_invoice_detail.item_description = detail.item_description;
+                            sales_invoice_detail.discount = detail.discount;
+                            sales_invoice_detail.id_company = detail.id_company;
+                            sales_invoice_detail.id_item = detail.id_item;
+                            sales_invoice_detail.id_location = detail.id_location;
+                            sales_invoice_detail.id_project_task = detail.id_project_task;
+                            sales_invoice_detail.id_sales_order_detail = detail.id_sales_order_detail;
+                            sales_invoice_detail.id_vat_group = detail.id_vat_group;
+                            sales_invoice_detail.is_head = detail.is_head;
+                            sales_invoice_detail.IsSelected = detail.IsSelected;
+                            sales_invoice_detail.quantity = detail.quantity;
+                            sales_invoice_detail.State = EntityState.Added;
+                            sales_invoice_detail.SubTotal = detail.SubTotal;
+                            sales_invoice_detail.SubTotal_Vat = detail.SubTotal_Vat;
+                            sales_invoice_detail.unit_cost = detail.unit_cost;
+                            sales_invoice_detail.unit_price = detail.unit_price;
+                            sales_invoice_detail.UnitPrice_Vat = detail.UnitPrice_Vat;
+                            _invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                            position += 1;
+                        }
+                        base.sales_invoice.Add(_invoice);
+                    }
+
+                    invoice.is_head = false;
+                    invoice.status = Status.Documents_General.Approved;
+                }
+
+                    SaveChanges();
+
+                    }
+        }
+
+        public void Anull()
+        {
+            SaveChanges();
+
+            foreach (sales_invoice sales_invoice in base.sales_invoice.Local)
+            {
+                if (sales_invoice.IsSelected && sales_invoice.Error == null)
+                {
+                    if (sales_invoice.sales_return == null || sales_invoice.sales_return.Count == 0 )
+                    {
+                        List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                        Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                        payment_schedualList = _Payment.revert_Schedual(sales_invoice);
+
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.revert_Stock(this,App.Names.SalesInvoice, sales_invoice.id_sales_invoice);
+
+                        if (payment_schedualList != null && payment_schedualList.Count > 0)
+                        {
+                            base.payment_schedual.AddRange(payment_schedualList);
+                        }
+                        if (item_movementList != null && item_movementList.Count > 0)
+                        {
+                            base.item_movement.RemoveRange(item_movementList);
+                        }
+
+                        sales_invoice.status = Status.Documents_General.Annulled;
+                        SaveChanges();
+                    }
+                }
+            }
+        }
+    }
+}

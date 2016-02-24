@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="entity.Brillo" GeneratedClassName="WeatherSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Temp_Celcius" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="WeatherAPI" Type="(Web Service URL)" Scope="User">
+      <Value Profile="(Default)">http://api.openweathermap.org/data/2.5/weather?lat=35&amp;lon=139</Value>
+    </Setting>
+    <Setting Name="Update_Interval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">240</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "entity\Entity.csproj", "{770C9A34-4228-4E1D-8AA2-694AF7F108F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "view\View.csproj", "{1531D596-D0FA-46CE-99D9-6483EB40624A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{850B7465-0841-4C34-A918-F8B4472457D3} = {850B7465-0841-4C34-A918-F8B4472457D3}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cntrl", "cntrl\Cntrl.csproj", "{850B7465-0841-4C34-A918-F8B4472457D3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3} = {770C9A34-4228-4E1D-8AA2-694AF7F108F3}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{764326F8-BA6F-4E1B-87A9-3BD3AF36B301}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Debug|x86.ActiveCfg = Debug|x86
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Debug|x86.Build.0 = Debug|x86
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Release|x86.ActiveCfg = Release|x86
+		{770C9A34-4228-4E1D-8AA2-694AF7F108F3}.Release|x86.Build.0 = Release|x86
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Debug|x86.ActiveCfg = Debug|x86
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Debug|x86.Build.0 = Debug|x86
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Release|x86.ActiveCfg = Release|x86
+		{1531D596-D0FA-46CE-99D9-6483EB40624A}.Release|x86.Build.0 = Release|x86
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Debug|x86.ActiveCfg = Debug|x86
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Debug|x86.Build.0 = Debug|x86
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Release|x86.ActiveCfg = Release|x86
+		{850B7465-0841-4C34-A918-F8B4472457D3}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal

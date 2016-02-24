@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="cntrl.Controls.SmartBox_Contact" x:Name="_SmartBox_Contact"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+                xmlns:entity="clr-namespace:entity;assembly=entity"
+                xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+                lex:ResxLocalizationProvider.DefaultDictionary="local"
+                lex:LocalizeDictionary.DesignCulture="en-US" 
+             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+    </UserControl.Resources>
+    <Grid>
+        <!-- TextBox for Searching -->
+        <TextBox x:Name="tbxSearch" Padding="0,0,16,0"
+                 Text="{Binding Path=Text, ElementName=_SmartBox_Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                 metro:TextBoxHelper.SelectAllOnFocus="True"
+                 metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
+                 KeyUp="StartSearch"/>
+        
+        <!-- Progress Ring -->
+        <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Right"
+                            Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False"/>
+        <!-- Search Icon -->
+        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
+               HorizontalAlignment="Right" Foreground="{StaticResource Modal_BackgroundColor}"/>
+        
+        <Popup x:Name="ContactPopUp" IsOpen="False">
+            <Popup.Effect>
+                <DropShadowEffect ShadowDepth="0"/>
+            </Popup.Effect>
+            <Border Background="{StaticResource AccentColor_Brush}">
+                <DataGrid MaxWidth="512" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource contactViewSource}}" 
+                      IsReadOnly="True" MouseDoubleClick="ContactGrid_MouseDoubleClick" Margin="4">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding code}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding name}" FontWeight="Bold" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovId}" Binding="{Binding gov_code}" Width="auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

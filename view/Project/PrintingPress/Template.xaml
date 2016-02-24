@@ -1,0 +1,99 @@
+﻿<Page x:Class="Cognitivo.Project.PrintingPress.Template" Title="Template"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+      
+	  Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="project_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_template}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"></CollectionViewSource>
+        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"></CollectionViewSource>
+        <CollectionViewSource x:Key="project_taskViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task}, CreateList=True}"></CollectionViewSource>
+        <CollectionViewSource x:Key="project_templateproject_type_templateViewSource1" Source="{Binding project_template_detail, Source={StaticResource project_templateViewSource}}"/>
+    </Page.Resources>
+
+    <Grid DataContext="{StaticResource project_templateViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <cntrl:toolBar x:Name="ctrlToolBar" Grid.Row="0" Grid.ColumnSpan="2" btnCancel_Click="ctrlToolBar_btnCancel_Click" 
+                       btnDelete_Click="ctrlToolBar_btnDelete_Click" btnEdit_Click="ctrlToolBar_btnEdit_Click" 
+                       btnNew_Click="ctrlToolBar_btnNew_Click" btnSave_Click="ctrlToolBar_btnSave_Click" />
+
+        <ListBox x:Name="project_templateDataGrid" Background="{StaticResource AccentColor_Brush}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="" 
+                                   recordName="{Binding name}" 
+                                   recordSecondaryName=""/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Column="1" Grid.Row="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Background="{StaticResource winBackground}">
+                <StackPanel x:Name="stackMain" IsEnabled="False" HorizontalAlignment="Center" Orientation="Vertical" Margin="8">
+                    <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" />
+                    <TextBox x:Name="nameTextBox" Style="{StaticResource input_textbox}"
+                         Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <Label Content="{lex:Loc Type }" Style="{StaticResource input_label}" />
+                    <ComboBox x:Name="cmbType" Style="{StaticResource input_combobox}" DisplayMemberPath="ProjectTemplateType" SelectedValuePath="ProjectTemplateTypeId" 
+                        SelectedValue="{Binding type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <Label Content="{lex:Loc Output Product}" Style="{StaticResource input_label}" />
+                    <ComboBox x:Name="ItemCombo" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource itemViewSource}}"
+                        DisplayMemberPath="name" SelectedValuePath="id_item" HorizontalAlignment="Left" 
+                        SelectedValue="{Binding id_item_output, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                    <CheckBox x:Name="is_activeCheckBox" Content="Is Active" Style="{StaticResource input_checkbox}"
+                        IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                </StackPanel>
+            </ScrollViewer>
+            <DataGrid x:Name="project_type_templateDataGrid" AutoGenerateColumns="False" Style="{StaticResource detail_Datagrid}" Grid.Row="1" IsReadOnly="True"
+                      EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource project_templateproject_type_templateViewSource1}}"                       
+                      RowDetailsVisibilityMode="VisibleWhenSelected">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="secColumn1" 
+                                        Binding="{Binding sequence, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                        Header="Secuencia" Width="*"/>
+                    <DataGridComboBoxColumn x:Name="id_itemComboBox" Width="*" Header="Item" 
+                                            DisplayMemberPath="name" SelectedValuePath="id_item" 
+                                            ItemsSource="{Binding Source={StaticResource itemViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                            SelectedValueBinding="{Binding id_item, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridComboBoxColumn x:Name="id_item_tagComboBox" Width="*" Header="Etiqueta"
+                                            DisplayMemberPath="name" SelectedValuePath="id_tag"
+                                            ItemsSource="{Binding Source={StaticResource item_tagViewSource}}"
+                                            SelectedValueBinding="{Binding id_item_tag, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridComboBoxColumn x:Name="id_item_logicComboBox" Width="*" Header="Logica"
+                                            DisplayMemberPath="NameProperty" SelectedValuePath="NameProperty"
+                                            SelectedValueBinding="{Binding logic, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridComboBoxColumn x:Name="tamplateTaskRelationCombo" Width="SizeToHeader" Header="Plantilla" 
+                                            ItemsSource="{Binding Source={StaticResource project_templateViewSource}}"
+                                            DisplayMemberPath="name" SelectedValuePath="id_project_template" 
+                                            SelectedValueBinding="{Binding id_template_task_relation, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>

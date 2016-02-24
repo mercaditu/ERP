@@ -1,0 +1,101 @@
+﻿<Page xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" x:Class="Cognitivo.Menu.mainMenu_Corporate" Title="mainMenu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:my="clr-namespace:entity.Properties;assembly=entity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+          xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+          lex:LocalizeDictionary.DesignCulture="en-US" 
+          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+          lex:ResxLocalizationProvider.DefaultDictionary="local"
+      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+      MinWidth="800" MinHeight="600">
+    <Grid>
+        <Grid VerticalAlignment="Top">
+            <Grid.Background>
+                <SolidColorBrush Color="WhiteSmoke" Opacity="0.5"/>
+            </Grid.Background>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modFav.png"
+                                  ModuleName="{lex:Loc Favorite}" 
+                                  MouseUp="get_Apps"
+                                  Tag="Fav"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modPurchase.png"
+                                  ModuleName="{lex:Loc Purchase}"
+                                  MouseUp="get_Apps"
+                                  Tag="Purchase"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modSales.png"
+                                  ModuleName="{lex:Loc Sales}"
+                                  MouseUp="get_Apps"
+                                  Tag="Sales"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modStock.png"
+                                  ModuleName="{lex:Loc Stock}"
+                                  MouseUp="get_Apps"
+                                  Tag="Stock"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modImpex.png"
+                                  ModuleName="{lex:Loc Impex}"
+                                  MouseUp="get_Apps"
+                                  Tag="Impex"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modFinance.png"
+                                  ModuleName="{lex:Loc Finance}"
+                                  MouseUp="get_Apps"
+                                  Tag="Finance"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modHR.png"
+                                  ModuleName="{lex:Loc HumanResources}"
+                                  MouseUp="get_Apps"
+                                  Tag="HumanResources"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modAccounting.png"
+                                  ModuleName="{lex:Loc Accounting}"
+                                  MouseUp="get_Apps"
+                                  Tag="Accounting"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_Event.png"
+                                  ModuleName="{lex:Loc EventManagement}"
+                                  MouseUp="get_Apps"
+                                  Tag="Project_Event"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject_PrintingPress.png"
+                                  ModuleName="{lex:Loc PrintingPress}"
+                                  MouseUp="get_Apps"
+                                  Tag="Project_PrintingPress"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProject.png"
+                                  ModuleName="{lex:Loc Project}"
+                                  MouseUp="get_Apps"
+                                  Tag="Project_Dev"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modProduction.png"
+                                  ModuleName="{lex:Loc Production}"
+                                  MouseUp="get_Apps"
+                                  Tag="Production"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Label Content="{Binding Source={x:Static my:Settings.Default}, Path=branch_Name}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding Source={x:Static my:Settings.Default}, Path=terminal_Name}" Style="{StaticResource generic_Label}"/>
+                <TextBlock Text="G" ToolTip="{lex:Loc Setting}" Margin="4" 
+                                        Foreground="Black" FontSize="18" Cursor="Hand" Tag="Settings" MouseUp="get_Apps"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                <Rectangle Width="1" Fill="Silver" Margin="4,6"/>
+                <TextBlock Text="A" ToolTip="{lex:Loc Configuration}" Margin="4" 
+                                        Foreground="Black" FontSize="18" Cursor="Hand" Tag="Config" MouseUp="get_Apps"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                <Rectangle Width="1" Fill="Silver" Margin="4,6"/>
+                <TextBlock Text="U" ToolTip="{lex:Loc Logout}" Margin="4" 
+                                        Foreground="Black" FontSize="18" Cursor="Hand" Tag="LogOut" MouseUp="get_Apps"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                        FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="0,42,0,0">
+            <Label x:Name="lblModuleName" Style="{StaticResource H1}" HorizontalAlignment="Center" 
+                   FontWeight="Normal" Foreground="White">
+                <Label.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="2" />
+                </Label.Effect>
+            </Label>
+            <WrapPanel x:Name="wrapApps" ScrollViewer.HorizontalScrollBarVisibility="Auto" Orientation="Horizontal" 
+                       HorizontalAlignment="Center" Focusable="False"
+                       Margin="0,64,0,0"/>
+        </Grid>
+    </Grid>
+</Page>

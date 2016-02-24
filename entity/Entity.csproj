@@ -1,0 +1,739 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{770C9A34-4228-4E1D-8AA2-694AF7F108F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>entity</RootNamespace>
+    <AssemblyName>entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>4af06ab4</NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="InteractivePreGeneratedViews, Version=1.0.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\EFInteractiveViews.1.0.1\lib\net45\InteractivePreGeneratedViews.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.8\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RunProcessAsTask, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RunProcessAsTask.1.0.0\lib\RunProcessAsTask.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFLocalizeExtension, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfLocalizeExtension.2.3.2\lib\net35\WPFLocalizeExtension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="XAMLMarkupExtensions, Version=1.2.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XAMLMarkupExtensions.1.2.1.4\lib\net40\XAMLMarkupExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounting\accounting_chart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Accounting\accounting_budget.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Accounting\accounting_cycle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Accounting\accounting_template_detail.cs" />
+    <Compile Include="Accounting\accounting_template.cs" />
+    <Compile Include="Accounting\accounting_journal_detail.cs" />
+    <Compile Include="Accounting\accounting_journal.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app.cs" />
+    <Compile Include="Application\app_configuration.cs" />
+    <Compile Include="Application\app_name_template_detail.cs" />
+    <Compile Include="Application\app_name_template.cs" />
+    <Compile Include="Brillo\Accounting\AccountingCycle.cs" />
+    <Compile Include="Brillo\Currency.cs" />
+    <Compile Include="Brillo\DeepCopy.cs" />
+    <Compile Include="Brillo\Document\DataSource.cs" />
+    <Compile Include="Brillo\Document\Normal.cs" />
+    <Compile Include="Brillo\Document\Start.cs" />
+    <Compile Include="Brillo\Email.cs" />
+    <Compile Include="Brillo\GetDefault.cs" />
+    <Compile Include="Brillo\Localize.cs" />
+    <Compile Include="Brillo\Logic\Payment.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Brillo\Logic\Range.cs" />
+    <Compile Include="Brillo\Document\Reciept.cs" />
+    <Compile Include="Commercial\refinance.cs" />
+    <Compile Include="Context\Accounting\AccountingChartDB.cs" />
+    <Compile Include="Context\Accounting\AccountingCycleDB.cs" />
+    <Compile Include="Context\Accounting\AccountingJournalDB.cs" />
+    <Compile Include="Context\BaseDB.cs" />
+    <Compile Include="Context\Commercial\StockDB.cs" />
+    <Compile Include="Context\Commercial\IncotermDB.cs" />
+    <Compile Include="Context\Human Resource\hr_TalentDB.cs" />
+    <Compile Include="Context\Product\ItemDB.cs" />
+    <Compile Include="Context\Commercial\ContactDB.cs" />
+    <Compile Include="Context\Config\DocumentDB.cs" />
+    <Compile Include="Context\Production\ExecutionDB.cs" />
+    <Compile Include="Context\Production\LineDB.cs" />
+    <Compile Include="Context\Production\OrderDB.cs" />
+    <Compile Include="Context\Product\item_inventoryDB.cs" />
+    <Compile Include="Context\Product\item_requestDB.cs" />
+    <Compile Include="Context\Product\ProductMovementDB.cs" />
+    <Compile Include="Context\Product\ProductRecipeDB.cs" />
+    <Compile Include="Context\Product\ProductTransferDB.cs" />
+    <Compile Include="Context\Project\Event\EventDB.cs" />
+    <Compile Include="Context\Project\Event\TemplateDB.cs" />
+    <Compile Include="Context\Project\ProjectDB.cs" />
+    <Compile Include="Context\Project\ProjectTemplateDB.cs" />
+    <Compile Include="Context\Project\TaskViewDB.cs" />
+    <Compile Include="Context\Purchase\ImpexDB.cs" />
+    <Compile Include="Context\Purchase\PurchaseReturnDB.cs" />
+    <Compile Include="Context\Purchase\PurchaseTenderDB.cs" />
+    <Compile Include="Context\Sales\SalesmanDB.cs" />
+    <Compile Include="Context\Sales\PackingListDB.cs" />
+    <Compile Include="Context\Sales\SalesReturnDB.cs" />
+    <Compile Include="Context\Sales\SalesInvoiceDB.cs" />
+    <Compile Include="Context\Purchase\PurchaseInvoiceDB.cs" />
+    <Compile Include="Context\Purchase\PurchaseOrderDB.cs" />
+    <Compile Include="Context\Sales\SalesBudgetDB.cs" />
+    <Compile Include="Context\Sales\SalesOrderDB.cs" />
+    <Compile Include="Context\Security\UserRoleDB.cs" />
+    <Compile Include="Context\Security\UserDB.cs" />
+    <Compile Include="dbContext.cs" />
+    <Compile Include="DocumentViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DocumentViewer.Designer.cs">
+      <DependentUpon>DocumentViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentViewr.xaml.cs">
+      <DependentUpon>DocumentViewr.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Generic\CommercialPurchaseDetail.cs" />
+    <Compile Include="Generic\CommercialSalesDetail.cs" />
+    <Compile Include="Generic\Email.cs" />
+    <Compile Include="Generic\Audit.cs" />
+    <Compile Include="Application\app_geography.cs" />
+    <Compile Include="Application\app_account.cs" />
+    <Compile Include="Application\app_account_detail.cs" />
+    <Compile Include="Application\app_attachment.cs" />
+    <Compile Include="Application\app_bank.cs" />
+    <Compile Include="Application\app_branch.cs" />
+    <Compile Include="Application\app_company.cs" />
+    <Compile Include="Application\app_condition.cs" />
+    <Compile Include="Application\app_contract.cs" />
+    <Compile Include="Application\app_contract_detail.cs" />
+    <Compile Include="Application\app_cost_center.cs" />
+    <Compile Include="Application\app_currency.cs" />
+    <Compile Include="Application\app_currencyfx.cs" />
+    <Compile Include="Application\app_currency_denomination.cs" />
+    <Compile Include="Application\app_department.cs" />
+    <Compile Include="Application\app_dimension.cs" />
+    <Compile Include="Application\app_document.cs" />
+    <Compile Include="Application\app_document_range.cs" />
+    <Compile Include="HumanResource\hr_time_coefficient.cs" />
+    <Compile Include="Item\item_recepie.cs" />
+    <Compile Include="Item\item_request_decision.cs" />
+    <Compile Include="Item\item_request_dimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Item\item_transfer_dimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Migrations\201601200756285_CreateDB.cs" />
+    <Compile Include="Migrations\201601200756285_CreateDB.Designer.cs">
+      <DependentUpon>201601200756285_CreateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601232006212_ReturnType.cs" />
+    <Compile Include="Migrations\201601232006212_ReturnType.Designer.cs">
+      <DependentUpon>201601232006212_ReturnType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601281538547_AddTicketFields_AddImpexColumn.cs" />
+    <Compile Include="Migrations\201601281538547_AddTicketFields_AddImpexColumn.Designer.cs">
+      <DependentUpon>201601281538547_AddTicketFields_AddImpexColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601290944122_Addcolumnid_requestinitem_transfer.cs" />
+    <Compile Include="Migrations\201601290944122_Addcolumnid_requestinitem_transfer.Designer.cs">
+      <DependentUpon>201601290944122_Addcolumnid_requestinitem_transfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601291629376_StatusInventory.cs" />
+    <Compile Include="Migrations\201601291629376_StatusInventory.Designer.cs">
+      <DependentUpon>201601291629376_StatusInventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601301141479_addbranchitem_transfer.cs" />
+    <Compile Include="Migrations\201601301141479_addbranchitem_transfer.Designer.cs">
+      <DependentUpon>201601301141479_addbranchitem_transfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602010842429_GeneralUpdateV2.253.cs" />
+    <Compile Include="Migrations\201602010842429_GeneralUpdateV2.253.Designer.cs">
+      <DependentUpon>201602010842429_GeneralUpdateV2.253.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602020716478_AddDocumentRange_PurchaseTenser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Migrations\201602020716478_AddDocumentRange_PurchaseTenser.Designer.cs">
+      <DependentUpon>201602020716478_AddDocumentRange_PurchaseTenser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602021316429_UpdatePackingList.cs" />
+    <Compile Include="Migrations\201602021316429_UpdatePackingList.Designer.cs">
+      <DependentUpon>201602021316429_UpdatePackingList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602031314259_UpdatePayment.cs" />
+    <Compile Include="Migrations\201602031314259_UpdatePayment.Designer.cs">
+      <DependentUpon>201602031314259_UpdatePayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602040610483_UpdateSalesPackingRelation.cs" />
+    <Compile Include="Migrations\201602040610483_UpdateSalesPackingRelation.Designer.cs">
+      <DependentUpon>201602040610483_UpdateSalesPackingRelation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602040640315_UpdateSalesPackingRelationV2.cs" />
+    <Compile Include="Migrations\201602040640315_UpdateSalesPackingRelationV2.Designer.cs">
+      <DependentUpon>201602040640315_UpdateSalesPackingRelationV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602091927168_UpdateDocumentRange.cs" />
+    <Compile Include="Migrations\201602091927168_UpdateDocumentRange.Designer.cs">
+      <DependentUpon>201602091927168_UpdateDocumentRange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602160844589_ADDItem_Receipe.cs" />
+    <Compile Include="Migrations\201602160844589_ADDItem_Receipe.Designer.cs">
+      <DependentUpon>201602160844589_ADDItem_Receipe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602180901473_UpdateItemDimension.cs" />
+    <Compile Include="Migrations\201602180901473_UpdateItemDimension.Designer.cs">
+      <DependentUpon>201602180901473_UpdateItemDimension.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602220928101_UpdateTemplate_detail.cs" />
+    <Compile Include="Migrations\201602220928101_UpdateTemplate_detail.Designer.cs">
+      <DependentUpon>201602220928101_UpdateTemplate_detail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602230848592_AdddimensionTable.cs" />
+    <Compile Include="Migrations\201602230848592_AdddimensionTable.Designer.cs">
+      <DependentUpon>201602230848592_AdddimensionTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Project\Event\project_event.cs" />
+    <Compile Include="Project\Event\project_event_template_fixed.cs" />
+    <Compile Include="Project\Event\project_event_fixed.cs" />
+    <Compile Include="Project\Event\project_event_template_variable.cs" />
+    <Compile Include="Project\Event\project_event_variable.cs" />
+    <Compile Include="Project\Event\project_event_template.cs" />
+    <Compile Include="Generic\CommercialHead.cs" />
+    <Compile Include="Purchase\purchase_invoice_dimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Purchase\purchase_order_dimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Purchase\purchase_packing_dimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Purchase\purchase_return_dimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Purchase\purchase_tender_detail.cs" />
+    <Compile Include="Purchase\purchase_tender_dimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Status.cs" />
+    <Compile Include="Application\app_field.cs" />
+    <Compile Include="Application\app_location.cs" />
+    <Compile Include="Application\app_measurement.cs" />
+    <Compile Include="Application\app_measurement_type.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Application\app_property.cs" />
+    <Compile Include="Application\app_vat.cs" />
+    <Compile Include="Application\app_terminal.cs" />
+    <Compile Include="Application\app_vat_group.cs" />
+    <Compile Include="Application\app_vat_group_details.cs" />
+    <Compile Include="Application\app_weather.cs" />
+    <Compile Include="Brillo\Accounting\Asset\AccountsReceivable.cs" />
+    <Compile Include="Brillo\Accounting\Asset\Cash.cs" />
+    <Compile Include="Brillo\Accounting\Asset\FixedAsset.cs" />
+    <Compile Include="Brillo\Accounting\Asset\Inventory.cs" />
+    <Compile Include="Brillo\Accounting\Equity\RetainedEarnings.cs" />
+    <Compile Include="Brillo\Accounting\Equity\RevaluationSurplus.cs" />
+    <Compile Include="Brillo\Accounting\Equity\Shares.cs" />
+    <Compile Include="Brillo\Accounting\Expense\AdministrationExpense.cs" />
+    <Compile Include="Brillo\Accounting\Expense\CostOfGoodsSold.cs" />
+    <Compile Include="Brillo\Accounting\Expense\Depreciation.cs" />
+    <Compile Include="Brillo\Accounting\Expense\HumanResource.cs" />
+    <Compile Include="Brillo\Accounting\Expense\ImpairmentLoss.cs" />
+    <Compile Include="Brillo\Accounting\Expense_Calc.cs" />
+    <Compile Include="Brillo\Accounting\Income\Gains.cs" />
+    <Compile Include="Brillo\Accounting\Income\Revenue.cs" />
+    <Compile Include="Brillo\Accounting\Income_Calc.cs" />
+    <Compile Include="Brillo\Accounting\Liability\AccountsPayable.cs" />
+    <Compile Include="Brillo\Accounting\Liability\BankLoad.cs" />
+    <Compile Include="Brillo\Accounting\Liability\BankOverDraft.cs" />
+    <Compile Include="Brillo\Accounting\Liability\Debentures.cs" />
+    <Compile Include="Brillo\Accounting\Liability\ValueAddedTax.cs" />
+    <Compile Include="Brillo\General.cs" />
+    <Compile Include="Brillo\ImpexBrillo.cs" />
+    <Compile Include="Brillo\Location.cs" />
+    <Compile Include="Brillo\Logic\Document.cs" />
+    <Compile Include="Brillo\Logic\Stock.cs" />
+    <Compile Include="Brillo\Security.cs" />
+    <Compile Include="Brillo\Status.cs" />
+    <Compile Include="Brillo\Vat.cs" />
+    <Compile Include="BusinessIntelligence\bi_chart_report.cs" />
+    <Compile Include="BusinessIntelligence\bi_report_detail.cs" />
+    <Compile Include="BusinessIntelligence\bi_report.cs" />
+    <Compile Include="BusinessIntelligence\bi_tag_report.cs" />
+    <Compile Include="BusinessIntelligence\bi_tag_role.cs" />
+    <Compile Include="BusinessIntelligence\bi_tag.cs" />
+    <Compile Include="Class\EntityValidation.cs" />
+    <Compile Include="Class\EnumHelper.cs" />
+    <Compile Include="Commercial\contact.cs" />
+    <Compile Include="Commercial\contact_field_value.cs" />
+    <Compile Include="Commercial\contact_role.cs" />
+    <Compile Include="Commercial\contact_subscription.cs" />
+    <Compile Include="Commercial\impex_incoterm_condition.cs" />
+    <Compile Include="Commercial\impex_incoterm_detail.cs" />
+    <Compile Include="Commercial\payment_promissory_note.cs" />
+    <Compile Include="Commercial\payment_withholding_detail.cs" />
+    <Compile Include="Commercial\payment_withholding_tax.cs" />
+    <Compile Include="db.cs" />
+    <Compile Include="Commercial\impex.cs" />
+    <Compile Include="Commercial\impex_expense.cs" />
+    <Compile Include="Commercial\impex_export.cs" />
+    <Compile Include="Commercial\impex_import.cs" />
+    <Compile Include="Commercial\impex_incoterm.cs" />
+    <Compile Include="DependentProperties.cs" />
+    <Compile Include="HumanResource\hr_position.cs" />
+    <Compile Include="HumanResource\hr_family.cs" />
+    <Compile Include="HumanResource\hr_education.cs" />
+    <Compile Include="HumanResource\hr_contract.cs" />
+    <Compile Include="HumanResource\hr_talent_detail.cs" />
+    <Compile Include="HumanResource\hr_talent.cs" />
+    <Compile Include="HumanResource\hr_timesheet.cs" />
+    <Compile Include="Item\item.cs" />
+    <Compile Include="Item\item_asset_group.cs" />
+    <Compile Include="Item\item_attachment.cs" />
+    <Compile Include="Item\item_brand.cs" />
+    <Compile Include="Item\item_asset.cs" />
+    <Compile Include="Item\item_conversion_factor.cs" />
+    <Compile Include="Item\item_dimension.cs" />
+    <Compile Include="Item\item_inventory_detail.cs" />
+    <Compile Include="Item\item_movement.cs" />
+    <Compile Include="Item\item_movement_dimension.cs" />
+    <Compile Include="Item\item_movement_value.cs" />
+    <Compile Include="Item\item_price.cs" />
+    <Compile Include="Item\item_price_list.cs" />
+    <Compile Include="Item\item_product.cs" />
+    <Compile Include="Item\item_property.cs" />
+    <Compile Include="Item\item_recepie_detail.cs" />
+    <Compile Include="Item\item_request_detail.cs" />
+    <Compile Include="Item\item_request.cs" />
+    <Compile Include="Item\item_service.cs" />
+    <Compile Include="Item\item_tag.cs" />
+    <Compile Include="Item\item_tag_detail.cs" />
+    <Compile Include="Item\item_inventory.cs" />
+    <Compile Include="Item\item_transfer.cs" />
+    <Compile Include="Item\item_transfer_detail.cs" />
+    <Compile Include="Brillo\Weather.cs" />
+    <Compile Include="Brillo\WeatherSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>WeatherSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\payment.cs" />
+    <Compile Include="Commercial\payment_detail.cs" />
+    <Compile Include="Commercial\payment_schedual.cs" />
+    <Compile Include="Commercial\payment_type.cs" />
+    <Compile Include="Commercial\payment_type_detail.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\MySqlHistoryContext.cs" />
+    <Compile Include="PrintInvoice.cs" />
+    <Compile Include="Production\production_execution_detail.cs" />
+    <Compile Include="Production\production_line.cs" />
+    <Compile Include="Production\production_execution.cs" />
+    <Compile Include="Production\production_order_detail.cs" />
+    <Compile Include="Production\production_order.cs" />
+    <Compile Include="Project\clsproject.cs" />
+    <Compile Include="Project\project.cs" />
+    <Compile Include="Project\project_task.cs" />
+    <Compile Include="Project\project_task_dimension.cs" />
+    <Compile Include="Project\project_template.cs" />
+    <Compile Include="Project\project_template_detail.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Purchase\purchase_invoice.cs" />
+    <Compile Include="Purchase\purchase_invoice_detail.cs" />
+    <Compile Include="Purchase\purchase_order.cs" />
+    <Compile Include="Purchase\purchase_order_detail.cs" />
+    <Compile Include="Purchase\purchase_return.cs" />
+    <Compile Include="Purchase\purchase_return_detail.cs" />
+    <Compile Include="Purchase\purchase_tender.cs" />
+    <Compile Include="Purchase\purchase_tender_contact.cs" />
+    <Compile Include="Purchase\purchase_tender_item.cs" />
+    <Compile Include="Crm\crm_opportunity.cs" />
+    <Compile Include="Purchase\purchase_packing.cs" />
+    <Compile Include="Purchase\purchase_packing_detail.cs" />
+    <Compile Include="Purchase\purchase_packing_relation.cs" />
+    <Compile Include="Sales\sales_invoice.cs" />
+    <Compile Include="Sales\sales_invoice_detail.cs" />
+    <Compile Include="Sales\sales_budget.cs" />
+    <Compile Include="Sales\sales_order.cs" />
+    <Compile Include="Sales\sales_budget_detail.cs" />
+    <Compile Include="Sales\sales_order_detail.cs" />
+    <Compile Include="Sales\sales_packing.cs" />
+    <Compile Include="Sales\sales_packing_detail.cs" />
+    <Compile Include="Sales\sales_packing_relation.cs" />
+    <Compile Include="Sales\sales_rep.cs" />
+    <Compile Include="Sales\sales_return.cs" />
+    <Compile Include="Sales\sales_return_detail.cs" />
+    <Compile Include="Security\security_curd.cs" />
+    <Compile Include="Security\security_privilage.cs" />
+    <Compile Include="Security\security_question.cs" />
+    <Compile Include="Security\security_role.cs" />
+    <Compile Include="Security\security_role_privilage.cs" />
+    <Compile Include="Security\security_user.cs" />
+    <Compile Include="Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Brillo\WeatherSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>WeatherSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\accounting_account.datasource" />
+    <None Include="Properties\DataSources\accounting_budget.datasource" />
+    <None Include="Properties\DataSources\accounting_period.datasource" />
+    <None Include="Properties\DataSources\accounting_transaction.datasource" />
+    <None Include="Properties\DataSources\app_account.datasource" />
+    <None Include="Properties\DataSources\app_account_detail.datasource" />
+    <None Include="Properties\DataSources\app_account_type.datasource" />
+    <None Include="Properties\DataSources\app_attachment.datasource" />
+    <None Include="Properties\DataSources\app_audit.datasource" />
+    <None Include="Properties\DataSources\app_bank.datasource" />
+    <None Include="Properties\DataSources\app_branch.datasource" />
+    <None Include="Properties\DataSources\app_company.datasource" />
+    <None Include="Properties\DataSources\app_condition.datasource" />
+    <None Include="Properties\DataSources\app_contract.datasource" />
+    <None Include="Properties\DataSources\app_contract_detail.datasource" />
+    <None Include="Properties\DataSources\app_cost_center.datasource" />
+    <None Include="Properties\DataSources\app_currency.datasource" />
+    <None Include="Properties\DataSources\app_currencyfx.datasource" />
+    <None Include="Properties\DataSources\app_currency_denomination.datasource" />
+    <None Include="Properties\DataSources\app_dimension.datasource" />
+    <None Include="Properties\DataSources\app_document.datasource" />
+    <None Include="Properties\DataSources\app_document_range.datasource" />
+    <None Include="Properties\DataSources\app_field.datasource" />
+    <None Include="Properties\DataSources\app_location.datasource" />
+    <None Include="Properties\DataSources\app_measurement.datasource" />
+    <None Include="Properties\DataSources\app_measurement_type.datasource" />
+    <None Include="Properties\DataSources\app_module.datasource" />
+    <None Include="Properties\DataSources\app_person_relationship.datasource" />
+    <None Include="Properties\DataSources\app_person_sex.datasource" />
+    <None Include="Properties\DataSources\app_property.datasource" />
+    <None Include="Properties\DataSources\app_status.datasource" />
+    <None Include="Properties\DataSources\app_tax.datasource" />
+    <None Include="Properties\DataSources\app_terminal.datasource" />
+    <None Include="Properties\DataSources\contact.datasource" />
+    <None Include="Properties\DataSources\contact_category.datasource" />
+    <None Include="Properties\DataSources\contact_field_value.datasource" />
+    <None Include="Properties\DataSources\contact_role.datasource" />
+    <None Include="Properties\DataSources\contact_subscription.datasource" />
+    <None Include="Properties\DataSources\cost_calculation.datasource" />
+    <None Include="Properties\DataSources\db.datasource" />
+    <None Include="Properties\DataSources\geo_area.datasource" />
+    <None Include="Properties\DataSources\geo_city.datasource" />
+    <None Include="Properties\DataSources\geo_country.datasource" />
+    <None Include="Properties\DataSources\geo_state.datasource" />
+    <None Include="Properties\DataSources\hr_timesheet.datasource" />
+    <None Include="Properties\DataSources\impex.datasource" />
+    <None Include="Properties\DataSources\impex_expense.datasource" />
+    <None Include="Properties\DataSources\impex_export.datasource" />
+    <None Include="Properties\DataSources\impex_import.datasource" />
+    <None Include="Properties\DataSources\impex_incoterm.datasource" />
+    <None Include="Properties\DataSources\item.datasource" />
+    <None Include="Properties\DataSources\item_accesories.datasource" />
+    <None Include="Properties\DataSources\item_attachment.datasource" />
+    <None Include="Properties\DataSources\item_capital.datasource" />
+    <None Include="Properties\DataSources\item_conversion_factor.datasource" />
+    <None Include="Properties\DataSources\item_dimension.datasource" />
+    <None Include="Properties\DataSources\item_movement.datasource" />
+    <None Include="Properties\DataSources\item_movement_property.datasource" />
+    <None Include="Properties\DataSources\item_movement_value.datasource" />
+    <None Include="Properties\DataSources\item_price.datasource" />
+    <None Include="Properties\DataSources\item_price_list.datasource" />
+    <None Include="Properties\DataSources\item_product.datasource" />
+    <None Include="Properties\DataSources\item_property.datasource" />
+    <None Include="Properties\DataSources\Item_Question.datasource" />
+    <None Include="Properties\DataSources\item_recepie.datasource" />
+    <None Include="Properties\DataSources\item_service.datasource" />
+    <None Include="Properties\DataSources\item_status.datasource" />
+    <None Include="Properties\DataSources\item_tag.datasource" />
+    <None Include="Properties\DataSources\item_tag_detail.datasource" />
+    <None Include="Properties\DataSources\item_tax.datasource" />
+    <None Include="Properties\DataSources\item_transfer.datasource" />
+    <None Include="Properties\DataSources\item_transfer_detail.datasource" />
+    <None Include="Properties\DataSources\payment.datasource" />
+    <None Include="Properties\DataSources\payment_detail.datasource" />
+    <None Include="Properties\DataSources\payment_schedual.datasource" />
+    <None Include="Properties\DataSources\payment_type.datasource" />
+    <None Include="Properties\DataSources\payment_type_detail.datasource" />
+    <None Include="Properties\DataSources\production.datasource" />
+    <None Include="Properties\DataSources\production_execution.datasource" />
+    <None Include="Properties\DataSources\production_order.datasource" />
+    <None Include="Properties\DataSources\project.datasource" />
+    <None Include="Properties\DataSources\project_task.datasource" />
+    <None Include="Properties\DataSources\project_template.datasource" />
+    <None Include="Properties\DataSources\project_template_detail.datasource" />
+    <None Include="Properties\DataSources\purchase_invoice.datasource" />
+    <None Include="Properties\DataSources\purchase_invoice_detail.datasource" />
+    <None Include="Properties\DataSources\purchase_invoice_tax.datasource" />
+    <None Include="Properties\DataSources\purchase_order.datasource" />
+    <None Include="Properties\DataSources\purchase_order_detail.datasource" />
+    <None Include="Properties\DataSources\purchase_order_detail_tax.datasource" />
+    <None Include="Properties\DataSources\purchase_return.datasource" />
+    <None Include="Properties\DataSources\purchase_return_detail.datasource" />
+    <None Include="Properties\DataSources\purchase_return_detail_tax.datasource" />
+    <None Include="Properties\DataSources\purchase_tender.datasource" />
+    <None Include="Properties\DataSources\purchase_tender_contact_detail.datasource" />
+    <None Include="Properties\DataSources\purchase_tender_item_detail.datasource" />
+    <None Include="Properties\DataSources\sales_invoice.datasource" />
+    <None Include="Properties\DataSources\sales_invoice_detail.datasource" />
+    <None Include="Properties\DataSources\sales_invoice_detail_tax.datasource" />
+    <None Include="Properties\DataSources\sales_order.datasource" />
+    <None Include="Properties\DataSources\sales_order_detail.datasource" />
+    <None Include="Properties\DataSources\sales_order_detail_tax.datasource" />
+    <None Include="Properties\DataSources\sales_packinglist.datasource" />
+    <None Include="Properties\DataSources\sales_packinglist_detail.datasource" />
+    <None Include="Properties\DataSources\sales_packinglist_relation.datasource" />
+    <None Include="Properties\DataSources\sales_rep.datasource" />
+    <None Include="Properties\DataSources\sales_return.datasource" />
+    <None Include="Properties\DataSources\sales_return_detail.datasource" />
+    <None Include="Properties\DataSources\sales_return_tax.datasource" />
+    <None Include="Properties\DataSources\security_curd.datasource" />
+    <None Include="Properties\DataSources\security_privilage.datasource" />
+    <None Include="Properties\DataSources\security_question.datasource" />
+    <None Include="Properties\DataSources\security_role.datasource" />
+    <None Include="Properties\DataSources\security_role_privilage.datasource" />
+    <None Include="Properties\DataSources\security_user.datasource" />
+    <None Include="Properties\DataSources\security_user_field.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\Entypo.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cloud\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Entypo-license.txt" />
+    <Content Include="Resources\ErrorEmail.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\WindowsIcons-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DocumentViewr.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DocumentViewer.resx">
+      <DependentUpon>DocumentViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601200756285_CreateDB.resx">
+      <DependentUpon>201601200756285_CreateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601232006212_ReturnType.resx">
+      <DependentUpon>201601232006212_ReturnType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601281538547_AddTicketFields_AddImpexColumn.resx">
+      <DependentUpon>201601281538547_AddTicketFields_AddImpexColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601290944122_Addcolumnid_requestinitem_transfer.resx">
+      <DependentUpon>201601290944122_Addcolumnid_requestinitem_transfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601291629376_StatusInventory.resx">
+      <DependentUpon>201601291629376_StatusInventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601301141479_addbranchitem_transfer.resx">
+      <DependentUpon>201601301141479_addbranchitem_transfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602010842429_GeneralUpdateV2.253.resx">
+      <DependentUpon>201602010842429_GeneralUpdateV2.253.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602020716478_AddDocumentRange_PurchaseTenser.resx">
+      <DependentUpon>201602020716478_AddDocumentRange_PurchaseTenser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602021316429_UpdatePackingList.resx">
+      <DependentUpon>201602021316429_UpdatePackingList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602031314259_UpdatePayment.resx">
+      <DependentUpon>201602031314259_UpdatePayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602040610483_UpdateSalesPackingRelation.resx">
+      <DependentUpon>201602040610483_UpdateSalesPackingRelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602040640315_UpdateSalesPackingRelationV2.resx">
+      <DependentUpon>201602040640315_UpdateSalesPackingRelationV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602091927168_UpdateDocumentRange.resx">
+      <DependentUpon>201602091927168_UpdateDocumentRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602160844589_ADDItem_Receipe.resx">
+      <DependentUpon>201602160844589_ADDItem_Receipe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602180901473_UpdateItemDimension.resx">
+      <DependentUpon>201602180901473_UpdateItemDimension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602220928101_UpdateTemplate_detail.resx">
+      <DependentUpon>201602220928101_UpdateTemplate_detail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602230848592_AdddimensionTable.resx">
+      <DependentUpon>201602230848592_AdddimensionTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

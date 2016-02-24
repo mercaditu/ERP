@@ -1,0 +1,251 @@
+﻿<Page x:Class="Cognitivo.Product.Request"
+         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:pref="clr-namespace:Cognitivo.Sales"
+      xmlns:mainpref="clr-namespace:Cognitivo.Properties"
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
+      xmlns:customcmd="clr-namespace:Cognitivo.Class"
+      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
+          xmlns:lex="http://wpflocalizeextension.codeplex.com"        
+          lex:LocalizeDictionary.DesignCulture="en-US"
+          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+          lex:ResxLocalizationProvider.DefaultDictionary="local"
+      mc:Ignorable="d"
+      Title="{lex:Loc RequestResource}"
+      MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
+
+    <Page.CommandBindings>
+        <CommandBinding Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
+    </Page.CommandBindings>
+    <Page.Resources>
+        <converter:AddTwoValue x:Key="converter"/>
+        <CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_requestitem_request_detailViewSource" Source="{Binding item_request_detail, Source={StaticResource item_requestViewSource}}"/>
+        <CollectionViewSource x:Key="item_request_detailitem_request_decisionViewSource" Source="{Binding item_request_decision, Source={StaticResource item_requestitem_request_detailViewSource}}"/>
+        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
+        <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
+        <CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
+    </Page.Resources>
+    <Grid DataContext="{StaticResource item_requestViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="item_requestDataGrid"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding name}" 
+                                   recordSecondaryName="{Binding comment}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="1" Grid.Column="1" Background="white">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Center">
+
+                <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"
+                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
+					            SelectedDate="{Binding request_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="cbxcurrency" Style="{StaticResource input_combobox}" 
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                              metro:ControlsHelper.MouseOverBorderBrush="Silver" 
+                              DisplayMemberPath="name" SelectedValuePath="id_currency" SelectedValue="{Binding id_currency,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                              ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"/>
+
+                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                <TextBox Style="{StaticResource input_textbox}" Height="64"
+                            metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                            metro:ControlsHelper.MouseOverBorderBrush="Silver" Text="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+
+            </StackPanel>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                <Label Content="{lex:Loc UserName}" Style="{StaticResource input_label}"/>
+                    <Label Content="{Binding security_user.name}" Style="{StaticResource input_label}"/>
+                </StackPanel>
+                <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
+                <ComboBox Name="cbxProject" DisplayMemberPath="name" SelectedValuePath="id_project"
+                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                          Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource projectViewSource}}"
+                          SelectedValue="{Binding id_project, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                <Label Content="{lex:Loc SalesOrder}"  Style="{StaticResource input_label}"/>
+                <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="id_sales_order"
+                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                          SelectedValue="{Binding id_sales_order, Mode=TwoWay, NotifyOnValidationError=True, 
+                          ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                          SelectedValuePath="id_sales_order" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource sales_orderViewSource}}"/>
+                <Label Content="{lex:Loc ProductionOrder}"  Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="cbxProduction" Style="{StaticResource input_combobox}"
+                          SelectedValue="{Binding id_production_order,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                          SelectedIndex="{Binding id_production_order}"
+                          DisplayMemberPath="{Binding id_production_order}"
+                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                          metro:ControlsHelper.MouseOverBorderBrush="Silver"/>
+                <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
+                <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
+                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                          SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, 
+                          ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                          SelectedValuePath="id_branch" 
+                          ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"/>
+                <Label Content="{lex:Loc Department}"  Style="{StaticResource input_label}"/>
+                <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
+                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                          SelectedValue="{Binding id_department, Mode=TwoWay, NotifyOnValidationError=True, 
+                          ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                          SelectedValuePath="id_department" 
+                          ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"/>
+
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <Label Content="{lex:Loc Request}" Style="{StaticResource H2}"/>
+                <DataGrid x:Name="item_request_detailMovementDataGrid" SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged" 
+                          AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="6,0"
+                          ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" 
+                          RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    		Header="Item" Width="*"/>
+                        <DataGridTemplateColumn Header="date needed by" Width="SizeToHeader">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding date_needed_by, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="SizeToHeader"/>
+                        <DataGridComboBoxColumn  x:Name="cmburgency"
+                    		Header="{lex:Loc Cognitivo:local:urgency}" Width="*" SelectedValueBinding="{Binding urgency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <!--<DataGridTextColumn Binding="{Binding urgency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="urgency" Width="SizeToHeader"/>-->
+                        <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="comment" Width="SizeToHeader"/>
+                        <DataGridTextColumn Binding="{Binding balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="balance" Width="SizeToHeader"/>
+                    </DataGrid.Columns>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
+                        		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}"
+                        		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Dimension" Width="100"/>
+                                    <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
+                                    <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Measurement" Width="100"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                </DataGrid>
+            </StackPanel>
+
+            <TabControl Grid.Column="1" Grid.Row="1">
+                <TabItem>
+                    <TabItem.Header>
+                        <Label Content="" FontSize="24" Width="32" Style="{StaticResource ico_Label}"/>
+                    </TabItem.Header>
+                    <DataGrid x:Name="item_request_detailDataGrid" AutoGenerateColumns="False"   ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}"   >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding item_request_detail.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="item" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="decision" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="quantiity" Width="Auto"/>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="{lex:Loc Movement}">
+                    <DataGrid x:Name="item_request_decisionmovementDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" RowEditEnding="item_request_decisionDataGrid_RowEditEnding">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Location}" Binding="{Binding location}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="{lex:Loc Transfer}">
+                    <DataGrid x:Name="item_request_decisiontransferDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" RowEditEnding="item_request_decisiontransferDataGrid_RowEditEnding">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Header="{lex:Loc Cognitivo:local:Branch}" Binding="{Binding branch}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="{lex:Loc Purchase}">
+                    <DataGrid x:Name="item_request_decisionpurchaseDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" RowEditEnding="item_request_decisionpurchaseDataGrid_RowEditEnding">
+                        <DataGrid.Columns>
+                            <!--<DataGridComboBoxColumn 
+                                Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"/>-->
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+            
+        </Grid>
+
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" btnNew_Click="toolBar_btnNew_Click" btnEdit_Click="toolBar_btnEdit_Click" btnAnull_Click="toolBar_btnAnull_Click"
+                       btnApprove_Click="toolBar_btnApprove_Click" btnSave_Click="toolBar_btnSave_Click"
+                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+    </Grid>
+</Page>
+
+

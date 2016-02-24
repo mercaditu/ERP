@@ -1,0 +1,136 @@
+﻿<Page x:Class="Cognitivo.Project.EventType" x:Name="template_designer" Title="{lex:Loc EventType}" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:entity="clr-namespace:entity;assembly=entity"  
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
+      xmlns:customcmd="clr-namespace:Cognitivo.Class"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+      lex:ResxLocalizationProvider.DefaultDictionary="local"
+      lex:LocalizeDictionary.DesignCulture="en-US" 
+      mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600"
+	  Loaded="Page_Loaded">
+    
+    <Page.CommandBindings>
+        <CommandBinding Command="customcmd:CustomCommands.Delete" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed"/>
+    </Page.CommandBindings>
+    <Page.Resources>
+        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+        <CollectionViewSource x:Key="template_designerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_event_template}, CreateList=True}"/>
+        <CollectionViewSource x:Key="template_designerservices_per_eventViewSource" Source="{Binding project_event_template_fixed, Source={StaticResource template_designerViewSource}}"/>
+        <CollectionViewSource x:Key="template_designerproject_event_template_variableViewSource" Source="{Binding project_event_template_variable, Source={StaticResource template_designerViewSource}}"/>
+        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_tagViewSourceForEvents" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_tagViewSourceForPerson" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+    </Page.Resources>
+    <Grid Background="White" DataContext="{StaticResource template_designerViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox x:Name="template_designerDataGrid" Background="{StaticResource AccentColor_Brush}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding}" Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList 
+                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        recordName="{Binding name}" 
+                        recordCode="{Binding item_tag.name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!--<DataGrid x:Name="template_designerDataGrid" AutoGenerateColumns="False" Grid.Column="0" IsReadOnly="True"
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" Style="{StaticResource main_Datagrid}"
+                  RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding name}" Header="Name" Width="*"/>
+                <DataGridTextColumn Binding="{Binding item_tag.name}" Header="Hall" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Grid Margin="8,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.ColumnSpan="3" Margin="0,0,0,10" IsEnabled="{Binding ElementName=template_designer, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
+                    <Label Content="{lex:Loc EventType}" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+                    <Label Content="{lex:Loc Saloon}" Style="{StaticResource input_label}"/>
+                    <ComboBox DisplayMemberPath="name" SelectedValuePath="id_tag" Style="{StaticResource input_combobox}"
+                          ItemsSource="{Binding Source={StaticResource item_tagViewSource}}"
+                          SelectedValue="{Binding id_tag, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="{lex:Loc ServicesperPerson}" Style="{StaticResource text_Data}"/>
+                    <DataGrid x:Name="project_event_template_variableDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                              IsReadOnly="{Binding ElementName=template_designer, Path=SetIsEnable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                              ItemsSource="{Binding Source={StaticResource template_designerproject_event_template_variableViewSource}}" Margin="0,0,4,0"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" Style="{StaticResource detail_Datagrid}">
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="*" ItemsSource="{Binding Source={StaticResource item_tagViewSourceForPerson}}"
+                                                DisplayMemberPath="name" SelectedValuePath="id_tag"
+                                                SelectedValueBinding="{Binding id_tag, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Binding="{Binding adult_consumption}" Header="{lex:Loc Cognitivo:local:Adult}" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding child_consumption}" Header="{lex:Loc Cognitivo:local:Children}" Width="Auto"/>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Grid.Row="1">
+                    <TextBlock Text="{lex:Loc ServicesperEvent}" Style="{StaticResource text_Data}"/>
+                    <DataGrid x:Name="services_per_eventDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                              IsReadOnly="{Binding ElementName=template_designer, Path=SetIsEnable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                              ItemsSource="{Binding Source={StaticResource template_designerservices_per_eventViewSource}}" Margin="4,0,0,0"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" Style="{StaticResource detail_Datagrid}">
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="*" ItemsSource="{Binding Source={StaticResource item_tagViewSourceForEvents}}"
+                                                DisplayMemberPath="name" SelectedValuePath="id_tag"
+                                                SelectedValueBinding="{Binding id_tag, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
+                       btnNew_Click="toolBar_btnNew_Click" 
+                       btnCancel_Click="toolBar_btnCancel_Click" 
+                       btnDelete_Click="toolBar_btnDelete_Click" 
+                       btnEdit_Click="toolBar_btnEdit_Click" 
+                       btnSave_Click="toolBar_btnSave_Click"
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+    </Grid>
+</Page>

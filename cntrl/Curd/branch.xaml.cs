@@ -1,0 +1,109 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using entity;
+using System.Data.Entity.Validation;
+
+namespace cntrl
+{
+    public partial class branch : UserControl
+    {
+        entity.Properties.Settings _Settings = new entity.Properties.Settings();
+
+        CollectionViewSource _branchViewSource = null;
+        public CollectionViewSource app_branchViewSource { get { return _branchViewSource; } set { _branchViewSource = value; } }
+
+        private entity.dbContext _entity = null;
+        public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
+
+        public branch()
+        {
+            InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Do not load your data at design time.
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                stackMain.DataContext = app_branchViewSource;
+
+                CollectionViewSource app_vatViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vatViewSource")));
+                app_vatViewSource.Source = entity.db.app_vat.Where(a => a.is_active == true && a.id_company == _Settings.company_ID).OrderBy(a => a.name).ToList();
+
+                //CollectionViewSource geo_areaViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("geo_areaViewSource");
+                //geo_areaViewSource.Source = entity.db.geo_area.OrderBy(a => a.name).ToList();
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
+                if (validationresult.Count() == 0)
+                {
+                    entity.db.SaveChanges();
+                    btnCancel_Click(sender, e);
+                }
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                entity.CancelChanges();
+                app_branchViewSource.View.Refresh();
+                Grid parentGrid = (Grid)this.Parent;
+                parentGrid.Children.Clear();
+                parentGrid.Visibility = System.Windows.Visibility.Hidden;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult res = MessageBox.Show("Are you sure want to delete ?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
+            {
+                app_branch objbranch = app_branchViewSource.View.CurrentItem as entity.app_branch;
+                objbranch.is_active = false;
+                btnSave_Click(sender, e);
+            }
+        }
+
+        private void chkIsDefault_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox objIsCheck = sender as CheckBox;
+                int isCheckCtr = 0;
+                foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(app_locationDataGrid, "chkIsDefault"))
+                {
+                    if (checkBox.IsChecked == true)
+                        isCheckCtr++;
+                }
+                if (isCheckCtr > 1)
+                {
+                    foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(app_locationDataGrid, "chkIsDefault"))
+                    {
+                        checkBox.IsChecked = false;
+                    }
+                    objIsCheck.IsChecked = true;
+                }
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+        }
+    }
+}

@@ -1,0 +1,101 @@
+﻿<Page x:Class="Cognitivo.Project.ProjectExecution" Title="ProjectExecution" x:Name="_Production"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+        xmlns:data="clr-namespace:entity;assembly=entity"
+      xmlns:local="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
+      
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+      
+      mc:Ignorable="d"
+      MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
+    <Page.Resources>
+        <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
+        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+        <converter:TreeConverter x:Key="TreeConveter"/>
+        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
+        <converter:Status2Enable x:Key="Status2Enable"/>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemSearchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
+        <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
+        <CollectionViewSource x:Key="projectproject_taskproject_task_dimensionViewSource" Source="{Binding project_task_dimension, Source={StaticResource projectproject_taskViewSource}}"/>
+    </Page.Resources>
+    <Grid DataContext="{StaticResource projectViewSource}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+
+        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="projectDataGrid"
+			     ScrollViewer.VerticalScrollBarVisibility="Auto"
+			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+			     ItemContainerStyle="{StaticResource nav_ListSelection}"
+			     ItemsSource="{Binding}" SelectionChanged="projectDataGrid_SelectionChanged" Margin="0,40,0,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 
+						recordSecondaryName="{Binding est_end_date, StringFormat=d, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						recordName="{Binding name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Grid.Column="1" Background="White" DataContext="{StaticResource projectproject_taskViewSource}" Margin="0,40,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource TextAreaH2}" 
+                       Text="{Binding project.name}" Margin="8,12"/>
+            <Grid>
+                <Grid.Resources >
+                    <HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
+                                              ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Panels:pnl_TreeView StatusColor="{Binding status, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                                                                   Converter={StaticResource ProjectStatus2Color}}" IsEnabled="{Binding status,Converter={StaticResource Status2Enable}}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+                                             TaskName="{Binding item_description, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" 
+                                             Quantity="{Binding quantity_est, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    </HierarchicalDataTemplate>
+                </Grid.Resources>
+                <Label Margin="0,4,0,0" Width="150"
+                           Content="{Binding project.project_template.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                           HorizontalAlignment="Center" VerticalAlignment="Top" />
+                <TreeView x:Name="treeProject" Margin="0,80,0,0" ItemsSource="{Binding}" 
+                          VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True" ScrollViewer.CanContentScroll="True" >
+                    <TreeView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </TreeView.ItemsPanel>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+            </Grid>
+            <Button Content="{lex:Loc ProductionOrder}" Margin="16" Grid.Column="2" VerticalAlignment="Top"
+                    Style="{StaticResource btn_green}" Click="btnProductionOrder"/>
+
+        </Grid>
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" appName="ProjectExecustion"
+			           btnSearch_Click="toolBar_btnSearch_Click"/>
+    </Grid>
+</Page>

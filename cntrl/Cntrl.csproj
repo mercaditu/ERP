@@ -1,0 +1,864 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{850B7465-0841-4C34-A918-F8B4472457D3}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>cntrl</RootNamespace>
+    <AssemblyName>cntrl</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <ExpressionBlendVersion>12.0.51020.0</ExpressionBlendVersion>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>b84c20ca</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.2.4.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Effects" />
+    <Reference Include="Microsoft.Expression.Interactions" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.WinForms.10.0.40219.1\lib\Microsoft.ReportViewer.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.8\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFLocalizeExtension, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfLocalizeExtension.2.3.2\lib\net35\WPFLocalizeExtension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="XAMLMarkupExtensions, Version=1.2.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XAMLMarkupExtensions.1.2.1.4\lib\net40\XAMLMarkupExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.6\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="applicationIcon.xaml.cs">
+      <DependentUpon>applicationIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Class\clsCommon.cs" />
+    <Compile Include="Controls\AttachmentViewer.xaml.cs">
+      <DependentUpon>AttachmentViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SmartBox_Item.xaml.cs">
+      <DependentUpon>SmartBox_Item.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SmartBox_Contact.xaml.cs">
+      <DependentUpon>SmartBox_Contact.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextBox_Template.xaml.cs">
+      <DependentUpon>TextBox_Template.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\Expiry2ColorConverter.cs" />
+    <Compile Include="Converters\Status2ColorConverter.cs" />
+    <Compile Include="Converters\State2IconConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\ProjectStatus2ColorConverter.cs" />
+    <Compile Include="Converters\Bool2Collapsed.cs" />
+    <Compile Include="Converters\LevelToMarginConverter.cs" />
+    <Compile Include="Converters\TrueToFalseConverter.cs" />
+    <Compile Include="Curd\Accounting_template.xaml.cs">
+      <DependentUpon>Accounting_template.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Acocunting_Template_Entry.xaml.cs">
+      <DependentUpon>Acocunting_Template_Entry.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Refinance.xaml.cs">
+      <DependentUpon>Refinance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\VATWithholding.xaml.cs">
+      <DependentUpon>VATWithholding.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\hr_coefficient.xaml.cs">
+      <DependentUpon>hr_coefficient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\geography.xaml.cs">
+      <DependentUpon>geography.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\contact_role.xaml.cs">
+      <DependentUpon>contact_role.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\department.xaml.cs">
+      <DependentUpon>department.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\dimension.xaml.cs">
+      <DependentUpon>dimension.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\incoterm_condition.xaml.cs">
+      <DependentUpon>incoterm_condition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\item.xaml.cs">
+      <DependentUpon>item.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\itemMovement.xaml.cs">
+      <DependentUpon>itemMovement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\ItemRequest.xaml.cs">
+      <DependentUpon>ItemRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\item_brand.xaml.cs">
+      <DependentUpon>item_brand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\measurement_type.xaml.cs">
+      <DependentUpon>measurement_type.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\payment_quick.xaml.cs">
+      <DependentUpon>payment_quick.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\payment_type.xaml.cs">
+      <DependentUpon>payment_type.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\project.xaml.cs">
+      <DependentUpon>project.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\projecttemplate.xaml.cs">
+      <DependentUpon>projecttemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\property.xaml.cs">
+      <DependentUpon>property.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\vat_group.xaml.cs">
+      <DependentUpon>vat_group.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelayedExecutionService.cs" />
+    <Compile Include="moduleIcon.xaml.cs">
+      <DependentUpon>moduleIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CurrencyBox.xaml.cs">
+      <DependentUpon>CurrencyBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\False2Visibility.cs" />
+    <Compile Include="Converters\AccountTypeVisibilityConverter.cs" />
+    <Compile Include="Converters\CheckToEnableConverter.cs" />
+    <Compile Include="Converters\InitialsConverter.cs" />
+    <Compile Include="Curd\company.xaml.cs">
+      <DependentUpon>company.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\contact.xaml.cs">
+      <DependentUpon>contact.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\cost_center.xaml.cs">
+      <DependentUpon>cost_center.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\price_list.xaml.cs">
+      <DependentUpon>price_list.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\status.xaml.cs">
+      <DependentUpon>status.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\user_role.xaml.cs">
+      <DependentUpon>user_role.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyMaskedTextBox.cs" />
+    <Compile Include="Converters\ActiveValueConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Curd\account.xaml.cs">
+      <DependentUpon>account.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\bank.xaml.cs">
+      <DependentUpon>bank.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\branch.xaml.cs">
+      <DependentUpon>branch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\Condition.xaml.cs">
+      <DependentUpon>condition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\contract.xaml.cs">
+      <DependentUpon>contract.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\currency.xaml.cs">
+      <DependentUpon>currency.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\ItemTag.xaml.cs">
+      <DependentUpon>ItemTag.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\location.xaml.cs">
+      <DependentUpon>location.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\measurement.xaml.cs">
+      <DependentUpon>measurement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\range.xaml.cs">
+      <DependentUpon>range.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\terminal.xaml.cs">
+      <DependentUpon>terminal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\vat.xaml.cs">
+      <DependentUpon>vat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="navList.xaml.cs">
+      <DependentUpon>navList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="navPagination.xaml.cs">
+      <DependentUpon>navPagination.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="navTransaction.xaml.cs">
+      <DependentUpon>navTransaction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlAnnul.xaml.cs">
+      <DependentUpon>pnlAnnul.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlApprove.xaml.cs">
+      <DependentUpon>pnlApprove.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlOrder.xaml.cs">
+      <DependentUpon>pnlOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlPacking.xaml.cs">
+      <DependentUpon>pnlPacking.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlSalesBudget.xaml.cs">
+      <DependentUpon>pnlSalesBudget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlPurchaseOrder.xaml.cs">
+      <DependentUpon>pnlPurchaseOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlSalesInvoice.xaml.cs">
+      <DependentUpon>pnlSalesInvoice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PanelAdv\pnlSalesOrder.xaml.cs">
+      <DependentUpon>pnlSalesOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\pnl_Curd.xaml.cs">
+      <DependentUpon>pnl_Curd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\pnl_TreeChart.xaml.cs">
+      <DependentUpon>pnl_TreeChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\pnl_TreeView.xaml.cs">
+      <DependentUpon>pnl_TreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SearchableTextbox.xaml.cs">
+      <DependentUpon>SearchableTextbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SmartBoxColumn.cs" />
+    <Compile Include="SmartBoxColumnCollection.cs" />
+    <Compile Include="TagControl.xaml.cs">
+      <DependentUpon>TagControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolBar_Mini.xaml.cs">
+      <DependentUpon>toolBar_Mini.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolBar.xaml.cs">
+      <DependentUpon>toolBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolIcon_Mini.xaml.cs">
+      <DependentUpon>toolIcon_Mini.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="toolIcon.xaml.cs">
+      <DependentUpon>toolIcon.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="toolMessage.xaml.cs">
+      <DependentUpon>toolMessage.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Resource Include="Resources\Entypo.ttf" />
+    <Resource Include="Resources\cognitivo.ttf" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\entity.accounting_budget.datasource" />
+    <None Include="Properties\DataSources\entity.accounting_chart.datasource" />
+    <None Include="Properties\DataSources\entity.accounting_cycle.datasource" />
+    <None Include="Properties\DataSources\entity.accounting_journal.datasource" />
+    <None Include="Properties\DataSources\entity.accounting_journal_detail.datasource" />
+    <None Include="Properties\DataSources\entity.accounting_period.datasource" />
+    <None Include="Properties\DataSources\entity.accounting_template.datasource" />
+    <None Include="Properties\DataSources\entity.accounting_template_detail.datasource" />
+    <None Include="Properties\DataSources\entity.app_account.datasource" />
+    <None Include="Properties\DataSources\entity.app_account_detail.datasource" />
+    <None Include="Properties\DataSources\entity.app_account_type.datasource" />
+    <None Include="Properties\DataSources\entity.app_attachment.datasource" />
+    <None Include="Properties\DataSources\entity.app_audit.datasource" />
+    <None Include="Properties\DataSources\entity.app_bank.datasource" />
+    <None Include="Properties\DataSources\entity.app_branch.datasource" />
+    <None Include="Properties\DataSources\entity.app_company.datasource" />
+    <None Include="Properties\DataSources\entity.app_condition.datasource" />
+    <None Include="Properties\DataSources\entity.app_contract.datasource" />
+    <None Include="Properties\DataSources\entity.app_contract_detail.datasource" />
+    <None Include="Properties\DataSources\entity.app_cost_center.datasource" />
+    <None Include="Properties\DataSources\entity.app_currency.datasource" />
+    <None Include="Properties\DataSources\entity.app_currencyfx.datasource" />
+    <None Include="Properties\DataSources\entity.app_currency_denomination.datasource" />
+    <None Include="Properties\DataSources\entity.app_department.datasource" />
+    <None Include="Properties\DataSources\entity.app_document.datasource" />
+    <None Include="Properties\DataSources\entity.app_document_range.datasource" />
+    <None Include="Properties\DataSources\entity.app_field.datasource" />
+    <None Include="Properties\DataSources\entity.app_location.datasource" />
+    <None Include="Properties\DataSources\entity.app_measurement.datasource" />
+    <None Include="Properties\DataSources\entity.app_measurement_type.datasource" />
+    <None Include="Properties\DataSources\entity.app_module.datasource" />
+    <None Include="Properties\DataSources\entity.app_person_relationship.datasource" />
+    <None Include="Properties\DataSources\entity.app_person_sex.datasource" />
+    <None Include="Properties\DataSources\entity.app_property.datasource" />
+    <None Include="Properties\DataSources\entity.app_status.datasource" />
+    <None Include="Properties\DataSources\entity.app_tax.datasource" />
+    <None Include="Properties\DataSources\entity.app_terminal.datasource" />
+    <None Include="Properties\DataSources\entity.contact.datasource" />
+    <None Include="Properties\DataSources\entity.contact_category.datasource" />
+    <None Include="Properties\DataSources\entity.contact_field_value.datasource" />
+    <None Include="Properties\DataSources\entity.contact_role.datasource" />
+    <None Include="Properties\DataSources\entity.contact_subscription.datasource" />
+    <None Include="Properties\DataSources\entity.dbContainer.datasource" />
+    <None Include="Properties\DataSources\entity.impex.datasource" />
+    <None Include="Properties\DataSources\entity.impex_expense.datasource" />
+    <None Include="Properties\DataSources\entity.impex_export.datasource" />
+    <None Include="Properties\DataSources\entity.impex_import.datasource" />
+    <None Include="Properties\DataSources\entity.impex_incoterm.datasource" />
+    <None Include="Properties\DataSources\entity.item.datasource" />
+    <None Include="Properties\DataSources\entity.item_accesories.datasource" />
+    <None Include="Properties\DataSources\entity.item_attachment.datasource" />
+    <None Include="Properties\DataSources\entity.item_capital.datasource" />
+    <None Include="Properties\DataSources\entity.item_conversion_factor.datasource" />
+    <None Include="Properties\DataSources\entity.item_movement.datasource" />
+    <None Include="Properties\DataSources\entity.item_movement_property.datasource" />
+    <None Include="Properties\DataSources\entity.item_movement_value.datasource" />
+    <None Include="Properties\DataSources\entity.item_price.datasource" />
+    <None Include="Properties\DataSources\entity.item_price_list.datasource" />
+    <None Include="Properties\DataSources\entity.item_product.datasource" />
+    <None Include="Properties\DataSources\entity.item_property.datasource" />
+    <None Include="Properties\DataSources\entity.Item_Question.datasource" />
+    <None Include="Properties\DataSources\entity.item_recepie.datasource" />
+    <None Include="Properties\DataSources\entity.item_service.datasource" />
+    <None Include="Properties\DataSources\entity.item_status.datasource" />
+    <None Include="Properties\DataSources\entity.item_tag.datasource" />
+    <None Include="Properties\DataSources\entity.item_tag_detail.datasource" />
+    <None Include="Properties\DataSources\entity.item_tax.datasource" />
+    <None Include="Properties\DataSources\entity.item_transfer.datasource" />
+    <None Include="Properties\DataSources\entity.item_transfer_detail.datasource" />
+    <None Include="Properties\DataSources\entity.payment.datasource" />
+    <None Include="Properties\DataSources\entity.payment_detail.datasource" />
+    <None Include="Properties\DataSources\entity.payment_schedual.datasource" />
+    <None Include="Properties\DataSources\entity.payment_type.datasource" />
+    <None Include="Properties\DataSources\entity.payment_type_detail.datasource" />
+    <None Include="Properties\DataSources\entity.production.datasource" />
+    <None Include="Properties\DataSources\entity.production_execution.datasource" />
+    <None Include="Properties\DataSources\entity.production_order.datasource" />
+    <None Include="Properties\DataSources\entity.project.datasource" />
+    <None Include="Properties\DataSources\entity.project_task.datasource" />
+    <None Include="Properties\DataSources\entity.project_template.datasource" />
+    <None Include="Properties\DataSources\entity.project_template_detail.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_invoice.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_invoice_detail.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_invoice_tax.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_order.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_order_detail.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_order_detail_tax.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_return.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_return_detail.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_return_detail_tax.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_tender.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_tender_contact_detail.datasource" />
+    <None Include="Properties\DataSources\entity.purchase_tender_item_detail.datasource" />
+    <None Include="Properties\DataSources\entity.refinance.datasource" />
+    <None Include="Properties\DataSources\entity.sales_invoice.datasource" />
+    <None Include="Properties\DataSources\entity.sales_invoice_detail.datasource" />
+    <None Include="Properties\DataSources\entity.sales_invoice_detail_tax.datasource" />
+    <None Include="Properties\DataSources\entity.sales_order.datasource" />
+    <None Include="Properties\DataSources\entity.sales_order_detail.datasource" />
+    <None Include="Properties\DataSources\entity.sales_order_detail_tax.datasource" />
+    <None Include="Properties\DataSources\entity.sales_packing.datasource" />
+    <None Include="Properties\DataSources\entity.sales_packing_detail.datasource" />
+    <None Include="Properties\DataSources\entity.sales_packing_relation.datasource" />
+    <None Include="Properties\DataSources\entity.sales_rep.datasource" />
+    <None Include="Properties\DataSources\entity.sales_return.datasource" />
+    <None Include="Properties\DataSources\entity.sales_return_detail.datasource" />
+    <None Include="Properties\DataSources\entity.sales_return_tax.datasource" />
+    <None Include="Properties\DataSources\entity.security_curd.datasource" />
+    <None Include="Properties\DataSources\entity.security_privilage.datasource" />
+    <None Include="Properties\DataSources\entity.security_question.datasource" />
+    <None Include="Properties\DataSources\entity.security_role.datasource" />
+    <None Include="Properties\DataSources\entity.security_role_privilage.datasource" />
+    <None Include="Properties\DataSources\entity.security_user.datasource" />
+    <None Include="Properties\DataSources\entity.security_user_field.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="applicationIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AttachmentViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SmartBox_Item.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SmartBox_Contact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TextBox_Template.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Accounting_template.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Acocunting_Template_Entry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\Refinance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\VATWithholding.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\hr_coefficient.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\geography.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\contact_role.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\department.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\dimension.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\incoterm_condition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\item.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\itemMovement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\ItemRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\item_brand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\measurement_type.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\payment_quick.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\payment_type.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\project.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\projecttemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\property.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\vat_group.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="moduleIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CurrencyBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\company.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\contact.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\account.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\bank.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\branch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\condition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\contract.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\cost_center.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\currency.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\ItemTag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\location.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\measurement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\price_list.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\range.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\status.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\terminal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\user_role.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\vat.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="navList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="navPagination.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="navTransaction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlAnnul.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlApprove.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlPacking.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlSalesBudget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PanelAdv\pnlPurchaseOrder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PanelAdv\pnlSalesInvoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlSalesOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\pnl_Curd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\pnl_TreeChart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Panels\pnl_TreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchableTextbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TagControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="toolBar_Mini.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="toolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="toolIcon_Mini.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="toolIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="toolMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Outline_White\ball_point_pen-25.png" />
+    <Resource Include="Images\Outline_White\barcode_scanner-25.png" />
+    <Resource Include="Images\Outline_White\calendar-25.png" />
+    <Resource Include="Images\Outline_White\cancel-25.png" />
+    <Resource Include="Images\Outline_White\checkmark-26.png" />
+    <Resource Include="Images\Outline_White\delete-26.png" />
+    <Resource Include="Images\Outline_White\export-26.png" />
+    <Resource Include="Images\Outline_White\filled_box-25.png" />
+    <Resource Include="Images\Outline_White\import-26.png" />
+    <Resource Include="Images\Outline_White\plus-25.png" />
+    <Resource Include="Images\Outline_White\plus2-26.png" />
+    <Resource Include="Images\Outline_White\safe-26.png" />
+    <Resource Include="Images\Outline_White\save_as-25.png" />
+    <Resource Include="Images\Outline_White\trash-25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\entity\Entity.csproj">
+      <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Outline_White\bank_filled-100.png" />
+    <Resource Include="Images\Outline_White\currency_exchange_filled-100.png" />
+    <Resource Include="Images\Outline_White\design_filled-100.png" />
+    <Resource Include="Images\Outline_White\flag2_filled-100.png" />
+    <Resource Include="Images\Outline_White\group_filled-100.png" />
+    <Resource Include="Images\Outline_White\home_filled-100.png" />
+    <Resource Include="Images\Outline_White\length_filled-100.png" />
+    <Resource Include="Images\Outline_White\line_spliting_filled-100.png" />
+    <Resource Include="Images\Outline_White\money_box_filled-100.png" />
+    <Resource Include="Images\Outline_White\move_by_trolley_filled-100.png" />
+    <Resource Include="Images\Outline_White\museum_filled-100.png" />
+    <Resource Include="Images\Outline_White\percentage_filled-100.png" />
+    <Resource Include="Images\Outline_White\price_tag_filled-100.png" />
+    <Resource Include="Images\Outline_White\price_tag_USD_filled-100.png" />
+    <Resource Include="Images\Outline_White\resize_horizontal_filled-100.png" />
+    <Resource Include="Images\Outline_White\signature_filled-100.png" />
+    <Resource Include="Images\Outline_White\user_male_filled-100.png" />
+    <Resource Include="Images\Outline_White\workstation_filled-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Outline_White\shop-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WindowsIcons-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

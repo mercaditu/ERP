@@ -1,0 +1,321 @@
+﻿<Page x:Class="Cognitivo.Setup.Migration.Cogent.MigrationGUI" x:Name="_mysqlmigrate"
+      Title="MysqlMigrationAssitant" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:System="clr-namespace:System;assembly=mscorlib"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+        xmlns:convert="clr-namespace:Cognitivo.Converters"
+        mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1000"
+      Background="{StaticResource winBackground}">
+    <Page.Resources>
+        <convert:IsActive2ColorConverter x:Key="Converter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <StackPanel.Background>
+                <SolidColorBrush Color="Black" Opacity="0.05"/>
+            </StackPanel.Background>
+            <Image Style="{StaticResource img_Config}"
+                   Source="/Cognitivo;component/Images/Application/128/Beta.png"/>
+            <Label Content="Migration" HorizontalAlignment="Center" 
+                   Style="{StaticResource H1}"/>
+            <Button Content="Start" Margin="15"
+                    Style="{StaticResource btn_green}" Click="btnStart_Click"/>
+            <TextBlock Text="Migrate your COGENT or RIA data over to Cognitivo ERP." 
+                       HorizontalAlignment="Center" 
+                       Style="{StaticResource text_Instructions}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                        MouseDown="btnClear_MouseDown"
+                        Margin="0,64,0,0" Cursor="Hand">
+                <Label Style="{StaticResource btn_Label}" Content="c" FontSize="26" Foreground="Crimson"
+                       HorizontalAlignment="Center"/>
+                <Label Content="Clear All Data" Foreground="Crimson" Style="{StaticResource H3}" MouseDown="btnClear_MouseDown"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" 
+                        MouseDown="StackPanel_MouseDown"
+                        Margin="0,5" Cursor="Hand">
+                <Label Style="{StaticResource btn_Label}" Content="A" FontSize="26" Foreground="RoyalBlue"
+                       HorizontalAlignment="Center"/>
+                <Label Content="Connect to RIA" Foreground="RoyalBlue" Style="{StaticResource H3}"/>
+            </StackPanel>
+            <Popup x:Name="popConnBuilder" Placement="MousePoint">
+                <Border BorderBrush="Black" CornerRadius="4" Width="267"
+                        BorderThickness="1" Background="WhiteSmoke">
+                    <StackPanel>
+                        <TextBlock Text="For security reasons, only connections within the Server Network will be allowed to Connect." Style="{StaticResource text_Instructions}"/>
+
+                        <Label Content="{lex:Loc IPAddress}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="tbxAddress" Text="Localhost" Style="{StaticResource input_textbox}"/>
+
+                        <Label Content="{lex:Loc Username}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="tbxUser" Style="{StaticResource input_textbox}"/>
+
+                        <Label Content="{lex:Loc Password}" Style="{StaticResource input_label}"/>
+                        <PasswordBox x:Name="tbxPassword" Style="{StaticResource input_password}" LostFocus="PasswordBox_LostFocus"/>
+
+                        <Label Content="{lex:Loc Database}" Style="{StaticResource input_label}"/>
+                        <ComboBox x:Name="cbxDataBaseList" DisplayMemberPath="Database" SelectedValuePath="Database" Style="{StaticResource input_combobox}" IsEditable="True"/>
+                        <Button Style="{StaticResource btn_green}" Content="{lex:Loc TestConnection}" 
+                                Click="TestConn_Click" Margin="8"/>
+                    </StackPanel>
+                </Border>
+            </Popup>
+        </StackPanel>
+        <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="2" HorizontalAlignment="Center">
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/HomeCompany.png" Height="32"/>
+                        <Label Content="Company &amp; More" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}"/>
+                    <ProgressBar x:Name="progBasic" VerticalAlignment="Bottom" Margin="4"/>
+                </StackPanel>
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Contact.png" Height="32"/>
+                        <Label Content="{lex:Loc Employee}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="empValue" Text="{Binding ElementName=_mysqlmigrate, Path=_emp_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="empMaximum" Text="{Binding ElementName=_mysqlmigrate, Path=_emp_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progemp"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Contact.png" Height="32"/>
+                        <Label Content="{lex:Loc Talent}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="TalentValue" Text="{Binding ElementName=_mysqlmigrate, Path=_emp_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="TalentMaximum" Text="{Binding ElementName=_mysqlmigrate, Path=_emp_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progTalent"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Contact.png" Height="32"/>
+                        <Label Content="{lex:Loc Contact}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="contactValue" Text="{Binding ElementName=_mysqlmigrate, Path=_contact_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="contactMaximum" Text="{Binding ElementName=_mysqlmigrate, Path=_contact_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progcontact"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Product.png" Height="32"/>
+                        <Label Content="{lex:Loc Item}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="itemValue" Text="{Binding ElementName=_mysqlmigrate, Path=_item_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="itemMaximum" Text="{Binding ElementName=_mysqlmigrate, Path=_item_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progitem"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Product.png" Height="32"/>
+                        <Label Content="{lex:Loc ItemDimension}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="itemDimensionValue"/>
+                        <Run Text="/"/>
+                        <Run x:Name="itemDimensionMaximum" />
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progitemDimension"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Product.png" Height="32"/>
+                        <Label Content="{lex:Loc ItemConversion}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="itemConversionValue"/>
+                        <Run Text="/"/>
+                        <Run x:Name="itemConversionMaximum" />
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progitemConversion"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/Product.png" Height="32"/>
+                        <Label Content="{lex:Loc ItemPrice}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="itemPriceValue"/>
+                        <Run Text="/"/>
+                        <Run x:Name="itemPriceMaximum" />
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progitemPrice"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Menu/modProject.png" Height="32"/>
+                        <Label Content="{lex:Loc Project}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="projectValue" Text="{Binding ElementName=_mysqlmigrate, Path=_project_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="projectMaximum" Text="{Binding ElementName=_mysqlmigrate, Path=_project_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progProject"
+                                 Maximum="1"/>
+                </StackPanel>
+              
+            </Border>
+            
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Menu/modProduction.png" Height="32"/>
+                        <Label Content="{lex:Loc ProductionOrder}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="productionValue" Text="{Binding ElementName=_mysqlmigrate, Path=_project_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="productionMaximum" Text="{Binding ElementName=_mysqlmigrate, Path=_project_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progProduction"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Application/128/ProductionExecution.png" Height="32"/>
+                        <Label Content="{lex:Loc ProductionExecution}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="ExecValue" Text="{Binding ElementName=_mysqlmigrate, Path=_Exec_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="ExecMaximum" Text="{Binding ElementName=_mysqlmigrate, Path=_Exec_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progExec"
+                                 Maximum="1"/>
+                </StackPanel>
+
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" MinHeight="64" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Menu/modSales.png" Height="32"/>
+                        <Label Content="{lex:Loc SalesInvoice}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="salesValue" Text="{Binding ElementName=_migration, Path=_sales_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="salesMaximum" Text="{Binding ElementName=_migration, Path=_sales_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progSales"
+                                 Maximum="1"/>
+                </StackPanel>
+            </Border>
+
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" MinHeight="64" Margin="16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Menu/modPurchase.png" Height="32"/>
+                        <Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="purchaseValue" Text="{Binding ElementName=_migration, Path=_purchase_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="purchaseMaximum" Text="{Binding ElementName=_migration, Path=_purchase_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4" 
+                                 Value="0" x:Name="progPurchase"
+                                 Maximum="1"/>
+                </StackPanel>
+            </Border>
+        </WrapPanel>
+   
+           
+
+      
+    </Grid>
+</Page>

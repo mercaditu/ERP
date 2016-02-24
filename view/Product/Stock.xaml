@@ -1,0 +1,102 @@
+﻿<Page x:Class="Cognitivo.Product.Stock" x:Name="InventoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
+      MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+	  Title="{lex:Loc Stock}" >
+    <Page.Resources>
+        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
+        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemitem_productViewSource" Source="{Binding item_product, Source={StaticResource itemViewSource}}"/>
+        <CollectionViewSource x:Key="itemitem_productitem_movementViewSource" Source="{Binding item_movement, Source={StaticResource itemitem_productViewSource}}"/>
+        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+    </Page.Resources>
+    <Grid DataContext="{StaticResource itemitem_productitem_movementViewSource}" Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="dgvBranch"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     SelectionChanged="itemDataGrid_SelectionChanged"
+                     ItemContainerStyle="{StaticResource nav_ListSelection}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding code}" recordName="{Binding name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <cntrl:SearchableTextbox x:Name="itemComboBox" Margin="4" focusGrid="True" Width="256" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" 
+                                             CollectionViewSource="{StaticResource itemViewSource}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
+                                             KeyDown="itemComboBox_KeyDown" MouseDoubleClick="itemComboBox_MouseDoubleClick">
+                <cntrl:SearchableTextbox.Columns>
+                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Code}" ForProperty="code" Binding="{Binding code, Mode=Default}"/>
+                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Item}" ForProperty="name" Binding="{Binding name, Mode=Default}"/>
+                    <cntrl:SmartBoxColumn Header="ID" ForProperty="id_item" Binding="{Binding id_item, Mode=Default}"/>
+                </cntrl:SearchableTextbox.Columns>
+            </cntrl:SearchableTextbox>
+            <DataGrid x:Name="item_movementDataGrid" Margin="0,40,0,0"
+                    VerticalScrollBarVisibility="Auto"
+                    AutoGenerateColumns="False" Grid.Column="1"
+                    EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="item_movementDataGrid_SelectionChanged"
+                    RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding location}" Header="{lex:Loc Cognitivo:local:Location}" Width="Auto" />
+                    <DataGridTextColumn Binding="{Binding code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" />
+                    <DataGridTextColumn Binding="{Binding name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
+                    <DataGridTextColumn Binding="{Binding quntitiy, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" />
+                    <DataGridTextColumn Binding="{Binding measurement}" Header="{lex:Loc Cognitivo:local:Measurement}" Width="Auto" />
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DataGrid x:Name="itemmovementDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                              Margin="16" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
+                              IsReadOnly="True" HorizontalAlignment="Stretch">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="128"/>
+                                <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Debit}" Width="128"/>
+                                <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+        </Grid>
+    
+        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding ElementName=InventoryPage, Path=InventoryDate,
+                                      StringFormat=D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      MouseDown="Today_MouseDown" HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRMonth_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRDay_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                <Slider x:Name="slider" Width="256" VerticalAlignment="Center" Minimum="1" Ticks="1"
+                        Value="{Binding ElementName=InventoryPage, Path=sliderValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ValueChanged="slider_ValueChanged" Focusable="False" SmallChange="1"/>
+                <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="FFDay_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="FFMonth_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

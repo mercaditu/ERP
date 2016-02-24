@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="cntrl.Controls.AttachmentViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignWidth="150">
+    <Border CornerRadius="8" AllowDrop="True">
+        <Grid ClipToBounds="True">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="H" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="16" VerticalAlignment="Center"/>
+                    <Label Content="Attachments" Style="{StaticResource H3}"/>
+                </StackPanel>
+                <Rectangle Style="{StaticResource line_Bar}"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" VerticalAlignment="Center"/>
+                    <TextBlock Text="Image1.jpg" Style="{StaticResource text_HyperLinks}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" VerticalAlignment="Center"/>
+                    <TextBlock Text="Contract.doc" Style="{StaticResource text_HyperLinks}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" VerticalAlignment="Center"/>
+                    <TextBlock Text="Image3.jpg" Style="{StaticResource text_HyperLinks}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+            <Grid>
+                <Grid.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.32"/>
+                </Grid.Background>
+                <Label Content="Drag &amp; Drop" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       FontWeight="Medium" FontSize="16"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

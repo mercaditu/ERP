@@ -388,6 +388,9 @@
     <Compile Include="Product\Transfer.xaml.cs">
       <DependentUpon>Transfer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Project\Development\Project.xaml.cs">
+      <DependentUpon>Project.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Project\Development\ProjectExecution.xaml.cs">
       <DependentUpon>ProjectExecution.xaml</DependentUpon>
     </Compile>
@@ -1289,6 +1292,10 @@
     <Page Include="Product\Transfer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Project\Development\Project.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Project\Development\ProjectExecution.xaml">
       <Generator>MSBuild:Compile</Generator>

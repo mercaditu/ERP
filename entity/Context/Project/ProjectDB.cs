@@ -53,6 +53,31 @@ namespace entity
                 }
             }
         }
+        public void ActivateProject()
+        {
+            foreach (project project in base.projects.Local)
+            {
+                if (project.IsSelected )
+                {
+                    project.is_active = true;
+                   
+
+                }
+            }
+         
+            base.SaveChanges();
+        }
+        public void  DeActivateProject()
+        {
+            foreach (project project in base.projects.Local)
+            {
+                if (project.IsSelected)
+                {
+                    project.is_active = false;
+                }
+            }
+            base.SaveChanges();
+        }
 
       
     }

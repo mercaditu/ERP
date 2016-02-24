@@ -134,11 +134,11 @@
                        btnSearch_Click="toolBar_btnSearch_Click"
 			           btnNew_Click="toolBar_btnNew_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
-                       btnApprove_Click="toolBar_btnApprove_Click"
-                       btnAnull_Click="toolBar_btnAnull_Click"
                        appName="ProjectType"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                       
                        />
+        <cntrl:toolIcon imgSource="j" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,25,0" Click="toolBar_btnApprove_Click"/>
+        <cntrl:toolIcon imgSource="k" Grid.Column="1" HorizontalAlignment="Right" Click="toolBar_btnAnull_Click" />
+      
     </Grid>
 </Page>

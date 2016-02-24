@@ -385,7 +385,7 @@ namespace Cognitivo.Production
 
             if (itemDataGrid.ItemsSource != null)
             {
-                List<production_order_detail> production_order_detaillist = itemDataGrid.ItemsSource.OfType<production_order_detail>().ToList();
+                List<production_order_detail> production_order_detaillist = OrderDB.production_order_detail.ToList();
                 production_order_detaillist = production_order_detaillist.Where(x => x.IsSelected == true).ToList();
                
                 if (production_order_detaillist.Count() > 0)
@@ -409,7 +409,7 @@ namespace Cognitivo.Production
             int id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
             if (itemDataGrid.ItemsSource != null)
             {
-                List<production_order_detail> production_order_detaillist = itemDataGrid.ItemsSource.OfType<production_order_detail>().ToList();
+                List<production_order_detail> production_order_detaillist = OrderDB.production_order_detail.ToList();
                 production_order_detaillist = production_order_detaillist.Where(x => x.IsSelected == true).ToList();
                 
                 foreach (production_order_detail data in production_order_detaillist)
@@ -521,6 +521,34 @@ namespace Cognitivo.Production
                         }
 
                         production_order_detail.is_input = true;
+
+                        production_order_detail_output.child.Add(production_order_detail);
+                    }
+                    production_order.production_order_detail.Add(production_order_detail_output);
+                    filter_task();
+                }
+                else
+                {
+                    production_order_detail production_order_detail_output = new production_order_detail();
+                    production_order_detail_output.quantity = 1;
+                    production_order_detail_output.name = item.name;
+                    production_order_detail_output.id_item = item.id_item;
+                    production_order_detail_output.item = item;
+                    production_order_detail_output.is_input = true;
+
+                    foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                    {
+                        production_order_detail production_order_detail = new production_order_detail();
+
+                        production_order_detail.name = item_recepie_detail.item.name;
+                        production_order_detail.id_item = item_recepie_detail.item.id_item;
+                        production_order_detail.item = item_recepie_detail.item;
+                        if (item_recepie_detail.quantity > 0)
+                        {
+                            production_order_detail.quantity = (decimal)item_recepie_detail.quantity;
+                        }
+
+                        production_order_detail.is_input = false ;
 
                         production_order_detail_output.child.Add(production_order_detail);
                     }

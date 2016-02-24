@@ -295,10 +295,10 @@ namespace Cognitivo.Project.Development
         public void item_request_Click(object sender)
         {
             int project = ((project)projectViewSource.View.CurrentItem).id_project;
-          
 
-                List<project_task> productlist = itemDataGrid.ItemsSource.OfType<project_task>().ToList();
-                productlist = productlist.Where(x => x.IsSelected == true && x.items.id_item_type != item.item_type.Task).ToList();
+            List<project_task> productlist = entity.db.project_task.ToList();
+            productlist = productlist.Where(x => x.IsSelected == true).ToList();
+              
 
                 foreach (project_task project_task in productlist)
                 {

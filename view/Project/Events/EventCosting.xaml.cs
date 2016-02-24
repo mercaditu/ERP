@@ -336,27 +336,29 @@ namespace Cognitivo.Project
 
                 if (contact != null && app_condition != null && app_contract != null)
                 {
+                    using (SalesBudgetDB db = new SalesBudgetDB())
+                    {
                     sales_budget sales_budget = new sales_budget();
                     sales_budget.IsSelected = true;
-                  
+                    sales_budget.State = EntityState.Added;
 
                     sales_budget.id_contact = contact.id_contact;
-                    sales_budget.contact = contact;
+                  //  sales_budget.contact = contact;
                     if (_settings.branch_ID > 0)
                         sales_budget.id_branch = _settings.branch_ID;
 
                     else
-                        sales_budget.id_branch = EventDB.app_branch.Where(a => a.is_active == true && a.id_company == _settings.company_ID).FirstOrDefault().id_branch;
+                        sales_budget.id_branch = db.app_branch.Where(a => a.is_active == true && a.id_company == _settings.company_ID).FirstOrDefault().id_branch;
                     sales_budget.id_condition = app_condition.id_condition;
                     sales_budget.id_contract = app_contract.id_contract;
-                    sales_budget.id_currencyfx = EventDB.app_currency.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_priority == true).FirstOrDefault().app_currencyfx.Where(b => b.is_active == true).FirstOrDefault().id_currencyfx;
+                    sales_budget.id_currencyfx = db.app_currency.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_priority == true).FirstOrDefault().app_currencyfx.Where(b => b.is_active == true).FirstOrDefault().id_currencyfx;
                     sales_budget.number = txtOrderNumber.Text;
 
                     foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
                     {
                         sales_budget_detail sales_budget_detail = new sales_budget_detail();
                         sales_budget_detail.sales_budget = sales_budget;
-                        sales_budget_detail.item = project_event_variable.item;
+                        //sales_budget_detail.item = project_event_variable.item;
                         sales_budget_detail.id_item = project_event_variable.id_item;
                         sales_budget_detail.quantity = ((project_event_variable.adult_consumption ) + (project_event_variable.child_consumption));
                         sales_budget_detail.unit_price = get_Price(contact, IDcurrencyfx, project_event_variable.item);
@@ -367,7 +369,7 @@ namespace Cognitivo.Project
                     {
                         sales_budget_detail sales_budget_detail = new sales_budget_detail();
                         sales_budget_detail.sales_budget = sales_budget;
-                        sales_budget_detail.item = project_event_fixed.item;
+                       // sales_budget_detail.item = project_event_fixed.item;
                         sales_budget_detail.id_item = project_event_fixed.id_item;
                         sales_budget_detail.quantity = project_event_fixed.consumption;
                         sales_budget_detail.unit_price = get_Price(contact, IDcurrencyfx, project_event_fixed.item);
@@ -376,20 +378,15 @@ namespace Cognitivo.Project
 
                     sales_budget_detail sales_budget_detail_hall = new sales_budget_detail();
                     sales_budget_detail_hall.sales_budget = sales_budget;
-                    sales_budget_detail_hall.item = project_costing.item;
+                   // sales_budget_detail_hall.item = project_costing.item;
                     sales_budget_detail_hall.id_item = project_costing.id_item;
                     sales_budget_detail_hall.quantity = 1;
                     sales_budget_detail_hall.unit_price = get_Price(contact, IDcurrencyfx, project_costing.item);
                     sales_budget.sales_budget_detail.Add(sales_budget_detail_hall);
 
-                    crm_opportunity crm_opportunity = new crm_opportunity();
-                    crm_opportunity.id_contact = contact.id_contact;
-                    crm_opportunity.id_currency = EventDB.app_currency.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_priority == true).FirstOrDefault().app_currencyfx.Where(b => b.is_active == true).FirstOrDefault().id_currencyfx;
-                    crm_opportunity.value = sales_budget.sales_budget_detail.Sum(x => x.SubTotal_Vat);
-                    sales_budget.crm_opportunity = crm_opportunity;
+                  
 
-                    using(SalesOrderDB db = new SalesOrderDB())
-                    {
+                  
                         db.sales_budget.Add(sales_budget);
                         db.SaveChanges();
                     }

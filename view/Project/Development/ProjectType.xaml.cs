@@ -32,6 +32,7 @@ namespace Cognitivo.Project.Development
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+           
 
             project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
             dbContext.project_template.Where(a => a.id_company == _Setting.company_ID).LoadAsync();
@@ -290,12 +291,12 @@ namespace Cognitivo.Project.Development
 
        
 
-        private void toolBar_btnApprove_Click(object sender)
+        private void toolBar_btnApprove_Click(object sender,RoutedEventArgs e)
         {
             dbContext.Approve();
         }
 
-        private void toolBar_btnAnull_Click(object sender)
+        private void toolBar_btnAnull_Click(object sender, RoutedEventArgs e)
         {
             dbContext.Anull();
         }

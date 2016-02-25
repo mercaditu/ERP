@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,7 +58,11 @@ namespace cntrl.Controls
         public SmartBox_Item()
         {
             InitializeComponent();
-            itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
+
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
+            }
         }
 
         private void StartSearch(object sender, KeyEventArgs e)

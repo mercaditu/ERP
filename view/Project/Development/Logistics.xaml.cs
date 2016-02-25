@@ -9,10 +9,11 @@ using System.Data.Entity;
 using entity;
 using Microsoft.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.ComponentModel;
 
 namespace Cognitivo.Project.Development
 {
-    public partial class Logistics : Page
+    public partial class Logistics : Page, INotifyPropertyChanged
     {
         public bool is_select { get; set; }
         entity.dbContext entity = new dbContext();
@@ -23,7 +24,15 @@ namespace Cognitivo.Project.Development
         public static readonly DependencyProperty SetIsEnableProperty =
             DependencyProperty.Register("SetIsEnable", typeof(bool), typeof(Logistics),
             new FrameworkPropertyMetadata(false));
-
+        public int noofrows { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
         public Logistics()
         {
             InitializeComponent();
@@ -294,21 +303,23 @@ namespace Cognitivo.Project.Development
 
         public void item_request_Click(object sender)
         {
-            int project = ((project)projectViewSource.View.CurrentItem).id_project;
+            project project = ((project)projectViewSource.View.CurrentItem);
+            int id_project = ((project)projectViewSource.View.CurrentItem).id_project;
 
             List<project_task> productlist = entity.db.project_task.ToList();
             productlist = productlist.Where(x => x.IsSelected == true).ToList();
-              
+
+            item_request item_request = new item_request();
+            item_request.name = ItemRequest.name;
+            item_request.comment = ItemRequest.comment;
+            item_request.id_branch = project.id_branch;
+            item_request.id_department = ItemRequest.id_department;
+            item_request.id_project = id_project;
+            item_request.request_date = DateTime.Now;
 
                 foreach (project_task project_task in productlist)
                 {
-                    item_request item_request = new item_request();
-                    item_request.name = ItemRequest.name;
-                    item_request.comment = ItemRequest.comment;
-                    item_request.id_branch = project_task.project.id_branch;
-                    item_request.id_department = ItemRequest.id_department;
-                    item_request.id_project = project_task.id_project;
-                    item_request.request_date = (DateTime)project_task.trans_date;
+                  
 
                     item_request_detail item_request_detail = new entity.item_request_detail();
                     item_request_detail.date_needed_by = ItemRequest.neededDate;
@@ -331,10 +342,10 @@ namespace Cognitivo.Project.Development
 
 
                     item_request.item_request_detail.Add(item_request_detail);
-                    entity.db.item_request.Add(item_request);
-                    entity.db.SaveChanges();
+                    
                 }
-              
+                entity.db.item_request.Add(item_request);
+                entity.db.SaveChanges();
 
             crud_modal.Children.Clear();
             crud_modal.Visibility = System.Windows.Visibility.Collapsed;
@@ -540,7 +551,20 @@ namespace Cognitivo.Project.Development
             project_task_dimensionViewSource.Source = entity.db.project_task_dimension.Where(a => a.id_company == _entity.company_ID && a.id_project_task == project_task.id_project_task).ToList();
         }
 
+       
+
+        private void itemDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+          
+           
+            List<project_task> productlist = entity.db.project_task.ToList();
+            noofrows = productlist.Where(x => x.IsSelected == true).Count();
+            RaisePropertyChanged("noofrows");
+        }
 
 
+
+
+      
     }
 }

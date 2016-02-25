@@ -7,7 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    public partial class security_user : Email, IDataErrorInfo, INotifyPropertyChanged
+    public partial class security_user : Email, IDataErrorInfo
     {
         public security_user()
         {

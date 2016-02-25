@@ -6,10 +6,11 @@ using System.Windows.Data;
 using System.Data.Entity;
 using entity;
 using System;
+using System.ComponentModel;
 
 namespace Cognitivo.Production
 {
-    public partial class Order : Page
+    public partial class Order : Page,INotifyPropertyChanged
     {
         OrderDB OrderDB = new OrderDB();
         //List<production_order> ProductionOrderList = new List<production_order>();
@@ -17,7 +18,7 @@ namespace Cognitivo.Production
         CollectionViewSource project_task_dimensionViewSource, item_requestViewSource, item_transferViewSource, projectViewSource, production_orderViewSource, 
             production_lineViewSource, production_orderproduction_order_detailViewSource;
         cntrl.Curd.ItemRequest ItemRequest;
-
+        public int noofrows { get; set; }
         public Order()
         {
             InitializeComponent();
@@ -407,22 +408,25 @@ namespace Cognitivo.Production
 
         public void item_request_Click(object sender)
         {
+            production_order production_order = ((production_order)production_orderViewSource.View.CurrentItem);
             int id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
             if (itemDataGrid.ItemsSource != null)
             {
                 List<production_order_detail> production_order_detaillist = OrderDB.production_order_detail.ToList();
                 production_order_detaillist = production_order_detaillist.Where(x => x.IsSelected == true).ToList();
-                
+
+                item_request item_request = new item_request();
+                item_request.name = ItemRequest.name;
+                item_request.comment = ItemRequest.comment;
+                item_request.id_branch = production_order.project.id_branch;
+                item_request.id_department = ItemRequest.id_department;
+                item_request.id_production_order = id_production_order;
+                item_request.id_project = production_order.project.id_project;
+                item_request.request_date = DateTime.Now;
+
                 foreach (production_order_detail data in production_order_detaillist)
                 {
-                    item_request item_request = new item_request();
-                    item_request.name = ItemRequest.name;
-                    item_request.comment = ItemRequest.comment;
-                    item_request.id_branch = data.project_task.project.id_branch;
-                    item_request.id_department = ItemRequest.id_department;
-                    item_request.id_production_order = data.id_production_order;
-                    item_request.id_project= data.project_task.id_project;
-                    item_request.request_date = data.trans_date;
+                   
 
                     item_request_detail item_request_detail = new entity.item_request_detail();
                     item_request_detail.date_needed_by = ItemRequest.neededDate;
@@ -434,8 +438,7 @@ namespace Cognitivo.Production
                     item_request_detail.id_item = idItem;
                     item_request_detail.quantity = data.quantity;
                     item_request.item_request_detail.Add(item_request_detail);
-                    OrderDB.item_request.Add(item_request);
-                    OrderDB.SaveChanges();
+                   
 
 
 
@@ -443,10 +446,12 @@ namespace Cognitivo.Production
 
                   
                 }
+                OrderDB.item_request.Add(item_request);
+                OrderDB.SaveChanges();
                 item_requestViewSource.View.Filter = i =>
                 {
-                    item_request item_request = (item_request)i;
-                    if (item_request.id_production_order == id_production_order)
+                    item_request _item_request = (item_request)i;
+                    if (_item_request.id_production_order == id_production_order)
                         return true;
                     else
                         return false;
@@ -697,5 +702,23 @@ namespace Cognitivo.Production
 
             }
         }
+
+       
+
+        private void itemDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            List<production_order_detail> production_order_detaillist = OrderDB.production_order_detail.ToList();
+            noofrows = production_order_detaillist.Where(x => x.IsSelected == true).Count();
+            RaisePropertyChanged("noofrows");
+        }
+
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

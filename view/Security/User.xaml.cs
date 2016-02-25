@@ -18,7 +18,7 @@ namespace Cognitivo.Security
         CollectionViewSource security_user_view_source, security_ques_view_source, security_role_view_source;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
 
-     
+
         public User()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace Cognitivo.Security
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
             security_user_view_source = ((CollectionViewSource)(this.FindResource("security_userViewSource")));
             dbContext.security_user.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
             security_user_view_source.Source = dbContext.security_user.Local;
@@ -42,9 +42,9 @@ namespace Cognitivo.Security
 
         private void toolBar_btnNew_Click(object sender)
         {
-           // SetIsEnable = true;
+            // SetIsEnable = true;
             security_user security_user = new security_user();
-            security_user.State= EntityState.Added;
+            security_user.State = EntityState.Added;
             security_user.IsSelected = true;
             dbContext.security_user.Add(security_user);
             security_user_view_source.View.MoveCurrentToLast();
@@ -52,17 +52,18 @@ namespace Cognitivo.Security
 
         private void toolBar_btnSave_Click(object sender)
         {
-            security_user security_user=security_user_view_source.View.CurrentItem as security_user;
-            if (dbContext.security_user.Where(x => x.name == security_user.name).Any()) ;
+            security_user security_user = security_user_view_source.View.CurrentItem as security_user;
+            if (dbContext.security_user.Where(x => x.name == security_user.name).Any())
             {
                 toolBar.msgWarning("User Already Exists...");
             }
-            else{
-                    dbContext.SaveChanges();
-            security_user_view_source.View.Refresh();
-            toolBar.msgSaved();
+            else
+            {
+                dbContext.SaveChanges();
+                security_user_view_source.View.Refresh();
+                toolBar.msgSaved();
             }
-        
+
 
         }
 
@@ -82,7 +83,7 @@ namespace Cognitivo.Security
         {
             security_user_view_source.View.MoveCurrentToFirst();
             dbContext.CancelAllChanges();
-           // SetIsEnable = false;
+            // SetIsEnable = false;
         }
 
         private void CreateRole_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -94,7 +95,7 @@ namespace Cognitivo.Security
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if(crud_modal.Visibility == System.Windows.Visibility.Hidden)
+            if (crud_modal.Visibility == System.Windows.Visibility.Hidden)
             {
                 dbContext.security_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
                 security_role_view_source.Source = dbContext.security_role.Local;

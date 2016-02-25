@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Project.Development.Logistics"
+﻿<Page x:Class="Cognitivo.Project.Development.Logistics" x:Name="Logistic"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -232,38 +232,44 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2" Margin="0,42,0,0" Background="WhiteSmoke" HorizontalAlignment="Right">
-            <Button Content="{lex:Loc ItemRequest}" Style="{StaticResource btn_green}" 
-                    Grid.Column="3" HorizontalAlignment="Center" 
+            <StackPanel  Grid.Column="3" >
+                <Button Content="{lex:Loc ItemRequest}" Style="{StaticResource btn_green}" 
+                   HorizontalAlignment="Center" 
                     Margin="0,7,7,0" VerticalAlignment="Top" Click="Button_Click" />
-            <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="0"
-                      CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Right" 
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Selected Rows:-"/>
+                    <Label Content="{Binding noofrows,ElementName=Logistic,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="0"
+                      CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Right" CellEditEnding="itemDataGrid_CellEditEnding"
                       SelectionChanged="itemDataGrid_SelectionChanged" LoadingRowDetails="itemDataGrid_LoadingRowDetails"
-                      Width="300" Margin="0,40,0,0">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="SizeToHeader" />
-                    <DataGridTextColumn Binding="{Binding parent.code}" Header="Code" Width="SizeToHeader" IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding parent.item_description}" Header="Task" Width="*" IsReadOnly="True" />
-                    <DataGridTextColumn Binding="{Binding quantity_est, StringFormat=N2}" Header="QtyNeed" Width="SizeToHeader" IsReadOnly="True" />
-                </DataGrid.Columns>
-                <DataGrid.RowDetailsTemplate>
-                    <DataTemplate>
-                        <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                      Width="300" >
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="SizeToHeader" />
+                        <DataGridTextColumn Binding="{Binding parent.code}" Header="Code" Width="SizeToHeader" IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding parent.item_description}" Header="Task" Width="*" IsReadOnly="True" />
+                        <DataGridTextColumn Binding="{Binding quantity_est, StringFormat=N2}" Header="QtyNeed" Width="SizeToHeader" IsReadOnly="True" />
+                    </DataGrid.Columns>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
 							        ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
 							        RowDetailsVisibilityMode="VisibleWhenSelected">
-                            <DataGrid.Columns>
-                                <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" 
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" 
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, UpdateSourceTrigger=PropertyChanged}"/>
-                                <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
-                                <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
+                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
 									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 									                        SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DataTemplate>
-                </DataGrid.RowDetailsTemplate>
-            </DataGrid>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
+                </DataGrid>
+            </StackPanel>
         </Grid>
 
         <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar" appName="ProjectLogistics"

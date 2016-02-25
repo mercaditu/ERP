@@ -20,6 +20,7 @@
     <Page.Resources>
         <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+        <converter:ActiveToStatus x:Key="ActiveToStatus"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemSearchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
@@ -48,6 +49,7 @@
                     <cntrl:navList recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" recordCode="{Binding comment}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    Status="{Binding is_active,Converter={StaticResource ActiveToStatus},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  
                                     />
                 </DataTemplate>
             </ListBox.ItemTemplate>

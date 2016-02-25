@@ -315,6 +315,7 @@ namespace Cognitivo.Purchase
                                 purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
 
                                 purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
+                                purchase_tender_detail.purchase_tender_item = purchase_tender_item;
                                 purchase_tender_detail.quantity = 1;
                                 purchase_tender_detail.unit_cost = 0;
                                 purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);

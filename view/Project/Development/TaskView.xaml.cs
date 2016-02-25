@@ -264,10 +264,13 @@ namespace Cognitivo.Project.Development
             {
                 //if (project_task.Error == null)
                 //{
+                if (project_task.ProjectStatus == Status.ProjectStatus.Approved)
+                {
                     if (project_task.status == Status.Project.Pending || project_task.status == null)
                     {
                         project_task.status = Status.Project.Approved;
                     }
+                }
                 //}
                 //else
                 //{
@@ -532,13 +535,12 @@ namespace Cognitivo.Project.Development
            
             foreach (project_task project_task in _project_task)
             {
-                if (project_task.status ==Status.Project.Pending)
-                {
+                
                     if (project_task.ProjectStatus == Status.ProjectStatus.Pending || project_task.ProjectStatus == null)
                     {
                         project_task.ProjectStatus = Status.ProjectStatus.Approved;
                     }
-                }
+                
                
 
                 project_task.IsSelected = false;

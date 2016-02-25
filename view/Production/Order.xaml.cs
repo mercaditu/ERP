@@ -112,6 +112,7 @@ namespace Cognitivo.Production
                 filter_task();
                 production_orderproduction_order_detailViewSource.View.Refresh();
             }
+            cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
         }
 
         public void filter_task()
@@ -502,11 +503,10 @@ namespace Cognitivo.Production
 
                 if (item != null && item.id_item > 0 && item.is_autorecepie && production_order != null)
                 {
-                    production_order_detail production_order_detail_output = new production_order_detail();
-                    production_order_detail_output.quantity = 1;
-                    production_order_detail_output.name = item.name;
+                    production_order_detail production_order_detail_output = treeProject.SelectedItem as production_order_detail;
                     production_order_detail_output.id_item = item.id_item;
                     production_order_detail_output.item = item;
+                    production_order_detail_output.RaisePropertyChanged("item");
                     production_order_detail_output.is_input = false;
 
                     foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
@@ -516,6 +516,7 @@ namespace Cognitivo.Production
                         production_order_detail.name = item_recepie_detail.item.name;
                         production_order_detail.id_item = item_recepie_detail.item.id_item;
                         production_order_detail.item = item_recepie_detail.item;
+                        production_order_detail.RaisePropertyChanged("item");
                         if (item_recepie_detail.quantity > 0)
                         {
                             production_order_detail.quantity = (decimal)item_recepie_detail.quantity;
@@ -525,23 +526,175 @@ namespace Cognitivo.Production
 
                         production_order_detail_output.child.Add(production_order_detail);
                     }
-                    production_order.production_order_detail.Add(production_order_detail_output);
-                    filter_task();
+                
+                  //  filter_task();
                 }
                 else
                 {
-                    production_order_detail production_order_detail_output = new production_order_detail();
+                    production_order_detail production_order_detail_output = treeProject.SelectedItem as production_order_detail;
                     production_order_detail_output.quantity = 1;
                     production_order_detail_output.name = item.name;
                     production_order_detail_output.id_item = item.id_item;
                     production_order_detail_output.item = item;
+                    production_order_detail_output.RaisePropertyChanged("item");
                     production_order_detail_output.is_input = true;
 
 
-                    production_order.production_order_detail.Add(production_order_detail_output);
-                    filter_task();
-                
+                   
+                  //  filter_task();
+
                 }
+            }
+        }
+
+        private void toolBar_Mini_btnNew_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnEdit_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnSave_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnDelete_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnApprove_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnAnull_Click(object sender)
+        {
+
+        }
+
+        private void btnNewTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            stpcode.IsEnabled = true;
+            //itemSearchViewSource.View.Filter = i =>
+            //{
+            //    item item = (item)i;
+            //    if (item.is_active == true)
+            //        return true;
+            //    else
+            //        return false;
+            //};
+
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            production_order_detail production_order_detail = treeProject.SelectedItem as production_order_detail;
+
+            if (production_order_detail != null)
+            {
+                //Adding a Child Item.
+                if (production_order_detail.item != null)
+                {
+
+
+                    if (production_order_detail.item.id_item_type == entity.item.item_type.Task)
+                    {
+                        production_order_detail n_production_order_detail = new production_order_detail();
+                        n_production_order_detail.id_production_order = production_order.id_production_order;
+                        n_production_order_detail.production_order = production_order;
+                        n_production_order_detail.production_order.status = Status.Production.Pending;
+                        n_production_order_detail.quantity = 0;
+
+                        production_order_detail.child.Add(n_production_order_detail);
+                        OrderDB.production_order_detail.Add(n_production_order_detail);
+                        production_orderproduction_order_detailViewSource.View.Refresh();
+                        production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
+
+                    }
+                }
+            }
+            else
+            {
+                production_order_detail n_production_order_detail = new production_order_detail();
+                n_production_order_detail.id_production_order = production_order.id_production_order;
+                n_production_order_detail.production_order.status = Status.Production.Pending;
+                OrderDB.production_order_detail.Add(n_production_order_detail);
+                production_orderproduction_order_detailViewSource.View.Refresh();
+                production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
+                filter_task();
+            }
+
+        }
+
+        private void btnEditTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            stpcode.IsEnabled = true;
+        }
+
+        private void btnSaveTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
+            {
+
+                
+                    cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
+
+                    OrderDB.SaveChanges();
+                    toolBar.msgDone("Yay!");
+                    stpcode.IsEnabled = false;
+                
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
+
+        private void btnDeleteTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            production_orderproduction_order_detailViewSource.View.Filter = null;
+            List<production_order_detail> production_order_detailLIST = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
+            production_order_detailLIST = production_order_detailLIST.Where(x => x.IsSelected == true).ToList();
+            foreach (production_order_detail production_order_detail in production_order_detailLIST)
+            {
+                //if (project_task.Error == null)
+                //{
+                production_order_detail.production_order.status = Status.Production.Pending;
+                production_order_detail.IsSelected = false;
+
+                //}
+            }
+            OrderDB.SaveChanges();
+            toolBar.msgDone("Yay!");
+                    filter_task();
+        }
+
+        private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cbxItemType = (ComboBox)sender;
+
+            if (cbxItemType.SelectedItem != null)
+            {
+
+                item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
+                sbxItem.item_types = Item_Type;
+                // itemSearchViewSource.Source = _entity.db.items.Where(x =>x.id_company==_Setting.company_ID && x.id_item_type == Item_Type).ToList();
+
+
+                if (Item_Type == entity.item.item_type.Task)
+                {
+                    stpdate.Visibility = Visibility.Visible;
+                    stpitem.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    stpdate.Visibility = Visibility.Collapsed;
+                    stpitem.Visibility = Visibility.Visible;
+                }
+              
+
             }
         }
     }

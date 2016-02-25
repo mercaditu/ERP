@@ -294,11 +294,13 @@ namespace Cognitivo.Project.Development
         private void toolBar_btnApprove_Click(object sender,RoutedEventArgs e)
         {
             dbContext.Approve();
+            project_templateViewSource.View.Refresh();
         }
 
         private void toolBar_btnAnull_Click(object sender, RoutedEventArgs e)
         {
             dbContext.Anull();
+            project_templateViewSource.View.Refresh();
         }
         private void item_Select(object sender, EventArgs e)
         {

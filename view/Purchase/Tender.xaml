@@ -267,7 +267,7 @@
                                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                         Width="32" Header=""/>
-                                <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+                                <DataGridTextColumn Binding="{Binding purchase_tender_item.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                                                     Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>

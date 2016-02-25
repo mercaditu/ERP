@@ -22,7 +22,7 @@
 
     <StackPanel Margin="32" VerticalAlignment="Top" HorizontalAlignment="Center">
         <Label Content="{lex:Loc Settings}" Style="{StaticResource H1}" HorizontalAlignment="Center"/>
-        <Rectangle Height="1" Margin="15" Fill="Silver"/>
+        <Rectangle Style="{StaticResource line_Bar}"/>
 
         <Label Style="{StaticResource H3}" Content="{lex:Loc Company}" HorizontalAlignment="Center"/>
         <ComboBox Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
@@ -51,14 +51,8 @@
                   DisplayMemberPath="name" SelectedValuePath="id_account" 
                   Text="{Binding account_Name, Mode=OneWayToSource, Source={x:Static prop:Settings.Default}}"
                   SelectedValue="{Binding account_ID, Mode=TwoWay, Source={x:Static prop:Settings.Default}}"/>
-        <Label Style="{StaticResource H3}" Content="{lex:Loc User}" HorizontalAlignment="Center"/>
-        <ComboBox Style="{StaticResource input_combobox}" HorizontalAlignment="Center"
-                  ItemsSource="{Binding Source={StaticResource security_userViewSource}}"
-                  DisplayMemberPath="name" SelectedValuePath="id_user" 
-                  Text="{Binding user_Name, Mode=OneWayToSource, Source={x:Static prop:Settings.Default}}"
-                  SelectedValue="{Binding user_ID, Mode=TwoWay, Source={x:Static prop:Settings.Default}}"/>
-        <Rectangle Height="1" Margin="15" Fill="Silver"/>
-        <Button Style="{StaticResource btn_green}" Content="{lex:Loc Save}" Click="ButtonSave_Click"/>
+        <Rectangle Style="{StaticResource line_Bar}"/>
+        <Button Style="{StaticResource btn_green}" Content="{lex:Loc Save}" Click="ButtonSave_Click" Margin="8"/>
 
     </StackPanel>
 </Page>

@@ -63,8 +63,6 @@ namespace Cognitivo.Security
                 security_user_view_source.View.Refresh();
                 toolBar.msgSaved();
             }
-
-
         }
 
         private void toolBar_btnDelete_Click(object sender)

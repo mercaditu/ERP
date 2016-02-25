@@ -60,7 +60,7 @@
                 	 Margin="10,5" FontSize="26"/>
         </StackPanel>
         <Rectangle Height="1" Margin="15" Fill="Silver"/>
-        <Label Content="Application restart will be required" HorizontalAlignment="Center"/>
+        <Label Content="{lex:Loc Applicationrestartwillberequired}" HorizontalAlignment="Center"/>
         <Button Width="256" Click="btnTestConn_Click" BorderBrush="Transparent" Margin="0,0,0,10">
             <Button.Content>
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">

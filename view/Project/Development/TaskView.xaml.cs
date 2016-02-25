@@ -526,7 +526,7 @@ namespace Cognitivo.Project.Development
 
         }
 
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Label_MouseDown(object sender, EventArgs e)
         {
             project_taskViewSource.View.Filter = null;
             List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
@@ -549,7 +549,7 @@ namespace Cognitivo.Project.Development
             filter_task();
         }
 
-        private void Label_MouseDown_1(object sender, MouseButtonEventArgs e)
+        private void Label_MouseDown_1(object sender, EventArgs e)
         {
             project_taskViewSource.View.Filter = null;
             List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
@@ -564,12 +564,9 @@ namespace Cognitivo.Project.Development
                 //}
             }
             _entity.db.SaveChanges();
-            toolBar.msgDone("Yay!");
+            toolBar.msgDone();
             filter_task();
         }
-
-        
-
        
     }
 }

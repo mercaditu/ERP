@@ -37,8 +37,8 @@ namespace cntrl.Curd
                 CollectionViewSource branchViewSource = (CollectionViewSource)FindResource("branchViewSource");
                 branchViewSource.Source = await db.app_branch.Where(b => b.is_active == true && b.id_company == _settings.company_ID).OrderBy(b => b.name).AsNoTracking().ToListAsync();
 
-                CollectionViewSource contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
-                contactViewSource.Source = await db.contacts.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_customer == true).OrderBy(b => b.name).ToListAsync();
+                //CollectionViewSource contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
+                //contactViewSource.Source = await db.contacts.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_customer == true).OrderBy(b => b.name).ToListAsync();
 
                 CollectionViewSource templateViewSource = (CollectionViewSource)FindResource("project_templateViewSource");
                 templateViewSource.Source = await db.project_template.Where(x => x.is_active == true && x.id_company == _settings.company_ID).OrderBy(b => b.name).AsNoTracking().ToListAsync();
@@ -143,24 +143,6 @@ namespace cntrl.Curd
                 project _project = projectViewSource.View.CurrentItem as project;
                 btnSave_Click(sender, e);
             }
-        }
-
-        private void contactComboBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key==Key.Enter)
-            {
-                contactComboBox.focusGrid = false;
-                contactComboBox.Text = ((entity.contact)contactComboBox.Data).name;
-            }
-            
-        }
-
-        private void contactComboBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            contactComboBox.focusGrid = false;
-            contactComboBox.Text = ((entity.contact)contactComboBox.Data).name;
-        }
-
-       
+        }       
     }
 }

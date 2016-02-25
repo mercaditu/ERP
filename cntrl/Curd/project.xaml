@@ -1,4 +1,5 @@
 ﻿<UserControl   x:Class="cntrl.Curd.project"
+               xmlns:control="clr-namespace:cntrl.Controls"
                xmlns:cntrl="clr-namespace:cntrl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -58,17 +59,7 @@
                           DisplayMemberPath="name" SelectedValuePath="id_branch" 
                           SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}"/>
-                <cntrl:SearchableTextbox x:Name="contactComboBox"
-                                         CollectionViewSource="{StaticResource contactViewSource}" IsDisplayed="True"
-                                         KeyDown="contactComboBox_KeyDown" MouseDoubleClick="contactComboBox_MouseDoubleClick"
-                                         Data="{Binding contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <cntrl:SearchableTextbox.Columns>
-                        <cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                        <cntrl:SmartBoxColumn Header="GovId" ForProperty="gov_code" Binding="{Binding gov_code, Mode=Default}" EnableSearch="True"/>
-                        <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                        <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
-                    </cntrl:SearchableTextbox.Columns>
-                </cntrl:SearchableTextbox>
+                <control:SmartBox_Contact x:Name="contactComboBox" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <CheckBox IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                     Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"/>
                 

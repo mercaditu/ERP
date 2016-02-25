@@ -9,6 +9,7 @@
     </UserControl.Resources>
     <Grid>
         <Image Margin="8,5" Height="32" Cursor="Hand" 
+               RenderOptions.BitmapScalingMode="HighQuality" UseLayoutRounding="True"
                Source="{Binding Path=imgSource, ElementName=_moduleIcon}"/>
         <Rectangle VerticalAlignment="Bottom" Height="2" Fill="Silver">
             <Rectangle.Style>

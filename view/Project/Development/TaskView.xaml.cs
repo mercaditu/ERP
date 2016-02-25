@@ -256,50 +256,53 @@ namespace Cognitivo.Project.Development
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            project_taskViewSource.View.Filter = null;
-            List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-            _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
 
-            foreach (project_task project_task in _project_task)
+            if (project_taskViewSource.View != null)
             {
-                //if (project_task.Error == null)
-                //{
-                if (project_task.ProjectStatus == Status.ProjectStatus.Approved)
-                {
-                    if (project_task.status == Status.Project.Pending || project_task.status == null)
-                    {
-                        project_task.status = Status.Project.Approved;
-                    }
-                }
-                //}
-                //else
-                //{
-                //    toolBar.msgWarning(project_task.name + "Error");
-                //}
+                project_taskViewSource.View.Filter = null;
+                List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+                _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
 
-                project_task.IsSelected = false;
+                foreach (project_task project_task in _project_task)
+                {
+                    //if (project_task.Error == null)
+                    //{
+                    if (project_task.ProjectStatus == Status.ProjectStatus.Approved)
+                    {
+                        if (project_task.status == Status.Project.Pending || project_task.status == null)
+                        {
+                            project_task.status = Status.Project.Approved;
+                        }
+                    }
+                    //}
+                    //else
+                    //{
+                    //    toolBar.msgWarning(project_task.name + "Error");
+                    //}
+
+                    project_task.IsSelected = false;
+                }
+                _entity.db.SaveChanges();
+                filter_task();
             }
-            _entity.db.SaveChanges();
-            filter_task();
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            project_taskViewSource.View.Filter = null;
-            List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
-            project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
-            foreach (project_task project_task in project_taskLIST)
+            if (project_taskViewSource.View != null)
             {
-                //if (project_task.Error == null)
-                //{
-                project_task.status = Status.Project.Rejected;
-                project_task.IsSelected = false;
-
-                //}
+                project_taskViewSource.View.Filter = null;
+                List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
+                project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+                foreach (project_task project_task in project_taskLIST)
+                {
+                    project_task.status = Status.Project.Rejected;
+                    project_task.IsSelected = false;
+                }
+                _entity.db.SaveChanges();
+                toolBar.msgDone();
+                filter_task();
             }
-            _entity.db.SaveChanges();
-            toolBar.msgDone("Yay!");
-            filter_task();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -402,6 +405,7 @@ namespace Cognitivo.Project.Development
             //project_task_dimension.id_project_task = project_task.id_project_task;
             project_task.project_task_dimension.Add(project_task_dimension);
         }
+
         private void item_Select(object sender, RoutedEventArgs e)
         {
             if (sbxItem.ItemID > 0)
@@ -429,30 +433,6 @@ namespace Cognitivo.Project.Development
 
             }
         }
-        //private void cbxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    item item = (item)cbxItem.Data;
-        //    cbxItem.focusGrid = false;
-        //    cbxItem.Text = ((item)cbxItem.Data).name;
-        //    if (item.item_dimension != null)
-        //    {
-        //        project_task project_task = (project_task)treeProject.SelectedItem;
-        //        project_task.items = item;
-        //        foreach (item_dimension _item_dimension in item.item_dimension)
-        //        {
-        //            project_task_dimension project_task_dimension = new project_task_dimension();
-        //            project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
-        //            project_task_dimension.value = _item_dimension.value;
-        //            project_task_dimension.id_measurement = _item_dimension.id_measurement;
-        //            project_task_dimension.id_project_task = project_task.id_project_task;
-        //            project_task_dimension.project_task = project_task;
-        //            _entity.db.project_task_dimension.Add(project_task_dimension);
-        //            project_task_dimensionViewSource.View.MoveCurrentToLast();
-        //        }
-
-
-        //    }
-        //}
 
         private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
         {
@@ -468,33 +448,6 @@ namespace Cognitivo.Project.Development
             }
         }
 
-        //private void cbxItem_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        item item = (item)cbxItem.Data;
-        //        cbxItem.focusGrid = false;
-        //        cbxItem.Text = ((item)cbxItem.Data).name;
-        //        if (item.item_dimension != null)
-        //        {
-        //            project_task project_task = (project_task)treeProject.SelectedItem;
-        //            project_task.items = item;
-        //            foreach (item_dimension _item_dimension in item.item_dimension)
-        //            {
-        //                project_task_dimension project_task_dimension = new project_task_dimension();
-        //                project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
-        //                project_task_dimension.value = _item_dimension.value;
-        //                project_task_dimension.id_measurement = _item_dimension.id_measurement;
-        //                project_task_dimension.id_project_task = project_task.id_project_task;
-        //                project_task_dimension.project_task = project_task;
-        //                _entity.db.project_task_dimension.Add(project_task_dimension);
-        //                project_task_dimensionViewSource.View.MoveCurrentToLast();
-        //            }
-
-
-        //        }
-        //    }
-        //}
 
         private void toolBar_Mini_btnNew_Click(object sender)
         {
@@ -528,44 +481,50 @@ namespace Cognitivo.Project.Development
 
         private void Label_MouseDown(object sender, EventArgs e)
         {
-            project_taskViewSource.View.Filter = null;
-            List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-            _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
-
-           
-            foreach (project_task project_task in _project_task)
+            if (project_taskViewSource.View != null)
             {
-                
+                project_taskViewSource.View.Filter = null;
+                List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+                _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
+
+
+                foreach (project_task project_task in _project_task)
+                {
+
                     if (project_task.ProjectStatus == Status.ProjectStatus.Pending || project_task.ProjectStatus == null)
                     {
                         project_task.ProjectStatus = Status.ProjectStatus.Approved;
                     }
-                
-               
 
-                project_task.IsSelected = false;
+
+
+                    project_task.IsSelected = false;
+                }
+                _entity.db.SaveChanges();
+                filter_task();
             }
-            _entity.db.SaveChanges();
-            filter_task();
         }
 
         private void Label_MouseDown_1(object sender, EventArgs e)
         {
-            project_taskViewSource.View.Filter = null;
-            List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
-            project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
-            foreach (project_task project_task in project_taskLIST)
+            if (project_taskViewSource.View != null)
             {
-                //if (project_task.Error == null)
-                //{
-                project_task.ProjectStatus = Status.ProjectStatus.Rejected;
-                project_task.IsSelected = false;
+                project_taskViewSource.View.Filter = null;
+                List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
+                project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+                foreach (project_task project_task in project_taskLIST)
+                {
+                    //if (project_task.Error == null)
+                    //{
+                    project_task.ProjectStatus = Status.ProjectStatus.Rejected;
+                    project_task.IsSelected = false;
 
-                //}
+                    //}
+                }
+                _entity.db.SaveChanges();
+                toolBar.msgDone();
+                filter_task();
             }
-            _entity.db.SaveChanges();
-            toolBar.msgDone();
-            filter_task();
         }
        
     }

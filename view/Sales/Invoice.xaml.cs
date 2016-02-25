@@ -422,6 +422,7 @@ namespace Cognitivo.Sales
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
+               
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 calculate_vat(null, null);

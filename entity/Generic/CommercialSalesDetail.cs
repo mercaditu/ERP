@@ -341,6 +341,7 @@ namespace entity
         {
             UnitPrice_Vat = Vat.return_ValueWithVAT((int)id_vat_group, unit_price);
             RaisePropertyChanged("UnitPrice_Vat");
+            
         }
 
         /// <summary>

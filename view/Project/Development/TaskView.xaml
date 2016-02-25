@@ -99,9 +99,9 @@
                                    Style="{StaticResource btn_Label}" Content="k" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                        <Label MouseDown="Label_MouseDown_1" ToolTip="{lex:Loc Save}" 
+                        <Label MouseDown="Label_MouseDown" ToolTip="{lex:Loc Save}" 
                                    Style="{StaticResource btn_Label}" Content="j"/>
-                        <Label MouseDown="Button_Click_1" ToolTip="{lex:Loc Reject}"
+                        <Label MouseDown="Label_MouseDown_1" ToolTip="{lex:Loc Reject}"
                                    Style="{StaticResource btn_Label}" Content="k" />
                     </StackPanel>
                 </StackPanel>

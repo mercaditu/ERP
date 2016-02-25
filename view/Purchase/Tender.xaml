@@ -199,7 +199,9 @@
                         </Grid.RowDefinitions>
                         <StackPanel>
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc Contact}"/>
-                            <cntrl:SearchableTextbox x:Name="contactComboBox" Width="256" HorizontalAlignment="Left"
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Select="set_ContactPref" Get_Suppliers="True"/>
+
+                            <!--<cntrl:SearchableTextbox x:Name="contactComboBox" Width="256" HorizontalAlignment="Left"
                                              CollectionViewSource="{StaticResource contactViewSource}" 
                                              IsDisplayed="True" KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref" 
                                              Data="{Binding contact,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
@@ -210,7 +212,7 @@
                                     <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
                                     <cntrl:SmartBoxColumn Header="Telephone" ForProperty="telephone" Binding="{Binding telephone, Mode=Default}" Hide="True"/>
                                 </cntrl:SearchableTextbox.Columns>
-                            </cntrl:SearchableTextbox>
+                            </cntrl:SearchableTextbox>-->
                             
                         </StackPanel>
                      
@@ -225,11 +227,8 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Contact}" Width="*"
-					                                    ItemsSource="{Binding Source={StaticResource contactViewSource}}"  
-                                                        DisplayMemberPath="name" SelectedValuePath="id_contact" 
-					                                    SelectedValueBinding="{Binding id_contact, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
-                                                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
+					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="auto"
 					                                    ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"  

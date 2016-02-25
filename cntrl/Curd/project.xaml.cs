@@ -83,10 +83,6 @@ namespace cntrl.Curd
             {
                 foreach (project_template_detail item in project_template_detail)
                 {
-                    //if (item.status == Status.Project.Approved)
-                    //{
-
-
                         project_task project_task = new project_task();
                         project_task.id_project_task = item.id_template_detail;
                         project_task.items = item.item;

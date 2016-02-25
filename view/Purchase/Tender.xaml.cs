@@ -10,15 +10,12 @@ using System.Windows.Input;
 
 namespace Cognitivo.Purchase
 {
-    /// <summary>
-    /// Interaction logic for Tender.xaml
-    /// </summary>
     public partial class Tender : Page
     {
         PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
        
-        CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, purchase_tenderpurchase_tender_itemViewSource, purchase_tenderpurchase_tender_contact_detailViewSource, contactViewSource, app_conditionViewSource, app_contractViewSource, app_currencyfxViewSource;
+        CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, purchase_tenderpurchase_tender_itemViewSource, 
+            purchase_tenderpurchase_tender_contact_detailViewSource, contactViewSource, app_conditionViewSource, app_contractViewSource, app_currencyfxViewSource;
 
         public Tender()
         {
@@ -43,8 +40,6 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnNew_Click(object sender)
         {
-
-
             purchase_tender purchase_tender = new purchase_tender();
             purchase_tender.State = EntityState.Added;
             purchase_tender.IsSelected = true;
@@ -67,7 +62,6 @@ namespace Cognitivo.Purchase
             {
                 toolBar.msgWarning("Please Select an Item");
             }
-
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -90,7 +84,9 @@ namespace Cognitivo.Purchase
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            entity.Properties.Settings _setting = new entity.Properties.Settings();
             int company_ID = _setting.company_ID;
+
             PurchaseTenderDB.purchase_tender.Where(a => a.id_company == company_ID).Load();
             purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
             purchase_tenderViewSource.Source = PurchaseTenderDB.purchase_tender.Local;
@@ -102,23 +98,14 @@ namespace Cognitivo.Purchase
 
             cbxBranch.ItemsSource = PurchaseTenderDB.app_branch.Local;
 
-
             PurchaseTenderDB.app_department.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
-
             cbxDepartment.ItemsSource = PurchaseTenderDB.app_department.Local;
-
 
             PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
             cbxProject.ItemsSource = PurchaseTenderDB.projects.Local;
 
-
-            PurchaseTenderDB.contacts.Where(a => a.is_active == true && a.is_supplier == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
-            //contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
+            //PurchaseTenderDB.contacts.Where(a => a.is_active == true && a.is_supplier == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
             cbxDocument.ItemsSource  = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, _setting.branch_ID, _setting.terminal_ID);
-
-            PurchaseTenderDB.contacts.Where(a => a.is_active == true && a.is_supplier == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
-            contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
-            contactViewSource.Source = PurchaseTenderDB.contacts.Local;
 
             PurchaseTenderDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
 
@@ -136,14 +123,6 @@ namespace Cognitivo.Purchase
 
             app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
-
-
-            PurchaseTenderDB.items.Where(a => a.id_company == company_ID && a.is_active == true).ToList();
-
-            CollectionViewSource itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
-            itemViewSource.Source = PurchaseTenderDB.items.Local;
-
-
         }
 
         private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -181,22 +160,28 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void set_ContactPref(object sender, EventArgs e)
+        private void set_ContactPref(object sender, RoutedEventArgs e)
         {
-            purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
-            if (purchase_tender != null)
+            if (sbxContact.ContactID > 0 && purchase_tenderViewSource.View != null)
             {
-                if (contactComboBox.Data != null)
+                purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
+
+                contact contact = PurchaseTenderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
+                purchase_tender_contact.contact = contact;
+                purchase_tender_contact.id_contact = contact.id_contact;
+                purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
+
+                if (contact.app_contract != null)
                 {
-                    int id = ((contact)contactComboBox.Data).id_contact;
-                    // contact contact = PurchaseTenderDB.contacts.Where(x => x.id_contact == id).FirstOrDefault();
-                    purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
-                    purchase_tender_contact.contact = (contact)contactComboBox.Data;
-                    purchase_tender_contact.id_contact = id;
-                    purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
+                    purchase_tender_contact.app_contract = contact.app_contract;
+                    purchase_tender_contact.app_condition = contact.app_contract.app_condition;
                 }
+
+                purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
+
+                purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
             }
-            purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
         }
 
         private void toolBar_btnSave_Click(object sender)
@@ -205,6 +190,7 @@ namespace Cognitivo.Purchase
             purchase_tenderViewSource.View.Refresh();
             toolBar.msgSaved();
         }
+
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             DataGrid dg = (DataGrid)e.Source;
@@ -243,13 +229,8 @@ namespace Cognitivo.Purchase
                         //DeleteDetailGridRow
                         purchase_tender_item_detailDataGrid.CancelEdit();
                         PurchaseTenderDB.purchase_tender_detail.Remove(e.Parameter as purchase_tender_detail);
-                        //  purchase_tender_contact.purchase_tender_detail.Remove(e.Parameter as purchase_tender_detail);
                         purchase_tenderpurchase_tender_item_detailViewSource.View.Refresh();
                     }
-
-
-
-
                 }
             }
             catch (Exception ex)
@@ -285,7 +266,9 @@ namespace Cognitivo.Purchase
                     }
                 }
             }
+
             purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
+            
             if (purchase_tender != null)
             {
                 if (purchase_tenderpurchase_tender_contact_detailViewSource.View.CurrentItem != null)
@@ -329,7 +312,6 @@ namespace Cognitivo.Purchase
 
         private void purchase_tender_itemDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
         {
-            
             purchase_tender_item purchase_tender_item = (purchase_tender_item)purchase_tenderpurchase_tender_itemViewSource.View.CurrentItem;
             CollectionViewSource purchase_tender_dimensionViewSource = ((CollectionViewSource)(FindResource("purchase_tender_dimensionViewSource")));
             if (purchase_tender_item != null)
@@ -345,9 +327,6 @@ namespace Cognitivo.Purchase
         {
             List<purchase_tender_detail> purchase_tender_detailList = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().ToList();
             LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.unit_cost);
-        }
-
-       
-       
+        }       
     }
 }

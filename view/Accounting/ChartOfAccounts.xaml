@@ -93,7 +93,7 @@
             <TextBlock Style="{StaticResource text_Instructions}"
 					       Text="Not all Accounts are used for Automatic Accounting, but those that are should be check to integrate those accounts to the movements that occur in the other areas of your company."/>
             <CheckBox x:Name="chbxAutomatic" Style="{StaticResource input_checkbox}"
-					  Content="{lex:Loc AutomaticAccounting}" IsChecked="{Binding can_transact, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+					  Content="{lex:Loc AutomaticAccounting}" IsChecked="{Binding can_transact, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=True}"/>
 
             <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=chbxAutomatic}">
                 <Label Content="{lex:Loc Integration}" Style="{StaticResource H2}"/>
@@ -140,6 +140,8 @@
 							              ItemsSource="{Binding Source={StaticResource item_tagViewSource}}"
                                           SelectedValuePath="id_tag" DisplayMemberPath="name"
                                           SelectedValue="{Binding id_tag, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox x:Name="chkGenericInventory" Content="Generic" Style="{StaticResource input_checkbox}"
+                                      IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
 
                     <!-- Takes Fixed Assets (Capital Resource) -->
@@ -151,6 +153,8 @@
 							              ItemsSource="{Binding Source={StaticResource item_asset_groupViewSource}}"
                                           SelectedValuePath="id_item_asset_group" DisplayMemberPath="name"
                                           SelectedValue="{Binding id_item_asset_group, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox x:Name="chkGenericFixedAsset" Content="Generic" Style="{StaticResource input_checkbox}"
+                                      IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -217,7 +221,6 @@
                                         Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnHR}" >
                         <CheckBox x:Name="chkGenricHR" Content="Generic" Style="{StaticResource input_checkbox}"
                                               IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
                     </StackPanel>
 
                     <RadioButton x:Name="rbtnAdminExpenses" Content="{lex:Loc Administrative}" Style="{StaticResource input_radiobutton}" Margin="5" 

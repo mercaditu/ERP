@@ -1379,16 +1379,16 @@ namespace Cognitivo.Setup.Migration.Cogent
                     cmd.CommandText = sql_statement;
 
                     cmd.CommandType = CommandType.Text;
-
-                    MySqlDataReader readerproduction = cmd.ExecuteReader();
-                    DataTable dtproduction = exeDTMysql(sql_statement);
-                    int count = dtproduction.Rows.Count;
-                    int value = 0;
-                    Dispatcher.BeginInvoke((Action)(() => productionMaximum.Text = count.ToString()));
-                    Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
-                    Dispatcher.BeginInvoke((Action)(() => progProduction.Maximum = count));
-                    Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
-
+                
+                        MySqlDataReader readerproduction = cmd.ExecuteReader();
+                        DataTable dtproduction = exeDTMysql(sql_statement);
+                        int count = dtproduction.Rows.Count;
+                        int value = 0;
+                        Dispatcher.BeginInvoke((Action)(() => productionMaximum.Text = count.ToString()));
+                        Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
+                        Dispatcher.BeginInvoke((Action)(() => progProduction.Maximum = count));
+                        Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
+                   
                     production_order production_order = new production_order();
                     if (dtproduction.Rows.Count > 0)
                     {
@@ -1539,7 +1539,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                         cmd.Dispose();
                         conn.Close();
                     }
-
+                   
                     db.SaveChanges();
                 }
             }
@@ -1577,6 +1577,7 @@ namespace Cognitivo.Setup.Migration.Cogent
 
                 while (readerproduction.Read())
                 {
+                 
                     using (db db = new db())
                     {
                         db.Database.CommandTimeout = 5500;
@@ -1681,7 +1682,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                            
 
                         }
-                        if (production_execution.Error == null)
+                        if (production_execution.Error == null && production_execution.production_execution_detail.Count()>0)
                         {
                             db.production_execution.Add(production_execution);
 

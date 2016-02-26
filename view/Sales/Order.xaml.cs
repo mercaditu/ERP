@@ -278,6 +278,7 @@ namespace Cognitivo.Sales
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
+            sales_order.RaisePropertyChanged("GrandTotal");
             if (sales_order != null)
             {
                 List<sales_order_detail> sales_order_detail = sales_order.sales_order_detail.ToList();

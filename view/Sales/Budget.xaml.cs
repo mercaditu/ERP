@@ -205,6 +205,7 @@ namespace Cognitivo.Sales
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
+            sales_budget.RaisePropertyChanged("GrandTotal");
             List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
             dgvvat.ItemsSource = sales_budget_detail
                  .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group

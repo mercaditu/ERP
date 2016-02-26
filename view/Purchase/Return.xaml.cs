@@ -135,6 +135,7 @@ namespace Cognitivo.Purchase
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
+            purchase_return.RaisePropertyChanged("GrandTotal");
             //List<purchase_return_vat> deletepurchase_return_detail_vat = entity.db.purchase_return_detail_vat.Local.Where(x => x.purchase_return_detail == null).ToList();
             //List<purchase_return_vat> purchase_return_detail_vat = entity.db.purchase_return_detail_vat.Local.Where(x => x.purchase_return_detail != null && x.id_purchase_return_vat == 0).ToList();
             //entity.db.purchase_return_detail_vat.RemoveRange(deletepurchase_return_detail_vat);

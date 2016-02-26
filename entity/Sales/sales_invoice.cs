@@ -69,7 +69,7 @@ namespace entity
                         _sales_invoice_detail.CurrencyFX_ID = _id_currencyfx;
                     }
                 }
-                calc_credit(_GrandTotal);
+                calc_credit(GrandTotal);
             }
         }
         private int _id_currencyfx;

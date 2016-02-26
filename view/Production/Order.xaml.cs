@@ -206,33 +206,38 @@ namespace Cognitivo.Production
         //    crud_modal.Children.Add(itemMovement);
         //}
 
-        private async void productionorderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private  void productionorderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_request();
+        }
+        public async void Update_request()
         {
             try
             {
-               
+
                 int _id_production_order = 0;
                 _id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
 
                 if (_id_production_order > 0)
-                { filter_task();
+                {
+                    filter_task();
 
-                    var item_List = await (from IT in OrderDB.production_order_detail
-                                       where IT.item.id_item_type != item.item_type.Service && 
-                                       IT.item.id_item_type != item.item_type.Task && 
-                                       (IT.production_order.status == Status.Production.Approved || IT.production_order.status == Status.Production.InProcess || IT.production_order.status == Status.Production.Executed || IT.production_order.status == Status.Production.Pending)
-                                       && IT.production_order.status != null && IT.id_production_order == _id_production_order
-                                       group IT by new { IT.item } into last
-                                       select new
-                                       {
-                                         
-                                           _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
-                                           _code = last.Key.item != null ? last.Key.item.code : "",
-                                           _name = last.Key.item != null ? last.Key.item.name : "",
-                                           _id_task = last.Max(x => x.id_project_task),
-                                           _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
-                                           item = last.Key.item
-                                       }).ToListAsync();
+                    var item_List = await(from IT in OrderDB.production_order_detail
+                                          where IT.item.id_item_type != item.item_type.Service &&
+                                          IT.item.id_item_type != item.item_type.Task &&
+                                          (IT.production_order.status == Status.Production.Approved || IT.production_order.status == Status.Production.InProcess || IT.production_order.status == Status.Production.Executed || IT.production_order.status == Status.Production.Pending)
+                                          && IT.production_order.status != null && IT.id_production_order == _id_production_order
+                                          group IT by new { IT.item } into last
+                                          select new
+                                          {
+
+                                              _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
+                                              _code = last.Key.item != null ? last.Key.item.code : "",
+                                              _name = last.Key.item != null ? last.Key.item.name : "",
+                                              _id_task = last.Max(x => x.id_project_task),
+                                              _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
+                                              item = last.Key.item
+                                          }).ToListAsync();
 
                     item_ProductDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.Product);
                     item_RawDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.RawMaterial);
@@ -265,10 +270,10 @@ namespace Cognitivo.Production
                     //                       _name = last.Key.item != null ? last.Key.item.name : "",
                     //                       _id_task = last.Max(x => x.id_project_task),
                     //                       _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
-                                          
+
                     //                   }).ToList();
                     //item_CapitalDataGrid.ItemsSource = capitallist.ToList();
-                    
+
                     //var supplierlist = (from IT in OrderDB.production_order_detail
                     //                    where IT.item.id_item_type == item.item_type.Supplies && (IT.production_order.status == Status.Production.Approved || IT.production_order.status == Status.Production.InProcess || IT.production_order.status == Status.Production.Executed || IT.production_order.status == Status.Production.Pending)
                     //                    && IT.production_order.status != null && IT.id_production_order == _id_production_order
@@ -299,7 +304,6 @@ namespace Cognitivo.Production
                 toolBar.msgError(ex);
             }
         }
-
         private void item_ProductDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int _id_production_order = 0;
@@ -647,6 +651,9 @@ namespace Cognitivo.Production
                     cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
 
                     OrderDB.SaveChanges();
+                    production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+                    production_order.State = EntityState.Modified;
+                    Update_request();
                     toolBar.msgDone("Yay!");
                     stpcode.IsEnabled = false;
                 

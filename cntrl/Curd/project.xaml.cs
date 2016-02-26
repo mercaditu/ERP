@@ -140,5 +140,17 @@ namespace cntrl.Curd
                 btnSave_Click(sender, e);
             }
         }       
+
+        private void contactComboBox_Select(object sender, RoutedEventArgs e)
+        {
+            if (contactComboBox.ContactID > 0)
+            {
+                entity.contact contact = db.contacts.Where(x => x.id_contact == contactComboBox.ContactID).FirstOrDefault();
+                entity.project _project = projectViewSource.View.CurrentItem as entity.project;
+                _project.id_contact = contact.id_contact;
+                _project.contact = contact;
+
+            }
+        }       
     }
 }

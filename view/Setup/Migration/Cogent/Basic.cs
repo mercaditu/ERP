@@ -1525,13 +1525,14 @@ namespace Cognitivo.Setup.Migration.Cogent
                             }
 
                             production_order.production_order_detail.Add(production_order_detail);
-                            if (production_order.Error == null)
-                            {
-                                db.production_order.Add(production_order);
-                                value += 1;
-                                Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
-                                Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
-                            }
+                           
+                        }
+                        if (production_order.Error == null)
+                        {
+                            db.production_order.Add(production_order);
+                            value += 1;
+                            Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
+                            Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
                         }
                         dtproduction.Clear();
                         readerproduction.Close();
@@ -1677,11 +1678,12 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 production_execution_detail.id_project_task = db.project_task.Where(x => x.item_description == Task_name && x.project.name == project_name).FirstOrDefault().id_project_task;
                             }
                             production_execution.production_execution_detail.Add(production_execution_detail);
-                            if (production_execution.Error == null)
-                            {
-                                db.production_execution.Add(production_execution);
+                           
 
-                            }
+                        }
+                        if (production_execution.Error == null)
+                        {
+                            db.production_execution.Add(production_execution);
 
                         }
                         // readerproduction_detail.Close();

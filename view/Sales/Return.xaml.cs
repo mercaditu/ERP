@@ -167,6 +167,7 @@ namespace Cognitivo.Sales
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
+            sales_return.RaisePropertyChanged("GrandTotal");
             //List<sales_return_vat> deletesales_return_detail_vat = entity.db.sales_return_detail_vat.Local.Where(x => x.sales_return_detail == null).ToList();
             //List<sales_return_vat> sales_return_detail_vat = entity.db.sales_return_detail_vat.Local.Where(x => x.sales_return_detail != null && x.id_sales_return_detail_vat == 0).ToList();
             //entity.db.sales_return_detail_vat.RemoveRange(deletesales_return_detail_vat);

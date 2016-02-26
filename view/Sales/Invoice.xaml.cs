@@ -280,6 +280,7 @@ namespace Cognitivo.Sales
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+            sales_invoice.RaisePropertyChanged("GrandTotal");
             if (sales_invoice != null)
             {
                 List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
@@ -525,6 +526,8 @@ namespace Cognitivo.Sales
         private void sales_invoice_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             calculate_vat(sender, e);
+          
+           
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

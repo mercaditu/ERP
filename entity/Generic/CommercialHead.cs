@@ -244,7 +244,7 @@ namespace entity
         /// 
         /// </summary>
         [NotMapped]
-        public decimal GrandTotal
+        public  decimal GrandTotal
         {
             get { return Math.Round(_GrandTotal, 2); }
             set
@@ -252,6 +252,7 @@ namespace entity
                 if (_GrandTotal != value)
                 {
                     _GrandTotal = value;
+                 
                     RaisePropertyChanged("GrandTotal");
                     calc_credit(_GrandTotal);
                 }

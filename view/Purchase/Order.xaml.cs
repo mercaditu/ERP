@@ -250,6 +250,7 @@ namespace Cognitivo.Purchase
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
+            purchase_order.RaisePropertyChanged("GrandTotal");
             if (purchase_order != null)
             {
                 List<purchase_order_detail> purchase_order_detail = purchase_order.purchase_order_detail.ToList();

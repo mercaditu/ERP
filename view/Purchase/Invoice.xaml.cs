@@ -251,6 +251,7 @@ namespace Cognitivo.Purchase
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+            purchase_invoice.RaisePropertyChanged("GrandTotal");
             if (purchase_invoice != null)
             {
                 List<purchase_invoice_detail> purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.ToList();

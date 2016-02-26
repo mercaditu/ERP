@@ -59,7 +59,7 @@
                           DisplayMemberPath="name" SelectedValuePath="id_branch" 
                           SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}"/>
-                <control:SmartBox_Contact x:Name="contactComboBox" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <control:SmartBox_Contact x:Name="contactComboBox" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="contactComboBox_Select"/>
                 <CheckBox IsChecked="{Binding is_active, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                     Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"/>
                 

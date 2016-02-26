@@ -45,9 +45,7 @@ namespace Cognitivo.Project.Development
             entity.db.projects.Where(a => a.is_active && a.id_company == _entity.company_ID).Load();
             projectViewSource.Source = entity.db.projects.Local;
 
-            CollectionViewSource itemViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("itemViewSource")));
-            entity.db.items.Where(a => a.id_company == _entity.company_ID).Load();
-            itemViewSource.Source = entity.db.items.Local;
+         
 
             contractViewSource = (CollectionViewSource)this.FindResource("contractViewSource");
             contractViewSource.Source = entity.db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();

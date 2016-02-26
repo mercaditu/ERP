@@ -136,10 +136,10 @@ namespace Cognitivo.Purchase
         {
             if (purchase_invoiceDataGrid.SelectedItem != null)
             {
-                purchase_invoice purchase_invoice_old = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-                purchase_invoice_old.IsSelected = true;
-                purchase_invoice_old.State = EntityState.Modified;
-                dbContext.Entry(purchase_invoice_old).State = EntityState.Modified;
+                purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+                purchase_invoice.IsSelected = true;
+                purchase_invoice.State = EntityState.Modified;
+                dbContext.Entry(purchase_invoice).State = EntityState.Modified;
             }
             else
             {

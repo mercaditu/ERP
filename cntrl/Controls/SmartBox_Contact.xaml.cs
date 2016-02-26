@@ -108,25 +108,51 @@ namespace cntrl.Controls
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
-                List<entity.contact> results = db.contacts
+                List<entity.contact> results = new List<entity.contact>();
+
+                if (Get_Customers)
+                {
+                    results.AddRange(db.contacts
                     .Where(x =>
                               x.id_company == company_ID &&
                               (
                                   x.code.Contains(SearchText) ||
                                   x.name.Contains(SearchText) ||
                                   x.gov_code.Contains(SearchText)
-                              ) 
+                              )
                               &&
                               (
-                                  x.is_customer == Get_Customers ||
-                                  x.is_supplier == Get_Suppliers ||
-                                  x.is_employee == Get_Employees
+                                  x.is_customer == Get_Customers
                               )
                               &&
                               x.is_active == true
                             )
                     .OrderBy(x => x.name)
-                    .ToList();
+                    .ToList()
+                    );
+                }
+
+                if (Get_Suppliers)
+                {
+                    results.AddRange(db.contacts
+                    .Where(x =>
+                              x.id_company == company_ID &&
+                              (
+                                  x.code.Contains(SearchText) ||
+                                  x.name.Contains(SearchText) ||
+                                  x.gov_code.Contains(SearchText)
+                              )
+                              &&
+                              (
+                                  x.is_supplier == Get_Suppliers
+                              )
+                              &&
+                              x.is_active == true
+                            )
+                    .OrderBy(x => x.name)
+                    .ToList()
+                    );
+                }
 
                 Dispatcher.InvokeAsync(new Action(() =>
                 {

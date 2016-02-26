@@ -67,7 +67,6 @@ namespace Cognitivo.Project
             project_costingproject_event_template_variable_detailsViewSource = FindResource("project_costingproject_event_template_variable_detailsViewSource") as CollectionViewSource;
             project_costingservices_per_event_detailsViewSource = FindResource("project_costingservices_per_event_detailsViewSource") as CollectionViewSource;
 
-
             IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
 
             EstimateCost();

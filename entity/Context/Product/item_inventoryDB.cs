@@ -26,17 +26,17 @@ namespace entity
             {
                 if (item_inventory.IsSelected)
                 {
-                    foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail)
-                    {
-                        if (item_inventory_detail.value_counted != 0)
-                        {
-                            validate_item_inventory_detail(item_inventory_detail);
-                        }
-                        else
-                        {
-                             Entry(item_inventory_detail).State = EntityState.Unchanged;
-                        }
-                    }
+                    //foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail)
+                    //{
+                    //    if (item_inventory_detail.value_counted != 0)
+                    //    {
+                    //        validate_item_inventory_detail(item_inventory_detail);
+                    //    }
+                    //    else
+                    //    {
+                    //         Entry(item_inventory_detail).State = EntityState.Unchanged;
+                    //    }
+                    //}
                     if (item_inventory.State == EntityState.Added)
                     {
                         item_inventory.timestamp = DateTime.Now;

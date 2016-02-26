@@ -14,7 +14,7 @@ namespace Cognitivo.Product
     {
         InventoryDB InventoryDB = new InventoryDB();
         CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource;
-
+        List<item_inventory_detail> item_inventory_detailList;
         int company_ID = entity.Properties.Settings.Default.company_ID;
 
         public Inventory()
@@ -41,91 +41,93 @@ namespace Cognitivo.Product
             int id_branch = (int)cbxBranch.SelectedValue;
             item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
 
-            //List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == company_ID && x.item.is_active).ToList();
+            item_inventory_detailList = new List<entity.item_inventory_detail>();
+            List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == company_ID && x.item.is_active).ToList();
 
-            //foreach (item_product i in item_productLIST)
-            //{
-            //    item_inventory_detail item_inventory_detail = new item_inventory_detail();
-            //    item_inventory_detail.item_product = i;
-            //    item_inventory_detail.value_counted = 0;
-
-            //    using (db db = new db())
-            //    {
-            //        item_inventory_detail.app_location = db.app_location.Where(x => x.id_branch == id_branch && x.is_default).FirstOrDefault();
-
-            //        if (db.item_movement.Where(x => x.id_item_product == i.id_item_product
-            //                                     && x.app_location.id_branch == id_branch
-            //                                     && x.status == Status.Stock.InStock).ToList().Count > 0)
-            //        {
-            //            item_inventory_detail.value_system = db.item_movement
-            //                                                   .Where(x => x.id_item_product == i.id_item_product && x.app_location.id_branch == id_branch && x.status == Status.Stock.InStock)
-            //                                                   .Sum(y => y.credit - y.debit);
-            //        }
-            //        else
-            //        {
-            //            item_inventory_detail.value_system = 0;
-            //        }
-            //    }
-
-            //    item_inventory.item_inventory_detail.Add(item_inventory_detail);
-            //}
-            var movement =
-                (from item_movement in  InventoryDB.item_movement join item_product in  InventoryDB.item_product on item_movement.id_item_product equals item_product.id_item_product
-                        into its
-                 from p in its.DefaultIfEmpty()
-                
-                 group p by new {p}
-                     into last
-                     select new
-                     {
-                         code = last.Key.p.item.code,
-                         item_product = last.Key.p,
-                         name = last.Key.p.item.name,
-                        // BranchName = last.Key.item_movement.app_location.app_branch.name,
-                        // id_location = last.Key.item_movement.app_location.id_location,
-                         itemid = last.Key.p.item.id_item,
-                         //quntitiy = last.Sum(x => last.Key.item_movement.credit) - last.Sum(x => last.Key.item_movement.debit),
-                         id_item_product = last.Key.p.id_item_product,
-                         measurement = last.Key.p.item.id_measurement
-                     }).ToList();
-
-            //var movement =
-            //    (from items in InventoryDB.items
-            //        join item_product in InventoryDB.item_product on items.id_item equals item_product.id_item
-            //            into its
-            //     from p in its.DefaultIfEmpty()
-            //        join item_movement in InventoryDB.item_movement on p.id_item_product equals item_movement.id_item_product
-            //        into IMS
-            //     from a in IMS
-            //        join AM in InventoryDB.app_branch on a.app_location.id_branch equals AM.id_branch
-            //        where a.app_location.id_branch == id_branch
-            //        group a by new { a.item_product }
-            //            into last
-            //            select new
-            //            {
-            //                code = last.Key.item_product.item.code,
-            //                item_product = last.Key.item_product,
-            //                name = last.Key.item_product.item.name,
-            //                BranchName = last.OrderBy(m => m.app_location.id_branch),
-            //                id_location = last.Max(x=>x.id_location),
-            //                itemid = last.Key.item_product.item.id_item,
-            //                quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-            //                id_item_product = last.Key.item_product.id_item_product,
-            //                measurement = last.Key.item_product.item.id_measurement
-            //            }).ToList();
-
-            foreach (var item in movement)
+            foreach (item_product i in item_productLIST)
             {
                 item_inventory_detail item_inventory_detail = new item_inventory_detail();
-                //item_inventory_detail.app_location = InventoryDB.app_location.Where(x => x.id_location == item.id_location).FirstOrDefault();
-                item_inventory_detail.item_product = InventoryDB.item_product.Where(x => x.id_item_product == item.id_item_product).FirstOrDefault();
-                item_inventory_detail.id_item_product = item.id_item_product;
-                //item_inventory_detail.id_location = item.id_location;
-                item_inventory_detail.id_item_product = item.id_item_product;
-               // item_inventory_detail.value_system = item.quntitiy;
-                item_inventory.item_inventory_detail.Add(item_inventory_detail);
-            }
+                item_inventory_detail.item_product = i;
+                item_inventory_detail.value_counted = 0;
 
+                //using (InventoryDB db = new InventoryDB())
+                //{
+                item_inventory_detail.app_location = InventoryDB.app_location.Where(x => x.id_branch == id_branch && x.is_default).FirstOrDefault();
+                item_inventory_detail.id_location = InventoryDB.app_location.Where(x => x.id_branch == id_branch && x.is_default).FirstOrDefault().id_location;
+                if (InventoryDB.item_movement.Where(x => x.id_item_product == i.id_item_product
+                                                 && x.app_location.id_branch == id_branch
+                                                 && x.status == Status.Stock.InStock).ToList().Count > 0)
+                    {
+                        item_inventory_detail.value_system = InventoryDB.item_movement
+                                                               .Where(x => x.id_item_product == i.id_item_product && x.app_location.id_branch == id_branch && x.status == Status.Stock.InStock)
+                                                               .Sum(y => y.credit - y.debit);
+                    }
+                    else
+                    {
+                        item_inventory_detail.value_system = 0;
+                    }
+              //  }
+
+                item_inventory_detailList.Add(item_inventory_detail);
+            }
+            
+            //var movement =
+            //    (from item_movement in  InventoryDB.item_movement join item_product in  InventoryDB.item_product on item_movement.id_item_product equals item_product.id_item_product
+            //            into its
+            //     from p in its.DefaultIfEmpty()
+                
+            //     group p by new {p}
+            //         into last
+            //         select new
+            //         {
+            //             code = last.Key.p.item.code,
+            //             item_product = last.Key.p,
+            //             name = last.Key.p.item.name,
+            //            // BranchName = last.Key.item_movement.app_location.app_branch.name,
+            //            // id_location = last.Key.item_movement.app_location.id_location,
+            //             itemid = last.Key.p.item.id_item,
+            //             quntitiy = last.Sum(x => last.Key.p.item_movement.cred) - last.Sum(x => last.Key.item_movement.debit),
+            //             id_item_product = last.Key.p.id_item_product,
+            //             measurement = last.Key.p.item.id_measurement
+            //         }).ToList();
+
+            ////var movement =
+            ////    (from items in InventoryDB.items
+            ////        join item_product in InventoryDB.item_product on items.id_item equals item_product.id_item
+            ////            into its
+            ////     from p in its.DefaultIfEmpty()
+            ////        join item_movement in InventoryDB.item_movement on p.id_item_product equals item_movement.id_item_product
+            ////        into IMS
+            ////     from a in IMS
+            ////        join AM in InventoryDB.app_branch on a.app_location.id_branch equals AM.id_branch
+            ////        where a.app_location.id_branch == id_branch
+            ////        group a by new { a.item_product }
+            ////            into last
+            ////            select new
+            ////            {
+            ////                code = last.Key.item_product.item.code,
+            ////                item_product = last.Key.item_product,
+            ////                name = last.Key.item_product.item.name,
+            ////                BranchName = last.OrderBy(m => m.app_location.id_branch),
+            ////                id_location = last.Max(x=>x.id_location),
+            ////                itemid = last.Key.item_product.item.id_item,
+            ////                quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+            ////                id_item_product = last.Key.item_product.id_item_product,
+            ////                measurement = last.Key.item_product.item.id_measurement
+            ////            }).ToList();
+
+            //foreach (var item in movement)
+            //{
+            //    item_inventory_detail item_inventory_detail = new item_inventory_detail();
+            //    //item_inventory_detail.app_location = InventoryDB.app_location.Where(x => x.id_location == item.id_location).FirstOrDefault();
+            //    item_inventory_detail.item_product = InventoryDB.item_product.Where(x => x.id_item_product == item.id_item_product).FirstOrDefault();
+            //    item_inventory_detail.id_item_product = item.id_item_product;
+            //    //item_inventory_detail.id_location = item.id_location;
+            //    item_inventory_detail.id_item_product = item.id_item_product;
+            //   // item_inventory_detail.value_system = item.quntitiy;
+            //   item_inventory.item_inventory_detail .Add(item_inventory_detail);
+            //}
+            dgvdetail.ItemsSource = item_inventory_detailList;
             item_inventoryitem_inventory_detailViewSource = ((CollectionViewSource)(FindResource("item_inventoryitem_inventory_detailViewSource")));
             item_inventoryitem_inventory_detailViewSource.View.Refresh();
             item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToLast();
@@ -173,9 +175,48 @@ namespace Cognitivo.Product
         {
             try
             {
+                ProductMovementDB ProductMovementDB = new entity.ProductMovementDB();
+                foreach (item_inventory_detail _item_inventory_detail in item_inventory_detailList)
+                {
+                    if (_item_inventory_detail.value_counted != 0)
+                    {
+                        item_movement item_movement_origin = new item_movement();
+                        if (_item_inventory_detail.value_counted>_item_inventory_detail.value_system)
+                        {
+                            item_movement_origin.debit = 0;
+                            item_movement_origin.credit = _item_inventory_detail.value_counted - _item_inventory_detail.value_system;
+                        }
+                        else
+                        {
+                            item_movement_origin.debit = _item_inventory_detail.value_system - _item_inventory_detail.value_counted;
+                            item_movement_origin.credit =0 ;
+                        }
+                        item_movement_origin.id_application = global::entity.App.Names.Inventory;
+                        item_movement_origin.id_location = _item_inventory_detail.id_location;
+                        item_movement_origin.transaction_id = 0;
+                        item_movement_origin.status = Status.Stock.InStock;
+                        item_movement_origin.trans_date = _item_inventory_detail.timestamp;
+                        if (_item_inventory_detail.item_product.id_item_product != 0)
+                        {
+                            if (ProductMovementDB.item_product.Where(x => x.id_item == _item_inventory_detail.item_product.id_item_product).FirstOrDefault() != null)
+                            {
+                                item_movement_origin.id_item_product = ProductMovementDB.item_product.Where(x => x.id_item == _item_inventory_detail.item_product.id_item_product).FirstOrDefault().id_item_product;
+                            }
+                        }
+                        InventoryDB.item_inventory_detail.Add(_item_inventory_detail);
+                        InventoryDB.item_movement.Add(item_movement_origin);
+                    }
+                }
                 InventoryDB.SaveChanges();
                 item_inventoryViewSource.View.Refresh();
                 toolBar.msgSaved();
+
+              
+              
+                  
+
+                  
+              
             }
             catch (Exception ex)
             {

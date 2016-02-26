@@ -102,7 +102,7 @@
                 <Label Content="{Binding  security_user.name}"/>
 
             </StackPanel>
-            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}"  Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
+            <DataGrid x:Name="dgvdetail"  AutoGenerateColumns="False" EnableRowVirtualization="True"   Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
                     <DataGridTextColumn Binding="{Binding app_location.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Location}" Width="auto"/>

@@ -63,8 +63,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+       
         <StackPanel Grid.Column="1" Grid.Row="1" Background="White" Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+           
             <Border CornerRadius="64" Background="WhiteSmoke"
                     Width="100" Height="100" Margin="24"
                     HorizontalAlignment="Center" VerticalAlignment="Top">
@@ -269,5 +270,6 @@
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <cntrl:toolIcon imgSource="K" Click="toolIcon_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1"/>
     </Grid>
 </Page>

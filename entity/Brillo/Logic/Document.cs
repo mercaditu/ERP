@@ -54,7 +54,7 @@ namespace entity.Brillo.Logic
         }
 
 
-        public void  Document_PrintPaymentReceipt(payment payment)
+        public void Document_PrintPaymentReceipt(payment payment)
         {
             DocumentViewr MainWindow = new DocumentViewr();
             MainWindow.loadPaymentRecieptReport(payment.id_payment);
@@ -189,7 +189,7 @@ namespace entity.Brillo.Logic
             }
             if (app_document != null)
             {
-                if (purchase_order.app_document_range.printer_name!=null)
+                if (purchase_order.app_document_range.printer_name != null)
                 {
                     DocumentViewr MainWindow = new DocumentViewr();
                     MainWindow.loadPurchaseOrderReport(purchase_order.id_purchase_order);
@@ -362,12 +362,27 @@ namespace entity.Brillo.Logic
                     document.MinPageWidth = 283;
                     //Specify maximum page sizes.
                     document.MaxPageWidth = 300;
-               
+
                     IDocumentPaginatorSource idpSource = document;
                     pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
                     pd.PrintDocument(idpSource.DocumentPaginator, Reciept.ItemMovement(item_transfer));
                 }
             }
+        }
+
+
+        public void Document_PrintCarnetContact(contact contact)
+        {
+
+            DocumentViewr MainWindow = new DocumentViewr();
+            MainWindow.loadCarnetcontactReport(contact.id_contact);
+            Window window = new Window
+            {
+                Title = "Report",
+                Content = MainWindow
+            };
+
+            window.ShowDialog();
         }
     }
 }

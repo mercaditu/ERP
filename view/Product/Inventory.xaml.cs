@@ -66,6 +66,7 @@ namespace Cognitivo.Product
                     {
                         item_inventory_detail.value_system = 0;
                     }
+                item_inventory_detail.item_inventory = item_inventory;
               //  }
 
                 item_inventory_detailList.Add(item_inventory_detail);
@@ -175,36 +176,14 @@ namespace Cognitivo.Product
         {
             try
             {
-                ProductMovementDB ProductMovementDB = new entity.ProductMovementDB();
+              
                 foreach (item_inventory_detail _item_inventory_detail in item_inventory_detailList)
                 {
                     if (_item_inventory_detail.value_counted != 0)
                     {
-                        item_movement item_movement_origin = new item_movement();
-                        if (_item_inventory_detail.value_counted>_item_inventory_detail.value_system)
-                        {
-                            item_movement_origin.debit = 0;
-                            item_movement_origin.credit = _item_inventory_detail.value_counted - _item_inventory_detail.value_system;
-                        }
-                        else
-                        {
-                            item_movement_origin.debit = _item_inventory_detail.value_system - _item_inventory_detail.value_counted;
-                            item_movement_origin.credit =0 ;
-                        }
-                        item_movement_origin.id_application = global::entity.App.Names.Inventory;
-                        item_movement_origin.id_location = _item_inventory_detail.id_location;
-                        item_movement_origin.transaction_id = 0;
-                        item_movement_origin.status = Status.Stock.InStock;
-                        item_movement_origin.trans_date = _item_inventory_detail.timestamp;
-                        if (_item_inventory_detail.item_product.id_item_product != 0)
-                        {
-                            if (ProductMovementDB.item_product.Where(x => x.id_item == _item_inventory_detail.item_product.id_item_product).FirstOrDefault() != null)
-                            {
-                                item_movement_origin.id_item_product = ProductMovementDB.item_product.Where(x => x.id_item == _item_inventory_detail.item_product.id_item_product).FirstOrDefault().id_item_product;
-                            }
-                        }
+                       
                         InventoryDB.item_inventory_detail.Add(_item_inventory_detail);
-                        InventoryDB.item_movement.Add(item_movement_origin);
+                        
                     }
                 }
                 InventoryDB.SaveChanges();

@@ -129,6 +129,8 @@ namespace Cognitivo.Commercial
             try
             {
                 dbContext.SaveChanges();
+             
+             
                 contactViewSource.View.Refresh();
                 toolBar.msgSaved();
             }
@@ -291,6 +293,13 @@ namespace Cognitivo.Commercial
                 }));
 
             }
+        }
+
+        private void toolIcon_Click(object sender, RoutedEventArgs e)
+        {
+            entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
+            contact contact = (contact)listContacts.SelectedItem;
+            Document.Document_PrintCarnetContact(contact);
         }
     }
 }

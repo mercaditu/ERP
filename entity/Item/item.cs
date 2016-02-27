@@ -7,22 +7,24 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     using System.Linq;
+using entity.Class;
 
     public partial class item : Audit, IDataErrorInfo
     {
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum item_type
         {
-            //[Description("Producto ABHI")]
+            [LocalizedDescription("Product")]
             Product = 1,
-            //[Description(Brillo.Localize.StringText("RawMaterial"))]
+            [LocalizedDescription("RawMaterial")]
             RawMaterial = 2,
-            //[Description(Brillo.Localize.StringText("Service"))]
+            [LocalizedDescription("Service")]
             Service = 3,
-            //[Description(Brillo.Localize.StringText("FixedAssets"))]
+            [LocalizedDescription("FixedAssets")]
             FixedAssets = 4,
-           // [Description(Brillo.Localize.StringText("Task"))]
+            [LocalizedDescription("Task")]
             Task = 5,
-           // [Description(Brillo.Localize.StringText("Supplies"))]
+            [LocalizedDescription("Supplies")]
             Supplies = 6
         }
 

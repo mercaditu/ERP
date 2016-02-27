@@ -177,6 +177,8 @@
     </Compile>
     <Compile Include="Brillo\Logic\Range.cs" />
     <Compile Include="Brillo\Document\Reciept.cs" />
+    <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
+    <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Commercial\refinance.cs" />
     <Compile Include="Context\Accounting\AccountingChartDB.cs" />
     <Compile Include="Context\Accounting\AccountingCycleDB.cs" />

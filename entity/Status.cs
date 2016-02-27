@@ -1,14 +1,21 @@
+using entity.Class;
+using System.ComponentModel;
 namespace entity
 {
     public static class Status
     {
-
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ReturnTypes
         {
+            [LocalizedDescription("ItemDefect")]
             ItemDefect = 1,
+            [LocalizedDescription("ItemExpired")]
             ItemExpired = 2,
+            [LocalizedDescription("Discount")]
             Discount = 3,
+            [LocalizedDescription("Bonus")]
             Bonus = 4,
+            [LocalizedDescription("Error")]
             Error = 5,
         }
 
@@ -52,13 +59,16 @@ namespace entity
             InProcess = 3,
             Executed = 4,
             Rejected = 5
-          
         }
-
+        
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Stock
         {
+            [LocalizedDescription("OnTheWay")]
             OnTheWay = 1,
+            [LocalizedDescription("InStock")]
             InStock = 2,
+            [LocalizedDescription("Reserved")]
             Reserved = 3
         }
     }

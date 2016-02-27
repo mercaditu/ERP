@@ -1,5 +1,6 @@
 ﻿namespace entity
 {
+    using entity.Class;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -11,17 +12,24 @@
     {
         Project.clsproject objclsproject = new Project.clsproject();
 
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ChartType
         {
+            [LocalizedDescription("Asset")]
             Asset,
+            [LocalizedDescription("Liability")]
             Liability,
+            [LocalizedDescription("Equity")]
             Equity,
+            [LocalizedDescription("Revenue")]
             Revenue,
+            [LocalizedDescription("Expense")]
             Expense
         }
+
+        //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ChartSubType
         {
-            //Assets
             FixedAsset = 1,
             Cash = 2,
             Inventory = 3,

@@ -19,7 +19,7 @@
     </UserControl.Resources>
     <Grid>
         <!-- TextBox for Searching -->
-        <TextBox x:Name="tbxSearch" Padding="0,0,16,0"
+        <TextBox x:Name="tbxSearch" Padding="12,0,16,0"
                  Text="{Binding Path=Text, ElementName=__SmartBox_Geography, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
@@ -33,6 +33,9 @@
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
                HorizontalAlignment="Right" Foreground="{StaticResource Modal_BackgroundColor}"/>
+
+        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" VerticalAlignment="Center" Margin="0" 
+               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
 
         <Popup x:Name="ContactPopUp" IsOpen="False">
             <Popup.Effect>

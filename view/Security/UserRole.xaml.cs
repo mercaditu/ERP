@@ -134,10 +134,10 @@ namespace Cognitivo.Security
                 List<entity.App.Names> _DbApplication = security_curd.Select(x => x.id_application).ToList();
                 List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
                 List<entity.App.Names> finalapplicaiton = Enumerable.Except<entity.App.Names>(Application, (IEnumerable<entity.App.Names>)_DbApplication).ToList();
-                foreach (entity.App.Names item in finalapplicaiton)
+                foreach (entity.App.Names AppName in finalapplicaiton)
                 {
                     security_curd _security_curd = new security_curd();
-                    _security_curd.id_application = item;
+                    _security_curd.id_application = AppName;
                     _security_curd.security_role = security_role;
                     _security_curd.has_full_control = false;
                     _security_curd.can_update = false;

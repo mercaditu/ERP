@@ -357,6 +357,7 @@
     <Compile Include="Converters\AccountingChartGroupExpense.cs" />
     <Compile Include="Converters\AccountingChartGroupIncome.cs" />
     <Compile Include="Converters\AddTwoValue.cs" />
+    <Compile Include="Converters\Localize.cs" />
     <Compile Include="Converters\CurrencyConverter.cs" />
     <Compile Include="Converters\Enum2ArrayConverter.cs" />
     <Compile Include="Converters\HierarchyConverter.cs" />

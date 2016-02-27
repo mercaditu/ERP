@@ -16,6 +16,7 @@
       Background="{StaticResource winBackground}"
 	 Loaded="Page_Loaded">
     <Page.Resources>
+        <converter:Localize x:Key="Localized"/>
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}"/>
         <CollectionViewSource x:Key="security_roleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_role}, CreateList=True}"/>
@@ -80,11 +81,13 @@
                               ItemsSource="{Binding Source={StaticResource security_rolesecurity_curdViewSource}}" Grid.Row="1" CanUserDeleteRows="False" CanUserAddRows="False"
                               RowDetailsVisibilityMode="VisibleWhenSelected" FontSize="16" SelectionUnit="Cell">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding id_application}" Header="{lex:Loc Cognitivo:local:Application}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding id_application, Converter={StaticResource Localized}}" 
+                                                Header="{lex:Loc Cognitivo:local:Application}" 
+                                                IsReadOnly="True" Width="*"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                    Header="{lex:Loc Cognitivo:local:View}" Width="SizeToHeader"/>
+                                                    Header="View" Width="SizeToHeader"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_create, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -108,7 +111,7 @@
                             <DataGridCheckBoxColumn Binding="{Binding has_full_control, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                                                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                    Header="{lex:Loc Cognitivo:local:All}" Width="SizeToHeader"/>
+                                                    Header="Full" Width="SizeToHeader"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

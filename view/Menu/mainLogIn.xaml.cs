@@ -15,7 +15,6 @@ namespace Cognitivo.Menu
         Frame myFrame;
         Task taskAuth;
         MainWindow myWindow = Application.Current.MainWindow as MainWindow;
-        //entity.dbContext entity = new entity.dbContext();
 
         entity.Properties.Settings _settings = new entity.Properties.Settings();
 
@@ -118,6 +117,7 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => { this.Cursor = Cursors.AppStarting; }));
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
+            
             try
             {
                 if(_settings.company_ID == 0)
@@ -129,28 +129,17 @@ namespace Cognitivo.Menu
                     }
                 }
 
-                //if (_settings.branch_ID == 0)
-                //{
-                //    using (db db = new db())
-                //    {
-                //        _settings.branch_ID = db.app_branch.FirstOrDefault().id_branch;
-                //        _settings.Save();
-                //    }
-                //}
                 security_user security_user;
-                using (db db = new db())
+
+                using (CurrentSession.db)
                 {
-                    security_user = db.security_user.Where(user => user.name.Equals(u) 
-                                                                && user.password.Equals(p) 
-                                                                && user.id_company.Equals(entity.Properties.Settings.Default.company_ID)).FirstOrDefault();
+
                 }
 
-                if (security_user != null)
+                if (CurrentSession.User != null)
                 {
-                    //Save Values In Settings
-                    _settings.user_Name = security_user.name;
-                    _settings.user_ID = security_user.id_user;
-                    _settings.Save();
+                    CurrentSession.Company = security_user.app_company;
+                    CurrentSession.User = security_user;
 
                     myWindow.is_LoggedIn = true;
                     Dispatcher.BeginInvoke((Action)(() => myFrame.Navigate(new mainMenu_Corporate())));

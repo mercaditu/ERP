@@ -11,7 +11,7 @@ using entity.Class;
 
     public partial class item : Audit, IDataErrorInfo
     {
-       // [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum item_type
         {
             [LocalizedDescription("Product")]

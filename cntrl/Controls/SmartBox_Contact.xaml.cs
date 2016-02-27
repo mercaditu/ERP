@@ -110,49 +110,26 @@ namespace cntrl.Controls
 
                 List<entity.contact> results = new List<entity.contact>();
 
-                if (Get_Customers)
-                {
-                    results.AddRange(db.contacts
-                    .Where(x =>
-                              x.id_company == company_ID &&
-                              (
-                                  x.code.Contains(SearchText) ||
-                                  x.name.Contains(SearchText) ||
-                                  x.gov_code.Contains(SearchText)
-                              )
-                              &&
-                              (
-                                  x.is_customer == Get_Customers
-                              )
-                              &&
-                              x.is_active == true
+                results.AddRange(db.contacts
+                .Where(x =>
+                            x.id_company == company_ID &&
+                            (
+                                x.code.Contains(SearchText) ||
+                                x.name.Contains(SearchText) ||
+                                x.gov_code.Contains(SearchText)
                             )
-                    .OrderBy(x => x.name)
-                    .ToList()
-                    );
-                }
-
-                if (Get_Suppliers)
-                {
-                    results.AddRange(db.contacts
-                    .Where(x =>
-                              x.id_company == company_ID &&
-                              (
-                                  x.code.Contains(SearchText) ||
-                                  x.name.Contains(SearchText) ||
-                                  x.gov_code.Contains(SearchText)
-                              )
-                              &&
-                              (
-                                  x.is_supplier == Get_Suppliers
-                              )
-                              &&
-                              x.is_active == true
+                            &&
+                            (
+                                x.is_customer == Get_Customers ||
+                                x.is_supplier == Get_Suppliers ||
+                                x.is_employee == Get_Employees
                             )
-                    .OrderBy(x => x.name)
-                    .ToList()
-                    );
-                }
+                            &&
+                            x.is_active == true
+                        )
+                .OrderBy(x => x.name)
+                .ToList()
+                );
 
                 Dispatcher.InvokeAsync(new Action(() =>
                 {

@@ -91,10 +91,12 @@
         <!--Right Hand Side Part - Start-->
         <Grid Grid.Column="1" Grid.Row="1" DataContext="{StaticResource item_inventoryitem_inventory_detailViewSource}" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="105"/>
+                <RowDefinition Height="164"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <StackPanel Background="{StaticResource winBackground}">
+                <Label Content="{lex:Loc Date}"/>
+                <DatePicker SelectedDate="{Binding trans_date}" Style="{StaticResource input_datepicker}"/>
                 <Label Content="{lex:Loc Branch}"/>
                 <ComboBox x:Name="cbxBranch" ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" Style="{StaticResource input_combobox}"
                           DisplayMemberPath="name" SelectedValuePath="id_branch" SelectionChanged="CbxBranch_SelectionChanged"/>
@@ -106,17 +108,17 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
                     <DataGridTextColumn Binding="{Binding app_location.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Location}" Width="auto"/>
-                    <DataGridTextColumn Binding="{Binding value_system}" Width="auto" CellStyle="{StaticResource Number_CellStyle}">
+                    <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="auto" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True">
                         <DataGridTextColumn.Header>
                             <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" System"/></TextBlock>
                         </DataGridTextColumn.Header>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding value_counted}" Width="64" CellStyle="{StaticResource Number_CellStyle}">
+                    <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" CellStyle="{StaticResource Number_CellStyle}">
                         <DataGridTextColumn.Header>
                             <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" Counted"/></TextBlock>
                         </DataGridTextColumn.Header>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" Width="auto"/>
+                    <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Comment}" Width="auto"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

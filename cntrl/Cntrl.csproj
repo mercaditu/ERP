@@ -165,6 +165,9 @@
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SmartBox_Geography.xaml.cs">
+      <DependentUpon>SmartBox_Geography.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SmartBox_Item.xaml.cs">
       <DependentUpon>SmartBox_Item.xaml</DependentUpon>
     </Compile>
@@ -532,6 +535,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\AttachmentViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SmartBox_Geography.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

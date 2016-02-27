@@ -69,9 +69,6 @@ namespace entity
 
         private void validate_item_inventory_detail(item_inventory_detail item_inventory_detail)
         {
-        //    if (item_inventory_detail.IsSelected)
-        //    {
-
                 if (item_inventory_detail.State == EntityState.Added)
                 {
                     item_inventory_detail.timestamp = DateTime.Now;
@@ -90,19 +87,13 @@ namespace entity
                     item_inventory_detail.State = EntityState.Unchanged;
                     base.item_inventory_detail.Remove(item_inventory_detail);
                 }
-            //}
-            //else if (item_inventory_detail.State > 0)
-            //{
-            //    if (item_inventory_detail.State != EntityState.Unchanged)
-            //    {
-            //        Entry(item_inventory_detail).State = EntityState.Unchanged;
-            //    }
-            //}
+
                 if (item_inventory_detail.State != EntityState.Unchanged)
                 {
                     Entry(item_inventory_detail).State = EntityState.Unchanged;
                 }
         }
+
         public void Approve()
         {
             foreach (item_inventory item_inventory in base.item_inventory.Local.Where(x =>

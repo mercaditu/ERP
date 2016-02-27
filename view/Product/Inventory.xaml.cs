@@ -16,7 +16,7 @@ namespace Cognitivo.Product
         CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource;
         List<item_inventory_detail> item_inventory_detailList;
         int company_ID = entity.Properties.Settings.Default.company_ID;
-
+        
         public Inventory()
         {
             InitializeComponent();
@@ -181,20 +181,12 @@ namespace Cognitivo.Product
                 {
                     if (_item_inventory_detail.value_counted != 0)
                     {
-                       
                         InventoryDB.item_inventory_detail.Add(_item_inventory_detail);
-                        
                     }
                 }
                 InventoryDB.SaveChanges();
                 item_inventoryViewSource.View.Refresh();
                 toolBar.msgSaved();
-
-              
-              
-                  
-
-                  
               
             }
             catch (Exception ex)

@@ -15,16 +15,16 @@
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ChartType
         {
-            [LocalizedDescription("Asset")]
-            Asset,
-            [LocalizedDescription("Liability")]
+            [LocalizedDescription("Assets")]
+            Assets,
+            [LocalizedDescription("Liabilities")]
             Liability,
             [LocalizedDescription("Equity")]
             Equity,
             [LocalizedDescription("Revenue")]
             Revenue,
-            [LocalizedDescription("Expense")]
-            Expense
+            [LocalizedDescription("Expenses")]
+            Expenses
         }
 
         //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
@@ -274,7 +274,6 @@
             {
                 if (child.Count == 0)
                 {
-
                     _child_total = objclsproject.getsumAccounting_chart(this);
                 }
                 RaisePropertyChanged("child_total");

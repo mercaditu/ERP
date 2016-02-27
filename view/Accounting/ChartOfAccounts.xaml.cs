@@ -86,7 +86,7 @@ namespace Cognitivo.Accounting
             AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == _settings.company_ID).Load();
             accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
             accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
-         //   filter_task();
+
             filter_chart();
         }
 

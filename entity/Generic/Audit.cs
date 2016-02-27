@@ -23,8 +23,10 @@ namespace entity
         //Data
         [NotMapped]
         public bool HasErrors { get; set; }
+
         [NotMapped]
         public bool IsSelected { get; set; }
+
         [NotMapped]
         public System.Data.Entity.EntityState State
         {

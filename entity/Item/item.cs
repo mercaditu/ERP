@@ -30,19 +30,15 @@ using entity.Class;
 
         public item()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = Session.Company.id_company;
+            id_user = Session.User.id_user;
             is_head = true;
             is_active = true;
-            //has_promo = false;
             is_autorecepie = false;
-
-           
 
             unit_cost = 0;
 
             item_price = new List<item_price>();
-
             item_attachment = new List<item_attachment>();
             item_tag_detail = new List<item_tag_detail>();
             item_product = new List<item_product>();
@@ -50,13 +46,6 @@ using entity.Class;
             item_asset = new List<item_asset>();
             item_property = new List<item_property>();
             item_dimension = new List<item_dimension>();
-            using (db db = new db())
-            {
-                if (db.app_vat_group.Where(x => x.is_default == true && x.id_company == id_company).FirstOrDefault() != null)
-                    id_vat_group = db.app_vat_group.Where(x => x.is_default == true && x.id_company == id_company).FirstOrDefault().id_vat_group;
-                else
-                    id_vat_group = 0;
-            }
         }
 
         [Key]

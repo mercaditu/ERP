@@ -7,6 +7,22 @@ namespace entity
 {
     public partial class ItemDB : BaseDB
     {
+        public void New(item item)
+        {
+            item.unit_cost = 0;
+
+            if (item.State > 0)
+            {
+                using (db db = new db())
+                {
+                    if (db.app_vat_group.Where(x => x.is_default == true && x.id_company == Session.Company.id_company).FirstOrDefault() != null)
+                        item.id_vat_group = db.app_vat_group.Where(x => x.is_default == true && x.id_company == Session.Company.id_company).FirstOrDefault().id_vat_group;
+                    else
+                        item.id_vat_group = 0;
+                }
+            }
+        }
+
         public override int SaveChanges()
         {
             validate_Item();

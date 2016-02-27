@@ -15,7 +15,7 @@ namespace Cognitivo.Converters
         {
             if (value!=null)
             {
-                if (value.ToString() == entity.accounting_chart.ChartType.Asset.ToString())
+                if (value.ToString() == entity.accounting_chart.ChartType.Assets.ToString())
                     return Visibility.Visible;
                 else
                 {

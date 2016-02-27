@@ -73,7 +73,7 @@ namespace Cognitivo.Setup.Migration
                     {
                         if (Convert.ToInt16(chart_reader["TIPOCUENTA"]) == 1)
                         {
-                            accounting_chart.chart_type = accounting_chart.ChartType.Asset;
+                            accounting_chart.chart_type = accounting_chart.ChartType.Assets;
                         }
                         else if (Convert.ToInt16(chart_reader["TIPOCUENTA"]) == 2)
                         {
@@ -89,7 +89,7 @@ namespace Cognitivo.Setup.Migration
                         }
                         else if (Convert.ToInt16(chart_reader["TIPOCUENTA"]) == 5)
                         {
-                            accounting_chart.chart_type = accounting_chart.ChartType.Expense;
+                            accounting_chart.chart_type = accounting_chart.ChartType.Expenses;
                         }
                     }
 

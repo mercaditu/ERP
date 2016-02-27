@@ -4,7 +4,7 @@ namespace entity
 {
     public class App
     {
-        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Modules
         {
             [LocalizedDescription("Sales")]
@@ -33,7 +33,7 @@ namespace entity
             Configuration,
         }
         
-        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+       // [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Names
         {
             /// <summary>

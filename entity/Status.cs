@@ -4,18 +4,18 @@ namespace entity
 {
     public static class Status
     {
-        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ReturnTypes
         {
-            [LocalizedDescription("ItemDefect")]
+          //  [LocalizedDescription("ItemDefect")]
             ItemDefect = 1,
-            [LocalizedDescription("ItemExpired")]
+         //   [LocalizedDescription("ItemExpired")]
             ItemExpired = 2,
-            [LocalizedDescription("Discount")]
+          //  [LocalizedDescription("Discount")]
             Discount = 3,
-            [LocalizedDescription("Bonus")]
+         //   [LocalizedDescription("Bonus")]
             Bonus = 4,
-            [LocalizedDescription("Error")]
+         //   [LocalizedDescription("Error")]
             Error = 5,
         }
 
@@ -61,14 +61,14 @@ namespace entity
             Rejected = 5
         }
         
-        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+      //  [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Stock
         {
-            [LocalizedDescription("OnTheWay")]
+          //  [LocalizedDescription("OnTheWay")]
             OnTheWay = 1,
-            [LocalizedDescription("InStock")]
+           // [LocalizedDescription("InStock")]
             InStock = 2,
-            [LocalizedDescription("Reserved")]
+           // [LocalizedDescription("Reserved")]
             Reserved = 3
         }
     }

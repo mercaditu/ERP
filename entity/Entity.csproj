@@ -177,7 +177,6 @@
     </Compile>
     <Compile Include="Brillo\Logic\Range.cs" />
     <Compile Include="Brillo\Document\Reciept.cs" />
-    <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Commercial\refinance.cs" />
     <Compile Include="Context\Accounting\AccountingChartDB.cs" />
@@ -362,7 +361,6 @@
     <Compile Include="Sales\sales_packing_relation.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Session.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="Application\app_field.cs" />
     <Compile Include="Application\app_location.cs" />

@@ -11,7 +11,7 @@ using entity.Class;
 
     public partial class item : Audit, IDataErrorInfo
     {
-        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+       // [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum item_type
         {
             [LocalizedDescription("Product")]
@@ -30,8 +30,8 @@ using entity.Class;
 
         public item()
         {
-            id_company = Session.Company.id_company;
-            id_user = Session.User.id_user;
+            id_company = Properties.Settings.Default.company_ID;
+            id_user = Properties.Settings.Default.user_ID;
             is_head = true;
             is_active = true;
             is_autorecepie = false;

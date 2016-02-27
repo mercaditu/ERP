@@ -12,7 +12,7 @@
     {
         Project.clsproject objclsproject = new Project.clsproject();
 
-        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+       // [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ChartType
         {
             [LocalizedDescription("Assets")]

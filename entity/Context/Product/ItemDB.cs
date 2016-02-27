@@ -15,8 +15,8 @@ namespace entity
             {
                 using (db db = new db())
                 {
-                    if (db.app_vat_group.Where(x => x.is_default == true && x.id_company == Session.Company.id_company).FirstOrDefault() != null)
-                        item.id_vat_group = db.app_vat_group.Where(x => x.is_default == true && x.id_company == Session.Company.id_company).FirstOrDefault().id_vat_group;
+                    if (db.app_vat_group.Where(x => x.is_default == true && x.id_company == Properties.Settings.Default.company_ID).FirstOrDefault() != null)
+                        item.id_vat_group = db.app_vat_group.Where(x => x.is_default == true && x.id_company == Properties.Settings.Default.company_ID).FirstOrDefault().id_vat_group;
                     else
                         item.id_vat_group = 0;
                 }

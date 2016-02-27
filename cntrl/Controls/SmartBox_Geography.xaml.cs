@@ -46,14 +46,14 @@ namespace cntrl.Controls
         CollectionViewSource continentViewSource, countryViewSource, stateViewSource, cityViewSource, areaViewSource;
 
         public event RoutedEventHandler Select;
-        private void GeographyGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
+        private void GeographyGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGrid GeoDGV = (DataGrid)sender;
-            CollectionViewSource CollectionViewSource = (CollectionViewSource)GeoDGV.ItemsSource;
+            //CollectionViewSource CollectionViewSource = (CollectionViewSource)GeoDGV.ItemsSource;
 
-            if (CollectionViewSource.View != null)
+            if (GeoDGV.SelectedItem != null)
             {
-                entity.app_geography Geography = CollectionViewSource.View.CurrentItem as entity.app_geography;
+                entity.app_geography Geography = GeoDGV.SelectedItem as entity.app_geography;
 
                 if (Geography != null)
                 {
@@ -72,7 +72,28 @@ namespace cntrl.Controls
         {
             if (e.Key == Key.Enter)
             {
-                GeographyGrid_MouseDoubleClick(sender, e);
+
+                if (continentViewSource.View.SourceCollection.Cast<entity.app_geography>().Count() > 0)
+                {
+                    GeographyGrid_MouseDoubleClick(DgContinent, null);
+                }
+                else if (countryViewSource.View.SourceCollection.Cast<entity.app_geography>().Count() > 0)
+                {
+                    GeographyGrid_MouseDoubleClick(DgCountry, null);
+                }
+                else if (stateViewSource.View.SourceCollection.Cast<entity.app_geography>().Count() > 0)
+                {
+                    GeographyGrid_MouseDoubleClick(DgState, null);
+                }
+                else if (cityViewSource.View.SourceCollection.Cast<entity.app_geography>().Count() > 0)
+                {
+                    GeographyGrid_MouseDoubleClick(DgCity, null);
+                }
+                else if (areaViewSource.View.SourceCollection.Cast<entity.app_geography>().Count() > 0)
+                {
+                    GeographyGrid_MouseDoubleClick(DgArea, null);
+                }
+
             }
             //else if (e.Key == Key.Up)
             //{
@@ -118,13 +139,13 @@ namespace cntrl.Controls
 
                 results.AddRange(db.app_geography
                 .Where(x =>
-                            x.id_company == company_ID 
+                            x.id_company == company_ID
                             &&
                             (
-                                x.code.Contains(SearchText) 
+                                x.code.Contains(SearchText)
                                 ||
                                 x.name.Contains(SearchText)
-                            ) 
+                            )
                             &&
                             x.is_active == true
                         )
@@ -136,7 +157,11 @@ namespace cntrl.Controls
                 {
                     //contactViewSource.Source = results;
                     //Contact = contactViewSource.View.CurrentItem as entity.contact;
-
+                    continentViewSource.Source = results.Where(x => x.type == entity.app_geography.geo_types.Continent).ToList();
+                    countryViewSource.Source = results.Where(x => x.type == entity.app_geography.geo_types.Country).ToList();
+                    stateViewSource.Source = results.Where(x => x.type == entity.app_geography.geo_types.State).ToList();
+                    cityViewSource.Source = results.Where(x => x.type == entity.app_geography.geo_types.City).ToList();
+                    areaViewSource.Source = results.Where(x => x.type == entity.app_geography.geo_types.Zone).ToList();
                     ContactPopUp.IsOpen = true;
                     progBar.IsActive = false;
                 }));
@@ -167,5 +192,8 @@ namespace cntrl.Controls
                 }
             }
         }
+
+
+
     }
 }

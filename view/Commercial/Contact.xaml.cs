@@ -301,5 +301,14 @@ namespace Cognitivo.Commercial
             contact contact = (contact)listContacts.SelectedItem;
             Document.Document_PrintCarnetContact(contact);
         }
+
+        private void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
+        {
+            contact contact = (contact)contactViewSource.View.CurrentItem;
+            if (smtgeo.GeographyID>0)
+            {
+                contact.id_geography = smtgeo.GeographyID;
+            }
+        }
     }
 }

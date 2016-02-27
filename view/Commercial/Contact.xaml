@@ -9,6 +9,7 @@
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
           xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+          xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
           xmlns:customcmd="clr-namespace:Cognitivo.Class"
           xmlns:Controls="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
           xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
@@ -131,6 +132,8 @@
                         <TextBox x:Name="txtAddress"
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
+                        <cntrls:SmartBox_Geography x:Name="smtgeo" Select="SmartBox_Geography_Select" />
                     </StackPanel>
                 </WrapPanel>
             </TabItem>
@@ -270,6 +273,6 @@
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-        <cntrl:toolIcon imgSource="K" Click="toolIcon_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1"/>
+        <cntrl:toolIcon imgSource="p" Click="toolIcon_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1"/>
     </Grid>
 </Page>

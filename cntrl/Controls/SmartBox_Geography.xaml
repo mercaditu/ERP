@@ -43,29 +43,29 @@
             </Popup.Effect>
             <Border Background="White">
                 <StackPanel Orientation="Horizontal">
-                    <DataGrid Width="89" ItemsSource="{Binding Source={StaticResource continentViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp">
+                    <DataGrid x:Name="DgContinent" Width="89" ItemsSource="{Binding Source={StaticResource continentViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Continent" Width="*"/>
+                            <DataGridTextColumn Header="Continent" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid Width="89" ItemsSource="{Binding Source={StaticResource countryViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp">
+                    <DataGrid x:Name="DgCountry" Width="89" ItemsSource="{Binding Source={StaticResource countryViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Country" Width="*"/>
+                            <DataGridTextColumn Header="Country" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid Width="89" ItemsSource="{Binding Source={StaticResource stateViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp">
+                    <DataGrid x:Name="DgState" Width="89" ItemsSource="{Binding Source={StaticResource stateViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="State" Width="*"/>
+                            <DataGridTextColumn Header="State" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid Width="89" ItemsSource="{Binding Source={StaticResource cityViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp">
+                    <DataGrid  x:Name="DgCity" Width="89" ItemsSource="{Binding Source={StaticResource cityViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="City" Width="*"/>
+                            <DataGridTextColumn Header="City" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid Width="89" ItemsSource="{Binding Source={StaticResource areaViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp">
+                    <DataGrid x:Name="DgArea" Width="89" ItemsSource="{Binding Source={StaticResource areaViewSource}}" AutoGenerateColumns="False" KeyUp="DataGrid_KeyUp" MouseDoubleClick="GeographyGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Area" Width="*"/>
+                            <DataGridTextColumn Header="Area" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

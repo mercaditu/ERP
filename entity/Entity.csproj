@@ -356,6 +356,9 @@
     <Compile Include="Purchase\purchase_tender_dimension.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Sales\sales_packing_relation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Status.cs" />
     <Compile Include="Application\app_field.cs" />
     <Compile Include="Application\app_location.cs" />
@@ -505,7 +508,6 @@
     <Compile Include="Sales\sales_order_detail.cs" />
     <Compile Include="Sales\sales_packing.cs" />
     <Compile Include="Sales\sales_packing_detail.cs" />
-    <Compile Include="Sales\sales_packing_relation.cs" />
     <Compile Include="Sales\sales_rep.cs" />
     <Compile Include="Sales\sales_return.cs" />
     <Compile Include="Sales\sales_return_detail.cs" />

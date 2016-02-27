@@ -1525,14 +1525,15 @@ namespace Cognitivo.Setup.Migration.Cogent
                             }
 
                             production_order.production_order_detail.Add(production_order_detail);
+                            value += 1;
+                            Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
+                            Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
                            
                         }
                         if (production_order.Error == null)
                         {
                             db.production_order.Add(production_order);
-                            value += 1;
-                            Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
-                            Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
+                         
                         }
                         dtproduction.Clear();
                         readerproduction.Close();

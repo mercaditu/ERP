@@ -143,6 +143,8 @@
                         </ComboBox>
                         <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                         <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus"/>
+                        <Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="1">
                         <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
@@ -392,7 +394,7 @@
                                 <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                     Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                     Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto" CellStyle="{StaticResource Number_CellStyle}"/>
-                                <DataGridTextColumn Binding="{Binding Discount_SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                       <DataGridTextColumn Binding="{Binding Discount_SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="Discount" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                     Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

@@ -89,6 +89,38 @@ namespace entity
         }
         private decimal _GrandTotal;
 
+
+        /// <summary>
+        /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
+        /// </summary>
+        [NotMapped]
+        public decimal DiscountPercentage
+        {
+            get { return _DiscountPercentage; }
+            set
+            {
+                _DiscountPercentage = value;
+                RaisePropertyChanged("DiscountPercentage");
+
+
+
+                decimal OriginalValue = GrandTotal * DiscountPercentage;
+                if (OriginalValue != 0)
+                {
+                    decimal DifferenceValue = OriginalValue / purchase_order_detail.Count;
+                    foreach (var item in purchase_order_detail)
+                    {
+                        DifferenceValue = DifferenceValue / item.quantity;
+                        item.discount = DifferenceValue;
+                        item.RaisePropertyChanged("discount");
+                    }
+
+
+                }
+            }
+        }
+        private decimal _DiscountPercentage;
+
         //TimeCapsule
         public ICollection<purchase_order> older { get; set; }
         public purchase_order newer { get; set; }

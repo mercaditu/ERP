@@ -273,7 +273,11 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding unit_price, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto"/>
+                                <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="Discount" Width="Auto" CellStyle="{StaticResource Number_CellStyle}"/>
                                 <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto"/>
+                                <DataGridTextColumn Binding="{Binding Discount_SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="Discount" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="Auto" IsReadOnly="True"/>
                                 <DataGridTemplateColumn Width="Auto">

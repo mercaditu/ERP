@@ -226,6 +226,7 @@
     </Compile>
     <Compile Include="Generic\CommercialPurchaseDetail.cs" />
     <Compile Include="Generic\CommercialSalesDetail.cs" />
+    <Compile Include="Generic\Discount.cs" />
     <Compile Include="Generic\Email.cs" />
     <Compile Include="Generic\Audit.cs" />
     <Compile Include="Application\app_geography.cs" />

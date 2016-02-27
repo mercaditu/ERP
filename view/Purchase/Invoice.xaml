@@ -14,7 +14,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
-        mc:Ignorable="d" MinHeight="550" MinWidth="700" Loaded="pageInvoice_Loaded">
+        mc:Ignorable="d" MinHeight="670" MinWidth="700" Loaded="pageInvoice_Loaded">
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="Class:CustomCommands.Delete" 
                         CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
@@ -41,7 +41,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="330"/>
+            <RowDefinition Height="420"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -145,6 +145,8 @@
                 <AdornerDecorator>
                     <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"  LostFocus="cbxCurrency_LostFocus"  />
                 </AdornerDecorator>
+                <Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
+                <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
             <!-- SideBar -->

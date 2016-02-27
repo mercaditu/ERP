@@ -206,34 +206,7 @@ namespace entity
         }
         private decimal _UnitCost_Vat;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal discount
-        {
-            get { return _discount; }
-            set
-            {
-                if (_discount != value) // && value <= unit_cost
-                {
-                    if (_discount==0)
-                    {
-                        _discount = value;
-                        RaisePropertyChanged("discount");
-                        
-                    }
-                    else{
-                        decimal new_discount =_discount - value;
-                        _discount = value;
-                        RaisePropertyChanged("discount");
-                        unit_cost = unit_cost +new_discount;
-                        RaisePropertyChanged("unit_cost");
-                    }
-               
-                }
-            }
-        }
-        private decimal _discount;
+       
 
         /// <summary>
         /// 
@@ -274,65 +247,7 @@ namespace entity
         private decimal _SubTotal_Vat;
 
 
-        #region Discount Calculations
-
-        /// <summary>
-        /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
-        /// </summary>
-        [NotMapped]
-        public decimal DiscountPercentage
-        {
-            get { return _DiscountPercentage; }
-            set
-            {
-                _DiscountPercentage = value;
-                RaisePropertyChanged("DiscountPercentage");
-            }
-        }
-        private decimal _DiscountPercentage;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotMapped]
-        public decimal Discount_SubTotal
-        {
-            get { return _Discount_SubTotal; }
-            set
-            {
-                if (_Discount_SubTotal != value && quantity > 0) // && value <= unit_cost
-                {
-                    //Take discount sub total, minus value to create total discount value.
-                    //decimal new_discount = _Discount_SubTotal - value;
-
-                    //Update with new value.
-                    _Discount_SubTotal = value;
-                    RaisePropertyChanged("Discount_SubTotal");
-
-                    //Sends unit_discount value to discount.
-                    discount = (_Discount_SubTotal / quantity);
-                    RaisePropertyChanged("discount");
-                }
-            }
-        }
-        private decimal _Discount_SubTotal;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotMapped]
-        public decimal Discount_SubTotalPercentage
-        {
-            get { return _Discount_SubTotalPercentage; }
-            set
-            {
-                _Discount_SubTotalPercentage = value;
-                RaisePropertyChanged("Discount_SubTotalPercentage");
-            }
-        }
-        private decimal _Discount_SubTotalPercentage;
-
-        #endregion
+    
 
 
 

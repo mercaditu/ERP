@@ -213,45 +213,6 @@ namespace entity
         }
         private decimal _UnitPrice_Vat;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public decimal discount
-        {
-            get { return _discount; }
-            set
-            {
-                if (_discount != value) // && value <= unit_price
-                {
-                    decimal new_discount = _discount - value;
-
-                    _discount = value;
-                    RaisePropertyChanged("discount");
-
-                    unit_price = unit_price + new_discount;
-                    RaisePropertyChanged("unit_price");
-                }
-            }
-        }
-        private decimal _discount;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotMapped]
-        public decimal DiscountPercentage
-        {
-            get { return _DiscountPercentage; }
-            set
-            {
-                if (_DiscountPercentage != value)
-                {
-                    _DiscountPercentage = value;
-                    RaisePropertyChanged("DiscountPercentage");
-                }
-            }
-        }
-        private decimal _DiscountPercentage;
 
         /// <summary>
         /// 

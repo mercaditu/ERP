@@ -119,7 +119,7 @@ namespace entity
             get { return _id_vat_group; }
             set
             {
-                if (value!=null)
+                if (value != null)
                 {
                     if (_id_vat_group != value)
                     {
@@ -129,7 +129,7 @@ namespace entity
                         update_UnitPriceVAT();
                     }
                 }
-              
+
             }
         }
         private int _id_vat_group;
@@ -216,13 +216,20 @@ namespace entity
             {
                 if (_discount != value) // && value <= unit_cost
                 {
-                    decimal new_discount = _discount - value;
-
-                    _discount = value;
-                    RaisePropertyChanged("discount");
-
-                    unit_cost = unit_cost + new_discount;
-                    RaisePropertyChanged("unit_cost");
+                    if (_discount==0)
+                    {
+                        _discount = value;
+                        RaisePropertyChanged("discount");
+                        
+                    }
+                    else{
+                        decimal new_discount =_discount - value;
+                        _discount = value;
+                        RaisePropertyChanged("discount");
+                        unit_cost = unit_cost +new_discount;
+                        RaisePropertyChanged("unit_cost");
+                    }
+               
                 }
             }
         }
@@ -359,7 +366,7 @@ namespace entity
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
-            
+
             unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
             RaisePropertyChanged("unit_cost");
         }

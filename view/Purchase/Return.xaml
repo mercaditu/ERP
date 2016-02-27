@@ -167,7 +167,11 @@
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged}" Header="Quantity" Width="SizeToHeader"/>
                         <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="UnitPrice" Width="SizeToHeader"/>
+                        <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="Discount" Width="Auto"  CellStyle="{StaticResource Number_CellStyle}"/>
                         <DataGridTextColumn Binding="{Binding unit_cost_vat, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="UnitPriceWithVAT" Width="SizeToHeader"/>
+                        <DataGridTextColumn Binding="{Binding Discount_SubTotal, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="Discount" Width="Auto" />
                         <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="SubTotal" Width="SizeToHeader" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding sub_total_vat, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="SubTotalWithVat" Width="SizeToHeader" IsReadOnly="True"/>
                         <DataGridTemplateColumn Width="Auto" Header="">

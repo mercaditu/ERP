@@ -82,6 +82,9 @@ namespace Cognitivo.Commercial
         private void toolBar_btnNew_Click(object sender)
         {
             contact contact = new contact();
+
+            dbContext.New(contact);
+
             contact.is_employee = false;
             contact.State = EntityState.Added;
             contact.IsSelected = true;

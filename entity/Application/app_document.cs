@@ -14,8 +14,8 @@ namespace entity
             app_document_range = new List<app_document_range>();
             payment_type = new List<payment_type>();
             style_printer = true;
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             is_active = true;
         }

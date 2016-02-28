@@ -11,8 +11,8 @@ namespace entity
     {
         public item_movement()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             item_movement_value = new List<item_movement_value>();
             item_movement_dimension = new List<item_movement_dimension>();

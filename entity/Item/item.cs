@@ -7,7 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     using System.Linq;
-using entity.Class;
+    using entity.Class;
 
     public partial class item : Audit, IDataErrorInfo
     {
@@ -30,8 +30,9 @@ using entity.Class;
 
         public item()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
+
             is_head = true;
             is_active = true;
             is_autorecepie = false;

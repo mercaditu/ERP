@@ -9,16 +9,12 @@ using System.Windows.Data;
 
 namespace cntrl.Curd
 {
-
-
-    /// <summary>
-    /// Interaction logic for contact_role.xaml
-    /// </summary>
     public partial class Geography : UserControl
     {
         CollectionViewSource _objCollectionViewSource = null;
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
         CollectionViewSource app_geographyViewSource=null;
+        
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
 
@@ -31,7 +27,7 @@ namespace cntrl.Curd
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                cbxType.ItemsSource = Enum.GetValues(typeof(app_geography.geo_types));
+                cbxType.ItemsSource = Enum.GetValues(typeof(Status.geo_types));
                 app_geographyViewSource = (CollectionViewSource)FindResource("app_geographyViewSource");
                 app_geographyViewSource.Source = entity.db.app_geography.Where(a => a.is_active == true).OrderBy(a => a.name).ToList();
                 stackFields.DataContext = objCollectionViewSource;
@@ -86,14 +82,14 @@ namespace cntrl.Curd
         {
             if (cbxType.SelectedValue!=null)
             {
-                 if (app_geographyViewSource != null)
+                if (app_geographyViewSource != null)
             {
                 if (app_geographyViewSource.View != null)
                 {
                     app_geographyViewSource.View.Filter = i =>
                     {
                         app_geography app_geography = (app_geography)i;
-                        if (Convert.ToInt32(app_geography.type) == (int)cbxType.SelectedValue)
+                        if (Convert.ToInt32(app_geography.type) == ((int)cbxType.SelectedValue - 1))
                             return true;
                         else
                             return false;

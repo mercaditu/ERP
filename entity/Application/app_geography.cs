@@ -14,18 +14,9 @@ namespace entity
         {
             is_active = true;
             child = new List<app_geography>();
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
-        }
-
-        public enum geo_types
-        {
-            Continent,
-            Country,
-            State,
-            City,
-            Zone
         }
 
         [Key]
@@ -35,7 +26,7 @@ namespace entity
         [Required]
         public string name { get; set; }
         public string code { get; set; }
-        public geo_types type { get; set; }
+        public Status.geo_types type { get; set; }
         public decimal? geo_long { get; set; }
         public decimal? geo_lat { get; set; }
         public bool is_active { get; set; }

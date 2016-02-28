@@ -1,5 +1,6 @@
 namespace entity
 {
+    using entity.Class;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -10,75 +11,53 @@ namespace entity
 
     public partial class contact : Audit, IDataErrorInfo, INotifyPropertyChanged
     {
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum CivilStatus
         {
-            [Display(Name = "Soltero/a")]
+            [LocalizedDescription("Soltero/a")]
             Single,
-            [Display(Name = "Casado/a")]
+            [LocalizedDescription("Casado/a")]
             Married,
-            [Display(Name = "Separado/a")]
+            [LocalizedDescription("Separado/a")]
             Seperated,
-            [Display(Name = "Divorciado/a")]
+            [LocalizedDescription("Divorciado/a")]
             Divorced,
-            [Display(Name = "Viudo/a")]
+            [LocalizedDescription("Viudo/a")]
             Widowed
         }
-
+        
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Genders
         {
-            [Display(Name = "Masculino")]
+            [LocalizedDescription("Male")]
             Male,
-            [Display(Name = "Femenino")]
+            [LocalizedDescription("Female")]
             Female
         }
 
+
         public enum BloodTypes
         {
-            [Display(Name = "O+")]
+            [LocalizedDescription("O+")]
             Op,
-            [Display(Name = "O-")]
+            [LocalizedDescription("O-")]
             On,
-            [Display(Name = "A+")]
+            [LocalizedDescription("A+")]
             Ap,
-            [Display(Name = "A-")]
+            [LocalizedDescription("A-")]
             An,
-            [Display(Name = "B+")]
+            [LocalizedDescription("B+")]
             Bp,
-            [Display(Name = "B-")]
+            [LocalizedDescription("B-")]
             Bn,
-            [Display(Name = "AB+")]
+            [LocalizedDescription("AB+")]
             ABp,
-            [Display(Name = "AB-")]
+            [LocalizedDescription("AB-")]
             ABn,
         }
 
         public contact()
-        {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
-            is_head = true;
-            is_active = true;
-            contact_field_value = new List<contact_field_value>();
-            contact_subscription = new List<contact_subscription>();
-            hr_education = new List<hr_education>();
-            hr_contract = new List<hr_contract>();
-            hr_family = new List<hr_family>();
-            hr_talent_detail = new List<hr_talent_detail>();
-            lead_time = 0;
-
-            //Changed by Abhi, I want to use less entity on starting a new contact form.
-            using (db db = new db())
-            {
-                if (db.contact_role.Where(c => c.is_principal == true && c.id_company == id_company).FirstOrDefault() != null)
-                {
-                    int _id_contact_role = Convert.ToInt32(db.contact_role.Where(c => c.is_principal == true && c.id_company == id_company).FirstOrDefault().id_contact_role);
-                    if (_id_contact_role != 0)
-                    {
-                        id_contact_role = _id_contact_role;
-                    }
-                }
-            }
-        }
+        { }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

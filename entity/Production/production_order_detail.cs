@@ -11,8 +11,8 @@ namespace entity
     {
         public production_order_detail()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             child = new List<production_order_detail>();
             trans_date = DateTime.Now;

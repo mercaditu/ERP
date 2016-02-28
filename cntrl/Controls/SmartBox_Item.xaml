@@ -29,14 +29,13 @@
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
                HorizontalAlignment="Right" Foreground="{StaticResource Modal_BackgroundColor}"/>
-        
         <Popup x:Name="ContactPopUp" IsOpen="False">
-            <Popup.Effect>
-                <DropShadowEffect ShadowDepth="0"/>
-            </Popup.Effect>
             <Border Background="{StaticResource AccentColor_Brush}">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="1" Direction="270" Opacity="0.8"/>
+                </Border.Effect>
                 <DataGrid MaxWidth="512" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
-                      IsReadOnly="True" MouseDoubleClick="ItemGrid_MouseDoubleClick" Margin="4">
+                          IsReadOnly="True" MouseDoubleClick="ItemGrid_MouseDoubleClick" Margin="4">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding code}" Width="auto"/>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding name}" FontWeight="Bold" Width="auto"/>

@@ -19,8 +19,8 @@ namespace entity
 
         public sales_rep()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             sales_order = new List<sales_order>();
             sales_invoice = new List<sales_invoice>();

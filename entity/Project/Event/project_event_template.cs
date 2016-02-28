@@ -11,8 +11,8 @@ namespace entity
         public project_event_template()
         {
             is_active = true;
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
 
             project_event_template_fixed = new List<project_event_template_fixed>();

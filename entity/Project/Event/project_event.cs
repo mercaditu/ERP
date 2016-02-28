@@ -11,10 +11,10 @@ namespace entity
     {
         public project_event()
         {
-            id_user = Properties.Settings.Default.user_ID;
+            id_user = CurrentSession.User.id_user;
             is_active = true;
             trans_date = DateTime.Now;
-            id_company = Properties.Settings.Default.company_ID;
+            id_company = CurrentSession.Company.id_company;
             project_event_fixed = new List<project_event_fixed>();
             project_event_variable = new List<project_event_variable>();
         }

@@ -14,8 +14,8 @@ namespace entity
             sales_budget = new List<sales_budget>();
             sales_packing = new List<sales_packing>();
             sales_return = new List<sales_return>();
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
         }
 

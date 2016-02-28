@@ -19,9 +19,9 @@
 
         public accounting_journal()
         {
-            id_branch = Properties.Settings.Default.branch_ID;
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_branch = CurrentSession.Branch.id_branch;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             trans_date = DateTime.Now;
             accounting_journal_detail = new List<accounting_journal_detail>();

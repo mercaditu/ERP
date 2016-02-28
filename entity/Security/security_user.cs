@@ -11,7 +11,7 @@ namespace entity
     {
         public security_user()
         {
-            id_company = Properties.Settings.Default.company_ID;
+            //id_company = CurrentSession.Company.id_company;
             is_active = true;
         }
 

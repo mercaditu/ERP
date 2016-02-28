@@ -12,8 +12,8 @@ namespace entity
     {
         public purchase_order()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             Properties.Settings _settings = new Properties.Settings();
             purchase_order_detail = new List<purchase_order_detail>();

@@ -4,19 +4,34 @@ namespace entity
 {
     public static class Status
     {
-        //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum ReturnTypes
         {
-          //  [LocalizedDescription("ItemDefect")]
+            [LocalizedDescription("ItemDefect")]
             ItemDefect = 1,
-         //   [LocalizedDescription("ItemExpired")]
+            [LocalizedDescription("ItemExpired")]
             ItemExpired = 2,
-          //  [LocalizedDescription("Discount")]
+            [LocalizedDescription("Discount")]
             Discount = 3,
-         //   [LocalizedDescription("Bonus")]
+            [LocalizedDescription("Bonus")]
             Bonus = 4,
-         //   [LocalizedDescription("Error")]
+            [LocalizedDescription("Error")]
             Error = 5,
+        }
+
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        public enum geo_types
+        {
+            [LocalizedDescription("Continent")]
+            Continent,
+            [LocalizedDescription("Country")]
+            Country,
+            [LocalizedDescription("State")]
+            State,
+            [LocalizedDescription("City")]
+            City,
+            [LocalizedDescription("Zone")]
+            Zone
         }
 
         public enum Documents

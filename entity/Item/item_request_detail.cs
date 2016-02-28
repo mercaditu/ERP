@@ -20,8 +20,8 @@ namespace entity
 
         public item_request_detail()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             date_needed_by = DateTime.Now;
             item_request_dimension = new List<item_request_dimension>();

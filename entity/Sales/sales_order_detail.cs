@@ -11,8 +11,8 @@ namespace entity
     {
         public sales_order_detail()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             quantity = 1;
         }

@@ -13,8 +13,8 @@ namespace entity
     {
         public purchase_packing()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             //if (Properties.Settings.Default.terminal_ID > 0) { app_terminal.id_terminal = Properties.Settings.Default.terminal_ID; }
             is_head = true;
 

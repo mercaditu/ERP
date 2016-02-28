@@ -9,8 +9,8 @@ namespace entity
     {
         public purchase_tender_item()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Company.id_company;
+            id_user = CurrentSession.User.id_user;
             is_head = true;
             purchase_tender_dimension = new List<purchase_tender_dimension>();
         }

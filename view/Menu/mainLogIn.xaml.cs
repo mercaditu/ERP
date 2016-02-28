@@ -129,18 +129,11 @@ namespace Cognitivo.Menu
                     }
                 }
 
-                security_user security_user;
-
-                using (CurrentSession.db)
-                {
-
-                }
+                //CurrentSession.
+                CurrentSession.Start(u, p);
 
                 if (CurrentSession.User != null)
                 {
-                    CurrentSession.Company = security_user.app_company;
-                    CurrentSession.User = security_user;
-
                     myWindow.is_LoggedIn = true;
                     Dispatcher.BeginInvoke((Action)(() => myFrame.Navigate(new mainMenu_Corporate())));
                 }

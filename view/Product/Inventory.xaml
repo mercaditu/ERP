@@ -61,30 +61,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <!--<DataGrid x:Name="app_branchDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
-                      EnableRowVirtualization="True" ItemsSource="{Binding}" IsReadOnly="True"
-                      RowDetailsVisibilityMode="VisibleWhenSelected">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" Binding="{Binding name}" Header="Branch"/>
-                </DataGrid.Columns>
-                <DataGrid.RowDetailsTemplate>
-                    <DataTemplate>
-                        <DataGrid x:Name="app_locationDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="5" SelectionChanged="app_locationDataGrid_SelectionChanged"
-                                  ItemsSource="{Binding Source={StaticResource app_branchapp_locationViewSource}}" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
-                            <DataGrid.Resources>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Resources>
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Yellow" />
-                                    </Style.Resources>
-                                </Style>
-                            </DataGrid.Resources>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding name}" Header="Location" Width="150"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DataTemplate>
-                </DataGrid.RowDetailsTemplate>
-            </DataGrid>-->
         </Grid>
         <!--Left Side Part End-->
 
@@ -94,20 +70,40 @@
                 <RowDefinition Height="164"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <StackPanel Background="{StaticResource winBackground}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Background="{StaticResource winBackground}" Grid.ColumnSpan="2">
+                <Label Content="{lex:Loc User}"/>
+                <Label Content="{Binding  security_user.name}"/>
                 <Label Content="{lex:Loc Date}"/>
                 <DatePicker SelectedDate="{Binding trans_date}" Style="{StaticResource input_datepicker}"/>
                 <Label Content="{lex:Loc Branch}"/>
                 <ComboBox x:Name="cbxBranch" ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" Style="{StaticResource input_combobox}"
                           DisplayMemberPath="name" SelectedValuePath="id_branch" SelectionChanged="CbxBranch_SelectionChanged"/>
-                <Label Content="{lex:Loc User}"/>
-                <Label Content="{Binding  security_user.name}"/>
-
             </StackPanel>
-            <DataGrid x:Name="dgvdetail"  AutoGenerateColumns="False" EnableRowVirtualization="True"   Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
+
+            <ListBox x:Name="location_ListBox" Background="WhiteSmoke"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <cntrl:navList recordCode="{Binding app_branch.name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                   recordName="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <DataGrid x:Name="dgvdetail"  AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Row="1" Grid.Column="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding app_location.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Location}" Width="auto"/>
                     <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="auto" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True">
                         <DataGridTextColumn.Header>
                             <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" System"/></TextBlock>

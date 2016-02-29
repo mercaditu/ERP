@@ -31,9 +31,11 @@
         <CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="contactcontact_subscriptionViewSource" Source="{Binding contact_subscription, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="app_fieldViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </Page.Resources>
     <Page.CommandBindings>
@@ -135,6 +137,35 @@
                         <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
                         <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
                     </StackPanel>
+                    <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                        <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
+                                                 CollectionViewSource="{StaticResource contact_tagViewSource}"
+                                                 focusGrid="True" Height="27" Width="256"
+                                                 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                            <cntrl:SearchableTextbox.Columns>
+                                <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+                                                          Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                            </cntrl:SearchableTextbox.Columns>
+                        </cntrl:SearchableTextbox>
+                        <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                      HeadersVisibility="None"
+                                      ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                   
                 </WrapPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Relationship}" HorizontalAlignment="Right">

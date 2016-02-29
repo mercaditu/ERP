@@ -191,6 +191,9 @@
     <Compile Include="Curd\Acocunting_Template_Entry.xaml.cs">
       <DependentUpon>Acocunting_Template_Entry.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\ContactTag.xaml.cs">
+      <DependentUpon>ContactTag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\Refinance.xaml.cs">
       <DependentUpon>Refinance.xaml</DependentUpon>
     </Compile>
@@ -559,6 +562,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Curd\Acocunting_Template_Entry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\ContactTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

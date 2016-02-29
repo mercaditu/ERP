@@ -24,6 +24,7 @@
     </Page.CommandBindings>
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
         <convert:ItemProduct2VisibilityConverter x:Key="ItemProduct2VisibilityConverter"/>
         <convert:ImageConverter x:Key="ConvertImage"/>
         <convert:NumberFormat x:Key="Numberformatting"/>
@@ -75,7 +76,7 @@
                     <cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"
                                    recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   Status="{Binding is_active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
 
@@ -515,6 +516,7 @@
                        btnEdit_Click="toolBar_btnEdit_Click" 
                        btnNew_Click="toolBar_btnNew_Click" 
                        btnSearch_Click="toolBar_btnSearch_Click" IsEnabled="False"
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                           Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>
 </Page>

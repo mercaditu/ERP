@@ -296,6 +296,9 @@
     <Compile Include="Configs\ConnectionBuilder.xaml.cs">
       <DependentUpon>ConnectionBuilder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\ContactTag.xaml.cs">
+      <DependentUpon>ContactTag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\Contract.xaml.cs">
       <DependentUpon>Contract.xaml</DependentUpon>
     </Compile>
@@ -356,6 +359,7 @@
     <Compile Include="Converters\AccountChartGroupLiabillity.cs" />
     <Compile Include="Converters\AccountingChartGroupExpense.cs" />
     <Compile Include="Converters\AccountingChartGroupIncome.cs" />
+    <Compile Include="Converters\ActiveToStatusforitem.cs" />
     <Compile Include="Converters\AddTwoValue.cs" />
     <Compile Include="Converters\Localize.cs" />
     <Compile Include="Converters\CurrencyConverter.cs" />
@@ -444,7 +448,11 @@
       <DependentUpon>Budget.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sales\BudgetSetting.Designer.cs" />
+    <Compile Include="Sales\BudgetSetting1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>BudgetSetting.settings</DependentUpon>
+    </Compile>
     <Compile Include="Sales\Packing.xaml.cs">
       <DependentUpon>Packing.xaml</DependentUpon>
     </Compile>
@@ -1082,7 +1090,10 @@
     </None>
     <Resource Include="Resources\cognitivo.ttf" />
     <Resource Include="Resources\Entypo.ttf" />
-    <None Include="Sales\BudgetSetting.settings" />
+    <None Include="Sales\BudgetSetting.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>BudgetSetting1.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Sales\InvoiceSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>InvoiceSetting.Designer.cs</LastGenOutput>
@@ -1199,6 +1210,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\ConnectionBuilder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configs\ContactTag.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

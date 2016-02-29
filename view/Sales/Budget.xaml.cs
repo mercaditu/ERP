@@ -55,7 +55,14 @@ namespace Cognitivo.Sales
                 entity.Properties.Settings _settings = new entity.Properties.Settings();
 
                 sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));
-                dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID).Include(x => x.sales_budget_detail).Load();
+                if (_pref_SalesBudget.filterbyBranch)
+                {
+                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID && a.id_branch == _settings.branch_ID).Include(x => x.sales_budget_detail).Load();
+                }
+                else
+                {
+                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID ).Include(x => x.sales_budget_detail).Load();
+                }
                 sales_budgetViewSource.Source = dbContext.sales_budget.Local;
                 sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
@@ -326,7 +333,7 @@ namespace Cognitivo.Sales
 
         private void item_Select(object sender, EventArgs e)
         {
-            
+           
             if (sbxItem.ItemID > 0)
             {
                 sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
@@ -341,7 +348,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_budget sales_budget, item item)
         {
-            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
+
+            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || _pref_SalesBudget.AllowDuplicateItems)
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();
                 _sales_budget_detail.sales_budget = sales_budget;

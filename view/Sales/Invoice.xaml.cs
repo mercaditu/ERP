@@ -18,7 +18,7 @@ namespace Cognitivo.Sales
     {
         entity.Properties.Settings _setting = new entity.Properties.Settings();
         int company_ID ;
-
+        int branch_ID;
         //Global Variables
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailViewSource, sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
@@ -31,6 +31,7 @@ namespace Cognitivo.Sales
         {
             InitializeComponent();
             company_ID = _setting.company_ID;
+            branch_ID = _setting.branch_ID;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -75,9 +76,20 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-          
-            await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID
-                                            && (a.is_head == true)).ToListAsync();
+            InvoiceSetting InvoiceSetting = new InvoiceSetting();
+            if (InvoiceSetting.filterbyBranch)
+            {
+                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID && a.id_branch == branch_ID
+                                               && (a.is_head == true)).ToListAsync();
+                
+            }
+            else
+            {
+                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID 
+                                              && (a.is_head == true)).ToListAsync();
+            }
+
+            
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
@@ -87,13 +99,13 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            SalesInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == company_ID).ToList();
+            SalesInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == company_ID ).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxContract.ItemsSource = SalesInvoiceDB.app_contract.Local;
             }));
 
-            SalesInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
+            SalesInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID ).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxCondition.ItemsSource = SalesInvoiceDB.app_condition.Local;
@@ -405,7 +417,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_invoice sales_invoice, item item)
         {
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
+            InvoiceSetting InvoiceSetting = new InvoiceSetting();
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || InvoiceSetting.AllowDuplicateItems)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                 _sales_invoice_detail.sales_invoice = sales_invoice;

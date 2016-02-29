@@ -12,7 +12,7 @@ namespace Cognitivo.Purchase {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
     public sealed partial class OrderSetting : global::System.Configuration.ApplicationSettingsBase {
         
         private static OrderSetting defaultInstance = ((OrderSetting)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new OrderSetting())));
@@ -116,6 +116,30 @@ namespace Cognitivo.Purchase {
             }
             set {
                 this["quicklook_PurchaseTender"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowDuplicateItems {
+            get {
+                return ((bool)(this["AllowDuplicateItems"]));
+            }
+            set {
+                this["AllowDuplicateItems"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool filterbyBranch {
+            get {
+                return ((bool)(this["filterbyBranch"]));
+            }
+            set {
+                this["filterbyBranch"] = value;
             }
         }
     }

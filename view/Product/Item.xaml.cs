@@ -470,6 +470,10 @@ namespace Cognitivo.Product
                 e.CanExecute = true;
                 //}
             }
+            if (e.Parameter as item_tag_detail != null)
+            {
+                e.CanExecute = true;
+            }
         }
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -497,6 +501,14 @@ namespace Cognitivo.Product
                         item_propertyDataGrid.CancelEdit();
                         dbContext.item_property.Remove(e.Parameter as item_property);
                         itemitem_propertyViewSource.View.Refresh();
+                    }
+                     if (e.Parameter as item_tag_detail != null)
+                    {
+                    //DeleteDetailGridRow
+                    item_tag_detailDataGrid.CancelEdit();
+                    dbContext.item_tag_detail.Remove(e.Parameter as item_tag_detail);
+                    itemitem_tagdetailViewSource.View.Refresh();
+                    //calculate_total(sender, e);
                     }
                 }
             }
@@ -761,37 +773,7 @@ namespace Cognitivo.Product
           
         }
 
-        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (e.Parameter as item_tag_detail != null)
-            {
-                e.CanExecute = true;
-            }
-        }
-
-        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            try
-            {
-
-                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    
-                    //DeleteDetailGridRow
-                    item_tag_detailDataGrid.CancelEdit();
-                    dbContext.item_tag_detail.Remove(e.Parameter as item_tag_detail);
-                    itemitem_tagdetailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
-
+        
         //contact contact = (contact)employeeViewSource.View.CurrentItem;
         //hr_talent_detail hr_talent_detail = new hr_talent_detail();
         //hr_talent_detail.hr_talent =(hr_talent)cmbtalent.SelectionBoxItem;

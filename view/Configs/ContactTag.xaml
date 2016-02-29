@@ -1,4 +1,4 @@
-﻿<Page  x:Class="Cognitivo.Product.ItemTag"
+﻿<Page x:Class="Cognitivo.Contact.ContactTag"
        xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"
       Title="{lex:Loc Tags}"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -14,12 +14,12 @@
         lex:LocalizeDictionary.DesignCulture="en-US"       
       mc:Ignorable="d" MinHeight="400" MinWidth="600" Margin="0" Loaded="Page_Loaded">
     <Page.Resources>
-        <CollectionViewSource x:Key="item_tagViewSource"
-                              d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contact_tagViewSource"
+                              d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
         <local:Boolean2StringConverter x:Key="BoolToValConverter"/>
         <local:IsActive2ColorConverter x:Key="Converter"/>
     </Page.Resources>
-    <Grid x:Name="gridMain" DataContext="{StaticResource item_tagViewSource}">
+    <Grid x:Name="gridMain" DataContext="{StaticResource contact_tagViewSource}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>

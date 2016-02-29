@@ -13,7 +13,11 @@ namespace cntrl.Curd
     public partial class payment_quick : UserControl
     {
         dbContext dbContext = new dbContext();
-
+        public enum modes
+        {
+            sales,
+            purchase
+        }
         public payment_quick()
         {
             InitializeComponent();
@@ -21,7 +25,7 @@ namespace cntrl.Curd
 
         public List<entity.contact> contacts { get; set; }
         public payment_detail payment_detail { get; set; }
-
+        public modes mode { get; set; }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             entity.Properties.Settings _Settings = new entity.Properties.Settings();
@@ -45,6 +49,9 @@ namespace cntrl.Curd
             CollectionViewSource purchase_returnViewSource = (CollectionViewSource)this.FindResource("purchase_returnViewSource");
             dbContext.db.purchase_return.Where(x=>x.id_contact==payment_detail.payment.id_contact).Load();
             purchase_returnViewSource.Source = dbContext.db.purchase_return.Local;
+            CollectionViewSource sales_returnViewSource = (CollectionViewSource)this.FindResource("sales_returnViewSource");
+            dbContext.db.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact).Load();
+            sales_returnViewSource.Source = dbContext.db.sales_return.Local;
 
             cbxDocument.ItemsSource = dbContext.db.app_document_range.Where(d => d.is_active == true
                                            && d.app_document.id_application == entity.App.Names.PaymentUtility
@@ -83,17 +90,29 @@ namespace cntrl.Curd
                 if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.Normal)
                 {
                     stpaccount.Visibility = Visibility.Visible;
-                    stpcredit.Visibility = Visibility.Collapsed;
+                    stpcreditpurchase.Visibility = Visibility.Collapsed;
+                    stpcreditsales.Visibility = Visibility.Collapsed;
+
                 }
                 else if(payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
                 {
                     stpaccount.Visibility = Visibility.Collapsed;
-                    stpcredit.Visibility = Visibility.Visible;
+                    if (mode == modes.purchase)
+                    {
+                        stpcreditpurchase.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        stpcreditsales.Visibility = Visibility.Visible;
+                    }
+                    stpcreditpurchase.Visibility = Visibility.Visible;
+                   
                 }
                 else
                 {
                     stpaccount.Visibility = Visibility.Collapsed;
-                    stpcredit.Visibility = Visibility.Collapsed;
+                    stpcreditpurchase.Visibility = Visibility.Collapsed;
+                    stpcreditsales.Visibility = Visibility.Collapsed;
                 }
 
                 if (payment_type.id_document > 0)
@@ -136,6 +155,43 @@ namespace cntrl.Curd
                 {
                     purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
                     purchasereturnComboBox.Text = purchase_return.number;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                // toolBar.msgError(ex);
+            }
+        }
+
+        private void salesreturnComboBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    if (salesreturnComboBox.Data != null)
+                    {
+                        sales_return sales_return = (sales_return)salesreturnComboBox.Data;
+                        salesreturnComboBox.Text = sales_return.number;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                    // toolBar.msgError(ex);
+                }
+            }
+        }
+
+        private void salesreturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (salesreturnComboBox.Data != null)
+                {
+                    sales_return sales_return = (sales_return)salesreturnComboBox.Data;
+                    salesreturnComboBox.Text = sales_return.number;
                 }
             }
             catch (Exception ex)

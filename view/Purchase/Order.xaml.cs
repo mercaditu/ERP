@@ -45,6 +45,17 @@ namespace Cognitivo.Purchase
 
         private async void load_PrimaryDataThread()
         {
+            Cognitivo.Purchase.OrderSetting OrderSetting = new Cognitivo.Purchase.OrderSetting();
+            if (OrderSetting.filterbyBranch)
+            {
+                await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID && a.id_branch==_setting.branch_ID
+                                      ).Include(x => x.purchase_order_detail).ToListAsync();
+            }
+            else
+            {
+                await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID
+                                      ).Include(x => x.purchase_order_detail).ToListAsync();
+            }
             await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID
                                            ).Include(x => x.purchase_order_detail).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -546,11 +557,11 @@ namespace Cognitivo.Purchase
         {
             purchase_order_detail purchase_order_detail = new purchase_order_detail();
             purchase_order_detail.purchase_order = purchase_order;
-
+            Cognitivo.Purchase.OrderSetting OrderSetting = new Cognitivo.Purchase.OrderSetting();
             //ItemLink 
             if (item != null)
             {
-                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null)
+                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null || !OrderSetting.AllowDuplicateItems)
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_order_detail _purchase_order_detail = purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();

@@ -57,7 +57,7 @@ namespace entity
         }
 
         public contact()
-        { }
+        { contact_tag_detail = new List<contact_tag_detail>(); }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -170,6 +170,7 @@ namespace entity
         public virtual IEnumerable<project> project { get; set; }
         public virtual ICollection<production_execution_detail> production_execution_detail { get; set; }
 
+        public virtual ICollection<contact_tag_detail> contact_tag_detail { get; set; }
         public virtual ICollection<hr_contract> hr_contract { get; set; }
         public virtual ICollection<hr_education> hr_education { get; set; }
         public virtual ICollection<hr_family> hr_family { get; set; }

@@ -55,6 +55,8 @@
         public virtual DbSet<contact_field_value> contact_field_value { get; set; }
         public virtual DbSet<contact_role> contact_role { get; set; }
         public virtual DbSet<contact_subscription> contact_subscription { get; set; }
+        public virtual DbSet<contact_tag_detail> contact_tag_detail { get; set; }
+        public virtual DbSet<contact_tag> contact_tag { get; set; }
         public virtual DbSet<hr_talent> hr_talent { get; set; }
         public virtual DbSet<hr_talent_detail> hr_talent_detail { get; set; }
         public virtual DbSet<hr_timesheet> hr_timesheet { get; set; }

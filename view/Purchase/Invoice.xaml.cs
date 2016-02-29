@@ -50,7 +50,15 @@ namespace Cognitivo.Purchase
 
         private async void load_PrimaryDataThread()
         {
-            await dbContext.purchase_invoice.Where(a => a.id_company == _setting.company_ID).ToListAsync();
+            Cognitivo.Purchase.InvoiceSetting InvoiceSetting = new Cognitivo.Purchase.InvoiceSetting();
+            if (InvoiceSetting.filterbyBranch)
+            {
+                await dbContext.purchase_invoice.Where(a => a.id_company == _setting.company_ID && a.id_branch==_setting.branch_ID).ToListAsync();   
+            }
+            else
+            {
+                await dbContext.purchase_invoice.Where(a => a.id_company == _setting.company_ID).ToListAsync();
+            }
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -578,11 +586,11 @@ namespace Cognitivo.Purchase
         {
             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
             purchase_invoice_detail.purchase_invoice = purchase_invoice;
-
+            Cognitivo.Purchase.InvoiceSetting InvoiceSetting = new Cognitivo.Purchase.InvoiceSetting();
             //ItemLink 
             if (item != null)
             {
-                if (purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null)
+                if (purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null || !InvoiceSetting.AllowDuplicateItems)
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_invoice_detail _purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();

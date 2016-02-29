@@ -26,12 +26,14 @@ namespace Cognitivo.Sales
         ContactDB ContactdbContext = new ContactDB();
         entity.Properties.Settings _setting = new entity.Properties.Settings();
         int company_ID;
+        int branch_ID;
         //cntrl.PanelAdv.pnlSalesBudget pnlSalesBudget = new cntrl.PanelAdv.pnlSalesBudget();
 
         public Order()
         {
             InitializeComponent();
             company_ID = _setting.company_ID;
+            branch_ID = _setting.branch_ID;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -55,12 +57,26 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-            await dbContext.sales_order.Where(a => a.id_company == company_ID
+            OrderSetting OrderSetting = new OrderSetting();
+            if (OrderSetting.filterbyBranch)
+            {
+                await dbContext.sales_order.Where(a => a.id_company == company_ID && a.id_branch == branch_ID
                                             && (
-                //a.trans_date >= navPagination.start_Date
-                // && a.trans_date <= navPagination.end_Date 
-                // && 
+                    //a.trans_date >= navPagination.start_Date
+                    // && a.trans_date <= navPagination.end_Date 
+                    // && 
                                              a.is_head == true)).Include("sales_order_detail").ToListAsync();
+            }
+            else
+            {
+                await dbContext.sales_order.Where(a => a.id_company == company_ID 
+                                            && (
+                    //a.trans_date >= navPagination.start_Date
+                    // && a.trans_date <= navPagination.end_Date 
+                    // && 
+                                             a.is_head == true)).Include("sales_order_detail").ToListAsync();
+            }
+            
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_orderViewSource = ((CollectionViewSource)(FindResource("sales_orderViewSource")));
@@ -490,7 +506,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_order sales_order, item item)
         {
-            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
+            OrderSetting OrderSetting = new OrderSetting();
+            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || OrderSetting.AllowDuplicateItems)
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();
                 _sales_order_detail.sales_order = sales_order;

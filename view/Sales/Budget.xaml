@@ -202,6 +202,15 @@
                                             IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Mode=TwoWay}">
                                                     <Label Content="Developer Option" Style="{StaticResource generic_Label}"/>
                                                 </CheckBox>
+
+                                                <CheckBox Margin="6,0,0,0" x:Name="chkDuplicateItem" 
+                                          IsChecked="{Binding Source={x:Static pref:BudgetSetting.Default}, Path=AllowDuplicateItems, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                    <Label Content="{lex:Loc AllowDuplicateItem}" Foreground="MediumVioletRed"/>
+                                                </CheckBox>
+                                                <CheckBox Margin="6,0,0,0" x:Name="chkfilterByBranch" 
+                                          IsChecked="{Binding Source={x:Static pref:BudgetSetting.Default}, Path=filterbyBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                    <Label Content="{lex:Loc filterbyBranch}" Foreground="MediumVioletRed"/>
+                                                </CheckBox>
                                             </StackPanel>
                                         </Border>
                                     </Popup>

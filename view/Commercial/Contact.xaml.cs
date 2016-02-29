@@ -75,6 +75,15 @@ namespace Cognitivo.Commercial
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
+
+
+             dbContext.contact_tag
+              .Where(x => x.id_company == _entity.company_ID && x.is_active == true)
+              .OrderBy(x => x.name).Load();
+
+             CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
+             contact_tagViewSource.Source = dbContext.contact_tag.Local;
+      
         }
         #endregion
 
@@ -233,6 +242,10 @@ namespace Cognitivo.Commercial
             {
                 e.CanExecute = true;
             }
+            else if (e.Parameter as contact_tag_detail != null)
+            {
+                e.CanExecute = true;
+            }
         }
 
         private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -256,6 +269,14 @@ namespace Cognitivo.Commercial
 
                         CollectionViewSource contactcontact_subscriptionViewSource = FindResource("contactcontact_subscriptionViewSource") as CollectionViewSource;
                         contactcontact_subscriptionViewSource.View.Refresh();
+                    }
+                    else if (e.Parameter as contact_tag_detail != null)
+                    {
+                        contact_tag_detailDataGrid.CancelEdit();
+                        dbContext.contact_tag_detail.Remove(e.Parameter as contact_tag_detail);
+
+                        CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
+                        contactcontact_tag_detailViewSource.View.Refresh();
                     }
                 }
             }
@@ -311,6 +332,41 @@ namespace Cognitivo.Commercial
             if (smtgeo.GeographyID>0)
             {
                 contact.app_geography = await dbContext.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
+            }
+        }
+        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Add_Tag();
+
+            }
+        }
+
+        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Add_Tag();
+        }
+        void Add_Tag()
+        {
+            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+            if (cbxTag.Data != null)
+            {
+                int id = Convert.ToInt32(((contact_tag)cbxTag.Data).id_tag);
+                if (id > 0)
+                {
+                    contact contact = contactViewSource.View.CurrentItem as contact;
+                    if (contact != null)
+                    {
+                        contact_tag_detail contact_tag_detail = new contact_tag_detail();
+                        contact_tag_detail.id_tag = ((contact_tag)cbxTag.Data).id_tag;
+                        contact_tag_detail.contact_tag = ((contact_tag)cbxTag.Data);
+                        contact.contact_tag_detail.Add(contact_tag_detail);
+                        CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
+                        contactcontact_tag_detailViewSource.View.Refresh();
+
+                    }
+                }
             }
         }
     }

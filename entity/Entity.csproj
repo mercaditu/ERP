@@ -180,6 +180,8 @@
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Class\EnumExtension.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
+    <Compile Include="Commercial\contact_tag.cs" />
+    <Compile Include="Commercial\contact_tag_detail.cs" />
     <Compile Include="Commercial\refinance.cs" />
     <Compile Include="Context\Accounting\AccountingChartDB.cs" />
     <Compile Include="Context\Accounting\AccountingCycleDB.cs" />
@@ -336,6 +338,10 @@
     <Compile Include="Migrations\201602241050596_updatecurrencyfxEventcosting.cs" />
     <Compile Include="Migrations\201602241050596_updatecurrencyfxEventcosting.Designer.cs">
       <DependentUpon>201602241050596_updatecurrencyfxEventcosting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602290533012_addcontacttag.cs" />
+    <Compile Include="Migrations\201602290533012_addcontacttag.Designer.cs">
+      <DependentUpon>201602290533012_addcontacttag.cs</DependentUpon>
     </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
@@ -738,6 +744,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602241050596_updatecurrencyfxEventcosting.resx">
       <DependentUpon>201602241050596_updatecurrencyfxEventcosting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602290533012_addcontacttag.resx">
+      <DependentUpon>201602290533012_addcontacttag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

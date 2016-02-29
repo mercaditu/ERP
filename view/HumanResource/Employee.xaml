@@ -106,7 +106,7 @@
                         <TextBox Style="{StaticResource input_textbox}"
                             Text="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                         <Label Content="{lex:Loc DateofBirth}" Style="{StaticResource input_label}"/>
-                        <DatePicker Text="{Binding date_birth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" Style="{StaticResource input_datepicker}"/>
+                        <DatePicker SelectedDate="{Binding date_birth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" Style="{StaticResource input_datepicker}"/>
                         <Label Content="{lex:Loc Nationality}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}"
                                  Text="{Binding social_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 

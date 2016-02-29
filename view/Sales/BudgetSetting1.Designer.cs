@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cognitivo.Purchase {
+namespace Cognitivo.Sales {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    public sealed partial class InvoiceSetting : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class BudgetSetting : global::System.Configuration.ApplicationSettingsBase {
         
-        private static InvoiceSetting defaultInstance = ((InvoiceSetting)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new InvoiceSetting())));
+        private static BudgetSetting defaultInstance = ((BudgetSetting)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new BudgetSetting())));
         
-        public static InvoiceSetting Default {
+        public static BudgetSetting Default {
             get {
                 return defaultInstance;
             }
@@ -62,24 +62,24 @@ namespace Cognitivo.Purchase {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool quicklook_Telephone {
+        public bool quicklook_AvailableCredit {
             get {
-                return ((bool)(this["quicklook_Telephone"]));
+                return ((bool)(this["quicklook_AvailableCredit"]));
             }
             set {
-                this["quicklook_Telephone"] = value;
+                this["quicklook_AvailableCredit"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool quicklook_PurchaseOrder {
+        public bool quicklook_Telephone {
             get {
-                return ((bool)(this["quicklook_PurchaseOrder"]));
+                return ((bool)(this["quicklook_Telephone"]));
             }
             set {
-                this["quicklook_PurchaseOrder"] = value;
+                this["quicklook_Telephone"] = value;
             }
         }
         

@@ -15,8 +15,8 @@ namespace entity
             sales_invoice = new List<sales_invoice>();
             purchase_invoice = new List<purchase_invoice>();
             is_active = true;
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = Properties.Settings.Default.company_ID;
+            id_user = Properties.Settings.Default.user_ID;
             is_head = true;
         }
 

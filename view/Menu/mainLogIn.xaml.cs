@@ -82,7 +82,8 @@ namespace Cognitivo.Menu
                 else
                 {
                     string company_Alias = string.Empty;
-                     app_company app_company = db.app_company.Where(x => x.id_company == _settings.company_ID).FirstOrDefault();
+                    app_company app_company = db.app_company.Where(x => x.id_company == _settings.company_ID).FirstOrDefault();
+                    
                     if (app_company != null)
                     {
                         if (!string.IsNullOrEmpty(app_company.alias))

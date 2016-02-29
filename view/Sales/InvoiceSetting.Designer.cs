@@ -158,12 +158,12 @@ namespace Cognitivo.Sales {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AllowDuplicateItems {
+        public bool duplicate_Items {
             get {
-                return ((bool)(this["AllowDuplicateItems"]));
+                return ((bool)(this["duplicate_Items"]));
             }
             set {
-                this["AllowDuplicateItems"] = value;
+                this["duplicate_Items"] = value;
             }
         }
         
@@ -184,12 +184,12 @@ namespace Cognitivo.Sales {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool filterbyBranch {
+        public bool filter_Branch {
             get {
-                return ((bool)(this["filterbyBranch"]));
+                return ((bool)(this["filter_Branch"]));
             }
             set {
-                this["filterbyBranch"] = value;
+                this["filter_Branch"] = value;
             }
         }
     }

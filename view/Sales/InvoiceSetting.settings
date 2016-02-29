@@ -35,7 +35,7 @@
     <Setting Name="Discount_OnUnitValue" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AllowDuplicateItems" Type="System.Boolean" Scope="User">
+    <Setting Name="duplicate_Items" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DiscountType" Type="System.Collections.Specialized.StringCollection" Scope="User">
@@ -45,7 +45,7 @@
   &lt;string&gt;Discount&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="filterbyBranch" Type="System.Boolean" Scope="User">
+    <Setting Name="filter_Branch" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

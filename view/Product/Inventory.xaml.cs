@@ -45,7 +45,7 @@ namespace Cognitivo.Product
             int id_branch = (int)cbxBranch.SelectedValue;
             item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
 
-            if (item_inventory.item_inventory_detail.Count==0)
+            if (item_inventory.item_inventory_detail.Count == 0)
             {
                 item_inventory_detailList = new List<entity.item_inventory_detail>();
                 List<item_product> item_productLIST = await InventoryDB.item_product.Where(x => x.id_company == company_ID && x.item.is_active).ToListAsync();
@@ -97,7 +97,7 @@ namespace Cognitivo.Product
             {
                 item_inventory item_inventory = new item_inventory();
                 item_inventory.IsSelected = true;
-               item_inventory.trans_date = DateTime.Now;
+                item_inventory.trans_date = DateTime.Now;
                 InventoryDB.Entry(item_inventory).State = EntityState.Added;
                 item_inventory.State = EntityState.Added;
                 item_inventoryViewSource.View.Refresh();
@@ -172,7 +172,7 @@ namespace Cognitivo.Product
 
         private void CbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+           
 
         }
 
@@ -183,8 +183,8 @@ namespace Cognitivo.Product
                 if (item_inventoryViewSource.View!=null)
                 {
                     item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
-                    item_inventory_detailList = item_inventory.item_inventory_detail.ToList();
-                    dgvdetail.ItemsSource = item_inventory_detailList;
+                        item_inventory_detailList = item_inventory.item_inventory_detail.ToList();
+                        dgvdetail.ItemsSource = item_inventory_detailList;
                    
                     
                 }
@@ -201,10 +201,10 @@ namespace Cognitivo.Product
                 {
                     if (app_branchapp_locationViewSource.View!=null)
                     {
-                        BindItemMovement();
-                    }
-                }
-          
+                BindItemMovement();
+            }
+        }
+
             }
         }
 

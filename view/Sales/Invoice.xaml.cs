@@ -80,7 +80,7 @@ namespace Cognitivo.Sales
         private async void load_PrimaryDataThread()
         {
             InvoiceSetting InvoiceSetting = new InvoiceSetting();
-            if (InvoiceSetting.filterbyBranch)
+            if (InvoiceSetting.filter_Branch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID && a.id_branch == branch_ID
                                                && (a.is_head == true)).ToListAsync();
@@ -420,7 +420,7 @@ namespace Cognitivo.Sales
         private void select_Item(sales_invoice sales_invoice, item item)
         {
             InvoiceSetting InvoiceSetting = new InvoiceSetting();
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || InvoiceSetting.AllowDuplicateItems)
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || InvoiceSetting.duplicate_Items)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                 _sales_invoice_detail.sales_invoice = sales_invoice;

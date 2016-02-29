@@ -164,7 +164,9 @@ namespace Cognitivo.Commercial
             {
                 contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
                 if (contact_role.is_principal == true)
+                {
                     cbxRelation.IsEnabled = false;
+                }
                 else
                     cbxRelation.IsEnabled = true;
                 if (contact_role.can_transact == true)
@@ -290,9 +292,6 @@ namespace Cognitivo.Commercial
         {
             contact _contact = (contact)cbxRelation.SelectedItem;
             Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(_contact));
-
-
-
         }
 
         private void LoadRelatedContactOnThread(contact _contact)
@@ -366,6 +365,19 @@ namespace Cognitivo.Commercial
                         contactcontact_tag_detailViewSource.View.Refresh();
 
                     }
+                }
+            }
+        }
+
+        private void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
+            if (contact_role != null)
+            {
+                if (contact_role.is_principal == true)
+                {
+                    contact contact = contactViewSource.View.CurrentItem as contact;
+                    Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(contact));
                 }
             }
         }

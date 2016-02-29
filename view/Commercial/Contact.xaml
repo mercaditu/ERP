@@ -52,7 +52,7 @@
         </Grid.RowDefinitions>
 
         <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="listContacts"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listContacts_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
                  ItemsSource="{Binding Source={StaticResource contactViewSource}, IsAsync=True}">

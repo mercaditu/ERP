@@ -17,6 +17,8 @@ namespace entity
             Bonus = 4,
             [LocalizedDescription("Error")]
             Error = 5,
+            [LocalizedDescription("Freight")]
+            Freight = 6
         }
 
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]

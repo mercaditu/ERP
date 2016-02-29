@@ -331,6 +331,11 @@ namespace Cognitivo.Sales
             dbContext.Approve();
         }
 
+        private void toolBar_btnAnull_Click(object sender)
+        {
+            dbContext.Anull();
+        }
+
         private void item_Select(object sender, EventArgs e)
         {
            

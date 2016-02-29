@@ -408,7 +408,9 @@
                        btnDelete_Click="toolBar_btnDelete_Click"
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click" 
-                       btnApprove_Click="toolBar_btnApprove_Click" Grid.ColumnSpan="2"
+                       btnApprove_Click="toolBar_btnApprove_Click" 
+                       btnAnull_Click="toolBar_btnAnull_Click"
+                       Grid.ColumnSpan="2"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 

@@ -725,7 +725,5 @@ namespace Cognitivo.Sales
                 entity.Brillo.Document.Start.Automatic(sales_budget, sales_budget.app_document_range);
             }
         }
-
-
     }
 }

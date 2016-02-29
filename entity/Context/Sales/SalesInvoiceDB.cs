@@ -145,9 +145,15 @@ namespace entity
                     if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range >0)
                     {
                         invoice.is_issued = true;
+                        if (invoice.id_branch > 0)
+                        {
+                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
+                        }
+                        if (invoice.id_terminal > 0)
+                        {
+                            Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
+                        }
 
-                        Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
-                        Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
                         app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
                         invoice.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                         invoice.RaisePropertyChanged("number");

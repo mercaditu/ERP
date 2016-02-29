@@ -15,7 +15,7 @@
     <Page.Resources>
         <CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_locationViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_location}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
         <!--<CollectionViewSource x:Key="app_branchapp_locationitem_movementViewSource" Source="{Binding item_movement, Source={StaticResource app_branchapp_locationViewSource}}"/>-->
         <!--<CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>-->
         <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>-->
@@ -88,14 +88,14 @@
             <ListBox x:Name="location_ListBox" Background="WhiteSmoke"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}" SelectedItem="{Binding app_location,Source={StaticResource item_inventoryitem_inventory_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                 ItemsSource="{Binding Source={StaticResource app_locationViewSource}}" SelectionChanged="location_ListBox_SelectionChanged">
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}" SelectedItem="{Binding id_location,Source={StaticResource item_inventoryitem_inventory_detailViewSource},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                 ItemsSource="{Binding Source={StaticResource app_branchapp_locationViewSource}}" SelectionChanged="location_ListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <cntrl:navList recordCode="{Binding app_branch.name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                    recordName="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                               
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

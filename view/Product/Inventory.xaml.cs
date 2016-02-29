@@ -36,7 +36,7 @@ namespace Cognitivo.Product
                 .OrderBy(a => a.name).ToListAsync();
         }
 
-        private void BindItemMovement()
+        private async void BindItemMovement()
         {
             int id_branch = (int)cbxBranch.SelectedValue;
             item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
@@ -44,7 +44,7 @@ namespace Cognitivo.Product
             if (item_inventory.item_inventory_detail.Count==0)
             {
                 item_inventory_detailList = new List<entity.item_inventory_detail>();
-                List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == company_ID && x.item.is_active).ToList();
+                List<item_product> item_productLIST = await InventoryDB.item_product.Where(x => x.id_company == company_ID && x.item.is_active).ToListAsync();
 
                 foreach (item_product i in item_productLIST)
                 {

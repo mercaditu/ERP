@@ -56,6 +56,7 @@ namespace Cognitivo.HumanResource
 
             cbxBloodtype.ItemsSource = Enum.GetValues(typeof(contact.BloodTypes));
             cbxmaritialstatus.ItemsSource = Enum.GetValues(typeof(contact.CivilStatus));
+            cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
         }
 
@@ -177,6 +178,14 @@ namespace Cognitivo.HumanResource
             else
             {
                 employeeViewSource.View.Filter = null;
+            }
+        }
+        private async void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
+        {
+            contact contact = (contact)employeeViewSource.View.CurrentItem;
+            if (smtgeo.GeographyID > 0)
+            {
+                contact.app_geography = await dbContext.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
             }
         }
     }

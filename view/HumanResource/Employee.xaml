@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+           xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=Entity"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -94,11 +95,11 @@
                         <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}" x:Name="tbxCode"
                                  Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-                        <Label Content="{lex:Loc Gender}" Style="{StaticResource input_label}"/>
-                        <StackPanel Orientation="Horizontal" Height="30">
-                            <RadioButton Content="{lex:Loc Male}" IsChecked="{Binding gender}" Margin="3"/>
-                            <RadioButton Content="{lex:Loc Female}" IsChecked="{Binding gender}" Margin="3"/>
-                        </StackPanel>
+                        <Label Content="{lex:Loc Gender}" 
+                    			Style="{StaticResource input_label}"/>
+                        <ComboBox Style="{StaticResource input_combobox}" 
+                    			x:Name="cbxGender"
+                    			SelectedValue="{Binding gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}"
                             Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
@@ -122,20 +123,11 @@
                         <TextBox Style="{StaticResource input_textbox}"
                             Text="{Binding email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
                             NotifyOnValidationError=True}" />
-                        <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}"/>
-                        <ComboBox  Style="{DynamicResource input_combobox}" 
-					x:Name="id_locationComboBox"
-					DisplayMemberPath="name" SelectedValue="{Binding id_geography, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					SelectedValuePath="id_location"
-					ItemsSource="{Binding Source={StaticResource app_locationViewSource}}">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel/>
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                        </ComboBox>
+                       
                         <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
                         <TextBox Text="{Binding address,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" TextWrapping="WrapWithOverflow" Height="52"/>
+                        <Label Content="{lex:Loc Location}" Style="{StaticResource input_label}"/>
+                        <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
                     </StackPanel>
                 </WrapPanel>
             </TabItem>

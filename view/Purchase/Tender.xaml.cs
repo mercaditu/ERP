@@ -104,7 +104,7 @@ namespace Cognitivo.Purchase
             PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
             cbxProject.ItemsSource = PurchaseTenderDB.projects.Local;
 
-            cbxDocument.ItemsSource  = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Branch.id_branch, CurrentSession.Terminal.id_terminal);
+            cbxDocument.ItemsSource  = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Branch.id_branch, _setting.terminal_ID);
 
             PurchaseTenderDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
 

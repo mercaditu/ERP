@@ -104,20 +104,17 @@ namespace Cognitivo.Purchase
             PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
             cbxProject.ItemsSource = PurchaseTenderDB.projects.Local;
 
-            //PurchaseTenderDB.contacts.Where(a => a.is_active == true && a.is_supplier == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
-            cbxDocument.ItemsSource  = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, _setting.branch_ID, _setting.terminal_ID);
+            cbxDocument.ItemsSource  = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Branch.id_branch, CurrentSession.Terminal.id_terminal);
 
             PurchaseTenderDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
 
             app_conditionViewSource = FindResource("app_conditionViewSource") as CollectionViewSource;
             app_conditionViewSource.Source = PurchaseTenderDB.app_condition.Local;
 
-
             PurchaseTenderDB.app_contract.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
 
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
             app_contractViewSource.Source = PurchaseTenderDB.app_contract.Local;
-
 
             PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == company_ID).ToList();
 

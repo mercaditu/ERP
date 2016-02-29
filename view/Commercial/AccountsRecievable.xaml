@@ -13,7 +13,7 @@
     xmlns:converters="clr-namespace:Cognitivo.Converters;assembly=cntrl"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
-      Title="AccountsRecievable" Loaded="Page_Loaded">
+      Title="{lex:Loc AccountsReceivable}" Loaded="Page_Loaded">
 
     <Page.Resources>
         <converters:Expiry2ColorConverter x:Key="Status2Color"/>
@@ -37,14 +37,14 @@
 			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10"/>
 
         <ListBox Background="{StaticResource AccentColor_Brush}" SelectionChanged="ListBox_SelectionChanged"
-			ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" Loaded="ListBox_Loaded"
+			ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
 			ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Source={StaticResource contactViewSource}}"
 			ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding contact.code}" 
-                                   recordSecondaryName="{Binding contact.gov_code}"  recordName="{Binding contact.name}" 
-                                   IsChecked="{Binding contact.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <cntrl:navList recordCode="{Binding code}" 
+                                   recordSecondaryName="{Binding gov_code}" recordName="{Binding name}" 
+                                   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     </cntrl:navList>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -62,9 +62,9 @@
                                         Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" 
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                        Header="{lex:Loc Cognitivo:local:Recievable}" Width="auto" IsReadOnly="True" CellStyle="{StaticResource Number_CellStyle}"
-                                        Foreground="{Binding expire_date, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2Color}}"/>
+                    <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                        Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
+                                        CellStyle="{StaticResource Number_CellStyle}"/>
                     <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"
                                         Foreground="{Binding expire_date, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2Color}}"/>

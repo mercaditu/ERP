@@ -10,14 +10,11 @@ using System.Data.Entity.Validation;
 
 namespace Cognitivo.Commercial
 {
-    /// <summary>
-    /// Interaction logic for AccountsRecievable.xaml
-    /// </summary>
     public partial class AccountsRecievable : Page
     {
         entity.dbContext _entity = new entity.dbContext();
         entity.Properties.Settings _Settings = new entity.Properties.Settings();
-        CollectionViewSource paymentViewSource;
+        //CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource, contactViewSource;
 
         List<contact> ContactList;
@@ -39,41 +36,65 @@ namespace Cognitivo.Commercial
 
         }
 
-        private void purchase_returnDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ListBox_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact.id_contact > 0 && payment_schedualViewSource != null)
+            {
+                try
+                {
+                    payment_schedualViewSource.View.Filter = i =>
+                    {
+                        payment_schedual payment_schedual = i as payment_schedual;
+                        if (payment_schedual.contact.id_contact == contact.id_contact)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch (Exception ex)
+                {
+                    toolbar.msgError(ex);
+                }
+            }
+            else
+            {
+                contactViewSource.View.Filter = null;
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //paymentViewSource = (CollectionViewSource)FindResource("paymentViewSource");
-            //await entity.db.payments.Where(a => a.id_company == _Settings.company_ID).Include(x => x.payment_detail).LoadAsync();
-            //paymentViewSource.Source = entity.db.payments.Local;
-
             load_Schedual();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
-            contactViewSource.Source = _entity.db.payment_schedual.Local.GroupBy(x => x.contact).ToList();
+            List<contact> contactLIST = new List<contact>();
+
+            foreach (payment_schedual payment in _entity.db.payment_schedual.Local.ToList())
+            {
+                if (contactLIST.Contains(payment.contact) == false)
+                {
+                    contact contact = new contact();
+                    contact = payment.contact;
+                    contactLIST.Add(contact);
+                }
+            }
+            
+            contactViewSource.Source = contactLIST;
         }
 
         private async void load_Schedual()
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
             await _entity.db.payment_schedual
-                                                                    .Where(x => x.id_payment_detail == null
-                                                                       && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
-                                                                       && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
-                                                                    .LoadAsync();
+                    .Where(x => x.id_payment_detail == null
+                        && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
+                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                    .LoadAsync();
             payment_schedualViewSource.Source = _entity.db.payment_schedual.Local;
         }
 
@@ -82,10 +103,7 @@ namespace Cognitivo.Commercial
             List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
             decimal total = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
 
-            //payment payment = new payment();
-
             payment_quick.payment_detail = new payment_detail();
-
             payment_quick.payment_detail.id_purchase_return = 0;
             payment_quick.payment_detail.id_sales_return = 0;
             payment_quick.payment_detail.value = total;
@@ -98,7 +116,6 @@ namespace Cognitivo.Commercial
                 if (_entity.db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
                 {
                     payment_quick.payment_detail.id_payment_type = _entity.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-
                 }
                 else
                 {
@@ -107,8 +124,6 @@ namespace Cognitivo.Commercial
                 }
 
             }
-            //payment_quick.payment_detail.id_range = entity.Brillo.g.;
-            //payment_quick.payment_detail.id_range = entity.Brillo.GetDefault.Range(entity.App.Names.PaymentType);
             payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
             payment_quick.contacts = ContactList;
             payment_quick.mode = cntrl.Curd.payment_quick.modes.sales; 
@@ -182,9 +197,8 @@ namespace Cognitivo.Commercial
                         crud_modal.Visibility = System.Windows.Visibility.Collapsed;
                         entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
                         Document.Document_PrintPaymentReceipt(payment);
-
-
                     }
+
                     load_Schedual();
                 }
             }
@@ -199,11 +213,18 @@ namespace Cognitivo.Commercial
                     contactViewSource.View.Filter = i =>
                     {
                         contact contact = i as contact;
-                        if (contact.name.ToLower().Contains(query.ToLower())
-                            || contact.code.ToLower().Contains(query.ToLower())
-                            || contact.gov_code.ToLower().Contains(query.ToLower()))
+                        if (contact != null)
                         {
-                            return true;
+                            if (contact.name.ToLower().Contains(query.ToLower())
+                             || contact.code.ToLower().Contains(query.ToLower())
+                             || contact.gov_code.ToLower().Contains(query.ToLower()))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                         else
                         {
@@ -235,22 +256,15 @@ namespace Cognitivo.Commercial
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(Refinance);
         }
+
         public void SaveRefinance_Click(object sender)
         {
-
-
-            
-
             IEnumerable<DbEntityValidationResult> validationresult = _entity.db.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
                 _entity.db.SaveChanges();
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-                //entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-                //Document.Document_PrintPaymentReceipt(payment);
-               
-
             }
             load_Schedual();
         }

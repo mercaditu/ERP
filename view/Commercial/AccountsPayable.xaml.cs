@@ -44,32 +44,53 @@ namespace Cognitivo.Commercial
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //List<contact> _ContactList=new List<contact>();
-            //dynamic payment_schedual =ContactListBox.SelectedItem;
-            //_ContactList.Add(payment_schedual.contact);
-            //if (ContactList.Count > 0)
-            //{
-            //    payment_schedualViewSource.View.Filter = i =>
-            //    {
-            //        payment_schedual _payment_schedual = (payment_schedual)i;
-            //        if (_ContactList.Contains(_payment_schedual.contact))
-            //            return true;
-            //        else
-            //            return false;
-            //    };
-            //}
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact.id_contact > 0 && payment_schedualViewSource != null)
+            {
+                try
+                {
+                    payment_schedualViewSource.View.Filter = i =>
+                    {
+                        payment_schedual payment_schedual = i as payment_schedual;
+                        if (payment_schedual.contact.id_contact == contact.id_contact)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch (Exception ex)
+                {
+                    toolbar.msgError(ex);
+                }
+            }
+            else
+            {
+                contactViewSource.View.Filter = null;
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //paymentViewSource = (CollectionViewSource)FindResource("paymentViewSource");
-            //await entity.db.payments.Where(a => a.id_company == _Settings.company_ID).Include(x => x.payment_detail).LoadAsync();
-            //paymentViewSource.Source = entity.db.payments.Local;
-
             load_Schedual();
-            
+
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
-            contactViewSource.Source = dbContext.db.payment_schedual.Local.GroupBy(x => x.contact).ToList();
+            List<contact> contactLIST = new List<contact>();
+
+            foreach (payment_schedual payment in dbContext.db.payment_schedual.Local.ToList())
+            {
+                if (contactLIST.Contains(payment.contact) == false)
+                {
+                    contact contact = new contact();
+                    contact = payment.contact;
+                    contactLIST.Add(contact);
+                }
+            }
+
+            contactViewSource.Source = contactLIST;
         }
 
         private async void load_Schedual()
@@ -86,8 +107,6 @@ namespace Cognitivo.Commercial
         {
             List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
             decimal total = PaymentSchedualList.Sum(x => x.AccountPayableBalance);
-
-            //payment payment = new payment();
 
             payment_quick.payment_detail = new payment_detail();
             payment_quick.payment_detail.id_purchase_return = 0;
@@ -198,11 +217,18 @@ namespace Cognitivo.Commercial
                     contactViewSource.View.Filter = i =>
                     {
                         contact contact = i as contact;
-                        if (contact.name.ToLower().Contains(query.ToLower())
-                            || contact.code.ToLower().Contains(query.ToLower())
-                            || contact.gov_code.ToLower().Contains(query.ToLower()))
+                        if (contact != null)
                         {
-                            return true;
+                            if (contact.name.ToLower().Contains(query.ToLower())
+                             || contact.code.ToLower().Contains(query.ToLower())
+                             || contact.gov_code.ToLower().Contains(query.ToLower()))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                         else
                         {

@@ -114,7 +114,6 @@
                             <ComboBox Style="{StaticResource input_combobox}" 
                     			x:Name="cbxGender"
                     			SelectedValue="{Binding gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
                             <Label Content="{lex:Loc DateofBirth}" 
                     			Style="{StaticResource input_label}"/>
                             <DatePicker  Style="{StaticResource input_datepicker}" 
@@ -137,7 +136,9 @@
                         <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
                         <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
                     </StackPanel>
-                    <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    
+                    <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 
+                                IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
                         <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
                                                  CollectionViewSource="{StaticResource contact_tagViewSource}"
@@ -150,10 +151,11 @@
                         </cntrl:SearchableTextbox>
                         <DataGrid x:Name="contact_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
                                       HeadersVisibility="None"
-                                      ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
+                                      ItemsSource="{Binding Source={StaticResource contactcontact_tag_detailViewSource}}" RowDetailsVisibilityMode="Collapsed">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
-                                <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTextColumn Binding="{Binding contact_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IsReadOnly="True" Width="*"/>
+                                <DataGridTemplateColumn Width="26" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Button Command="customcmd:CustomCommands.Delete"
@@ -173,23 +175,23 @@
                     <Label Content="{lex:Loc ContactRole}" Style="{StaticResource H2}"/>
                     <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}"/>
                     <ComboBox x:Name="cbxContactRole" Style="{StaticResource input_combobox}"
-                                      DisplayMemberPath="name" SelectedValuePath="id_contact_role"
-                                      ItemsSource="{Binding Source={StaticResource contactRoleViewSource}}" 
-                                      SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
-                                      SelectionChanged="cbxContactRole_SelectionChanged"/>
+                              DisplayMemberPath="name" SelectedValuePath="id_contact_role"
+                              ItemsSource="{Binding Source={StaticResource contactRoleViewSource}}" 
+                              SelectedValue="{Binding id_contact_role, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                              SelectionChanged="cbxContactRole_SelectionChanged"/>
                     <Label Content="{lex:Loc RelatedTo}" Style="{StaticResource input_label}"/>
                     <ComboBox x:Name="cbxRelation" Style="{StaticResource input_combobox}"
-                                  ItemsSource="{Binding Source={StaticResource contactParentViewSource}}" 
-                                  DisplayMemberPath="name" SelectedValuePath="id_contact" SelectionChanged="cbxRelation_SelectionChanged"
-                        SelectedItem="{Binding /parent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"/>
+                              ItemsSource="{Binding Source={StaticResource contactParentViewSource}}" 
+                              DisplayMemberPath="name" SelectedValuePath="id_contact" SelectionChanged="cbxRelation_SelectionChanged"
+                              SelectedItem="{Binding /parent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsSynchronizedWithCurrentItem="True"/>
                     <Label Content="{lex:Loc Relationship}" Style="{StaticResource H2}"/>
                     <DataGrid Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="4,6,8,6" IsReadOnly="True" 
                               ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Code" Binding="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Gov Code" Binding="{Binding gov_code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Role" Binding="{Binding contact_role.name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" Binding="{Binding code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Width="*" Binding="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovernmentID}" Width="Auto" Binding="{Binding gov_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:ContactRole}" Width="Auto" Binding="{Binding contact_role.name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

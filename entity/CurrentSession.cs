@@ -30,12 +30,25 @@ namespace entity
 
                 //Check if Branch Exists
                 if (Company.app_branch.Where(branch => 
+                                branch.id_company == Company.id_company &&
                                 branch.id_branch == Properties.Settings.Default.branch_ID)
                                 .FirstOrDefault() != null)
                 {
                     //Set Branch
                     Branch = Company.app_branch.Where(branch =>
+                                branch.id_company == Company.id_company &&
                                 branch.id_branch == Properties.Settings.Default.branch_ID)
+                                .FirstOrDefault();
+                }
+
+                //Check if Terminal Exists inside Branch
+                if (Branch.app_terminal.Where(terminal =>
+                                terminal.id_terminal == Properties.Settings.Default.terminal_ID)
+                                .FirstOrDefault() != null)
+                {
+                    //Set Terminal
+                    Terminal = Branch.app_terminal.Where(terminal =>
+                                terminal.id_terminal == Properties.Settings.Default.terminal_ID)
                                 .FirstOrDefault();
                 }
             }

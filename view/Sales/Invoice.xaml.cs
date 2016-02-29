@@ -17,11 +17,13 @@ namespace Cognitivo.Sales
     public partial class Invoice : INotifyPropertyChanged
     {
         entity.Properties.Settings _setting = new entity.Properties.Settings();
-        int company_ID ;
+        int company_ID;
         int branch_ID;
+
         //Global Variables
         CollectionViewSource sales_invoiceViewSource;
-        CollectionViewSource sales_invoicesales_invoice_detailViewSource, sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
+        CollectionViewSource sales_invoicesales_invoice_detailViewSource, 
+            sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         
         cntrl.PanelAdv.pnlPacking pnlPacking;
@@ -30,6 +32,7 @@ namespace Cognitivo.Sales
         public Invoice()
         {
             InitializeComponent();
+
             company_ID = _setting.company_ID;
             branch_ID = _setting.branch_ID;
         }
@@ -112,8 +115,7 @@ namespace Cognitivo.Sales
             }));
 
           
-           
-           cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, _setting.branch_ID, _setting.terminal_ID);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Branch.id_branch, _setting.terminal_ID);
           
 
             SalesInvoiceDB.sales_rep.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();

@@ -52,8 +52,6 @@ namespace Cognitivo.Product
                     item_inventory_detail.item_product = i;
                     item_inventory_detail.value_counted = 0;
 
-                    //using (InventoryDB db = new InventoryDB())
-                    //{
                     item_inventory_detail.app_location = InventoryDB.app_location.Where(x => x.id_branch == id_branch && x.is_default).FirstOrDefault();
                     item_inventory_detail.id_location = InventoryDB.app_location.Where(x => x.id_branch == id_branch && x.is_default).FirstOrDefault().id_location;
                     if (InventoryDB.item_movement.Where(x => x.id_item_product == i.id_item_product
@@ -68,8 +66,8 @@ namespace Cognitivo.Product
                     {
                         item_inventory_detail.value_system = 0;
                     }
+
                     item_inventory_detail.item_inventory = item_inventory;
-                    //  }
 
                     item_inventory_detailList.Add(item_inventory_detail);
                 }

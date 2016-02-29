@@ -133,7 +133,7 @@
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
-                        <cntrls:SmartBox_Geography x:Name="smtgeo" Select="SmartBox_Geography_Select" />
+                        <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
                     </StackPanel>
                 </WrapPanel>
             </TabItem>

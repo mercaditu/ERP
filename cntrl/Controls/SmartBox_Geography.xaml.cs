@@ -30,7 +30,7 @@ namespace cntrl.Controls
 
         entity.db db = new entity.db();
 
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Contact));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Geography));
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
@@ -238,7 +238,7 @@ namespace cntrl.Controls
             else
             {
                 //DataGrid.Visibility = System.Windows.Visibility.Collapsed;
-                DataGrid.Opacity = 0.64;
+                DataGrid.Opacity = 0.32;
             }
         }
     }

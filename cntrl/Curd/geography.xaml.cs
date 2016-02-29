@@ -12,8 +12,9 @@ namespace cntrl.Curd
     public partial class Geography : UserControl
     {
         CollectionViewSource _objCollectionViewSource = null;
+        //CollectionViewSource app_geographyViewSource = null;
+
         public CollectionViewSource objCollectionViewSource { get { return _objCollectionViewSource; } set { _objCollectionViewSource = value; } }
-        CollectionViewSource app_geographyViewSource=null;
         
         private entity.dbContext _entity = null;
         public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
@@ -28,8 +29,8 @@ namespace cntrl.Curd
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 cbxType.ItemsSource = Enum.GetValues(typeof(Status.geo_types));
-                app_geographyViewSource = (CollectionViewSource)FindResource("app_geographyViewSource");
-                app_geographyViewSource.Source = entity.db.app_geography.Where(a => a.is_active == true).OrderBy(a => a.name).ToList();
+                //app_geographyViewSource = (CollectionViewSource)FindResource("app_geographyViewSource");
+                //app_geographyViewSource.Source = entity.db.app_geography.Where(a => a.is_active == true).OrderBy(a => a.name).ToList();
                 stackFields.DataContext = objCollectionViewSource;
             }
         }
@@ -57,6 +58,13 @@ namespace cntrl.Curd
                 IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
+                    entity.app_geography app_geography = objCollectionViewSource.View.CurrentItem as entity.app_geography;
+
+                    if (sbxGeo.GeographyID > 0)
+                    {
+                        app_geography.parent = entity.db.app_geography.Where(i => i.id_geography == sbxGeo.GeographyID).FirstOrDefault();
+                    }
+
                     entity.db.SaveChanges();
                     btnCancel_Click(sender, e);
                 }
@@ -72,31 +80,40 @@ namespace cntrl.Curd
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                entity.contact_role contact_role = objCollectionViewSource.View.CurrentItem as entity.contact_role;
-                contact_role.is_active = false;
+                entity.app_geography app_geography = objCollectionViewSource.View.CurrentItem as entity.app_geography;
+                app_geography.is_active = false;
                 btnSave_Click(sender, e);
+            }
+        }
+
+        private void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
+        {
+            app_geography app_geography = (app_geography)objCollectionViewSource.View.CurrentItem;
+            if (sbxGeo.GeographyID > 0)
+            {
+                app_geography.parent = entity.db.app_geography.Where(p => p.id_geography == sbxGeo.GeographyID).FirstOrDefault();
             }
         }
 
         private void cbxType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbxType.SelectedValue!=null)
-            {
-                if (app_geographyViewSource != null)
-            {
-                if (app_geographyViewSource.View != null)
-                {
-                    app_geographyViewSource.View.Filter = i =>
-                    {
-                        app_geography app_geography = (app_geography)i;
-                        if (Convert.ToInt32(app_geography.type) == ((int)cbxType.SelectedValue - 1))
-                            return true;
-                        else
-                            return false;
-                    };
-                }
-            }
-            }
+            //if (cbxType.SelectedValue!=null)
+            //{
+            //    if (app_geographyViewSource != null)
+            //    {
+            //        if (app_geographyViewSource.View != null)
+            //        {
+            //            app_geographyViewSource.View.Filter = i =>
+            //            {
+            //                app_geography app_geography = (app_geography)i;
+            //                if (Convert.ToInt32(app_geography.type) == ((int)cbxType.SelectedValue - 1))
+            //                    return true;
+            //                else
+            //                    return false;
+            //            };
+            //        }
+            //    }
+            //}
         }
     }
 }

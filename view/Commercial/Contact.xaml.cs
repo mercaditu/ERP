@@ -305,12 +305,12 @@ namespace Cognitivo.Commercial
             Document.Document_PrintCarnetContact(contact);
         }
 
-        private void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
+        private async void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
         {
             contact contact = (contact)contactViewSource.View.CurrentItem;
             if (smtgeo.GeographyID>0)
             {
-                contact.id_geography = smtgeo.GeographyID;
+                contact.app_geography = await dbContext.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
             }
         }
     }

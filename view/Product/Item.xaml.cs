@@ -534,13 +534,9 @@ namespace Cognitivo.Product
             _pref_Product = ProductSettings.Default;
             popupCustomize.IsOpen = false;
 
-            //mycntrl.entity = dbContext;
-            //dbContext.Set<item>().Local.ToList().ForEach(x =>
-            //{
-            //    dbContext.Entry(x).State = EntityState.Detached;
-            //});
+            Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
 
-            load_PrimaryData();
+            toolBar.msgWarning("Close and Open Window to see Changes");
         }
 
         private void item_priceDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)

@@ -431,7 +431,7 @@
                     </StackPanel>
                 </TabItem>
             </TabControl>
-            <StackPanel Grid.Column="1" Grid.RowSpan="3" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+            <StackPanel Grid.Column="1" Grid.RowSpan="3">
                 <Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
 
                 <Grid Height="130" AllowDrop="True" Drop="StackPanel_Drop">
@@ -440,24 +440,26 @@
                     <Image x:Name="imageViewer" Margin="4"/>
                 </Grid>
                 <TextBlock Text="{Binding name}" Style="{StaticResource text_H3}" TextWrapping="Wrap"/>
-                <Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
-                <CheckBox Content="{lex:Loc Active}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
+                <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    <Label Content="{lex:Loc Properties}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
+                    <CheckBox Content="{lex:Loc Active}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
                                   IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-                <CheckBox Content="{lex:Loc AutomaticRecipe}" Grid.Column="1" Grid.Row="7" 
+                    <CheckBox Content="{lex:Loc AutomaticRecipe}" Grid.Column="1" Grid.Row="7" 
                                   HorizontalAlignment="Left" Margin="5"
 						          IsChecked="{Binding is_autorecepie, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" />
-                <Rectangle Height="1" Fill="Silver" Margin="16,4"/>
-                <StackPanel Orientation="Horizontal" Margin="15,0,0,5">
-                    <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
-                    <TextBox x:Name="unit_costTextBox" Style="{StaticResource TextToLabelStyle}"
+                    <Rectangle Height="1" Fill="Silver" Margin="16,4"/>
+                    <StackPanel Orientation="Horizontal" Margin="15,0,0,5">
+                        <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="unit_costTextBox" Style="{StaticResource TextToLabelStyle}"
 							Text="{Binding unit_cost, Mode=TwoWay,
                                             NotifyOnValidationError=true, ValidatesOnExceptions=true, 
                                             UpdateSourceTrigger=LostFocus, StringFormat={}{0:N}}" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="15,0,0,5">
-                    <Label Style="{StaticResource input_label}" Content="{lex:Loc Variant}"/>
-                    <TextBox x:Name="variationTextBox" Style="{StaticResource TextToLabelStyle}"
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="15,0,0,5">
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Variant}"/>
+                        <TextBox x:Name="variationTextBox" Style="{StaticResource TextToLabelStyle}"
 							Text="{Binding variation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
                 </StackPanel>
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
                 <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" Margin="3,2,0,5">

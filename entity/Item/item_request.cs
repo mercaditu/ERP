@@ -15,8 +15,8 @@ namespace entity
         public item_request()
         {
             item_request_detail = new List<item_request_detail>();
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
                         is_head = true;
             status = Status.Documents_General.Pending;
             request_date = DateTime.Now;

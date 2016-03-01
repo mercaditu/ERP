@@ -12,8 +12,8 @@ namespace entity
         {
             accounting_budget = new List<accounting_budget>();
             is_active = true;
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             DateTime Now = DateTime.Now;
             start_date = new DateTime(Now.Year, 1, 1);

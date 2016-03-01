@@ -10,8 +10,8 @@ namespace entity
     {
         public purchase_invoice_detail()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();

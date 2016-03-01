@@ -11,8 +11,8 @@ namespace entity
     {
         public item_conversion_factor()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
         }
 

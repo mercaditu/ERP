@@ -118,6 +118,13 @@ namespace Cognitivo.Setup.Migration
                 ));
 
                 sync_Users();
+                id_user=dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    entity.Properties.Settings.Default.user_ID = id_user;
+                    entity.Properties.Settings.Default.Save();
+                }
+              ));
 
                 foreach (DataRow row_Branch in dt_Branch.Rows)
                 {
@@ -137,8 +144,8 @@ namespace Cognitivo.Setup.Migration
                         _app_branch.app_location.Add(app_location);
                     }
 
-                    string id_branch = row_Branch["CODSUCURSAL"].ToString();
-                    foreach (DataRow row_Terminal in dt_Terminal.Select("CODSUCURSAL = " + id_branch))
+                    string id_branchString = row_Branch["CODSUCURSAL"].ToString();
+                    foreach (DataRow row_Terminal in dt_Terminal.Select("CODSUCURSAL = " + id_branchString))
                     {
                         app_terminal app_terminal = new app_terminal();
                         app_terminal.is_active = true;
@@ -160,6 +167,15 @@ namespace Cognitivo.Setup.Migration
                       
                     }
                 }
+                id_branch=dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
+                id_terminal=dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    entity.Properties.Settings.Default.branch_ID = id_branch;
+                    entity.Properties.Settings.Default.terminal_ID = id_terminal;
+                    entity.Properties.Settings.Default.Save();
+                }
+              ));
             }
 
             dt.Clear();
@@ -471,6 +487,8 @@ namespace Cognitivo.Setup.Migration
 
         private void sync_Users()
         {
+            try
+            {
             security_role security_role = new security_role();
             security_role.is_active = true;
             security_role.name = "Administrador";
@@ -513,8 +531,7 @@ namespace Cognitivo.Setup.Migration
                 dbContext.security_user.Add(security_user);
             }
             dt.Clear();
-            try
-            {
+          
                 IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {

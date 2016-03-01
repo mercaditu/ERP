@@ -115,7 +115,7 @@ namespace Cognitivo.Sales
             }));
 
           
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Branch.id_branch, _setting.terminal_ID);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice,  CurrentSession.Id_Branch, _setting.terminal_ID);
           
 
             SalesInvoiceDB.sales_rep.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();

@@ -17,17 +17,17 @@ namespace entity
             contact.hr_family = new List<hr_family>();
             contact.hr_talent_detail = new List<hr_talent_detail>();
 
-            contact.id_company = CurrentSession.Company.id_company;
-            contact.id_user = CurrentSession.User.id_user;
+            contact.id_company = CurrentSession.Id_Company;
+            contact.id_user =  CurrentSession.Id_User;
             contact.is_head = true;
             contact.is_active = true;
             contact.lead_time = 0;
 
             using (db db = new db())
             {
-                if (db.contact_role.Where(c => c.is_principal == true && c.id_company == CurrentSession.Company.id_company).FirstOrDefault() != null)
+                if (db.contact_role.Where(c => c.is_principal == true && c.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                 {
-                    int _id_contact_role = Convert.ToInt32(db.contact_role.Where(c => c.is_principal == true && c.id_company == CurrentSession.Company.id_company).FirstOrDefault().id_contact_role);
+                    int _id_contact_role = Convert.ToInt32(db.contact_role.Where(c => c.is_principal == true && c.id_company == CurrentSession.Id_Company).FirstOrDefault().id_contact_role);
                     if (_id_contact_role != 0)
                     {
                         contact.id_contact_role = _id_contact_role;

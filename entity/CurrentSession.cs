@@ -8,6 +8,58 @@ namespace entity
 {
     public static class CurrentSession
     {
+        public static int Id_Company
+        {
+            get
+            {
+                if (_Id_Company==0)
+                {
+                    _Id_Company = Properties.Settings.Default.company_ID;
+                };
+                return _Id_Company;
+            }
+            set { _Id_Company=value; }
+        }
+          static int _Id_Company;
+          public static int Id_User
+          {
+              get
+              {
+                  if (_Id_User == 0)
+                  {
+                      _Id_User = Properties.Settings.Default.user_ID;
+                  };
+                  return _Id_User;
+              }
+              set { _Id_User = value; }
+          }
+          static int _Id_User;
+          public static int Id_Branch
+          {
+              get
+              {
+                  if (_Id_Branch == 0)
+                  {
+                      _Id_Branch = Properties.Settings.Default.branch_ID;
+                  };
+                  return _Id_Branch;
+              }
+              set { _Id_Branch = value; }
+          }
+          static int _Id_Branch;
+          public static int Id_terminal
+          {
+              get
+              {
+                  if (_Id_terminal == 0)
+                  {
+                      _Id_terminal = Properties.Settings.Default.terminal_ID;
+                  };
+                  return _Id_terminal;
+              }
+              set { _Id_terminal = value; }
+          }
+          static int _Id_terminal;
         public static app_company Company { get; set; }
         public static app_branch Branch { get; set; }
         public static app_terminal Terminal { get; set; }

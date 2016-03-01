@@ -9,11 +9,11 @@ namespace entity
     {
         public purchase_tender()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             if (Properties.Settings.Default.terminal_ID > 0) { id_terminal = Properties.Settings.Default.terminal_ID; }
-            id_branch = CurrentSession.Branch.id_branch;
+            id_branch =  CurrentSession.Id_Branch;
             trans_date = DateTime.Now;
             status = Status.Documents_General.Pending;
           

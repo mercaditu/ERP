@@ -10,8 +10,8 @@ namespace entity
     {
         public production_line()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             production_order = new List<production_order>();
             production_execution = new List<production_execution>();

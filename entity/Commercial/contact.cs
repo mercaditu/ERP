@@ -57,7 +57,10 @@ namespace entity
         }
 
         public contact()
-        { contact_tag_detail = new List<contact_tag_detail>(); }
+        {
+            contact_tag_detail = new List<contact_tag_detail>();
+            id_user = CurrentSession.Id_User;
+        }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -9,9 +9,9 @@ namespace entity
     {
         public item_inventory()
         {
-            id_branch = CurrentSession.Branch.id_branch;
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_branch =  CurrentSession.Id_Branch;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
             status = Status.Documents.Pending;

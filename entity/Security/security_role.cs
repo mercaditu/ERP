@@ -12,7 +12,7 @@ namespace entity
         public security_role()
         {
             is_active = true;
-            id_company = CurrentSession.Company.id_company;
+            id_company = CurrentSession.Id_Company;
             security_curd = new List<security_curd>();
             security_user = new List<security_user>();
             security_role_privilage = new List<security_role_privilage>();

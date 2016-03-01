@@ -1,4 +1,5 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace cntrl.Controls
 
         public int GeographyID { get; set; }
 
-        int company_ID = entity.CurrentSession.Company.id_company;
+        int company_ID = CurrentSession.Id_Company;
         Task taskSearch;
         CancellationTokenSource tokenSource;
         CancellationToken token;
@@ -149,7 +150,7 @@ namespace cntrl.Controls
 
             results = db.app_geography.Where
                                     (y =>
-                                    y.id_company == entity.CurrentSession.Company.id_company
+                                    y.id_company == CurrentSession.Id_Company
                                     && y.parent.id_geography == app_geography.id_geography
                                     ).ToList();
 

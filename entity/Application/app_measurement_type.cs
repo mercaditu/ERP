@@ -12,8 +12,8 @@ namespace entity
         public app_measurement_type()
         {
             app_measurement = new List<app_measurement>();
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
         }
 

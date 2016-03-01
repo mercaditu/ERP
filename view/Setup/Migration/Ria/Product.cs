@@ -53,6 +53,7 @@ namespace Cognitivo.Setup.Migration
             DataTable dt_product = exeDT(sql);
             foreach (DataRow reader in dt_product.Rows)
             {
+               
                 using (db db = new db())
                 {
                     db.Configuration.AutoDetectChangesEnabled = false;

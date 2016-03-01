@@ -20,8 +20,8 @@ namespace entity
         public app_condition()
         {
             app_contract = new List<app_contract>();
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             id_company = entity.Properties.Settings.Default.company_ID;

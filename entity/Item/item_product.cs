@@ -14,8 +14,8 @@ namespace entity
 
         public item_product()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             cogs_type = COGS_Types.FIFO;
             is_head = true;
             item_movement = new List<item_movement>();

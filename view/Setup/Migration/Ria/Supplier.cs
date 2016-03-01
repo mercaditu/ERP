@@ -98,11 +98,18 @@ namespace Cognitivo.Setup.Migration
 
                       if (contacts.Error == null)
                       {
-                          db.contacts.Add(contacts);
-                          db.SaveChanges();
-                          value += 1;
-                          Dispatcher.BeginInvoke((Action)(() => progSupplier.Value = value));
-                          Dispatcher.BeginInvoke((Action)(() => supplierValue.Text = value.ToString()));
+                          try
+                          {
+                              db.contacts.Add(contacts);
+                              db.SaveChanges();
+                              value += 1;
+                              Dispatcher.BeginInvoke((Action)(() => progSupplier.Value = value));
+                              Dispatcher.BeginInvoke((Action)(() => supplierValue.Text = value.ToString()));
+                          }
+                          catch(Exception ex)
+                          {
+                              throw;
+                          }
                       }
                       //db.Dispose();
                   }

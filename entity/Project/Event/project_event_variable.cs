@@ -10,9 +10,9 @@ namespace entity
     {
         public project_event_variable()
         {
-            id_user = CurrentSession.User.id_user;
+            id_user =  CurrentSession.Id_User;
            
-            id_company = CurrentSession.Company.id_company;
+            id_company = CurrentSession.Id_Company;
          
         }
         [Key]

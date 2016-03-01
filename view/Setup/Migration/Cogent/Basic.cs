@@ -44,7 +44,7 @@ namespace Cognitivo.Setup.Migration.Cogent
             productionsExecution.Wait();
             Task PurchaseInvoice = Task.Factory.StartNew(() => Purchase_Invoice());
             PurchaseInvoice.Wait();
-          //  Task SalesInvocie = Task.Factory.StartNew(() => Sales_Invoice());
+            //  Task SalesInvocie = Task.Factory.StartNew(() => Sales_Invoice());
         }
 
         private void basic()
@@ -132,7 +132,12 @@ namespace Cognitivo.Setup.Migration.Cogent
                     ));
 
                     sync_Users();
-
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        entity.Properties.Settings.Default.user_ID = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
+                        entity.Properties.Settings.Default.Save();
+                    }
+                 ));
 
                     foreach (DataRow row_Branch in dt_Branch.Rows)
                     {
@@ -174,6 +179,13 @@ namespace Cognitivo.Setup.Migration.Cogent
                             }
                         }
                     }
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        entity.Properties.Settings.Default.branch_ID = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
+                        entity.Properties.Settings.Default.terminal_ID = dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
+                        entity.Properties.Settings.Default.Save();
+                    }
+));
                     dt_Branch.Clear();
                     dt_Terminal.Clear();
                 }
@@ -696,7 +708,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                     {
                         item.id_vat_group = dbContext.app_vat_group.FirstOrDefault().id_vat_group;
                     }
-                   
+
 
 
                     if (item.Error == null)
@@ -1379,16 +1391,16 @@ namespace Cognitivo.Setup.Migration.Cogent
                     cmd.CommandText = sql_statement;
 
                     cmd.CommandType = CommandType.Text;
-                
-                        MySqlDataReader readerproduction = cmd.ExecuteReader();
-                        DataTable dtproduction = exeDTMysql(sql_statement);
-                        int count = dtproduction.Rows.Count;
-                        int value = 0;
-                        Dispatcher.BeginInvoke((Action)(() => productionMaximum.Text = count.ToString()));
-                        Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
-                        Dispatcher.BeginInvoke((Action)(() => progProduction.Maximum = count));
-                        Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
-                   
+
+                    MySqlDataReader readerproduction = cmd.ExecuteReader();
+                    DataTable dtproduction = exeDTMysql(sql_statement);
+                    int count = dtproduction.Rows.Count;
+                    int value = 0;
+                    Dispatcher.BeginInvoke((Action)(() => productionMaximum.Text = count.ToString()));
+                    Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
+                    Dispatcher.BeginInvoke((Action)(() => progProduction.Maximum = count));
+                    Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
+
                     production_order production_order = new production_order();
                     if (dtproduction.Rows.Count > 0)
                     {
@@ -1528,19 +1540,19 @@ namespace Cognitivo.Setup.Migration.Cogent
                             value += 1;
                             Dispatcher.BeginInvoke((Action)(() => progProduction.Value = value));
                             Dispatcher.BeginInvoke((Action)(() => productionValue.Text = value.ToString()));
-                           
+
                         }
                         if (production_order.Error == null)
                         {
                             db.production_order.Add(production_order);
-                         
+
                         }
                         dtproduction.Clear();
                         readerproduction.Close();
                         cmd.Dispose();
                         conn.Close();
                     }
-                   
+
                     db.SaveChanges();
                 }
             }
@@ -1578,7 +1590,7 @@ namespace Cognitivo.Setup.Migration.Cogent
 
                 while (readerproduction.Read())
                 {
-                 
+
                     using (db db = new db())
                     {
                         db.Database.CommandTimeout = 5500;
@@ -1680,10 +1692,10 @@ namespace Cognitivo.Setup.Migration.Cogent
                                 production_execution_detail.id_project_task = db.project_task.Where(x => x.item_description == Task_name && x.project.name == project_name).FirstOrDefault().id_project_task;
                             }
                             production_execution.production_execution_detail.Add(production_execution_detail);
-                           
+
 
                         }
-                        if (production_execution.Error == null && production_execution.production_execution_detail.Count()>0)
+                        if (production_execution.Error == null && production_execution.production_execution_detail.Count() > 0)
                         {
                             db.production_execution.Add(production_execution);
 
@@ -2171,7 +2183,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                             }
 
 
-                           
+
                             sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
 
 

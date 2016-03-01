@@ -11,8 +11,8 @@ namespace entity
     {
         public payment_type()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             payment_type_detail = new List<payment_type_detail>();
             is_active = true;

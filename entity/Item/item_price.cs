@@ -15,8 +15,8 @@ namespace entity
         {
             Brillo.General general = new Brillo.General();
 
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             id_currency = general.Get_Currency(Properties.Settings.Default.company_ID);
             id_price_list = general.get_price_list(Properties.Settings.Default.company_ID);

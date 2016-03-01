@@ -10,8 +10,8 @@ namespace entity
     {
         public production_execution_detail()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
             is_input = false;

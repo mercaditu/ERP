@@ -11,8 +11,8 @@ namespace entity
     {
         public item_movement()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             item_movement_value = new List<item_movement_value>();
             item_movement_dimension = new List<item_movement_dimension>();

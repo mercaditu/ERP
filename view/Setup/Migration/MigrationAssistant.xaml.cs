@@ -16,6 +16,9 @@ namespace Cognitivo.Setup.Migration
     {
         public entity.db dbContext { get; set; }
         public int id_company { get; set; }
+        public int id_user { get; set; }
+        public int id_branch { get; set; }
+        public int id_terminal { get; set; }
 
         public bool _cogent_State { get; set; }
         public string _connString { get; set; }

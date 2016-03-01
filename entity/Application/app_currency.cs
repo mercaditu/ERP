@@ -14,8 +14,8 @@ namespace entity
             app_currency_denomination = new List<app_currency_denomination>();
             app_currencyfx = new List<app_currencyfx>();
 
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_active = true;
             is_priority = false;
             is_head = true;

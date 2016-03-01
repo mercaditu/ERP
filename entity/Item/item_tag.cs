@@ -11,8 +11,8 @@ namespace entity
     {
         public item_tag()
         {
-            id_company = CurrentSession.Company.id_company;
-            id_user = CurrentSession.User.id_user;
+            id_company = CurrentSession.Id_Company;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             item_tag_detail = new List<item_tag_detail>();
             is_active = true;

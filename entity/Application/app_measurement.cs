@@ -13,7 +13,7 @@ namespace entity
         {
             id_company = entity.Properties.Settings.Default.company_ID;
             is_active = true;
-            id_user = CurrentSession.User.id_user;
+            id_user =  CurrentSession.Id_User;
             is_head = true;
             item_conversion_factor = new List<item_conversion_factor>();
             item_dimension = new List<item_dimension>();

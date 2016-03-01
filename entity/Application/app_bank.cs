@@ -22,9 +22,9 @@ namespace entity
             app_account = new List<app_account>();
             payment_detail = new List<payment_detail>();
             is_active = true;
-            id_company = CurrentSession.Company.id_company;
+            id_company = CurrentSession.Id_Company;
             is_head = true;
-            id_user = CurrentSession.User.id_user;
+            id_user =  CurrentSession.Id_User;
         }
 
         public virtual ICollection<app_account> app_account { get; set; }

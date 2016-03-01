@@ -24,35 +24,38 @@
     <Grid Background="White" >
         <Grid.RowDefinitions>
             <RowDefinition Height="46"/>
+            <RowDefinition Height="46"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+        <Grid Grid.Row="2" Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
               Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"  />
-        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="accounting_cycleDataGrid"
+        <ListBox Grid.Row="2" Background="{StaticResource AccentColor_Brush}" x:Name="accounting_cycleDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="accounting_cycleDataGrid_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding Source={StaticResource accounting_cycleViewSource}}" Grid.Row="1" Margin="0,0,0,152">
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}" 
+                 ItemsSource="{Binding Source={StaticResource accounting_cycleViewSource}}"  Margin="0,0,0,152">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding start_date, StringFormat=\{0:dd-MM-yyyy\}}" 
                                    recordSecondaryName="{Binding end_date, StringFormat=\{0:dd-MM-yyyy\}}"
-                                   recordName="{Binding name}"/>
+                                   recordName="{Binding name}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Background="WhiteSmoke" Margin="0">
+        <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Background="WhiteSmoke" Margin="0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
             <Label Foreground="{StaticResource Label_ImportantColor}" FontWeight="Medium" Content="{lex:Loc Template}"/>
             <Button Content="{lex:Loc Create}" Click="Button_Click" Margin="8,4"/>
             <Button Content="{lex:Loc Template}" Click="Button_Click_1" Margin="8,4"/>
             <Label Foreground="{StaticResource Label_ImportantColor}" FontWeight="Medium" Content="{lex:Loc Code}"/>
             <Button Content="{lex:Loc Order}" Click="Button_Click_2" Margin="8,4"/>
         </StackPanel>
-        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center">
             <TextBlock Text="{Binding AccountDate, ElementName=JournalPage, Mode=TwoWay, StringFormat=D, UpdateSourceTrigger=PropertyChanged}" 
 				       HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray"  MouseDown="Today_MouseDown"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -71,9 +74,9 @@
 					HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        <DataGrid x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Row="1" Grid.Column="1" 
+        <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Column="1" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RowEditEnding="accounting_journal_detailDataGrid_RowEditEnding" 
-                  CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding_1" >
+                  CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding_1" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
             <DataGrid.Columns>
                 <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_journalViewSource}}" 
 						                                SelectedValueBinding="{Binding id_journal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -107,5 +110,11 @@
                 <DataGridTextColumn x:Name="commentColumn" Binding="{Binding accounting_journal.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Comment}" Width="auto"/>
             </DataGrid.Columns>
         </DataGrid>
+        <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="2" VerticalAlignment="Top" 
+                     
+                      appName="AccountJournal"
+                       
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

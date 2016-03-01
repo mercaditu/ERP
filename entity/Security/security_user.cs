@@ -13,6 +13,7 @@ namespace entity
         {
             //id_company = CurrentSession.Company.id_company;
             is_active = true;
+            trans_date = DateTime.Now;
         }
 
         [Key]
@@ -67,6 +68,8 @@ namespace entity
         public string code { get; set; }
         public string security_answer { get; set; }
         public bool is_active { get; set; }
+        public DateTime? trans_date { get; set; }
+        public int? id_created_user { get; set; }
         [NotMapped]
         public System.Data.Entity.EntityState State
         {
@@ -94,7 +97,7 @@ namespace entity
 
         public virtual IEnumerable<security_user> child { get; set; }
         public virtual security_user parent { get; set; }
-
+       // public virtual security_user Createdby { get; set; }
         public virtual IEnumerable<item_inventory> item_inventory { get; set; }
 
         public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }

@@ -195,7 +195,31 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-
+                                                    <ToggleButton x:Name="chkisIncluded" Tag="{Binding}" IsChecked="{Binding is_included, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="6"
+                                                          Checked="chkisIncluded_Checked" Unchecked="chkisIncluded_Checked" Height="100" Width="256" Cursor="Hand" Background="{StaticResource AccentColor_Introvert}"
+                                                          IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
+                                                        <ToggleButton.Content>
+                                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="14"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <TextBlock Text="{Binding item_tag.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
+                                                                <TextBlock Text="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Foreground="White" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
+                                                                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                                                                    <StackPanel Margin="2">
+                                                                        <TextBlock Text="Adult" FontSize="9"/>
+                                                                        <TextBox Text="{Binding adult_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="Consumption_KeyUp" Width="40"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Margin="2">
+                                                                        <TextBlock Text="Child" FontSize="9"/>
+                                                                        <TextBox Text="{Binding child_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" KeyUp="Consumption_KeyUp" Width="40"/>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </ToggleButton.Content>
+                                                    </ToggleButton>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>

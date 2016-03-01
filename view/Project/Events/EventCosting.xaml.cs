@@ -67,7 +67,8 @@ namespace Cognitivo.Project
             project_costingproject_event_template_variable_detailsViewSource = FindResource("project_costingproject_event_template_variable_detailsViewSource") as CollectionViewSource;
             project_costingservices_per_event_detailsViewSource = FindResource("project_costingservices_per_event_detailsViewSource") as CollectionViewSource;
 
-            IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
+        
+       
 
             EstimateCost();
         }
@@ -215,6 +216,11 @@ namespace Cognitivo.Project
 
         private void EstimateCost()
         {
+            if (project_costingViewSource.View.CurrentItem != null)
+            {
+                IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
+
+            } 
             int adult_guest = 0;
             int child_guest = 0;
             try
@@ -568,7 +574,7 @@ namespace Cognitivo.Project
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
-            IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
+          
 
             EstimateCost();
         }

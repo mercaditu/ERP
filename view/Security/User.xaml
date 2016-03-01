@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
       xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-      
+        xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl" 
       xmlns:entity="clr-namespace:entity;assembly=entity" 
       xmlns:cls="clr-namespace:Cognitivo.Class"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
@@ -20,6 +20,7 @@
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="securityQuesViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_question}, CreateList=True}"/>
         <CollectionViewSource x:Key="securityRoleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_role}, CreateList=True}"/>
+      
     </Page.Resources>
 
     <Grid DataContext="{StaticResource security_userViewSource}">
@@ -67,7 +68,9 @@
                                      Text="{Binding name_full, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                             
                             <Label Content="{lex:Loc User}" Style="{StaticResource input_label}"/>
-                            <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" 
+                                                   Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <!--<TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>-->
                             <Label Content="{lex:Loc Password}" Style="{StaticResource input_label}"/>
                             <PasswordBox cls:PasswordHelper.Attach="True" Style="{StaticResource input_password}"
                                          cls:PasswordHelper.Password="{Binding password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

@@ -46,6 +46,12 @@ namespace Cognitivo.Security
             security_user security_user = new security_user();
             security_user.State = EntityState.Added;
             security_user.IsSelected = true;
+            security_user.id_company = CurrentSession.Company.id_company;
+            if (CurrentSession.User!=null)
+            {
+                security_user.id_created_user = CurrentSession.User.id_user;
+            }
+    
             dbContext.security_user.Add(security_user);
             security_user_view_source.View.MoveCurrentToLast();
         }

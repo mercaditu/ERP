@@ -67,6 +67,8 @@ namespace entity
             AccountsPayable = 9,
             [LocalizedDescription("AccountsRecievable")]
             AccountsRecievable = 27,
+            [LocalizedDescription("AccountJournal")]
+            AccountJournal = 29,
             [LocalizedDescription("Contact")]
             Contact = 10,
             [LocalizedDescription("PaymentUtility")]

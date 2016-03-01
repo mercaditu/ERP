@@ -343,6 +343,10 @@
     <Compile Include="Migrations\201602290533012_addcontacttag.Designer.cs">
       <DependentUpon>201602290533012_addcontacttag.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603010650333_UpdateSecurity_user.cs" />
+    <Compile Include="Migrations\201603010650333_UpdateSecurity_user.Designer.cs">
+      <DependentUpon>201603010650333_UpdateSecurity_user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -747,6 +751,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602290533012_addcontacttag.resx">
       <DependentUpon>201602290533012_addcontacttag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603010650333_UpdateSecurity_user.resx">
+      <DependentUpon>201603010650333_UpdateSecurity_user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

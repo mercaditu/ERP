@@ -577,9 +577,10 @@ namespace Cognitivo.Sales
             sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
             foreach (sales_packing item in pnlPacking.selected_sales_packing)
             {
-                _sales_invoice.State = EntityState.Modified;
-                    
-                foreach (sales_packing_detail _sales_packing_detail in item.sales_packing_detail)
+                sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault(); 
+              //  _sales_invoice.State = EntityState.Modified;
+
+                foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail)
                 {
                    
                     if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_packing_detail.id_item).Count() == 0)
@@ -596,16 +597,20 @@ namespace Cognitivo.Sales
                         sales_packing_relation sales_packing_relation = new sales_packing_relation();
                         sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
                         sales_packing_relation.sales_packing_detail = _sales_packing_detail;
-                        sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
+                        //sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
 
                         sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                     }
                 }
-                
+
+                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
-              //  sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.View.Refresh();
+                sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
+                CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
                // SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
+                //sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.View.Refresh();
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = Visibility.Collapsed;
             }
@@ -705,8 +710,7 @@ namespace Cognitivo.Sales
             sales_packing sales_packing = (sales_packing)Hyperlink.Tag;
             if (sales_packing != null)
             {
-                entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-                Document.Document_PrintPackingList(0, sales_packing);
+                entity.Brillo.Document.Start.Automatic(sales_packing, sales_packing.app_document_range);
             }
            
         }
@@ -724,6 +728,22 @@ namespace Cognitivo.Sales
                 toolBar.msgWarning("Please select");
             }
         }
+
+        private void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+            if (sales_invoicesales_invoice_detailViewSource.View!=null)
+            {
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
+                CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
+                
+            }
+          
+        }
+
+       
 
         
        

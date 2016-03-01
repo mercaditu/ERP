@@ -52,7 +52,7 @@
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}"
-                 ItemsSource="{Binding}" Grid.Row="1" Margin="0,3,0,-3">
+                 ItemsSource="{Binding}" Grid.Row="1" Margin="0,3,0,-3" SelectionChanged="sales_invoiceDataGrid_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
@@ -360,8 +360,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
-                                    <Hyperlink PreviewMouseUp="salespackinglist_PreviewMouseUp" Tag="{Binding sales_packinglist_relation.sales_packing}">
-                                        <Run  Text="{Binding sales_packing_detail.id_sales_packing_detail}" />
+                                    <Hyperlink PreviewMouseUp="salespackinglist_PreviewMouseUp" Tag="{Binding sales_packing_detail.sales_packing}">
+                                        <Run  Text="{Binding sales_packing_detail.sales_packing.number}" />
                                     </Hyperlink>
                                         </TextBlock>
 

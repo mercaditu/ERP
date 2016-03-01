@@ -608,7 +608,15 @@ namespace Cognitivo.Sales
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
                 CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
-                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
+                if (sales_invoicesales_invoice_detailViewSource.View.CurrentItem!=null)
+                {
+                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;      
+                }
+                else
+                {
+                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
+
+                }
                // SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
                 //sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.View.Refresh();
                 crud_modal.Children.Clear();
@@ -732,13 +740,18 @@ namespace Cognitivo.Sales
         private void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-            if (sales_invoicesales_invoice_detailViewSource.View!=null)
+            CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+            if (sales_invoicesales_invoice_detailViewSource.View != null)
             {
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
-                CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
-                
+
+            }
+            else
+            {
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
             }
           
         }

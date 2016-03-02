@@ -159,11 +159,11 @@
                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
                     <StackPanel x:Name="stpcode">
 
-                        <Button Content="{lex:Loc Generate}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Button_Click"/>
+                        <Button Content="{lex:Loc SalesOrder}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Button_Click"/>
 
-                        <Label Content="{lex:Loc description}" Style="{StaticResource input_label}"/>
+                        <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                        <Label Content="{lex:Loc UnitCost}" Style="{StaticResource input_label}"/>
+                        <Label Content="{lex:Loc UnitPrice}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_cost_est,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                     </StackPanel>
 

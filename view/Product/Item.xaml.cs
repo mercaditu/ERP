@@ -396,14 +396,18 @@ namespace Cognitivo.Product
                 itemViewSource.View.Filter = i =>
                 {
                     item item = i as item;
-                    if (item.name.ToLower().Contains(query.ToLower()) || item.code.ToLower().Contains(query.ToLower()))
+                    if (item.Error == null)
                     {
-                        return true;
+                        if (item.name.ToLower().Contains(query.ToLower()) || item.code.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
-                    else
-                    {
-                        return false;
-                    }
+                    return false;
                 };
             }
             else

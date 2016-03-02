@@ -33,7 +33,7 @@
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseDown="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <TextBlock Text="Define Geography" Style="{StaticResource text_Instructions}"/>

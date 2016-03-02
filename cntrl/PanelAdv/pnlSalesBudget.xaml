@@ -28,7 +28,7 @@
                 <Label Foreground="White" Content="{lex:Loc SalesBudget}" Style="{StaticResource H3}"/>
             </StackPanel>
             <Label Content="c" FontSize="22" VerticalAlignment="Center" Margin="0"
-				HorizontalAlignment="Right" MouseDown="btnCancel_Click" Foreground="White" 
+				HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White" 
 				FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <Grid Margin="8,40,8,0" VerticalAlignment="Top">

@@ -31,7 +31,7 @@ namespace cntrl.Controls
                     ContactID = Contact.id_contact;
                     Text = Contact.name;
 
-                    ContactPopUp.IsOpen = false;
+                    popContact.IsOpen = false;
 
                     if (Select != null)
                     { Select(this, new RoutedEventArgs()); }
@@ -136,7 +136,7 @@ namespace cntrl.Controls
                     contactViewSource.Source = results;
                     Contact = contactViewSource.View.CurrentItem as entity.contact;
 
-                    ContactPopUp.IsOpen = true;
+                    popContact.IsOpen = true;
                     progBar.IsActive = false;
                 }));
             }

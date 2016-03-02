@@ -11,7 +11,7 @@
         public Settings() {
             // // To add event handlers for saving and changing settings, uncomment the lines below:
             //
-            // SettingChanging += SettingChangingEventHandler;
+            //SettingChanging += SettingChangingEventHandler;
             //
             // SettingsSaving += SettingsSavingEventHandler;
             //

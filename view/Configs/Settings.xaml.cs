@@ -29,7 +29,6 @@ namespace Cognitivo.Configs
             if (app_companyViewSource.View != null)
             {
                 int new_CompanyID = ((entity.app_company)app_companyViewSource.View.CurrentItem).id_company;
-
                 entity.Properties.Settings.Default.Save();
 
                 if (new_CompanyID != CompanyID &&
@@ -42,6 +41,10 @@ namespace Cognitivo.Configs
                 }
                 else
                 {
+                    entity.CurrentSession.Id_Company = entity.Properties.Settings.Default.company_ID;
+                    entity.CurrentSession.Id_Branch = entity.Properties.Settings.Default.branch_ID;
+                    entity.CurrentSession.Id_terminal = entity.Properties.Settings.Default.terminal_ID;
+
                     //GoBack with changed data.
                     mainWindow.mainFrame.NavigationService.GoBack();
                 }

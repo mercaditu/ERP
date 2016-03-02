@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:crud="clr-namespace:cntrl.Curd"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                 xmlns:entity="clr-namespace:entity;assembly=entity"
                 xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -14,6 +15,19 @@
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
+        <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
+            <crud:contact x:Name="crudContact"/>
+        </Popup>
+        <Popup x:Name="popToolBar" PopupAnimation="Slide" Placement="Top" Visibility="Collapsed">
+            <StackPanel Background="WhiteSmoke" Width="256">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
+                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}"/>
+                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
+                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}"/>
+                </StackPanel>
+            </StackPanel>
+        </Popup>
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,16,0"
                  Text="{Binding Path=Text, ElementName=_SmartBox_Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -22,7 +36,6 @@
                  metro:TextBoxHelper.SelectAllOnFocus="True"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
                  KeyUp="StartSearch"/>
-        
         <!-- Progress Ring -->
         <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Right"
                             Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False"/>
@@ -33,7 +46,7 @@
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" VerticalAlignment="Center" Margin="0" 
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
 
-        <Popup x:Name="ContactPopUp" IsOpen="False">
+        <Popup x:Name="popContact" IsOpen="False">
             <Popup.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </Popup.Effect>

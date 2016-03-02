@@ -43,21 +43,10 @@
                        Text=""/>
             <StackPanel HorizontalAlignment="Center" >
                 <Label Content="Template" Style="{StaticResource input_label}"/>
-                <Label Content="chart" Style="{StaticResource input_label}"/>
                 <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
                      Text="{Binding name, Mode=TwoWay, 
                                     NotifyOnValidationError=true, ValidatesOnDataErrors=True,
                                     ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-                <!--<cntrl:SearchableTextbox x:Name="combo" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256"
-                                                      _focusgrid="True"
-                                                     Height="26" ItemsSource="{StaticResource accounting_chartcomboViewSource}" 
-                                                     KeyDown="cbxItem_KeyDown" MouseDoubleClick="cbxItem_MouseDoubleClick">
-                    <cntrl:SearchableTextbox.Columns>
-                        <cntrl:SmartBoxColumn Header="code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                        <cntrl:SmartBoxColumn Header="name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                        <cntrl:SmartBoxColumn Header="id_chart" ForProperty="id_chart" Binding="{Binding id_chart, Mode=Default}" EnableSearch="True"/>
-                    </cntrl:SearchableTextbox.Columns>
-                </cntrl:SearchableTextbox>-->
                 <StackPanel x:Name="stpsub">
                 <DataGrid x:Name="accounting_template_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Height="200"  RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
@@ -65,9 +54,9 @@
 						                                SelectedValueBinding="{Binding id_chart,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="name" 
 						                                SelectedValuePath="id_chart" Header="Chart" Width="*"/>
-                            <DataGridTextColumn x:Name="coeeficientColumn" Binding="{Binding coefficeint,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="coefficeint" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn x:Name="is_debitColumn" Binding="{Binding is_debit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn x:Name="is_creditColumn" Binding="{Binding is_debit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource InverseBooleanConverter}}" Header="credit" Width="SizeToHeader"/>
+                            <DataGridTextColumn Binding="{Binding coefficeint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Coefficients}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding is_debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Debit}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding is_debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanConverter}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="SizeToHeader"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 </StackPanel>

@@ -60,8 +60,8 @@
             <DataGrid HorizontalScrollBarVisibility="Disabled" x:Name="dgvContractDetail" Width="256" Margin="0,0,0,8"
                       ItemsSource="{Binding app_contract_detail}" AutoGenerateColumns="False" InitializingNewItem="dgvContractDetail_InitializingNewItem">
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Order" Width="SizeToHeader" Binding="{Binding is_order, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="Coefficient" Width="*" Binding="{Binding coefficient, StringFormat=P, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
+                    <DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Order}" Width="SizeToHeader" Binding="{Binding is_order, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coefficient}" Width="*" Binding="{Binding coefficient, StringFormat=P, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
                     <DataGridTextColumn Header="Interval(Days)" Width="SizeToHeader" Binding="{Binding interval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </DataGrid.Columns>
             </DataGrid>

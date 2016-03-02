@@ -15,6 +15,7 @@ namespace entity
         public project_task()
         {
             project_task_dimension = new List<project_task_dimension>();
+           
             trans_date = DateTime.Now;
             child= new List<project_task>();
             is_active = true;
@@ -27,6 +28,8 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_project_task { get; set; }
         public int id_project { get; set; }
+
+     
         public Status.Project? status { get; set; }
         public Status.ProjectStatus? ProjectStatus { get; set; }
         public int? id_item
@@ -65,14 +68,30 @@ namespace entity
 
                 if (parent != null)
                 {
-                    parent.quantity_est = objclsproject.getsum(parent.id_project_task, parent.child);
+                    parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
                     parent.RaisePropertyChanged("quantity_est");
                 }
 
             }
         }
         private decimal? _quantity_est;
-        public decimal? unit_cost_est { get; set; }
+        public decimal? unit_cost_est
+        {
+            get { return _unit_cost_est; }
+            set
+            {
+                _unit_cost_est = value;
+                RaisePropertyChanged("unit_cost_est");
+
+                if (parent != null)
+                {
+                    parent.unit_cost_est = objclsproject.getsumunitcost(parent.id_project_task, parent.child);
+                    parent.RaisePropertyChanged("unit_cost_est");
+                }
+
+            }
+        }
+        private decimal? _unit_cost_est;
         public DateTime? start_date_est { get; set; }
         public DateTime? end_date_est { get; set; }
         public DateTime? trans_date { get; set; }
@@ -120,11 +139,12 @@ namespace entity
         item _items;
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
-        public virtual IEnumerable<sales_budget_detail> sales_budget_detail { get; set; }
+        public virtual ICollection<sales_budget_detail> sales_budget_detail { get; set; }
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail { get; set; }
-        public virtual IEnumerable<sales_order_detail> sales_order_detail { get; set; }
-        public virtual IEnumerable<sales_invoice_detail> sales_invoice_detail { get; set; }
+        public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
+        public virtual sales_order_detail sales_detail { get; set; }
+        public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
 
         public virtual ICollection<project_task> child
         {
@@ -147,7 +167,7 @@ namespace entity
                     RaisePropertyChanged("parent");
                     if (parent != null)
                     {
-                        parent.quantity_est = objclsproject.getsum(parent.id_project_task, parent.child);
+                        parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
                         parent.quantity_est += quantity_est;
                         parent.RaisePropertyChanged("quantity_est");
                     }

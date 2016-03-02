@@ -93,6 +93,87 @@ namespace Cognitivo.Project.Development
         }
 
         #region Toolbar Events
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(query))
+                {
+                    projectViewSource.View.Filter = i =>
+                    {
+                        project project = i as project;
+                        if (project.name.ToLower().Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    projectViewSource.View.Filter = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+
+            filter_task();
+        }
+        private void toolBar_btnApprove_Click(object sender)
+        {
+
+            if (project_taskViewSource.View != null)
+            {
+                project_taskViewSource.View.Filter = null;
+                List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+                _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
+
+                foreach (project_task project_task in _project_task)
+                {
+                    //if (project_task.Error == null)
+                    //{
+                    if (project_task.ProjectStatus == Status.ProjectStatus.Approved)
+                    {
+                        if (project_task.status == Status.Project.Pending || project_task.status == null)
+                        {
+                            project_task.status = Status.Project.Approved;
+                        }
+                    }
+                    //}
+                    //else
+                    //{
+                    //    toolBar.msgWarning(project_task.name + "Error");
+                    //}
+
+                    project_task.IsSelected = false;
+                }
+                _entity.db.SaveChanges();
+                filter_task();
+            }
+        }
+
+        private void toolBar_btnAnull_Click(object sender)
+        {
+            if (project_taskViewSource.View != null)
+            {
+                project_taskViewSource.View.Filter = null;
+                List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
+                project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+                foreach (project_task project_task in project_taskLIST)
+                {
+                    project_task.status = Status.Project.Rejected;
+                    project_task.IsSelected = false;
+                }
+                _entity.db.SaveChanges();
+                toolBar.msgDone();
+                filter_task();
+            }
+        }
         private void toolBar_btnNew_Click(object sender)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -254,93 +335,14 @@ namespace Cognitivo.Project.Development
             }
         }
 
-        private void toolBar_btnApprove_Click(object sender)
-        {
-
-            if (project_taskViewSource.View != null)
-            {
-                project_taskViewSource.View.Filter = null;
-                List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-                _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
-
-                foreach (project_task project_task in _project_task)
-                {
-                    //if (project_task.Error == null)
-                    //{
-                    if (project_task.ProjectStatus == Status.ProjectStatus.Approved)
-                    {
-                        if (project_task.status == Status.Project.Pending || project_task.status == null)
-                        {
-                            project_task.status = Status.Project.Approved;
-                        }
-                    }
-                    //}
-                    //else
-                    //{
-                    //    toolBar.msgWarning(project_task.name + "Error");
-                    //}
-
-                    project_task.IsSelected = false;
-                }
-                _entity.db.SaveChanges();
-                filter_task();
-            }
-        }
-
-        private void toolBar_btnAnull_Click(object sender)
-        {
-            if (project_taskViewSource.View != null)
-            {
-                project_taskViewSource.View.Filter = null;
-                List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
-                project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
-                foreach (project_task project_task in project_taskLIST)
-                {
-                    project_task.status = Status.Project.Rejected;
-                    project_task.IsSelected = false;
-                }
-                _entity.db.SaveChanges();
-                toolBar.msgDone();
-                filter_task();
-            }
-        }
+    
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             filter_task();
         }
 
-        private void toolBar_btnSearch_Click(object sender, string query)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(query))
-                {
-                    projectViewSource.View.Filter = i =>
-                    {
-                        project project = i as project;
-                        if (project.name.ToLower().Contains(query.ToLower()))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    projectViewSource.View.Filter = null;
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-
-            filter_task();
-        }
+      
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

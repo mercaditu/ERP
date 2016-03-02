@@ -756,7 +756,17 @@ namespace Cognitivo.Sales
           
         }
 
-       
+         private void btnRecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+         {
+             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+             if (sales_invoice != null)
+             {
+                 crud_modal.Visibility = System.Windows.Visibility.Visible;
+                 cntrl.Curd.receive_payment recive_payment = new cntrl.Curd.receive_payment();
+                 recive_payment.sales_invoice = sales_invoice;
+                 crud_modal.Children.Add(recive_payment);
+             }
+         }
 
         
        

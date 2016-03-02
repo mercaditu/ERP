@@ -347,6 +347,10 @@
     <Compile Include="Migrations\201603010650333_UpdateSecurity_user.Designer.cs">
       <DependentUpon>201603010650333_UpdateSecurity_user.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603021256595_UpdateProject_task.cs" />
+    <Compile Include="Migrations\201603021256595_UpdateProject_task.Designer.cs">
+      <DependentUpon>201603021256595_UpdateProject_task.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -754,6 +758,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603010650333_UpdateSecurity_user.resx">
       <DependentUpon>201603010650333_UpdateSecurity_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603021256595_UpdateProject_task.resx">
+      <DependentUpon>201603021256595_UpdateProject_task.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

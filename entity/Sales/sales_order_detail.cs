@@ -15,6 +15,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
+            //project_task = new List<project_task>();
         }
 
         [Key]
@@ -132,7 +133,8 @@ namespace entity
         }
         private sales_order _sales_order;
 
-        
+
+       
         public virtual sales_budget_detail sales_budget_detail { get; set; }
         public virtual IEnumerable<sales_packing_detail> sales_packing_detail { get; set; }
         public virtual IEnumerable<sales_invoice_detail> sales_invoice_detail { get; set; }

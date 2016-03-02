@@ -359,6 +359,8 @@
     <Compile Include="Converters\AccountChartGroupLiabillity.cs" />
     <Compile Include="Converters\AccountingChartGroupExpense.cs" />
     <Compile Include="Converters\AccountingChartGroupIncome.cs" />
+    <Compile Include="Converters\salesorderdetailtoEnable.cs" />
+    <Compile Include="Converters\salesorderdetailtostatus.cs" />
     <Compile Include="Converters\ActiveToStatusforitem.cs" />
     <Compile Include="Converters\AddTwoValue.cs" />
     <Compile Include="Converters\Localize.cs" />
@@ -399,6 +401,9 @@
     </Compile>
     <Compile Include="Project\Development\ProjectExecution.xaml.cs">
       <DependentUpon>ProjectExecution.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Project\Development\ProjectInvoice.xaml.cs">
+      <DependentUpon>ProjectInvoice.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project\Events\EventCosting.xaml.cs">
       <DependentUpon>EventCosting.xaml</DependentUpon>
@@ -1320,6 +1325,10 @@
     <Page Include="Project\Development\ProjectExecution.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Project\Development\ProjectInvoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Project\Events\EventCosting.xaml">
       <Generator>MSBuild:Compile</Generator>

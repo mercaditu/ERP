@@ -25,6 +25,7 @@
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <converter:CustomStringFormatConverter x:Key="CustomStringFormat"/>
+        <converter:Status2Enable x:Key="Status2Enable"/>
         <converter:BooleanToIsStatusConverter x:Key="BoolToIssued"/>
         <converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable"/>
@@ -33,7 +34,6 @@
         <!--<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}"/>
-       
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailsales_packinglist_relationViewSource" Source="{Binding sales_packinglist_relation, Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"/>
     </Page.Resources>
@@ -226,10 +226,10 @@
                                     </Border>
                                 </Popup>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal"  Margin="3,0,0,0" IsEnabled="False">
+                            <StackPanel Orientation="Horizontal"  Margin="3,0,0,0" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource Status2Enable}}">
                                 <Label Content="" Style="{StaticResource btn_Label}"/>
                                 <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                <Hyperlink><Run Text="{lex:Loc RecievePayment}"/></Hyperlink></TextBlock>
+                                <Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp"><Run Text="{lex:Loc RecievePayment}"/></Hyperlink></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" IsEnabled="False">
                                 <Label Content="" Style="{StaticResource btn_Label}"/>

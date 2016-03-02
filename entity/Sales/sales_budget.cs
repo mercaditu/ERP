@@ -22,6 +22,7 @@ namespace entity
             if (_settings.terminal_ID > 0) { id_terminal = _settings.terminal_ID; }
 
             sales_budget_detail = new List<sales_budget_detail>();
+           
         }
 
         [Key]

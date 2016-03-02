@@ -99,7 +99,7 @@
                                   Style="{StaticResource input_combobox}"
                                   IsEnabled="{Binding Text, Converter={StaticResource TextChangeToEnable}, ElementName=tbxOrderNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                  
-                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                                 />
                         <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}" 
                                  metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

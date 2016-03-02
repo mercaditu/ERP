@@ -115,6 +115,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.Development.TaskView", "ActivityPlan", "ProjectTask");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.Development.Logistics", "Logistics", "Logistics");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectExecution", "ProjectExecution", "");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectInvoice", "ProjectInvoice", "");
 
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.Line", "Line", "");

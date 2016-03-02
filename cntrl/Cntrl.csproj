@@ -194,6 +194,9 @@
     <Compile Include="Curd\ContactTag.xaml.cs">
       <DependentUpon>ContactTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\receive_payment.xaml.cs">
+      <DependentUpon>receive_payment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\Refinance.xaml.cs">
       <DependentUpon>Refinance.xaml</DependentUpon>
     </Compile>
@@ -566,6 +569,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Curd\ContactTag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\receive_payment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

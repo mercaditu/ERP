@@ -115,8 +115,8 @@ namespace cntrl.Controls
                             x.id_company == company_ID &&
                             (
                                 x.code.Contains(SearchText) ||
-                                x.name.Contains(SearchText) ||
-                                x.gov_code.Contains(SearchText)
+                                x.name.Contains(SearchText) //||
+                                //x.gov_code.Contains(SearchText)
                             )
                             &&
                             (

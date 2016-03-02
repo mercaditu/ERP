@@ -119,7 +119,7 @@ namespace Cognitivo.Project
             sales_order.comment = "Generate From Project";
             foreach (project_task _project_task in project_task)
             {
-                if (_project_task.items.id_item_type!=item.item_type.Task)
+                if (_project_task.items.id_item_type==item.item_type.Task)
                 {
                     sales_order_detail sales_order_detail = new sales_order_detail();
                     sales_order_detail.id_sales_order = sales_order.id_sales_order;

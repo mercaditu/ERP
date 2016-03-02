@@ -108,7 +108,7 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = sales_order_detail
                     .Select(g => new
                     {
-                        sales_budget_number = g.sales_order.sales_budget != null ? g.sales_order.sales_budget.number : "",
+                        sales_budget_number = g.sales_budget_detail != null ? g.sales_budget_detail.sales_budget.number : "",
                         contact_name = g.sales_order.contact.name,
                         customer_address = g.sales_order.contact.address,
                         customer_telephone = g.sales_order.contact.telephone,
@@ -155,19 +155,18 @@ namespace entity.Brillo.Document
                 List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
                 if (sales_invoice_detail.Count < sales_invoice.app_document_range.app_document.line_limit)
                 {
-
-
                     for (int i = sales_invoice_detail.Count; i < sales_invoice.app_document_range.app_document.line_limit; i++)
                     {
                         sales_invoice_detail _sales_invoice_detail = new entity.sales_invoice_detail();
                         sales_invoice_detail.Add(_sales_invoice_detail);
                     }
                 }
+
                 reportDataSource.Value = sales_invoice_detail.Select(g => new
                 {
                     sales_invoice = g.id_sales_invoice,
                     id_company = g.id_company,
-                    add1 = g.sales_invoice!= null ?g.sales_invoice.contact.address:"",
+                    add1 = g.sales_invoice!= null ? g.sales_invoice.contact.address:"",
                     telephone = g.sales_invoice!= null ?g.sales_invoice.contact.telephone:"",
                     email = g.sales_invoice!= null ?g.sales_invoice.contact.email:"",
                     company_name = g.app_company != null ? g.app_company.name : "",
@@ -191,10 +190,11 @@ namespace entity.Brillo.Document
                     id_vat_group = g.id_vat_group,
                     gov_id = g.sales_invoice != null?g.sales_invoice.contact.gov_code:"",
                     sales_invoice_contract = g.sales_invoice != null?g.sales_invoice.app_contract.name:"",
-                    sales_invoice_condition =g.sales_invoice != null? g.sales_invoice.app_contract.app_condition.name:"",
-                    sales_number =g.sales_invoice != null ? g.sales_invoice.number:"",
-                    sales_invoice_Comment =g.sales_invoice != null ? g.sales_invoice.comment:"",
-                    packingList =g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()):""
+                    sales_invoice_condition = g.sales_invoice != null? g.sales_invoice.app_contract.app_condition.name:"",
+                    sales_number = g.sales_invoice != null ? g.sales_invoice.number:"",
+                    sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment:"",
+                    packingList = g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()):"",
+                    sales_order = g.sales_order_detail != null ? g.sales_order_detail.sales_order.number :""
                 }).ToList();
               
                 return reportDataSource;

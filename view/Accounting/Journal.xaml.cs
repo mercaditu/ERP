@@ -203,6 +203,7 @@ namespace Cognitivo.Accounting
 
             //filter_date();
         }
+
         public void Save_Click(object sender)
         { 
              try
@@ -220,18 +221,14 @@ namespace Cognitivo.Accounting
                         entity.db.SaveChanges();
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
-
-
-
                     }
-                    
                 }
-                
             }
              catch (Exception ex)
              { throw ex; }
              filter_date();
         }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -279,7 +276,6 @@ namespace Cognitivo.Accounting
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             //TODO. CODE NEEDS TO REFRESH FOR EACH FISCAL YEAR
-
             accounting_journalViewSource.View.Filter = null;
             int cycle_id = ((accounting_cycle)accounting_cycleDataGrid.SelectedItem).id_cycle;
             List<accounting_journal> accounting_journal = accounting_journalViewSource.View.Cast<accounting_journal>().ToList();

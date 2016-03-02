@@ -166,5 +166,17 @@ namespace entity.Properties {
                 this["Document_Id"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string user_UserName {
+            get {
+                return ((string)(this["user_UserName"]));
+            }
+            set {
+                this["user_UserName"] = value;
+            }
+        }
     }
 }

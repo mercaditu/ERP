@@ -58,9 +58,9 @@ namespace Cognitivo.Menu
 
             Task taskdb = Task.Factory.StartNew(() => check_createdb());
 
-            if (_settings.user_Name != null && _settings.user_Name != "")
+            if (_settings.user_UserName != null && _settings.user_UserName != "")
             {
-                tbxUser.Text = _settings.user_Name;
+                tbxUser.Text = _settings.user_UserName;
                 tbxPassword.Focus();
                 chbxRemember.IsChecked = true;
             }
@@ -135,13 +135,20 @@ namespace Cognitivo.Menu
 
                 if (CurrentSession.User != null)
                 {
+                    Dispatcher.BeginInvoke((Action)(() => 
+                    {
+                        if (chbxRemember.IsChecked == true)
+                        {
+                            _settings.user_UserName = tbxUser.Text;
+                        }
+                    }));
+
                     myWindow.is_LoggedIn = true;
                     Dispatcher.BeginInvoke((Action)(() => myFrame.Navigate(new mainMenu_Corporate())));
                 }
                 else
                 {
-                    Dispatcher.BeginInvoke((Action)(() => { tbxUser.Focus(); }));
-                        
+                    Dispatcher.BeginInvoke((Action)(() => { tbxUser.Focus(); }));                        
                 }
             }
             catch (Exception ex) 

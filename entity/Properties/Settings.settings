@@ -38,5 +38,8 @@
     <Setting Name="Document_Id" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
+    <Setting Name="user_UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

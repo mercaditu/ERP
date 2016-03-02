@@ -17,13 +17,9 @@ using System.ComponentModel;
 using System.Data.Entity.Validation;
 namespace cntrl.Curd
 {
-    /// <summary>
-    /// Interaction logic for recive_payment.xaml
-    /// </summary>
     public partial class receive_payment : UserControl, INotifyPropertyChanged
     {
         dbContext dbContext = new dbContext();
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
 
         public sales_invoice sales_invoice { get; set; }
         public purchase_invoice purchase_invoice { get; set; }
@@ -49,31 +45,36 @@ namespace cntrl.Curd
             try
             {
                 CollectionViewSource app_accountViewSource = this.FindResource("app_accountViewSource") as CollectionViewSource;
-                app_accountViewSource.Source = dbContext.db.app_account.Where(a => a.is_active == true && a.id_company == _setting.company_ID).ToList();
+                app_accountViewSource.Source = dbContext.db.app_account.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).ToList();
 
                 if (sales_invoice != null)
                 {
-                    DateTime start_date=DateTime.Now.AddDays(-2).Date;
-                     DateTime end_date=DateTime.Now.AddDays(2).Date;
+                    DateTime start_date = DateTime.Now.AddDays(-2).Date;
+                    DateTime end_date = DateTime.Now.AddDays(2).Date;
                     List<payment_schedual> payment_sceduallist = dbContext.db.payment_schedual
                     .Where(x => x.id_payment_detail == null
                         && x.id_sales_invoice == sales_invoice.id_sales_invoice && (x.trans_date >= start_date && x.trans_date <= end_date)
                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0).ToList();
-
-                    invoice_total = payment_sceduallist.FirstOrDefault().AccountReceivableBalance;
-                    if (sales_invoice.app_currencyfx != null)
-                        if (sales_invoice.app_currencyfx.app_currency != null)
+                    
+                    if (payment_sceduallist.Count > 0)
+                    {
+                        invoice_total = payment_sceduallist.FirstOrDefault().AccountReceivableBalance;
+                        if (sales_invoice.app_currencyfx != null && sales_invoice.app_currencyfx.app_currency != null)
                             currency = sales_invoice.app_currencyfx.app_currency.name;
                         else
                             currency = string.Empty;
+                    }
                     else
-                        currency = string.Empty;
+                    {
+
+                    }
                 }
                 else
                 {
                     invoice_total = 0;
                     currency = string.Empty;
                 }
+
                 RaisePropertyChanged("invoice_total");
                 RaisePropertyChanged("currency");
             }
@@ -127,9 +128,7 @@ namespace cntrl.Curd
                             }
                             payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
 
-
                             payment_schedual _payment_schedual = new payment_schedual();
-
                             _payment_schedual.credit = invoice_total;
                             _payment_schedual.parent = payment_schedual;
                             _payment_schedual.expire_date = payment_schedual.expire_date;
@@ -149,8 +148,6 @@ namespace cntrl.Curd
                             payment.payment_detail.Add(payment_detail);
 
                             //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
-
-
                             app_account_detail app_account_detail = new app_account_detail();
                             app_account_detail.id_account = (int)payment_detail.id_account;
                             app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
@@ -172,8 +169,6 @@ namespace cntrl.Curd
 
                                 imgCancel_MouseDown(null, null);
                             }
-
-
                         }
                     }
                     else

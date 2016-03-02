@@ -41,25 +41,18 @@ namespace Cognitivo.Commercial
             contact contact = contactViewSource.View.CurrentItem as contact;
             if (contact.id_contact > 0 && payment_schedualViewSource != null)
             {
-                try
+                payment_schedualViewSource.View.Filter = i =>
                 {
-                    payment_schedualViewSource.View.Filter = i =>
+                    payment_schedual payment_schedual = i as payment_schedual;
+                    if (payment_schedual.id_contact == contact.id_contact)
                     {
-                        payment_schedual payment_schedual = i as payment_schedual;
-                        if (payment_schedual.id_contact == contact.id_contact)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                catch (Exception ex)
-                {
-                    toolbar.msgError(ex);
-                }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
             else
             {
@@ -90,12 +83,11 @@ namespace Cognitivo.Commercial
         private async void load_Schedual()
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            await _entity.db.payment_schedual
+            payment_schedualViewSource.Source = await _entity.db.payment_schedual
                     .Where(x => x.id_payment_detail == null
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
-                    .LoadAsync();
-            payment_schedualViewSource.Source = _entity.db.payment_schedual.Local;
+                    .ToListAsync();
         }
 
         private void Payment_Click(object sender, RoutedEventArgs e)
@@ -151,6 +143,7 @@ namespace Cognitivo.Commercial
 
                     payment_detail.id_purchase_return = payment_quick.payment_detail.id_purchase_return;
                     payment_detail.id_sales_return = payment_quick.payment_detail.id_sales_return;
+                    
                     payment_detail.value = payment_quick.payment_detail.value;
 
                     payment_schedual _payment_schedual = new payment_schedual();

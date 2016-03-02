@@ -16,7 +16,7 @@ namespace Cognitivo.Commercial
 
         int id_comapny = entity.Properties.Settings.Default.company_ID;
 
-        CollectionViewSource paymentViewSource, contactViewSource;
+        CollectionViewSource contactViewSource;
         CollectionViewSource payment_schedualViewSource;
 
         List<contact> ContactList;
@@ -47,25 +47,18 @@ namespace Cognitivo.Commercial
             contact contact = contactViewSource.View.CurrentItem as contact;
             if (contact.id_contact > 0 && payment_schedualViewSource != null)
             {
-                try
+                payment_schedualViewSource.View.Filter = i =>
                 {
-                    payment_schedualViewSource.View.Filter = i =>
+                    payment_schedual payment_schedual = i as payment_schedual;
+                    if (payment_schedual.id_contact == contact.id_contact)
                     {
-                        payment_schedual payment_schedual = i as payment_schedual;
-                        if (payment_schedual.contact.id_contact == contact.id_contact)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                catch (Exception ex)
-                {
-                    toolbar.msgError(ex);
-                }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
             }
             else
             {
@@ -157,13 +150,16 @@ namespace Cognitivo.Commercial
                     payment_detail.id_account = payment_quick.payment_detail.id_account;
                     payment_detail.id_currencyfx = payment_quick.payment_detail.id_currencyfx;
                     payment_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
+                    
                     payment_detail.id_purchase_return = payment_quick.payment_detail.id_purchase_return;
                     payment_detail.id_sales_return = payment_quick.payment_detail.id_sales_return;
+                    
                     payment_detail.value = payment_quick.payment_detail.value;
 
                     payment_schedual _payment_schedual = new payment_schedual();
 
                     _payment_schedual.debit = Convert.ToDecimal(payment_quick.payment_detail.value);
+                    _payment_schedual.parent = payment_schedual;
                     _payment_schedual.expire_date = payment_schedual.expire_date;
                     _payment_schedual.status = payment_schedual.status;
                     _payment_schedual.id_contact = payment_schedual.id_contact;

@@ -77,7 +77,7 @@
                             </cntrl:SearchableTextbox.Columns>
                         </cntrl:SearchableTextbox>
 
-                        <StackPanel x:Name="stpDocument" Background="Gainsboro">
+                        <StackPanel x:Name="stpDocument" Background="{StaticResource AccentColor_Brush}">
                             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                             <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
@@ -106,7 +106,7 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <StackPanel x:Name="stpDetailDocument" Background="Gainsboro">
+                        <StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Brush}">
                             <!--<Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                         <ComboBox Name="cbxDocumentDetail" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
@@ -180,7 +180,8 @@
                     </ComboBox>-->
                     </StackPanel>
                     <Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}"/>
-                        <TextBox  Text="{Binding value, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" x:Name="txtAmount" Style="{StaticResource input_textbox}"  />
+                        <TextBox  Text="{Binding value, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, 
+                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" x:Name="txtAmount" Style="{StaticResource input_textbox}"  />
                     </StackPanel>
          
             </ScrollViewer>

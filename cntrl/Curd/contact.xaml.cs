@@ -123,6 +123,8 @@ namespace cntrl.Curd
             crud.Visibility = Visibility.Hidden;
         }
 
+      
+
         
 
         //private void cbxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)

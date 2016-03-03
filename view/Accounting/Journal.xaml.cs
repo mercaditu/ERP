@@ -19,6 +19,7 @@ namespace Cognitivo.Accounting
         CollectionViewSource accounting_cycleViewSource, accounting_journalViewSource, app_currencyfxViewSource, accounting_chartViewSource, accounting_templateViewSource, accounting_templateaccounting_template_detailViewSource;
         entity.Properties.Settings _settings = new entity.Properties.Settings();
         cntrl.Curd.Acocunting_Template_Entry Acocunting_Template_Entry;
+        cntrl.Curd.AccountingJournal AccountingJournal;
         public DateTime AccountDate
         {
             get { return _AccountDate; }
@@ -100,11 +101,13 @@ namespace Cognitivo.Accounting
             accounting_chartViewSource = ((CollectionViewSource)(FindResource("accounting_chartViewSource")));
             accounting_chartViewSource.Source = entity.db.accounting_chart.Where(x => x.id_company == _settings.company_ID).ToList();
 
+            app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
+            app_currencyfxViewSource.Source = entity.db.app_currencyfx.Where(x => x.id_company == _settings.company_ID).ToList();
+
             accounting_cycleViewSource = ((CollectionViewSource)(FindResource("accounting_cycleViewSource")));
             accounting_cycleViewSource.Source = entity.db.accounting_cycle.Where(x => x.id_company == _settings.company_ID).ToList();
 
-            app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            app_currencyfxViewSource.Source = entity.db.app_currencyfx.Where(x => x.id_company == _settings.company_ID).ToList();
+           
             AccountDate = DateTime.Now;
         }
 
@@ -131,67 +134,25 @@ namespace Cognitivo.Accounting
         private void accounting_journal_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
-            IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-            accounting_journal accounting_journal;
-            if (validationresult.Count() == 0)
-            {
-                if (accounting_journal_detail.id_journal_detail == 0)
-                {
-                    accounting_journal = new accounting_journal();
-                    accounting_journal.id_cycle = entity.db.accounting_cycle.Where(x => x.id_company == _settings.company_ID && x.is_active == true).FirstOrDefault().id_cycle;
-                    accounting_journal.comment = "entry from journal";
-                    accounting_journal.accounting_journal_detail.Add(accounting_journal_detail);
-                    entity.db.accounting_journal.Add(accounting_journal);
+            crud_modal.Visibility = Visibility.Visible;
+            AccountingJournal = new cntrl.Curd.AccountingJournal();
+            AccountingJournal.accounting_journal = accounting_journal_detail.accounting_journal;
+            AccountingJournal.db =entity.db;
 
-                }
-                else
-                {
-                    accounting_journal = accounting_journal_detail.accounting_journal;
-                }
-
-                if (accounting_journal.accounting_journal_detail.Sum(x => x.credit) == accounting_journal.accounting_journal_detail.Sum(x => x.debit))
-                {
-                    entity.SaveChanges();
-                    accounting_templateViewSource.View.Refresh();
-                    accounting_journalViewSource.View.Refresh();
-                }
-                else
-                {
-                    MessageBox.Show("Verify balance :-" + accounting_journal.code);
-                }
-
-
-            }
+            crud_modal.Children.Add(AccountingJournal);
         }
 
         private void accounting_journal_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            //TextBox txtcode = e.EditingElement as TextBox;
-            //if (txtcode != null && e.Column.DisplayIndex == 0)
-            //{
-            //    int id = Convert.ToInt32(txtcode.Text);
-            //    accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
-            //    accounting_journal accounting_journal = entity.db.accounting_journal.Where(x => x.code == id).FirstOrDefault();
-            //    if (accounting_journal != null)
-            //    {
-            //        accounting_journal_detail.accounting_journal = accounting_journal;
-            //    }
-            //}
+            accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
+            crud_modal.Visibility = Visibility.Visible;
+            AccountingJournal = new cntrl.Curd.AccountingJournal();
+            AccountingJournal.accounting_journal = accounting_journal_detail.accounting_journal;
+            AccountingJournal.db = entity.db;
+           // AccountingJournal.Save_Click += Savejouranl_Click;
 
-            //try
-            //{
-            //    IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-            //    if (validationresult.Count() == 0)
-            //    {
-            //        entity.db.SaveChanges();
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{ throw ex; }
-
+            crud_modal.Children.Add(AccountingJournal);
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -227,6 +188,30 @@ namespace Cognitivo.Accounting
              catch (Exception ex)
              { throw ex; }
              filter_date();
+        }
+        public void Savejouranl_Click(object sender)
+        {
+            try
+            {
+                if (AccountingJournal.accounting_journal.accounting_journal_detail.Sum(x => x.credit) != AccountingJournal.accounting_journal.accounting_journal_detail.Sum(x => x.debit))
+                {
+                    MessageBox.Show("Verify balance :-" + AccountingJournal.accounting_journal.code);
+                }
+                else
+                {
+                    entity.db.accounting_journal.Add(Acocunting_Template_Entry.accounting_journal);
+                    IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
+                    if (validationresult.Count() == 0)
+                    {
+                        entity.db.SaveChanges();
+                        crud_modal.Children.Clear();
+                        crud_modal.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
+            catch (Exception ex)
+            { throw ex; }
+            filter_date();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -292,32 +277,13 @@ namespace Cognitivo.Accounting
             filter_date();
         }
 
-        private void accounting_journal_detailDataGrid_CellEditEnding_1(object sender, DataGridCellEditEndingEventArgs e)
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
-            int code = accounting_journal_detail.accounting_journal.code;
-            int id_chart = accounting_journal_detail.accounting_journal.id_cycle;
-            List<accounting_journal_detail> lst_accounting_journal_detail = entity.db.accounting_journal_detail.Where(x => x.id_company == _settings.company_ID && x.accounting_journal.code == code && x.accounting_journal.id_cycle == id_chart).ToList();
-            DataGridColumn column = e.Column;
-            int id = 0;
-            id = accounting_journal_detail.id_currencyfx;
-            if (column.Header.ToString() == "Currency")
-            {
-                if (entity.db.app_currencyfx.Where(x => x.id_currencyfx == id).FirstOrDefault() != null)
-                {
-                    accounting_journal_detail.app_currencyfx = entity.db.app_currencyfx.Where(x => x.id_company == _settings.company_ID && x.id_currencyfx == id).FirstOrDefault();
-                    accounting_journal_detail.RaisePropertyChanged("app_currencyfx");
-                    foreach (accounting_journal_detail item in lst_accounting_journal_detail)
-                    {
-                        item.id_currencyfx = id;
-                        item.app_currencyfx = entity.db.app_currencyfx.Where(x => x.id_company == _settings.company_ID && x.id_currencyfx == id).FirstOrDefault();
-                        item.RaisePropertyChanged("app_currencyfx");
-                        item.RaisePropertyChanged("id_currencyfx");
-                    }
-                }
-
-            }
+            accounting_journalViewSource.View.Refresh();
+            filter_date();
         }
+
+       
 
      
 

@@ -185,6 +185,9 @@
     <Compile Include="Converters\Bool2Collapsed.cs" />
     <Compile Include="Converters\LevelToMarginConverter.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
+    <Compile Include="Curd\AccountingJournal.xaml.cs">
+      <DependentUpon>AccountingJournal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\Accounting_template.xaml.cs">
       <DependentUpon>Accounting_template.xaml</DependentUpon>
     </Compile>
@@ -557,6 +560,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TextBox_Template.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\AccountingJournal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

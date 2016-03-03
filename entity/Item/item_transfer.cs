@@ -5,7 +5,7 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
+    using System.Linq;
     public partial class item_transfer : Audit
     {
         public enum Transfer_type
@@ -15,9 +15,11 @@ namespace entity
         }
         public item_transfer()
         {
+            Properties.Settings _settings = new Properties.Settings();
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            if (_settings.terminal_ID > 0) { id_terminal = _settings.terminal_ID; }
 
             item_transfer_detail = new List<item_transfer_detail>();
             trans_date = DateTime.Now;
@@ -33,8 +35,65 @@ namespace entity
         public int? id_item_request { get; set; }
         public int? id_project { get; set; }
         public int? id_department { get; set; }
-        public int? id_range { get; set; }
+        public int? id_range
+        {
+            get
+            {
+                return _id_range;
+            }
+            set
+            {
+                if (_id_range != value)
+                {
+                    _id_range = value;
+
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                    {
+                        using (db db = new db())
+                        {
+                            if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
+                            {
+                                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+
+                                if (db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
+                                }
+                                if (db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                }
+                                if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                                }
+                                if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                }
+
+                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
+                                RaisePropertyChanged("NumberWatermark");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private int? _id_range;
         public string number { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public string NumberWatermark { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? id_terminal { get; set; }
+        #region Terminal => Navigation
+        public virtual app_terminal app_terminal { get; set; }
+        #endregion
         public string comment { get; set; }
         public DateTime trans_date { get; set; }
         public Transfer_type transfer_type { get; set; }

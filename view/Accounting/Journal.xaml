@@ -32,7 +32,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="2" Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
-              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"  />
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"  IsVisibleChanged="crud_modal_IsVisibleChanged" />
         <ListBox Grid.Row="2" Background="{StaticResource AccentColor_Brush}" x:Name="accounting_cycleDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="accounting_cycleDataGrid_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -75,8 +75,8 @@
             </StackPanel>
         </StackPanel>
         <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Column="1" 
-                  RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RowEditEnding="accounting_journal_detailDataGrid_RowEditEnding" 
-                  CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding_1" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
+                  RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RowEditEnding="accounting_journal_detailDataGrid_RowEditEnding" CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding"
+                  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
             <DataGrid.Columns>
                 <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_journalViewSource}}" 
 						                                SelectedValueBinding="{Binding id_journal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

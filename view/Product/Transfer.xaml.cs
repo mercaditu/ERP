@@ -180,6 +180,9 @@ namespace Cognitivo.Product
             clsTotalGrid = new List<Class.transfercost>();
             transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
             transfercostViewSource.Source = clsTotalGrid;
+
+
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ItemTransfer, CurrentSession.Id_Branch, _entity.terminal_ID);
         }
     }
 

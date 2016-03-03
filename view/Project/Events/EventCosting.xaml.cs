@@ -457,6 +457,7 @@ namespace Cognitivo.Project
                 if (item_price != null)
                 {
                     return item_price.valuewithVAT;
+                  //  return Currency.convert_Value(item_price_value, id_currencyfx, entity.App.Modules.Sales);
                 }
                 else
                 {
@@ -557,6 +558,8 @@ namespace Cognitivo.Project
             {
                 contactComboBox._focusgrid = false;
                 contactComboBox.Text = ((contact)contactComboBox.Data).name;
+                contact contact=(contact)contactComboBox.Data;
+                get_ActiveRateXContact(ref contact);
             }
         }
 
@@ -564,6 +567,24 @@ namespace Cognitivo.Project
         {
             contactComboBox._focusgrid = false;
             contactComboBox.Text = ((contact)contactComboBox.Data).name;
+            contact contact = (contact)contactComboBox.Data;
+            get_ActiveRateXContact(ref contact);
+        }
+
+        public void get_ActiveRateXContact(ref contact contact)
+        {
+            app_currencyfx app_currencyfx = null;
+            if (contact.app_currency != null && contact.app_currency.app_currencyfx != null && contact.app_currency.app_currencyfx.Count > 0)
+                app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
+            if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
+            {
+                cbxCurrency.SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); 
+            }
+            else
+            {
+                cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx;
+            }
+
         }
 
         public void Dispose()

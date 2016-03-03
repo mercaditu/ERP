@@ -24,7 +24,7 @@
             <Grid>
                 <Border Background="WhiteSmoke" />
                 <!--{Binding is_active, Converter={StaticResource Converter}}-->
-                <Border Width="45" HorizontalAlignment="Left" Background="#66ccff">
+                <Border Width="45" HorizontalAlignment="Left" Background="#0099ff">
                     <Image Source="/cntrl;component/Images/Outline_White/shop-50.png" 
                        Height="32" Opacity="0.64"/>
                 </Border>

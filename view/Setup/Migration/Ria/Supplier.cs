@@ -13,6 +13,7 @@ namespace Cognitivo.Setup.Migration
         public void supplier()
         {
             string sql = " SELECT dbo.PROVEEDOR.NUMPROVEEDOR, dbo.PROVEEDOR.NOMBRE, dbo.PROVEEDOR.RUC_CIN, dbo.PROVEEDOR.DIRECCION, dbo.PROVEEDOR.TELEFONO, dbo.PROVEEDOR.EMAIL, dbo.PROVEEDOR.observacion, dbo.PROVEEDOR.CLIENTE_ID, dbo.PROVEEDOR.CONTACTO1, dbo.PROVEEDOR.CONTACTO2, dbo.PROVEEDOR.EMAILCONT1,"
+                        + " (select DESZONA from ZONA where ZONA.CODZONA=PROVEEDOR.CODZONA) as DESZONA,(select DESCIUDAD from CIUDAD where CIUDAD.CODCIUDAD=PROVEEDOR.CODCIUDAD) as DESCIUDAD,(select DESPAIS from PAIS where PAIS.CODPAIS=PROVEEDOR.CODPAIS) as DESPAIS,"
                         + " dbo.PROVEEDOR.EMAILCONT2, dbo.PROVEEDOR.TELCONT1, dbo.PROVEEDOR.TELCONT2, dbo.PROVEEDOR.CELCONT1, dbo.PROVEEDOR.CELCONT2, dbo.PROVEEDOR.DIRECCIONCONT1, dbo.PROVEEDOR.DIRECCIONCONT2, dbo.PROVEEDOR.FORMAPAGO,"
                         + " dbo.PROVEEDOR.ESTADO, dbo.PROVEEDOR.DIASVENCIMIENTO, "
                         + " dbo.CATEGORIAPROVEEDOR.DESCATEGORIAPROVEEDOR, dbo.CENTROCOSTO.DESCENTRO, dbo.MONEDA.DESMONEDA"
@@ -94,6 +95,37 @@ namespace Cognitivo.Setup.Migration
                           string fx = reader[23].ToString();
                           app_currency app_currency = db.app_currency.Where(x => x.name == fx && x.id_company == id_company).FirstOrDefault();
                           contacts.id_currency = (int)app_currency.id_currency;
+                      }
+
+                      if (!(reader["DESZONA"] is DBNull))
+                      {
+                          string name = (string)reader["DESZONA"];
+                          app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                          if (_app_geography != null)
+                          {
+                              contacts.app_geography = _app_geography;
+                              contacts.id_geography = _app_geography.id_geography;
+                          }
+                      }
+                      else if (!(reader["DESCIUDAD"] is DBNull))
+                      {
+                          string name = (string)reader["DESCIUDAD"];
+                          app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                          if (_app_geography != null)
+                          {
+                              contacts.app_geography = _app_geography;
+                              contacts.id_geography = _app_geography.id_geography;
+                          }
+                      }
+                      else if (!(reader["DESPAIS"] is DBNull))
+                      {
+                          string name = (string)reader["DESPAIS"];
+                          app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                          if (_app_geography != null)
+                          {
+                              contacts.app_geography = _app_geography;
+                              contacts.id_geography = _app_geography.id_geography;
+                          }
                       }
 
                       if (contacts.Error == null)

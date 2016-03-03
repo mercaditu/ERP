@@ -154,7 +154,36 @@ namespace Cognitivo.Setup.Migration
                         }
 
                     }
-
+                    if (!(reader["DESZONA"] is DBNull))
+                    {
+                        string name = (string)reader["DESZONA"];
+                          app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                          if (_app_geography != null)
+                          {
+                              contacts.app_geography = _app_geography;
+                              contacts.id_geography = _app_geography.id_geography;
+                          }
+                    }
+                    else if (!(reader["DESCIUDAD"] is DBNull))
+                    {
+                        string name = (string)reader["DESCIUDAD"];
+                          app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                          if (_app_geography != null)
+                          {
+                              contacts.app_geography = _app_geography;
+                              contacts.id_geography = _app_geography.id_geography;
+                          }
+                    }
+                    else if (!(reader["DESPAIS"] is DBNull))
+                    {
+                        string name = (string)reader["DESPAIS"];
+                        app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                        if (_app_geography != null)
+                        {
+                            contacts.app_geography = _app_geography;
+                            contacts.id_geography = _app_geography.id_geography;
+                        }
+                    }
 
 
 

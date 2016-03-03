@@ -64,6 +64,12 @@ namespace Cognitivo.Setup.Migration
             //??Contract??
             sync_Contracts();
             sync_SalesRep();
+
+            sync_country();
+            sync_state();
+            sync_city();
+            sync_zone();
+
             Dispatcher.BeginInvoke((Action)(() => progBasic.IsIndeterminate = false));
         }
 
@@ -480,6 +486,106 @@ namespace Cognitivo.Setup.Migration
                 sales_rep.id_company = id_company;
                 sales_rep.is_active = true;
                 dbContext.sales_rep.Add(sales_rep);
+            }
+            dt.Clear();
+            dbContext.SaveChanges();
+        }
+
+        private void sync_country()
+        {
+            DataTable dt = exeDT("SELECT * FROM PAIS");
+            foreach (DataRow row in dt.Rows)
+            {
+                app_geography app_geography = new app_geography();
+                app_geography.code = (string)row["DESPAIS"];
+                app_geography.name = (string)row["DESPAIS"];
+                app_geography.type = Status.geo_types.Country;
+                dbContext.app_geography.Add(app_geography);
+            }
+            dt.Clear();
+            dbContext.SaveChanges();
+        }
+
+
+        private void sync_state()
+        {
+            DataTable dt = exeDT("SELECT *,(select DESPAIS from PAIS where PAIS.CODPAIS=DEPARTAMENTO.CODPAIS) as DESPAIS FROM DEPARTAMENTO");
+            foreach (DataRow row in dt.Rows)
+            {
+                app_geography app_geography = new app_geography();
+                app_geography.code = (string)row["DESDEPARTAMENTO"];
+                app_geography.name = (string)row["DESDEPARTAMENTO"];
+                app_geography.type = Status.geo_types.State;
+                string name = (string)row["DESPAIS"];
+                app_geography _app_geography = dbContext.app_geography.Where(x => x.name == name).FirstOrDefault();
+                if (_app_geography!=null)
+                {
+                    app_geography.parent = _app_geography;
+                }
+                dbContext.app_geography.Add(app_geography);
+            }
+            dt.Clear();
+            dbContext.SaveChanges();
+        }
+        private void sync_city()
+        {
+            DataTable dt = exeDT("SELECT *,(select DESDEPARTAMENTO from DEPARTAMENTO where DEPARTAMENTO.CODDEPARTAMENTO=CIUDAD.CODDEPARTAMENTO) as DESDEPARTAMENTO,(select DESPAIS from PAIS where PAIS.CODPAIS=CIUDAD.CODPAIS) as DESPAIS FROM CIUDAD");
+            foreach (DataRow row in dt.Rows)
+            {
+                app_geography app_geography = new app_geography();
+                app_geography.code = (string)row["DESCIUDAD"];
+                app_geography.name = (string)row["DESCIUDAD"];
+                app_geography.type = Status.geo_types.City;
+                if (row["DESDEPARTAMENTO"] is DBNull)
+                {
+                    if (!(row["DESPAIS"] is DBNull))
+                    {
+                        string name = (string)row["DESPAIS"];
+                        app_geography _app_geography = dbContext.app_geography.Where(x => x.name == name).FirstOrDefault();
+                        if (_app_geography != null)
+                        {
+                            app_geography.parent = _app_geography;
+                        }
+                    }
+                 
+                }
+                else
+                {
+                    string name = (string)row["DESDEPARTAMENTO"];
+                    app_geography _app_geography = dbContext.app_geography.Where(x => x.name == name).FirstOrDefault();
+                    if (_app_geography != null)
+                    {
+                        app_geography.parent = _app_geography;
+                    }
+                }
+               
+                dbContext.app_geography.Add(app_geography);
+            }
+            dt.Clear();
+            dbContext.SaveChanges();
+        }
+        private void sync_zone()
+        {
+            DataTable dt = exeDT("SELECT *,(select DESCIUDAD from CIUDAD where CIUDAD.CODCIUDAD=ZONA.CODCIUDAD) as DESCIUDAD FROM ZONA");
+            foreach (DataRow row in dt.Rows)
+            {
+                app_geography app_geography = new app_geography();
+                app_geography.code = (string)row["DESZONA"];
+                app_geography.name = (string)row["DESZONA"];
+                app_geography.type = Status.geo_types.Zone;
+                if (!(row["DESCIUDAD"] is DBNull))
+                {
+                    string name = (string)row["DESCIUDAD"];
+                    app_geography _app_geography = dbContext.app_geography.Where(x => x.name == name).FirstOrDefault();
+                    if (_app_geography != null)
+                    {
+                        app_geography.parent = _app_geography;
+                    }
+
+                }
+                
+               
+                dbContext.app_geography.Add(app_geography);
             }
             dt.Clear();
             dbContext.SaveChanges();

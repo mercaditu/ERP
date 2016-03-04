@@ -125,8 +125,6 @@ namespace cntrl.Curd
 
       
 
-        
-
         //private void cbxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    if (cbxRole.SelectedItem != null)

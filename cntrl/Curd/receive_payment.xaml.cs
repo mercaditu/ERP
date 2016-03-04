@@ -184,6 +184,11 @@ namespace cntrl.Curd
                 //throw ex;
             }
         }
+
+        private void btnCancel_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
 

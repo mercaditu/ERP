@@ -769,9 +769,9 @@ namespace Cognitivo.Purchase
             if (purchase_invoice != null)
             {
                 crud_modal.Visibility = Visibility.Visible;
-                //cntrl.Curd.recive_payment recive_payment = new cntrl.Curd.recive_payment();
-                //recive_payment.purchase_invoice = purchase_invoice;
-                //crud_modal.Children.Add(recive_payment);
+                cntrl.Curd.receive_payment recive_payment = new cntrl.Curd.receive_payment();
+                recive_payment.purchase_invoice = purchase_invoice;
+                crud_modal.Children.Add(recive_payment);
             }
         }
 

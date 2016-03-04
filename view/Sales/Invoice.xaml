@@ -226,10 +226,13 @@
                                     </Border>
                                 </Popup>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal"  Margin="3,0,0,0" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource Status2Enable}}">
+                            <StackPanel Orientation="Horizontal" Margin="3,0,0,0" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource Status2Enable}}">
                                 <Label Content="" Style="{StaticResource btn_Label}"/>
                                 <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                <Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp"><Run Text="{lex:Loc RecievePayment}"/></Hyperlink></TextBlock>
+                                    <Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp">
+                                        <Run Text="{lex:Loc RecievePayment}"/>
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" IsEnabled="False">
                                 <Label Content="" Style="{StaticResource btn_Label}"/>

@@ -649,8 +649,6 @@ namespace Cognitivo.Sales
                 _sales_invoice.id_sales_order = item.id_sales_order;
                 foreach (sales_order_detail _sales_order_detail in item.sales_order_detail)
                 {
-                   
-                    
                     if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_order_detail.id_item).Count() == 0)
                     {
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
@@ -667,11 +665,6 @@ namespace Cognitivo.Sales
                         sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                     }
-
-                   
-                    
-                 
-                  
                 }
                 SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
                 crud_modal.Children.Clear();

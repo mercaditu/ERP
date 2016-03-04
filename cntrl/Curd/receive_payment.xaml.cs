@@ -139,11 +139,6 @@ namespace cntrl.Curd
                         _payment_schedual.id_contact = payment_schedual.id_contact;
                         _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
                         _payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
-                        //_payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
-                        //_payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
-                        //_payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
-                        //_payment_schedual.id_sales_order = payment_schedual.id_sales_order;
-                        //_payment_schedual.id_sales_return = payment_schedual.id_sales_return;
                         _payment_schedual.trans_date = DateTime.Now;
                         _payment_schedual.AccountReceivableBalance = invoice_total;
 
@@ -186,8 +181,6 @@ namespace cntrl.Curd
                     if (invoice_total > 0)
                     {
                         payment_detail payment_detail = new payment_detail();
-                        payment_detail.id_purchase_return = 0;
-                        payment_detail.id_sales_return = 0;
                         payment_detail.value = invoice_total;
                         payment_detail.id_account = (int)app_accountComboBox.SelectedValue;
                         payment payment = new payment();
@@ -217,12 +210,7 @@ namespace cntrl.Curd
                         _payment_schedual.status = payment_schedual.status;
                         _payment_schedual.id_contact = payment_schedual.id_contact;
                         _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
-                        _payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
-                        _payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
-                        _payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
                         _payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
-                        _payment_schedual.id_sales_order = payment_schedual.id_sales_order;
-                        _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
                         _payment_schedual.trans_date = payment_schedual.trans_date;
                         _payment_schedual.AccountReceivableBalance = invoice_total;
 

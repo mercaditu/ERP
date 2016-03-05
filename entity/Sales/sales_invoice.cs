@@ -30,7 +30,7 @@ namespace entity
         [NotMapped]
         public new System.Data.Entity.EntityState State
         {
-            get;
+            get { return _State; }
             set
             {
                 if(value != _State)

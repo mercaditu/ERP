@@ -401,7 +401,7 @@ namespace entity
             {
                 //if (sales_invoice != null)
                 //{
-                if (_discount != value)
+                if (_discount != value && State>0)
                 {
                     Calculate_UnitCostDiscount(_discount, value, unit_price);
                     RaisePropertyChanged("unit_price");

@@ -116,6 +116,27 @@ namespace entity
         }
         private decimal _GrandTotal;
 
+        [NotMapped]
+        public decimal TotalVat
+        {
+            get
+            {
+                _TotalVat = 0;
+                foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
+                {
+                    _TotalVat += _sales_invoice_detail.SubTotal_Vat - _sales_invoice_detail.SubTotal;
+                }
+
+                return Math.Round(_TotalVat, 2);
+            }
+            set
+            {
+                _TotalVat = value;
+                RaisePropertyChanged("TotalVat");
+            }
+        }
+        private decimal _TotalVat;
+
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
         /// </summary>

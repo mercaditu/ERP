@@ -11,8 +11,8 @@ namespace cntrl
 {
     public partial class VATWithholding : UserControl
     {
-        CollectionViewSource _app_companyViewSource = null;
-        public CollectionViewSource app_companyViewSource { get { return _app_companyViewSource; } set { _app_companyViewSource = value; } }
+        List<object> _invoiceList = null;
+        public List<object> invoiceList { get { return _invoiceList; } set { _invoiceList = value; } }
 
         private dbContext _entity = null;
         public dbContext objEntity { get { return _entity; } set { _entity = value; } }
@@ -23,9 +23,7 @@ namespace cntrl
             Edit
         }
 
-        public bool canedit { get; set; }
-        public bool candelete { get; set; }
-        public Mode EnterMode { get; set; }
+       
 
         public VATWithholding()
         {
@@ -34,30 +32,15 @@ namespace cntrl
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (EnterMode == Mode.Edit)
-            {
-                if (canedit == false)
-                {
-                    stpDisplay.IsEnabled = false;
-                    btnSave.IsEnabled = false;
-                }
-            }
-            if (EnterMode == Mode.Add)
-            {
-                stpDisplay.IsEnabled = true;
-                btnSave.IsEnabled = true;
-            }
-
-            if (candelete == false)
-            {
-                btnDelete.IsEnabled = false;
-            }
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
 
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 try
                 {
-                    stackMain.DataContext = app_companyViewSource;
+                    CollectionViewSource invoiceViewSource = new CollectionViewSource();
+                    invoiceViewSource.Source = _invoiceList;
+                    stackMain.DataContext = invoiceViewSource;
 
                     //CollectionViewSource geo_countryViewSource = this.FindResource("geo_countryViewSource") as CollectionViewSource;
                     //geo_countryViewSource.Source = objEntity.db.geo_country.ToList();
@@ -67,6 +50,8 @@ namespace cntrl
                     throw ex;
                 }
             }
+
+           
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -94,7 +79,7 @@ namespace cntrl
             try
             {
                 objEntity.CancelChanges();
-                app_companyViewSource.View.Refresh();
+                
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -105,22 +90,6 @@ namespace cntrl
             }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (res == MessageBoxResult.Yes)
-                {
-                    app_company _app_company = app_companyViewSource.View.CurrentItem as entity.app_company;
-                    _app_company.is_active = false;
-                    btnSave_Click(sender, e);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+      
     }
 }

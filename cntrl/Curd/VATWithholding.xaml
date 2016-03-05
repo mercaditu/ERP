@@ -39,40 +39,47 @@
                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                     <DatePicker SelectedDate="{Binding tras_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                                 Style="{StaticResource input_datepicker}"/>
-                    
+
                     <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
-                    <Label Content="{Binding contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_label}"/>
-                    
+                    <Label Content="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_label}"/>
+
                     <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
-                    <ComboBox Text="{Binding alias, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                              Style="{StaticResource input_combobox}"/>
+                    <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+                                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
+                                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                                  Style="{StaticResource input_combobox}"
+                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                     <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-                    <TextBox Text="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                             metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                             Style="{StaticResource input_textbox}"/>
+                    <TextBox
+                                metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
+                                metro:TextBoxHelper.SelectAllOnFocus="True"
+                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                             Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </StackPanel>
-                
+
                 <Label Content="{lex:Loc Link}" HorizontalAlignment="Center" Style="{StaticResource generic_Label}"/>
-                <DataGrid Margin="8,4">
+                <DataGrid Margin="8,4" ItemsSource="{Binding}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SalesInvoice}" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PurchaseInvoice}" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SalesInvoice}" Binding="{Binding id_sales_invoice}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PurchaseInvoice}" Binding="{Binding id_purchase_invoice}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal}" Width="auto"/>
+                      
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel HorizontalAlignment="Center">
                     <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
-                    <TextBox Text="{Binding address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                         Style="{StaticResource input_textbox}"/>
+                    <Label Content="{Binding TotalVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                         Style="{StaticResource input_label}"/>
                 </StackPanel>
             </StackPanel>
 
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}" Height="26" Margin="0,0,0,-0.5" VerticalAlignment="Bottom"/>
+
             </Grid>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
+

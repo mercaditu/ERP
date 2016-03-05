@@ -32,7 +32,7 @@ namespace entity
             {
                 if (_discount != value)
                 {
-                    unit_price = Discount.Calculate_Discount(id_sales_budget_detail, _discount, value, unit_cost);
+                    unit_price = Calculate_UnitCostDiscount();
                     RaisePropertyChanged("unit_price");
                 }
                 _discount = value;
@@ -40,6 +40,22 @@ namespace entity
             }
         }
         private decimal _discount;
+
+        public decimal discountVat
+        {
+            get { return _discountVat; }
+            set
+            {
+                if (_discountVat != value)
+                {
+                    UnitPrice_Vat = Calculate_UnitCostVatDiscount();
+                    RaisePropertyChanged("UnitPrice_Vat");
+                }
+                _discountVat = value;
+                RaisePropertyChanged("discountVat");
+            }
+        }
+        private decimal _discountVat;
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
         /// </summary>
@@ -64,22 +80,62 @@ namespace entity
             get { return _Discount_SubTotal; }
             set
             {
-                if (_Discount_SubTotal != value && quantity > 0) // && value <= unit_cost
+                //if (_Discount_SubTotal != value && quantity > 0) // && value <= unit_cost
+                //{
+                //    //Take discount sub total, minus value to create total discount value.
+                //    //decimal new_discount = _Discount_SubTotal - value;
+
+                //    //Update with new value.
+                //    _Discount_SubTotal = value;
+                //    RaisePropertyChanged("Discount_SubTotal");
+
+                //    //Sends unit_discount value to discount.
+                //    discount = (_Discount_SubTotal / quantity);
+                //    RaisePropertyChanged("discount");
+                //}
+                if (_Discount_SubTotal != value)
                 {
-                    //Take discount sub total, minus value to create total discount value.
-                    //decimal new_discount = _Discount_SubTotal - value;
-
-                    //Update with new value.
-                    _Discount_SubTotal = value;
-                    RaisePropertyChanged("Discount_SubTotal");
-
-                    //Sends unit_discount value to discount.
-                    discount = (_Discount_SubTotal / quantity);
-                    RaisePropertyChanged("discount");
+                    SubTotal = Calculate_SubTotalDiscount();
+                    RaisePropertyChanged("SubTotal");
                 }
+                _Discount_SubTotal = value;
+                RaisePropertyChanged("Discount_SubTotal");
             }
         }
         private decimal _Discount_SubTotal;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal Discount_SubTotalVat
+        {
+            get { return _Discount_SubTotalVat; }
+            set
+            {
+                //if (_Discount_SubTotal != value && quantity > 0) // && value <= unit_cost
+                //{
+                //    //Take discount sub total, minus value to create total discount value.
+                //    //decimal new_discount = _Discount_SubTotal - value;
+
+                //    //Update with new value.
+                //    _Discount_SubTotal = value;
+                //    RaisePropertyChanged("Discount_SubTotal");
+
+                //    //Sends unit_discount value to discount.
+                //    discount = (_Discount_SubTotal / quantity);
+                //    RaisePropertyChanged("discount");
+                //}
+                if (_Discount_SubTotalVat != value)
+                {
+                    SubTotal_Vat = Calculate_SubTotalVatDiscount();
+                    RaisePropertyChanged("SubTotal_Vat");
+                }
+                _Discount_SubTotalVat = value;
+                RaisePropertyChanged("_Discount_SubTotalVat");
+            }
+        }
+        private decimal _Discount_SubTotalVat;
 
         /// <summary>
         /// 

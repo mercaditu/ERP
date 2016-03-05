@@ -175,6 +175,8 @@ namespace entity
 
                     update_UnitPriceVAT();
                     update_SubTotal();
+
+                
                 }
             }
         }
@@ -380,6 +382,29 @@ namespace entity
 
             return 0;
         }
+
+        public decimal Calculate_UnitCostDiscount()
+        {
+          
+            return 0;
+        }
+
+        public decimal Calculate_UnitCostVatDiscount()
+        {
+
+            return 0;
+        }
+        public decimal Calculate_SubTotalDiscount()
+        {
+
+            return 0;
+        }
+        public decimal Calculate_SubTotalVatDiscount()
+        {
+
+            return 0;
+        }
+
 
         #endregion
     }

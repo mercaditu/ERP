@@ -29,8 +29,8 @@ namespace entity
 
         public app_branch()
         {
-            id_company = Properties.Settings.Default.company_ID;
-            id_user = Properties.Settings.Default.user_ID;
+            id_company = CurrentSession.Id_Branch;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             is_active = true;
             app_location = new List<app_location>();

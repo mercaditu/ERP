@@ -127,8 +127,9 @@ namespace Cognitivo.Setup.Migration
                 id_user=dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    entity.Properties.Settings.Default.user_ID = id_user;
-                    entity.Properties.Settings.Default.Save();
+                    CurrentSession.Id_User = id_user;
+                    //entity.Properties.Settings.Default.user_ID = id_user;
+                    //entity.Properties.Settings.Default.Save();
                 }
               ));
 

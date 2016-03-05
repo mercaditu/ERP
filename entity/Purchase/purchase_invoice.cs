@@ -18,12 +18,11 @@ namespace entity
             //is_accounted = false;
 
             status = Status.Documents_General.Pending;
-              
-            Properties.Settings _settings = new Properties.Settings();
-            id_company = _settings.company_ID;
-            id_user = _settings.user_ID;
-            if (_settings.branch_ID > 0) { id_branch = _settings.branch_ID; }
-            if (_settings.terminal_ID > 0) { id_terminal = _settings.terminal_ID; }
+
+            id_company = CurrentSession.Id_Company;
+            id_user = CurrentSession.Id_User;
+            if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
+            if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
 
             purchase_invoice_detail = new List<purchase_invoice_detail>();
             purchase_return = new List<purchase_return>();

@@ -271,7 +271,7 @@ namespace Cognitivo.Sales
             payment_detail.id_payment_type = (int)cbxPamentType.SelectedValue;
             payment_detail.id_purchase_return = 0;
             payment_detail.id_sales_return = 0;
-            payment_detail.id_user = enittysetting.user_ID;
+            payment_detail.id_user = CurrentSession.Id_User;
             payment_detail.value = Convert.ToDecimal(txtBlockTotal.Text); ;
             appaccountdetail.id_account = Cognitivo.Sales.POS.Default.id_account; ;
             appaccountdetail.id_currencyfx = Cognitivo.Sales.POS.Default.id_currencyfx;

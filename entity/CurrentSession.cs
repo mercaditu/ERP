@@ -24,20 +24,8 @@ namespace entity
             }
         }
         static int _Id_Company;
-        
-        public static int Id_User
-        {
-            get
-            {
-                if (_Id_User == 0)
-                {
-                    _Id_User = Properties.Settings.Default.user_ID;
-                };
-                return _Id_User;
-            }
-            set { _Id_User = value; }
-        }
-        static int _Id_User;
+
+        public static int Id_User { get; set; }
 
         public static int Id_Branch
         {
@@ -83,7 +71,6 @@ namespace entity
                 //Set the User
                 Id_User = User.id_user;
 
-                entity.Properties.Settings.Default.user_ID = Id_User;
                 entity.Properties.Settings.Default.user_Name = User.name_full;
                 entity.Properties.Settings.Default.Save();
 

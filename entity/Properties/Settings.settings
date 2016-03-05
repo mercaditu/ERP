@@ -26,9 +26,6 @@
     <Setting Name="account_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="user_ID" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="user_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

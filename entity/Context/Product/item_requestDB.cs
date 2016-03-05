@@ -83,7 +83,7 @@ namespace entity
                                 item_transfer.app_location_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
                                 item_transfer.app_branch_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault().app_branch;
                                 entity.Properties.Settings setting= new Properties.Settings();
-                                item_transfer.user_requested =  base.security_user.Where(x=>x.id_user==setting.user_ID).FirstOrDefault();
+                                item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                                 item_transfer.id_item_request = item_request.id_item_request;
                                 item_transfer.id_department = base.app_department.FirstOrDefault().id_department;
                                 item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;

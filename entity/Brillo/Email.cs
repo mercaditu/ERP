@@ -37,9 +37,9 @@ namespace entity.Brillo
             {
                 using (db db = new db())
                 {
-                    if (db.security_user.Where(u => u.id_user == Properties.Settings.Default.user_ID).FirstOrDefault() != null)
+                    if (db.security_user.Where(u => u.id_user == CurrentSession.Id_User).FirstOrDefault() != null)
                     {
-                        SentFrom = db.security_user.Where(u => u.id_user == Properties.Settings.Default.user_ID).FirstOrDefault().email;
+                        SentFrom = db.security_user.Where(u => u.id_user == CurrentSession.Id_User).FirstOrDefault().email;
                         if (db.security_user.Local.FirstOrDefault().email_smtp != string.Empty)
                         {
                             SMTP_Server = db.security_user.Local.FirstOrDefault().email_smtp;

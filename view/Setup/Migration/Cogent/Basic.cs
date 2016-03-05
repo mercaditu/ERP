@@ -134,8 +134,8 @@ namespace Cognitivo.Setup.Migration.Cogent
                     sync_Users();
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        entity.Properties.Settings.Default.user_ID = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
-                        entity.Properties.Settings.Default.Save();
+                        CurrentSession.Id_User = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
+                        //entity.Properties.Settings.Default.Save();
                     }
                  ));
 

@@ -147,7 +147,8 @@ namespace Cognitivo.Product
 
             }
             entity.Properties.Settings setting = new entity.Properties.Settings();
-            item_transfer.user_given = dbContext.security_user.Where(x => x.id_user == setting.user_ID).FirstOrDefault();
+            item_transfer.user_given = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+
             ProductMovementDB ProductMovementDB = new ProductMovementDB();
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
             {

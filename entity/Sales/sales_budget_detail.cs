@@ -30,9 +30,9 @@ namespace entity
             get { return _discount; }
             set
             {
-                if (_discount != value)
+                if (_discount != value && sales_budget.State > 0)
                 {
-                    unit_price = Calculate_UnitCostDiscount();
+                    unit_price = Calculate_UnitCostDiscount(_discount, value, unit_price);
                     RaisePropertyChanged("unit_price");
                 }
                 _discount = value;

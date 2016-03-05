@@ -34,9 +34,9 @@ namespace entity
             get { return _discount; }
             set
             {
-                if (_discount != value)
+                if (_discount != value && sales_order.State > 0)
                 {
-                    unit_price = Discount.Calculate_Discount(id_sales_order_detail, _discount, value, unit_cost);
+                    unit_price = Calculate_UnitCostDiscount(_discount, value, unit_price);
                     RaisePropertyChanged("unit_price");
                 }
                 _discount = value;

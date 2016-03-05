@@ -30,35 +30,40 @@ namespace entity
             get { return _discount; }
             set
             {
-                if (_discount != value && sales_budget.State > 0)
+                if (sales_budget!=null)
                 {
-                    unit_price = Calculate_UnitCostDiscount(_discount, value, unit_price);
-                    RaisePropertyChanged("unit_price");
+                    if (_discount != value && sales_budget.State > 0)
+                    {
+                        //unit_price = Calculate_UnitCostDiscount(_discount, value, unit_price);
+                        RaisePropertyChanged("unit_price");
+                    }
                 }
+              
                 _discount = value;
                 RaisePropertyChanged("discount");
             }
         }
         private decimal _discount;
 
-        //public decimal discountVat
-        //{
-        //    get { return _discountVat; }
-        //    set
-        //    {
-        //        if (_discountVat != value)
-        //        {
-        //            UnitPrice_Vat = Calculate_UnitCostVatDiscount();
-        //            RaisePropertyChanged("UnitPrice_Vat");
-        //        }
-        //        _discountVat = value;
-        //        RaisePropertyChanged("discountVat");
-        //    }
-        //}
-        //private decimal _discountVat;
-        /// <summary>
-        /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
-        /// </summary>
+         [NotMapped]
+        public decimal discountVat
+        {
+            get { return _discountVat; }
+            set
+            {
+                if (_discountVat != value)
+                {
+                   // UnitPrice_Vat = Calculate_UnitCostVatDiscount();
+                    RaisePropertyChanged("UnitPrice_Vat");
+                }
+                _discountVat = value;
+                RaisePropertyChanged("discountVat");
+            }
+        }
+        private decimal _discountVat;
+         //<summary>
+         //Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
+         //</summary>
         [NotMapped]
         public decimal DiscountPercentage
         {
@@ -95,7 +100,7 @@ namespace entity
                 //}
                 if (_Discount_SubTotal != value)
                 {
-                    SubTotal = Calculate_SubTotalDiscount();
+                   // SubTotal = Calculate_SubTotalDiscount();
                     RaisePropertyChanged("SubTotal");
                 }
                 _Discount_SubTotal = value;
@@ -128,7 +133,7 @@ namespace entity
                 //}
                 if (_Discount_SubTotalVat != value)
                 {
-                    SubTotal_Vat = Calculate_SubTotalVatDiscount();
+                   // SubTotal_Vat = Calculate_SubTotalVatDiscount();
                     RaisePropertyChanged("SubTotal_Vat");
                 }
                 _Discount_SubTotalVat = value;

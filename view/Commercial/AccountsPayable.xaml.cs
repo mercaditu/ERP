@@ -242,5 +242,10 @@ namespace Cognitivo.Commercial
                 contactViewSource.View.Filter = null;
             }
         }
+
+        private void btnWithholding_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

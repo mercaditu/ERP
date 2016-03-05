@@ -64,6 +64,7 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = sales_budget_detail
                     .Select(g => new
                     {
+                        geo_name = g.sales_budget.contact.app_geography != null ? g.sales_budget.contact.app_geography.name : "",
                         id_sales_budget = g.id_sales_budget,
                         id_sales_budget_detail = g.id_sales_budget_detail,
                         sales_budget = g.id_sales_budget_detail,
@@ -108,6 +109,7 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = sales_order_detail
                     .Select(g => new
                     {
+                        geo_name = g.sales_order.contact.app_geography != null ? g.sales_order.contact.app_geography.name : "",
                         sales_budget_number = g.sales_budget_detail != null ? g.sales_budget_detail.sales_budget.number : "",
                         contact_name = g.sales_order.contact.name,
                         customer_address = g.sales_order.contact.address,
@@ -164,6 +166,7 @@ namespace entity.Brillo.Document
 
                 reportDataSource.Value = sales_invoice_detail.Select(g => new
                 {
+                    geo_name = g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "",
                     sales_invoice = g.id_sales_invoice,
                     id_company = g.id_company,
                     add1 = g.sales_invoice!= null ? g.sales_invoice.contact.address:"",
@@ -257,6 +260,7 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = sales_return_detail
                               .Select(g => new
                               {
+                                  geo_name = g.sales_return.contact.app_geography != null ? g.sales_return.contact.app_geography.name : "",
                                   id_sales_return = g.id_sales_return,
                                   id_sales_return_detail = g.id_sales_return_detail,
                                   sales_return = g.id_sales_return_detail,

@@ -173,10 +173,8 @@
 
             </StackPanel>
         </Grid>
-        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                                          
-                       appName="Project"
-                      />
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                       appName="SalesOrder" />
 
       
 

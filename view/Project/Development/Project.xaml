@@ -68,7 +68,7 @@
             </StackPanel>
 
         </ScrollViewer>
-        <cntrl:toolBar x:Name="toolBar" appName="SalesInvoice"
+        <cntrl:toolBar x:Name="toolBar" appName="Project"
 			           btnNew_Click="btnNew_Click" 
 			           btnDelete_Click="btnDelete_Click" 
 			           btnSave_Click="btnSave_Click" 

@@ -132,7 +132,8 @@
             </Grid>
         </Grid>
 
-        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" appName="ProjectType"
+                       VerticalAlignment="Top" HorizontalAlignment="Stretch"
                        btnSearch_Click="toolBar_btnSearch_Click"
 			           btnNew_Click="toolBar_btnNew_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"

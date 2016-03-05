@@ -66,7 +66,8 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Top"
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" HorizontalAlignment="Stretch"
+                       Grid.Row="0" VerticalAlignment="Top"
 			            btnCancel_Click="toolBar_btnCancel_Click"
                        btnDelete_Click="toolBar_btnDelete_Click" 
                        btnNew_Click="toolBar_btnNew_Click" 

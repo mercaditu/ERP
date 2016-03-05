@@ -39,7 +39,7 @@ namespace entity
             {
                 if (_discount != value)
                 {
-                    unit_price = Discount.Calculate_Discount((int)id_sales_invoice_detail, _discount, value, unit_cost);
+                    unit_price = Calculate_UnitCostDiscount(_discount, value, unit_cost);
                     RaisePropertyChanged("unit_price");
                 }
                 _discount = value;

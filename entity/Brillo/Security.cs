@@ -42,8 +42,6 @@ namespace entity.Brillo
                     }
                 }
             }
-
         }
-
     }
 }

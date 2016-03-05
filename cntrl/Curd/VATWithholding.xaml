@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-                   xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
@@ -40,8 +39,10 @@
                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                     <DatePicker SelectedDate="{Binding tras_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                                 Style="{StaticResource input_datepicker}"/>
+                    
                     <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
-                    <ComboBox Style="{StaticResource input_combobox}"/>
+                    <Label Content="{Binding contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_label}"/>
+                    
                     <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                     <ComboBox Text="{Binding alias, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                               Style="{StaticResource input_combobox}"/>
@@ -59,9 +60,11 @@
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Width="auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                <StackPanel HorizontalAlignment="Center">
+                    <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                          Style="{StaticResource input_textbox}"/>
+                </StackPanel>
             </StackPanel>
 
             <Grid Background="WhiteSmoke">

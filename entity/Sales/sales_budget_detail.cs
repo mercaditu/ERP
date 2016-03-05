@@ -41,21 +41,21 @@ namespace entity
         }
         private decimal _discount;
 
-        public decimal discountVat
-        {
-            get { return _discountVat; }
-            set
-            {
-                if (_discountVat != value)
-                {
-                    UnitPrice_Vat = Calculate_UnitCostVatDiscount();
-                    RaisePropertyChanged("UnitPrice_Vat");
-                }
-                _discountVat = value;
-                RaisePropertyChanged("discountVat");
-            }
-        }
-        private decimal _discountVat;
+        //public decimal discountVat
+        //{
+        //    get { return _discountVat; }
+        //    set
+        //    {
+        //        if (_discountVat != value)
+        //        {
+        //            UnitPrice_Vat = Calculate_UnitCostVatDiscount();
+        //            RaisePropertyChanged("UnitPrice_Vat");
+        //        }
+        //        _discountVat = value;
+        //        RaisePropertyChanged("discountVat");
+        //    }
+        //}
+        //private decimal _discountVat;
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
         /// </summary>

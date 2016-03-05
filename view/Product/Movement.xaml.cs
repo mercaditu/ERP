@@ -50,8 +50,6 @@ namespace Cognitivo.Product
                 IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
-
-
                     dbContext.SaveChanges();
 
                     MainGrid.IsEnabled = false;

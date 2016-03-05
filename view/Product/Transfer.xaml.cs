@@ -23,6 +23,7 @@ namespace Cognitivo.Product
         CollectionViewSource item_transferViewSource, transfercostViewSource;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
         List<Class.transfercost> clsTotalGrid = null;
+
         public Transfer()
         {
             InitializeComponent();
@@ -157,7 +158,12 @@ namespace Cognitivo.Product
 
 
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
-            dbContext.item_transfer.Where(a => a.id_company == _entity.company_ID && a.transfer_type==item_transfer.Transfer_type.transfer).Include("item_transfer_detail").Load();
+            dbContext.item_transfer.Where(a => 
+                a.id_company == CurrentSession.Id_Company && 
+                a.id_branch == CurrentSession.Id_Branch &&
+                a.transfer_type == item_transfer.Transfer_type.transfer)
+                .Include(i => i.item_transfer_detail)
+                .Load();
             item_transferViewSource.Source = dbContext.item_transfer.Local;
 
             CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
@@ -168,21 +174,14 @@ namespace Cognitivo.Product
             branch_destViewSource.Source = dbContext.app_branch.Local;
 
             CollectionViewSource security_userViewSource = ((CollectionViewSource)(this.FindResource("security_userViewSource")));
-            dbContext.security_user.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            dbContext.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             security_userViewSource.Source = dbContext.security_user.Local;
-
-            CollectionViewSource itemViewSource = ((CollectionViewSource)(this.FindResource("itemViewSource")));
-            dbContext.item_product.Where(a => a.id_company == _entity.company_ID
-          ).Load();
-            itemViewSource.Source = dbContext.item_product.Local;
-
 
             clsTotalGrid = new List<Class.transfercost>();
             transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
             transfercostViewSource.Source = clsTotalGrid;
 
-
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ItemTransfer, CurrentSession.Id_Branch, _entity.terminal_ID);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ItemTransfer, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
         }
     }
 

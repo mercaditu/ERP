@@ -30,10 +30,6 @@
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                        HorizontalAlignment="Right" MouseUp="imgCancel_MouseDown" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-            <!--<Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>-->
-            <Image x:Name="imgCancel" Source="/cntrl;component/Images/Outline/Very_Basic/cancel-50.png" Margin="13"
-                   Width="16" HorizontalAlignment="Right" MouseDown="imgCancel_MouseDown"/>
         </Grid>
         <TextBlock Text="Recive a quick cash payment." Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center" Margin="0,0,0,4">

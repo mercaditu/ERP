@@ -105,8 +105,8 @@
 
             <TabControl Grid.Row="1" Grid.ColumnSpan="2">
                 <TabItem Header="{lex:Loc Origin}">
-                    <StackPanel>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
                             <DataGrid Height="120" x:Name="item_transfer_detailDataGrid" 
                                   AutoGenerateColumns="False" Grid.ColumnSpan="2" 
                                   EnableRowVirtualization="True" 
@@ -123,8 +123,8 @@
                                     <DataGridTextColumn Binding="{Binding quantity_origin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="SizeToHeader"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </ScrollViewer>
-                    </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{lex:Loc Destination}">
                     <StackPanel>

@@ -8,25 +8,10 @@ namespace entity
 {
     public static class Discount
     {
-        public static decimal Calculate_Discount(int id, decimal oldDiscount, decimal value, decimal unit_cost)
+        public static decimal Calculate_Discount(decimal oldDiscount, decimal value, decimal unit_cost)
         {
-
-
-            if (id > 0)
-            {
-                return value;
-
-            }
-            else
-            {
-                decimal new_discount = oldDiscount - value;
-                return unit_cost + new_discount;
-
-            }
-
-
-
-
+            decimal new_discount = oldDiscount - value;
+            return unit_cost + new_discount;
         }
     }
 }

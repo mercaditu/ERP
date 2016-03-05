@@ -14,7 +14,7 @@
              xmlns:cntrl="clr-namespace:cntrl"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              mc:Ignorable="d" 
-             VerticalAlignment="Center" Width="540" Loaded="UserControl_Loaded">
+             VerticalAlignment="Center" Width="360" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Converters:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
@@ -28,10 +28,6 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <Grid DataContext="{StaticResource paymentpayment_detailViewSource}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="400"/>

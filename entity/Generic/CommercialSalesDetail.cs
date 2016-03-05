@@ -383,10 +383,11 @@ namespace entity
             return 0;
         }
 
-        public decimal Calculate_UnitCostDiscount()
+        public decimal Calculate_UnitCostDiscount(decimal oldDiscount, decimal value, decimal unit_cost)
         {
-          
-            return 0;
+            unit_price = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
+            RaisePropertyChanged("unit_price");
+            return unit_price;
         }
 
         public decimal Calculate_UnitCostVatDiscount()

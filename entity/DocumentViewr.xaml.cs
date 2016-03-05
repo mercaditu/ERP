@@ -731,19 +731,48 @@ namespace entity
                 ReportDataSource reportDataSource = new ReportDataSource();
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
                 contact contact = db.contacts.Where(x => x.id_contact == id).FirstOrDefault();
-                List<contact> contact_detail = contact.child.ToList();
+                if ( contact.child.Count >0)
+                {
+                    List<contact> contact_detail = contact.child.ToList();
+                    reportDataSource.Value = contact_detail
+                       .Select(g => new
+                       {
+                           id_contact = g.id_contact,
+                           contacts_name = g.parent.name,
+                           date_birth = g.parent.date_birth,
+                           gove_code = g.parent.gov_code,
+                           trans_date = g.parent.timestamp,
+                           contacts_code = g.parent.code,
+                           name = g.name
+                       }).ToList();
+                }
+                else
+                {
+                    List<contact> contact_detail = new List<entity.contact>();
+                    contact_detail.Add(contact);
+                    reportDataSource.Value = contact_detail
+                       .Select(g => new
+                       {
+                           id_contact = g.id_contact,
+                           contacts_name = g.name,
+                           date_birth = g.date_birth,
+                           gove_code = g.gov_code,
+                           trans_date = g.timestamp,
+                           contacts_code = g.code,
+                           name = ""
+                       }).ToList();
+                }
 
-                reportDataSource.Value = contact_detail
-                              .Select(g => new
-                              {
-                                  id_contact=g.id_contact,
-                                 contacts_name=g.parent.name,
-                                 date_birth = g.parent.date_birth,
-                                 gove_code=g.parent.gov_code,
-                                 trans_date=g.parent.timestamp,
-                                 contacts_code=g.parent.code,
-                                 name=g.name
-                              }).ToList();
+                if (contact.child.Count==0)
+                {
+                   
+                      
+                }
+                else
+                {
+                  
+                }
+           
 
                 string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 path = path + "\\CogntivoERP";

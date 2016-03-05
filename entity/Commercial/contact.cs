@@ -60,6 +60,8 @@ namespace entity
         {
             contact_tag_detail = new List<contact_tag_detail>();
             id_user = CurrentSession.Id_User;
+            id_company = CurrentSession.Id_Company;
+            
         }
 
         [Key]

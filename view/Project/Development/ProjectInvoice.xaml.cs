@@ -36,15 +36,7 @@ namespace Cognitivo.Project
             SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).Include("project_task").Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
 
-            SalesOrderDB.app_contract.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).ToList();
-
-            cbxContract.ItemsSource = SalesOrderDB.app_contract.Local;
-
-
-            SalesOrderDB.app_condition.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).OrderBy(a => a.name).ToList();
-
-            cbxCondition.ItemsSource = SalesOrderDB.app_condition.Local;
-          
+           
 
 
             //Filter to remove all items that are not top level.
@@ -103,52 +95,97 @@ namespace Cognitivo.Project
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-          
             project project = projectViewSource.View.CurrentItem as project;
-            List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
-            sales_order sales_order = new entity.sales_order();
-            sales_order.id_contact = (int)project.id_contact;
-            sales_order.contact = SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
-            if (SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.SalesOrder && x.is_active == true).FirstOrDefault() != null)
-            {
-                sales_order.id_range = SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.SalesOrder && x.is_active == true).FirstOrDefault().id_range;
-            }
-            sales_order.id_condition = (int)cbxCondition.SelectedValue;
-            sales_order.id_contract = (int)cbxContract.SelectedValue;
-            sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
-            sales_order.comment = "Generate From Project";
-            foreach (project_task _project_task in project_task)
-            {
-                if (_project_task.items.id_item_type==item.item_type.Task)
-                {
-                    sales_order_detail sales_order_detail = new sales_order_detail();
-                    sales_order_detail.id_sales_order = sales_order.id_sales_order;
-                    sales_order_detail.sales_order = sales_order;
-                    sales_order_detail.id_item = (int)_project_task.id_item;
-                    sales_order_detail.quantity = (int)_project_task.quantity_est;
-                    sales_order_detail.unit_cost = (int)_project_task.unit_cost_est;
-                    _project_task.sales_detail = sales_order_detail;
-                    sales_order.sales_order_detail.Add(sales_order_detail);
-                }
+            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
+            objSalesOrder.project = project;
+            objSalesOrder.db = SalesOrderDB;
+            crud_modal.Children.Add(objSalesOrder);
+
+            //project project = projectViewSource.View.CurrentItem as project;
+            //List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
+            //sales_order sales_order = new entity.sales_order();
+            //sales_order.id_contact = (int)project.id_contact;
+            //sales_order.contact = SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+            //if (SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.SalesOrder && x.is_active == true).FirstOrDefault() != null)
+            //{
+            //    sales_order.id_range = SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.SalesOrder && x.is_active == true).FirstOrDefault().id_range;
+            //}
+            //sales_order.id_condition = (int)cbxCondition.SelectedValue;
+            //sales_order.id_contract = (int)cbxContract.SelectedValue;
+            //sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
+            //sales_order.comment = "Generate From Project";
+            //sales_order_detail sales_order_detail = null;
+            //foreach (project_task _project_task in project_task)
+            //{
+               
+            //    if (_project_task.items.id_item_type==item.item_type.Task)
+            //    {
+            //        sales_order_detail = new sales_order_detail();
+            //        sales_order_detail.id_sales_order = sales_order.id_sales_order;
+            //        sales_order_detail.sales_order = sales_order;
+            //        sales_order_detail.id_item = (int)_project_task.id_item;
+            //        sales_order_detail.quantity = (int)_project_task.quantity_est;
+            //        sales_order_detail.unit_cost = (int)_project_task.unit_cost_est;
+            //        _project_task.sales_detail = sales_order_detail;
+            //        _project_task.IsSelected = false;
+                   
+            //    }
+            //    else
+            //    {
+            //        if (sales_order_detail!=null)
+            //        {
+            //            _project_task.sales_detail = sales_order_detail;
+            //            _project_task.IsSelected = false;
+            //        }
+                    
+            //    }
+            //    sales_order.sales_order_detail.Add(sales_order_detail);
               
-            }
-            sales_order.State = EntityState.Added;
-            sales_order.IsSelected = true;
-            SalesOrderDB.sales_order.Add(sales_order);
-            SalesOrderDB.SaveChanges();
+            //}
+            //sales_order.State = EntityState.Added;
+            //sales_order.IsSelected = true;
+            //SalesOrderDB.sales_order.Add(sales_order);
+            //SalesOrderDB.SaveChanges();
+            //filter_task();
         }
 
-        private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxCondition.SelectedItem != null)
-            {
-                app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = await SalesOrderDB.app_contract.Where(a => a.is_active == true
-                                                                        && a.id_company == _Setting.company_ID
-                                                                        && a.id_condition == app_condition.id_condition).ToListAsync();
-                cbxContract.SelectedIndex = 0;
-            }
+       
 
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query) && projectViewSource != null)
+            {
+                try
+                {
+                    projectViewSource.View.Filter = i =>
+                    {
+                        project project = i as project;
+                        if (project.name.ToLower().Contains(query.ToLower())
+                            )
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch (Exception ex)
+                {
+                    toolBar.msgError(ex);
+                }
+            }
+            else
+            {
+                projectViewSource.View.Filter = null;
+            }
+        }
+
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            filter_task();
         }
 
    

@@ -203,6 +203,9 @@
     <Compile Include="Curd\Refinance.xaml.cs">
       <DependentUpon>Refinance.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\SalesOrder.xaml.cs">
+      <DependentUpon>SalesOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\VATWithholding.xaml.cs">
       <DependentUpon>VATWithholding.xaml</DependentUpon>
     </Compile>
@@ -587,6 +590,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Curd\SalesOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Curd\VATWithholding.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -886,6 +893,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Outline_White\SalesOrder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

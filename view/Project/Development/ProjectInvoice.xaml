@@ -31,6 +31,7 @@
         <CollectionViewSource x:Key="project_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}" />
        
     </Page.Resources>
+   
     <Grid DataContext="{StaticResource projectViewSource}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -38,11 +39,11 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="*"/>
+                       <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        
+        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
         <ListBox Background="{StaticResource AccentColor_Brush}"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -57,7 +58,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Column="1" Grid.Row="1" Background="White"  >
+        <!--<StackPanel Grid.Column="1" Grid.Row="1" Background="White"  >
           
             <Grid>
                 <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
@@ -87,9 +88,9 @@
             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
             <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Margin="4,0,340,0"/>
            
-        </StackPanel>
+        </StackPanel>-->
         
-        <Grid Grid.Row="2" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
+        <Grid Grid.Row="1" Grid.Column="1" Background="White" DataContext="{StaticResource project_taskViewSource}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>

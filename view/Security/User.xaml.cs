@@ -59,7 +59,8 @@ namespace Cognitivo.Security
         private void toolBar_btnSave_Click(object sender)
         {
             security_user security_user = security_user_view_source.View.CurrentItem as security_user;
-            if (dbContext.security_user.Where(x => x.name == security_user.name).Any())
+           
+            if (dbContext.security_user.Where(x => x.name == security_user.name).Any() && security_user.State==EntityState.Added)
             {
                 toolBar.msgWarning("User Already Exists...");
             }

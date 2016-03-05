@@ -580,368 +580,89 @@
               </Border>
             </Style>
           </Rectangle>
-          <Rectangle Name="Rectangle5">
-            <ReportItems>
-              <Textbox Name="Textbox37">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>B</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                      <TextRun>
-                        <Value>     - </Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>E</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                      <TextRun>
-                        <Value>     - </Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>N</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                      <TextRun>
-                        <Value>     - </Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>E</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                      <TextRun>
-                        <Value>     - </Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>F</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>I</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>C</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>I</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>A</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>R</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>I</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>O</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>S</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value />
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value xml:space="preserve">     </Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                        </Style>
-                      </TextRun>
-                      <TextRun>
-                        <Value>URGENCIAS: (0984) 101 - 053</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                          <FontWeight>Bold</FontWeight>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style />
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>Textbox37</rd:DefaultName>
-                <Top>0.28082cm</Top>
-                <Left>0.24797cm</Left>
-                <Height>5.6279cm</Height>
-                <Width>7.59081cm</Width>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
-              <Tablix Name="Tablix1">
-                <TablixBody>
-                  <TablixColumns>
-                    <TablixColumn>
-                      <Width>2.5cm</Width>
-                    </TablixColumn>
-                  </TablixColumns>
-                  <TablixRows>
-                    <TablixRow>
-                      <Height>0.6cm</Height>
-                      <TablixCells>
-                        <TablixCell>
-                          <CellContents>
-                            <Textbox Name="Textbox10">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value />
-                                      <Style />
-                                    </TextRun>
-                                  </TextRuns>
+          <Tablix Name="Tablix1">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>8.48775cm</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="name">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!name.Value</Value>
                                   <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox10</rd:DefaultName>
-                              <Style>
-                                <Border>
-                                  <Color>LightGrey</Color>
-                                  <Style>Solid</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                          </CellContents>
-                        </TablixCell>
-                      </TablixCells>
-                    </TablixRow>
-                    <TablixRow>
-                      <Height>0.6cm</Height>
-                      <TablixCells>
-                        <TablixCell>
-                          <CellContents>
-                            <Textbox Name="Textbox11">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=First(Fields!name.Value, "DataSet1")</Value>
-                                      <Style />
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox11</rd:DefaultName>
-                              <Style>
-                                <Border>
-                                  <Color>LightGrey</Color>
-                                  <Style>Solid</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                          </CellContents>
-                        </TablixCell>
-                      </TablixCells>
-                    </TablixRow>
-                  </TablixRows>
-                </TablixBody>
-                <TablixColumnHierarchy>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>name</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Group1">
+                    <GroupExpressions>
+                      <GroupExpression>id_contact</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>id_contact</Value>
+                    </SortExpression>
+                  </SortExpressions>
                   <TablixMembers>
-                    <TablixMember />
-                  </TablixMembers>
-                </TablixColumnHierarchy>
-                <TablixRowHierarchy>
-                  <TablixMembers>
-                    <TablixMember />
                     <TablixMember>
-                      <Group Name="Group1">
-                        <GroupExpressions>
-                          <GroupExpression>id_contact</GroupExpression>
-                        </GroupExpressions>
-                      </Group>
-                      <SortExpressions>
-                        <SortExpression>
-                          <Value>id_contact</Value>
-                        </SortExpression>
-                      </SortExpressions>
-                      <TablixMembers>
-                        <TablixMember>
-                          <Group Name="Details" />
-                        </TablixMember>
-                      </TablixMembers>
+                      <Group Name="Details" />
                     </TablixMember>
                   </TablixMembers>
-                </TablixRowHierarchy>
-                <Top>0.54541cm</Top>
-                <Left>0.98775cm</Left>
-                <Height>1.2cm</Height>
-                <Width>2.5cm</Width>
-                <ZIndex>1</ZIndex>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                </Style>
-              </Tablix>
-            </ReportItems>
-            <KeepTogether>true</KeepTogether>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>DataSet1</DataSetName>
             <Top>8.05037cm</Top>
             <Left>6.3813cm</Left>
-            <Height>6.17331cm</Height>
+            <Height>0.6cm</Height>
             <Width>8.48775cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
-                <Style>Solid</Style>
+                <Style>None</Style>
               </Border>
             </Style>
-          </Rectangle>
+          </Tablix>
         </ReportItems>
         <Height>17cm</Height>
         <Style>

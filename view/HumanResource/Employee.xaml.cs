@@ -85,6 +85,7 @@ namespace Cognitivo.HumanResource
         {
             contact contact = new contact();
             contact.is_employee = true;
+            contact.id_contact_role = dbContext.contact_role.Where(x => x.is_principal).FirstOrDefault().id_contact_role;
             //dbContext.Entry(contact).State = EntityState.Added;
             contact.State = EntityState.Added;
             contact.IsSelected = true;
@@ -158,8 +159,8 @@ namespace Cognitivo.HumanResource
                     employeeViewSource.View.Filter = i =>
                     {
                         contact contact = i as contact;
-                        if (contact.name.ToLower().Contains(query.ToLower())
-                            || contact.code.ToLower().Contains(query.ToLower())
+                        if ((contact.name.ToLower().Contains(query.ToLower())
+                            || contact.code.ToLower().Contains(query.ToLower()) && contact.is_employee)
                            )
                         {
                             return true;

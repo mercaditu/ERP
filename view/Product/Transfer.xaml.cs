@@ -17,11 +17,9 @@ namespace Cognitivo.Product
 {
     public partial class Transfer : Page
     {
-        //dbContext. entity = new dbContext.();
-        ProductTransferDB dbContext = new ProductTransferDB();
+        ProductTransferDB ProductTransferDB = new ProductTransferDB();
 
         CollectionViewSource item_transferViewSource, transfercostViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
         List<Class.transfercost> clsTotalGrid = null;
 
         public Transfer()
@@ -37,7 +35,7 @@ namespace Cognitivo.Product
             item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
             item_transfer.IsSelected = true;
 
-            dbContext.Entry(item_transfer).State = EntityState.Added;
+            ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
        
             item_transferViewSource.View.MoveCurrentToLast();
          }
@@ -52,7 +50,7 @@ namespace Cognitivo.Product
                 item_transfer.app_location_origin = ((app_branch)id_branch_originComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
                 item_transfer.app_location_destination = ((app_branch)id_branch_destinComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
 
-                IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
+                IEnumerable<DbEntityValidationResult> validationresult = ProductTransferDB.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
                     for (int i = 0; i < item_transfer_detailDataGrid.Items.Count - 1; i++)
@@ -70,13 +68,13 @@ namespace Cognitivo.Product
                         item_movement_origin.trans_date = item.item_transfer.trans_date;
                         if (item.item_product.id_item_product != 0)
                         {
-                            if (dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
+                            if (ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
                             {
-                                item_movement_origin.id_item_product = dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
+                                item_movement_origin.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
                             }
                         }
-                        
-                        dbContext.item_movement.Add(item_movement_origin);
+
+                        ProductTransferDB.item_movement.Add(item_movement_origin);
                         item_movement item_movement_dest = new item_movement();
                         item_movement_dest.debit = item.quantity_destination;
                         item_movement_dest.credit = 0;
@@ -87,9 +85,9 @@ namespace Cognitivo.Product
                         item_movement_dest.trans_date = item.item_transfer.trans_date;
                         if (item.item_product.id_item_product != 0)
                         {
-                            if (dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
+                            if (ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
                             {
-                                item_movement_dest.id_item_product = dbContext.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
+                                item_movement_dest.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
                             }
 
                         }
@@ -106,10 +104,10 @@ namespace Cognitivo.Product
                             }
 
                         }
-                        dbContext.item_movement.Add(item_movement_dest);
+                        ProductTransferDB.item_movement.Add(item_movement_dest);
                     }
 
-                    dbContext.SaveChangesAsync();
+                    ProductTransferDB.SaveChangesAsync();
                  
                     toolBar.msgSaved();
                 }
@@ -123,19 +121,11 @@ namespace Cognitivo.Product
         private void toolBar_btnDelete_Click(object sender)
         {
 
-            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (res == MessageBoxResult.Yes)
-            {
-                //dbContext.item_transfer.Remove((item_transfer)item_transferDataGrid.SelectedItem);
-                //item_transferViewSource.View.MoveCurrentToFirst();
-                //toolBar_btnSave_Click(sender);
-            }
-
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            ProductTransferDB.CancelAllChanges();
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -145,7 +135,7 @@ namespace Cognitivo.Product
                 item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
                 item_transfer.IsSelected = true;
                 item_transfer.State = System.Data.Entity.EntityState.Modified;
-                dbContext.Entry(item_transfer).State = EntityState.Modified;
+                ProductTransferDB.Entry(item_transfer).State = EntityState.Modified;
             }
             else
             {
@@ -155,27 +145,26 @@ namespace Cognitivo.Product
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
-
+            //Filter by branch.
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
-            dbContext.item_transfer.Where(a => 
+            ProductTransferDB.item_transfer.Where(a => 
                 a.id_company == CurrentSession.Id_Company && 
                 a.id_branch == CurrentSession.Id_Branch &&
                 a.transfer_type == item_transfer.Transfer_type.transfer)
                 .Include(i => i.item_transfer_detail)
                 .Load();
-            item_transferViewSource.Source = dbContext.item_transfer.Local;
+            item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
             CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
-            dbContext.app_branch.Where(a => a.is_active == true).OrderBy(a => a.name).Load();
-            branch_originViewSource.Source = dbContext.app_branch.Local;
+            ProductTransferDB.app_branch.Where(a => a.is_active == true).OrderBy(a => a.name).Load();
+            branch_originViewSource.Source = ProductTransferDB.app_branch.Local;
 
             CollectionViewSource branch_destViewSource = ((CollectionViewSource)(this.FindResource("branch_destViewSource")));
-            branch_destViewSource.Source = dbContext.app_branch.Local;
+            branch_destViewSource.Source = ProductTransferDB.app_branch.Local;
 
             CollectionViewSource security_userViewSource = ((CollectionViewSource)(this.FindResource("security_userViewSource")));
-            dbContext.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-            security_userViewSource.Source = dbContext.security_user.Local;
+            ProductTransferDB.security_user.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+            security_userViewSource.Source = ProductTransferDB.security_user.Local;
 
             clsTotalGrid = new List<Class.transfercost>();
             transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
@@ -183,7 +172,20 @@ namespace Cognitivo.Product
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ItemTransfer, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
         }
+
+        private async void SmartBox_Item_Select(object sender, RoutedEventArgs e)
+        {
+            item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+            item item = await ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefaultAsync();
+
+            if (item != null && item.item_product != null && item_transfer != null)
+            {
+                item_transfer_detail item_transfer_detail = new item_transfer_detail();
+                item_transfer_detail.quantity_origin = 1;
+                item_transfer_detail.item_product = item.item_product.FirstOrDefault();
+
+                item_transfer.item_transfer_detail.Add(item_transfer_detail);
+            }
+        }
     }
-
-
 }

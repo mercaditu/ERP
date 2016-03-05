@@ -5,10 +5,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:entity="clr-namespace:entity;assembly=entity" 
-    xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-   xmlns:cls ="clr-namespace:Cognitivo.Class"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:cls ="clr-namespace:Cognitivo.Class"
       mc:Ignorable="d" 
-      
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -23,7 +23,7 @@
         <CollectionViewSource x:Key="branch_originViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
         <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
-        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_product}, CreateList=True}"/>
+        <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_product}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="transfercostViewSource" d:DesignSource="{d:DesignInstance {x:Type cls:transfercost}, CreateList=True}"/>
     </Page.Resources>
 
@@ -59,8 +59,8 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="113*"/>
-                <RowDefinition Height="67*"/>
+                <RowDefinition Height="280"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                 <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
@@ -96,7 +96,7 @@
                           ItemsSource="{Binding Source={StaticResource app_statusViewSource}}"  Grid.Row="3" 
                           Style="{StaticResource input_combobox}" />-->
             </StackPanel>
-            <StackPanel Grid.Column="1" Background="WhiteSmoke">
+            <StackPanel Grid.Column="1">
                 <Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Margin="5,5,5,1"/>
                 <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="WrapWithOverflow" Height="46"
                          Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
@@ -107,20 +107,17 @@
                 <TabItem Header="{lex:Loc Origin}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
-                            <DataGrid Height="120" x:Name="item_transfer_detailDataGrid" 
-                                  AutoGenerateColumns="False" Grid.ColumnSpan="2" 
-                                  EnableRowVirtualization="True" 
-                                  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                  Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
+                            <control:SmartBox_Item x:Name="sbxItem" Width="256" HorizontalAlignment="Left" Select="SmartBox_Item_Select"/>
+                            <DataGrid x:Name="item_transfer_detailDataGrid" 
+                                      AutoGenerateColumns="False" Grid.ColumnSpan="2" 
+                                      EnableRowVirtualization="True" CanUserAddRows="False"
+                                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
+                                      Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
-                                    <!--<DataGridTextColumn Binding="{Binding code}" Header="code" Width="SizeToHeader"/>-->
-                                    <!--<DataGridTextColumn Binding="{Binding product}" Header="product" Width="200"/>-->
-                                    <DataGridComboBoxColumn 
-                        ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
-                        SelectedValueBinding="{Binding id_item_product,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                        DisplayMemberPath="item.name"  SelectedValuePath="id_item_product" 
-                        Header="Product" Width="200"/>
-                                    <DataGridTextColumn Binding="{Binding quantity_origin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="SizeToHeader"/>
+                                    <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Item}" Width="Auto"/>
+                                    <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Quantity}" Width="Auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -129,20 +126,15 @@
                 <TabItem Header="{lex:Loc Destination}">
                     <StackPanel>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <DataGrid Height="120"
-                                  AutoGenerateColumns="False" Grid.ColumnSpan="2" 
-                                  EnableRowVirtualization="True" 
-                                  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                  Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+                            <DataGrid AutoGenerateColumns="False" Grid.ColumnSpan="2" 
+                                      EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
+                                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
+                                      Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
-                                    <!--<DataGridTextColumn Binding="{Binding code}" Header="code" Width="SizeToHeader"/>-->
-                                    <!--<DataGridTextColumn Binding="{Binding product}" Header="product" Width="200"/>-->
-                                    <DataGridComboBoxColumn 
-                        ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
-                        SelectedValueBinding="{Binding id_item_product,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                        DisplayMemberPath="item.name"  SelectedValuePath="id_item_product" 
-                        Header="Product" Width="200"/>
-                                    <DataGridTextColumn Binding="{Binding quantity,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="SizeToHeader"/>
+                                    <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                        Header="{lex:Loc Item}" Width="Auto"/>
+                                    <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                                        Header="{lex:Loc Quantity}" Width="SizeToHeader"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </ScrollViewer>

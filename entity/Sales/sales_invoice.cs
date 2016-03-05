@@ -27,6 +27,25 @@ namespace entity
             if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
         }
 
+        [NotMapped]
+        public new System.Data.Entity.EntityState State
+        {
+            get;
+            set
+            {
+                if(value != _State)
+                {
+                    _State = value;
+                    
+                    foreach(sales_invoice_detail detail in sales_invoice_detail)
+                    {
+                        detail.State = value;
+                    }
+                }
+            }
+        }
+        System.Data.Entity.EntityState _State;
+
         /// <summary>
         /// 
         /// </summary>

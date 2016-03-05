@@ -85,9 +85,6 @@ namespace Cognitivo
                 Cognitivo.Properties.Settings.Default.UpgradeRequired = false;
                 Cognitivo.Properties.Settings.Default.Save();
             }
-        }
-        
-      
+        } 
     }
-    
 }

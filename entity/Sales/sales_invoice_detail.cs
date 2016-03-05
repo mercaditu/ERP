@@ -17,7 +17,6 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-           // quantity = 1;
 
             timestamp = DateTime.Now;
         }

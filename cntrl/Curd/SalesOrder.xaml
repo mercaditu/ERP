@@ -43,6 +43,10 @@
             <Label Content="{Binding contact.email}" Style="{StaticResource input_label}"/>
             <Label Content="{lex:Loc telephone}" Style="{StaticResource input_label}"/>
             <Label Content="{Binding contact.telephone}" Style="{StaticResource input_label}"/>
+            <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding name}" Style="{StaticResource input_label}"/>
+            <Label Content="{lex:Loc GovCode}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding gov_code}" Style="{StaticResource input_label}"/>
             <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
 
 
@@ -67,7 +71,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-            <Controls:CurrencyBox x:Name="cbxCurrency" Width="100" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Margin="4,0,340,0"/>
+            <Controls:CurrencyBox x:Name="cbxCurrency" Width="252" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Height="19"/>
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

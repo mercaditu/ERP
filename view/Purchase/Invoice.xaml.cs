@@ -590,11 +590,15 @@ namespace Cognitivo.Purchase
             //ItemLink 
             if (item != null)
             {
-                if (purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null || !InvoiceSetting.AllowDuplicateItems)
+                if (purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null )
                 {
-                    //Item Exists in Context, so add to sum.
-                    purchase_invoice_detail _purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                    _purchase_invoice_detail.quantity += 1;
+                    if (!InvoiceSetting.AllowDuplicateItems)
+                    {
+                        //Item Exists in Context, so add to sum.
+                        purchase_invoice_detail _purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                        _purchase_invoice_detail.quantity += 1;
+                    }
+                  
 
                     //Return because Item exists, and will +1 in Quantity
                     return;

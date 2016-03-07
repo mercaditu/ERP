@@ -355,6 +355,10 @@
     <Compile Include="Migrations\201603030555579_UpdateItemTransfer.Designer.cs">
       <DependentUpon>201603030555579_UpdateItemTransfer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603071003546_Updatecontact_subsciption.cs" />
+    <Compile Include="Migrations\201603071003546_Updatecontact_subsciption.Designer.cs">
+      <DependentUpon>201603071003546_Updatecontact_subsciption.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -768,6 +772,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603030555579_UpdateItemTransfer.resx">
       <DependentUpon>201603030555579_UpdateItemTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603071003546_Updatecontact_subsciption.resx">
+      <DependentUpon>201603071003546_Updatecontact_subsciption.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

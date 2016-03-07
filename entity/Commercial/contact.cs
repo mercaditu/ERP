@@ -61,7 +61,8 @@ namespace entity
             contact_tag_detail = new List<contact_tag_detail>();
             id_user = CurrentSession.Id_User;
             id_company = CurrentSession.Id_Company;
-            
+            is_active = true;
+            contact_subscription = new List<contact_subscription>();
         }
 
         [Key]
@@ -144,6 +145,7 @@ namespace entity
         public virtual sales_rep sales_rep { get; set; }
         public virtual app_currency app_currency { get; set; }
         public virtual app_geography app_geography { get; set; }
+     
 
         //Heirarchy Nav Properties
         public virtual ICollection<contact> child { get; set; }

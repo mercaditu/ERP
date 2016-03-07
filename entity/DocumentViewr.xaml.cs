@@ -743,6 +743,7 @@ namespace entity
                            gove_code = g.parent.gov_code,
                            trans_date = g.parent.timestamp,
                            contacts_code = g.parent.code,
+                           Product_code=g.parent.contact_subscription.FirstOrDefault().item.name,
                            name = g.name
                        }).ToList();
                 }
@@ -759,6 +760,7 @@ namespace entity
                            gove_code = g.gov_code,
                            trans_date = g.timestamp,
                            contacts_code = g.code,
+                           Product_code = g.contact_subscription.FirstOrDefault().item.name,
                            name = ""
                        }).ToList();
                 }

@@ -43,8 +43,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding id_user}" 
-                                   recordSecondaryName="{Binding name}"
-                                   recordName="{Binding name_full}" 
+                                   recordSecondaryName="{Binding name_full}"
+                                   recordName="{Binding name}" 
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
@@ -64,12 +64,13 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Margin="32,16">
                         <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" HorizontalAlignment="Center">
                             <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-                            <TextBox Style="{StaticResource input_textbox}"
-                                     Text="{Binding name_full, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" 
+                                                   Text="{Binding name_full, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                           
                             
                             <Label Content="{lex:Loc User}" Style="{StaticResource input_label}"/>
-                            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" 
-                                                   Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Style="{StaticResource input_textbox}"
+                                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                             <!--<TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>-->
                             <Label Content="{lex:Loc Password}" Style="{StaticResource input_label}"/>
                             <PasswordBox cls:PasswordHelper.Attach="True" Style="{StaticResource input_password}"

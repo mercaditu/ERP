@@ -410,9 +410,55 @@ namespace Cognitivo.Project.Development
 
         private void item_Select(object sender, RoutedEventArgs e)
         {
+
+
+
             if (sbxItem.ItemID > 0)
             {
                 item item = _entity.db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+               
+
+                if (item != null && item.id_item > 0 && item.is_autorecepie )
+                {
+                    project_task project_task_output = treeProject.SelectedItem as project_task;
+                    project_task_output.id_item = item.id_item;
+                    project_task_output.items = item;
+                    project_task_output.RaisePropertyChanged("item");
+                    project_task_output.quantity_est = 1;
+                    foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                    {
+                        project_task project_task = new project_task();
+
+                        project_task.code = item_recepie_detail.item.name;
+                        project_task.item_description = item_recepie_detail.item.name;
+                        project_task.id_item = item_recepie_detail.item.id_item;
+                        project_task.items = item_recepie_detail.item;
+                        project_task.RaisePropertyChanged("item");
+                        if (item_recepie_detail.quantity > 0)
+                        {
+                            project_task.quantity_est = (decimal)item_recepie_detail.quantity;
+                        }
+
+                       
+
+                        project_task_output.child.Add(project_task);
+                    }
+
+                   
+                }
+                else
+                {
+                    project_task project_task_output = treeProject.SelectedItem as project_task;
+                    project_task_output.id_item = item.id_item;
+                    project_task_output.items = item;
+                    project_task_output.RaisePropertyChanged("item");
+                    project_task_output.quantity_est = 1;
+
+
+                
+
+                }
+
                 if (item.item_dimension != null)
                 {
                     project_task project_task = (project_task)treeProject.SelectedItem;
@@ -431,7 +477,7 @@ namespace Cognitivo.Project.Development
 
 
                 }
-               
+                filter_task();
 
             }
         }

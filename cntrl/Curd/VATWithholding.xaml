@@ -38,7 +38,7 @@
                 <StackPanel HorizontalAlignment="Center">
                     <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                     <DatePicker SelectedDate="{Binding tras_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                                Style="{StaticResource input_datepicker}"/>
+                                Style="{StaticResource input_datepicker}" x:Name="DtpTransdate"/>
 
                     <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
                     <Label Content="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_label}"/>
@@ -50,7 +50,7 @@
                                   Style="{StaticResource input_combobox}"
                                   SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                     <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-                    <TextBox
+                    <TextBox x:Name="txtnumber"
                                 metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
                                 metro:TextBoxHelper.SelectAllOnFocus="True"
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -59,7 +59,7 @@
                 </StackPanel>
 
                 <Label Content="{lex:Loc Link}" HorizontalAlignment="Center" Style="{StaticResource generic_Label}"/>
-                <DataGrid Margin="8,4" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                <DataGrid x:Name="dgbinvoice" Margin="8,4" ItemsSource="{Binding}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SalesInvoice}" Binding="{Binding id_sales_invoice}" Width="auto"/>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PurchaseInvoice}" Binding="{Binding id_purchase_invoice}" Width="auto"/>
@@ -69,7 +69,7 @@
                 </DataGrid>
                 <StackPanel HorizontalAlignment="Center">
                     <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
-                    <Label Content="{Binding TotalVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                    <Label x:Name="lbltotalvat" Content="{Binding TotalVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
                          Style="{StaticResource input_label}"/>
                 </StackPanel>
             </StackPanel>

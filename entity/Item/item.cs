@@ -100,6 +100,7 @@ namespace entity
 
 
         public virtual ICollection<item_price> item_price { get; set; }
+        public virtual ICollection<contact_subscription> contact_subscription { get; set; }
         public virtual ICollection<item_attachment> item_attachment { get; set; }
         public virtual ICollection<item_tag_detail> item_tag_detail { get; set; }
         public virtual IEnumerable<sales_invoice_detail> sales_invoice_detail { get; set; }

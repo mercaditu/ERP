@@ -41,6 +41,7 @@ namespace cntrl
             {
                 sales_order.id_range = db.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.SalesOrder && x.is_active == true).FirstOrDefault().id_range;
             }
+            sales_order.id_project = project.id_project;
             sales_order.id_condition = (int)cbxCondition.SelectedValue;
             sales_order.id_contract = (int)cbxContract.SelectedValue;
             sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
@@ -55,8 +56,9 @@ namespace cntrl
                     sales_order_detail.id_sales_order = sales_order.id_sales_order;
                     sales_order_detail.sales_order = sales_order;
                     sales_order_detail.id_item = (int)_project_task.id_item;
+                    sales_order_detail.item_description = _project_task.item_description;
                     sales_order_detail.quantity = (int)_project_task.quantity_est;
-                    sales_order_detail.unit_cost = (int)_project_task.unit_cost_est;
+                    sales_order_detail.unit_price = (int)_project_task.unit_cost_est;
                     _project_task.sales_detail = sales_order_detail;
                     _project_task.IsSelected = false;
                    
@@ -103,7 +105,8 @@ namespace cntrl
             db.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
 
             cbxCondition.ItemsSource = db.app_condition.Local;
-          
+
+            stackMain.DataContext = project;
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)

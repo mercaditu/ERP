@@ -66,10 +66,14 @@ namespace entity
                 _quantity_est = value;
                 RaisePropertyChanged("quantity_est");
 
-                if (parent != null)
+                if (parent != null && parent.items!=null)
                 {
-                    parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
-                    parent.RaisePropertyChanged("quantity_est");
+                    if (!parent.items.is_autorecepie)
+                    {
+                        parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
+                        parent.RaisePropertyChanged("quantity_est");
+                    }
+                  
                 }
 
             }
@@ -165,11 +169,16 @@ namespace entity
                 {
                     _parent = value;
                     RaisePropertyChanged("parent");
-                    if (parent != null)
+                    if (parent != null && parent.items!=null)
                     {
-                        parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
-                        parent.quantity_est += quantity_est;
-                        parent.RaisePropertyChanged("quantity_est");
+                        if (!parent.items.is_autorecepie)
+                        {
+
+
+                            parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
+                            parent.quantity_est += quantity_est;
+                            parent.RaisePropertyChanged("quantity_est");
+                        }
                     }
                 }
             

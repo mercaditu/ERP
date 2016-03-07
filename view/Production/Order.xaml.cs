@@ -517,7 +517,7 @@ namespace Cognitivo.Production
                     production_order_detail_output.item = item;
                     production_order_detail_output.RaisePropertyChanged("item");
                     production_order_detail_output.is_input = false;
-
+                    production_order_detail_output.quantity = 1;
                     foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                     {
                         production_order_detail production_order_detail = new production_order_detail();
@@ -536,7 +536,7 @@ namespace Cognitivo.Production
                         production_order_detail_output.child.Add(production_order_detail);
                     }
                 
-                  //  filter_task();
+                    filter_task();
                 }
                 else
                 {
@@ -550,7 +550,7 @@ namespace Cognitivo.Production
 
 
                    
-                  //  filter_task();
+                    filter_task();
 
                 }
             }
@@ -727,5 +727,7 @@ namespace Cognitivo.Production
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+
+      
     }
 }

@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 30
+            /// Last Used : 31
             /// </summary>
 
             //Sales
@@ -75,6 +75,8 @@ namespace entity
             PaymentUtility = 16,
             [LocalizedDescription("PaymentType")]
             PaymentType=29,
+            [LocalizedDescription("ItemTransfer")]
+            PaymentWithHolding = 31,
 
             //Stock
             [LocalizedDescription("Item")]

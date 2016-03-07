@@ -529,6 +529,7 @@ namespace Cognitivo.Production
                             _production_execution_detail.id_contact = ((contact)combo.Data).id_contact;
                             _production_execution_detail.contact = (contact)combo.Data;
                             _production_execution_detail.quantity = 1;
+                            _production_execution.RaisePropertyChanged("quantity");
                             if (cmbcoefficient.SelectedValue != null)
                             {
                                 _production_execution_detail.id_time_coefficient = (int)cmbcoefficient.SelectedValue;

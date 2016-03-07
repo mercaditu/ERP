@@ -16,7 +16,7 @@ namespace Cognitivo.Commercial
         ContactDB dbContext = new ContactDB();
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
-
+        CollectionViewSource contactcontact_subscriptionViewSource;
         #region Initilize and load
         public Contact()
         {
@@ -35,7 +35,11 @@ namespace Cognitivo.Commercial
             CollectionViewSource contactParentViewSource = (CollectionViewSource)FindResource("contactParentViewSource");
             contactParentViewSource.Source = dbContext.contacts.Local;
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
+
             contactChildListViewSource.Source = dbContext.contacts.Local;
+
+
+            contactcontact_subscriptionViewSource = (CollectionViewSource)FindResource("contactcontact_subscriptionViewSource");
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
@@ -379,6 +383,22 @@ namespace Cognitivo.Commercial
                     contact contact = contactViewSource.View.CurrentItem as contact;
                     Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(contact));
                 }
+            }
+        }
+        private void item_Select(object sender, EventArgs e)
+        {
+            if (sbxItem.ItemID > 0)
+            {
+                contact contact = contactViewSource.View.CurrentItem as contact;
+                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                   
+                contact_subscription contact_subscription = new contact_subscription();
+                contact_subscription.id_item =(int)item.id_item;
+                contact_subscription.item = item;
+                contact_subscription.contact = contact;
+                dbContext.contact_subscription.Add(contact_subscription);
+                contactViewSource.View.Refresh();
+                contactcontact_subscriptionViewSource.View.Refresh();
             }
         }
     }

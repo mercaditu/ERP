@@ -132,12 +132,9 @@ namespace Cognitivo.Setup.Migration.Cogent
                     ));
 
                     sync_Users();
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
+                
                         CurrentSession.Id_User = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
-                        //entity.Properties.Settings.Default.Save();
-                    }
-                 ));
+                 
 
                     foreach (DataRow row_Branch in dt_Branch.Rows)
                     {
@@ -179,13 +176,13 @@ namespace Cognitivo.Setup.Migration.Cogent
                             }
                         }
                     }
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
+                    //Dispatcher.BeginInvoke((Action)(() =>
+                    //{
                         entity.Properties.Settings.Default.branch_ID = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
                         entity.Properties.Settings.Default.terminal_ID = dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
                         entity.Properties.Settings.Default.Save();
-                    }
-));
+//                    }
+//));
                     dt_Branch.Clear();
                     dt_Terminal.Clear();
                 }
@@ -1173,7 +1170,7 @@ namespace Cognitivo.Setup.Migration.Cogent
                     contact contact = new contact();
                     contact.id_contact = readeremp.GetInt32("id");
                     contact.id_contact_role = 1;
-
+                    
                     if (!(readeremp["name_full"] is DBNull))
                     {
                         contact.name = readeremp.GetString("name_full");

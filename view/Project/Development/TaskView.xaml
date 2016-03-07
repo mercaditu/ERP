@@ -91,7 +91,7 @@
                               Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
                               Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
               
-                <TreeView x:Name="treeProject" Margin="0,95,0,0" ItemsSource="{Binding}" 
+                <TreeView x:Name="treeProject" Margin="0,108,0,-13" ItemsSource="{Binding}" 
                           VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
                           ScrollViewer.CanContentScroll="True" SelectedItemChanged="treeProject_SelectedItemChanged"  >
                     <TreeView.ItemContainerStyle>

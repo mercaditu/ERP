@@ -734,13 +734,13 @@ namespace Cognitivo.Sales
         {
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+            
             if (sales_invoicesales_invoice_detailViewSource.View != null)
             {
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
 
-                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
-
+                //sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
             }
             else
             {

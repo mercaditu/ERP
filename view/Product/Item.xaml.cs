@@ -35,8 +35,6 @@ namespace Cognitivo.Product
             itemitem_serviceViewSource,
             app_propertyViewSource;
 
-        entity.Properties.Settings _settings_entity = new entity.Properties.Settings();
-
         public Item()
         {
             InitializeComponent();
@@ -70,32 +68,32 @@ namespace Cognitivo.Product
 
             if (_pref_Product.Product)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == _settings_entity.company_ID && i.id_item_type == item.item_type.Product).Load();
+                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Product).Load();
             }
 
             if (_pref_Product.RawMaterial)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == _settings_entity.company_ID && i.id_item_type == item.item_type.RawMaterial).Load();
+                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.RawMaterial).Load();
             }
 
             if (_pref_Product.FixedAsset)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == _settings_entity.company_ID && i.id_item_type == item.item_type.FixedAssets).Load();
+                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).Load();
             }
 
             if (_pref_Product.Service)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == _settings_entity.company_ID && i.id_item_type == item.item_type.Service).Load();
+                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Service).Load();
             }
 
             if (_pref_Product.Task)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == _settings_entity.company_ID && i.id_item_type == item.item_type.Task).Load();
+                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Task).Load();
             }
 
             if (_pref_Product.Supplies)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == _settings_entity.company_ID && i.id_item_type == item.item_type.Supplies).Load();
+                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Supplies).Load();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -107,7 +105,7 @@ namespace Cognitivo.Product
         private async void load_SecondaryDataThread()
         {
             await dbContext.app_measurement
-                    .Where(a => a.is_active == true && a.id_company == _settings_entity.company_ID)
+                    .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
                     .OrderBy(a => a.name).LoadAsync();
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -121,21 +119,21 @@ namespace Cognitivo.Product
             }));
 
             await dbContext.app_dimension
-                .Where(a => a.id_company == _settings_entity.company_ID)
+                .Where(a => a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_dimentionViewSource.Source = dbContext.app_dimension.Local;
             }));
 
-            await dbContext.app_property.OrderBy(a => a.name).AsNoTracking().AsNoTracking().LoadAsync();
+            await dbContext.app_property.OrderBy(a => a.name).AsNoTracking().LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_propertyViewSource.Source = dbContext.app_property.Local;
             }));
 
             await dbContext.app_vat_group
-                .Where(a => a.is_active == true && a.id_company == _settings_entity.company_ID)
+                .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -143,7 +141,7 @@ namespace Cognitivo.Product
             }));
 
             await dbContext.item_tag
-                .Where(x => x.id_company == _settings_entity.company_ID && x.is_active == true)
+                .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
                 .OrderBy(x => x.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -152,7 +150,7 @@ namespace Cognitivo.Product
             }));
 
             await dbContext.app_currency
-                .Where(a => a.is_active == true && a.id_company == _settings_entity.company_ID)
+                .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -161,7 +159,7 @@ namespace Cognitivo.Product
             }));
 
             await dbContext.hr_talent
-                .Where(a => a.is_active == true && a.id_company == _settings_entity.company_ID)
+                .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -169,7 +167,7 @@ namespace Cognitivo.Product
             }));
 
             await dbContext.item_price_list
-               .Where(a => a.is_active == true && a.id_company == _settings_entity.company_ID)
+               .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
                .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -177,7 +175,7 @@ namespace Cognitivo.Product
             }));
 
             await dbContext.item_brand
-                .Where(a => a.id_company == _settings_entity.company_ID)
+                .Where(a => a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -211,7 +209,7 @@ namespace Cognitivo.Product
                     IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
                     if (validationresult.Count() == 0)
                     {
-                        dbContext.item_tag.Where(a => a.is_active == true && a.id_company == _settings_entity.company_ID).Load();
+                        dbContext.item_tag.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
                         dbContext.SaveChanges();
                         return true;
                     }
@@ -381,7 +379,7 @@ namespace Cognitivo.Product
             IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
-                //dbContext.item_tag.Where(a => a.id_company == _settings_entity.company_ID && a.is_active == true).Load();
+                //dbContext.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Load();
                 dbContext.SaveChanges();
                 itemViewSource.View.Refresh();
                 //SetIsEnable = false;
@@ -758,7 +756,6 @@ namespace Cognitivo.Product
             item_service.hr_talent = (hr_talent)cmbtalent.SelectionBoxItem;
             item_service.id_talent = (int)cmbtalent.SelectedValue;
             item.item_service.Add(item_service);
-          //  dbContext.item_service.Add(item_service);
             itemitem_serviceViewSource.View.Refresh();
             itemitem_serviceViewSource.View.MoveCurrentToLast();
         }
@@ -766,20 +763,11 @@ namespace Cognitivo.Product
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
              dbContext.item_brand
-               .Where(a => a.id_company == _settings_entity.company_ID)
+               .Where(a => a.id_company == CurrentSession.Id_Company)
                .OrderBy(a => a.name).Load();
           
-                item_brandViewSource.Source = dbContext.item_brand.Local;
+            item_brandViewSource.Source = dbContext.item_brand.Local;
           
         }
-
-        
-        //contact contact = (contact)employeeViewSource.View.CurrentItem;
-        //hr_talent_detail hr_talent_detail = new hr_talent_detail();
-        //hr_talent_detail.hr_talent =(hr_talent)cmbtalent.SelectionBoxItem;
-        //hr_talent_detail.experience = 0;
-        //contact.hr_talent_detail.Add(hr_talent_detail);
-        //contacthr_talent_detailViewSource.View.Refresh();
-        //contacthr_talent_detailViewSource.View.MoveCurrentToLast();
     }
 }

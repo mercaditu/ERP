@@ -46,14 +46,6 @@ namespace entity
                         item_description = _item.name;
                         RaisePropertyChanged("item_description");
                     }
-                    //}
-                    //else
-                    //{
-                    //    id_vat_group = Vat.getItemVat(item);
-                    //    RaisePropertyChanged("id_vat_group");
-                    //    item_description = item.name;
-                    //    RaisePropertyChanged("item_description");
-                    //}
 
                     update_UnitPrice();
                     update_UnitCost();
@@ -391,69 +383,51 @@ namespace entity
 
         #endregion
         #region Discount Calculations
+
         /// <summary>
-        /// 
+        /// Basic Discount column that is stored in database. Realvalue.
         /// </summary>
         public decimal discount
         {
             get { return _discount; }
             set
             {
-                //if (sales_invoice != null)
-                //{
-                if (_discount != value && State>=0)
+                if (_discount != value && State >= 0)
                 {
-                    Calculate_UnitCostDiscount(_discount, value, unit_price);
+                    ApplyDiscount_UnitPrice(_discount, value, unit_price);
                     RaisePropertyChanged("unit_price");
                 }
-                // }
 
                 _discount = value;
                 RaisePropertyChanged("discount");
-                Calculate_UnitVatDiscount( discount);
-                Calculate_SubTotalDiscount( discount);
-                Calculate_SubTotalVatDiscount( DiscountVat);
+
+                Calculate_UnitVatDiscount(_discount);
+                Calculate_SubTotalDiscount(_discount);
             }
         }
         private decimal _discount;
 
+        /// <summary>
+        /// 
+        /// </summary>
         [NotMapped]
         public decimal DiscountVat
         {
-            get { return _discountVat; }
+            get { return _DiscountVat; }
             set
             {
-                if (_discountVat != value)
+                if (_DiscountVat != value)
                 {
-                    Calculate_Discount_WithoutVAT(value);
+                    Calculate_UnitDiscount(value);
+                }
 
-                }
-                _discountVat = value;
-                RaisePropertyChanged("discountVat");
-                Calculate_SubTotalDiscount(discount);
-                Calculate_SubTotalVatDiscount(DiscountVat);
+                _DiscountVat = value;
+                RaisePropertyChanged("DiscountVat");
+
+                Calculate_SubTotalVatDiscount(_DiscountVat);
             }
         }
-        private decimal _discountVat;
-        /// <summary>
-        /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
-        /// </summary>
-        [NotMapped]
-        public decimal DiscountPercentage
-        {
-            get { return _DiscountPercentage; }
-            set
-            {
-                if (_DiscountPercentage!=value)
-                {
-                    _DiscountPercentage = value;
-                 
-                    
-                }
-              
-            }
-        }
-        private decimal _DiscountPercentage;
+        private decimal _DiscountVat;
 
         /// <summary>
         /// 
@@ -464,30 +438,16 @@ namespace entity
             get { return _Discount_SubTotal; }
             set
             {
-                if (_Discount_SubTotal != value) // && value <= unit_cost
+                if (_Discount_SubTotal != value)
                 {
-                    _Discount_SubTotal = value;
-                    RaisePropertyChanged("Discount_SubTotal");
-                    //Calculate_Discount_WithoutVAT(ref _discount, value);
+                    Calculate_UnitDiscount(_Discount_SubTotal);
                 }
+                
+                _Discount_SubTotal = value;
+                RaisePropertyChanged("Discount_SubTotal");
             }
         }
         private decimal _Discount_SubTotal;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotMapped]
-        public decimal Discount_SubTotalPercentage
-        {
-            get { return _Discount_SubTotalPercentage; }
-            set
-            {
-                _Discount_SubTotalPercentage = value;
-                RaisePropertyChanged("Discount_SubTotalPercentage");
-            }
-        }
-        private decimal _Discount_SubTotalPercentage;
 
         /// <summary>
         /// 
@@ -498,52 +458,69 @@ namespace entity
             get { return _Discount_SubTotal_Vat; }
             set
             {
-                if (_Discount_SubTotal_Vat != value) // && value <= unit_cost
+                if (_Discount_SubTotal_Vat != value)
                 {
-                    _Discount_SubTotal_Vat = value;
-                    RaisePropertyChanged("Discount_SubTotalVat");
-                    //Calculate_Discount_WithoutVAT(ref _discount, value);
+                    Calculate_UnitVatDiscount(_Discount_SubTotal_Vat);
                 }
+
+                _Discount_SubTotal_Vat = value;
+                RaisePropertyChanged("Discount_SubTotal_Vat");
             }
         }
         private decimal _Discount_SubTotal_Vat;
 
-
-        public void Calculate_UnitCostDiscount(decimal oldDiscount, decimal value, decimal unit_cost)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oldDiscount"></param>
+        /// <param name="value"></param>
+        /// <param name="unit_cost"></param>
+        public void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
         {
-
             this.unit_price= Discount.Calculate_Discount(oldDiscount, value, unit_cost);
             RaisePropertyChanged("unit_price");
-
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discountvat"></param>
+        public void Calculate_UnitDiscount(decimal discountvat)
+        {
+            discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
+            RaisePropertyChanged("discount");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discount"></param>
         public void Calculate_UnitVatDiscount(decimal discount)
         {
-
-            _discountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
+            DiscountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
             RaisePropertyChanged("DiscountVat");
-
         }
-        public void Calculate_Discount_WithoutVAT(decimal discountvat)
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discount"></param>
+        public void Calculate_SubTotalDiscount(decimal discount)
         {
-
-            _discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
-            RaisePropertyChanged("discount");
-
-        }
-        public decimal Calculate_SubTotalDiscount(decimal discount)
-        {
-           _Discount_SubTotal = discount * _quantity;
+           Discount_SubTotal = discount * _quantity;
            RaisePropertyChanged("Discount_SubTotal");
-            return 0;
         }
-        public decimal Calculate_SubTotalVatDiscount(decimal DiscountVat)
-        {
-            _Discount_SubTotal_Vat = DiscountVat * _quantity;
-            RaisePropertyChanged("Discount_SubTotal_Vat");
-            return 0;
-        }
-        #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DiscountVat"></param>
+        public void Calculate_SubTotalVatDiscount(decimal DiscountVat)
+        {
+            Discount_SubTotal_Vat = DiscountVat * _quantity;
+            RaisePropertyChanged("Discount_SubTotal_Vat");
+        }
+
+        #endregion
     }
 }

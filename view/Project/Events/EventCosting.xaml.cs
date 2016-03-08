@@ -511,40 +511,168 @@ namespace Cognitivo.Project
                 {
                     foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
                     {
-                        project_task project_task = new project_task();
-                        project_task.status = Status.Project.Pending;
-                        //project_task.project = project;
-                        project_task.id_item = project_event_variable.id_item;
-                        project_task.item_description = project_event_variable.item.name;
-                        project_task.code = project_event_variable.item.code;
-                        project_task.quantity_est = ((project_event_variable.adult_consumption ) + (project_event_variable.child_consumption ));
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item);
-                        project.project_task.Add(project_task);
+                        item item = project_event_variable.item;
+                        if (item != null && item.id_item > 0 && item.is_autorecepie)
+                        {
+                            project_task project_task = new project_task();
+                            project_task.status = Status.Project.Pending;
+                            //project_task.project = project;
+                            project_task.id_item = project_event_variable.id_item;
+                            project_task.item_description = project_event_variable.item.name;
+                            project_task.code = project_event_variable.item.code;
+                            project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
+                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item);
+                            
+
+                           foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                            {
+                                project_task Subproject_task = new project_task();
+
+                                Subproject_task.code = item_recepie_detail.item.name;
+                                Subproject_task.item_description = item_recepie_detail.item.name;
+                                Subproject_task.id_item = item_recepie_detail.item.id_item;
+                                Subproject_task.items = item_recepie_detail.item;
+                                Subproject_task.RaisePropertyChanged("item");
+                                if (item_recepie_detail.quantity > 0)
+                                {
+                                    Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
+                                }
+
+
+
+                                project_task.child.Add(Subproject_task);
+                            }
+                           project.project_task.Add(project_task);
+                           
+
+                        }
+                        else
+                        {
+                            project_task project_task = new project_task();
+                            project_task.status = Status.Project.Pending;
+                            //project_task.project = project;
+                            project_task.id_item = project_event_variable.id_item;
+                            project_task.item_description = project_event_variable.item.name;
+                            project_task.code = project_event_variable.item.code;
+                            project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
+                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item);
+                            project.project_task.Add(project_task);
+
+
+
+                        }
+                       
                     }
 
                     foreach (project_event_fixed per_event_service in project_costing.project_event_fixed.Where(a => a.is_included == true))
                     {
-                        project_task project_task = new project_task();
-                        project_task.status = Status.Project.Pending;
-                        //project_task.project = project;
-                        project_task.id_item = per_event_service.id_item;
-                        project_task.item_description = per_event_service.item.name;
-                        project_task.code = per_event_service.item.code;
-                        project_task.quantity_est = per_event_service.consumption;
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item);
-                        project.project_task.Add(project_task);                
+                        item item = per_event_service.item;
+                        if (item != null && item.id_item > 0 && item.is_autorecepie)
+                        {
+                            project_task project_task = new project_task();
+                            project_task.status = Status.Project.Pending;
+                            //project_task.project = project;
+                            project_task.id_item = per_event_service.id_item;
+                            project_task.item_description = per_event_service.item.name;
+                            project_task.code = per_event_service.item.code;
+                            project_task.quantity_est = per_event_service.consumption;
+                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item);
+
+
+                            foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                            {
+                                project_task Subproject_task = new project_task();
+
+                                Subproject_task.code = item_recepie_detail.item.name;
+                                Subproject_task.item_description = item_recepie_detail.item.name;
+                                Subproject_task.id_item = item_recepie_detail.item.id_item;
+                                Subproject_task.items = item_recepie_detail.item;
+                                Subproject_task.RaisePropertyChanged("item");
+                                if (item_recepie_detail.quantity > 0)
+                                {
+                                    Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
+                                }
+
+
+
+                                project_task.child.Add(Subproject_task);
+                            }
+                            project.project_task.Add(project_task);
+
+
+                        }
+                        else
+                        {
+                            project_task project_task = new project_task();
+                            project_task.status = Status.Project.Pending;
+                            //project_task.project = project;
+                            project_task.id_item = per_event_service.id_item;
+                            project_task.item_description = per_event_service.item.name;
+                            project_task.code = per_event_service.item.code;
+                            project_task.quantity_est = per_event_service.consumption;
+                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item);
+                            project.project_task.Add(project_task);
+
+
+
+                        }
+                       
+                                      
+                    }
+                    item _item = project_costing.item;
+                    if (_item != null && _item.id_item > 0 && _item.is_autorecepie)
+                    {
+                        project_task _project_task = new project_task();
+                        _project_task.status = Status.Project.Pending;
+                        //_project_task.project = project;
+                        _project_task.id_item = project_costing.id_item;
+                        _project_task.item_description = project_costing.item.name;
+                        _project_task.code = project_costing.item.code;
+                        _project_task.quantity_est = 1;
+                        _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item);
+
+
+
+
+                        foreach (item_recepie_detail item_recepie_detail in _item.item_recepie.FirstOrDefault().item_recepie_detail)
+                        {
+                            project_task Subproject_task = new project_task();
+
+                            Subproject_task.code = item_recepie_detail.item.name;
+                            Subproject_task.item_description = item_recepie_detail.item.name;
+                            Subproject_task.id_item = item_recepie_detail.item.id_item;
+                            Subproject_task.items = item_recepie_detail.item;
+                            Subproject_task.RaisePropertyChanged("item");
+                            if (item_recepie_detail.quantity > 0)
+                            {
+                                Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * _project_task.quantity_est;
+                            }
+
+
+
+                            _project_task.child.Add(Subproject_task);
+                        }
+                        project.project_task.Add(_project_task);
+
+
+                    }
+                    else
+                    {
+                        project_task _project_task = new project_task();
+                        _project_task.status = Status.Project.Pending;
+                        //_project_task.project = project;
+                        _project_task.id_item = project_costing.id_item;
+                        _project_task.item_description = project_costing.item.name;
+                        _project_task.code = project_costing.item.code;
+                        _project_task.quantity_est = 1;
+                        _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item);
+                        project.project_task.Add(_project_task);
+
+
+
                     }
 
-                    project_task _project_task = new project_task();
-                    _project_task.status = Status.Project.Pending;
-                    //_project_task.project = project;
-                    _project_task.id_item = project_costing.id_item;
-                    _project_task.item_description = project_costing.item.name;
-                    _project_task.code = project_costing.item.code;
-                    _project_task.quantity_est = 1;
-                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item);
-
-                    project.project_task.Add(_project_task);
+                  
 
                     EventDB.projects.Add(project);
                     EventDB.SaveChanges();

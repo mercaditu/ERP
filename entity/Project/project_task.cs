@@ -15,12 +15,12 @@ namespace entity
         public project_task()
         {
             project_task_dimension = new List<project_task_dimension>();
-           
+
             trans_date = DateTime.Now;
-            child= new List<project_task>();
+            child = new List<project_task>();
             is_active = true;
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
         }
 
@@ -29,7 +29,7 @@ namespace entity
         public int id_project_task { get; set; }
         public int id_project { get; set; }
 
-     
+
         public Status.Project? status { get; set; }
         public Status.ProjectStatus? ProjectStatus { get; set; }
         public int? id_item
@@ -40,9 +40,9 @@ namespace entity
                 if (_id_item != value)
                 {
                     _id_item = value;
-                 
 
-                    
+
+
                 }
             }
         }
@@ -66,14 +66,35 @@ namespace entity
                 _quantity_est = value;
                 RaisePropertyChanged("quantity_est");
 
-                if (parent != null && parent.items!=null)
+                if (parent != null && parent.items != null)
                 {
-                    if (!parent.items.is_autorecepie )
+                    if (!parent.items.is_autorecepie)
                     {
                         parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
                         parent.RaisePropertyChanged("quantity_est");
                     }
-                  
+
+                }
+
+                if (this.items != null)
+                {
+
+
+                    if (this.items.is_autorecepie)
+                    {
+
+                        if (child.Count > 0)
+                        {
+                            foreach (project_task project_task in child)
+                            {
+                                project_task.quantity_est = project_task.items.item_recepie_detail.FirstOrDefault().quantity * this.quantity_est;
+                                project_task.RaisePropertyChanged("quantity_est");
+                            }
+
+                        }
+
+
+                    }
                 }
 
             }
@@ -114,9 +135,9 @@ namespace entity
 
                     foreach (var task in child)
                     {
-                        if (task.status != Status.Project.Rejected )
+                        if (task.status != Status.Project.Rejected)
                             task.IsSelected = value;
-                        
+
                     }
                 }
             }
@@ -130,14 +151,14 @@ namespace entity
             get { return _items; }
             set
             {
-                if (value!=null)
+                if (value != null)
                 {
                     _items = value;
                     RaisePropertyChanged("items");
                     _item_description = items.name;
                     RaisePropertyChanged("item_description");
                 }
-              
+
             }
         }
         item _items;
@@ -155,7 +176,7 @@ namespace entity
             get { return _child; }
             set
             {
-                _child = value; 
+                _child = value;
             }
         }
         private ICollection<project_task> _child;
@@ -165,11 +186,11 @@ namespace entity
             get { return _parent; }
             set
             {
-                if (value!=null)
+                if (value != null)
                 {
                     _parent = value;
                     RaisePropertyChanged("parent");
-                    if (parent != null && parent.items!=null)
+                    if (parent != null && parent.items != null)
                     {
                         if (!parent.items.is_autorecepie)
                         {
@@ -181,7 +202,7 @@ namespace entity
                         }
                     }
                 }
-            
+
             }
         }
         private project_task _parent;

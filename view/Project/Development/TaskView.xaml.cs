@@ -416,11 +416,11 @@ namespace Cognitivo.Project.Development
             if (sbxItem.ItemID > 0)
             {
                 item item = _entity.db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-               
 
+                project_task project_task_output = treeProject.SelectedItem as project_task;
                 if (item != null && item.id_item > 0 && item.is_autorecepie )
                 {
-                    project_task project_task_output = treeProject.SelectedItem as project_task;
+                   
                     project_task_output.id_item = item.id_item;
                     project_task_output.items = item;
                     project_task_output.RaisePropertyChanged("item");
@@ -448,7 +448,7 @@ namespace Cognitivo.Project.Development
                 }
                 else
                 {
-                    project_task project_task_output = treeProject.SelectedItem as project_task;
+                   
                     project_task_output.id_item = item.id_item;
                     project_task_output.items = item;
                     project_task_output.RaisePropertyChanged("item");
@@ -461,16 +461,16 @@ namespace Cognitivo.Project.Development
 
                 if (item.item_dimension != null)
                 {
-                    project_task project_task = (project_task)treeProject.SelectedItem;
-                    project_task.items = item;
+
+                    project_task_output.items = item;
                     foreach (item_dimension _item_dimension in item.item_dimension)
                     {
                         project_task_dimension project_task_dimension = new project_task_dimension();
                         project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
                         project_task_dimension.value = _item_dimension.value;
                         project_task_dimension.id_measurement = _item_dimension.id_measurement;
-                        project_task_dimension.id_project_task = project_task.id_project_task;
-                        project_task_dimension.project_task = project_task;
+                        project_task_dimension.id_project_task = project_task_output.id_project_task;
+                        project_task_dimension.project_task = project_task_output;
                         _entity.db.project_task_dimension.Add(project_task_dimension);
                         project_task_dimensionViewSource.View.MoveCurrentToLast();
                     }

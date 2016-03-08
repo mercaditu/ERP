@@ -481,13 +481,13 @@ namespace entity.Brillo.Logic
             return null;
         }
 
-        private string comment_Generator(App.Names AppName, string TransNumber, string ContactName)
+        public string comment_Generator(App.Names AppName, string TransNumber, string ContactName)
         {
             string strAPP = LocExtension.GetLocalizedValue<string>("Cognitivo:local:" + AppName.ToString());
             return string.Format(strAPP + " {0} / {1}", TransNumber, ContactName);
         }
 
-        private item_movement credit_Movement(
+        public item_movement credit_Movement(
             entity.Status.Stock Status,
             App.Names ApplicationID,
             int TransactionID,
@@ -510,7 +510,7 @@ namespace entity.Brillo.Logic
             return item_movement;
         }
 
-        private item_movement debit_Movement(
+        public item_movement debit_Movement(
             entity.Status.Stock Status,
             App.Names ApplicationID,
             int TransactionID,
@@ -533,7 +533,7 @@ namespace entity.Brillo.Logic
             return item_movement;
         }
 
-        private item_product FindNFix_ItemProduct(item item)
+        public item_product FindNFix_ItemProduct(item item)
         {
             if (item.item_product == null)
             {
@@ -549,7 +549,7 @@ namespace entity.Brillo.Logic
             return item.item_product.FirstOrDefault();
         }
 
-        private int FindNFix_Location(item_product item_product, app_location app_location, app_branch app_branch)
+        public int FindNFix_Location(item_product item_product, app_location app_location, app_branch app_branch)
         {
             if (app_location == null && app_branch != null)
             {

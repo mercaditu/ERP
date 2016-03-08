@@ -74,6 +74,7 @@ namespace entity
                         parent.RaisePropertyChanged("quantity_est");
                     }
 
+
                 }
 
                 if (this.items != null)
@@ -89,6 +90,9 @@ namespace entity
                             {
                                 project_task.quantity_est = project_task.items.item_recepie_detail.FirstOrDefault().quantity * this.quantity_est;
                                 project_task.RaisePropertyChanged("quantity_est");
+
+
+
                             }
 
                         }

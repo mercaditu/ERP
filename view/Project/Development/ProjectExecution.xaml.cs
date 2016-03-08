@@ -13,7 +13,7 @@ namespace Cognitivo.Project
     {
         dbContext dbContext = new dbContext();
         CollectionViewSource project_taskViewSource, projectViewSource;
-        entity.Properties.Settings _Setting = new entity.Properties.Settings();
+        //entity.Properties.Settings _Setting = new entity.Properties.Settings();
         public List<project_task> project_task { get; set; }
         public List<project_task> project_main_task { get; set; }
 
@@ -28,7 +28,7 @@ namespace Cognitivo.Project
             project_taskViewSource = ((CollectionViewSource)(this.FindResource("projectproject_taskViewSource")));
 
             projectViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
-            dbContext.db.projects.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).Load();
+            dbContext.db.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             projectViewSource.Source = dbContext.db.projects.Local;
             filter_task();
         }
@@ -46,6 +46,7 @@ namespace Cognitivo.Project
                 cntrl.PanelAdv.pnlOrder pnlOrder = new cntrl.PanelAdv.pnlOrder();
                 pnlOrder.project_taskLIST = project_task;
                 pnlOrder.projectViewSource = project_taskViewSource;
+
                 pnlOrder.shared_dbContext = dbContext;
                 crud_modal.Children.Add(pnlOrder);
 

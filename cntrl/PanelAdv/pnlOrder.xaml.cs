@@ -27,12 +27,16 @@ namespace cntrl.PanelAdv
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            production_order production_order = new production_order();
+
             // Do not load your data at design time.
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 //Load your data here and assign the result to the CollectionViewSource.
                 production_orderViewSource = (CollectionViewSource)this.Resources["production_orderViewSource"];
-                shared_dbContext.db.production_order.Load();
+
+                shared_dbContext.db.production_order.Add(production_order);
+
                 production_orderViewSource.Source = shared_dbContext.db.production_order.Local;
 
                 production_lineViewSource = (CollectionViewSource)this.Resources["production_lineViewSource"];
@@ -43,7 +47,7 @@ namespace cntrl.PanelAdv
 
             if (project_taskLIST.Count() > 0)
             {
-                production_order production_order = new production_order();
+                //production_order production_order = new production_order();
                 production_order.id_project = project_taskLIST.FirstOrDefault().id_project;
 
                 foreach (var item in project_taskLIST)
@@ -55,6 +59,16 @@ namespace cntrl.PanelAdv
                     production_order_detail.name = _project_task.item_description;
                     production_order_detail.item = _project_task.items;
                     production_order_detail.id_item = _project_task.id_item;
+
+                    //If Item has Recepie
+                    if (_project_task.items.item_recepie.Count > 0)
+                    {
+                        production_order_detail.is_input = false;
+                    }
+                    else
+                    {
+                        production_order_detail.is_input = true;
+                    }
 
                     if (_project_task.parent != null)
                     {
@@ -71,7 +85,6 @@ namespace cntrl.PanelAdv
                         production_order_detail.quantity = (decimal)_project_task.quantity_est;
                     }
 
-                    production_order_detail.is_input = true;
                     production_order.status = entity.Status.Production.Pending;
                     production_order.name = _project_task.project.name;
                     production_order.production_order_detail.Add(production_order_detail);
@@ -90,13 +103,16 @@ namespace cntrl.PanelAdv
             foreach (var item in project_taskLIST)
             {
                 project_task _project_task = (project_task)item;
+
                 if (_project_task.status == entity.Status.Project.Approved)
                 {
                     _project_task.status = entity.Status.Project.InProcess;
                     _project_task.IsSelected = false;
                 }
             }
+
             IEnumerable<DbEntityValidationResult> validationresult = _dbContext.db.GetValidationErrors();
+
             if (validationresult.Count() == 0)
             {
                 shared_dbContext.SaveChanges();

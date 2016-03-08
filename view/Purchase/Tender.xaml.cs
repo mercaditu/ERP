@@ -167,7 +167,11 @@ namespace Cognitivo.Purchase
                 purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
                 purchase_tender_contact.contact = contact;
                 purchase_tender_contact.id_contact = contact.id_contact;
-                purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
+                if (contact.lead_time!=null)
+                {
+                    purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
+                }
+       
 
                 if (contact.app_contract != null)
                 {

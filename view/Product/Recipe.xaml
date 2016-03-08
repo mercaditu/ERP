@@ -84,7 +84,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="auto"/>
-                                <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" 
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="False" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>

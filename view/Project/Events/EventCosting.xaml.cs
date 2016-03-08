@@ -348,7 +348,7 @@ namespace Cognitivo.Project
                     sales_budget.State = EntityState.Added;
 
                     sales_budget.id_contact = contact.id_contact;
-                  //  sales_budget.contact = contact;
+                    sales_budget.contact = db.contacts.Where(x => x.id_contact == contact.id_contact).FirstOrDefault();
                     if (_settings.branch_ID > 0)
                         sales_budget.id_branch = _settings.branch_ID;
 

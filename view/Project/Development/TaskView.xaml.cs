@@ -419,10 +419,15 @@ namespace Cognitivo.Project.Development
 
               
                 project_task project_task_output = treeProject.SelectedItem as project_task;
-                if (project_task_output.parent.items.is_autorecepie)
+                if (project_task_output.parent!=null)
                 {
-                    MessageBox.Show("can't add becuse item is auto receipe");
+                    if (project_task_output.parent.items.is_autorecepie)
+                    {
+                        MessageBox.Show("can't add becuse item is auto receipe");
+                    }
+                    
                 }
+               
                 if (item != null && item.id_item > 0 && item.is_autorecepie )
                 {
                    
@@ -438,6 +443,7 @@ namespace Cognitivo.Project.Development
                         project_task.item_description = item_recepie_detail.item.name;
                         project_task.id_item = item_recepie_detail.item.id_item;
                         project_task.items = item_recepie_detail.item;
+                        project_task.id_project = project_task_output.id_project;
                         project_task.RaisePropertyChanged("item");
                         if (item_recepie_detail.quantity > 0)
                         {

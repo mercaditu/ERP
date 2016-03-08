@@ -395,21 +395,27 @@ namespace entity.Brillo.Logic
                         {
                             item_movement item_movement = new item_movement();
 
-                            //decimal movement_debit_quantity = qty_ExexustionDetail;
-                            //if (object_Movement.credit <= qty_ExexustionDetail)
-                            //{
-                            //    movement_debit_quantity = object_Movement.credit;
-                            //}
+
 
                             if (detail.is_input)
                             {
+                                decimal movement_debit_quantity = qty_ExexustionDetail;
+                                if (object_Movement.credit <= qty_ExexustionDetail)
+                                {
+                                    movement_debit_quantity = object_Movement.credit;
+                                }
+                                else
+                                {
+                                    movement_debit_quantity = qty_ExexustionDetail;
+                                }
+
                                 //If input is true, then we should DEBIT Stock.
                                 item_movement = debit_Movement(entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecustion,
                                                         (int)detail.id_production_execution,
                                                         item_product.id_item_product,
                                                         (int)production_execution.production_line.id_location,
-                                                        qty_ExexustionDetail,
+                                                        movement_debit_quantity,
                                                         production_execution.trans_date,
                                                         comment_Generator(App.Names.ProductionExecustion, 
                                                         production_execution.id_production_execution.ToString(), ""));

@@ -164,7 +164,7 @@ namespace Cognitivo.Sales
 
             sales_invoice sales_invoice = SalesInvoiceDB.New();
             sales_invoice.trans_date = DateTime.Now.AddDays(_pref_SalesInvoice.TransDate_OffSet);
-          
+            sales_invoice.State = EntityState.Added;
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             SalesInvoiceDB.Entry(sales_invoice).State = EntityState.Added;
@@ -456,7 +456,7 @@ namespace Cognitivo.Sales
                         sales_invoice sales_invoice = i as sales_invoice;
                         if (sales_invoice.contact.name.ToLower().Contains(query.ToLower())
                             || sales_invoice.number.ToLower().Contains(query.ToLower())
-                            || sales_invoice.trans_date == Convert.ToDateTime(query))
+                            || sales_invoice.trans_date.ToString() == query)
                         {
                             return true;
                         }

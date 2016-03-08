@@ -401,7 +401,7 @@ namespace entity
             {
                 //if (sales_invoice != null)
                 //{
-                if (_discount != value && State>0)
+                if (_discount != value && State>=0)
                 {
                     Calculate_UnitCostDiscount(_discount, value, unit_price);
                     RaisePropertyChanged("unit_price");
@@ -444,8 +444,13 @@ namespace entity
             get { return _DiscountPercentage; }
             set
             {
-                _DiscountPercentage = value;
-                RaisePropertyChanged("DiscountPercentage");
+                if (_DiscountPercentage!=value)
+                {
+                    _DiscountPercentage = value;
+                 
+                    
+                }
+              
             }
         }
         private decimal _DiscountPercentage;
@@ -507,7 +512,7 @@ namespace entity
         public void Calculate_UnitCostDiscount(decimal oldDiscount, decimal value, decimal unit_cost)
         {
 
-            unit_price = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
+            this.unit_price= Discount.Calculate_Discount(oldDiscount, value, unit_cost);
             RaisePropertyChanged("unit_price");
 
         }

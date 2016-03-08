@@ -102,7 +102,7 @@ namespace entity
                 _GrandTotal = 0;
                 foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
                 {
-                    _GrandTotal += _sales_invoice_detail.SubTotal_Vat;
+                    _GrandTotal += _sales_invoice_detail.SubTotal_Vat-_sales_invoice_detail.Discount_SubTotal_Vat;
                 }
 
                 calc_credit(_GrandTotal);
@@ -124,7 +124,7 @@ namespace entity
                 _TotalVat = 0;
                 foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
                 {
-                    _TotalVat += _sales_invoice_detail.SubTotal_Vat - _sales_invoice_detail.SubTotal;
+                    _TotalVat += _sales_invoice_detail.SubTotal_Vat ;
                 }
 
                 return Math.Round(_TotalVat, 2);

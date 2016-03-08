@@ -443,7 +443,7 @@ namespace Cognitivo.Project.Development
 
                         project_task_output.child.Add(project_task);
                     }
-
+                    filter_task();
                    
                 }
                 else
@@ -454,7 +454,7 @@ namespace Cognitivo.Project.Development
                     project_task_output.RaisePropertyChanged("item");
                     project_task_output.quantity_est = 1;
 
-
+                   
                 
 
                 }
@@ -477,7 +477,7 @@ namespace Cognitivo.Project.Development
 
 
                 }
-                filter_task();
+               
 
             }
         }

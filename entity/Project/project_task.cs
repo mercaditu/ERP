@@ -11,7 +11,7 @@ namespace entity
     public partial class project_task : Audit
     {
         Project.clsproject objclsproject = new Project.clsproject();
-        
+        db db = new db();
         public project_task()
         {
             project_task_dimension = new List<project_task_dimension>();
@@ -68,7 +68,7 @@ namespace entity
 
                 if (parent != null && parent.items!=null)
                 {
-                    if (!parent.items.is_autorecepie)
+                    if (!parent.items.is_autorecepie )
                     {
                         parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
                         parent.RaisePropertyChanged("quantity_est");

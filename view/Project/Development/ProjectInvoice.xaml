@@ -158,7 +158,8 @@
              
 
                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
-                    <StackPanel x:Name="stpcode">
+                    <StackPanel x:Name="stpcode"  IsEnabled="{Binding sales_detail, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                                                                   Converter={StaticResource salesorderdetailtoEnable}}">
 
                         <Button Content="{lex:Loc SalesOrder}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Button_Click"/>
 

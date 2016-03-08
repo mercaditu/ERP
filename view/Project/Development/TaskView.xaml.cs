@@ -417,7 +417,12 @@ namespace Cognitivo.Project.Development
             {
                 item item = _entity.db.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
+              
                 project_task project_task_output = treeProject.SelectedItem as project_task;
+                if (project_task_output.parent.items.is_autorecepie)
+                {
+                    MessageBox.Show("can't add becuse item is auto receipe");
+                }
                 if (item != null && item.id_item > 0 && item.is_autorecepie )
                 {
                    

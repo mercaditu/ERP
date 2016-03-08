@@ -358,26 +358,8 @@ namespace entity.Brillo.Logic
                              || x.item.id_item_type == item.item_type.RawMaterial))
                 {
                     item_product item_product = FindNFix_ItemProduct(detail.item);
-                    //detail.id_location = FindNFix_Location(item_product, detail.production_execution.production_line.app_location, detail.production_execution.production_line.);
-
-                    //Add Logic for removing Reserved Stock 
-                    //if (item_product != null && detail.sales_order_detail != null)
-                    //{
-                    //    //Adding into List
-                    //    item_movementList.Add(debit_Movement(entity.Status.Stock.Reserved,
-                    //                        App.Names.SalesInvoice,
-                    //                        detail.id_sales_invoice,
-                    //                        item_product.id_item_product,
-                    //                        (int)detail.id_location,
-                    //                        detail.quantity,
-                    //                        production_execution.trans_date,
-                    //                        comment_Generator(App.Names.SalesInvoice, production_execution.number, production_execution.contact.name)
-                    //                        ));
-                    //}
 
                     List<item_movement> _item_movementList;
-                    //using (db db = new db())
-                    //{
                     _item_movementList = db.item_movement.Where(x => x.id_location == production_execution.production_line.id_location
                                                                   && x.id_item_product == item_product.id_item_product
                                                                   && x.status == entity.Status.Stock.InStock
@@ -413,22 +395,38 @@ namespace entity.Brillo.Logic
                         {
                             item_movement item_movement = new item_movement();
 
-                            decimal movement_debit_quantity = qty_ExexustionDetail;
-                            if (object_Movement.credit <= qty_ExexustionDetail)
-                            {
-                                movement_debit_quantity = object_Movement.credit;
-                            }
+                            //decimal movement_debit_quantity = qty_ExexustionDetail;
+                            //if (object_Movement.credit <= qty_ExexustionDetail)
+                            //{
+                            //    movement_debit_quantity = object_Movement.credit;
+                            //}
 
-                            //Adding into List if Movement List for this Location is empty.
-                            item_movement = debit_Movement(entity.Status.Stock.InStock,
-                                                    App.Names.ProductionExecustion,
-                                                    (int)detail.id_production_execution,
-                                                    item_product.id_item_product,
-                                                    (int)production_execution.production_line.id_location,
-                                                    movement_debit_quantity,
-                                                    production_execution.trans_date,
-                                                    comment_Generator(App.Names.ProductionExecustion
-                                                    , production_execution.id_production_execution.ToString(), ""));
+                            if (detail.is_input)
+                            {
+                                //If input is true, then we should DEBIT Stock.
+                                item_movement = debit_Movement(entity.Status.Stock.InStock,
+                                                        App.Names.ProductionExecustion,
+                                                        (int)detail.id_production_execution,
+                                                        item_product.id_item_product,
+                                                        (int)production_execution.production_line.id_location,
+                                                        qty_ExexustionDetail,
+                                                        production_execution.trans_date,
+                                                        comment_Generator(App.Names.ProductionExecustion, 
+                                                        production_execution.id_production_execution.ToString(), ""));
+                            }
+                            else
+                            {
+                                //If input is false, then we should CREDIT Stock.
+                                item_movement = credit_Movement(entity.Status.Stock.InStock,
+                                                        App.Names.ProductionExecustion,
+                                                        (int)detail.id_production_execution,
+                                                        item_product.id_item_product,
+                                                        (int)production_execution.production_line.id_location,
+                                                        qty_ExexustionDetail,
+                                                        production_execution.trans_date,
+                                                        comment_Generator(App.Names.ProductionExecustion, 
+                                                        production_execution.id_production_execution.ToString(), ""));
+                            }
 
                             item_movement._parent = object_Movement;
 

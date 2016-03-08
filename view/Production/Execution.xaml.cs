@@ -15,7 +15,7 @@ namespace Cognitivo.Production
     /// </summary>
     public partial class Execution : Page
     {
-        ExecutionDB dbContext=new ExecutionDB();
+        ExecutionDB dbContext = new ExecutionDB();
 
         CollectionViewSource projectViewSource, production_orderViewSource, production_executionViewSource, production_execution_detailitemViewSource, production_execution_detairawlViewSource, production_execution_detailcapitalViewSource, production_execution_detailserviceViewSource, production_execution_detailsupplierViewSource;
         CollectionViewSource production_order_detaillproductViewSource, production_order_detaillrawViewSource, production_order_detaillsupplierViewSource, production_order_detaillserviceViewSource, production_order_detaillcapitalViewSource, item_dimensionViewSource;
@@ -36,8 +36,6 @@ namespace Cognitivo.Production
 
             item_dimensionViewSource = (CollectionViewSource)this.FindResource("item_dimensionViewSource");
             item_dimensionViewSource.Source = dbContext.item_dimension.ToList();
-
-         
 
             production_executionViewSource = ((CollectionViewSource)(FindResource("production_executionViewSource")));
             dbContext.production_execution.Where(a => a.id_company == _setting.company_ID).Include("production_execution_detail").Load();

@@ -325,10 +325,12 @@ namespace Cognitivo.Project
             id_contractComboBox.SelectedIndex = -1;
             crud_modal.Visibility = System.Windows.Visibility.Visible;
         }
+
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             crud_modal.Visibility = System.Windows.Visibility.Hidden;
         }
+
         private void saveOrder_Click(object sender, RoutedEventArgs e)
         {
             project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
@@ -349,24 +351,24 @@ namespace Cognitivo.Project
 
                     sales_budget.id_contact = contact.id_contact;
                     sales_budget.contact = db.contacts.Where(x => x.id_contact == contact.id_contact).FirstOrDefault();
+
                     if (_settings.branch_ID > 0)
                         sales_budget.id_branch = _settings.branch_ID;
-
                     else
                         sales_budget.id_branch = db.app_branch.Where(a => a.is_active == true && a.id_company == _settings.company_ID).FirstOrDefault().id_branch;
+                    
                     sales_budget.id_condition = app_condition.id_condition;
                     sales_budget.id_contract = app_contract.id_contract;
-                    sales_budget.id_currencyfx = db.app_currency.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_priority == true).FirstOrDefault().app_currencyfx.Where(b => b.is_active == true).FirstOrDefault().id_currencyfx;
+                    sales_budget.id_currencyfx = project_costing.id_currencyfx;
                     sales_budget.number = txtBudgetNumber.Text;
 
                     foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
                     {
                         sales_budget_detail sales_budget_detail = new sales_budget_detail();
                         sales_budget_detail.sales_budget = sales_budget;
-                        //sales_budget_detail.item = project_event_variable.item;
+                        sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_variable.id_item).FirstOrDefault();
                         sales_budget_detail.id_item = project_event_variable.id_item;
                         sales_budget_detail.quantity = ((project_event_variable.adult_consumption ) + (project_event_variable.child_consumption));
-                        sales_budget_detail.unit_price = get_Price(contact, IDcurrencyfx, project_event_variable.item);
                         sales_budget.sales_budget_detail.Add(sales_budget_detail);
                     }
 
@@ -374,24 +376,19 @@ namespace Cognitivo.Project
                     {
                         sales_budget_detail sales_budget_detail = new sales_budget_detail();
                         sales_budget_detail.sales_budget = sales_budget;
-                       // sales_budget_detail.item = project_event_fixed.item;
+                        sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
                         sales_budget_detail.id_item = project_event_fixed.id_item;
                         sales_budget_detail.quantity = project_event_fixed.consumption;
-                        sales_budget_detail.unit_price = get_Price(contact, IDcurrencyfx, project_event_fixed.item);
                         sales_budget.sales_budget_detail.Add(sales_budget_detail);
                     }
 
-                    sales_budget_detail sales_budget_detail_hall = new sales_budget_detail();
-                    sales_budget_detail_hall.sales_budget = sales_budget;
-                   // sales_budget_detail_hall.item = project_costing.item;
-                    sales_budget_detail_hall.id_item = project_costing.id_item;
-                    sales_budget_detail_hall.quantity = 1;
-                    sales_budget_detail_hall.unit_price = get_Price(contact, IDcurrencyfx, project_costing.item);
-                    sales_budget.sales_budget_detail.Add(sales_budget_detail_hall);
+                        sales_budget_detail sales_budget_detail_hall = new sales_budget_detail();
+                        sales_budget_detail_hall.sales_budget = sales_budget;
+                        sales_budget_detail_hall.item = db.items.Where(a => a.id_item == project_costing.id_item).FirstOrDefault();
+                        sales_budget_detail_hall.id_item = project_costing.id_item;
+                        sales_budget_detail_hall.quantity = 1;
+                        sales_budget.sales_budget_detail.Add(sales_budget_detail_hall);
 
-                  
-
-                  
                         db.sales_budget.Add(sales_budget);
                         db.SaveChanges();
                     }
@@ -472,6 +469,7 @@ namespace Cognitivo.Project
             }
             return 0;
         }
+
         public item_price get_Default(int id_company)
         {
             item_price item_price = new item_price();
@@ -525,10 +523,10 @@ namespace Cognitivo.Project
                             
 
                            foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
-                            {
+                           {
                                 project_task Subproject_task = new project_task();
 
-                                Subproject_task.code = item_recepie_detail.item.name;
+                                Subproject_task.code = item_recepie_detail.item.code;
                                 Subproject_task.item_description = item_recepie_detail.item.name;
                                 Subproject_task.id_item = item_recepie_detail.item.id_item;
                                 Subproject_task.items = item_recepie_detail.item;
@@ -537,14 +535,10 @@ namespace Cognitivo.Project
                                 {
                                     Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
                                 }
-
-
-
                                 project_task.child.Add(Subproject_task);
-                            }
-                           project.project_task.Add(project_task);
-                           
+                           }
 
+                           project.project_task.Add(project_task);
                         }
                         else
                         {

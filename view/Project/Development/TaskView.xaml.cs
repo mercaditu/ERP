@@ -227,7 +227,7 @@ namespace Cognitivo.Project.Development
             project project = projectViewSource.View.CurrentItem as project;
             project_task project_task = treeProject.SelectedItem as project_task;
 
-            if (project_task != null)
+            if (project_task != null && project_task.items.item_recepie == null)
             {
                 //Adding a Child Item.
                 if (project_task.items != null)
@@ -585,6 +585,5 @@ namespace Cognitivo.Project.Development
                 filter_task();
             }
         }
-       
     }
 }

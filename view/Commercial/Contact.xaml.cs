@@ -13,7 +13,7 @@ namespace Cognitivo.Commercial
 {
     public partial class Contact : Page
     {
-        ContactDB dbContext = new ContactDB();
+        ContactDB ContactDB = new ContactDB();
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
         CollectionViewSource contactcontact_subscriptionViewSource;
@@ -28,37 +28,37 @@ namespace Cognitivo.Commercial
             entity.Properties.Settings _entity = new entity.Properties.Settings();
 
             //Contact
-            dbContext.contacts.Where(a => a.is_active == true && a.id_company == _entity.company_ID && a.is_employee == false).OrderBy(a => a.name).Load();
+            ContactDB.contacts.Where(a => a.is_active == true && a.id_company == _entity.company_ID && a.is_employee == false).OrderBy(a => a.name).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
-            contactViewSource.Source = dbContext.contacts.Local;
+            contactViewSource.Source = ContactDB.contacts.Local;
             CollectionViewSource contactParentViewSource = (CollectionViewSource)FindResource("contactParentViewSource");
-            contactParentViewSource.Source = dbContext.contacts.Local;
+            contactParentViewSource.Source = ContactDB.contacts.Local;
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
 
-            contactChildListViewSource.Source = dbContext.contacts.Local;
+            contactChildListViewSource.Source = ContactDB.contacts.Local;
 
 
             contactcontact_subscriptionViewSource = (CollectionViewSource)FindResource("contactcontact_subscriptionViewSource");
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
-            contactRoleViewSource.Source = dbContext.contact_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            contactRoleViewSource.Source = ContactDB.contact_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppContract
             CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
-            appContractViewSource.Source = dbContext.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            appContractViewSource.Source = ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppCostCenter
             CollectionViewSource appCostCenterViewSource = (CollectionViewSource)FindResource("appCostCenterViewSource");
-            appCostCenterViewSource.Source = dbContext.app_cost_center.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            appCostCenterViewSource.Source = ContactDB.app_cost_center.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //ItemPriceList
             CollectionViewSource itemPriceListViewSource = (CollectionViewSource)FindResource("itemPriceListViewSource");
-            itemPriceListViewSource.Source = dbContext.item_price_list.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            itemPriceListViewSource.Source = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //SalesRep
-            List<sales_rep> sales_rep = dbContext.sales_rep.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            List<sales_rep> sales_rep = ContactDB.sales_rep.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
             CollectionViewSource salesRepViewSource = (CollectionViewSource)FindResource("salesRepViewSource");
             salesRepViewSource.Source = sales_rep.ToList();
             CollectionViewSource salesRepViewSourceCollector = (CollectionViewSource)FindResource("salesRepViewSourceCollector");
@@ -66,7 +66,7 @@ namespace Cognitivo.Commercial
 
             //AppCurrency
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = dbContext.app_currency.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            app_currencyViewSource.Source = ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //Items
             //CollectionViewSource itemViewSource = (CollectionViewSource)FindResource("itemViewSource");
@@ -81,12 +81,12 @@ namespace Cognitivo.Commercial
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
 
-             dbContext.contact_tag
+             ContactDB.contact_tag
               .Where(x => x.id_company == _entity.company_ID && x.is_active == true)
               .OrderBy(x => x.name).Load();
 
              CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
-             contact_tagViewSource.Source = dbContext.contact_tag.Local;
+             contact_tagViewSource.Source = ContactDB.contact_tag.Local;
       
         }
         #endregion
@@ -96,12 +96,12 @@ namespace Cognitivo.Commercial
         {
             contact contact = new contact();
 
-            dbContext.New(contact);
+            ContactDB.New(contact);
 
             contact.is_employee = false;
             contact.State = EntityState.Added;
             contact.IsSelected = true;
-            dbContext.contacts.Add(contact);
+            ContactDB.contacts.Add(contact);
             contactViewSource.View.Refresh();
             contactViewSource.View.MoveCurrentToLast();
             txtName.Focus();
@@ -144,7 +144,7 @@ namespace Cognitivo.Commercial
             //Abhi> in Brillo, add logic to add for validations
             try
             {
-                dbContext.SaveChanges();
+                ContactDB.SaveChanges();
              
              
                 contactViewSource.View.Refresh();
@@ -158,7 +158,7 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            ContactDB.CancelAllChanges();
         }
         #endregion
 
@@ -265,13 +265,13 @@ namespace Cognitivo.Commercial
                     if (e.Parameter as contact_field_value != null)
                     {
                         //ontact_field_valueDataGrid.CancelEdit();
-                        dbContext.contact_field_value.Remove(e.Parameter as contact_field_value);
+                        ContactDB.contact_field_value.Remove(e.Parameter as contact_field_value);
                         //contactcontact_field_valueViewSource.View.Refresh();
                     }
                     else if (e.Parameter as contact_subscription != null)
                     {
                         contactcontact_subscriptionDataGrid.CancelEdit();
-                        dbContext.contact_subscription.Remove(e.Parameter as contact_subscription);
+                        ContactDB.contact_subscription.Remove(e.Parameter as contact_subscription);
 
                         CollectionViewSource contactcontact_subscriptionViewSource = FindResource("contactcontact_subscriptionViewSource") as CollectionViewSource;
                         contactcontact_subscriptionViewSource.View.Refresh();
@@ -279,7 +279,7 @@ namespace Cognitivo.Commercial
                     else if (e.Parameter as contact_tag_detail != null)
                     {
                         contact_tag_detailDataGrid.CancelEdit();
-                        dbContext.contact_tag_detail.Remove(e.Parameter as contact_tag_detail);
+                        ContactDB.contact_tag_detail.Remove(e.Parameter as contact_tag_detail);
 
                         CollectionViewSource contactcontact_tag_detailViewSource = FindResource("contactcontact_tag_detailViewSource") as CollectionViewSource;
                         contactcontact_tag_detailViewSource.View.Refresh();
@@ -290,12 +290,6 @@ namespace Cognitivo.Commercial
             {
                 //throw;
             }
-        }
-
-        private void cbxRelation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            contact _contact = (contact)cbxRelation.SelectedItem;
-            Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(_contact));
         }
 
         private void LoadRelatedContactOnThread(contact _contact)
@@ -334,7 +328,7 @@ namespace Cognitivo.Commercial
             contact contact = (contact)contactViewSource.View.CurrentItem;
             if (smtgeo.GeographyID>0)
             {
-                contact.app_geography = await dbContext.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
+                contact.app_geography = await ContactDB.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
             }
         }
         private void cbxTag_KeyDown(object sender, KeyEventArgs e)
@@ -390,15 +384,27 @@ namespace Cognitivo.Commercial
             if (sbxItem.ItemID > 0)
             {
                 contact contact = contactViewSource.View.CurrentItem as contact;
-                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = ContactDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                    
                 contact_subscription contact_subscription = new contact_subscription();
                 contact_subscription.id_item =(int)item.id_item;
                 contact_subscription.item = item;
                 contact_subscription.contact = contact;
-                dbContext.contact_subscription.Add(contact_subscription);
+                ContactDB.contact_subscription.Add(contact_subscription);
                 contactViewSource.View.Refresh();
                 contactcontact_subscriptionViewSource.View.Refresh();
+            }
+        }
+
+        private async void cbxRelation_Select(object sender, RoutedEventArgs e)
+        {
+            contact contact = (contact)contactViewSource.View.CurrentItem;
+            if (contact != null && cbxRelation.ContactID > 0)
+            {
+                contact relatedto_contact = await ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefaultAsync();
+                contact.parent = relatedto_contact;
+
+                Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(relatedto_contact));
             }
         }
     }

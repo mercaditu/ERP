@@ -163,7 +163,7 @@
                             <Rectangle Style="{StaticResource line_Bar}"/>
                             <WrapPanel Orientation="Horizontal">
                                 <Button x:Name="btnPlaceProject" Click="btnPlaceProject_Click" Content="{lex:Loc Approve}" Style="{StaticResource btn_green}" HorizontalAlignment="Left" Margin="4"/>
-                                <Button x:Name="btnPlaceOrder" Click="btnPlaceOrder_Click" Content="Place Budget" Style="{StaticResource btn_green}" HorizontalAlignment="Left" Margin="4"/>
+                                <Button x:Name="btnPlaceOrder" Click="btnPlaceOrder_Click" Content="{lex:Loc SalesBudget}" Style="{StaticResource btn_green}" HorizontalAlignment="Left" Margin="4"/>
                             </WrapPanel>
                         </StackPanel>
                     </Grid>

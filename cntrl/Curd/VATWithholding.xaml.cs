@@ -17,14 +17,14 @@ namespace cntrl
         private dbContext _entity = null;
         public dbContext objEntity { get { return _entity; } set { _entity = value; } }
 
+        //Change to List. We will need to add multiple payment scheduals.
         public payment_schedual payment_schedual { get; set; }
+        
         public enum Mode
         {
             Add,
             Edit
         }
-
-
 
         public VATWithholding()
         {
@@ -42,24 +42,18 @@ namespace cntrl
                     CollectionViewSource invoiceViewSource = new CollectionViewSource();
                     invoiceViewSource.Source = _invoiceList;
                     stackMain.DataContext = invoiceViewSource;
-
-                    //CollectionViewSource geo_countryViewSource = this.FindResource("geo_countryViewSource") as CollectionViewSource;
-                    //geo_countryViewSource.Source = objEntity.db.geo_country.ToList();
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
             }
-
-
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 payment_withholding_tax payment_withholding_tax = new payment_withholding_tax();
                 payment_withholding_tax.status = Status.Documents_General.Pending;
                 payment_withholding_tax.id_contact = ((dynamic)_invoiceList.FirstOrDefault()).id_contact;
@@ -76,13 +70,10 @@ namespace cntrl
 
                 foreach (dynamic item in _invoiceList)
                 {
-
                     payment_withholding_detail payment_withholding_detail = new payment_withholding_detail();
                     payment_withholding_detail.id_purchase_invoice = item.id_purchase_invoice;
                     payment_withholding_tax.payment_withholding_detail.Add(payment_withholding_detail);
-
                 }
-
 
                 payment_schedual _payment_schedual = new payment_schedual();
 
@@ -100,7 +91,10 @@ namespace cntrl
                 _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
                 _payment_schedual.trans_date = (DateTime)DtpTransdate.SelectedDate;
 
+                objEntity.db.payment_schedual.Add(_payment_schedual);
+
                 IEnumerable<DbEntityValidationResult> validationresult = objEntity.db.GetValidationErrors();
+
                 if (validationresult.Count() == 0)
                 {
                     objEntity.SaveChanges();

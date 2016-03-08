@@ -246,12 +246,16 @@ namespace Cognitivo.Commercial
         private void btnWithholding_Click(object sender, RoutedEventArgs e)
         {
             List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            VATWithholding.invoiceList=  new List<object>();
-            VATWithholding.invoiceList.Add(PaymentSchedualList.FirstOrDefault().purchase_invoice);
-            VATWithholding.objEntity = dbContext;
-            VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
-            crud_modal.Children.Add(VATWithholding);
+
+            if (PaymentSchedualList.Count > 0)
+            {
+                VATWithholding.invoiceList = new List<object>();
+                VATWithholding.invoiceList.Add(PaymentSchedualList.FirstOrDefault().purchase_invoice);
+                VATWithholding.objEntity = dbContext;
+                VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
+                crud_modal.Visibility = System.Windows.Visibility.Visible;
+                crud_modal.Children.Add(VATWithholding);   
+            }
         }
     }
 }

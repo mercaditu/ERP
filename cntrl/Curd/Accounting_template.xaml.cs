@@ -1,19 +1,14 @@
-﻿using entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data.Entity;
+using cntrl;
+using entity;
+using System.Data.Entity.Validation;
 
 namespace cntrl.Curd
 {
@@ -22,15 +17,21 @@ namespace cntrl.Curd
     /// </summary>
     public partial class Accounting_template : UserControl
     {
-        CollectionViewSource _accounting_templateViewSource = null;
-        public CollectionViewSource accounting_templateViewSource { get { return _accounting_templateViewSource; } set { _accounting_templateViewSource = value; } }
-        CollectionViewSource _accounting_templatedetailViewSource = null;
-        public CollectionViewSource accounting_templatedetailViewSource { get { return _accounting_templatedetailViewSource; } set { _accounting_templatedetailViewSource = value; } }
+        CollectionViewSource accounting_templateViewSource = null;
+        CollectionViewSource accounting_templateaccounting_template_detailViewSource = null;
 
-        private entity.dbContext _entity = null;
-        public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
+        private dbContext entity = new dbContext();
+       // public entity.dbContext entity { get { return _entity; } set { _entity = value; } }
 
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
+        private Class.clsCommon.Mode _operationMode = 0;
+        public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }
+
+
+        private entity.accounting_template _accounting_templateobject = null;
+        public entity.accounting_template accounting_templateobject { get { return _accounting_templateobject; } set { _accounting_templateobject = value; } }
+
+
+
         public Accounting_template()
         {
             InitializeComponent();
@@ -38,11 +39,31 @@ namespace cntrl.Curd
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            stackMainAc.DataContext = accounting_templateViewSource;
-            stpsub.DataContext = accounting_templatedetailViewSource;
+            accounting_templateViewSource = ((CollectionViewSource)(FindResource("accounting_templateViewSource")));
+            entity.db.accounting_template.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Include("accounting_template_detail").OrderBy(a => a.name).Load();
+            accounting_templateViewSource.Source = entity.db.accounting_template.Local;
+           
             CollectionViewSource accounting_chartViewSource = ((CollectionViewSource)(FindResource("accounting_chartViewSource")));
-            accounting_chartViewSource.Source = entity.db.accounting_chart.Where(x=>x.id_company==_setting.company_ID).OrderBy(b => b.name).ToList();
+            accounting_chartViewSource.Source = entity.db.accounting_chart.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
 
+            if (operationMode == Class.clsCommon.Mode.Add)
+            {
+                accounting_template accounting_template = new accounting_template();
+                accounting_template.name = "Template";
+                accounting_template.is_active = true;
+                entity.db.accounting_template.Add(accounting_template);
+                //  entity.db.SaveChanges();
+
+                accounting_templateViewSource.View.Refresh();
+                accounting_templateViewSource.View.MoveCurrentToLast();
+            }
+            else
+            {
+                accounting_templateViewSource.View.MoveCurrentTo(entity.db.accounting_template.Where(x => x.id_template == accounting_templateobject.id_template).FirstOrDefault());
+                btnDelete.Visibility = System.Windows.Visibility.Visible;
+            }
+            //stackMainAc.DataContext = accounting_templateViewSource;
+            //stpsub.DataContext = accounting_templateaccounting_template_detailViewSource;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -87,8 +108,8 @@ namespace cntrl.Curd
         {
             try
             {
-                accounting_template_detailDataGrid.CancelEdit();
-                // entity.CancelChanges();
+                entity.CancelChanges();
+              
                 accounting_templateViewSource.View.Refresh();
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();

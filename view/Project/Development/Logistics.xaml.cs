@@ -45,7 +45,7 @@ namespace Cognitivo.Project.Development
             entity.db.projects.Where(a => a.is_active && a.id_company == _entity.company_ID).Load();
             projectViewSource.Source = entity.db.projects.Local;
 
-         
+
 
             contractViewSource = (CollectionViewSource)this.FindResource("contractViewSource");
             contractViewSource.Source = entity.db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
@@ -73,11 +73,13 @@ namespace Cognitivo.Project.Development
                 if (_id_project > 0)
                 {
                     var productlist = (from IT in entity.db.project_task
-
                                        where IT.items.id_item_type == item.item_type.Product && (IT.status == Status.Project.Approved)
                                        && IT.status != null && IT.id_project == _id_project
-
-                                       group IT by new { IT.items } into last
+                                       join IK in entity.db.item_product on IT.id_item equals IK.id_item
+                                       join IO in entity.db.item_movement on IK.id_item_product equals IO.id_item_product into a
+                                       from IM in a.DefaultIfEmpty()
+                                       group IT by new { IM, IT.items }
+                                           into last
                                        select new
                                        {
                                            _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
@@ -85,7 +87,8 @@ namespace Cognitivo.Project.Development
                                            _name = last.Key.items != null ? last.Key.items.name : "",
                                            _id_task = last.Max(x => x.id_project_task),
                                            _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
-                                          
+                                           avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
+                                           buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0)
                                        }).ToListAsync();
 
 
@@ -109,8 +112,11 @@ namespace Cognitivo.Project.Development
                     var rawlist = (from IT in entity.db.project_task
                                    where IT.items.id_item_type == item.item_type.RawMaterial && IT.status == Status.Project.Approved // || IT.status == app_status.Project.InProcess || IT.status == app_status.Project.Executed) 
                                    && IT.status != null && IT.id_project == _id_project
-
-                                   group IT by new { IT.items } into last
+                                    join IK in entity.db.item_product on IT.id_item equals IK.id_item
+                                       join IO in entity.db.item_movement on IK.id_item_product equals IO.id_item_product into a
+                                       from IM in a.DefaultIfEmpty()
+                                       group IT by new { IM, IT.items }
+                                           into last
                                    select new
                                    {
                                        _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
@@ -118,14 +124,17 @@ namespace Cognitivo.Project.Development
                                        _name = last.Key.items != null ? last.Key.items.name : "",
                                        _id_task = last.Max(x => x.id_project_task),
                                        _ordered_quantity = last.Sum(x => x.quantity_est) != null ? last.Sum(x => x.quantity_est) : 0,
+                                       avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
+                                       buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0)
                                    }).ToListAsync();
                     item_RawDataGrid.ItemsSource = await rawlist;
 
                     var capitallist = (from IT in entity.db.project_task
                                        where IT.items.id_item_type == item.item_type.FixedAssets && IT.status == Status.Project.Approved //|| IT.status == app_status.Project.InProcess || IT.status == app_status.Project.Executed) 
                                        && IT.status != null && IT.id_project == _id_project
-
-                                       group IT by new { IT.items } into last
+  
+                                       group IT by new {  IT.items }
+                                           into last
                                        select new
                                        {
                                            _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
@@ -133,14 +142,16 @@ namespace Cognitivo.Project.Development
                                            _name = last.Key.items != null ? last.Key.items.name : "",
                                            _id_task = last.Max(x => x.id_project_task),
                                            _ordered_quantity = last.Sum(x => x.quantity_est) != null ? last.Sum(x => x.quantity_est) : 0,
+                                     
                                        }).ToListAsync();
                     item_CapitalDataGrid.ItemsSource = await capitallist;
 
                     var suppliesList = (from IT in entity.db.project_task
                                         where IT.items.id_item_type == item.item_type.Supplies && IT.status == Status.Project.Approved //|| IT.status == app_status.Project.InProcess || IT.status == app_status.Project.Executed) 
                                         && IT.status != null && IT.id_project == _id_project
-
-                                        group IT by new { IT.items } into last
+ 
+                                       group IT by new { IT.items }
+                                           into last
                                         select new
                                         {
                                             _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
@@ -148,6 +159,7 @@ namespace Cognitivo.Project.Development
                                             _name = last.Key.items != null ? last.Key.items.name : "",
                                             _id_task = last.Max(x => x.id_project_task),
                                             _ordered_quantity = last.Sum(x => x.quantity_est) != null ? last.Sum(x => x.quantity_est) : 0,
+                                           
                                         }).ToListAsync();
                     dgvSupplies.ItemsSource = await suppliesList;
 
@@ -315,35 +327,35 @@ namespace Cognitivo.Project.Development
             item_request.id_project = id_project;
             item_request.request_date = DateTime.Now;
 
-                foreach (project_task project_task in productlist)
+            foreach (project_task project_task in productlist)
+            {
+
+
+                item_request_detail item_request_detail = new entity.item_request_detail();
+                item_request_detail.date_needed_by = ItemRequest.neededDate;
+                item_request_detail.id_project_task = project_task.id_project_task;
+                item_request_detail.urgency = ItemRequest.Urgencies;
+                item_request_detail.comment = ItemRequest.comment;
+                int idItem = (int)project_task.id_item;
+                item_request_detail.id_item = idItem;
+                item_request_detail.quantity = (int)project_task.quantity_est;
+
+                List<project_task_dimension> project_task_dimensionList = entity.db.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList();
+                foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
                 {
-                  
-
-                    item_request_detail item_request_detail = new entity.item_request_detail();
-                    item_request_detail.date_needed_by = ItemRequest.neededDate;
-                    item_request_detail.id_project_task = project_task.id_project_task;
-                    item_request_detail.urgency = ItemRequest.Urgencies;
-                    item_request_detail.comment = ItemRequest.comment;
-                    int idItem = (int)project_task.id_item;
-                    item_request_detail.id_item = idItem;
-                    item_request_detail.quantity = (int)project_task.quantity_est;
-
-                    List<project_task_dimension> project_task_dimensionList = entity.db.project_task_dimension.Where(x=>x.id_project_task==project_task.id_project_task).ToList();
-                    foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
-                    {
-                        item_request_dimension item_request_dimension = new item_request_dimension();
-                        item_request_dimension.id_dimension = project_task_dimension.id_dimension;
-                        item_request_dimension.id_measurement = project_task_dimension.id_measurement;
-                        item_request_dimension.value = project_task_dimension.value;
-                        item_request_detail.item_request_dimension.Add(item_request_dimension);
-                    }
-
-
-                    item_request.item_request_detail.Add(item_request_detail);
-                    
+                    item_request_dimension item_request_dimension = new item_request_dimension();
+                    item_request_dimension.id_dimension = project_task_dimension.id_dimension;
+                    item_request_dimension.id_measurement = project_task_dimension.id_measurement;
+                    item_request_dimension.value = project_task_dimension.value;
+                    item_request_detail.item_request_dimension.Add(item_request_dimension);
                 }
-                entity.db.item_request.Add(item_request);
-                entity.db.SaveChanges();
+
+
+                item_request.item_request_detail.Add(item_request_detail);
+
+            }
+            entity.db.item_request.Add(item_request);
+            entity.db.SaveChanges();
 
             crud_modal.Children.Clear();
             crud_modal.Visibility = System.Windows.Visibility.Collapsed;
@@ -531,9 +543,9 @@ namespace Cognitivo.Project.Development
         {
             if (((TabItem)TabLogistics.SelectedItem).Name == "tabproduct" || ((TabItem)TabLogistics.SelectedItem).Name == "tabraw")
             {
-               
+
                 itemDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-              
+
             }
             else
             {
@@ -549,12 +561,12 @@ namespace Cognitivo.Project.Development
             project_task_dimensionViewSource.Source = entity.db.project_task_dimension.Where(a => a.id_company == _entity.company_ID && a.id_project_task == project_task.id_project_task).ToList();
         }
 
-       
+
 
         private void itemDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-          
-           
+
+
             List<project_task> productlist = entity.db.project_task.ToList();
             noofrows = productlist.Where(x => x.IsSelected == true).Count();
             RaisePropertyChanged("noofrows");
@@ -563,6 +575,6 @@ namespace Cognitivo.Project.Development
 
 
 
-      
+
     }
 }

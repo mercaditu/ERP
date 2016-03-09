@@ -234,7 +234,9 @@
 					                                    ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"  
                                                         DisplayMemberPath="name" SelectedValuePath="id_condition" 
 					                                    SelectedValueBinding="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
-                                                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  />
+                                                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"   >
+                                  
+                                </DataGridComboBoxColumn>
 
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Contract}" Width="auto"
 					                                    ItemsSource="{Binding Source={StaticResource app_contractViewSource}}"  

@@ -121,6 +121,12 @@ namespace entity
         public virtual IEnumerable<production_execution_detail> production_execution_detail { get; set; }
         public virtual IEnumerable<item_request> item_request { get; set; }
 
+
+        public virtual ICollection<project_event> project_event { get; set; }
+        public virtual ICollection<project_event_fixed> project_event_fixed { get; set; }
+        public virtual ICollection<project_event_variable> project_event_variable { get; set; }
+
+
         public virtual ICollection<item_product> item_product { get; set; }
         public virtual ICollection<item_service> item_service { get; set; }
         public virtual ICollection<item_asset> item_asset { get; set; }

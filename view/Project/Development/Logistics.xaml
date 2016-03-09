@@ -109,7 +109,8 @@
                                 <DataGridTextColumn Binding="{Binding _code}" Header="Code" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding _name}" Header="Product" Width="*" />
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="Qty Needed" Width="SizeToHeader" />
-                                <!--<DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />-->
+                                <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
+                                <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
                             </DataGrid.Columns>
                             <DataGrid.RowDetailsTemplate>
                                 <DataTemplate>
@@ -141,7 +142,8 @@
                                 <DataGridTextColumn Binding="{Binding _code}" Header="Code" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding _name}" Header="Product" Width="*" />
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="Qty Needed" Width="SizeToHeader" />
-                                <!--<DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />-->
+                                <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
+                                <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
                             </DataGrid.Columns>
                             <DataGrid.RowDetailsTemplate>
                                 <DataTemplate>
@@ -188,7 +190,8 @@
                                 <DataGridTextColumn Binding="{Binding _code}" Header="Code" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding _name}" Header="Product" Width="*" />
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="Qty Needed" Width="SizeToHeader" />
-                                <!--<DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />-->
+                                <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
+                                <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
                             </DataGrid.Columns>
                             <!--<DataGrid.RowDetailsTemplate>
                                 <DataTemplate>
@@ -221,7 +224,8 @@
                                 <DataGridTextColumn Binding="{Binding _code}" Header="Code" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding _name}" Header="Product" Width="*" />
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="Qty Needed" Width="SizeToHeader" />
-                                <!--<DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />-->
+                                <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
+                                <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
                             </DataGrid.Columns>
 
                         </DataGrid>

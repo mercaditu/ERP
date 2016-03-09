@@ -328,6 +328,8 @@ namespace Cognitivo.Purchase
         {
             List<purchase_tender_detail> purchase_tender_detailList = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().ToList();
             LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.unit_cost);
-        }       
+        }
+
+       
     }
 }

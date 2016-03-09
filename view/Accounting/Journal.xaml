@@ -31,6 +31,8 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        <Frame Grid.Row="2" Name="crud_frame" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"  />
         <Grid Grid.Row="2" Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
               Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"  IsVisibleChanged="crud_modal_IsVisibleChanged" />
         <ListBox Grid.Row="2" Background="{StaticResource AccentColor_Brush}" x:Name="accounting_cycleDataGrid"

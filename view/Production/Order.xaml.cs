@@ -222,12 +222,16 @@ namespace Cognitivo.Production
                 {
                     filter_task();
 
-                    var item_List = await(from IT in OrderDB.production_order_detail
+                    var item_List_group = await(from IT in OrderDB.production_order_detail
                                           where IT.item.id_item_type != item.item_type.Service &&
                                           IT.item.id_item_type != item.item_type.Task &&
                                           (IT.production_order.status == Status.Production.Approved || IT.production_order.status == Status.Production.InProcess || IT.production_order.status == Status.Production.Executed || IT.production_order.status == Status.Production.Pending)
                                           && IT.production_order.status != null && IT.id_production_order == _id_production_order
-                                          group IT by new { IT.item } into last
+                                                join IK in OrderDB.item_product on IT.id_item equals IK.id_item
+                                                join IO in OrderDB.item_movement on IK.id_item_product equals IO.id_item_product into a
+                                                from IM in a.DefaultIfEmpty()
+                                                group IT by new { IM, IT.item }
+                                                    into last
                                           select new
                                           {
 
@@ -236,11 +240,31 @@ namespace Cognitivo.Production
                                               _name = last.Key.item != null ? last.Key.item.name : "",
                                               _id_task = last.Max(x => x.id_project_task),
                                               _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
-                                              item = last.Key.item
+                                              item = last.Key.item,
+                                              avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
+                                              buyqty = (last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0)
                                           }).ToListAsync();
 
-                    item_ProductDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.Product);
-                    item_RawDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.RawMaterial);
+                    item_ProductDataGrid.ItemsSource = item_List_group.Where(x => x.item.id_item_type == item.item_type.Product);
+                    item_RawDataGrid.ItemsSource = item_List_group.Where(x => x.item.id_item_type == item.item_type.RawMaterial);
+
+
+                    var item_List = await (from IT in OrderDB.production_order_detail
+                                           where IT.item.id_item_type != item.item_type.Service &&
+                                           IT.item.id_item_type != item.item_type.Task &&
+                                           (IT.production_order.status == Status.Production.Approved || IT.production_order.status == Status.Production.InProcess || IT.production_order.status == Status.Production.Executed || IT.production_order.status == Status.Production.Pending)
+                                           && IT.production_order.status != null && IT.id_production_order == _id_production_order
+                                           group IT by new { IT.item } into last
+                                           select new
+                                           {
+
+                                               _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
+                                               _code = last.Key.item != null ? last.Key.item.code : "",
+                                               _name = last.Key.item != null ? last.Key.item.name : "",
+                                               _id_task = last.Max(x => x.id_project_task),
+                                               _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
+                                               item = last.Key.item
+                                           }).ToListAsync();
                     item_CapitalDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.FixedAssets);
                     item_SupplierDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.Supplies);
                     //var rawlist = (from IT in OrderDB.production_order_detail

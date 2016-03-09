@@ -249,7 +249,8 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
                                         <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
                                     </DataGrid.Columns>
                                     <!--<DataGrid.RowDetailsTemplate>
                                         <DataTemplate>
@@ -281,7 +282,8 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
                                         <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
                                     </DataGrid.Columns>
                                     <!--<DataGrid.RowDetailsTemplate>
                                         <DataTemplate>

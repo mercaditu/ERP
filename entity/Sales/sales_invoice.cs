@@ -33,9 +33,11 @@ namespace entity
             get { return _State; }
             set
             {
+
                 if (value != _State)
                 {
                     _State = value;
+                    base.State = value;
                     RaisePropertyChanged("State");
 
                     foreach(sales_invoice_detail detail in sales_invoice_detail)

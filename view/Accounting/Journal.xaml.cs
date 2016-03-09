@@ -169,12 +169,7 @@ namespace Cognitivo.Accounting
         { 
              try
             {
-                if (Acocunting_Template_Entry.accounting_journal.accounting_journal_detail.Sum(x => x.credit) != Acocunting_Template_Entry.accounting_journal.accounting_journal_detail.Sum(x => x.debit))
-                {
-                    MessageBox.Show("Verify balance :-" + Acocunting_Template_Entry.accounting_journal.code);
-                }
-                else
-                {
+               
                     entity.db.accounting_journal.Add(Acocunting_Template_Entry.accounting_journal);
                     IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
                     if (validationresult.Count() == 0)
@@ -183,7 +178,7 @@ namespace Cognitivo.Accounting
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = Visibility.Collapsed;
                     }
-                }
+                
             }
              catch (Exception ex)
              { throw ex; }
@@ -216,16 +211,19 @@ namespace Cognitivo.Accounting
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.Accounting_template Acocunting_Template = new cntrl.Curd.Accounting_template();
-            accounting_template accounting_template = new accounting_template();
-            entity.db.accounting_template.Add(accounting_template);
+           
+         
+            Configs.Accounting_Template Acocunting_Template = new Configs.Accounting_Template();
+            
+            Window window = new Window
+            {
+                Title = "Accounting Tempalte",
+                Content = Acocunting_Template
+            };
+
+            window.ShowDialog();
+
             accounting_templateViewSource.View.Refresh();
-            accounting_templateViewSource.View.MoveCurrentToLast();
-            Acocunting_Template.accounting_templateViewSource = accounting_templateViewSource;
-            Acocunting_Template.accounting_templatedetailViewSource = accounting_templateaccounting_template_detailViewSource;
-            Acocunting_Template.entity = entity;
-            crud_modal.Children.Add(Acocunting_Template);
           //  filter_date();
         }
 

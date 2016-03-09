@@ -12,8 +12,9 @@ namespace entity
         {
             sales_invoice sales_invoice = new sales_invoice();
             sales_invoice.State = EntityState.Added;
-            sales_invoice.id_range = Brillo.GetDefault.Range(App.Names.SalesInvoice);
             sales_invoice.status = Status.Documents_General.Pending;
+            sales_invoice.id_range = Brillo.GetDefault.Range(App.Names.SalesInvoice);
+           
             sales_invoice.trans_date = DateTime.Now;
 
        

@@ -137,7 +137,7 @@ namespace entity.Brillo.Accounting
                                     accounting_journal_detail PAYaccounting_journal_detail = new accounting_journal_detail();
                                     PAYaccounting_journal_detail.accounting_chart = AR_Chart;
                                     PAYaccounting_journal_detail.trans_date = schedual.trans_date;
-                                    PAYaccounting_journal_detail.debit = schedual.debit;
+                                    PAYaccounting_journal_detail.debit = schedual.credit;
                                     PAYaccounting_journal_detail.id_currencyfx = schedual.app_currencyfx.id_currencyfx;
                                     accounting_journal.accounting_journal_detail.Add(PAYaccounting_journal_detail);
                                 }

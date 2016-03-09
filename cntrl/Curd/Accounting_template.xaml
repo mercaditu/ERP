@@ -15,17 +15,17 @@
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
-        <!--<CollectionViewSource x:Key="accounting_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:accounting_template}, CreateList=True}"/>-->
+        <CollectionViewSource x:Key="accounting_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:accounting_template}, CreateList=True}"/>
         <CollectionViewSource x:Key="accounting_chartViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:accounting_chart}, CreateList=True}"/>
         <CollectionViewSource x:Key="accounting_chartcomboViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:accounting_chart}, CreateList=True}"/>
-        <!--<CollectionViewSource x:Key="accounting_templateaccounting_template_detailViewSource" Source="{Binding accounting_template_detail, Source={StaticResource accounting_templateViewSource}}"/>-->
+        <CollectionViewSource x:Key="accounting_templateaccounting_template_detailViewSource" Source="{Binding accounting_template_detail, Source={StaticResource accounting_templateViewSource}}"/>
 
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75" />
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel x:Name="stackMainAc" Background="White">
+        <StackPanel x:Name="stackMainAc" Background="White" DataContext="{StaticResource accounting_templateViewSource}">
             <Grid>
                 <Border Background="WhiteSmoke" />
                 <Border Width="45" HorizontalAlignment="Left" Background="#0099ff">
@@ -48,7 +48,7 @@
                                     NotifyOnValidationError=true, ValidatesOnDataErrors=True,
                                     ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
                 <StackPanel x:Name="stpsub">
-                <DataGrid x:Name="accounting_template_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Height="200"  RowDetailsVisibilityMode="VisibleWhenSelected">
+                <DataGrid x:Name="accounting_template_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource accounting_templateaccounting_template_detailViewSource}}" Height="200"  RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
                         <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
 						                                SelectedValueBinding="{Binding id_chart,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

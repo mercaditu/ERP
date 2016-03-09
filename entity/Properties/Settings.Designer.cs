@@ -166,5 +166,17 @@ namespace entity.Properties {
                 this["user_UserName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal vatwithholding_Percentage {
+            get {
+                return ((decimal)(this["vatwithholding_Percentage"]));
+            }
+            set {
+                this["vatwithholding_Percentage"] = value;
+            }
+        }
     }
 }

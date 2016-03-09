@@ -247,8 +247,145 @@ namespace entity
         private decimal _SubTotal_Vat;
 
 
-    
+        #region Discount Calculations
 
+        /// <summary>
+        /// Basic Discount column that is stored in database. Realvalue.
+        /// </summary>
+        public decimal discount
+        {
+            get { return _discount; }
+            set
+            {
+                if (_discount != value && State >= 0)
+                {
+                    ApplyDiscount_UnitPrice(_discount, value, unit_cost);
+
+                    _discount = value;
+                    RaisePropertyChanged("discount");
+
+                    Calculate_UnitVatDiscount(_discount);
+                    Calculate_SubTotalDiscount(_discount);
+                }
+            }
+        }
+        private decimal _discount;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal DiscountVat
+        {
+            get { return _DiscountVat; }
+            set
+            {
+                if (_DiscountVat != value)
+                {
+                    Calculate_UnitDiscount(value);
+
+                    _DiscountVat = value;
+                    RaisePropertyChanged("DiscountVat");
+
+                    Calculate_SubTotalVatDiscount(_DiscountVat);
+                }
+            }
+        }
+        private decimal _DiscountVat;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal Discount_SubTotal
+        {
+            get { return _Discount_SubTotal; }
+            set
+            {
+                if (_Discount_SubTotal != value)
+                {
+                    Calculate_UnitDiscount(_Discount_SubTotal);
+
+                    _Discount_SubTotal = value;
+                    RaisePropertyChanged("Discount_SubTotal");
+                }
+            }
+        }
+        private decimal _Discount_SubTotal;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal Discount_SubTotal_Vat
+        {
+            get { return _Discount_SubTotal_Vat; }
+            set
+            {
+                if (_Discount_SubTotal_Vat != value)
+                {
+                    Calculate_UnitVatDiscount(_Discount_SubTotal_Vat);
+
+                    _Discount_SubTotal_Vat = value;
+                    RaisePropertyChanged("Discount_SubTotal_Vat");
+                }
+            }
+        }
+        private decimal _Discount_SubTotal_Vat;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oldDiscount"></param>
+        /// <param name="value"></param>
+        /// <param name="unit_cost"></param>
+        public void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
+        {
+            this.unit_cost = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
+            RaisePropertyChanged("unit_price");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discountvat"></param>
+        public void Calculate_UnitDiscount(decimal discountvat)
+        {
+            discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
+            RaisePropertyChanged("discount");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discount"></param>
+        public void Calculate_UnitVatDiscount(decimal discount)
+        {
+            DiscountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
+            RaisePropertyChanged("DiscountVat");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="discount"></param>
+        public void Calculate_SubTotalDiscount(decimal discount)
+        {
+            Discount_SubTotal = discount * _quantity;
+            RaisePropertyChanged("Discount_SubTotal");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="DiscountVat"></param>
+        public void Calculate_SubTotalVatDiscount(decimal DiscountVat)
+        {
+            Discount_SubTotal_Vat = DiscountVat * _quantity;
+            RaisePropertyChanged("Discount_SubTotal_Vat");
+        }
+
+        #endregion
 
 
         #region "Foreign Key"

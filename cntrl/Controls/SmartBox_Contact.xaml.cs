@@ -110,26 +110,68 @@ namespace cntrl.Controls
 
                 List<entity.contact> results = new List<entity.contact>();
 
-                results.AddRange(db.contacts
-                .Where(x =>
-                            x.id_company == company_ID &&
-                            (
-                                x.code.Contains(SearchText) ||
-                                x.name.Contains(SearchText) //||
-                                //x.gov_code.Contains(SearchText)
-                            )
-                            &&
-                            (
-                                x.is_customer == Get_Customers ||
-                                x.is_supplier == Get_Suppliers ||
-                                x.is_employee == Get_Employees
-                            )
-                            &&
-                            x.is_active == true
-                        )
-                .OrderBy(x => x.name)
-                .ToList()
-                );
+                if (Get_Customers)
+                {
+                    results.AddRange(db.contacts
+                   .Where(x =>
+                               x.id_company == company_ID &&
+                               (
+                                   x.code.Contains(SearchText) ||
+                                   x.name.Contains(SearchText)
+                               )
+                               &&
+                                   x.is_customer == Get_Customers
+                               &&
+                                   x.contact_role.is_principal
+                               &&
+                                   x.is_active == true
+                           )
+                   .OrderBy(x => x.name)
+                   .ToList()
+                   );   
+                }
+
+                if (Get_Suppliers)
+                {
+                    results.AddRange(db.contacts
+                   .Where(x =>
+                               x.id_company == company_ID &&
+                               (
+                                   x.code.Contains(SearchText) ||
+                                   x.name.Contains(SearchText)
+                               )
+                               &&
+                                   x.is_supplier == Get_Suppliers
+                               &&
+                                   x.contact_role.is_principal
+                               &&
+                                   x.is_active == true
+                           )
+                   .OrderBy(x => x.name)
+                   .ToList()
+                   );
+                }
+
+                if (Get_Employees)
+                {
+                    results.AddRange(db.contacts
+                   .Where(x =>
+                               x.id_company == company_ID &&
+                               (
+                                   x.code.Contains(SearchText) ||
+                                   x.name.Contains(SearchText)
+                               )
+                               &&
+                                   x.is_employee == Get_Employees
+                               &&
+                                   x.contact_role.is_principal
+                               &&
+                                   x.is_active == true
+                           )
+                   .OrderBy(x => x.name)
+                   .ToList()
+                   );
+                }
 
                 Dispatcher.InvokeAsync(new Action(() =>
                 {

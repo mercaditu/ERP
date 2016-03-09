@@ -79,6 +79,7 @@ namespace entity
         public int? id_price_list { get; set; }
         public int? id_sales_rep { get; set; }
         public int? id_geography { get; set; }
+        public int? id_bank { get; set; }
 
         [Required]
         public string name { get; set; }
@@ -145,7 +146,7 @@ namespace entity
         public virtual sales_rep sales_rep { get; set; }
         public virtual app_currency app_currency { get; set; }
         public virtual app_geography app_geography { get; set; }
-     
+        public virtual app_bank app_bank { get; set; }
 
         //Heirarchy Nav Properties
         public virtual ICollection<contact> child { get; set; }

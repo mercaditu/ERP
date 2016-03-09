@@ -23,13 +23,19 @@ namespace entity
         public int id_contact { get; set; }
         public int id_item { get; set; }
         public int id_contract { get; set; }
+
+        public decimal unit_price { get; set; }
+
         public DateTime start_date { get; set; }
         public DateTime? end_date { get; set; }
         public short bill_cycle { get; set; }
         public short bill_on { get; set; }
         public bool is_active { get; set; }
-    
+
         public virtual contact contact { get; set; }
         public virtual item item { get; set; }
+
+        [NotMapped]
+        public virtual app_currency app_currency { get; set; }
     }
 }

@@ -259,7 +259,7 @@ namespace entity
             {
                 if (_discount != value && State >= 0)
                 {
-                    ApplyDiscount_UnitPrice(_discount, value, unit_cost);
+                    ApplyDiscount_UnitCost(_discount, value, unit_cost);
 
                     _discount = value;
                     RaisePropertyChanged("discount");
@@ -339,10 +339,10 @@ namespace entity
         /// <param name="oldDiscount"></param>
         /// <param name="value"></param>
         /// <param name="unit_cost"></param>
-        public void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
+        public void ApplyDiscount_UnitCost(decimal oldDiscount, decimal value, decimal unit_cost)
         {
             this.unit_cost = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
-            RaisePropertyChanged("unit_price");
+            RaisePropertyChanged("unit_cost");
         }
 
         /// <summary>
@@ -418,7 +418,6 @@ namespace entity
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
-
             unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
             RaisePropertyChanged("unit_cost");
         }

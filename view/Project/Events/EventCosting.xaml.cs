@@ -175,15 +175,20 @@ namespace Cognitivo.Project
                             item_tag item_tag = person_service.item_tag;
                             foreach (item_tag_detail tag_detail in item_tag.item_tag_detail)
                             {
-                                project_event_variable project_event_variable = new project_event_variable();
-                                project_event_variable.item = tag_detail.item;
-                                project_event_variable.id_item = tag_detail.id_item;
-                                project_event_variable.item_tag = tag_detail.item_tag;
-                                project_event_variable.id_tag = tag_detail.id_tag;
-                                project_event_variable.adult_consumption = person_service.adult_consumption * project_event.quantity_adult;
-                                project_event_variable.child_consumption = person_service.child_consumption * project_event.quantity_child;
-                                project_event_variable.is_included = false;
-                                project_event.project_event_variable.Add(project_event_variable);
+                                if (tag_detail.item.is_active)
+                                {
+
+
+                                    project_event_variable project_event_variable = new project_event_variable();
+                                    project_event_variable.item = tag_detail.item;
+                                    project_event_variable.id_item = tag_detail.id_item;
+                                    project_event_variable.item_tag = tag_detail.item_tag;
+                                    project_event_variable.id_tag = tag_detail.id_tag;
+                                    project_event_variable.adult_consumption = person_service.adult_consumption * project_event.quantity_adult;
+                                    project_event_variable.child_consumption = person_service.child_consumption * project_event.quantity_child;
+                                    project_event_variable.is_included = false;
+                                    project_event.project_event_variable.Add(project_event_variable);
+                                }
                             }
                         }
                         project_costingproject_event_template_variable_detailsViewSource.View.Refresh();
@@ -197,14 +202,17 @@ namespace Cognitivo.Project
                             item_tag item_tag = project_event_template_fixed.item_tag;
                             foreach (item_tag_detail tag_detail in item_tag.item_tag_detail)
                             {
-                                project_event_fixed services_per_event_details = new project_event_fixed();
-                                services_per_event_details.item = tag_detail.item;
-                                services_per_event_details.id_item = tag_detail.id_item;
-                                services_per_event_details.item_tag = tag_detail.item_tag;
-                                services_per_event_details.id_tag = tag_detail.id_tag;
-                                services_per_event_details.consumption = 1;
-                                services_per_event_details.is_included = false;
-                                project_event.project_event_fixed.Add(services_per_event_details);
+                                if (tag_detail.item.is_active)
+                                {
+                                    project_event_fixed services_per_event_details = new project_event_fixed();
+                                    services_per_event_details.item = tag_detail.item;
+                                    services_per_event_details.id_item = tag_detail.id_item;
+                                    services_per_event_details.item_tag = tag_detail.item_tag;
+                                    services_per_event_details.id_tag = tag_detail.id_tag;
+                                    services_per_event_details.consumption = 1;
+                                    services_per_event_details.is_included = false;
+                                    project_event.project_event_fixed.Add(services_per_event_details);
+                                }
                             }
                         }
                         project_costingservices_per_event_detailsViewSource.View.Refresh();
@@ -285,7 +293,7 @@ namespace Cognitivo.Project
             if (id_template_designerComboBox.SelectedItem != null)
             {
                 project_event_template template_designer = id_template_designerComboBox.SelectedItem as project_event_template;
-                itemViewSource.Source = EventDB.items.Where(x => EventDB.item_tag_detail.Where(y => y.id_tag == template_designer.id_tag).Select(z => z.id_item).Contains(x.id_item)).ToList();
+                itemViewSource.Source = EventDB.items.Where(x => EventDB.item_tag_detail.Where(y => y.id_tag == template_designer.id_tag).Select(z => z.id_item).Contains(x.id_item) && x.is_active).ToList();
             }
         }
 

@@ -36,6 +36,7 @@ namespace entity.Brillo.Accounting
         private accounting_journal calc(AccountingJournalDB context, sales_invoice sales_invoice, accounting_cycle accounting_cycle)
         {
             //List<accounting_journal> ListAccountingJournal = new List<accounting_journal>();
+
             accounting_journal accounting_journal = new accounting_journal();
             if (sales_invoice.accounting_journal == null)
             {
@@ -45,21 +46,37 @@ namespace entity.Brillo.Accounting
                 accounting_journal.trans_date = sales_invoice.trans_date;
                 accounting_journal.State = EntityState.Added;
 
+                List<accounting_journal_detail> accounting_journal_detailList = new List<accounting_journal_detail>();
 
                 //List<sales_invoice_detail> _sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
-                List<accounting_journal_detail> accounting_journal_detailList = new List<accounting_journal_detail>();
                 Asset.Inventory Inventory = new Asset.Inventory();
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail.ToList())
                 {
-                    if (sales_invoice_detail.item.id_item_type == item.item_type.Product
-                        || sales_invoice_detail.item.id_item_type == item.item_type.RawMaterial)
+                    accounting_chart INV_Chart = null;
+                    
+                    if (sales_invoice_detail.item != null)
                     {
-                        item_tag_detail item_tag_detail = sales_invoice_detail.item.item_tag_detail.FirstOrDefault();
-                        if (item_tag_detail != null)
+                        if (sales_invoice_detail.item.item_tag_detail != null)
                         {
-                            if (Inventory.find_Chart(context, item_tag_detail.item_tag) != null)
+                            List<item_tag> item_tagLIST = new List<item_tag>();
+
+                            foreach (item_tag_detail item_tag_detail in sales_invoice_detail.item.item_tag_detail.ToList())
                             {
-                                accounting_chart INV_Chart = Inventory.find_Chart(context, item_tag_detail.item_tag);
+                                item_tag item_tag = item_tag_detail.item_tag;
+                                item_tagLIST.Add(item_tag);
+                            }
+
+                            if (Inventory.find_Chart(context, item_tagLIST) != null)
+                            {
+                                INV_Chart = Inventory.find_Chart(context, item_tagLIST);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        INV_Chart = Inventory.find_Chart(context, null);
+                    }
+
                                 if (INV_Chart != null)
                                 {
                                     accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
@@ -70,18 +87,6 @@ namespace entity.Brillo.Accounting
                                     accounting_journal_detailList.Add(INV_accounting_journal);
                                 }
                             }
-                        }
-                    }
-                    else if (sales_invoice_detail.item.id_item_type == item.item_type.Service
-                              || sales_invoice_detail.item.id_item_type == item.item_type.Task)
-                    {
-
-                    }
-                    else if (sales_invoice_detail.item.id_item_type == item.item_type.FixedAssets)
-                    {
-
-                    }
-                }
 
                 Liability.ValueAddedTax VAT = new Liability.ValueAddedTax();
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail.ToList())
@@ -141,11 +146,11 @@ namespace entity.Brillo.Accounting
                                     PAYaccounting_journal_detail.id_currencyfx = schedual.app_currencyfx.id_currencyfx;
                                     accounting_journal_detailList.Add(PAYaccounting_journal_detail);
                                 }
+                                }
+                           
                             }
                            
                         }
-                        
-                    }
                 }
                 foreach (accounting_journal_detail accounting_journal_detail in accounting_journal_detailList)
                 {
@@ -160,7 +165,7 @@ namespace entity.Brillo.Accounting
                         PAYaccounting_journal_detail.debit = accounting_journal_detail.debit;
                         PAYaccounting_journal_detail.id_currencyfx = accounting_journal_detail.id_currencyfx;
                         accounting_journal.accounting_journal_detail.Add(PAYaccounting_journal_detail);
-
+                        
                     }
                     else
                     {

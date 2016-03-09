@@ -57,7 +57,6 @@
 
         public accounting_chart()
         {
-
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
@@ -76,6 +75,7 @@
             {
                 can_transact = false;
             }
+
             child_total = 0;
         }
 
@@ -122,7 +122,6 @@
                             chart.chart_type = value;
                         }
                     }
-                   
                 }
             }
         }

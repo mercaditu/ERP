@@ -50,13 +50,22 @@ namespace entity.Brillo.Accounting
                 //List<purchase_invoice_detail> purchase_invoice_detailList = purchase_invoice.purchase_invoice_detail.ToList();
                 foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail.ToList())
                 {
-                    if (purchase_invoice_detail.app_cost_center.is_product)
+                    if (purchase_invoice_detail.app_cost_center.is_product && purchase_invoice_detail.item != null)
                     {
-                        item_tag_detail item_tag_detail = purchase_invoice_detail.item.item_tag_detail.FirstOrDefault();
-                        if (item_tag_detail != null)
+                        List<item_tag_detail> item_tag_detailLIST = purchase_invoice_detail.item.item_tag_detail.ToList();
+                        if (item_tag_detailLIST != null)
                         {
                             Asset.Inventory Inventory = new Asset.Inventory();
-                            accounting_chart INV_Chart = Inventory.find_Chart(AccountingJournalDB, item_tag_detail.item_tag);
+
+                            List<item_tag> item_tagLIST = new List<item_tag>();
+
+                            foreach (item_tag_detail item_tag_detail in purchase_invoice_detail.item.item_tag_detail.ToList())
+                            {
+                                item_tag item_tag = item_tag_detail.item_tag;
+                                item_tagLIST.Add(item_tag);
+                            }
+
+                            accounting_chart INV_Chart = Inventory.find_Chart(AccountingJournalDB, item_tagLIST);
                             if (INV_Chart != null)
                             {
                                 accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();

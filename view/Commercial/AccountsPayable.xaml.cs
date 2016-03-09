@@ -249,13 +249,29 @@ namespace Cognitivo.Commercial
 
             if (PaymentSchedualList.Count > 0)
             {
-                VATWithholding.invoiceList = new List<object>();
-                VATWithholding.invoiceList.Add(PaymentSchedualList.FirstOrDefault().purchase_invoice);
-                VATWithholding.objEntity = dbContext;
-                VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
-                crud_modal.Visibility = System.Windows.Visibility.Visible;
-                crud_modal.Children.Add(VATWithholding);   
+                purchase_invoice  purchase_invoice=PaymentSchedualList.FirstOrDefault().purchase_invoice;
+                if (purchase_invoice.payment_withholding_details.Count()==0)
+                {
+                    VATWithholding.invoiceList = new List<object>();
+                    VATWithholding.invoiceList.Add(purchase_invoice);
+                    VATWithholding.objEntity = dbContext;
+                    VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
+                    crud_modal.Visibility = System.Windows.Visibility.Visible;
+                    crud_modal.Children.Add(VATWithholding);   
+                    
+                }
+                else
+                {
+                    toolbar.msgWarning("Alerady Link With Vat Holding...");
+                }
+             
             }
+            
+        }
+
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            load_Schedual();
         }
     }
 }

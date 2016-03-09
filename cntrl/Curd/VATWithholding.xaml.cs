@@ -70,11 +70,11 @@ namespace cntrl
 
                 foreach (dynamic item in _invoiceList)
                 {
-                    payment_withholding_detail payment_withholding_detail = new payment_withholding_detail();
-                    payment_withholding_detail.id_purchase_invoice = item.id_purchase_invoice;
-                    payment_withholding_tax.payment_withholding_detail.Add(payment_withholding_detail);
+                    payment_withholding_details payment_withholding_details = new payment_withholding_details();
+                    payment_withholding_details.id_purchase_invoice = item.id_purchase_invoice;
+                    payment_withholding_tax.payment_withholding_details.Add(payment_withholding_details);
                 }
-
+                objEntity.db.payment_withholding_tax.Add(payment_withholding_tax);
                 payment_schedual _payment_schedual = new payment_schedual();
 
                 _payment_schedual.debit = Convert.ToDecimal(lbltotalvat.Content);

@@ -7,6 +7,12 @@ namespace entity
     
     public partial class contact_subscription : Audit
     {
+       public enum Billng_Cycles
+        {
+            Daily,
+            Weekly,
+            Monthly
+        }
         public contact_subscription()
         {
             id_company = CurrentSession.Id_Company;
@@ -16,6 +22,7 @@ namespace entity
             start_date = DateTime.Now;
             end_date = DateTime.Now.AddDays(365);
         }
+
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,7 +35,7 @@ namespace entity
 
         public DateTime start_date { get; set; }
         public DateTime? end_date { get; set; }
-        public short bill_cycle { get; set; }
+        public Billng_Cycles bill_cycle { get; set; }
         public short bill_on { get; set; }
         public bool is_active { get; set; }
 

@@ -35,7 +35,7 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
-			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10"/>
+			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
 
         <ListBox Background="{StaticResource AccentColor_Brush}" SelectionChanged="ListBox_SelectionChanged"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"

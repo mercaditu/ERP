@@ -184,6 +184,7 @@ namespace entity
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
       
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
+        public virtual IEnumerable<payment_withholding_details> payment_withholding_details { get; set; }
         #endregion
 
         #region "Validations"

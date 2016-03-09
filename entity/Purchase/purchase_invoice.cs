@@ -26,8 +26,9 @@ namespace entity
 
             purchase_invoice_detail = new List<purchase_invoice_detail>();
             purchase_return = new List<purchase_return>();
-         
-         
+
+            payment_withholding_detail = new List<payment_withholding_detail>();
+            payment_withholding_details = new List<payment_withholding_details>();
         }
 
         [Key]
@@ -171,6 +172,7 @@ namespace entity
 
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }
         public virtual IEnumerable<impex_expense> impex_expense { get; set; }
+        public virtual ICollection<payment_withholding_details> payment_withholding_details { get; set; }
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         #endregion

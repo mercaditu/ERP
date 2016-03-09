@@ -68,14 +68,9 @@ namespace Cognitivo.Commercial
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
-            //Items
-            //CollectionViewSource itemViewSource = (CollectionViewSource)FindResource("itemViewSource");
-            //itemViewSource.Source = dbContext.items.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
-
-            //CollectionViewSource app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
-            //app_fieldViewSource.Source = dbContext.app_field.OrderBy(a => a.name).AsNoTracking().ToList();
-
-            //contactcontact_field_valueViewSource = FindResource("contactcontact_field_valueViewSource") as CollectionViewSource;
+            //AppBank
+            CollectionViewSource bankViewSource = (CollectionViewSource)FindResource("bankViewSource");
+            bankViewSource.Source = ContactDB.app_bank.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));

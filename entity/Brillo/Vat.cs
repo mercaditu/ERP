@@ -49,7 +49,9 @@ namespace entity.Brillo
             {
                 using (db db = new db())
                 {
-                    List<app_vat_group_details> app_vat_group_details = db.app_vat_group_details.Where(x => x.id_vat_group == id_vat_group).ToList();
+                    List<app_vat_group_details> app_vat_group_details = new List<entity.app_vat_group_details>();
+                    app_vat_group_details = db.app_vat_group_details.Where(x => x.id_vat_group == id_vat_group).ToList();
+
                     foreach (app_vat_group_details app_vat_group in app_vat_group_details)
                     {
                         VAT_Value = VAT_Value + calculate_Vat(ValueWithoutVAT, app_vat_group.app_vat.coefficient);

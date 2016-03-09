@@ -50,13 +50,16 @@
                 <StackPanel x:Name="stpsub">
                 <DataGrid x:Name="accounting_template_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource accounting_templateaccounting_template_detailViewSource}}" Height="200"  RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
-                        <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
-						                                SelectedValueBinding="{Binding id_chart,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-						                                DisplayMemberPath="name" 
-						                                SelectedValuePath="id_chart" Header="Chart" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding coefficeint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Coefficients}" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn Binding="{Binding is_debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Debit}" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn Binding="{Binding is_debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanConverter}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="SizeToHeader"/>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
+						                            SelectedValueBinding="{Binding id_chart,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+						                            DisplayMemberPath="name" 
+						                            SelectedValuePath="id_chart" Header="Chart" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding coefficeint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:P}}" 
+                                                Header="{lex:Loc Cognitivo:local:Coeficient}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding is_debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Header="{lex:Loc Cognitivo:local:Debit}" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn Binding="{Binding is_debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanConverter}}" 
+                                                    Header="{lex:Loc Cognitivo:local:Credit}" Width="SizeToHeader"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 </StackPanel>

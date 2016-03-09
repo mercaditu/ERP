@@ -77,6 +77,7 @@ namespace entity.Brillo.Document
                         currencyfx_rate = g.sales_budget.app_currencyfx.sell_value,
                         item_code = g.item.code,
                         item_description = g.item.name,
+                        item_long_description = g.item.description,
                         item_brand = g.item.item_brand != null ? g.item.item_brand.name : "",
                         quantity = g.quantity,
                         sub_Total = g.SubTotal,

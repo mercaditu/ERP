@@ -57,15 +57,13 @@ namespace entity.Brillo.Accounting
                         {
                             Asset.Inventory Inventory = new Asset.Inventory();
 
-                            List<item_tag> item_tagLIST = new List<item_tag>();
-
+                            accounting_chart INV_Chart = null;
                             foreach (item_tag_detail item_tag_detail in purchase_invoice_detail.item.item_tag_detail.ToList())
                             {
                                 item_tag item_tag = item_tag_detail.item_tag;
-                                item_tagLIST.Add(item_tag);
+                                INV_Chart = Inventory.find_Chart(AccountingJournalDB, item_tag);
                             }
 
-                            accounting_chart INV_Chart = Inventory.find_Chart(AccountingJournalDB, item_tagLIST);
                             if (INV_Chart != null)
                             {
                                 accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();

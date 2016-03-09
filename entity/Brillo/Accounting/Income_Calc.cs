@@ -58,17 +58,14 @@ namespace entity.Brillo.Accounting
                     {
                         if (sales_invoice_detail.item.item_tag_detail != null)
                         {
-                            List<item_tag> item_tagLIST = new List<item_tag>();
-
                             foreach (item_tag_detail item_tag_detail in sales_invoice_detail.item.item_tag_detail.ToList())
                             {
                                 item_tag item_tag = item_tag_detail.item_tag;
-                                item_tagLIST.Add(item_tag);
-                            }
 
-                            if (Inventory.find_Chart(context, item_tagLIST) != null)
-                            {
-                                INV_Chart = Inventory.find_Chart(context, item_tagLIST);
+                                if (Inventory.find_Chart(context, item_tag) != null)
+                                {
+                                    INV_Chart = Inventory.find_Chart(context, item_tag);
+                                }
                             }
                         }
                     }

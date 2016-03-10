@@ -44,7 +44,7 @@ namespace cntrl
                     stackMain.DataContext = invoiceViewSource;
 
                     dynamic vat=(dynamic)_invoiceList.FirstOrDefault();
-                    lbltotalvat.Content=(vat.TotalVat *)
+                    //lbltotalvat.Content=(vat.TotalVat *)
                 }
                 catch (Exception ex)
                 {

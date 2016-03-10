@@ -10,15 +10,29 @@ using System.Windows.Input;
 
 namespace Cognitivo.Production
 {
-    /// <summary>
-    /// Interaction logic for Execution.xaml
-    /// </summary>
     public partial class Execution : Page
     {
-        ExecutionDB dbContext = new ExecutionDB();
+        ExecutionDB ExecutionDB = new ExecutionDB();
 
-        CollectionViewSource projectViewSource, production_orderViewSource, production_executionViewSource, production_execution_detailitemViewSource, production_execution_detairawlViewSource, production_execution_detailcapitalViewSource, production_execution_detailserviceViewSource, production_execution_detailsupplierViewSource;
-        CollectionViewSource production_order_detaillproductViewSource, production_order_detaillrawViewSource, production_order_detaillsupplierViewSource, production_order_detaillserviceViewSource, production_order_detaillcapitalViewSource, item_dimensionViewSource;
+        //Production EXECUTION CollectionViewSource
+        CollectionViewSource
+            projectViewSource,
+            production_executionViewSource,
+            production_execution_detailProductViewSource,
+            production_execution_detailRawViewSource,
+            production_execution_detailAssetViewSource,
+            production_execution_detailServiceViewSource,
+            production_execution_detailSupplyViewSource;
+
+        //Production ORDER CollectionViewSource
+        CollectionViewSource
+            production_orderViewSource, 
+            production_order_detaillProductViewSource, 
+            production_order_detaillRawViewSource, 
+            production_order_detaillServiceViewSource,
+            production_order_detaillAssetViewSource, 
+            production_order_detaillSupplyViewSource,
+            item_dimensionViewSource;
 
         public Execution()
         {
@@ -32,49 +46,45 @@ namespace Cognitivo.Production
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            entity.Properties.Settings _setting = new entity.Properties.Settings();
 
-            item_dimensionViewSource = (CollectionViewSource)this.FindResource("item_dimensionViewSource");
-            item_dimensionViewSource.Source = dbContext.item_dimension.ToList();
+            item_dimensionViewSource = FindResource("item_dimensionViewSource") as CollectionViewSource;
+            item_dimensionViewSource.Source = ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-            production_executionViewSource = ((CollectionViewSource)(FindResource("production_executionViewSource")));
-            dbContext.production_execution.Where(a => a.id_company == _setting.company_ID).Include("production_execution_detail").Load();
-            production_executionViewSource.Source = dbContext.production_execution.Local;
+            production_executionViewSource = FindResource("production_executionViewSource") as CollectionViewSource;
+            ExecutionDB.production_execution.Where(a => a.id_company == CurrentSession.Id_Company).Include("production_execution_detail").Load();
+            production_executionViewSource.Source = ExecutionDB.production_execution.Local;
 
-            production_execution_detailitemViewSource = ((CollectionViewSource)(FindResource("production_execution_detailitemViewSource")));
-            production_execution_detairawlViewSource = ((CollectionViewSource)(FindResource("production_execution_detairawlViewSource")));
-            production_execution_detailserviceViewSource = ((CollectionViewSource)(FindResource("production_execution_detailserviceViewSource")));
-            production_execution_detailcapitalViewSource = ((CollectionViewSource)(FindResource("production_execution_detailcapitalViewSource")));
-            production_execution_detailsupplierViewSource = ((CollectionViewSource)(FindResource("production_execution_detailsupplierViewSource")));
+            production_execution_detailProductViewSource = FindResource("production_execution_detailProductViewSource") as CollectionViewSource;
+            production_execution_detailRawViewSource = FindResource("production_execution_detailRawViewSource") as CollectionViewSource;
+            production_execution_detailServiceViewSource = FindResource("production_execution_detailServiceViewSource") as CollectionViewSource;
+            production_execution_detailAssetViewSource = FindResource("production_execution_detailAssetViewSource") as CollectionViewSource;
+            production_execution_detailSupplyViewSource = FindResource("production_execution_detailSupplyViewSource") as CollectionViewSource;
 
-            production_order_detaillproductViewSource = ((CollectionViewSource)(FindResource("production_order_detaillproductViewSource")));
-            production_order_detaillserviceViewSource = ((CollectionViewSource)(FindResource("production_order_detaillserviceViewSource")));
-            production_order_detaillsupplierViewSource = ((CollectionViewSource)(FindResource("production_order_detaillsupplierViewSource")));
-            production_order_detaillrawViewSource = ((CollectionViewSource)(FindResource("production_order_detaillrawViewSource")));
-            production_order_detaillcapitalViewSource = ((CollectionViewSource)(FindResource("production_order_detaillcapitalViewSource")));
+            production_order_detaillProductViewSource = FindResource("production_order_detaillProductViewSource") as CollectionViewSource;
+            production_order_detaillServiceViewSource = FindResource("production_order_detaillServiceViewSource") as CollectionViewSource;
+            production_order_detaillRawViewSource = FindResource("production_order_detaillRawViewSource") as CollectionViewSource;
+            production_order_detaillAssetViewSource = FindResource("production_order_detaillCapitalViewSource") as CollectionViewSource;
+            production_order_detaillSupplyViewSource = FindResource("production_order_detaillSupplyViewSource") as CollectionViewSource;
 
-            CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
-            dbContext.contacts.Where(a => a.id_company == _setting.company_ID && a.is_employee == true).Load();
-            contactViewSource.Source = dbContext.contacts.Local;
+            CollectionViewSource employeeViewSource = FindResource("employeeViewSource") as CollectionViewSource;
+            ExecutionDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == true).Load();
+            employeeViewSource.Source = ExecutionDB.contacts.Local;
 
-            CollectionViewSource contactSupplierViewSource = ((CollectionViewSource)(FindResource("contactSupplierViewSource")));
-            contactSupplierViewSource.Source = dbContext.contacts.Where(a => a.id_company == _setting.company_ID && a.is_supplier == true).ToList();
+            production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
+            ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            production_orderViewSource.Source = ExecutionDB.production_order.Local;
 
-            production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            dbContext.production_order.Load();
-            production_orderViewSource.Source = dbContext.production_order.Local;
+            projectViewSource = FindResource("projectViewSource") as CollectionViewSource;
+            ExecutionDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            projectViewSource.Source = ExecutionDB.projects.Local;
 
-            projectViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
-            dbContext.projects.Where(a => a.id_company == _setting.company_ID).Load();
-            projectViewSource.Source = dbContext.projects.Local;
-            
-            CollectionViewSource production_lineViewSource = ((CollectionViewSource)(FindResource("production_lineViewSource")));
-            dbContext.production_line.Load();
-            production_lineViewSource.Source = dbContext.production_line.Local;
+            CollectionViewSource production_lineViewSource = FindResource("production_lineViewSource") as CollectionViewSource;
+            ExecutionDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            production_lineViewSource.Source = ExecutionDB.production_line.Local;
 
-            CollectionViewSource hr_time_coefficientViewSource = ((CollectionViewSource)(FindResource("hr_time_coefficientViewSource")));
-            dbContext.hr_time_coefficient.Load();
-            hr_time_coefficientViewSource.Source = dbContext.hr_time_coefficient.Local;
+            CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
+            ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            hr_time_coefficientViewSource.Source = ExecutionDB.hr_time_coefficient.Local;
 
             cmbcoefficient.SelectedIndex = -1;
             
@@ -94,11 +104,11 @@ namespace Cognitivo.Production
 
         public void filer_productioncapital_execution()
         {
-            if (production_execution_detailcapitalViewSource != null)
+            if (production_execution_detailAssetViewSource != null)
             {
-                if (production_execution_detailcapitalViewSource.View != null)
+                if (production_execution_detailAssetViewSource.View != null)
                 {
-                    production_execution_detailcapitalViewSource.View.Filter = i =>
+                    production_execution_detailAssetViewSource.View.Filter = i =>
                     {
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
                         if (objproduction_execution_detail.item != null)
@@ -117,13 +127,13 @@ namespace Cognitivo.Production
 
         public void filer_productionitem_execution()
         {
-            if (production_execution_detailitemViewSource != null)
+            if (production_execution_detailProductViewSource != null)
             {
-                if (production_execution_detailitemViewSource.View != null)
+                if (production_execution_detailProductViewSource.View != null)
                 {
 
 
-                    production_execution_detailitemViewSource.View.Filter = i =>
+                    production_execution_detailProductViewSource.View.Filter = i =>
                     {
 
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
@@ -144,12 +154,12 @@ namespace Cognitivo.Production
 
         public void filer_productionservice_execution()
         {
-            production_order_detail production_order_detail = (production_order_detail)treeservice.SelectedItem;
-            if (production_execution_detailserviceViewSource != null)
+            production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem;
+            if (production_execution_detailServiceViewSource != null)
             {
-                if (production_execution_detailserviceViewSource.View != null)
+                if (production_execution_detailServiceViewSource.View != null)
                 {
-                    production_execution_detailserviceViewSource.View.Filter = i =>
+                    production_execution_detailServiceViewSource.View.Filter = i =>
                     {
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
 
@@ -162,13 +172,14 @@ namespace Cognitivo.Production
                 }
             }
         }
+
         public void filer_productionsupply_execution()
         {
-            if (production_execution_detailsupplierViewSource != null)
+            if (production_execution_detailSupplyViewSource != null)
             {
-                if (production_execution_detailsupplierViewSource.View != null)
+                if (production_execution_detailSupplyViewSource.View != null)
                 {
-                    production_execution_detailsupplierViewSource.View.Filter = i =>
+                    production_execution_detailSupplyViewSource.View.Filter = i =>
                     {
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
                         if (objproduction_execution_detail.item != null)
@@ -188,11 +199,11 @@ namespace Cognitivo.Production
 
         public void filer_productionraw_execution()
         {
-            if (production_execution_detairawlViewSource != null)
+            if (production_execution_detailRawViewSource != null)
             {
-                if (production_execution_detairawlViewSource.View != null)
+                if (production_execution_detailRawViewSource.View != null)
                 {
-                    production_execution_detairawlViewSource.View.Filter = i =>
+                    production_execution_detailRawViewSource.View.Filter = i =>
                     {
 
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
@@ -217,11 +228,11 @@ namespace Cognitivo.Production
             {
                 id_production_order = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
             }
-            if (production_order_detaillproductViewSource != null)
+            if (production_order_detaillProductViewSource != null)
             {
 
                 List<production_order_detail> _production_order_detail = 
-                    dbContext.production_order_detail.Where(a => a.parent == null 
+                    ExecutionDB.production_order_detail.Where(a => a.parent == null 
                          && a.production_order.status == Status.Production.Approved
                          && (a.item.id_item_type == item.item_type.Product 
                          || a.item.id_item_type == item.item_type.Task) 
@@ -229,26 +240,12 @@ namespace Cognitivo.Production
                          .ToList();
                 if (_production_order_detail.Count() > 0)
                 {
-                    production_order_detaillproductViewSource.Source = _production_order_detail;
-                    //production_order_detaillserviceViewSource.View.Filter = i =>
-                    //{
-                    //    production_order_detail objproduction_order_detail = (production_order_detail)i;
-                    //    if (objproduction_order_detail.parent == null)
-                    //    {
-                    //        return true;
-                    //    }
-                    //    else { return false; }
-                    //};
-
+                    production_order_detaillProductViewSource.Source = _production_order_detail;
                 }
                 else
                 {
-                    production_order_detaillproductViewSource.Source = null;
-
+                    production_order_detaillProductViewSource.Source = null;
                 }
-
-
-
             }
 
         }
@@ -259,29 +256,18 @@ namespace Cognitivo.Production
             {
                 id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
             }
-            if (production_order_detaillserviceViewSource != null)
-            {
 
-                List<production_order_detail> _production_order_detail = dbContext.production_order_detail.Where(a => a.parent == null && a.production_order.status == Status.Production.Approved
+            if (production_order_detaillServiceViewSource != null)
+            {
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null && a.production_order.status == Status.Production.Approved
                          && (a.item.id_item_type == item.item_type.Service || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
-                    production_order_detaillserviceViewSource.Source = _production_order_detail;
-                    //production_order_detaillserviceViewSource.View.Filter = i =>
-                    //{
-                    //    production_order_detail objproduction_order_detail = (production_order_detail)i;
-                    //    if (objproduction_order_detail.parent == null)
-                    //    {
-                    //        return true;
-                    //    }
-                    //    else { return false; }
-                    //};
+                    production_order_detaillServiceViewSource.Source = _production_order_detail;
                 }
-
                 else
                 {
-                    production_order_detaillserviceViewSource.Source = null;
-
+                    production_order_detaillServiceViewSource.Source = null;
                 }
             }
 
@@ -293,28 +279,19 @@ namespace Cognitivo.Production
             {
                 id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
             }
-            if (production_order_detaillsupplierViewSource != null)
+            if (production_execution_detailSupplyViewSource != null)
             {
 
-                List<production_order_detail> _production_order_detail = dbContext.production_order_detail.Where(a => a.parent == null && a.production_order.status == Status.Production.Approved
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null && a.production_order.status == Status.Production.Approved
                            && (a.item.id_item_type == item.item_type.Supplies || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
-                    production_order_detaillsupplierViewSource.Source = _production_order_detail;
-                    //production_order_detaillserviceViewSource.View.Filter = i =>
-                    //{
-                    //    production_order_detail objproduction_order_detail = (production_order_detail)i;
-                    //    if (objproduction_order_detail.parent == null)
-                    //    {
-                    //        return true;
-                    //    }
-                    //    else { return false; }
-                    //};
+                    production_execution_detailSupplyViewSource.Source = _production_order_detail;
                 }
 
                 else
                 {
-                    production_order_detaillsupplierViewSource.Source = null;
+                    production_execution_detailSupplyViewSource.Source = null;
 
                 }
             }
@@ -327,18 +304,18 @@ namespace Cognitivo.Production
             {
                 id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
             }
-            if (production_order_detaillrawViewSource != null)
+            if (production_order_detaillRawViewSource != null)
             {
 
-                List<production_order_detail> _production_order_detail = dbContext.production_order_detail.Where(a => a.parent == null && a.production_order.status == Status.Production.Approved
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null && a.production_order.status == Status.Production.Approved
                             && (a.item.id_item_type == item.item_type.RawMaterial || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
-                    production_order_detaillrawViewSource.Source = _production_order_detail;
+                    production_order_detaillRawViewSource.Source = _production_order_detail;
                 }
                 else
                 {
-                    production_order_detaillrawViewSource.Source = null;
+                    production_order_detaillRawViewSource.Source = null;
 
                 }
             }
@@ -350,19 +327,19 @@ namespace Cognitivo.Production
             {
                 id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
             }
-            if (production_order_detaillcapitalViewSource != null)
+            if (production_order_detaillAssetViewSource != null)
             {
 
-                List<production_order_detail> _production_order_detail = dbContext.production_order_detail.Where(a => a.parent == null
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null
                 && a.production_order.status == Status.Production.Approved
                          && (a.item.id_item_type == item.item_type.FixedAssets || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
-                    production_order_detaillcapitalViewSource.Source = _production_order_detail;
+                    production_order_detaillAssetViewSource.Source = _production_order_detail;
                 }
                 else
                 {
-                    production_order_detaillcapitalViewSource.Source = null;
+                    production_order_detaillAssetViewSource.Source = null;
 
                 }
             }
@@ -372,7 +349,7 @@ namespace Cognitivo.Production
         {
             try
             {
-                production_order_detail production_order_detail = (production_order_detail)treeproduct.SelectedItem;
+                production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem;
                 production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
 
                 if (production_order_detail != null)
@@ -388,8 +365,8 @@ namespace Cognitivo.Production
                     _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                     _production_execution.production_execution_detail.Add(_production_execution_detail);
 
-                    production_execution_detailitemViewSource.View.Refresh();
-                    production_execution_detailitemViewSource.View.MoveCurrentToLast();
+                    production_execution_detailProductViewSource.View.Refresh();
+                    production_execution_detailProductViewSource.View.MoveCurrentToLast();
                 }
             }
             catch (Exception ex)
@@ -401,7 +378,7 @@ namespace Cognitivo.Production
         {
             try
             {
-                production_order_detail production_order_detail = (production_order_detail)treecapital.SelectedItem;
+                production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem;
                 production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
 
                 if (production_order_detail != null)
@@ -419,62 +396,8 @@ namespace Cognitivo.Production
                     _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                     _production_execution.production_execution_detail.Add(_production_execution_detail);
 
-                    production_execution_detailcapitalViewSource.View.Refresh();
-                    production_execution_detailcapitalViewSource.View.MoveCurrentToLast();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
-        public void adddataraw()
-        {
-            try
-            {
-                production_order_detail production_order_detail = (production_order_detail)treeraw.SelectedItem;
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-
-                production_execution_detail _production_execution_detail = new entity.production_execution_detail();
-                if (production_order_detail != null)
-                {
-                    _production_execution_detail.id_item = production_order_detail.id_item;
-                    _production_execution_detail.item = production_order_detail.item;
-                    _production_execution_detail.quantity = Convert.ToInt32(txtraw.Text);
-                    _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
-                    _production_execution_detail.production_execution = _production_execution;
-                    _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-                    _production_execution.production_execution_detail.Add(_production_execution_detail);
-
-                    production_execution_detairawlViewSource.View.Refresh();
-                    production_execution_detairawlViewSource.View.MoveCurrentToLast();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
-        public void adddatasupplies()
-        {
-            try
-            {
-                production_order_detail production_order_detail = (production_order_detail)treesupplier.SelectedItem;
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-
-                production_execution_detail _production_execution_detail = new entity.production_execution_detail();
-                if (production_order_detail != null)
-                {
-                    _production_execution_detail.id_item = production_order_detail.id_item;
-                    _production_execution_detail.item = production_order_detail.item;
-                    _production_execution_detail.quantity = Convert.ToInt32(txtsupplier.Text);
-                    _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
-                    _production_execution_detail.production_execution = _production_execution;
-                    _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-                    _production_execution.production_execution_detail.Add(_production_execution_detail);
-
-                    production_execution_detailsupplierViewSource.View.Refresh();
-                    production_execution_detailsupplierViewSource.View.MoveCurrentToLast();
+                    production_execution_detailAssetViewSource.View.Refresh();
+                    production_execution_detailAssetViewSource.View.MoveCurrentToLast();
                 }
             }
             catch (Exception ex)
@@ -485,14 +408,14 @@ namespace Cognitivo.Production
 
         private void toolBar_btnSave_Click(object sender)
         {
-            dbContext.SaveChanges();
+            ExecutionDB.SaveChanges();
         }
 
         private void itemserviceComboBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                adddatacontact(itemserviceComboBox, treeservice);
+                adddatacontact(itemserviceComboBox, treeService);
             }
             else
             {
@@ -502,7 +425,7 @@ namespace Cognitivo.Production
 
         private void itemserviceComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            adddatacontact(itemserviceComboBox,treeservice);
+            adddatacontact(itemserviceComboBox,treeService);
         }
 
         public void adddatacontact(cntrl.SearchableTextbox combo,TreeView treeview)
@@ -544,10 +467,10 @@ namespace Cognitivo.Production
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
                      
-                            dbContext.production_execution_detail.Add(_production_execution_detail);
+                            ExecutionDB.production_execution_detail.Add(_production_execution_detail);
 
-                            production_execution_detailserviceViewSource.View.Refresh();
-                            production_execution_detailserviceViewSource.View.MoveCurrentToLast();
+                            production_execution_detailServiceViewSource.View.Refresh();
+                            production_execution_detailServiceViewSource.View.MoveCurrentToLast();
                         }
                     }
                 }
@@ -564,7 +487,7 @@ namespace Cognitivo.Production
             production_execution production_execution = new production_execution();
             production_execution.State = System.Data.Entity.EntityState.Added;
             production_execution.IsSelected = true;
-            dbContext.Entry(production_execution).State = EntityState.Added;
+            ExecutionDB.Entry(production_execution).State = EntityState.Added;
 
             production_executionViewSource.View.MoveCurrentToLast();
         }
@@ -576,7 +499,7 @@ namespace Cognitivo.Production
                 production_execution production_execution = (production_execution)projectDataGrid.SelectedItem;
                 production_execution.IsSelected = true;
                 production_execution.State = EntityState.Modified;
-                dbContext.Entry(production_execution).State = EntityState.Modified;
+                ExecutionDB.Entry(production_execution).State = EntityState.Modified;
             }
             else
             {
@@ -586,7 +509,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            ExecutionDB.CancelAllChanges();
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -594,7 +517,7 @@ namespace Cognitivo.Production
             if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question)
                             == MessageBoxResult.Yes)
             {
-                dbContext.production_execution.Remove((production_execution)production_executionViewSource.View.CurrentItem);
+                ExecutionDB.production_execution.Remove((production_execution)production_executionViewSource.View.CurrentItem);
                 production_executionViewSource.View.MoveCurrentToFirst();
             }
 
@@ -602,7 +525,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            dbContext.Approve();
+            ExecutionDB.Approve();
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -628,12 +551,12 @@ namespace Cognitivo.Production
 
         private void treeraw_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeraw.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeRaw.SelectedItem;
             if (production_order_detail != null)
             {
 
 
-                production_execution_detairawlViewSource.View.Filter = i =>
+                production_execution_detailRawViewSource.View.Filter = i =>
                 {
                     production_execution_detail production_execution_detail = (production_execution_detail)i;
                     if (production_execution_detail.id_order_detail == production_order_detail.id_order_detail && production_execution_detail.item.id_item_type == item.item_type.RawMaterial)
@@ -647,10 +570,10 @@ namespace Cognitivo.Production
 
         private void treeservice_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeservice.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem;
             if (production_order_detail != null)
             {
-                production_execution_detailserviceViewSource.View.Filter = i =>
+                production_execution_detailServiceViewSource.View.Filter = i =>
                 {
                     production_execution_detail production_execution_detail = (production_execution_detail)i;
                    
@@ -666,10 +589,10 @@ namespace Cognitivo.Production
 
         private void treecapital_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treecapital.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem;
             if (production_order_detail != null)
             {
-                production_execution_detailcapitalViewSource.View.Filter = i =>
+                production_execution_detailAssetViewSource.View.Filter = i =>
                 {
                     production_execution_detail production_execution_detail = (production_execution_detail)i;
                     if (production_execution_detail.id_order_detail == production_order_detail.id_order_detail && production_execution_detail.item.id_item_type == item.item_type.FixedAssets)
@@ -678,7 +601,7 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
-                production_execution_detailitemViewSource.View.Filter = null;
+                production_execution_detailProductViewSource.View.Filter = null;
             }
         }
 
@@ -691,29 +614,44 @@ namespace Cognitivo.Production
 
         }
 
-        private void TextBox_KeyDown_1(object sender, KeyEventArgs e)
+        private void dgSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (production_execution_detailSupplyViewSource != null)
             {
-                adddataraw();
-            }
-        }
+                if (production_execution_detailSupplyViewSource.View != null)
+                {
+                    production_execution_detail obj = (production_execution_detail)production_execution_detailSupplyViewSource.View.CurrentItem;
+                    if (obj != null)
+                    {
+                        if (obj.id_item != null)
+                        {
+                            int _id_item = (int)obj.id_item;
+                            item_dimensionViewSource.View.Filter = i =>
+                            {
+                                item_dimension item_dimension = i as item_dimension;
+                                if (item_dimension.id_item == _id_item)
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            };
+                        }
 
-        private void TextBox_KeyDown_2(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                adddatacapital();
+                    }
+                }
             }
         }
 
         private void dgproduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (production_execution_detailitemViewSource != null)
+            if (production_execution_detailProductViewSource != null)
             {
-                if (production_execution_detailitemViewSource.View != null)
+                if (production_execution_detailProductViewSource.View != null)
                 {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detailitemViewSource.View.CurrentItem;
+                    production_execution_detail obj = (production_execution_detail)production_execution_detailProductViewSource.View.CurrentItem;
                     if (obj != null)
                     {
                         if (obj.id_item != null)
@@ -741,11 +679,11 @@ namespace Cognitivo.Production
 
         private void dgRaw_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (production_execution_detairawlViewSource != null)
+            if (production_execution_detailRawViewSource != null)
             {
-                if (production_execution_detairawlViewSource.View != null)
+                if (production_execution_detailRawViewSource.View != null)
                 {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detairawlViewSource.View.CurrentItem;
+                    production_execution_detail obj = (production_execution_detail)production_execution_detailRawViewSource.View.CurrentItem;
                     if (obj != null)
                     {
                         if (obj.id_item != null)
@@ -772,11 +710,11 @@ namespace Cognitivo.Production
 
         private void dgCapital_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (production_execution_detailcapitalViewSource != null)
+            if (production_execution_detailAssetViewSource != null)
             {
-                if (production_execution_detailcapitalViewSource.View != null)
+                if (production_execution_detailAssetViewSource.View != null)
                 {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detailcapitalViewSource.View.CurrentItem;
+                    production_execution_detail obj = (production_execution_detail)production_execution_detailAssetViewSource.View.CurrentItem;
                     if (obj != null)
                     {
                         if (obj.id_item != null)
@@ -801,12 +739,12 @@ namespace Cognitivo.Production
             }
         }
 
-        private void treesupplier_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void treeSupply_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treesupplier.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeSupply.SelectedItem;
             if (production_order_detail != null)
             {
-                production_execution_detailsupplierViewSource.View.Filter = i =>
+                production_execution_detailSupplyViewSource.View.Filter = i =>
                 {
                     production_execution_detail production_execution_detail = (production_execution_detail)i;
                     if (production_execution_detail.id_order_detail == production_order_detail.id_order_detail)
@@ -818,14 +756,12 @@ namespace Cognitivo.Production
             }
         }
 
-        private void treeproduct_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeproduct.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem;
             if (production_order_detail != null)
             {
-
-
-                production_execution_detailitemViewSource.View.Filter = i =>
+                production_execution_detailProductViewSource.View.Filter = i =>
                 {
                     production_execution_detail production_execution_detail = (production_execution_detail)i;
                     if (production_execution_detail.item != null)
@@ -839,22 +775,6 @@ namespace Cognitivo.Production
                     else { return false; }
                 };
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            adddataitem();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            adddataraw();
-
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            adddatacapital();
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -888,51 +808,16 @@ namespace Cognitivo.Production
 
         }
 
-        private void dgSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (production_execution_detailsupplierViewSource != null)
-            {
-                if (production_execution_detailsupplierViewSource.View != null)
-                {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detailsupplierViewSource.View.CurrentItem;
-                    if (obj != null)
-                    {
-                        if (obj.id_item != null)
-                        {
-                            int _id_item = (int)obj.id_item;
-                            item_dimensionViewSource.View.Filter = i =>
-                            {
-                                item_dimension item_dimension = i as item_dimension;
-                                if (item_dimension.id_item == _id_item)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                            };
-                        }
-
-                    }
-                }
-            }
-        }
-
         private void txtsupplier_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                adddatasupplies();
+                Button btn = new Button();
+                btn.Name = "Supp";
+                btnInsert_Click(btn, e);
             }
 
         }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            adddatasupplies();
-        }
-
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -955,18 +840,85 @@ namespace Cognitivo.Production
                     exexustiondetail.CancelEdit();
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
                     //production_execution.production_execution_detail.Remove(production_execution_detail);
-                    dbContext.production_execution_detail.Remove(production_execution_detail);
-                    production_execution_detailcapitalViewSource.View.Refresh();
-                    production_execution_detailitemViewSource.View.Refresh();
-                    production_execution_detailserviceViewSource.View.Refresh();
-                    production_execution_detailsupplierViewSource.View.Refresh();
-                    production_execution_detairawlViewSource.View.Refresh();
+                    ExecutionDB.production_execution_detail.Remove(production_execution_detail);
+                    production_execution_detailAssetViewSource.View.Refresh();
+                    production_execution_detailProductViewSource.View.Refresh();
+                    production_execution_detailServiceViewSource.View.Refresh();
+                    production_order_detaillAssetViewSource.View.Refresh();
+                    production_execution_detailRawViewSource.View.Refresh();
                 }
             }
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
             }
+        }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+            production_order_detail production_order_detail = null;
+            Button btn = sender as Button;
+            decimal Quantity = 0M;
+
+            if (btn.Name.Contains("Prod"))
+            {
+                Quantity = Convert.ToDecimal(txtProduct.Text);
+                production_order_detail = treeProduct.SelectedItem as production_order_detail;
+            }
+            else if (btn.Name.Contains("Raw"))
+            {
+                Quantity = Convert.ToDecimal(txtRaw.Text);
+                production_order_detail = treeRaw.SelectedItem as production_order_detail;
+            }
+            else if (btn.Name.Contains("Asset"))
+            {
+                Quantity = Convert.ToDecimal(txtAsset.Text);
+                production_order_detail = treeAsset.SelectedItem as production_order_detail;
+            }
+            else if (btn.Name.Contains("Supp"))
+            {
+                Quantity = Convert.ToDecimal(txtSupply.Text);
+                production_order_detail = treeSupply.SelectedItem as production_order_detail;
+            }
+
+            try
+            {
+
+                if (production_order_detail != null)
+                {
+                    Insert_IntoDetail(production_order_detail, Quantity);
+
+                    production_execution_detailRawViewSource.View.Refresh();
+                    production_execution_detailRawViewSource.View.MoveCurrentToLast();
+
+                    production_execution_detailSupplyViewSource.View.Refresh();
+                    production_execution_detailSupplyViewSource.View.MoveCurrentToLast();
+
+                    production_execution_detailProductViewSource.View.Refresh();
+                    production_execution_detailProductViewSource.View.MoveCurrentToLast();
+
+                    production_execution_detailAssetViewSource.View.Refresh();
+                    production_execution_detailAssetViewSource.View.MoveCurrentToLast();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
+
+        private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
+        {
+            production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            production_execution_detail _production_execution_detail = new entity.production_execution_detail();
+
+            _production_execution_detail.id_item = production_order_detail.id_item;
+            _production_execution_detail.item = production_order_detail.item;
+            _production_execution_detail.quantity = Quantity;
+            _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
+            _production_execution_detail.production_execution = _production_execution;
+            _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
+            _production_execution.production_execution_detail.Add(_production_execution_detail);
         }
     }
 }

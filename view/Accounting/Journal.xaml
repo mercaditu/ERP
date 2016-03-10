@@ -88,7 +88,7 @@
 						                SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                DisplayMemberPath="name" IsReadOnly="True"
 						                SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="*"/>
-                <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" CellStyle="{StaticResource Number_CellStyle}"
+                <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}}" CellStyle="{StaticResource Number_CellStyle}"
                                     Header="{lex:Loc Cognitivo:local:Debit}" Width="auto" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" CellStyle="{StaticResource Number_CellStyle}"
                                     Header="{lex:Loc Cognitivo:local:Credit}" Width="auto" IsReadOnly="True"/>

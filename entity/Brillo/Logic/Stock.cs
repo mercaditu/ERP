@@ -386,10 +386,10 @@ namespace entity.Brillo.Logic
                                                 comment_Generator(App.Names.ProductionExecustion, production_execution.id_production_execution.ToString(), "")
                                             ));
                     }
-
+                    decimal qty_ExexustionDetail = detail.quantity;
                     foreach (item_movement object_Movement in _item_movementList)
                     {
-                        decimal qty_ExexustionDetail = detail.quantity;
+                      
 
                         if (qty_ExexustionDetail > 0)
                         {
@@ -445,6 +445,7 @@ namespace entity.Brillo.Logic
                             //Adding into List
                             item_movementList.Add(item_movement);
                             qty_ExexustionDetail = qty_ExexustionDetail - object_Movement.credit;
+                         
                         }
                     }
                     // }

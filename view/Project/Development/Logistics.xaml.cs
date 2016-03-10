@@ -72,29 +72,46 @@ namespace Cognitivo.Project.Development
 
                 if (_id_project > 0)
                 {
-                    var productlist = (from IT in entity.db.project_task
-                                       where IT.items.id_item_type == item.item_type.Product && (IT.status == Status.Project.Approved)
-                                       && IT.status != null && IT.id_project == _id_project
-                                       join IK in entity.db.item_product on IT.id_item equals IK.id_item
-                                       join IO in entity.db.item_movement on IK.id_item_product equals IO.id_item_product into a
-                                       from IM in a.DefaultIfEmpty()
-                                       group IT by new { IM, IT.items }
+                    var productlistbasic = (from IT in entity.db.project_task
+                                            where (IT.status == Status.Project.Approved)
+                                            && IT.status != null && IT.id_project == _id_project
+                                            join IK in entity.db.item_product on IT.id_item equals IK.id_item
+                                            join IO in entity.db.item_movement on IK.id_item_product equals IO.id_item_product into a
+                                            from IM in a.DefaultIfEmpty()
+                                            group IT by new { IM, IT.items }
+                                                into last
+                                                select new
+                                                {
+                                                    _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
+                                                    _code = last.Key.items != null ? last.Key.items.code : "",
+                                                    _name = last.Key.items != null ? last.Key.items.name : "",
+                                                    _id_task = last.Max(x => x.id_project_task),
+                                                    _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
+                                                    avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
+                                                    buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0),
+                                                    item = last.Key.items
+                                                }).ToList();
+
+                    var productlist = (from PL in productlistbasic
+                                       group PL by new { PL.item }
                                            into last
-                                       select new
-                                       {
-                                           _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
-                                           _code = last.Key.items != null ? last.Key.items.code : "",
-                                           _name = last.Key.items != null ? last.Key.items.name : "",
-                                           _id_task = last.Max(x => x.id_project_task),
-                                           _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
-                                           avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
-                                           buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0)
-                                       }).ToListAsync();
+                                           select new
+                                           {
+                                               _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
+                                               _code = last.Key.item != null ? last.Key.item.code : "",
+                                               _name = last.Key.item != null ? last.Key.item.name : "",
+                                               _id_task = last.Max(x => x._id_task),
+                                               _ordered_quantity = last.Max(x => x._ordered_quantity),
+                                               avlqtyColumn = last.Sum(x => x.avlqtyColumn),
+                                               buyqty = last.Sum(x => x.avlqtyColumn)<last.Max(x => x._ordered_quantity)?(last.Max(x => x._ordered_quantity) != 0 ? last.Max(x => x._ordered_quantity) : 0) - (last.Sum(x => x.avlqtyColumn) != 0 ? last.Sum(x => x.avlqtyColumn) : 0):0,
+                                               item=last.Key.item
+                                           }).ToList();
 
+                    item_ProductDataGrid.ItemsSource = productlist.Where(IT=>IT.item.id_item_type == item.item_type.Product).ToList();
 
-                    item_ProductDataGrid.ItemsSource = await productlist;
+                    item_RawDataGrid.ItemsSource = productlist.Where(IT => IT.item.id_item_type == item.item_type.RawMaterial).ToList(); ;
                     var servicelist = (from IT in entity.db.project_task
-                                       where IT.items.id_item_type == item.item_type.Service && IT.status == Status.Project.Approved //) 
+                                       where IT.status == Status.Project.Approved //) 
                                        && IT.status != null && IT.id_project == _id_project
 
                                        group IT by new { IT.items } into last
@@ -104,64 +121,13 @@ namespace Cognitivo.Project.Development
                                            _code = last.Key.items != null ? last.Key.items.code : "",
                                            _name = last.Key.items != null ? last.Key.items.name : "",
                                            _id_task = last.Max(x => x.id_project_task),
-                                           _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0
-                                          // avlqtyColumn =  entity.db.item_movement.Where(x => x.item_product.id_item == last.Key.items.id_item)!=null?entity.db.item_movement.Where(x => x.item_product.id_item == last.Key.items.id_item).Sum(x => x.credit != 0 ? x.credit : 0 - x.debit != 0 ? x.debit : 0):0
-                                       }).ToListAsync();
-                    item_ServiceDataGrid.ItemsSource = await servicelist;
-
-                    var rawlist = (from IT in entity.db.project_task
-                                   where IT.items.id_item_type == item.item_type.RawMaterial && IT.status == Status.Project.Approved // || IT.status == app_status.Project.InProcess || IT.status == app_status.Project.Executed) 
-                                   && IT.status != null && IT.id_project == _id_project
-                                    join IK in entity.db.item_product on IT.id_item equals IK.id_item
-                                       join IO in entity.db.item_movement on IK.id_item_product equals IO.id_item_product into a
-                                       from IM in a.DefaultIfEmpty()
-                                       group IT by new { IM, IT.items }
-                                           into last
-                                   select new
-                                   {
-                                       _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
-                                       _code = last.Key.items != null ? last.Key.items.code : "",
-                                       _name = last.Key.items != null ? last.Key.items.name : "",
-                                       _id_task = last.Max(x => x.id_project_task),
-                                       _ordered_quantity = last.Sum(x => x.quantity_est) != null ? last.Sum(x => x.quantity_est) : 0,
-                                       avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
-                                       buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0)
-                                   }).ToListAsync();
-                    item_RawDataGrid.ItemsSource = await rawlist;
-
-                    var capitallist = (from IT in entity.db.project_task
-                                       where IT.items.id_item_type == item.item_type.FixedAssets && IT.status == Status.Project.Approved //|| IT.status == app_status.Project.InProcess || IT.status == app_status.Project.Executed) 
-                                       && IT.status != null && IT.id_project == _id_project
-  
-                                       group IT by new {  IT.items }
-                                           into last
-                                       select new
-                                       {
-                                           _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
-                                           _code = last.Key.items != null ? last.Key.items.code : "",
-                                           _name = last.Key.items != null ? last.Key.items.name : "",
-                                           _id_task = last.Max(x => x.id_project_task),
-                                           _ordered_quantity = last.Sum(x => x.quantity_est) != null ? last.Sum(x => x.quantity_est) : 0,
-                                     
-                                       }).ToListAsync();
-                    item_CapitalDataGrid.ItemsSource = await capitallist;
-
-                    var suppliesList = (from IT in entity.db.project_task
-                                        where IT.items.id_item_type == item.item_type.Supplies && IT.status == Status.Project.Approved //|| IT.status == app_status.Project.InProcess || IT.status == app_status.Project.Executed) 
-                                        && IT.status != null && IT.id_project == _id_project
- 
-                                       group IT by new { IT.items }
-                                           into last
-                                        select new
-                                        {
-                                            _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
-                                            _code = last.Key.items != null ? last.Key.items.code : "",
-                                            _name = last.Key.items != null ? last.Key.items.name : "",
-                                            _id_task = last.Max(x => x.id_project_task),
-                                            _ordered_quantity = last.Sum(x => x.quantity_est) != null ? last.Sum(x => x.quantity_est) : 0,
-                                           
-                                        }).ToListAsync();
-                    dgvSupplies.ItemsSource = await suppliesList;
+                                           _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
+                                           item = last.Key.items
+                                           // avlqtyColumn =  entity.db.item_movement.Where(x => x.item_product.id_item == last.Key.items.id_item)!=null?entity.db.item_movement.Where(x => x.item_product.id_item == last.Key.items.id_item).Sum(x => x.credit != 0 ? x.credit : 0 - x.debit != 0 ? x.debit : 0):0
+                                       }).ToList();
+                    item_ServiceDataGrid.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.Service).ToList();
+                    item_CapitalDataGrid.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.FixedAssets).ToList(); ;
+                    dgvSupplies.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.Supplies).ToList(); ;
 
                 }
 

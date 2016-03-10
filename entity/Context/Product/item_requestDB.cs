@@ -73,7 +73,11 @@ namespace entity
                 item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                 item_transfer.id_item_request = item_request.id_item_request;
                 item_transfer.id_department = base.app_department.FirstOrDefault().id_department;
-                item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
+                if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault()!=null)
+                {
+                    item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
+                }
+               
 
 
 
@@ -195,11 +199,11 @@ namespace entity
                         //}
                     }
                 }
-                if (item_transfer.transfer_type==0)
+                if (purchase_tender.purchase_tender_item_detail.Count()> 0)
                 {
                     base.purchase_tender.Add(purchase_tender);
                 }
-                else
+                if(item_transfer.item_transfer_detail.Count()>0)
                 {
                     base.item_transfer.Add(item_transfer);
                 }

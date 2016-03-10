@@ -168,6 +168,7 @@
     <Compile Include="Brillo\DeepCopy.cs" />
     <Compile Include="Brillo\Document\DataSource.cs" />
     <Compile Include="Brillo\Document\Normal.cs" />
+    <Compile Include="Brillo\Document\NumToWords.cs" />
     <Compile Include="Brillo\Document\Start.cs" />
     <Compile Include="Brillo\Email.cs" />
     <Compile Include="Brillo\GetDefault.cs" />
@@ -363,6 +364,10 @@
     <Compile Include="Migrations\201603091255409_UpdateVatWithHolding.cs" />
     <Compile Include="Migrations\201603091255409_UpdateVatWithHolding.Designer.cs">
       <DependentUpon>201603091255409_UpdateVatWithHolding.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603101027236_UpdateCurrency.cs" />
+    <Compile Include="Migrations\201603101027236_UpdateCurrency.Designer.cs">
+      <DependentUpon>201603101027236_UpdateCurrency.cs</DependentUpon>
     </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
@@ -783,6 +788,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603091255409_UpdateVatWithHolding.resx">
       <DependentUpon>201603091255409_UpdateVatWithHolding.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603101027236_UpdateCurrency.resx">
+      <DependentUpon>201603101027236_UpdateCurrency.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

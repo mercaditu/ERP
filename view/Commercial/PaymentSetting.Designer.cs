@@ -12,7 +12,7 @@ namespace Cognitivo.Commercial {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
     internal sealed partial class PaymentSetting : global::System.Configuration.ApplicationSettingsBase {
         
         private static PaymentSetting defaultInstance = ((PaymentSetting)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new PaymentSetting())));
@@ -32,6 +32,18 @@ namespace Cognitivo.Commercial {
             }
             set {
                 this["Trans_Date"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.03")]
+        public decimal vatwithholdingPersent {
+            get {
+                return ((decimal)(this["vatwithholdingPersent"]));
+            }
+            set {
+                this["vatwithholdingPersent"] = value;
             }
         }
     }

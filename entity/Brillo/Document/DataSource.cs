@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using entity;
+using System;
 
 namespace entity.Brillo.Document
 {
@@ -95,7 +96,9 @@ namespace entity.Brillo.Document
                         contract = g.sales_budget.app_contract.name,
                         condition = g.sales_budget.app_contract.app_condition.name,
                         Number = g.sales_budget.number,
-                        comment = g.sales_budget.comment
+                        comment = g.sales_budget.comment,
+                        AmountWords=Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(sales_budget.GrandTotal)),
+                        HasRounding = g.sales_budget.app_currencyfx.app_currency.has_rounding
                     }).ToList();
 
                 return reportDataSource;
@@ -147,6 +150,8 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_price,
                         unit_price_vat = g.UnitPrice_Vat,
+                        AmountWords=Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(g.sales_order.GrandTotal)),
+                        HasRounding = g.sales_order.app_currencyfx.app_currency.has_rounding
                     }).ToList();
 
                 return reportDataSource;
@@ -203,7 +208,9 @@ namespace entity.Brillo.Document
                     sales_number = g.sales_invoice != null ? g.sales_invoice.number:"",
                     sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment:"",
                     packingList = g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()):"",
-                    sales_order = g.sales_order_detail != null ? g.sales_order_detail.sales_order.number :""
+                    sales_order = g.sales_order_detail != null ? g.sales_order_detail.sales_order.number :"",
+                    AmountWords = Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(sales_invoice.GrandTotal)),
+                    HasRounding = g.sales_invoice.app_currencyfx.app_currency.has_rounding
                 }).ToList();
               
                 return reportDataSource;
@@ -291,6 +298,8 @@ namespace entity.Brillo.Document
                                   id_vat_group = g.id_vat_group,
                                   gov_id = g.sales_return.contact.gov_code,
                                   Number = g.sales_return.number,
+                                  AmountWords = Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(sales_return.GrandTotal)),
+                                  HasRounding = g.sales_return.app_currencyfx.app_currency.has_rounding
                               }).ToList();
 
                 return reportDataSource;
@@ -380,6 +389,8 @@ namespace entity.Brillo.Document
                         id_vat_group = g.id_vat_group,
                         gov_id = g.purchase_order.contact.gov_code,
                         Number = g.purchase_order.number,
+                        AmountWords = Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(purchase_order.GrandTotal)),
+                        HasRounding = g.purchase_order.app_currencyfx.app_currency.has_rounding
                     }).ToList();
 
                 return reportDataSource;

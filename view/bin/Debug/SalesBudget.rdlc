@@ -21,6 +21,10 @@
           <DataField>sales_order</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="AmountWords">
+          <DataField>AmountWords</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="company_name">
           <DataField>company_name</DataField>
           <rd:TypeName>System.String</rd:TypeName>

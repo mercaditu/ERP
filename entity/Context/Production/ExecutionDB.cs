@@ -75,16 +75,13 @@ namespace entity
                 {
                     item_movement.AddRange(item_movementList);
                 }
-             
+                production_execution.status = Status.Documents_General.Approved;
               
                 SaveChanges();
 
-                production_execution.status = Status.Documents_General.Approved;
+                
 
-                if (production_execution.Error != null)
-                {
-                    production_execution.HasErrors = true;
-                }
+              
             }
         }
 

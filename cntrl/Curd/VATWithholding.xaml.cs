@@ -19,7 +19,7 @@ namespace cntrl
 
         //Change to List. We will need to add multiple payment scheduals.
         public payment_schedual payment_schedual { get; set; }
-        
+        public decimal percentage { get; set; }
         public enum Mode
         {
             Add,
@@ -42,6 +42,9 @@ namespace cntrl
                     CollectionViewSource invoiceViewSource = new CollectionViewSource();
                     invoiceViewSource.Source = _invoiceList;
                     stackMain.DataContext = invoiceViewSource;
+
+                    dynamic vat=(dynamic)_invoiceList.FirstOrDefault();
+                    lbltotalvat.Content=(vat.TotalVat *)
                 }
                 catch (Exception ex)
                 {

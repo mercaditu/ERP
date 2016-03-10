@@ -57,6 +57,9 @@
             <CheckBox x:Name="chkIsPriority" Content="{lex:Loc Default}"
                   Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
 				  IsChecked="{Binding is_priority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <CheckBox x:Name="chkhasrounding" Content="{lex:Loc HasRounding}"
+                  Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
+				  IsChecked="{Binding has_rounding, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
 
             <Label Content="{lex:Loc Rate}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center"/>

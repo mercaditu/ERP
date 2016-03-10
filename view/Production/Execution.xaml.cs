@@ -88,11 +88,11 @@ namespace Cognitivo.Production
 
             cmbcoefficient.SelectedIndex = -1;
             
-            filter_prodcuct();
-            filter_service();
-            filter_supplier();
-            filter_raw();
-            filter_capital();
+            filter_Product();
+            filter_Service();
+            filter_Supply();
+            filter_Raw();
+            filter_Asset();
             filer_productionitem_execution();
             filer_productionraw_execution();
             filer_productionsupply_execution();
@@ -172,7 +172,6 @@ namespace Cognitivo.Production
                 }
             }
         }
-
         public void filer_productionsupply_execution()
         {
             if (production_execution_detailSupplyViewSource != null)
@@ -196,7 +195,6 @@ namespace Cognitivo.Production
                 }
             }
         }
-
         public void filer_productionraw_execution()
         {
             if (production_execution_detailRawViewSource != null)
@@ -221,7 +219,8 @@ namespace Cognitivo.Production
                 }
             }
         }
-        public void filter_prodcuct()
+
+        public void filter_Product()
         {
             int id_production_order = 0;
             if (production_executionViewSource.View.CurrentItem != null)
@@ -249,7 +248,7 @@ namespace Cognitivo.Production
             }
 
         }
-        public void filter_service()
+        public void filter_Service()
         {
             int id_production = 0;
             if (production_executionViewSource.View.CurrentItem != null)
@@ -272,7 +271,7 @@ namespace Cognitivo.Production
             }
 
         }
-        public void filter_supplier()
+        public void filter_Supply()
         {
             int id_production = 0;
             if (production_executionViewSource.View.CurrentItem != null)
@@ -297,7 +296,7 @@ namespace Cognitivo.Production
             }
 
         }
-        public void filter_raw()
+        public void filter_Raw()
         {
             int id_production = 0;
             if (production_executionViewSource.View.CurrentItem != null)
@@ -320,7 +319,7 @@ namespace Cognitivo.Production
                 }
             }
         }
-        public void filter_capital()
+        public void filter_Asset()
         {
             int id_production = 0;
             if (production_executionViewSource.View.CurrentItem != null)
@@ -342,67 +341,6 @@ namespace Cognitivo.Production
                     production_order_detaillAssetViewSource.Source = null;
 
                 }
-            }
-        }
-
-        public void adddataitem()
-        {
-            try
-            {
-                production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem;
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-
-                if (production_order_detail != null)
-                {
-                    production_execution_detail _production_execution_detail = new entity.production_execution_detail();
-                    //Check for contact
-
-                    _production_execution_detail.id_item = production_order_detail.id_item;
-                    _production_execution_detail.item = production_order_detail.item;
-                    _production_execution_detail.quantity = Convert.ToInt32(txtitem.Text);
-                    _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
-                    _production_execution_detail.production_execution = _production_execution;
-                    _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-                    _production_execution.production_execution_detail.Add(_production_execution_detail);
-
-                    production_execution_detailProductViewSource.View.Refresh();
-                    production_execution_detailProductViewSource.View.MoveCurrentToLast();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
-        public void adddatacapital()
-        {
-            try
-            {
-                production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem;
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-
-                if (production_order_detail != null)
-                {
-
-
-                    production_execution_detail _production_execution_detail = new production_execution_detail();
-                    //Check for contact
-
-                    _production_execution_detail.id_item = production_order_detail.id_item;
-                    _production_execution_detail.item = production_order_detail.item;
-                    _production_execution_detail.quantity = Convert.ToInt32(txtcapital.Text);
-                    _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
-                    _production_execution_detail.production_execution = _production_execution;
-                    _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-                    _production_execution.production_execution_detail.Add(_production_execution_detail);
-
-                    production_execution_detailAssetViewSource.View.Refresh();
-                    production_execution_detailAssetViewSource.View.MoveCurrentToLast();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
             }
         }
 
@@ -530,18 +468,16 @@ namespace Cognitivo.Production
 
         private void toolBar_btnAnull_Click(object sender)
         {
-
+            
         }
-
-
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            filter_prodcuct();
-            filter_service();
-            filter_supplier();
-            filter_raw();
-            filter_capital();
+            filter_Product();
+            filter_Service();
+            filter_Supply();
+            filter_Raw();
+            filter_Asset();
             filer_productionitem_execution();
             filer_productionraw_execution();
             filer_productionservice_execution();
@@ -554,8 +490,6 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = (production_order_detail)treeRaw.SelectedItem;
             if (production_order_detail != null)
             {
-
-
                 production_execution_detailRawViewSource.View.Filter = i =>
                 {
                     production_execution_detail production_execution_detail = (production_execution_detail)i;
@@ -582,7 +516,6 @@ namespace Cognitivo.Production
                             return true;
                         }
                         else { return false; }
-                   
                 };
             }
         }
@@ -603,15 +536,6 @@ namespace Cognitivo.Production
                 };
                 production_execution_detailProductViewSource.View.Filter = null;
             }
-        }
-
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                adddataitem();
-            }
-
         }
 
         private void dgSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -884,7 +808,7 @@ namespace Cognitivo.Production
             try
             {
 
-                if (production_order_detail != null)
+                if (production_order_detail != null && Quantity > 0)
                 {
                     Insert_IntoDetail(production_order_detail, Quantity);
 

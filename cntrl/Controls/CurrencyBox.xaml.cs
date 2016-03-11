@@ -89,7 +89,9 @@ namespace cntrl.Controls
                         SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
                         RaisePropertyChanged("Rate_Current");
                     }
-                
+                    else
+                    { Rate_Current = 0.0M; }
+              
             }
         }
 
@@ -111,6 +113,7 @@ namespace cntrl.Controls
                         }
                     }
                 }
+               
             }
         }
 
@@ -146,7 +149,12 @@ namespace cntrl.Controls
                                                                          && x.id_company == company_ID)
                                                                      .FirstOrDefault();
                     if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
-                        SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
+                    { SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
+                    else
+                    {
+                        SelectedValue = 1;
+                       // cbCurrency.SelectedValue = -1;
+                    }
                 }
             }
         }
@@ -155,9 +163,17 @@ namespace cntrl.Controls
         {
             app_currencyfx app_currencyfx = null;
             if (contact.app_currency != null && contact.app_currency.app_currencyfx != null && contact.app_currency.app_currencyfx.Count > 0)
+            {
                 app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
+            }
+
             if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
-                SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
+            { SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
+            else
+            {
+                SelectedValue =1;
+               // cbCurrency.SelectedValue = -1;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

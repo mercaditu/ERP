@@ -115,6 +115,7 @@ namespace entity
         public virtual app_location app_location_destination { get; set; }
         public virtual app_branch app_branch_origin { get; set; }
         public virtual app_branch app_branch_destination { get; set; }
+        public virtual contact employee { get; set; }
         public virtual security_user user_requested { get; set; }
         public virtual security_user user_given { get; set; }
     }

@@ -157,6 +157,7 @@ namespace entity
         public virtual ICollection<contact_subscription> contact_subscription { get; set; }
         public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
         public virtual IEnumerable<item_brand> item_brand { get; set; }
+        public virtual IEnumerable<item_transfer> item_transfer { get; set; }
         public virtual IEnumerable<purchase_tender_contact> purchase_tender_contact { get; set; }
         public virtual IEnumerable<purchase_order> purchase_order { get; set; }
         public virtual IEnumerable<purchase_invoice> purchase_invoice { get; set; }

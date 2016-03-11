@@ -12,7 +12,7 @@ namespace entity.Brillo.Logic
         /// </summary>
         /// <param name="obj_entity">Pass Table Entity such as Sales Invoice or Purchase Order</param>
         /// <returns></returns>
-        public List<item_movement> insert_Stock(db db ,object obj_entity)
+        public List<item_movement> insert_Stock(db db, object obj_entity)
         {
             List<item_movement> item_movementList = new List<item_movement>();
 
@@ -22,8 +22,7 @@ namespace entity.Brillo.Logic
                 sales_invoice sales_invoice = (sales_invoice)obj_entity;
 
                 foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail
-                    .Where(x => x.item.id_item_type == item.item_type.Product
-                             || x.item.id_item_type == item.item_type.RawMaterial))
+                    .Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(detail.item);
                     detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
@@ -46,10 +45,10 @@ namespace entity.Brillo.Logic
                     List<item_movement> _item_movementList;
                     //using (db db = new db())
                     //{
-                        _item_movementList = db.item_movement.Where(x => x.id_location == detail.id_location
-                                                                      && x.id_item_product == item_product.id_item_product
-                                                                      && x.status == entity.Status.Stock.InStock
-                                                                      && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                    _item_movementList = db.item_movement.Where(x => x.id_location == detail.id_location
+                                                                  && x.id_item_product == item_product.id_item_product
+                                                                  && x.status == entity.Status.Stock.InStock
+                                                                  && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
                     if (item_product.cogs_type == item_product.COGS_Types.LIFO && _item_movementList != null)
                     {
@@ -72,34 +71,12 @@ namespace entity.Brillo.Logic
                                                 comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
                                             ));
                     }
-                    if (_item_movementList.Count()==0)
-                    {
-                        item_movement item_movement = new item_movement();
-                          //Adding into List if Movement List for this Location is empty.
-                            item_movement = debit_Movement(entity.Status.Stock.InStock,
-                                                    App.Names.SalesInvoice,
-                                                    (int)detail.id_sales_invoice_detail,
-                                                    item_product.id_item_product,
-                                                    (int)detail.id_location,
-                                                    detail.quantity,
-                                                    sales_invoice.trans_date,
-                                                    comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name));
 
-                            item_movement._parent = null;
 
-                            //Logic for Value
-                            item_movement_value item_movement_value = new item_movement_value();
-                            item_movement_value.unit_value =detail.unit_price;
-                            item_movement_value.id_currencyfx = sales_invoice.id_currencyfx;
-                            item_movement_value.comment = item_movement.comment;
-                            item_movement.item_movement_value.Add(item_movement_value);
-                            //Adding into List
-                            item_movementList.Add(item_movement);
-                    }
-
+                    decimal qty_SalesDetail = detail.quantity;
                     foreach (item_movement object_Movement in _item_movementList)
                     {
-                        decimal qty_SalesDetail = detail.quantity;
+
 
                         if (qty_SalesDetail > 0)
                         {
@@ -134,7 +111,31 @@ namespace entity.Brillo.Logic
                             qty_SalesDetail = qty_SalesDetail - object_Movement.credit;
                         }
                     }
-                   // }
+                    if (qty_SalesDetail > 0)
+                    {
+                        item_movement item_movement = new item_movement();
+                        //Adding into List if Movement List for this Location is empty.
+                        item_movement = debit_Movement(entity.Status.Stock.InStock,
+                                                App.Names.SalesInvoice,
+                                                (int)detail.id_sales_invoice_detail,
+                                                item_product.id_item_product,
+                                                (int)detail.id_location,
+                                            qty_SalesDetail,
+                                                sales_invoice.trans_date,
+                                                comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name));
+
+                        item_movement._parent = null;
+
+                        //Logic for Value
+                        item_movement_value item_movement_value = new item_movement_value();
+                        item_movement_value.unit_value = detail.unit_price;
+                        item_movement_value.id_currencyfx = sales_invoice.id_currencyfx;
+                        item_movement_value.comment = item_movement.comment;
+                        item_movement.item_movement_value.Add(item_movement_value);
+                        //Adding into List
+                        item_movementList.Add(item_movement);
+                    }
+                    // }
 
                 }
                 //Return List so we can save into context.
@@ -146,8 +147,7 @@ namespace entity.Brillo.Logic
             {
                 sales_return sales_return = (sales_return)obj_entity;
                 foreach (sales_return_detail sales_return_detail in sales_return.sales_return_detail
-                    .Where(x => x.item.id_item_type == item.item_type.Product
-                             || x.item.id_item_type == item.item_type.RawMaterial))
+                    .Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(sales_return_detail.item);
                     sales_return_detail.id_location = FindNFix_Location(item_product, sales_return_detail.app_location, sales_return.app_branch);
@@ -181,8 +181,7 @@ namespace entity.Brillo.Logic
                 purchase_return purchase_return = (purchase_return)obj_entity;
                 List<purchase_return_detail> Listpurchase_return_detail = purchase_return.purchase_return_detail.Where(x => x.id_item > 0).ToList();
                 foreach (purchase_return_detail purchase_return_detail in Listpurchase_return_detail
-                    .Where(x => x.item.id_item_type == item.item_type.Product
-                             || x.item.id_item_type == item.item_type.RawMaterial))
+                    .Where(x => x.item.item_product.Count() > 0))
                 {
 
                     item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
@@ -215,8 +214,7 @@ namespace entity.Brillo.Logic
             {
                 sales_order sales_order = (sales_order)obj_entity;
                 foreach (sales_order_detail sales_order_detail in sales_order.sales_order_detail
-                    .Where(x => x.item.id_item_type == item.item_type.Product
-                             || x.item.id_item_type == item.item_type.RawMaterial))
+                    .Where(x => x.item.item_product.Count() > 0))
                 {
 
                     item_product item_product = FindNFix_ItemProduct(sales_order_detail.item);
@@ -272,13 +270,12 @@ namespace entity.Brillo.Logic
                 purchase_invoice purchase_invoice = (purchase_invoice)obj_entity;
                 List<purchase_invoice_detail> Listpurchase_invoice_detail = purchase_invoice.purchase_invoice_detail.Where(x => x.id_item > 0).ToList();
                 foreach (purchase_invoice_detail purchase_invoice_detail in Listpurchase_invoice_detail
-                        .Where(x => x.item.id_item_type == item.item_type.Product
-                                 || x.item.id_item_type == item.item_type.RawMaterial))
+                        .Where(x => x.item.item_product.Count() > 0))
                 {
 
                     item_product item_product = FindNFix_ItemProduct(purchase_invoice_detail.item);
                     purchase_invoice_detail.id_location = FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
-                    
+
                     if (purchase_invoice_detail.purchase_order_detail != null)
                     {
                         item_movement mov_OnTheWay = debit_Movement(entity.Status.Stock.OnTheWay,
@@ -289,7 +286,7 @@ namespace entity.Brillo.Logic
                                                         purchase_invoice_detail.quantity,
                                                         purchase_invoice.trans_date,
                                                         comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number, purchase_invoice.contact.name));
-                        
+
                         //Adding into List
                         item_movementList.Add(mov_OnTheWay);
                     }
@@ -324,8 +321,7 @@ namespace entity.Brillo.Logic
                 purchase_order purchase_order = (purchase_order)obj_entity;
                 List<purchase_order_detail> Listpurchase_order_detail = purchase_order.purchase_order_detail.Where(x => x.id_item > 0).ToList();
                 foreach (purchase_order_detail purchase_order_detail in Listpurchase_order_detail
-                    .Where(x => x.item.id_item_type == item.item_type.Product
-                             || x.item.id_item_type == item.item_type.RawMaterial))
+                    .Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(purchase_order_detail.item);
                     purchase_order_detail.id_location = FindNFix_Location(item_product, purchase_order_detail.app_location, purchase_order.app_branch);
@@ -354,8 +350,7 @@ namespace entity.Brillo.Logic
                 production_execution production_execution = (production_execution)obj_entity;
 
                 foreach (production_execution_detail detail in production_execution.production_execution_detail
-                    .Where(x => x.item.id_item_type == item.item_type.Product
-                             || x.item.id_item_type == item.item_type.RawMaterial))
+                    .Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(detail.item);
 
@@ -373,23 +368,11 @@ namespace entity.Brillo.Logic
                     {
                         _item_movementList = _item_movementList.OrderByDescending(x => x.trans_date).ToList();
                     }
-                    else
-                    {
-                        //Adding into List if _item_movementList is empty.
-                        item_movementList.Add(debit_Movement(entity.Status.Stock.InStock,
-                                                App.Names.ProductionExecustion,
-                                                detail.id_production_execution,
-                                                item_product.id_item_product,
-                                                (int)production_execution.production_line.id_location,
-                                                detail.quantity,
-                                                production_execution.trans_date,
-                                                comment_Generator(App.Names.ProductionExecustion, production_execution.id_production_execution.ToString(), "")
-                                            ));
-                    }
+
                     decimal qty_ExexustionDetail = detail.quantity;
                     foreach (item_movement object_Movement in _item_movementList)
                     {
-                      
+
 
                         if (qty_ExexustionDetail > 0)
                         {
@@ -417,7 +400,7 @@ namespace entity.Brillo.Logic
                                                         (int)production_execution.production_line.id_location,
                                                         movement_debit_quantity,
                                                         production_execution.trans_date,
-                                                        comment_Generator(App.Names.ProductionExecustion, 
+                                                        comment_Generator(App.Names.ProductionExecustion,
                                                         production_execution.id_production_execution.ToString(), ""));
                             }
                             else
@@ -430,7 +413,7 @@ namespace entity.Brillo.Logic
                                                         (int)production_execution.production_line.id_location,
                                                         qty_ExexustionDetail,
                                                         production_execution.trans_date,
-                                                        comment_Generator(App.Names.ProductionExecustion, 
+                                                        comment_Generator(App.Names.ProductionExecustion,
                                                         production_execution.id_production_execution.ToString(), ""));
                             }
 
@@ -445,8 +428,22 @@ namespace entity.Brillo.Logic
                             //Adding into List
                             item_movementList.Add(item_movement);
                             qty_ExexustionDetail = qty_ExexustionDetail - object_Movement.credit;
-                         
+
                         }
+                    }
+                    if (qty_ExexustionDetail > 0)
+                    
+                    {
+                        //Adding into List if _item_movementList is empty.
+                        item_movementList.Add(debit_Movement(entity.Status.Stock.InStock,
+                                                App.Names.ProductionExecustion,
+                                                detail.id_production_execution,
+                                                item_product.id_item_product,
+                                                (int)production_execution.production_line.id_location,
+                                                qty_ExexustionDetail,
+                                                production_execution.trans_date,
+                                                comment_Generator(App.Names.ProductionExecustion, production_execution.id_production_execution.ToString(), "")
+                                            ));
                     }
                     // }
 
@@ -464,20 +461,20 @@ namespace entity.Brillo.Logic
         /// <param name="Application_ID">ID of Source Application. OfType app.Applications</param>
         /// <param name="Transaction_ID">ID of Source Transaction from DB.</param>
         /// <returns></returns>
-        public List<item_movement> revert_Stock(db db,App.Names Application_ID, int Transaction_ID)
+        public List<item_movement> revert_Stock(db db, App.Names Application_ID, int Transaction_ID)
         {
             List<item_movement> item_movementList = new List<item_movement>();
 
             //using (db db = new db())
             //{
-                item_movementList = db.item_movement
-                                            .Where(x => x.id_application == Application_ID
-                                                && x.transaction_id == Transaction_ID).ToList();
-                if (item_movementList != null)
-                {
-                    return item_movementList;
-                }
-           // }
+            item_movementList = db.item_movement
+                                        .Where(x => x.id_application == Application_ID
+                                            && x.transaction_id == Transaction_ID).ToList();
+            if (item_movementList != null)
+            {
+                return item_movementList;
+            }
+            // }
 
             return null;
         }
@@ -493,8 +490,8 @@ namespace entity.Brillo.Logic
             App.Names ApplicationID,
             int TransactionID,
             int Item_ProductID,
-            int LocationID, 
-            decimal Quantity, 
+            int LocationID,
+            decimal Quantity,
             DateTime TransDate,
             string Comment)
         {

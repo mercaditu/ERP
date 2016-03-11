@@ -261,6 +261,7 @@ namespace Cognitivo.Sales
                     if (objContact.id_contract != null)
                         cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
                     //Currency
+                   
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
                 }));
 

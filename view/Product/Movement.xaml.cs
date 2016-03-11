@@ -137,7 +137,7 @@ namespace Cognitivo.Product
             {
                 contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-               // item_transfer.us = contact.id_contact;
+                item_transfer.employee = contact;
                
 
                

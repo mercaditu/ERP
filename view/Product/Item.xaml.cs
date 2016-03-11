@@ -241,13 +241,19 @@ namespace Cognitivo.Product
 
         #region Toolbar Events
         private void toolBar_btnCancel_Click(object sender)
+
         {
+             item item = (item)itemDataGrid.SelectedItem;
             // item_vatDataGrid.CancelEdit();
             item_priceDataGrid.CancelEdit();
             item_dimentionDataGrid.CancelEdit();
             item_propertyDataGrid.CancelEdit();
             itemViewSource.View.MoveCurrentToFirst();
-            //dbContext.CancelChanges_withQuestion();
+            if (item.State==EntityState.Added)
+            {
+                dbContext.Entry(item).State = EntityState.Detached;
+            }
+            itemViewSource.View.Refresh();
             //SetIsEnable = false;
         }
 

@@ -131,7 +131,18 @@ namespace Cognitivo.Product
             cbxBranch.ItemsSource = dbContext.app_branch.Local;
         }
 
+        private void set_ContactPref(object sender, EventArgs e)
+        {
+            if (sbxContact.ContactID > 0)
+            {
+                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+               // item_transfer.us = contact.id_contact;
+               
 
+               
+            }
+        }
         private void toolBar_btnApprove_Click(object sender)
         {
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
@@ -223,25 +234,25 @@ namespace Cognitivo.Product
         }
 
         #region Filter Data
-        private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                set_ContactPref(sender, e);
-            }
-        }
+        //private void set_ContactPrefKeyStroke(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        set_ContactPref(sender, e);
+        //    }
+        //}
 
-        private void set_ContactPref(object sender, EventArgs e)
-        {
-            if (contactComboBox.Data != null)
-            {
-                int id = ((contact)contactComboBox.Data).id_contact;
-                contact contact = dbContext.contacts.Where(x => x.id_contact == id).FirstOrDefault();
-                contactComboBox.focusGrid = false;
-                contactComboBox.Text = contact.name;
+        //private void set_ContactPref(object sender, EventArgs e)
+        //{
+        //    if (contactComboBox.Data != null)
+        //    {
+        //        int id = ((contact)contactComboBox.Data).id_contact;
+        //        contact contact = dbContext.contacts.Where(x => x.id_contact == id).FirstOrDefault();
+        //        contactComboBox.focusGrid = false;
+        //        contactComboBox.Text = contact.name;
 
-            }
-        }
+        //    }
+        //}
 
 
 

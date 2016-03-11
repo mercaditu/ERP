@@ -48,7 +48,7 @@ namespace entity.Brillo.Logic
                     Detail = Detail +
                         ""
                         + "Descripcion, Cantiad, Codigo" + "\n"
-                        + "-------------------------------"
+                        + "-------------------------------" + "\n"
                         + ItemName + "\n"
                         + Qty.ToString() + "\t" + ItemCode + "\t" + TaskName + "\n";
                 //}
@@ -56,8 +56,8 @@ namespace entity.Brillo.Logic
             }
 
             Footer = "-------------------------------";
-            Footer += "RETIRADO: " + i.user_requested + "\n";
-            Footer += "APRORADO: " + i.user_given + "\n";
+            Footer += "RETIRADO: " + i.user_requested.name_full + "\n";
+            Footer += "APRORADO: " + i.user_given.name_full + "\n";
             Footer += "-------------------------------";
 
             string Text = Header + Detail + Footer;

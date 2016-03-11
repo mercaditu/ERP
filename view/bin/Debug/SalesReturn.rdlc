@@ -17,6 +17,14 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="HasRounding">
+          <DataField>HasRounding</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="AmountWords">
+          <DataField>AmountWords</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="sales_order">
           <DataField>sales_order</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -552,7 +560,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!unit_price_vat.Value</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Fields!unit_price_vat.Value,System.MidpointRounding.AwayFromZero),Fields!unit_price_vat.Value)</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -600,7 +608,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!sub_Total_vat.Value</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Fields!sub_Total_vat.Value,System.MidpointRounding.AwayFromZero),Fields!sub_Total_vat.Value)</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -751,7 +759,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!sub_Total.Value)</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Sum(Fields!sub_Total.Value),System.MidpointRounding.AwayFromZero),Sum(Fields!sub_Total.Value))</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -844,7 +852,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!sub_Total_vat.Value)-Sum(Fields!sub_Total.Value)</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Sum(Fields!sub_Total_vat.Value)-Sum(Fields!sub_Total.Value),System.MidpointRounding.AwayFromZero),Sum(Fields!sub_Total_vat.Value)-Sum(Fields!sub_Total.Value))</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -937,7 +945,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!sub_Total_vat.Value)</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Sum(Fields!sub_Total_vat.Value),System.MidpointRounding.AwayFromZero),Sum(Fields!sub_Total_vat.Value))</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -1111,6 +1119,66 @@
               </Border>
             </Style>
           </Line>
+          <Textbox Name="Textbox1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Total a Pagar Dolares / Guaranies :</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>15.31545cm</Top>
+            <Left>0.35319cm</Left>
+            <Height>1.50816cm</Height>
+            <Width>10.29044cm</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=UCase(First(Fields!AmountWords.Value, "DataSet1"))</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>15.38601cm</Top>
+            <Left>5.94995cm</Left>
+            <Height>0.6cm</Height>
+            <Width>2.5cm</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>17cm</Height>
         <Style>
@@ -1423,7 +1491,7 @@
               <KeepTogether>true</KeepTogether>
               <Top>0.36152cm</Top>
               <Left>0.35319cm</Left>
-              <Height>2.61501cm</Height>
+              <Height>2.61502cm</Height>
               <Width>6.32763cm</Width>
               <ZIndex>3</ZIndex>
               <Style>

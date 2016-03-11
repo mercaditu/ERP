@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Data.Entity;
 using entity;
 using System.Data.Entity.Validation;
+using System.Windows.Input;
 
 namespace Cognitivo.Commercial
 {
@@ -274,5 +275,24 @@ namespace Cognitivo.Commercial
         {
             load_Schedual();
         }
+
+        #region PrefSettings
+        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            popupCustomize.StaysOpen = false;
+            popupCustomize.IsOpen = true;
+        }
+
+        private void popupCustomize_Closed(object sender, EventArgs e)
+        {
+            Commercial.PaymentSetting _pref_PaymentSetting = new Commercial.PaymentSetting();
+
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            Commercial.PaymentSetting.Default.Save();
+            _pref_PaymentSetting = Commercial.PaymentSetting.Default;
+            popupCustomize.IsOpen = false;
+        }
+        #endregion
     }
 }

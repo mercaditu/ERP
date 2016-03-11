@@ -161,7 +161,7 @@
                         <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailProductViewSource}"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                <TextBox x:Name="txtProduct" Width="64" VerticalAlignment="Top" KeyDown="TextBox_KeyDown"/>
+                                <TextBox x:Name="txtProduct" Width="64" VerticalAlignment="Top" />
                                 <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 

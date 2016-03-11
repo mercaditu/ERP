@@ -21,6 +21,10 @@
           <DataField>sales_order</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="HasRounding">
+          <DataField>HasRounding</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="AmountWords">
           <DataField>AmountWords</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -750,7 +754,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!unit_price_vat.Value</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Fields!unit_price_vat.Value,System.MidpointRounding.AwayFromZero),Fields!unit_price_vat.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>N2</Format>
@@ -799,7 +803,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!sub_Total_vat.Value</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Fields!sub_Total_vat.Value,System.MidpointRounding.AwayFromZero),Fields!sub_Total_vat.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <Format>N2</Format>
@@ -953,7 +957,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!sub_Total.Value)</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Sum(Fields!sub_Total.Value),System.MidpointRounding.AwayFromZero),Sum(Fields!sub_Total.Value))</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -1046,7 +1050,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!sub_Total_vat.Value, "DataSet1")-Sum(Fields!sub_Total.Value, "DataSet1")</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Sum(Fields!sub_Total_vat.Value)-Sum(Fields!sub_Total.Value),System.MidpointRounding.AwayFromZero),Sum(Fields!sub_Total_vat.Value)-Sum(Fields!sub_Total.Value))</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>
@@ -1139,7 +1143,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!sub_Total_vat.Value)</Value>
+                                  <Value>=IIf(First(Fields!HasRounding.Value, "DataSet1")=true,Round(Sum(Fields!sub_Total_vat.Value),System.MidpointRounding.AwayFromZero),Sum(Fields!sub_Total_vat.Value))</Value>
                                   <Style>
                                     <Format>N2</Format>
                                   </Style>

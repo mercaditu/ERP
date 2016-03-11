@@ -124,7 +124,6 @@ namespace Cognitivo.Production
                 }
             }
         }
-
         public void filer_productionitem_execution()
         {
             if (production_execution_detailProductViewSource != null)
@@ -137,7 +136,7 @@ namespace Cognitivo.Production
                     {
 
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
-                        if (objproduction_execution_detail.item != null)
+                        if (objproduction_execution_detail != null && objproduction_execution_detail.item != null)
                         {
                             if (objproduction_execution_detail.item.id_item_type == item.item_type.Product)
                             {
@@ -151,7 +150,6 @@ namespace Cognitivo.Production
                 }
             }
         }
-
         public void filer_productionservice_execution()
         {
             production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem;
@@ -180,8 +178,8 @@ namespace Cognitivo.Production
                 {
                     production_execution_detailSupplyViewSource.View.Filter = i =>
                     {
-                        production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
-                        if (objproduction_execution_detail.item != null)
+                        production_execution_detail objproduction_execution_detail = i as production_execution_detail;
+                        if (objproduction_execution_detail != null)
                         {
                             if (objproduction_execution_detail.item.id_item_type == item.item_type.Supplies)
                             {
@@ -544,7 +542,8 @@ namespace Cognitivo.Production
             {
                 if (production_execution_detailSupplyViewSource.View != null)
                 {
-                    production_execution_detail obj = (production_execution_detail)production_execution_detailSupplyViewSource.View.CurrentItem;
+                    production_execution_detail obj = production_execution_detailSupplyViewSource.View.CurrentItem as production_execution_detail;
+
                     if (obj != null)
                     {
                         if (obj.id_item != null)

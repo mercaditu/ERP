@@ -388,7 +388,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid Background="WhiteSmoke">
 
-                            <Grid Grid.Row="1" Grid.Column="0" Background="White" DataContext="{StaticResource production_execution_detailSupplyViewSource}">
+                            <Grid Grid.Row="1" Grid.Column="0" Background="White" DataContext="{StaticResource production_order_detaillSupplyViewSource}">
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntSix}}">

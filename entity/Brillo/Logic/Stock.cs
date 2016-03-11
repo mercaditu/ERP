@@ -76,13 +76,12 @@ namespace entity.Brillo.Logic
                     decimal qty_SalesDetail = detail.quantity;
                     foreach (item_movement object_Movement in _item_movementList)
                     {
-
-
                         if (qty_SalesDetail > 0)
                         {
                             item_movement item_movement = new item_movement();
 
                             decimal movement_debit_quantity = qty_SalesDetail;
+
                             if (object_Movement.credit <= qty_SalesDetail)
                             {
                                 movement_debit_quantity = object_Movement.credit;
@@ -97,7 +96,6 @@ namespace entity.Brillo.Logic
                                                     movement_debit_quantity,
                                                     sales_invoice.trans_date,
                                                     comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name));
-
                             item_movement._parent = object_Movement;
 
                             //Logic for Value
@@ -106,6 +104,7 @@ namespace entity.Brillo.Logic
                             item_movement_value.id_currencyfx = sales_invoice.id_currencyfx;
                             item_movement_value.comment = item_movement.comment;
                             item_movement.item_movement_value.Add(item_movement_value);
+                            
                             //Adding into List
                             item_movementList.Add(item_movement);
                             qty_SalesDetail = qty_SalesDetail - object_Movement.credit;

@@ -16,6 +16,7 @@ namespace entity.Brillo.Document
         public Normal(object Document, app_document_range app_range, PrintStyles PrintStyle)
         {
             string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\" + app_range.app_document.name + ".rdlc";
+            
             if (Directory.Exists(PathFull) == false)
             {
                 CreateFile(app_range);

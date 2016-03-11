@@ -80,6 +80,15 @@ namespace Cognitivo.Setup.Migration
                       contacts.telephone = (reader[4] is DBNull) ? null : reader[4].ToString();
                       contacts.email = (reader[5] is DBNull) ? null : reader[5].ToString();
 
+
+                      int _dias = Convert.ToInt32((reader["DIASVENCIMIENTO"] is DBNull) ? 0 : reader["DIASVENCIMIENTO"]);
+                      string contrat_name = _dias + " " + "Días";
+                      if (db.app_contract.Where(x => x.name == contrat_name).FirstOrDefault() != null)
+                      {
+                          app_contract app_contract = db.app_contract.Where(x => x.name == contrat_name).FirstOrDefault();
+                          contacts.id_contract = app_contract.id_contract;
+                          contacts.app_contract = app_contract;
+                      }
                       //db Related Insertion.
                       if (!(reader[22] is DBNull))
                       {

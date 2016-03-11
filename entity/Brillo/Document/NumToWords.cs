@@ -15,7 +15,7 @@ namespace entity.Brillo.Document
             double intPart;
             double decPart = 0;
             if (n == 0)
-                return "zero";
+                return "CERO";
             try
             {
                 string[] splitter = n.ToString().Split('.');
@@ -32,13 +32,13 @@ namespace entity.Brillo.Document
             if (decPart > 0)
             {
                 if (words != "")
-                    words += " and ";
+                    words += " Y ";
                 int counter = decPart.ToString().Length;
                 switch (counter)
                 {
                     case 1: words += NumWords(decPart) + " tenths"; break;
-                    case 2: words += NumWords(decPart) + " hundredths"; break;
-                    case 3: words += NumWords(decPart) + " thousandths"; break;
+                    case 2: words += NumWords(decPart) + " CIENTOS"; break;
+                    case 3: words += NumWords(decPart) + " MILES"; break;
                     case 4: words += NumWords(decPart) + " ten-thousandths"; break;
                     case 5: words += NumWords(decPart) + " hundred-thousandths"; break;
                     case 6: words += NumWords(decPart) + " millionths"; break;
@@ -50,9 +50,9 @@ namespace entity.Brillo.Document
 
         static String NumWords(double n) //converts double to words
         {
-            string[] numbersArr = new string[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-            string[] tensArr = new string[] { "twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninty" };
-            string[] suffixesArr = new string[] { "thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion", "undecillion", "duodecillion", "tredecillion", "Quattuordecillion", "Quindecillion", "Sexdecillion", "Septdecillion", "Octodecillion", "Novemdecillion", "Vigintillion" };
+            string[] numbersArr = new string[] { "UN", "DOS", "TRES", "CUATRO", "CINCO ", "SEIS", "SIETE", "OCHO", "NUEVE", "DIES", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE", "DIESISEIS", "DIESISIETE", "DIESIOCHO", "DIESINUEVE" };
+            string[] tensArr = new string[] { "VEINTE", "TREINTA", "CUARENTA", "CINCUENTA", "SESENTA", "SETENTA", "OCHENTA", "NOVENTA" };
+            string[] suffixesArr = new string[] { "MIL", "MILLION", "MIL-MILLON", "BILLON", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion", "undecillion", "duodecillion", "tredecillion", "Quattuordecillion", "Quindecillion", "Sexdecillion", "Septdecillion", "Octodecillion", "Novemdecillion", "Vigintillion" };
             string words = "";
 
             bool tens = false;
@@ -84,15 +84,15 @@ namespace entity.Brillo.Document
             }
             if (n >= 1000)
             {
-                if (n % 1000 > 0) words += NumWords(Math.Floor(n / 1000)) + " thousand, ";
-                else words += NumWords(Math.Floor(n / 1000)) + " thousand";
+                if (n % 1000 > 0) words += NumWords(Math.Floor(n / 1000)) + " MIL, ";
+                else words += NumWords(Math.Floor(n / 1000)) + " MIL";
                 n %= 1000;
             }
             if (0 <= n && n <= 999)
             {
                 if ((int)n / 100 > 0)
                 {
-                    words += NumWords(Math.Floor(n / 100)) + " hundred";
+                    words += NumWords(Math.Floor(n / 100)) + " CIENTO";
                     n %= 100;
                 }
                 if ((int)n / 10 > 1)

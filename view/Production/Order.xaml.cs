@@ -13,12 +13,14 @@ namespace Cognitivo.Production
     public partial class Order : Page,INotifyPropertyChanged
     {
         OrderDB OrderDB = new OrderDB();
-        //List<production_order> ProductionOrderList = new List<production_order>();
 
         CollectionViewSource project_task_dimensionViewSource, item_requestViewSource, item_transferViewSource, projectViewSource, production_orderViewSource, 
             production_lineViewSource, production_orderproduction_order_detailViewSource;
+        
         cntrl.Curd.ItemRequest ItemRequest;
+        
         public int noofrows { get; set; }
+        
         public Order()
         {
             InitializeComponent();
@@ -30,26 +32,21 @@ namespace Cognitivo.Production
             production_order.State = EntityState.Added;
             production_order.status = Status.Production.Pending;
             production_order.IsSelected = true;
-            OrderDB.Entry(production_order).State = EntityState.Added;
-            production_orderViewSource.View.Refresh();
+            OrderDB.production_order.Add(production_order);
+
+            //production_orderViewSource.View.Refresh();
             production_orderViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
-            try
+            MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes)
             {
-                MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (res == MessageBoxResult.Yes)
-                {
-                    OrderDB.production_order.Remove((production_order)production_orderDataGrid.SelectedItem);
-                    production_orderViewSource.View.MoveCurrentToFirst();
-                    toolBar_btnSave_Click(sender);
-                }
-
+                OrderDB.production_order.Remove((production_order)production_orderDataGrid.SelectedItem);
+                production_orderViewSource.View.MoveCurrentToFirst();
+                toolBar_btnSave_Click(sender);
             }
-            catch
-            { }
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -79,40 +76,38 @@ namespace Cognitivo.Production
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            int company_ID = entity.Properties.Settings.Default.company_ID;
-
+            
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-            projectViewSource.Source = OrderDB.projects.Where(a => a.id_company == company_ID).ToList();
+            projectViewSource.Source = OrderDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_lineViewSource = (CollectionViewSource)FindResource("production_lineViewSource");
-            production_lineViewSource.Source = OrderDB.production_line.Where(x => x.id_company == company_ID).ToList();
+            production_lineViewSource.Source = OrderDB.production_line.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             item_transferViewSource = (CollectionViewSource)FindResource("item_transferViewSource");
-            item_transferViewSource.Source = OrderDB.item_transfer.Where(a => a.id_company == company_ID).ToList();
+            item_transferViewSource.Source = OrderDB.item_transfer.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             item_requestViewSource = (CollectionViewSource)FindResource("item_requestViewSource");
-            item_requestViewSource.Source = OrderDB.item_request.Where(a => a.id_company == company_ID).ToList();
+            item_requestViewSource.Source = OrderDB.item_request.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            OrderDB.production_order.Where(a => a.id_company == company_ID).Load();
+            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             production_orderViewSource.Source = OrderDB.production_order.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            app_dimensionViewSource.Source = OrderDB.app_dimension.Where(a => a.id_company == company_ID).ToList();
+            app_dimensionViewSource.Source = OrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == company_ID).ToList();
-
+            app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_orderproduction_order_detailViewSource = ((CollectionViewSource)(FindResource("production_orderproduction_order_detailViewSource")));
 
             if (production_orderproduction_order_detailViewSource.View != null)
             {
                 production_orderproduction_order_detailViewSource.View.Filter = null;
-
                 filter_task();
                 production_orderproduction_order_detailViewSource.View.Refresh();
             }
+
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
         }
 
@@ -647,8 +642,6 @@ namespace Cognitivo.Production
                 //Adding a Child Item.
                 if (production_order_detail.item != null)
                 {
-
-
                     if (production_order_detail.item.id_item_type == entity.item.item_type.Task)
                     {
                         production_order_detail n_production_order_detail = new production_order_detail();
@@ -667,10 +660,11 @@ namespace Cognitivo.Production
             }
             else
             {
+                //Adding First Item
                 production_order_detail n_production_order_detail = new production_order_detail();
-                n_production_order_detail.id_production_order = production_order.id_production_order;
-                n_production_order_detail.production_order.status = Status.Production.Pending;
-                OrderDB.production_order_detail.Add(n_production_order_detail);
+                
+                production_order.production_order_detail.Add(n_production_order_detail);
+
                 production_orderproduction_order_detailViewSource.View.Refresh();
                 production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
                 filter_task();
@@ -733,7 +727,7 @@ namespace Cognitivo.Production
 
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
                 sbxItem.item_types = Item_Type;
-                // itemSearchViewSource.Source = _entity.db.items.Where(x =>x.id_company==_Setting.company_ID && x.id_item_type == Item_Type).ToList();
+                // itemSearchViewSource.Source = _entity.db.items.Where(x =>x.id_company==_Setting.CurrentSession.Id_Company && x.id_item_type == Item_Type).ToList();
 
 
                 if (Item_Type == entity.item.item_type.Task)

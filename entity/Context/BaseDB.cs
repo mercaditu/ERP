@@ -10,7 +10,6 @@ namespace entity
 
         public override int SaveChanges()
         {
-
             return base.SaveChanges();
         }
 

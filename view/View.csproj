@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>309</ApplicationRevision>
+    <ApplicationRevision>310</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -275,6 +275,7 @@
     <Compile Include="Commercial\AccountsRecievable.xaml.cs">
       <DependentUpon>AccountsRecievable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commercial\PaymentSetting.cs" />
     <Compile Include="Configs\Account.xaml.cs">
       <DependentUpon>Account.xaml</DependentUpon>
     </Compile>
@@ -874,7 +875,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Commercial\PaymentSetting.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>PaymentSetting.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Converters\NumberFormat.cs" />

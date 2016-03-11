@@ -10,10 +10,7 @@ namespace entity
         public override int SaveChanges()
         {
             validate_order();
-           
-                  return base.SaveChanges();
-         
-          
+            return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync()

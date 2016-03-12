@@ -2,7 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=entity"
@@ -13,6 +14,11 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
 	  Title="ItemRecipe" Loaded="Page_Loaded">
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
+    </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="item_recepieViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_recepie}, CreateList=True}" />
         <CollectionViewSource x:Key="item_recepieitem_recepie_detailViewSource" Source="{Binding item_recepie_detail, Source={StaticResource item_recepieViewSource}}"/>
@@ -79,13 +85,22 @@
                             <Controls:SmartBox_Item x:Name="sbxItemDetail" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select_detail"
                                                  IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" />
                         </StackPanel>
-                        <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" Margin="5,58,5,0"
+                        <DataGrid x:Name="dgvReceipeDetail" Style="{StaticResource detail_Datagrid}" Margin="5,58,5,0"
                                   ItemsSource="{Binding Source={StaticResource item_recepieitem_recepie_detailViewSource}}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="auto"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" 
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="False" Width="*"/>
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

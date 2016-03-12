@@ -43,8 +43,21 @@ namespace cntrl
                     invoiceViewSource.Source = _invoiceList;
                     stackMain.DataContext = invoiceViewSource;
 
-                    dynamic vat=(dynamic)_invoiceList.FirstOrDefault();
-                    lbltotalvat.Content = ((vat.TotalVat * payment_schedual.AccountPayableBalance) / vat.GrandTotal)*percentage;
+
+                  
+                   
+                    if (_invoiceList.FirstOrDefault().GetType().BaseType==typeof(sales_invoice))
+                    {
+                        sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
+                        lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal) * percentage),4);
+                    }
+                    else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
+                    {
+                        purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
+                        lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage,4);
+                        
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -71,16 +84,35 @@ namespace cntrl
                 payment_withholding_tax.trans_date =(DateTime) DtpTransdate.SelectedDate;
                 payment_withholding_tax.expire_date = (DateTime)DtpTransdate.SelectedDate;
 
-                foreach (dynamic item in _invoiceList)
-                {
+              
                     payment_withholding_details payment_withholding_details = new payment_withholding_details();
-                    payment_withholding_details.id_purchase_invoice = item.id_purchase_invoice;
+                    if (_invoiceList.FirstOrDefault().GetType() == typeof(sales_invoice))
+                    {
+                        sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
+                        payment_withholding_details.id_purchase_invoice = sales_invoice.id_sales_invoice;
+                    }
+                    else if (_invoiceList.FirstOrDefault().GetType() == typeof(purchase_invoice))
+                    {
+                        purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
+                        payment_withholding_details.id_purchase_invoice = purchase_invoice.id_purchase_invoice;
+
+                    }
+                   
                     payment_withholding_tax.payment_withholding_details.Add(payment_withholding_details);
-                }
+             
                 objEntity.db.payment_withholding_tax.Add(payment_withholding_tax);
                 payment_schedual _payment_schedual = new payment_schedual();
 
-                _payment_schedual.debit = Convert.ToDecimal(lbltotalvat.Content);
+                if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
+                {
+                    _payment_schedual.credit = Convert.ToDecimal(lbltotalvat.Content);
+                }
+                else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
+                {
+                    _payment_schedual.debit = Convert.ToDecimal(lbltotalvat.Content);
+
+                }
+               
                 _payment_schedual.parent = payment_schedual;
                 _payment_schedual.expire_date = payment_schedual.expire_date;
                 _payment_schedual.status = payment_schedual.status;

@@ -33,7 +33,8 @@ namespace cntrl.Curd
 
         private entity.contact _contactobject = null;
         public entity.contact contactobject { get { return _contactobject; } set { _contactobject = value; } }
-
+        public List<entity.contact> contactList { get; set; }
+        
         public contact()
         {
             InitializeComponent();
@@ -43,6 +44,7 @@ namespace cntrl.Curd
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
+                List<entity.contact> contactList = new List<global::entity.contact>();
                 cbPriceList.ItemsSource = entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == _Settings.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
                 cbCostCenter.ItemsSource = entity.db.app_cost_center.Where(a => a.is_active == true && a.id_company == _Settings.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
                 cbxRole.ItemsSource = entity.db.contact_role.Where(a => a.id_company == _Settings.company_ID && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
@@ -51,9 +53,15 @@ namespace cntrl.Curd
 
 
                 CollectionViewSource contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
-                List<entity.contact> contactList = new List<entity.contact>();
-                contactList.Add(contactobject);
+                if (contactobject!=null)
+                {
+                    contactList.Add(contactobject);
+                   
+                }
+             
                 contactViewSource.Source = contactList;
+                contactViewSource.View.Refresh();
+                contactViewSource.View.MoveCurrentToFirst();
                 //if (operationMode == Class.clsCommon.Mode.Add)
                 //{
                 //    entity.contact newContact = new entity.contact();
@@ -123,6 +131,7 @@ namespace cntrl.Curd
             crud.Visibility = Visibility.Hidden;
         }
 
+      
       
 
         //private void cbxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)

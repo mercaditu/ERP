@@ -204,11 +204,11 @@
                                             <Label Content="Developer Option" Style="{StaticResource generic_Label}"/>
                                         </CheckBox>
                                         <CheckBox Margin="6,0,0,0" x:Name="chkDuplicateItem" 
-                                          IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=AllowDuplicateItems, Mode=TwoWay}">
+                                          IsChecked="{Binding Source={x:Static pref:OrderSetting.Default}, Path=AllowDuplicateItems, Mode=TwoWay}">
                                             <Label Content="{lex:Loc AllowDuplicateItem}" Foreground="MediumVioletRed"/>
                                         </CheckBox>
                                         <CheckBox Margin="6,0,0,0" x:Name="chkfilterbyBranch" 
-                                          IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=filterbyBranch, Mode=TwoWay}">
+                                          IsChecked="{Binding Source={x:Static pref:OrderSetting.Default}, Path=filterbyBranch, Mode=TwoWay}">
                                             <Label Content="{lex:Loc filterbyBranch}" Foreground="MediumVioletRed"/>
                                         </CheckBox>
                                     </StackPanel>

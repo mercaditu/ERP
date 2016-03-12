@@ -205,7 +205,7 @@ namespace Cognitivo.Sales
             crud_modal.Visibility = Visibility.Visible;
             contactComboBox.IsDisplayed = false;
             cntrl.Curd.contact contact = new cntrl.Curd.contact();
-            contact.btnSave_Click += Save_Click;
+           // contact.btnSave_Click += Save_Click;
             contact.contactobject = _contact;
             crud_modal.Children.Add(contact);
 
@@ -225,7 +225,7 @@ namespace Cognitivo.Sales
                 contactComboBox.IsDisplayed = false;
                 cntrl.Curd.contact contact = new cntrl.Curd.contact();
                 contact.contactobject = _contact;
-                contact.btnSave_Click += Save_Click;
+                //contact.btnSave_Click += Save_Click;
                 crud_modal.Children.Add(contact);
             }
             else

@@ -69,7 +69,7 @@
                 </DataGrid>
                 <StackPanel HorizontalAlignment="Center">
                     <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
-                    <Label x:Name="lbltotalvat" Content="{Binding TotalVat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                    <Label x:Name="lbltotalvat" 
                          Style="{StaticResource input_label}"/>
                 </StackPanel>
             </StackPanel>

@@ -38,12 +38,12 @@ namespace Cognitivo.Commercial {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.03")]
-        public decimal vatwithholdingPersent {
+        public decimal vatwithholdingpercent {
             get {
-                return ((decimal)(this["vatwithholdingPersent"]));
+                return ((decimal)(this["vatwithholdingpercent"]));
             }
             set {
-                this["vatwithholdingPersent"] = value;
+                this["vatwithholdingpercent"] = value;
             }
         }
     }

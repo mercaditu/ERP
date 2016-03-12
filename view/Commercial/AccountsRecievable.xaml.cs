@@ -20,7 +20,7 @@ namespace Cognitivo.Commercial
         List<contact> ContactList;
         cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick();
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance();
-
+        cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
         public AccountsRecievable()
         {
             InitializeComponent();
@@ -260,6 +260,32 @@ namespace Cognitivo.Commercial
                 crud_modal.Visibility = System.Windows.Visibility.Collapsed;
             }
             load_Schedual();
+        }
+
+        private void btnWithholding_Click(object sender, RoutedEventArgs e)
+        {
+            List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
+
+            if (PaymentSchedualList.Count > 0)
+            {
+                sales_invoice sales_invoice = PaymentSchedualList.FirstOrDefault().sales_invoice;
+                if (sales_invoice.payment_withholding_details.Count() == 0)
+                {
+                    VATWithholding.invoiceList = new List<object>();
+                    VATWithholding.invoiceList.Add(sales_invoice);
+                    VATWithholding.objEntity = _entity;
+                    VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
+                    VATWithholding.percentage = sales_invoice.vatwithholdingpercentage;
+                    crud_modal.Visibility = System.Windows.Visibility.Visible;
+                    crud_modal.Children.Add(VATWithholding);
+
+                }
+                else
+                {
+                    toolbar.msgWarning("Alerady Link With Vat Holding...");
+                }
+
+            }
         }
     }
 }

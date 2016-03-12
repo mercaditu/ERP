@@ -77,6 +77,7 @@
             <StackPanel Margin="8,0">
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4"/>
                 <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Payment_Click"/>
+                <Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click"/>
                 <Rectangle Height="1" Margin="0,8" Fill="Silver"/>
                 <Button Content="{lex:Loc Refinance}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Refince_Click"/>
             </StackPanel>

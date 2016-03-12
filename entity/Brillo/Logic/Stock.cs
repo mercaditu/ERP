@@ -119,7 +119,7 @@ namespace entity.Brillo.Logic
                                                 (int)detail.id_sales_invoice_detail,
                                                 item_product.id_item_product,
                                                 (int)detail.id_location,
-                                            qty_SalesDetail,
+                                                qty_SalesDetail,
                                                 sales_invoice.trans_date,
                                                 comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name));
 

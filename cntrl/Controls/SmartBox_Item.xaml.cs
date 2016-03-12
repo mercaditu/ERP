@@ -137,7 +137,7 @@ namespace cntrl.Controls
                 {
                     results = db.items
                                   .Where(x =>
-                                            x.id_company == company_ID && x.id_item_type==item_types &&
+                                            x.id_company == company_ID && x.id_item_type == item_types &&
                                             (
                                                 x.code.Contains(SearchText) ||
                                                 x.name.Contains(SearchText) ||
@@ -160,6 +160,59 @@ namespace cntrl.Controls
                     progBar.IsActive = false;
                 }));
             }
+        }
+
+        private void _SmartBox_Item_GotFocus(object sender, RoutedEventArgs e)
+        {
+            popToolBar.IsOpen = true;
+            popToolBar.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            crudItem.itemobject = new entity.item();
+            popCrud.IsOpen = true;
+            popCrud.Visibility = System.Windows.Visibility.Visible;
+
+        }
+
+        private void crudItem_btnSave_Click(object sender)
+        {
+            using (entity.db db = new entity.db())
+            {
+                if (crudItem.itemList.Count() > 0)
+                {
+                    foreach (entity.item item in crudItem.itemList)
+                    {
+                        if (item.id_item == 0)
+                        {
+                            db.items.Add(item);
+                        }
+
+
+                    }
+
+                    db.SaveChanges();
+                }
+            }
+            popCrud.IsOpen = false;
+            popCrud.Visibility = System.Windows.Visibility.Collapsed;
+
+        }
+
+
+
+        private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            crudItem.itemobject = new entity.item();
+            popCrud.IsOpen = true;
+            popCrud.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void _SmartBox_Item_LostFocus(object sender, RoutedEventArgs e)
+        {
+            popToolBar.IsOpen = false;
+            popToolBar.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

@@ -87,12 +87,12 @@
 					            SelectedDate="{Binding trans_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         <Grid>
                             <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
                                    Style="{StaticResource btn_Label}"/>
                                 <Label Content="e" HorizontalAlignment="Right"
                                    Style="{StaticResource btn_Label}"/>
-                            </StackPanel>
+                            </StackPanel>-->
                         </Grid>
                         <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
                                                    Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -340,6 +340,12 @@
                                 <Label Content="" Style="{StaticResource ico_Label}"/>
                                 <TextBlock Margin="5,0" Text="{lex:Loc Exports}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
                                 <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
+                                      >
+                                <Label Content="X" Style="{StaticResource ico_Label}"/>
+                                <TextBlock Margin="5,0" Text="{lex:Loc VatHolding%}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
+                                <TextBox Text="{Binding vatwithholdingpercentage, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
 
 

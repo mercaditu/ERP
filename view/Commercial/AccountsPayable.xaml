@@ -11,7 +11,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
-        xmlns:converters="clr-namespace:Cognitivo.Converters;assembly=cntrl"
+    xmlns:converters="clr-namespace:Cognitivo.Converters;assembly=cntrl"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       Title="AccountsPayable" Loaded="Page_Loaded">
@@ -87,10 +87,12 @@
                                 <StackPanel Background="WhiteSmoke" Width="180">
                                     <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="MediumVioletRed"/>
                                     <WrapPanel>
-                                        <!--<TextBox Width="30" HorizontalAlignment="Left" 
-                                                Text="{Binding Source={x:Static local:PaymentSetting}, Path=vatwithholdingPersent, Mode=TwoWay}"
-                                                Margin="6,2,2,2"/>-->
                                         <Label Content="{lex:Loc VatWithholdingPercentage}" Style="{StaticResource generic_Label}"/>
+                                        <TextBox Width="36" HorizontalAlignment="Left" 
+                                             
+                                                         Text="{Binding Source={x:Static local:PaymentSetting.Default}, Path=vatwithholdingpercent, Mode=TwoWay}"
+                                                         Margin="6,2,2,2"/>
+                                     
                                     </WrapPanel>
                                     
                                 </StackPanel>

@@ -20,7 +20,7 @@ namespace entity
             
             sales_invoice_detail = new List<sales_invoice_detail>();
             sales_return = new List<sales_return>();
-
+            payment_withholding_details = new List<payment_withholding_details>();
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
@@ -126,7 +126,7 @@ namespace entity
                 _TotalVat = 0;
                 foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
                 {
-                    _TotalVat += _sales_invoice_detail.SubTotal_Vat ;
+                    _TotalVat += _sales_invoice_detail.SubTotal_Vat - _sales_invoice_detail.SubTotal;
                 }
 
                 return Math.Round(_TotalVat, 2);
@@ -170,6 +170,7 @@ namespace entity
         }
         private decimal _DiscountPercentage;
 
+        public decimal vatwithholdingpercentage { get; set; }
         //TimeCapsule
         public ICollection<sales_invoice> older { get; set; }
         public sales_invoice newer { get; set; }
@@ -184,7 +185,7 @@ namespace entity
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
       
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
-        public virtual IEnumerable<payment_withholding_details> payment_withholding_details { get; set; }
+        public virtual ICollection<payment_withholding_details> payment_withholding_details { get; set; }
         #endregion
 
         #region "Validations"

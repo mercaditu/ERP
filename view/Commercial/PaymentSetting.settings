@@ -5,7 +5,7 @@
     <Setting Name="Trans_Date" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="vatwithholdingPersent" Type="System.Decimal" Scope="User">
+    <Setting Name="vatwithholdingpercent" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0.03</Value>
     </Setting>
   </Settings>

@@ -136,5 +136,36 @@ namespace Cognitivo.Product
         {
             ProductRecipeDB.CancelAllChanges();
         }
+
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as item_recepie_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    item_recepie_detail item_recepie_detail = item_recepieitem_recepie_detailViewSource.View.CurrentItem as item_recepie_detail;
+                    //DeleteDetailGridRow
+                    dgvReceipeDetail.CancelEdit();
+                    ProductRecipeDB.item_recepie_detail.Remove(e.Parameter as item_recepie_detail);
+                    item_recepieitem_recepie_detailViewSource.View.Refresh();
+                    //calculate_total(sender, e);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
     }
 }

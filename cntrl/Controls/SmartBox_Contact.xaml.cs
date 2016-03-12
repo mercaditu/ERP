@@ -115,7 +115,7 @@ namespace cntrl.Controls
                     results.AddRange(db.contacts
                    .Where(x =>
                                x.id_company == company_ID &&
-                               (
+                               (   
                                    x.code.Contains(SearchText) ||
                                    x.name.Contains(SearchText)
                                )
@@ -183,5 +183,62 @@ namespace cntrl.Controls
                 }));
             }
         }
+
+       
+
+        private void _SmartBox_Contact_GotFocus(object sender, RoutedEventArgs e)
+        {
+            popToolBar.IsOpen = true;
+            popToolBar.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            crudContact.contactobject = new entity.contact();
+            popCrud.IsOpen = true;
+            popCrud.Visibility = System.Windows.Visibility.Visible;
+
+        }
+
+        private void crudContact_btnSave_Click(object sender)
+        {
+            using (entity.db db = new entity.db())
+            {
+                if (crudContact.contactList.Count()>0)
+                {
+                    foreach (entity.contact contact in crudContact.contactList)
+                    {
+                        if (contact.id_contact==0)
+                        {
+                            db.contacts.Add(contact);
+                        }
+                        
+                        
+                    }
+                    
+                    db.SaveChanges();
+                }
+            }
+                 popCrud.IsOpen = true;
+            popCrud.Visibility = System.Windows.Visibility.Visible;
+
+        }
+
+      
+
+        private void Edit_PreviewMouseUp_1(object sender, MouseButtonEventArgs e)
+        {
+            crudContact.contactobject = Contact;
+            popCrud.IsOpen = true;
+            popCrud.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void _SmartBox_Contact_LostFocus(object sender, RoutedEventArgs e)
+        {
+            popToolBar.IsOpen = false;
+            popToolBar.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+       
     }
 }

@@ -10,21 +10,21 @@
                 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
                 lex:ResxLocalizationProvider.DefaultDictionary="local"
                 lex:LocalizeDictionary.DesignCulture="en-US" 
-             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
+             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" GotFocus="_SmartBox_Contact_GotFocus" LostFocus="_SmartBox_Contact_LostFocus">
     <UserControl.Resources>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
         <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
-            <crud:contact x:Name="crudContact"/>
+            <crud:contact x:Name="crudContact" btnSave_Click="crudContact_btnSave_Click" />
         </Popup>
-        <Popup x:Name="popToolBar" PopupAnimation="Slide" Placement="Top" Visibility="Collapsed">
+        <Popup x:Name="popToolBar" PopupAnimation="Slide" Placement="Top" Visibility="Collapsed" >
             <StackPanel Background="WhiteSmoke" Width="256">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}"/>
+                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" PreviewMouseUp="Add_PreviewMouseUp"/>
                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}"/>
+                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" PreviewMouseUp="Edit_PreviewMouseUp_1"/>
                 </StackPanel>
             </StackPanel>
         </Popup>
@@ -35,7 +35,7 @@
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.SelectAllOnFocus="True"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
-                 KeyUp="StartSearch"/>
+                 KeyUp="StartSearch" />
         <!-- Progress Ring -->
         <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Right"
                             Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False"/>
@@ -46,7 +46,7 @@
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" VerticalAlignment="Center" Margin="0" 
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
 
-        <Popup x:Name="popContact" IsOpen="False">
+        <Popup x:Name="popContact" IsOpen="False" >
             <Popup.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </Popup.Effect>

@@ -20,13 +20,13 @@
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_price_listViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_price_list}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
-        <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail}"/>
+        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel x:Name="stackMain" Background="White">
+        <StackPanel x:Name="stackMain" Background="White" DataContext="{StaticResource itemViewSource}">
             <Grid>
                 <Border Background="WhiteSmoke" />
                 <Border Width="45" HorizontalAlignment="Left" Background="#ff3300">
@@ -79,19 +79,26 @@
             <Rectangle Height="1" Margin="8" Fill="Silver"/>
             <StackPanel>
                 <Label Content="{lex:Loc descVAT}" Margin="8,0" Foreground="Gray"/>
-                <DataGrid Margin="8,-2,8,0" x:Name="item_vatDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="100"
+                <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                              metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
+                              Name="cmbvat" ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"
+                              SelectedValue="{Binding id_vat_group, Mode=TwoWay, 
+                                                      ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                      UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" DisplayMemberPath="name" SelectedValuePath="id_vat_group"/>
+                <!--<DataGrid Margin="8,-2,8,0" x:Name="item_vatDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="100"
                           ItemsSource="{Binding item_vat}" RowDetailsVisibilityMode="VisibleWhenSelected" BorderThickness="1" BorderBrush="LightGray">
                     <DataGrid.Columns>
                         <DataGridComboBoxColumn Header="VAT" Width="*" ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_vat_group" SelectedValueBinding="{Binding id_vat_group, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <!--<DataGridTemplateColumn Width="30" Header="">
+                        --><!--<DataGridTemplateColumn Width="30" Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>-->
+                        </DataGridTemplateColumn>--><!--
                     </DataGrid.Columns>
-                </DataGrid>
+                </DataGrid>-->
                 <Label Content="{lex:Loc Item price}" Margin="8,0" Foreground="Gray"/>
                 <DataGrid Margin="8,-2,8,4" x:Name="item_priceDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderThickness="1" BorderBrush="LightGray" MaxHeight="100"
                                       InitializingNewItem="item_priceDataGrid_InitializingNewItem" ItemsSource="{Binding item_price}" RowDetailsVisibilityMode="VisibleWhenSelected">
@@ -110,9 +117,9 @@
             </StackPanel>
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                    Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}" Visibility="Hidden"/>
+                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_MouseUp"/>
+                <!--<Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
+                    Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}" Visibility="Hidden"/>-->
             </Grid>
         </StackPanel>
     </ScrollViewer>

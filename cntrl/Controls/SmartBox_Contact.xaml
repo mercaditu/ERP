@@ -15,38 +15,38 @@
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
-        <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
-            <crud:contact x:Name="crudContact" btnSave_Click="crudContact_btnSave_Click" />
-        </Popup>
-        <Popup x:Name="popToolBar" PopupAnimation="Slide" Placement="Top" Visibility="Collapsed" >
-            <StackPanel Background="WhiteSmoke" Width="256">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" PreviewMouseUp="Add_PreviewMouseUp"/>
-                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" PreviewMouseUp="Edit_PreviewMouseUp_1"/>
-                </StackPanel>
-            </StackPanel>
+        <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Relative" Visibility="Visible">
+            <crud:contact x:Name="crudContact" btnSave_Click="crudContact_btnSave_Click"/>
         </Popup>
         <!-- TextBox for Searching -->
-        <TextBox x:Name="tbxSearch" Padding="12,0,16,0"
+        <TextBox x:Name="tbxSearch" Padding="12,0,0,0"
                  Text="{Binding Path=Text, ElementName=_SmartBox_Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.SelectAllOnFocus="True"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
                  KeyUp="StartSearch" />
-        <!-- Progress Ring -->
-        <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Right"
-                            Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False"/>
-        <!-- Search Icon -->
-        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
-               HorizontalAlignment="Right" Foreground="{StaticResource Modal_BackgroundColor}"/>
 
-        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" VerticalAlignment="Center" Margin="0" 
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
+            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
+                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
+
+            <Label Content="|" Foreground="Silver" VerticalAlignment="Center" Margin="0" FontSize="9"/>
+
+            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
+                                       HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                                       PreviewMouseUp="Edit_PreviewMouseUp_1" Padding="4" FontWeight="Bold"/>
+        </StackPanel>
+
+        <!-- Progress Ring -->
+        <!--<ProgressBar x:Name="progBar" IsIndeterminate="True" Background="White" Opacity="0.16" Height="26"/>-->
+
+        <!-- Search Icon -->
+        <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
 
-        <Popup x:Name="popContact" IsOpen="False" >
+        <Popup x:Name="popContact" IsOpen="False">
             <Popup.Effect>
                 <DropShadowEffect ShadowDepth="0"/>
             </Popup.Effect>

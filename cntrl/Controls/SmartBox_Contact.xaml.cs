@@ -92,8 +92,6 @@ namespace cntrl.Controls
                         }
                     }
 
-                    progBar.IsActive = true;
-
                     tokenSource = new CancellationTokenSource();
                     token = tokenSource.Token;
                     taskSearch = Task.Factory.StartNew(() => Search_OnThread(SearchText), token);
@@ -179,7 +177,6 @@ namespace cntrl.Controls
                     Contact = contactViewSource.View.CurrentItem as entity.contact;
 
                     popContact.IsOpen = true;
-                    progBar.IsActive = false;
                 }));
             }
         }
@@ -188,8 +185,7 @@ namespace cntrl.Controls
 
         private void _SmartBox_Contact_GotFocus(object sender, RoutedEventArgs e)
         {
-            popToolBar.IsOpen = true;
-            popToolBar.Visibility = System.Windows.Visibility.Visible;
+            //popToolBar.IsOpen = true;
         }
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -235,8 +231,8 @@ namespace cntrl.Controls
 
         private void _SmartBox_Contact_LostFocus(object sender, RoutedEventArgs e)
         {
-            popToolBar.IsOpen = false;
-            popToolBar.Visibility = System.Windows.Visibility.Collapsed;
+            //popToolBar.IsOpen = false;
+            //popToolBar.Visibility = System.Windows.Visibility.Collapsed;
         }
 
        

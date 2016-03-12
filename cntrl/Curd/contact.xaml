@@ -18,8 +18,9 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
+    
     <UserControl.Effect>
-        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
+        <DropShadowEffect ShadowDepth="0" BlurRadius="16" Opacity="1"/>
     </UserControl.Effect>
 
     <StackPanel Background="White" DataContext="{StaticResource contactViewSource}">

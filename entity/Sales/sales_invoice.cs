@@ -169,7 +169,7 @@ namespace entity
             }
         }
         private decimal _DiscountPercentage;
-
+        [NotMapped]
         public decimal vatwithholdingpercentage { get; set; }
         //TimeCapsule
         public ICollection<sales_invoice> older { get; set; }

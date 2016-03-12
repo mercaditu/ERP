@@ -97,7 +97,11 @@ namespace entity.Brillo.Document
                         condition = g.sales_budget.app_contract.app_condition.name,
                         Number = g.sales_budget.number,
                         comment = g.sales_budget.comment,
-                        AmountWords = Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(g.sales_budget != null ? g.sales_budget.GrandTotal : 0)),
+                        AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
+                        NumToWords.IntToText(Convert.ToInt32(g.sales_budget != null ? g.sales_budget.GrandTotal : 0)) 
+                        : 
+                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "",
+                        
                         HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false
                     }).ToList();
 
@@ -150,7 +154,10 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_price,
                         unit_price_vat = g.UnitPrice_Vat,
-                        AmountWords = Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(g.sales_order != null ? g.sales_order.GrandTotal : 0)),
+                        AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
+                        NumToWords.IntToText(Convert.ToInt32(g.sales_order != null ? g.sales_order.GrandTotal : 0))
+                        :
+                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "",
                         HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false
                     }).ToList();
 
@@ -209,7 +216,10 @@ namespace entity.Brillo.Document
                     sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment : "",
                     packingList = g.sales_invoice != null ? g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()) : "" : "",
                     sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
-                    AmountWords = g.sales_invoice != null ? Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(g.sales_invoice.GrandTotal)) : "",
+                    AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
+                        NumToWords.IntToText(Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
+                        :
+                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "",
                     HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false
                 }).ToList();
               
@@ -298,7 +308,10 @@ namespace entity.Brillo.Document
                                   id_vat_group = g.id_vat_group,
                                   gov_id = g.sales_return.contact.gov_code,
                                   Number = g.sales_return.number,
-                                  AmountWords = Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(g.sales_return != null ? g.sales_return.GrandTotal : 0)),
+                                  AmountWords = g.sales_return != null ? g.sales_return.app_currencyfx.app_currency.has_rounding ?
+                        NumToWords.IntToText(Convert.ToInt32(g.sales_return != null ? g.sales_return.GrandTotal : 0))
+                        :
+                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_return != null ? g.sales_return.GrandTotal : 0))) : "",
                                   HasRounding = g.sales_return != null ? g.sales_return.app_currencyfx.app_currency.has_rounding : false
                               }).ToList();
 
@@ -389,7 +402,10 @@ namespace entity.Brillo.Document
                         id_vat_group = g.id_vat_group,
                         gov_id = g.purchase_order.contact.gov_code,
                         Number = g.purchase_order.number,
-                        AmountWords = Brillo.Document.NumToWords.NumWordsWrapper(Convert.ToDouble(g.purchase_order != null ? g.purchase_order.GrandTotal : 0)),
+                        AmountWords = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding ?
+                        NumToWords.IntToText(Convert.ToInt32(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))
+                        :
+                        NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))) : "",
                         HasRounding = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding : false
                     }).ToList();
 

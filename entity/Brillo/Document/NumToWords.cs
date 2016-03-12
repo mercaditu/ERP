@@ -1,121 +1,129 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace entity.Brillo.Document
 {
     public static class NumToWords
     {
-
-       public static String NumWordsWrapper(double n)
+        public static string IntToText(this int value)
         {
-            string words = "";
-            double intPart;
-            double decPart = 0;
-            if (n == 0)
-                return "CERO";
-            try
-            {
-                string[] splitter = n.ToString().Split('.');
-                intPart = double.Parse(splitter[0]);
-                decPart = double.Parse(splitter[1]);
-            }
-            catch
-            {
-                intPart = n;
-            }
+            string Num2Text = "";
+            if (value < 0) return "menos " + Math.Abs(value).IntToText();
 
-            words = NumWords(intPart);
-
-            if (decPart > 0)
+            if (value == 0) Num2Text = "cero";
+            else if (value == 1) Num2Text = "uno";
+            else if (value == 2) Num2Text = "dos";
+            else if (value == 3) Num2Text = "tres";
+            else if (value == 4) Num2Text = "cuatro";
+            else if (value == 5) Num2Text = "cinco";
+            else if (value == 6) Num2Text = "seis";
+            else if (value == 7) Num2Text = "siete";
+            else if (value == 8) Num2Text = "ocho";
+            else if (value == 9) Num2Text = "nueve";
+            else if (value == 10) Num2Text = "diez";
+            else if (value == 11) Num2Text = "once";
+            else if (value == 12) Num2Text = "doce";
+            else if (value == 13) Num2Text = "trece";
+            else if (value == 14) Num2Text = "catorce";
+            else if (value == 15) Num2Text = "quince";
+            else if (value < 20) Num2Text = "dieci" + (value - 10).IntToText();
+            else if (value == 20) Num2Text = "veinte";
+            else if (value < 30) Num2Text = "veinti" + (value - 20).IntToText();
+            else if (value == 30) Num2Text = "treinta";
+            else if (value == 40) Num2Text = "cuarenta";
+            else if (value == 50) Num2Text = "cincuenta";
+            else if (value == 60) Num2Text = "sesenta";
+            else if (value == 70) Num2Text = "setenta";
+            else if (value == 80) Num2Text = "ochenta";
+            else if (value == 90) Num2Text = "noventa";
+            else if (value < 100)
             {
-                if (words != "")
-                    words += " Y ";
-                int counter = decPart.ToString().Length;
-                switch (counter)
-                {
-                    case 1: words += NumWords(decPart) + " tenths"; break;
-                    case 2: words += NumWords(decPart) + " CIENTOS"; break;
-                    case 3: words += NumWords(decPart) + " MILES"; break;
-                    case 4: words += NumWords(decPart) + " ten-thousandths"; break;
-                    case 5: words += NumWords(decPart) + " hundred-thousandths"; break;
-                    case 6: words += NumWords(decPart) + " millionths"; break;
-                    case 7: words += NumWords(decPart) + " ten-millionths"; break;
-                }
+                int u = value % 10;
+                Num2Text = string.Format("{0} y {1}", ((value / 10) * 10).IntToText(), (u == 1 ? "un" : (value % 10).IntToText()));
             }
-            return words;
+            else if (value == 100) Num2Text = "cien";
+            else if (value < 200) Num2Text = "ciento " + (value - 100).IntToText();
+            else if ((value == 200) || (value == 300) || (value == 400) || (value == 600) || (value == 800))
+                Num2Text = ((value / 100)).IntToText() + "cientos";
+            else if (value == 500) Num2Text = "quinientos";
+            else if (value == 700) Num2Text = "setecientos";
+            else if (value == 900) Num2Text = "novecientos";
+            else if (value < 1000) Num2Text = string.Format("{0} {1}", ((value / 100) * 100).IntToText(), (value % 100).IntToText());
+            else if (value == 1000) Num2Text = "mil";
+            else if (value < 2000) Num2Text = "mil " + (value % 1000).IntToText();
+            else if (value < 1000000)
+            {
+                Num2Text = ((value / 1000)).IntToText() + " mil";
+                if ((value % 1000) > 0) Num2Text += " " + (value % 1000).IntToText();
+            }
+            else if (value == 1000000) Num2Text = "un millón";
+            else if (value < 2000000) Num2Text = "un millón " + (value % 1000000).IntToText();
+            else if (value < int.MaxValue)
+            {
+                Num2Text = ((value / 1000000)).IntToText() + " millones";
+                if ((value - (value / 1000000) * 1000000) > 0) Num2Text += " " + (value - (value / 1000000) * 1000000).IntToText();
+            }
+            return Num2Text;
         }
 
-        static String NumWords(double n) //converts double to words
+        public static string DecimalToText(this decimal value)
         {
-            string[] numbersArr = new string[] { "UN", "DOS", "TRES", "CUATRO", "CINCO ", "SEIS", "SIETE", "OCHO", "NUEVE", "DIES", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE", "DIESISEIS", "DIESISIETE", "DIESIOCHO", "DIESINUEVE" };
-            string[] tensArr = new string[] { "VEINTE", "TREINTA", "CUARENTA", "CINCUENTA", "SESENTA", "SETENTA", "OCHENTA", "NOVENTA" };
-            string[] suffixesArr = new string[] { "MIL", "MILLION", "MIL-MILLON", "BILLON", "quadrillion", "quintillion", "sextillion", "septillion", "octillion", "nonillion", "decillion", "undecillion", "duodecillion", "tredecillion", "Quattuordecillion", "Quindecillion", "Sexdecillion", "Septdecillion", "Octodecillion", "Novemdecillion", "Vigintillion" };
-            string words = "";
+            string Num2Text = "";
+            if (value < 0) return "menos " + Math.Abs(value).DecimalToText();
 
-            bool tens = false;
-
-            if (n < 0)
+            if (value == 0) Num2Text = "cero";
+            else if (value == 1) Num2Text = "uno";
+            else if (value == 2) Num2Text = "dos";
+            else if (value == 3) Num2Text = "tres";
+            else if (value == 4) Num2Text = "cuatro";
+            else if (value == 5) Num2Text = "cinco";
+            else if (value == 6) Num2Text = "seis";
+            else if (value == 7) Num2Text = "siete";
+            else if (value == 8) Num2Text = "ocho";
+            else if (value == 9) Num2Text = "nueve";
+            else if (value == 10) Num2Text = "diez";
+            else if (value == 11) Num2Text = "once";
+            else if (value == 12) Num2Text = "doce";
+            else if (value == 13) Num2Text = "trece";
+            else if (value == 14) Num2Text = "catorce";
+            else if (value == 15) Num2Text = "quince";
+            else if (value < 20) Num2Text = "dieci" + (value - 10).DecimalToText();
+            else if (value == 20) Num2Text = "veinte";
+            else if (value < 30) Num2Text = "veinti" + (value - 20).DecimalToText();
+            else if (value == 30) Num2Text = "treinta";
+            else if (value == 40) Num2Text = "cuarenta";
+            else if (value == 50) Num2Text = "cincuenta";
+            else if (value == 60) Num2Text = "sesenta";
+            else if (value == 70) Num2Text = "setenta";
+            else if (value == 80) Num2Text = "ochenta";
+            else if (value == 90) Num2Text = "noventa";
+            else if (value < 100)
             {
-                words += "negative ";
-                n *= -1;
+                decimal u = value % 10;
+                Num2Text = string.Format("{0} y {1}", ((value / 10) * 10).DecimalToText(), (u == 1 ? "un" : (value % 10).DecimalToText()));
             }
-
-            int power = (suffixesArr.Length + 1) * 3;
-
-            while (power > 3)
+            else if (value == 100) Num2Text = "cien";
+            else if (value < 200) Num2Text = "ciento " + (value - 100).DecimalToText();
+            else if ((value == 200) || (value == 300) || (value == 400) || (value == 600) || (value == 800))
+                Num2Text = ((value / 100)).DecimalToText() + "cientos";
+            else if (value == 500) Num2Text = "quinientos";
+            else if (value == 700) Num2Text = "setecientos";
+            else if (value == 900) Num2Text = "novecientos";
+            else if (value < 1000) Num2Text = string.Format("{0} {1}", ((value / 100) * 100).DecimalToText(), (value % 100).DecimalToText());
+            else if (value == 1000) Num2Text = "mil";
+            else if (value < 2000) Num2Text = "mil " + (value % 1000).DecimalToText();
+            else if (value < 1000000)
             {
-                double pow = Math.Pow(10, power);
-                if (n >= pow)
-                {
-                    if (n % pow > 0)
-                    {
-                        words += NumWords(Math.Floor(n / pow)) + " " + suffixesArr[(power / 3) - 1] + ", ";
-                    }
-                    else if (n % pow == 0)
-                    {
-                        words += NumWords(Math.Floor(n / pow)) + " " + suffixesArr[(power / 3) - 1];
-                    }
-                    n %= pow;
-                }
-                power -= 3;
+                Num2Text = ((value / 1000)).DecimalToText() + " mil";
+                if ((value % 1000) > 0) Num2Text += " " + (value % 1000).DecimalToText();
             }
-            if (n >= 1000)
+            else if (value == 1000000) Num2Text = "un millón";
+            else if (value < 2000000) Num2Text = "un millón " + (value % 1000000).DecimalToText();
+            else if (value < int.MaxValue)
             {
-                if (n % 1000 > 0) words += NumWords(Math.Floor(n / 1000)) + " MIL, ";
-                else words += NumWords(Math.Floor(n / 1000)) + " MIL";
-                n %= 1000;
+                Num2Text = ((value / 1000000)).DecimalToText() + " millones";
+                if ((value - (value / 1000000) * 1000000) > 0) Num2Text += " " + (value - (value / 1000000) * 1000000).DecimalToText();
             }
-            if (0 <= n && n <= 999)
-            {
-                if ((int)n / 100 > 0)
-                {
-                    words += NumWords(Math.Floor(n / 100)) + " CIENTO";
-                    n %= 100;
-                }
-                if ((int)n / 10 > 1)
-                {
-                    if (words != "")
-                        words += " ";
-                    words += tensArr[(int)n / 10 - 2];
-                    tens = true;
-                    n %= 10;
-                }
-
-                if (n < 20 && n > 0)
-                {
-                    if (words != "" && tens == false)
-                        words += " ";
-                    words += (tens ? "-" + numbersArr[(int)n - 1] : numbersArr[(int)n - 1]);
-                    n -= Math.Floor(n);
-                }
-            }
-
-            return words;
-
+            return Num2Text;
         }
-       
     }
 }

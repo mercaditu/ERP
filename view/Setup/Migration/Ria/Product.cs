@@ -53,7 +53,7 @@ namespace Cognitivo.Setup.Migration
             DataTable dt_product = exeDT(sql);
             foreach (DataRow reader in dt_product.Rows)
             {
-               
+           
                 using (db db = new db())
                 {
                     db.Configuration.AutoDetectChangesEnabled = false;
@@ -107,25 +107,32 @@ namespace Cognitivo.Setup.Migration
                         item.item_tag_detail.Add(tag_detailRub);
                     }
 
-                    if (Convert.ToInt32(reader[15]) == 1)
+                    if (!(reader[15] is DBNull))
                     {
-                        //Product
-                        item.id_item_type = item.item_type.Product;
+                        if (Convert.ToInt32(reader[15]) == 1)
+                        {
+                            //Product
+                            item.id_item_type = item.item_type.Product;
 
-                        item_product product = new item_product();
-                        product.id_company = id_company;
-                        product.can_expire = (reader[7] is DBNull || Convert.ToInt32(reader[7]) == 0) ? false : true;
-                        product.is_weigted = (reader[6] is DBNull || Convert.ToInt32(reader[6]) == 0) ? false : true;
-                        product.stock_max = (reader[11] is DBNull) ? 0M : (decimal)reader[11];
-                        product.stock_min = (reader[10] is DBNull) ? 0M :  (decimal)reader[10];
-                        item.item_product.Add(product);
+                            item_product product = new item_product();
+                            product.id_company = id_company;
+                            product.can_expire = (reader[7] is DBNull || Convert.ToInt32(reader[7]) == 0) ? false : true;
+                            product.is_weigted = (reader[6] is DBNull || Convert.ToInt32(reader[6]) == 0) ? false : true;
+                            product.stock_max = (reader[11] is DBNull) ? 0M : (decimal)reader[11];
+                            product.stock_min = (reader[10] is DBNull) ? 0M : (decimal)reader[10];
+                            item.item_product.Add(product);
+                        }
+                        else
+                        {
+                            item.id_item_type = item.item_type.Task; //Generic Service
+                            //item_service service
+                        }
                     }
                     else
                     {
                         item.id_item_type = item.item_type.Task; //Generic Service
                         //item_service service
                     }
-
                     decimal _vat_coeficient = 0;
 
                     if (!(reader[3] is DBNull))

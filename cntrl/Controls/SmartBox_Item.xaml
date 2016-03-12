@@ -23,8 +23,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
                            HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" Cursor="Hand" PreviewMouseUp="Add_PreviewMouseUp"/>
-                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" Cursor="Hand" VerticalAlignment="Center" Margin="0"  PreviewMouseUp="Edit_PreviewMouseUp"
-                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}"/>
+                  
                 </StackPanel>
             </StackPanel>
         </Popup>

@@ -84,68 +84,20 @@ namespace cntrl.Curd
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
-
-
             if (btnSave_Click != null)
             {
                 btnSave_Click(sender);
             }
         }
-        //private void btnSave_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (contactViewSource.View.CurrentItem != null)
-        //    {
-        //        entity.contact mycontact = contactViewSource.View.CurrentItem as entity.contact;
-        //        if (string.IsNullOrEmpty(mycontact.Error))
-        //        {
-        //            isValid = true;
-        //            btnCancel_Click(sender, e);
-        //        }
-        //    }
-        //}
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        public event btnCancel_ClickedEventHandler btnCancel_Click;
+        public delegate void btnCancel_ClickedEventHandler(object sender);
+        private void btnCancel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //if (!isValid && operationMode == Class.clsCommon.Mode.Add)
-            //{
-            //    if (contactViewSource.View.CurrentItem != null)
-            //        _entity.db.contacts.Remove(contactViewSource.View.CurrentItem as entity.contact);
-            //}
-            //else if (!isValid && operationMode == Class.clsCommon.Mode.Edit)
-            //{
-            //    if (_entity.db.Entry(contactobject).State == EntityState.Modified)
-            //    {
-            //        _entity.db.Entry(contactobject).State = EntityState.Unchanged;
-            //    }
-            //}
-            //contactViewSource.View.Refresh();
-            //if (contactobject != null)
-            //{
-            //    STbox.Text = contactobject.name;
-            //    STbox.Data = contactobject;
-            //}
-            //MainViewSource.View.Refresh();
-            //MainViewSource.View.MoveCurrentTo(curObject);
-            Grid crud = this.Parent as Grid;
-            crud.Children.Clear();
-            crud.Visibility = Visibility.Hidden;
+            if (btnCancel_Click != null)
+            {
+                btnCancel_Click(sender);
+            }
         }
-
-      
-      
-
-        //private void cbxRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (cbxRole.SelectedItem != null)
-        //    {
-        //        entity.contact_role contact_role = cbxRole.SelectedItem as entity.contact_role;
-        //        if (contact_role.is_principal == true)
-        //            cbxRelation.IsEnabled = false;
-        //        else
-        //            cbxRelation.IsEnabled = true;
-        //    }
-        //}
-
-
     }
 }

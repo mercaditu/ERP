@@ -13,7 +13,7 @@
              VerticalAlignment="Center"
              xmlns:local="clr-namespace:cntrl;assembly=cntrl"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
-             Width="360" Loaded="UserControl_Loaded">
+             Width="360" Loaded="UserControl_Loaded" BorderBrush="Silver" BorderThickness="2">
     <UserControl.Resources>
         <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="item_brandViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_brand}, CreateList=True}"/>
@@ -27,8 +27,8 @@
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMain" Background="White" DataContext="{StaticResource itemViewSource}">
-            <Grid Background="#ff3300">
-                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" 
+            <Grid Background="Silver">
+                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" Margin="4,0"
                    VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Black"/>
                 <Label x:Name="lblTitle" Content="{lex:Loc Product}" FontSize="25" Margin="32,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
@@ -65,9 +65,7 @@
                           DisplayMemberPath="name" SelectedValuePath="id_brand"
                           ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
                           SelectedValue="{Binding id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-            </StackPanel>
-            <Rectangle Height="1" Margin="8" Fill="Silver"/>
-            <StackPanel>
+                <Rectangle Height="1" Margin="8" Fill="Silver"/>
                 <Label Content="{lex:Loc VatGrouping}" Style="{DynamicResource input_label}"/>
                 <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
                               metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -75,7 +73,10 @@
                               Name="cmbvat" ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"
                               SelectedValue="{Binding id_vat_group, Mode=TwoWay, 
                                                       ValidatesOnExceptions=True, NotifyOnValidationError=True, 
-                                                      UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" DisplayMemberPath="name" SelectedValuePath="id_vat_group"/>
+                                                      UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                      DisplayMemberPath="name" SelectedValuePath="id_vat_group"/>
+            </StackPanel>
+            <StackPanel>
                 <!--<DataGrid Margin="8,-2,8,0" x:Name="item_vatDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="100"
                           ItemsSource="{Binding item_vat}" RowDetailsVisibilityMode="VisibleWhenSelected" BorderThickness="1" BorderBrush="LightGray">
                     <DataGrid.Columns>
@@ -89,18 +90,18 @@
                         </DataGridTemplateColumn>--><!--
                     </DataGrid.Columns>
                 </DataGrid>-->
-                <Label Content="{lex:Loc Itemprice}" Margin="8,0" Foreground="Gray"/>
+                <Label Content="{lex:Loc PriceList}" Style="{DynamicResource input_label}" HorizontalContentAlignment="Center"/>
                 <DataGrid Margin="8,-2,8,4" x:Name="item_priceDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderThickness="1" BorderBrush="LightGray" MaxHeight="100"
                                       InitializingNewItem="item_priceDataGrid_InitializingNewItem" ItemsSource="{Binding item_price}" RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
-                        <DataGridComboBoxColumn Header="PriceList" Width="*" ItemsSource="{Binding Source={StaticResource item_price_listViewSource}}"
+                        <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:PriceList}" Width="*" ItemsSource="{Binding Source={StaticResource item_price_listViewSource}}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_price_list" SelectedValueBinding="{Binding id_price_list , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <DataGridComboBoxColumn x:Name="id_currencyColumn" Header="Currency" Width="*" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
+                        <DataGridComboBoxColumn x:Name="id_currencyColumn" Header="{lex:Loc Cognitivo:local:Currency}" Width="*" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_currency" SelectedValueBinding="{Binding id_currency, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <DataGridTextColumn Binding="{Binding min_quantity,UpdateSourceTrigger=LostFocus, NotifyOnTargetUpdated=True}" Header="MinQuantity" Width="SizeToHeader"/>
-                        <DataGridTextColumn x:Name="valueColumn"  Header="Price" Width="SizeToHeader"
+                        <DataGridTextColumn Binding="{Binding min_quantity,UpdateSourceTrigger=LostFocus, NotifyOnTargetUpdated=True}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader"/>
+                        <DataGridTextColumn x:Name="valueColumn"  Header="{lex:Loc Cognitivo:local:Price}" Width="SizeToHeader"
                                             Binding="{Binding value, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, StringFormat={}{0:N}, NotifyOnValidationError=True}"/>
-                        <DataGridTextColumn x:Name="valuewithvatColumn"  Header="PricewithVAT" Width="SizeToHeader" 
+                        <DataGridTextColumn x:Name="valuewithvatColumn"  Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" 
                                             Binding="{Binding valuewithVAT, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=True, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"/>
                     </DataGrid.Columns>
                 </DataGrid>

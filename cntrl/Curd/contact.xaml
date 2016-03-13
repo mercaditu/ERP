@@ -12,7 +12,7 @@
              VerticalAlignment="Center"
             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
             lex:ResxLocalizationProvider.DefaultDictionary="local"
-            lex:LocalizeDictionary.DesignCulture="en-US">
+            lex:LocalizeDictionary.DesignCulture="en-US" BorderBrush="Gold" BorderThickness="2">
     <UserControl.Resources>
         <convert:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
@@ -23,8 +23,9 @@
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="U" FontSize="25" 
                    VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Black"/>
             <Label x:Name="lblTitle" Content="{lex:Loc Contact}" FontSize="25" Margin="32,0,0,0"/>
-            <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                       HorizontalAlignment="Right" MouseDown="btnCancel_MouseDown" 
+                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <TextBlock Text="Contacts can be used in Sales or Purchases depending on how you set it up." Style="{StaticResource text_Instructions}"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="500">
@@ -73,16 +74,15 @@
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,8">
                     <CheckBox x:Name="chbxCustomer" Content="{lex:Loc Customer}" IsChecked="{Binding is_customer, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
                     <CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" IsChecked="{Binding is_supplier, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
-                    <CheckBox x:Name="is_sales_repCheckBox" Content="{lex:Loc SalesRepresentative}" IsChecked="{Binding is_sales_rep, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                            Margin="3"/>
+                    <CheckBox x:Name="chbxEmployee" Content="{lex:Loc Employee}" IsChecked="{Binding is_employee, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
                 </StackPanel>
-                <Label Content="Price List" Style="{StaticResource input_label}"
+                <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
                                Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"/>
                 <ComboBox x:Name="cbPriceList" Style="{StaticResource input_combobox}"
                           SelectedValue="{Binding id_price_list, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
                                   DisplayMemberPath="name" SelectedValuePath="id_price_list"/>
-                <Label Content="Cost Center" Style="{StaticResource input_label}"
+                <Label Content="{lex:Loc CostCenter}" Style="{StaticResource input_label}"
                                    Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"/>
                 <ComboBox x:Name="cbCostCenter" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxSupplier}"
                           SelectedValue="{Binding id_cost_center, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"        

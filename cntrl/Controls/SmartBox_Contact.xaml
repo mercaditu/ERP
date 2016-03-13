@@ -15,10 +15,8 @@
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid>
-        <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Relative" Visibility="Visible" 
-               AllowsTransparency="True">
-            <crud:contact x:Name="crudContact" btnSave_Click="crudContact_btnSave_Click" 
-                          BorderBrush="Black" BorderThickness="0.3"/>
+        <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
+            <crud:contact x:Name="crudContact" btnSave_Click="crudContact_btnSave_Click"/>
         </Popup>
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,0,0"

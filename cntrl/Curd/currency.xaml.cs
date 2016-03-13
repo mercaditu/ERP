@@ -29,6 +29,7 @@ namespace cntrl
             {
                 app_currencyViewSource = ((CollectionViewSource)(this.FindResource("app_currencyViewSource")));
                 entity.db.app_currency.Where(x => x.id_currency == CurrencyId).Load();
+
                 app_currencyViewSource.Source = entity.db.app_currency.Local;
                 app_currencyapp_currencyfxViewSource = this.FindResource("app_currencyapp_currencyfxViewSource") as CollectionViewSource;
 
@@ -60,6 +61,7 @@ namespace cntrl
         private void _SaveChanges()
         {
             app_currency _app_currency = app_currencyViewSource.View.CurrentItem as app_currency;
+
             if (_app_currency.is_priority == true)
             {
                 List<app_currency> list_app_currency = entity.db.app_currency.Where(a => a.id_currency != _app_currency.id_currency).ToList();
@@ -196,31 +198,6 @@ namespace cntrl
             {
                 //throw;
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            app_currency _app_currency = app_currencyViewSource.View.CurrentItem as app_currency;
-            listapp_currencyfx = new List<app_currencyfx>();
-            if (_app_currency.app_currencyfx.Count > 0)
-                listapp_currencyfx = _app_currency.app_currencyfx.ToList();
-            foreach (var item in listapp_currencyfx)
-            {
-                item.is_active = false;
-            }
-
-            app_currencyfx _app_currencyfx = new app_currencyfx();
-            _app_currencyfx.is_active = true;
-            try
-            {
-                _app_currencyfx.buy_value = Convert.ToDecimal(txtbuyrate.Text);
-                _app_currencyfx.sell_value = Convert.ToDecimal(txtsellrate.Text);
-
-                _app_currency.app_currencyfx.Add(_app_currencyfx);
-
-                app_currencyViewSource.View.Refresh();
-                app_currencyapp_currencyfxViewSource.View.Refresh();
-            } catch { }
         }
     }
 }

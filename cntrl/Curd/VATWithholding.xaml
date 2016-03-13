@@ -62,16 +62,15 @@
                 <Label Content="{lex:Loc Link}" HorizontalAlignment="Center" Style="{StaticResource generic_Label}"/>
                 <DataGrid x:Name="dgbinvoice" Margin="8,4" ItemsSource="{Binding}" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SalesInvoice}" Binding="{Binding id_sales_invoice}" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PurchaseInvoice}" Binding="{Binding id_purchase_invoice}" Width="auto"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SalesInvoice}" Binding="{Binding sales_invoice.number}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PurchaseInvoice}" Binding="{Binding purchase_invoice.number}" Width="auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, StringFormat={}{0:N}}" Width="auto"/>
                       
                     </DataGrid.Columns>
                 </DataGrid>
-                <StackPanel HorizontalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
-                    <Label x:Name="lbltotalvat" 
-                         Style="{StaticResource input_label}"/>
+                    <Label x:Name="lbltotalvat" Style="{StaticResource input_label}" ContentStringFormat="{}{0:N}"/>
                 </StackPanel>
             </StackPanel>
 

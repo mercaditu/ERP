@@ -8,7 +8,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
-    VerticalAlignment="Center"
+    VerticalAlignment="Center" BorderBrush="#990066" BorderThickness="2"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.currency"
              Width="300" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -22,18 +22,14 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel Background="White" DataContext="{StaticResource app_currencyViewSource}">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#990066">
-                <Image Source="/cntrl;component/Images/Outline_White/currency_exchange_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <!--<Image Width="26" Height="25" Source="/cntrl;component/Images/Outline/Travel/museum-50.png"/>-->
-            <Label Content="{lex:Loc Currency}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="#990066">
+            <Image Source="/cntrl;component/Images/Outline_White/currency_exchange_filled-100.png" 
+                       Height="32" HorizontalAlignment="Left" Margin="4"/>
+            <Label Content="{lex:Loc Currency}" FontSize="25" Margin="40,0,0,0" Foreground="White"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                      Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <TextBlock Text="All monetary transactions related to the information stated on this page." Style="{StaticResource text_Instructions}"/>
@@ -57,26 +53,27 @@
             <CheckBox x:Name="chkIsPriority" Content="{lex:Loc Default}"
                   Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
 				  IsChecked="{Binding is_priority, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-            <CheckBox x:Name="chkhasrounding" Content="{lex:Loc HasRounding}"
+            <CheckBox x:Name="chkhasrounding" Content="{lex:Loc Rounding}"
                   Style="{StaticResource input_checkbox}" DataContext="{StaticResource app_currencyViewSource}"
 				  IsChecked="{Binding has_rounding, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
 
             <Label Content="{lex:Loc Rate}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center"/>
-            <StackPanel Orientation="Horizontal">
+            <!--<StackPanel Orientation="Horizontal">
                 <Label Content="Buy Rate"/>
                 <TextBox x:Name="txtbuyrate" Width="32" />
                 <Label Content="Sell Rate"/>
                 <TextBox x:Name="txtsellrate" Width="32"/>
                 <Button Content="Add" Click="Button_Click" Margin="8,0"/>
-            </StackPanel>
+            </StackPanel>-->
            
             <DataGrid x:Name="dataCurrencyfx" HorizontalScrollBarVisibility="Disabled" Width="256" Margin="8"
                       DataContext="{StaticResource app_currencyapp_currencyfxViewSource}" MaxHeight="256" CanUserDeleteRows="False"
                       ItemsSource="{Binding}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Buy Rate" Width="*" Binding="{Binding buy_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="Sell Rate" Width="*" Binding="{Binding sell_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="64" IsReadOnly="True" Binding="{Binding timestamp, StringFormat={}{0:d}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Buy}" Width="*" Binding="{Binding buy_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Sell}" Width="*" Binding="{Binding sell_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <DataGridTemplateColumn Header="Active" Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -88,7 +88,7 @@
                                     NotifyOnValidationError=True, 
                                     ValidatesOnExceptions=True, 
                                     UpdateSourceTrigger=LostFocus,
-                                    ValidatesOnDataErrors=True, StringFormat={}{0}%}" Margin="4,0,0,4" Width="170"/>
+                                    ValidatesOnDataErrors=True, StringFormat={}{0:P}}" Margin="4,0,0,4" Width="170"/>
                 </StackPanel>
                 <Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click"/>
                 <Rectangle Height="1" Margin="0,8" Fill="Silver"/>

@@ -27,13 +27,10 @@
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMain" Background="White" DataContext="{StaticResource itemViewSource}">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#ff3300">
-                    <Image Source="/cntrl;component/Images/Outline_White/price_tag_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-                </Border>
-                <Label Content="{lex:Loc Product}" FontSize="25" Margin="50,0,0,0"/>
+            <Grid Background="#ff3300">
+                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" 
+                   VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Black"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc Product}" FontSize="25" Margin="32,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
@@ -59,26 +56,19 @@
                 <Label Content="{lex:Loc ItemType}" Style="{DynamicResource input_label}"/>
                 <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" metro:ControlsHelper.FocusBorderBrush="RoyalBlue" metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                         Name="cmbitem" SelectedValue="{Binding id_item_type, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}" SelectionChanged="cmbitem_SelectionChanged">
-                  
+
                 </ComboBox>
-                <Label Content="{lex:Loc ItemBrand}" Style="{DynamicResource input_label}"/>
+                <Label Content="{lex:Loc Brand}" Style="{DynamicResource input_label}"/>
                 <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                           metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                           DisplayMemberPath="name" SelectedValuePath="id_brand"
                           ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
                           SelectedValue="{Binding id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-                <CheckBox Style="{StaticResource input_checkbox}" Content="{lex:Loc Substitute}"
-                          IsChecked="{Binding is_substitute, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
             </StackPanel>
             <Rectangle Height="1" Margin="8" Fill="Silver"/>
             <StackPanel>
-                <Label Content="{lex:Loc descItemTag}" Margin="8,0" Foreground="Gray"/>
-                <!--<local:TagControl x:Name="mycntrl" Margin="16,4" ItemsSource="{StaticResource itemitem_tagdetailViewSource}"/>-->
-            </StackPanel>
-            <Rectangle Height="1" Margin="8" Fill="Silver"/>
-            <StackPanel>
-                <Label Content="{lex:Loc descVAT}" Margin="8,0" Foreground="Gray"/>
+                <Label Content="{lex:Loc VatGrouping}" Style="{DynamicResource input_label}"/>
                 <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
                               metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                               metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
@@ -99,7 +89,7 @@
                         </DataGridTemplateColumn>--><!--
                     </DataGrid.Columns>
                 </DataGrid>-->
-                <Label Content="{lex:Loc Item price}" Margin="8,0" Foreground="Gray"/>
+                <Label Content="{lex:Loc Itemprice}" Margin="8,0" Foreground="Gray"/>
                 <DataGrid Margin="8,-2,8,4" x:Name="item_priceDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderThickness="1" BorderBrush="LightGray" MaxHeight="100"
                                       InitializingNewItem="item_priceDataGrid_InitializingNewItem" ItemsSource="{Binding item_price}" RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>

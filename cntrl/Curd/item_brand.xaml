@@ -13,7 +13,8 @@
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
              xmlns:entity="clr-namespace:entity;assembly=entity"
-             Width="360" Loaded="UserControl_Loaded">
+             Width="360" Loaded="UserControl_Loaded"
+             BorderBrush="Crimson" BorderThickness="2">
     <UserControl.Resources>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
@@ -22,17 +23,14 @@
     </UserControl.Effect>
     <Grid>
         <StackPanel x:Name="stackMain" Background="White">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#ff3300">
-                    <Image Source="/cntrl;component/Images/Outline_White/price_tag_filled-100.png" 
-                           Height="32" Opacity="0.64"/>
-                </Border>
-                <Label x:Name="lblTitle" Content="{lex:Loc Brand}" FontSize="25" Margin="50,0,0,0"/>
+            <Grid Background="Crimson">
+                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" Margin="4,0"
+                   VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc Brand}" FontSize="25" Margin="32,0,0,0" Foreground="White"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="PaleGreen"/>
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseDown="btnCancel_MouseDown" 
+                       HorizontalAlignment="Right" MouseDown="btnCancel_MouseDown" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
 

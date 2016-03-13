@@ -12,24 +12,6 @@ namespace cntrl.Curd
     public partial class contact : UserControl
     {
         entity.dbContext entity = new entity.dbContext();
-        entity.Properties.Settings _Settings = new entity.Properties.Settings();
-
-        //CollectionViewSource _contactViewSource = null;
-        //public CollectionViewSource contactViewSource { get { return _contactViewSource; } set { _contactViewSource = value; } }
-
-        //CollectionViewSource _MainViewSource = null;
-        //public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
-        //public object curObject { get; set; }
-
-        //private dbContext entity = null;
-        //public dbContext _entity { get { return entity; } set { entity = value; } }
-
-        //private app.Applications _application = 0;
-        //public app.Applications application { get { return _application; } set { _application = value; } }
-
-        //private Class.clsCommon.Mode _operationMode = 0;
-        //public Class.clsCommon.Mode operationMode { get { return _operationMode; } set { _operationMode = value; } }
-
 
         private entity.contact _contactobject = null;
         public entity.contact contactobject { get { return _contactobject; } set { _contactobject = value; } }
@@ -45,15 +27,15 @@ namespace cntrl.Curd
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 List<entity.contact> contactList = new List<global::entity.contact>();
-                cbPriceList.ItemsSource = entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == _Settings.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
-                cbCostCenter.ItemsSource = entity.db.app_cost_center.Where(a => a.is_active == true && a.id_company == _Settings.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
-                cbxRole.ItemsSource = entity.db.contact_role.Where(a => a.id_company == _Settings.company_ID && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
-                ///////cbxRelation.ItemsSource = entity.db.contacts.Local.ToList();
 
+                cbPriceList.ItemsSource = entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
+                cbCostCenter.ItemsSource = entity.db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+
+                cbxRole.ItemsSource = entity.db.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
 
                 CollectionViewSource contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
-                if (contactobject!=null)
+                if (contactobject != null)
                 {
                     contactList.Add(contactobject);
                    
@@ -62,21 +44,6 @@ namespace cntrl.Curd
                 contactViewSource.Source = contactList;
                 contactViewSource.View.Refresh();
                 contactViewSource.View.MoveCurrentToFirst();
-                //if (operationMode == Class.clsCommon.Mode.Add)
-                //{
-                //    entity.contact newContact = new entity.contact();
-                //    if (_application == app.Applications.SalesInvoice)
-                //        newContact.is_customer = true;
-                //    if (_application == app.Applications.PurchaseInvoice)
-                //        newContact.is_supplier = true;
-                //    _entity.db.contacts.Add(newContact);
-                //    contactViewSource.View.MoveCurrentTo(newContact);//Last();
-                //}
-                //else
-                //{
-                //    contactViewSource.View.MoveCurrentTo(contactobject);
-                //}
-                //stackContact.DataContext = contactViewSource;
             }
         }
 

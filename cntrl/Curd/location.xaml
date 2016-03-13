@@ -8,7 +8,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"
-        VerticalAlignment="Center"
+        VerticalAlignment="Center" BorderBrush="#00cc99" BorderThickness="2"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" 
         Width="360" Loaded="UserControl_Loaded">
@@ -21,16 +21,13 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
     <StackPanel x:Name="stackMain" Background="White">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="#00cc99">
-                <Image Source="/cntrl;component/Images/Outline_White/move_by_trolley_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-            </Border>
-            <Label Content="{lex:Loc Location}" FontSize="25" Margin="50,0,0,0"/>
+        <Grid Background="#00cc99">
+            <Image Source="/cntrl;component/Images/Outline_White/move_by_trolley_filled-100.png" 
+                       Height="32" HorizontalAlignment="Left" Margin="4,0"/>
+            <Label Content="{lex:Loc Location}" FontSize="25" Foreground="White" Margin="50,0,0,0"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
-            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5" Foreground="White"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>

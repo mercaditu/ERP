@@ -173,6 +173,7 @@
     <Compile Include="Brillo\Email.cs" />
     <Compile Include="Brillo\GetDefault.cs" />
     <Compile Include="Brillo\Localize.cs" />
+    <Compile Include="Brillo\Logic\CloneObject.cs" />
     <Compile Include="Brillo\Logic\Payment.cs">
       <SubType>Code</SubType>
     </Compile>

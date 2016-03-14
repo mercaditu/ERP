@@ -26,6 +26,14 @@ namespace entity
         public override int SaveChanges()
         {
             validate_Item();
+
+            //var source = base.items.FirstOrDefault();
+            //var clone = new item();
+            //base.items.Add(clone);
+
+            //var sourceValues = base.Entry(source).CurrentValues;
+            //base.Entry(clone).CurrentValues.SetValues(sourceValues);
+          
             return base.SaveChanges();
         }
 
@@ -49,6 +57,8 @@ namespace entity
                     }
                     else if (item.State == EntityState.Modified)
                     {
+                      
+
                         item.timestamp = DateTime.Now;
                         item.State = EntityState.Unchanged;
                         Entry(item).State = EntityState.Modified;

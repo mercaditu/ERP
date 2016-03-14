@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Windows;
 using WPFLocalizeExtension.Extensions;
@@ -50,6 +51,18 @@ namespace entity
                     }
                 }
             }
+        }
+
+        public object GetClone(object obj,Type a)
+        {
+            
+            var source = obj;
+            var clone = Activator.CreateInstance(a);
+            base.Entry(clone).State = EntityState.Added;
+
+            var sourceValues = base.Entry(source).CurrentValues;
+            base.Entry(clone).CurrentValues.SetValues(sourceValues);
+            return clone;
         }
     }
 }

@@ -10,7 +10,7 @@
                 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
                 lex:ResxLocalizationProvider.DefaultDictionary="local"
                 lex:LocalizeDictionary.DesignCulture="en-US" 
-             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" GotFocus="_SmartBox_Item_GotFocus" LostFocus="_SmartBox_Item_LostFocus">
+             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" >
     <UserControl.Resources>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
     </UserControl.Resources>
@@ -18,15 +18,7 @@
         <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
             <crud:item x:Name="crudItem" btnSave_Click="crudItem_btnSave_Click" />
         </Popup>
-        <Popup x:Name="popToolBar" PopupAnimation="Slide" Placement="Top" Visibility="Collapsed" >
-            <StackPanel Background="WhiteSmoke" Width="256">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" Cursor="Hand" PreviewMouseUp="Add_PreviewMouseUp"/>
-                  
-                </StackPanel>
-            </StackPanel>
-        </Popup>
+        
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,16,0"
                  Text="{Binding Path=Text, ElementName=_SmartBox_Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -35,13 +27,19 @@
                  metro:TextBoxHelper.SelectAllOnFocus="True"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
                  KeyUp="StartSearch"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
+                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
+                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
 
+     
+        </StackPanel>
         <!-- Progress Ring -->
-        <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Right"
+        <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Left"
                             Foreground="{StaticResource AccentColor_Introvert}" FontSize="32" IsActive="False"/>
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
-               HorizontalAlignment="Right" Foreground="{StaticResource Modal_BackgroundColor}"/>
+               HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
         <Popup x:Name="ContactPopUp" IsOpen="False" StaysOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}">
                 <Border.Effect>

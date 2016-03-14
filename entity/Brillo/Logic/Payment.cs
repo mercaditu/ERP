@@ -45,6 +45,8 @@ namespace entity.Brillo.Logic
                 payment_schedual.id_contact = sales_return.id_contact;
                 payment_schedual.can_calculate = false;
                 payment_schedualList.Add(payment_schedual);
+
+              
                 return payment_schedualList;
             }
 
@@ -64,6 +66,7 @@ namespace entity.Brillo.Logic
                 payment_schedual.id_contact = purchase_return.id_contact;
                 payment_schedual.can_calculate = false;
                 payment_schedualList.Add(payment_schedual);
+               
                 return payment_schedualList;
             }
 

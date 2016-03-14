@@ -49,7 +49,9 @@ namespace cntrl
                     if (_invoiceList.FirstOrDefault().GetType().BaseType==typeof(sales_invoice))
                     {
                         sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
-                        lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal) * percentage),4);
+                        lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
+                      
+                        
                     }
                     else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
                     {
@@ -158,6 +160,39 @@ namespace cntrl
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
+            {
+                sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
+                if (sales_invoice.vatwithholdingpercentage > 0)
+                {
+                    percentage = sales_invoice.vatwithholdingpercentage;
+                    if (percentage <=1)
+                    {
+                        lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)) * percentage, 4);
+                    }
+                    else
+                    {
+                        MessageBox.Show("not Exceed to Hundred %");
+                        lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
+                    }
+                    
+                }
+                else
+                {
+                    lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
+                }
+            }
+            else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
+            {
+                purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
+                lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
+
             }
         }
 

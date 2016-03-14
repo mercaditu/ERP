@@ -579,37 +579,41 @@ namespace Cognitivo.Sales
         {
             sales_return _sales_return = (sales_return)salesReturnViewSource.View.CurrentItem;
 
-          
+            sbxContact.Text = pnlSalesInvoice.selected_sales_invoice.FirstOrDefault().contact.name;
             foreach (sales_invoice item in pnlSalesInvoice.selected_sales_invoice)
             {
+                _sales_return.State = EntityState.Modified;
+                _sales_return.id_condition = item.id_condition;
+                _sales_return.id_contract = item.id_contract;
+                _sales_return.id_currencyfx = item.id_currencyfx;
+                _sales_return.id_sales_invoice= item.id_sales_invoice;
 
                 foreach (sales_invoice_detail _sales_invoice_detail in item.sales_invoice_detail)
                 {
                     if (_sales_return.sales_return_detail.Where(x => x.id_item == _sales_invoice_detail.id_item).Count() == 0)
                     {
                         sales_return_detail sales_return_detail = new sales_return_detail();
-                        _sales_return.State = EntityState.Modified;
-                        _sales_return.id_condition = item.id_condition;
-                        _sales_return.id_contract = item.id_contract;
-                        _sales_return.id_currencyfx = item.id_currencyfx;
                         sales_return_detail.id_sales_invoice_detail = _sales_invoice_detail.id_sales_invoice_detail;
                         sales_return_detail.sales_invoice_detail = _sales_invoice_detail;
                         sales_return_detail.sales_return = _sales_return;
                         sales_return_detail.item = _sales_invoice_detail.item;
                         sales_return_detail.id_item = _sales_invoice_detail.id_item;
+
                         sales_return_detail.quantity = _sales_invoice_detail.quantity - dbContext.sales_return_detail
                                                                                      .Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
                                                                                      .GroupBy(x => x.id_sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
                         sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
+                                   
                         _sales_return.sales_return_detail.Add(sales_return_detail);
                     }
-
-                    salesReturnViewSource.View.Refresh();
-                    _sales_return.id_sales_invoice= item.id_sales_invoice;
-                   sales_returnsales_return_detailViewSource.View.Refresh();
                     dbContext.Entry(_sales_return).Entity.State = EntityState.Added;
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
+                    salesReturnViewSource.View.Refresh();
+                
+                   sales_returnsales_return_detailViewSource.View.Refresh();
+                   
+                   
                 }
             }
         }

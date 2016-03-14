@@ -54,7 +54,7 @@ namespace cntrl.Controls
         CancellationToken token;
 
         CollectionViewSource contactViewSource;
-
+       
         public SmartBox_Contact()
         {
             InitializeComponent();
@@ -107,6 +107,10 @@ namespace cntrl.Controls
                 db.Configuration.AutoDetectChangesEnabled = false;
 
                 List<entity.contact> results = new List<entity.contact>();
+                var param = Controls.smartBoxContactSetting.Default.OrderByText;
+                var propertyInfo = typeof(entity.contact).GetProperty(param);
+               
+               // Boolean is_principal = Controls.smartBoxContactSetting.Default.is_principal;
 
                 if (Get_Customers)
                 {
@@ -120,11 +124,11 @@ namespace cntrl.Controls
                                &&
                                    x.is_customer == Get_Customers
                                &&
-                                   x.contact_role.is_principal
+                                   x.contact_role.can_transact 
                                &&
-                                   x.is_active == true
-                           )
-                   .OrderBy(x => x.name)
+                                   x.is_active
+                           ).AsEnumerable()
+                           .OrderBy(x =>propertyInfo.GetValue(x, null))
                    .ToList()
                    );   
                 }
@@ -141,15 +145,16 @@ namespace cntrl.Controls
                                &&
                                    x.is_supplier == Get_Suppliers
                                &&
-                                   x.contact_role.is_principal
+                                   x.contact_role.can_transact 
                                &&
                                    x.is_active == true
-                           )
-                   .OrderBy(x => x.name)
+                           ).AsEnumerable()
+                           .OrderBy(x => propertyInfo.GetValue(x, null))
                    .ToList()
                    );
                 }
-
+              
+              
                 if (Get_Employees)
                 {
                     results.AddRange(db.contacts
@@ -162,11 +167,11 @@ namespace cntrl.Controls
                                &&
                                    x.is_employee == Get_Employees
                                &&
-                                   x.contact_role.is_principal
+                                  x.contact_role.can_transact
                                &&
                                    x.is_active == true
-                           )
-                   .OrderBy(x => x.name)
+                           ).AsEnumerable()
+                           .OrderBy(x => propertyInfo.GetValue(x, null)).OrderBy(x => propertyInfo.GetValue(x, null))
                    .ToList()
                    );
                 }
@@ -233,6 +238,31 @@ namespace cntrl.Controls
         {
             //popToolBar.IsOpen = false;
             //popToolBar.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popupCustomize.IsOpen = true;
+            popupCustomize.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void popupCustomize_Closed(object sender, EventArgs e)
+        {
+            Controls.smartBoxContactSetting.Default.Save();
+            popupCustomize.IsOpen = false;
+            popupCustomize.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (rbtncode.IsChecked==true)
+            {
+                Controls.smartBoxContactSetting.Default.OrderByText = "code";
+            }
+            if (rbtnname.IsChecked==true)
+            {
+                Controls.smartBoxContactSetting.Default.OrderByText = "name";
+            }
         }
 
        

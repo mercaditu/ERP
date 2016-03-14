@@ -50,7 +50,7 @@ namespace cntrl.Curd
             dbContext.db.purchase_return.Where(x=>x.id_contact==payment_detail.payment.id_contact).Load();
             purchase_returnViewSource.Source = dbContext.db.purchase_return.Local;
             CollectionViewSource sales_returnViewSource = (CollectionViewSource)this.FindResource("sales_returnViewSource");
-            dbContext.db.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact).Load();
+            dbContext.db.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice==null).Load();
             sales_returnViewSource.Source = dbContext.db.sales_return.Local;
 
             cbxDocument.ItemsSource = dbContext.db.app_document_range.Where(d => d.is_active == true
@@ -172,8 +172,12 @@ namespace cntrl.Curd
                 {
                     if (salesreturnComboBox.Data != null)
                     {
+                        CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+                        payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                         sales_return sales_return = (sales_return)salesreturnComboBox.Data;
                         salesreturnComboBox.Text = sales_return.number;
+                        payment_detail.value = (Convert.ToDecimal(txtAmount.Text) - sales_return.GrandTotal);
+                        payment_detail.RaisePropertyChanged("value");
                     }
                 }
                 catch (Exception ex)
@@ -188,10 +192,15 @@ namespace cntrl.Curd
         {
             try
             {
+         
                 if (salesreturnComboBox.Data != null)
                 {
+                    CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+                    payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                     sales_return sales_return = (sales_return)salesreturnComboBox.Data;
                     salesreturnComboBox.Text = sales_return.number;
+                    payment_detail.value = (payment_detail.value - sales_return.GrandTotal);
+                    payment_detail.RaisePropertyChanged("value");
                 }
             }
             catch (Exception ex)

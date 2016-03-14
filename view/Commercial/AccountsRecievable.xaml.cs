@@ -76,7 +76,7 @@ namespace Cognitivo.Commercial
                     contactLIST.Add(contact);
                 }
             }
-            
+
             contactViewSource.Source = contactLIST;
         }
 
@@ -118,7 +118,7 @@ namespace Cognitivo.Commercial
             }
             payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
             payment_quick.contacts = ContactList;
-            payment_quick.mode = cntrl.Curd.payment_quick.modes.sales; 
+            payment_quick.mode = cntrl.Curd.payment_quick.modes.sales;
             payment_quick.btnSave_Click += Save_Click;
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(payment_quick);
@@ -133,54 +133,103 @@ namespace Cognitivo.Commercial
                 if (total > 0)
                 {
                     payment payment = new payment();
-                    payment.id_contact = payment_quick.payment_detail.payment.contact.id_contact;
-                    payment.id_payment = payment_quick.payment_detail.payment.id_payment;
-                    payment.number = payment_quick.payment_detail.payment.number;
-                    payment_detail payment_detail = new payment_detail();
-                    payment_detail.id_account = payment_quick.payment_detail.id_account;
-                    payment_detail.id_currencyfx = payment_quick.payment_detail.id_currencyfx;
-                    payment_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
-
-                    payment_detail.id_purchase_return = payment_quick.payment_detail.id_purchase_return;
-                    payment_detail.id_sales_return = payment_quick.payment_detail.id_sales_return;
-                    
-                    payment_detail.value = payment_quick.payment_detail.value;
-
-                    payment_schedual _payment_schedual = new payment_schedual();
-
-                    _payment_schedual.credit = Convert.ToDecimal(payment_quick.payment_detail.value);
-                    _payment_schedual.parent = payment_schedual;
-                    _payment_schedual.expire_date = payment_schedual.expire_date;
-                    _payment_schedual.status = payment_schedual.status;
-                    _payment_schedual.id_contact = payment_schedual.id_contact;
-                    _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
-                    _payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
-                    _payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
-                    _payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
-                    _payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
-                    _payment_schedual.id_sales_order = payment_schedual.id_sales_order;
-                    _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
-                    _payment_schedual.trans_date = payment_quick.payment_detail.trans_date;
-                    total = total - payment_quick.payment_detail.value;
-                    _payment_schedual.AccountReceivableBalance = total;
-
-                    payment_detail.payment_schedual.Add(_payment_schedual);
-                    payment.payment_detail.Add(payment_detail);
-
-                    //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
-
-                    if (_entity.db.payment_type.Where(x => x.id_payment_type == payment_quick.payment_detail.id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
+                    if (payment_schedual.id_sales_return > 0)
                     {
-                        app_account_detail app_account_detail = new app_account_detail();
-                        app_account_detail.id_account = (int)payment_quick.payment_detail.id_account;
-                        app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
-                        app_account_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
-                        app_account_detail.debit = 0;
-                        app_account_detail.credit = Convert.ToDecimal(payment_quick.payment_detail.value);
-                        _entity.db.app_account_detail.Add(app_account_detail);
+
+                        payment.id_contact = payment_quick.payment_detail.payment.contact.id_contact;
+                        payment.id_payment = payment_quick.payment_detail.payment.id_payment;
+                        payment.number = payment_quick.payment_detail.payment.number;
+                        payment_detail payment_detailreturn = new payment_detail();
+                       // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
+                        payment_detailreturn.id_currencyfx = payment_quick.payment_detail.id_currencyfx;
+                        payment_detailreturn.id_payment_type = payment_quick.payment_detail.id_payment_type;
+
+                        payment_detailreturn.id_purchase_return = payment_quick.payment_detail.id_purchase_return;
+                        payment_detailreturn.id_sales_return = payment_quick.payment_detail.id_sales_return;
+
+                        payment_detailreturn.value = payment_quick.payment_detail.value;
+                        payment_schedual _payment_schedualreturn = new payment_schedual();
+
+                        _payment_schedualreturn.credit = Convert.ToDecimal(payment_quick.payment_detail.value);
+                        _payment_schedualreturn.parent = payment_schedual;
+                        _payment_schedualreturn.expire_date = payment_schedual.expire_date;
+                        _payment_schedualreturn.status = payment_schedual.status;
+                        _payment_schedualreturn.id_contact = payment_schedual.id_contact;
+                        _payment_schedualreturn.id_currencyfx = payment_schedual.id_currencyfx;
+                        _payment_schedualreturn.id_purchase_invoice = payment_schedual.id_purchase_invoice;
+                        _payment_schedualreturn.id_purchase_order = payment_schedual.id_purchase_order;
+                        _payment_schedualreturn.id_purchase_return = payment_schedual.id_purchase_return;
+                        _payment_schedualreturn.id_sales_invoice = 0;
+                        _payment_schedualreturn.id_sales_order = payment_schedual.id_sales_order;
+                        _payment_schedualreturn.id_sales_return = payment_schedual.id_sales_return;
+                        _payment_schedualreturn.trans_date = payment_quick.payment_detail.trans_date;
+                        total = total - payment_quick.payment_detail.value;
+                        _payment_schedualreturn.AccountReceivableBalance = total;
+
+                        payment_detailreturn.payment_schedual.Add(_payment_schedualreturn);
+                        payment.payment_detail.Add(payment_detailreturn);
+
+                      
+                       
+                    }
+                    else
+                    {
+                        
+                        payment.id_contact = payment_quick.payment_detail.payment.contact.id_contact;
+                        payment.id_payment = payment_quick.payment_detail.payment.id_payment;
+                        payment.number = payment_quick.payment_detail.payment.number;
+                        payment_detail payment_detail = new payment_detail();
+                        payment_detail.id_account = payment_quick.payment_detail.id_account;
+                        payment_detail.id_currencyfx = payment_quick.payment_detail.id_currencyfx;
+                        payment_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
+
+                        payment_detail.id_purchase_return = payment_quick.payment_detail.id_purchase_return;
+                        payment_detail.id_sales_return = payment_quick.payment_detail.id_sales_return;
+
+                        payment_detail.value = payment_quick.payment_detail.value;
+                        payment_schedual _payment_schedual = new payment_schedual();
+
+                        _payment_schedual.credit = Convert.ToDecimal(payment_quick.payment_detail.value);
+                        _payment_schedual.parent = payment_schedual;
+                        _payment_schedual.expire_date = payment_schedual.expire_date;
+                        _payment_schedual.status = payment_schedual.status;
+                        _payment_schedual.id_contact = payment_schedual.id_contact;
+                        _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
+                        _payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
+                        _payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
+                        _payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
+                        _payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
+                        _payment_schedual.id_sales_order = payment_schedual.id_sales_order;
+                        _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
+                        _payment_schedual.trans_date = payment_quick.payment_detail.trans_date;
+                        total = total - payment_quick.payment_detail.value;
+                        _payment_schedual.AccountReceivableBalance = total;
+
+                        payment_detail.payment_schedual.Add(_payment_schedual);
+                        payment.payment_detail.Add(payment_detail);
+
+                        //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
+                        if (_entity.db.payment_type.Where(x => x.id_payment_type == payment_quick.payment_detail.id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
+                        {
+                            app_account_detail app_account_detail = new app_account_detail();
+                            app_account_detail.id_account = (int)payment_quick.payment_detail.id_account;
+                            app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
+                            app_account_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
+                            app_account_detail.debit = 0;
+                            app_account_detail.credit = Convert.ToDecimal(payment_quick.payment_detail.value);
+                            _entity.db.app_account_detail.Add(app_account_detail);
+                        }
+                       
                     }
 
+
                     _entity.db.payments.Add(payment);
+
+
+
+
+
+                   
 
                     IEnumerable<DbEntityValidationResult> validationresult = _entity.db.GetValidationErrors();
                     if (validationresult.Count() == 0)
@@ -240,7 +289,7 @@ namespace Cognitivo.Commercial
         {
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
 
-         
+
             Refinance.objEntity = _entity;
             Refinance.payment_schedualViewSource = payment_schedualViewSource;
             Refinance.id_contact = PaymentSchedual.id_contact;

@@ -30,7 +30,7 @@
     <Grid DataContext="{StaticResource paymentpayment_detailViewSource}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="400"/>
+            <RowDefinition Height="650"/>
         </Grid.RowDefinitions>
         <Border Background="WhiteSmoke" Grid.ColumnSpan="2">
             <Grid>

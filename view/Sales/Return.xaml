@@ -233,7 +233,7 @@
                 
                 <Grid Grid.ColumnSpan="2" Grid.Row="1">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
-                        <TextBlock x:Name="lblTotal" Text="{Binding return_Total, Source={StaticResource sales_returnViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource TextAreaH2}"/>
+                        <TextBlock x:Name="lblTotal" Text="{Binding GrandTotal, Source={StaticResource sales_returnViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource TextAreaH2}"/>
                         <Label Content="{Binding app_currencyfx.app_currency.name}" Style="{StaticResource H3}" ContentStringFormat="{}{0:N}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />
                         <Label x:Name="lblVAT" Foreground="RoyalBlue" Content="{lex:Loc VAT}" VerticalAlignment="Center"/>
                         <Popup x:Name="popupVAT" IsOpen="{Binding ElementName=lblVAT, Path=IsMouseOver, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

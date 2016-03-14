@@ -51,6 +51,11 @@ namespace cntrl.Curd
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
+            if (contactobject != null)
+            {
+                contactList.Add(contactobject);
+
+            }
             if (btnSave_Click != null)
             {
                 btnSave_Click(sender);

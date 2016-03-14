@@ -165,6 +165,11 @@
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\smartBoxContactSetting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>smartBoxContactSetting.settings</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SmartBox_Geography.xaml.cs">
       <DependentUpon>SmartBox_Geography.xaml</DependentUpon>
     </Compile>
@@ -420,6 +425,10 @@
     </None>
     <Resource Include="Resources\Entypo.ttf" />
     <Resource Include="Resources\cognitivo.ttf" />
+    <None Include="Controls\smartBoxContactSetting.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>smartBoxContactSetting.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\entity.accounting_budget.datasource" />
     <None Include="Properties\DataSources\entity.accounting_chart.datasource" />

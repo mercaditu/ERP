@@ -77,19 +77,7 @@
             <StackPanel Margin="8,0">
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="0,4"/>
                 <Button Content="{lex:Loc Payment}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Payment_Click"/>
-                <StackPanel x:Name="coefficient">
-                    <Label Content="{lex:Loc Coeficient}" Style="{StaticResource input_label}"/>
-                    <TextBox Style="{StaticResource input_textbox}"
-                         metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                         metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
-                         metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
-                         metro:TextBoxHelper.SelectAllOnFocus="True"
-                     Text="{Binding sales_invoice.vatwithholdingpercentage, Source={StaticResource payment_schedualViewSource}, Mode=TwoWay,
-                                    NotifyOnValidationError=True, 
-                                    ValidatesOnExceptions=True, 
-                                    UpdateSourceTrigger=LostFocus,
-                                    ValidatesOnDataErrors=True, StringFormat={}{0:P}}" Margin="4,0,0,4" Width="170"/>
-                </StackPanel>
+       
                 <Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click"/>
                 <Rectangle Height="1" Margin="0,8" Fill="Silver"/>
                 <Button Content="{lex:Loc Refinance}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Refince_Click"/>

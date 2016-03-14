@@ -162,11 +162,7 @@ namespace cntrl.Controls
             }
         }
 
-        private void _SmartBox_Item_GotFocus(object sender, RoutedEventArgs e)
-        {
-            popToolBar.IsOpen = true;
-            popToolBar.Visibility = System.Windows.Visibility.Visible;
-        }
+     
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -209,10 +205,6 @@ namespace cntrl.Controls
             popCrud.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void _SmartBox_Item_LostFocus(object sender, RoutedEventArgs e)
-        {
-            popToolBar.IsOpen = false;
-            popToolBar.Visibility = System.Windows.Visibility.Collapsed;
-        }
+        
     }
 }

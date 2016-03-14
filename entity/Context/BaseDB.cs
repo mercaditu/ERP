@@ -58,6 +58,7 @@ namespace entity
             
             var source = obj;
             var clone = Activator.CreateInstance(a);
+            
             base.Entry(clone).State = EntityState.Added;
 
             var sourceValues = base.Entry(source).CurrentValues;

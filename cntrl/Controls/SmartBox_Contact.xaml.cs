@@ -18,7 +18,7 @@ namespace cntrl.Controls
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-
+        entity.dbContext db = new entity.dbContext();
         public event RoutedEventHandler Select;
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
@@ -99,8 +99,17 @@ namespace cntrl.Controls
             }
         }
 
+        private static bool EmpSearch(entity.contact emp)
+        {
+            if (emp.name == "Anshu")
+                return true;
+            else
+                return false;
+        }
         private void Search_OnThread(string SearchText)
         {
+          
+           
             using(entity.db db = new entity.db())
             {
                 db.Configuration.LazyLoadingEnabled = false;
@@ -111,71 +120,100 @@ namespace cntrl.Controls
                 var propertyInfo = typeof(entity.contact).GetProperty(param);
                
                // Boolean is_principal = Controls.smartBoxContactSetting.Default.is_principal;
+                var predicate = PredicateBuilder.True<entity.contact>(); 
+               
 
-                if (Get_Customers)
+                if (param=="code")
                 {
-                    results.AddRange(db.contacts
-                   .Where(x =>
-                               x.id_company == company_ID &&
-                               (   
-                                   x.code.Contains(SearchText) ||
-                                   x.name.Contains(SearchText)
-                               )
-                               &&
-                                   x.is_customer == Get_Customers
-                               &&
-                                   x.contact_role.can_transact 
-                               &&
-                                   x.is_active
-                           ).AsEnumerable()
-                           .OrderBy(x =>propertyInfo.GetValue(x, null))
-                   .ToList()
-                   );   
+                    predicate = predicate.And(x => x.code == SearchText);
                 }
+                else if (param=="name")
+                {
+                    predicate = predicate.And(x => x.name == SearchText);
+                }
+                else if (param=="Default" || param=="")
+                {
+                    if (Get_Customers)
+                    {
+                        predicate = predicate.And(x => x.is_customer);
+                    }
+                    else if (Get_Suppliers)
+                    {
+                        predicate = predicate.And(x => x.is_supplier);
+                    }
+                    else if (Get_Employees)
+                    {
+                        predicate = predicate.And(x => x.is_employee);
+                    }
+                    predicate = predicate.And(x => x.code.Contains(SearchText) || x.name.Contains(SearchText));
+                }
+                predicate = predicate.And(x => x.contact_role.can_transact);
+                predicate = predicate.And(x => x.is_active);
+                //if (Get_Customers)
+                //{
+                //    results.AddRange(db.contacts
+                //   .Where(x =>
+                //               x.id_company == company_ID &&
+                //               (   
+                //                   x.code.Contains(SearchText) ||
+                //                   x.name.Contains(SearchText)
+                //               )
+                //               &&
+                //                   x.is_customer == Get_Customers
+                //               &&
+                //                   x.contact_role.can_transact 
+                //               &&
+                //                   x.is_active
+                //           ).AsEnumerable()
+                //           .OrderBy(x =>propertyInfo.GetValue(x, null))
+                //   .ToList()
+                //   );   
+                //}
 
-                if (Get_Suppliers)
-                {
-                    results.AddRange(db.contacts
-                   .Where(x =>
-                               x.id_company == company_ID &&
-                               (
-                                   x.code.Contains(SearchText) ||
-                                   x.name.Contains(SearchText)
-                               )
-                               &&
-                                   x.is_supplier == Get_Suppliers
-                               &&
-                                   x.contact_role.can_transact 
-                               &&
-                                   x.is_active == true
-                           ).AsEnumerable()
-                           .OrderBy(x => propertyInfo.GetValue(x, null))
-                   .ToList()
-                   );
-                }
+                //if (Get_Suppliers)
+                //{
+                //    results.AddRange(db.contacts
+                //   .Where(x =>
+                //               x.id_company == company_ID &&
+                //               (
+                //                   x.code.Contains(SearchText) ||
+                //                   x.name.Contains(SearchText)
+                //               )
+                //               &&
+                //                   x.is_supplier == Get_Suppliers
+                //               &&
+                //                   x.contact_role.can_transact 
+                //               &&
+                //                   x.is_active == true
+                //           ).AsEnumerable()
+                //           .OrderBy(x => propertyInfo.GetValue(x, null))
+                //   .ToList()
+                //   );
+                //}
               
               
-                if (Get_Employees)
-                {
-                    results.AddRange(db.contacts
-                   .Where(x =>
-                               x.id_company == company_ID &&
-                               (
-                                   x.code.Contains(SearchText) ||
-                                   x.name.Contains(SearchText)
-                               )
-                               &&
-                                   x.is_employee == Get_Employees
-                               &&
-                                  x.contact_role.can_transact
-                               &&
-                                   x.is_active == true
-                           ).AsEnumerable()
-                           .OrderBy(x => propertyInfo.GetValue(x, null)).OrderBy(x => propertyInfo.GetValue(x, null))
-                   .ToList()
-                   );
-                }
-
+                //if (Get_Employees)
+                //{
+                //    results.AddRange(db.contacts
+                //   .Where(x =>
+                //               x.id_company == company_ID &&
+                //               (
+                //                   x.code.Contains(SearchText) ||
+                //                   x.name.Contains(SearchText)
+                //               )
+                //               &&
+                //                   x.is_employee == Get_Employees
+                //               &&
+                //                  x.contact_role.can_transact
+                //               &&
+                //                   x.is_active == true
+                //           ).AsEnumerable()
+                //           .OrderBy(x => propertyInfo.GetValue(x, null)).OrderBy(x => propertyInfo.GetValue(x, null))
+                //   .ToList()
+                //   );
+                //}
+                results.AddRange(db.contacts
+                   .Where(predicate).OrderBy(x=>x.name).ToList());
                 Dispatcher.InvokeAsync(new Action(() =>
                 {
                     contactViewSource.Source = results;
@@ -196,22 +234,24 @@ namespace cntrl.Controls
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             crudContact.contactobject = new entity.contact();
+            
+            crudContact.entity = db;
             popCrud.IsOpen = true;
+
             popCrud.Visibility = System.Windows.Visibility.Visible;
 
         }
 
         private void crudContact_btnSave_Click(object sender)
         {
-            using (entity.db db = new entity.db())
-            {
+            
                 if (crudContact.contactList.Count()>0)
                 {
                     foreach (entity.contact contact in crudContact.contactList)
                     {
                         if (contact.id_contact==0)
                         {
-                            db.contacts.Add(contact);
+                            db.db.contacts.Add(contact);
                         }
                         
                         
@@ -219,9 +259,9 @@ namespace cntrl.Controls
                     
                     db.SaveChanges();
                 }
-            }
-                 popCrud.IsOpen = true;
-            popCrud.Visibility = System.Windows.Visibility.Visible;
+           
+                 popCrud.IsOpen = false;
+            popCrud.Visibility = System.Windows.Visibility.Collapsed;
 
         }
 
@@ -230,6 +270,7 @@ namespace cntrl.Controls
         private void Edit_PreviewMouseUp_1(object sender, MouseButtonEventArgs e)
         {
             crudContact.contactobject = Contact;
+            crudContact.entity = db;
             popCrud.IsOpen = true;
             popCrud.Visibility = System.Windows.Visibility.Visible;
         }
@@ -262,6 +303,10 @@ namespace cntrl.Controls
             if (rbtnname.IsChecked==true)
             {
                 Controls.smartBoxContactSetting.Default.OrderByText = "name";
+            }
+            if (rbtndefault.IsChecked==true)
+            {
+                Controls.smartBoxContactSetting.Default.OrderByText = "Default";
             }
         }
 

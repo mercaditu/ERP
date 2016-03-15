@@ -25,7 +25,7 @@ namespace cntrl.Controls {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("name")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
         public string OrderByText {
             get {
                 return ((string)(this["OrderByText"]));

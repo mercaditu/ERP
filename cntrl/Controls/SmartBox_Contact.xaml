@@ -39,7 +39,10 @@
                         <StackPanel Orientation="Vertical" Background="White" >
                             <RadioButton x:Name="rbtncode" Content="Select By Code" Checked="RadioButton_Checked"/>
                             <RadioButton x:Name="rbtnname" Content="Select By Name" Checked="RadioButton_Checked"/>
+                            <RadioButton x:Name="rbtndefault" Content="Select By Default" Checked="RadioButton_Checked"/>
                             <CheckBox x:Name="chkprincipal" Content="Search By Principal" IsChecked="{Binding Source={x:Static prf:smartBoxContactSetting.Default}, Path=is_principal, Mode=TwoWay}"/>
+                            
+                            
                         </StackPanel>
                     </Popup>
 

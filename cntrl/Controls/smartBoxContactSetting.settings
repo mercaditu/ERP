@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="OrderByText" Type="System.String" Scope="User">
-      <Value Profile="(Default)">name</Value>
+      <Value Profile="(Default)">Default</Value>
     </Setting>
     <Setting Name="is_principal" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

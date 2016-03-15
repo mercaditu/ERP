@@ -165,6 +165,7 @@
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PrecateBuilder.cs" />
     <Compile Include="Controls\smartBoxContactSetting.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

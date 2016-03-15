@@ -116,12 +116,25 @@ namespace cntrl.Controls
                 db.Configuration.AutoDetectChangesEnabled = false;
 
                 List<entity.contact> results = new List<entity.contact>();
-                var param = Controls.smartBoxContactSetting.Default.OrderByText;
+                var param = smartBoxContactSetting.Default.OrderByText;
                 var propertyInfo = typeof(entity.contact).GetProperty(param);
                
-               // Boolean is_principal = Controls.smartBoxContactSetting.Default.is_principal;
-                var predicate = PredicateBuilder.True<entity.contact>(); 
-               
+                var predicate = PredicateBuilder.True<entity.contact>();
+
+                if (Get_Customers)
+                {
+                    predicate = predicate.And(x => x.is_customer == true);
+                }
+
+                if (Get_Suppliers)
+                {
+                    predicate = predicate.And(x => x.is_supplier == true);
+                }
+
+                if (Get_Employees)
+                {
+                    predicate = predicate.And(x => x.is_employee == true);
+                }
 
                 if (param=="code")
                 {
@@ -133,85 +146,13 @@ namespace cntrl.Controls
                 }
                 else if (param=="Default" || param=="")
                 {
-                    if (Get_Customers)
-                    {
-                        predicate = predicate.And(x => x.is_customer);
-                    }
-                    else if (Get_Suppliers)
-                    {
-                        predicate = predicate.And(x => x.is_supplier);
-                    }
-                    else if (Get_Employees)
-                    {
-                        predicate = predicate.And(x => x.is_employee);
-                    }
                     predicate = predicate.And(x => x.code.Contains(SearchText) || x.name.Contains(SearchText));
                 }
+
                 predicate = predicate.And(x => x.contact_role.can_transact);
                 predicate = predicate.And(x => x.is_active);
-                //if (Get_Customers)
-                //{
-                //    results.AddRange(db.contacts
-                //   .Where(x =>
-                //               x.id_company == company_ID &&
-                //               (   
-                //                   x.code.Contains(SearchText) ||
-                //                   x.name.Contains(SearchText)
-                //               )
-                //               &&
-                //                   x.is_customer == Get_Customers
-                //               &&
-                //                   x.contact_role.can_transact 
-                //               &&
-                //                   x.is_active
-                //           ).AsEnumerable()
-                //           .OrderBy(x =>propertyInfo.GetValue(x, null))
-                //   .ToList()
-                //   );   
-                //}
+                
 
-                //if (Get_Suppliers)
-                //{
-                //    results.AddRange(db.contacts
-                //   .Where(x =>
-                //               x.id_company == company_ID &&
-                //               (
-                //                   x.code.Contains(SearchText) ||
-                //                   x.name.Contains(SearchText)
-                //               )
-                //               &&
-                //                   x.is_supplier == Get_Suppliers
-                //               &&
-                //                   x.contact_role.can_transact 
-                //               &&
-                //                   x.is_active == true
-                //           ).AsEnumerable()
-                //           .OrderBy(x => propertyInfo.GetValue(x, null))
-                //   .ToList()
-                //   );
-                //}
-              
-              
-                //if (Get_Employees)
-                //{
-                //    results.AddRange(db.contacts
-                //   .Where(x =>
-                //               x.id_company == company_ID &&
-                //               (
-                //                   x.code.Contains(SearchText) ||
-                //                   x.name.Contains(SearchText)
-                //               )
-                //               &&
-                //                   x.is_employee == Get_Employees
-                //               &&
-                //                  x.contact_role.can_transact
-                //               &&
-                //                   x.is_active == true
-                //           ).AsEnumerable()
-                //           .OrderBy(x => propertyInfo.GetValue(x, null)).OrderBy(x => propertyInfo.GetValue(x, null))
-                //   .ToList()
-                //   );
-                //}
                 results.AddRange(db.contacts
                    .Where(predicate).OrderBy(x=>x.name).ToList());
                 Dispatcher.InvokeAsync(new Action(() =>
@@ -238,7 +179,7 @@ namespace cntrl.Controls
             crudContact.entity = db;
             popCrud.IsOpen = true;
 
-            popCrud.Visibility = System.Windows.Visibility.Visible;
+            popCrud.Visibility = Visibility.Visible;
 
         }
 

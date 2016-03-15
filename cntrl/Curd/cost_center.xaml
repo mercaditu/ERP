@@ -22,18 +22,14 @@
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="White">
         <StackPanel x:Name="stackMain" Margin="0">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#ff9999">
-                    <Image Source="/cntrl;component/Images/Outline_White/money_box_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-                </Border>
+            <Grid Background="#FFBC0000">
+                <Image Source="/cntrl;component/Images/Outline_White/money_box_filled-100.png" HorizontalAlignment="Left" Margin="6,0" Height="32"/>
                 <!--<Image Width="26" Height="25" Source="/cntrl;component/Images/Outline/Travel/museum-50.png"/>-->
-                <Label x:Name="lblTitle" Content="{lex:Loc CostCenter}" FontSize="25" Margin="50,0,0,0"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc CostCenter}" FontSize="25" Foreground="White" Margin="40,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
             

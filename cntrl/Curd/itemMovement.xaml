@@ -72,7 +72,7 @@
             </StackPanel>
             <DataGrid Height="Auto" x:Name="item_transfer_detailDataGrid" 
                       AutoGenerateColumns="False" Grid.ColumnSpan="2" 
-                      EnableRowVirtualization="True" Margin="8,0"
+                      EnableRowVirtualization="True" Margin="8,4"
                       ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
@@ -81,7 +81,7 @@
                         SelectedValueBinding="{Binding id_item , UpdateSourceTrigger=PropertyChanged}" 
                         DisplayMemberPath="name" SelectedValuePath="id_item" 
                         Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader"/>
+                    <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Background="WhiteSmoke">

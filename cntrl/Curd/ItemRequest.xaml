@@ -5,7 +5,7 @@
             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
             lex:ResxLocalizationProvider.DefaultDictionary="local"
             lex:LocalizeDictionary.DesignCulture="en-US" 
-            VerticalAlignment="Center"
+            VerticalAlignment="Center" BorderBrush="#66ccff" BorderThickness="2"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:local="clr-namespace:Cognitivo.Converters"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

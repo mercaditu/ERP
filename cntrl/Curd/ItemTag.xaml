@@ -11,7 +11,7 @@
                 lex:ResxLocalizationProvider.DefaultDictionary="local"
                 lex:LocalizeDictionary.DesignCulture="en-US" 
              xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="cntrl.Curd.ItemTag" 
-             mc:Ignorable="d" 
+             mc:Ignorable="d" BorderBrush="RoyalBlue" BorderThickness="2"
              Width="360"  Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
@@ -25,17 +25,14 @@
     </UserControl.Effect>
     <Grid>
         <StackPanel x:Name="stackMain" Background="White">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#ff3300">
-                    <Image Source="/cntrl;component/Images/Outline_White/price_tag_filled-100.png" 
-                           Height="32" Opacity="0.64"/>
-                </Border>
-                <Label x:Name="lblTitle" Content="{lex:Loc Tags}" FontSize="25" Margin="50,0,0,0"/>
-                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
+            <Grid Background="RoyalBlue">
+                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" Margin="4,0"
+                   VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White"/>
+                    <Label Content="{lex:Loc ItemTag}" FontSize="25" Margin="32,0,0,0" Foreground="White"/>
+                    <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
             
@@ -51,15 +48,15 @@
             </StackPanel>
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
             <TextBlock Text="Items associated with tag. Add Tags to Products from the Products Window." Style="{StaticResource text_Instructions}"/>
-                <DataGrid x:Name="item_tag_detailDataGrid" IsReadOnly="True"
+            <DataGrid x:Name="item_tag_detailDataGrid" IsReadOnly="True"
                       AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="256"
-                      ItemsSource="{Binding item_tag_detail}" Margin="4" Width="256"
+                      ItemsSource="{Binding item_tag_detail}" Margin="52,4" Width="256"
                       RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
                     <DataGridComboBoxColumn x:Name="id_itemColumn" Header="Item" Width="*"
-                                            ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
-                                            DisplayMemberPath="name" SelectedValuePath="id_item" 
-                                            SelectedValueBinding="{Binding id_item, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                		ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
+                		DisplayMemberPath="name" SelectedValuePath="id_item" 
+                		SelectedValueBinding="{Binding id_item, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Background="WhiteSmoke">

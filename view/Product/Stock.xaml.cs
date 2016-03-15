@@ -89,7 +89,8 @@ namespace Cognitivo.Product
                                itemid = last.Key.item_product.item.id_item,
                                quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
                                id_item_product = last.Key.item_product.id_item_product,
-                               measurement = last.Key.item_product.item.id_measurement
+                               measurement = last.Key.item_product.item.id_measurement,
+                               id_location=last.Key.app_location.id_location
                            }).ToList();
 
                     item_movementDataGrid.ItemsSource = movement;
@@ -120,7 +121,8 @@ namespace Cognitivo.Product
                              itemid = last.Key.item_product.item.id_item,
                              quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
                              id_item_product = last.Key.item_product.id_item_product,
-                             measurement = last.Key.item_product.item.id_measurement
+                             measurement = last.Key.item_product.item.id_measurement,
+                              id_location=last.Key.app_location.id_location
                          }).ToList();
 
                     item_movementDataGrid.ItemsSource = movement;
@@ -181,13 +183,13 @@ namespace Cognitivo.Product
 
                 app_branch app_branch = (app_branch)dgvBranch.SelectedItem;
                 int id_branch = app_branch.id_branch;
-
+                int id_location = _item_movement.id_location;
                 using (db db = new db())
                 {
                     item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
                     item_movementViewSource.Source = await db.item_movement.Where(x => x.id_company == _entity_Pref.company_ID
                                                         && x.id_item_product == id_item_product
-                                                        && x.app_location.id_branch == id_branch
+                                                        && x.app_location.id_location == id_location
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
                                                         ).AsNoTracking().ToListAsync();

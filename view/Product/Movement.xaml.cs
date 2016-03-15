@@ -164,8 +164,8 @@ namespace Cognitivo.Product
                 item_transfer_detail item = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
 
                 item_movement item_movement_origin = new item_movement();
-                item_movement_origin.debit = 0;
-                item_movement_origin.credit = item.quantity_origin;
+                item_movement_origin.debit =  item.quantity_origin;
+                item_movement_origin.credit =0;
                 item_movement_origin.id_application = global::entity.App.Names.SalesInvoice;
                 item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
                 item_movement_origin.transaction_id = 0;
@@ -181,8 +181,8 @@ namespace Cognitivo.Product
 
                 ProductMovementDB.item_movement.Add(item_movement_origin);
                 item_movement item_movement_dest = new item_movement();
-                item_movement_dest.debit = item.quantity_destination;
-                item_movement_dest.credit = 0;
+                item_movement_dest.debit = 0;
+                item_movement_dest.credit =item.quantity_destination ;
                 item_movement_dest.id_application = global::entity.App.Names.PurchaseInvoice;
                 item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
                 item_movement_dest.transaction_id = 0;

@@ -135,6 +135,8 @@
                             <DropShadowEffect ShadowDepth="0"/>
                         </Border.Effect>
                         <StackPanel Orientation="Horizontal">
+                            <Label MouseDown="btnAddParentTask_Click" ToolTip="{lex:Loc NewParentTask}"
+                                   Style="{StaticResource btn_Label}" Content="+" Margin="10,4" FontSize="15"/>
                             <Label MouseDown="btnNewTask_Click" ToolTip="{lex:Loc New}"
                                    Style="{StaticResource btn_Label}" Content="+" Margin="10,4"/>
                             <Label MouseDown="btnEditTask_Click" ToolTip="{lex:Loc Edit}" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
@@ -158,7 +160,7 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
                         <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
-                        <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding items.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                     </StackPanel>

@@ -63,7 +63,7 @@ namespace Cognitivo.Production
             production_order_detaillProductViewSource = FindResource("production_order_detaillProductViewSource") as CollectionViewSource;
             production_order_detaillServiceViewSource = FindResource("production_order_detaillServiceViewSource") as CollectionViewSource;
             production_order_detaillRawViewSource = FindResource("production_order_detaillRawViewSource") as CollectionViewSource;
-            production_order_detaillAssetViewSource = FindResource("production_order_detaillCapitalViewSource") as CollectionViewSource;
+            production_order_detaillAssetViewSource = FindResource("production_order_detaillAssetViewSource") as CollectionViewSource;
             production_order_detaillSupplyViewSource = FindResource("production_order_detaillSupplyViewSource") as CollectionViewSource;
 
             CollectionViewSource employeeViewSource = FindResource("employeeViewSource") as CollectionViewSource;

@@ -197,10 +197,23 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel>
-                            <Label Style="{StaticResource input_label}" Content="{lex:Loc Contact}"/>
-                            <Controls:SmartBox_Contact x:Name="sbxContact" Select="set_ContactPref" Get_Suppliers="True"/>
+                        <StackPanel Orientation="Horizontal">
 
+                            <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
+                            <ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name" Width="75"
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"
+                              metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                               SelectedValuePath="id_condition" Grid.Row="1" SelectionChanged="cbxCondition_SelectionChanged"/>
+                                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
+                            <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name" 
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue"     ItemsSource="{Binding Source={StaticResource app_contractViewSource}}"
+                              metro:ControlsHelper.MouseOverBorderBrush="Silver"
+					          SelectedValuePath="id_contract" x:Name="cbxContract" Width="75"/>
+                            <Label Style="{StaticResource input_label}" Content="{lex:Loc Contact}"/>
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Select="set_ContactPref" Get_Suppliers="True" Height="20" VerticalAlignment="Top" />
+                        
+					         
+                    
                             <!--<cntrl:SearchableTextbox x:Name="contactComboBox" Width="256" HorizontalAlignment="Left"
                                              CollectionViewSource="{StaticResource contactViewSource}" 
                                              IsDisplayed="True" KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref" 
@@ -230,19 +243,10 @@
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Supplier}" Width="*"
 					                                Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="auto"
-					                                    ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"  
-                                                        DisplayMemberPath="name" SelectedValuePath="id_condition" 
-					                                    SelectedValueBinding="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
-                                                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"   >
-                                  
-                                </DataGridComboBoxColumn>
-
-                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Contract}" Width="auto"
-					                                    ItemsSource="{Binding Source={StaticResource app_contractViewSource}}"  
-                                                        DisplayMemberPath="name" SelectedValuePath="id_contract" 
-					                                    SelectedValueBinding="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
-                                                        UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="*"
+					                                Binding="{Binding app_condition.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="*"
+					                                Binding="{Binding app_contract.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="auto"
 					                                    ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"  

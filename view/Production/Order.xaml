@@ -75,8 +75,14 @@
             <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                 <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                 <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
+                <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+                                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
+                                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                                  Style="{StaticResource input_combobox}"
+                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                 <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
-                <TextBox Style="{StaticResource input_textbox}" Text="{Binding work_number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}" Text="{Binding work_number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="cmbline"  Style="{DynamicResource input_combobox}" 
 					      DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -393,7 +399,7 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
                 		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" >
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="24" />
-                                        <DataGridTextColumn Binding="{Binding project_task.parent.item_description}" Header="{lex:Loc Cognitivo:local:Task}" Width="*" IsReadOnly="True" />
+                                        <DataGridTextColumn Binding="{Binding parent.name}" Header="{lex:Loc Cognitivo:local:Task}" Width="*" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding quantity}" Header="Needed" Width="auto" IsReadOnly="True" />
                                     </DataGrid.Columns>
                                     <DataGrid.RowDetailsTemplate>

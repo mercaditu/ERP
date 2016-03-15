@@ -230,6 +230,7 @@ namespace Cognitivo.Product
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+            item_request_detailitem_request_decisionViewSource.View.Refresh();
 
         }
 
@@ -303,6 +304,7 @@ namespace Cognitivo.Product
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+            item_request_detailitem_request_decisionViewSource.View.Refresh();
         }
 
         private void item_request_decisionpurchaseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -327,6 +329,7 @@ namespace Cognitivo.Product
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+            item_request_detailitem_request_decisionViewSource.View.Refresh();
         }
 
         public enum state

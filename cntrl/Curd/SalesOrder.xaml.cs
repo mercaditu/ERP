@@ -58,7 +58,7 @@ namespace cntrl
                     sales_order_detail.id_item = (int)_project_task.id_item;
                     sales_order_detail.item_description = _project_task.item_description;
                     sales_order_detail.quantity = (int)_project_task.quantity_est;
-                    sales_order_detail.unit_price = (int)_project_task.unit_cost_est;
+                    sales_order_detail.UnitPrice_Vat = (int)_project_task.unit_cost_est;
                     _project_task.sales_detail = sales_order_detail;
                     _project_task.IsSelected = false;
                    

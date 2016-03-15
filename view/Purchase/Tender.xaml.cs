@@ -13,8 +13,8 @@ namespace Cognitivo.Purchase
     public partial class Tender : Page
     {
         PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
-       
-        CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, purchase_tenderpurchase_tender_itemViewSource, 
+
+        CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, purchase_tenderpurchase_tender_itemViewSource,
             purchase_tenderpurchase_tender_contact_detailViewSource, contactViewSource, app_conditionViewSource, app_contractViewSource, app_currencyfxViewSource;
 
         public Tender()
@@ -104,7 +104,7 @@ namespace Cognitivo.Purchase
             PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
             cbxProject.ItemsSource = PurchaseTenderDB.projects.Local;
 
-            cbxDocument.ItemsSource  = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender,  CurrentSession.Id_Branch, _setting.terminal_ID);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, _setting.terminal_ID);
 
             PurchaseTenderDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
 
@@ -122,10 +122,6 @@ namespace Cognitivo.Purchase
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
         }
 
-        private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         public void Item_Select(object sender, EventArgs e)
         {
@@ -167,17 +163,16 @@ namespace Cognitivo.Purchase
                 purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
                 purchase_tender_contact.contact = contact;
                 purchase_tender_contact.id_contact = contact.id_contact;
-                if (contact.lead_time!=null)
+                if (contact.lead_time != null)
                 {
                     purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
                 }
-       
 
-                if (contact.app_contract != null)
-                {
-                    purchase_tender_contact.app_contract = contact.app_contract;
-                    purchase_tender_contact.app_condition = contact.app_contract.app_condition;
-                }
+
+
+                purchase_tender_contact.app_contract = (app_contract)cbxContract.SelectedItem;
+                purchase_tender_contact.app_condition = (app_condition)cbxCondition.SelectedItem;
+
 
                 purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
 
@@ -243,33 +238,11 @@ namespace Cognitivo.Purchase
         private void purchase_tender_contact_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
 
-            if (e.Column.DisplayIndex == 2)
-            {
-                if (purchase_tenderpurchase_tender_contact_detailViewSource.View.CurrentItem != null)
-                {
-                    purchase_tender_contact purchase_tender_contact = ((purchase_tender_contact)purchase_tenderpurchase_tender_contact_detailViewSource.View.CurrentItem);
-                    if (app_contractViewSource != null)
-                    {
-                        if (app_contractViewSource.View != null)
-                        {
-                            if (app_contractViewSource.View.Cast<app_contract>().Count() > 0)
-                            {
-                                app_contractViewSource.View.Filter = i =>
-                                {
-                                    app_contract app_contract = (app_contract)i;
-                                    if (app_contract.id_condition == purchase_tender_contact.id_condition)
-                                        return true;
-                                    else
-                                        return false;
-                                };
-                            }
-                        }
-                    }
-                }
-            }
+
+
 
             purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
-            
+
             if (purchase_tender != null)
             {
                 if (purchase_tenderpurchase_tender_contact_detailViewSource.View.CurrentItem != null)
@@ -280,7 +253,7 @@ namespace Cognitivo.Purchase
                     {
                         if (purchase_tender_contact.id_purchase_tender_contact == 0)
                         {
-                            if (purchase_tender_contact.purchase_tender_detail.Where(x => x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).Count() == 0)
+                            if (purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).Count() == 0)
                             {
                                 purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
 
@@ -330,6 +303,33 @@ namespace Cognitivo.Purchase
             LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.unit_cost);
         }
 
-       
+        private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (app_contractViewSource != null)
+            {
+                if (app_contractViewSource.View != null)
+                {
+                    if (app_contractViewSource.View.Cast<app_contract>().Count() > 0)
+                    {
+                        app_contractViewSource.View.Filter = i =>
+                        {
+                            app_contract app_contract = (app_contract)i;
+                            int app_condition = (int)cbxCondition.SelectedValue;
+                            if (app_contract.id_condition == app_condition)
+                                return true;
+                            else
+                                return false;
+                        };
+                    }
+                }
+            }
+        }
+
+
     }
 }

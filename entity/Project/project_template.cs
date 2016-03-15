@@ -24,7 +24,7 @@ namespace entity
         public int id_project_template { get; set; }
         public int id_item_output { get; set; }
         public string name { get; set; }
-        public string comment { get; set; }
+        public string code { get; set; }
         public bool is_active { get; set; }
         //public Status.Documents_General status
         //{

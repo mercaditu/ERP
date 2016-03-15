@@ -66,7 +66,7 @@ namespace Cognitivo.Project.Development
                     projectproject_template_detailViewSource.View.Filter = i =>
                     {
                         project_template_detail project_template_detail = (project_template_detail)i;
-                        if (project_template_detail.parent == null)
+                        if (project_template_detail.parent == null && project_template_detail.status!=Status.Project.Rejected)
                             return true;
                         else
                             return false;
@@ -169,6 +169,29 @@ namespace Cognitivo.Project.Development
             }
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
         }
+        private void btnAddParentTask_Click(object sender, EventArgs e)
+        {
+            stpcode.IsEnabled = true;
+            itemSearchViewSource.View.Filter = i =>
+            {
+                item item = (item)i;
+                if (item.is_active == true)
+                    return true;
+                else
+                    return false;
+            };
+            project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
+          
+            project_template_detail n_project_template = new project_template_detail();
+            n_project_template.id_project_template = project_template.id_project_template;
+            n_project_template.status = Status.Project.Approved;
+            dbContext.project_template_detail.Add(n_project_template);
+
+            projectproject_template_detailViewSource.View.Filter = null;
+
+            filter_task();
+            projectproject_template_detailViewSource.View.MoveCurrentToLast();
+        }
 
         private void btnEditTask_Click(object sender, EventArgs e)
         {
@@ -195,14 +218,21 @@ namespace Cognitivo.Project.Development
 
         private void btnDeleteTask_Click(object sender, EventArgs e)
         {
-            project_template_detail project_template_detail = treeProject.SelectedItem as project_template_detail;
-
-            project_template_detail.status = Status.Project.Rejected;
-            project_template_detail.IsSelected = false;
-            projectproject_template_detailViewSource.View.Filter = null;
-
-            filter_task();
-            projectproject_template_detailViewSource.View.MoveCurrentToLast();
+            if (projectproject_template_detailViewSource.View != null)
+            {
+                projectproject_template_detailViewSource.View.Filter = null;
+                List<project_template_detail> project_template_detailLIST = treeProject.ItemsSource.Cast<project_template_detail>().ToList();
+                project_template_detailLIST = project_template_detailLIST.Where(x => x.IsSelected == true).ToList();
+                foreach (project_template_detail project_template_detail in project_template_detailLIST)
+                {
+                    project_template_detail.status = Status.Project.Rejected;
+                    project_template_detail.IsSelected = false;
+                }
+                dbContext.SaveChanges();
+                toolBar.msgDone();
+                filter_task();
+            }
+       
         }
 
         #endregion
@@ -314,6 +344,7 @@ namespace Cognitivo.Project.Development
              
             }
         }
+
        
 
     }

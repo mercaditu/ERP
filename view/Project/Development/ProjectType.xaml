@@ -21,6 +21,7 @@
         <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
         <converter:ActiveToStatus x:Key="ActiveToStatus"/>
+        <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemSearchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
@@ -68,8 +69,10 @@
                     <Grid.Resources >
                         <HierarchicalDataTemplate DataType="{x:Type data:project_template_detail}" 
                                               ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <Panels:pnl_TreeView Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
-                                             TaskName="{Binding item_description}"/>
+                            <Panels:pnl_TreeView 
+                                                 Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+                                                       IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             TaskName="{Binding item.name}" />
                         </HierarchicalDataTemplate>
                     </Grid.Resources>
                     <TreeView x:Name="treeProject" Margin="0,55,0,0" ItemsSource="{Binding}"
@@ -101,6 +104,8 @@
                                 <DropShadowEffect ShadowDepth="0"/>
                             </Border.Effect>
                             <StackPanel Orientation="Horizontal">
+                                <Label MouseDown="btnAddParentTask_Click" ToolTip="{lex:Loc NewParentTask}"
+                                   Style="{StaticResource btn_Label}" Content="+" Margin="10,4" FontSize="15"/>
                                 <Label MouseDown="btnNewTask_Click" ToolTip="{lex:Loc New}"
                                    Style="{StaticResource btn_Label}" Content="+" Margin="10,4"/>
                                 <Label MouseDown="btnEditTask_Click" ToolTip="{lex:Loc Edit}"
@@ -120,7 +125,7 @@
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                             <TextBox Text="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
-                            <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding item.name}" />
+                            <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                                 
                             <Label Content="{lex:Loc description}" Style="{StaticResource input_label}"/>
                             <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>

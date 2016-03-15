@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+    using System.Linq;
 
     public partial class production_order : Audit
     {
@@ -31,6 +32,94 @@ namespace entity
         public int? id_weather { get; set; }
 
         public int? id_project { get; set; }
+
+        public int id_branch
+        {
+            get
+            {
+                if (_Id_Branch == 0)
+                {
+                    _Id_Branch = Properties.Settings.Default.branch_ID;
+                };
+                return _Id_Branch;
+            }
+            set { _Id_Branch = value; }
+        }
+        int _Id_Branch;
+
+        public int id_terminal
+        {
+            get
+            {
+                if (_Id_terminal == 0)
+                {
+                    _Id_terminal = Properties.Settings.Default.terminal_ID;
+                };
+                return _Id_terminal;
+            }
+            set { _Id_terminal = value; }
+        }
+        int _Id_terminal;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? id_range
+        {
+            get
+            {
+                return _id_range;
+            }
+            set
+            {
+                if (_id_range != value)
+                {
+                    _id_range = value;
+
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+                    {
+                        using (db db = new db())
+                        {
+                            if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
+                            {
+                                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+
+                                if (db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
+                                }
+                                if (db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                }
+                                if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                                }
+                                if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                }
+
+                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
+                                RaisePropertyChanged("NumberWatermark");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private int? _id_range;
+
+        #region Document Range => Navigation
+        public virtual app_document_range app_document_range { get; set; }
+        #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public string NumberWatermark { get; set; }
         public string work_number { get; set; }
         public string project_cost_center { get; set; }
 

@@ -19,7 +19,7 @@ namespace Cognitivo.Product
     {
         ProductTransferDB ProductTransferDB = new ProductTransferDB();
 
-        CollectionViewSource item_transferViewSource, transfercostViewSource;
+        CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
         List<Class.transfercost> clsTotalGrid = null;
 
         public Transfer()
@@ -45,6 +45,11 @@ namespace Cognitivo.Product
             try
             {
                 item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+
+                app_document_range app_document_range = ProductTransferDB.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
+                item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                item_transfer.RaisePropertyChanged("number");
+
                 item_transfer.app_branch_origin = (app_branch)id_branch_originComboBox.SelectedItem;
                 item_transfer.app_branch_destination = (app_branch)id_branch_destinComboBox.SelectedItem;
                 item_transfer.app_location_origin = ((app_branch)id_branch_originComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
@@ -155,6 +160,8 @@ namespace Cognitivo.Product
                 .Load();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
+            item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(this.FindResource("item_transferitem_transfer_detailViewSource")));
+
             CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
             ProductTransferDB.app_branch.Where(a => a.is_active == true).OrderBy(a => a.name).Load();
             branch_originViewSource.Source = ProductTransferDB.app_branch.Local;
@@ -183,9 +190,11 @@ namespace Cognitivo.Product
                 item_transfer_detail item_transfer_detail = new item_transfer_detail();
                 item_transfer_detail.quantity_origin = 1;
                 item_transfer_detail.item_product = item.item_product.FirstOrDefault();
-
+                item_transfer_detail.RaisePropertyChanged("item_product");
                 item_transfer.item_transfer_detail.Add(item_transfer_detail);
             }
+            item_transferViewSource.View.Refresh();
+            item_transferitem_transfer_detailViewSource.View.Refresh();
         }
     }
 }

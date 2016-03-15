@@ -66,6 +66,28 @@ namespace Cognitivo.Production
 
         private void toolBar_btnSave_Click(object sender)
         {
+            production_order _production_order = (production_order)production_orderDataGrid.SelectedItem;
+            if ((_production_order.work_number == null || _production_order.work_number == string.Empty) && _production_order.id_range > 0)
+            {
+
+                if (_production_order.id_branch > 0)
+                {
+                    entity.Brillo.Logic.Range.branch_Code = OrderDB.app_branch.Where(x => x.id_branch == _production_order.id_branch).FirstOrDefault().code;
+                }
+                if (_production_order.id_terminal > 0)
+                {
+                    entity.Brillo.Logic.Range.terminal_Code = OrderDB.app_terminal.Where(x => x.id_terminal == _production_order.id_terminal).FirstOrDefault().code;
+                }
+
+               
+
+                app_document_range app_document_range = OrderDB.app_document_range.Where(x => x.id_range == _production_order.id_range).FirstOrDefault();
+                _production_order.work_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                _production_order.RaisePropertyChanged("work_number");
+
+              
+            }
+        
             OrderDB.SaveChanges();
         }
 
@@ -109,6 +131,7 @@ namespace Cognitivo.Production
             }
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
         }
 
         public void filter_task()

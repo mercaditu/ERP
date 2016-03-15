@@ -120,7 +120,7 @@
                 </Grid>
                 <AdornerDecorator>
                     <Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" Select="set_ContactPref"
-                                                   Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                   Text="{Binding employee.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </AdornerDecorator>
             </StackPanel>
             <StackPanel Grid.Column="2" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">

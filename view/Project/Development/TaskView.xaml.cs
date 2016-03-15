@@ -262,6 +262,20 @@ namespace Cognitivo.Project.Development
             }
             //   btnExpandAll.IsChecked = true;
         }
+        private void btnAddParentTask_Click(object sender, EventArgs e)
+        {
+            stpcode.IsEnabled = true;
+
+            project project = projectViewSource.View.CurrentItem as project;
+            project_task n_project_task = new project_task();
+            n_project_task.id_project = project.id_project;
+            n_project_task.status = entity.Status.Project.Pending;
+            _entity.db.project_task.Add(n_project_task);
+
+            project_taskViewSource.View.Filter = null;
+            project_taskViewSource.View.MoveCurrentTo(n_project_task);
+            filter_task();
+        }
 
         private void btnEditTask_Click(object sender, EventArgs e)
         {

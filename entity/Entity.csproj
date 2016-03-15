@@ -373,6 +373,10 @@
     <Compile Include="Migrations\201603111214424_UpdateItemTransfer1.Designer.cs">
       <DependentUpon>201603111214424_UpdateItemTransfer1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603151003584_UpdateProductionOrderandTemplate.cs" />
+    <Compile Include="Migrations\201603151003584_UpdateProductionOrderandTemplate.Designer.cs">
+      <DependentUpon>201603151003584_UpdateProductionOrderandTemplate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -798,6 +802,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603111214424_UpdateItemTransfer1.resx">
       <DependentUpon>201603111214424_UpdateItemTransfer1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603151003584_UpdateProductionOrderandTemplate.resx">
+      <DependentUpon>201603151003584_UpdateProductionOrderandTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

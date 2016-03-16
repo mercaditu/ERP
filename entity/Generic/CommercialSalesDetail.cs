@@ -153,6 +153,10 @@ namespace entity
         }
         private int _CurrencyFX_ID;
 
+
+        [NotMapped]
+        public contact Contact { get; set; }
+       
         /// <summary>
         /// 
         /// </summary>
@@ -326,8 +330,17 @@ namespace entity
         /// <returns></returns>
         public decimal get_SalesPrice()
         {
+            
             if (id_item > 0)
             {
+                if (Contact!=null)
+                {
+                    if (Contact.id_price_list > 0)
+                    {
+                        PriceList_ID = (int)Contact.id_price_list;
+                    }
+                }
+               
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
                 if (PriceList_ID == 0)
                 {

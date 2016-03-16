@@ -35,36 +35,36 @@ namespace cntrl.PanelAdv
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
 
-                //Load your data here and assign the result to the CollectionViewSource.
-                sales_budgetViewSource = (CollectionViewSource)Resources["sales_budgetViewSource"];
-
-
-                var salesBudget = (from sales_budget_detail in db.sales_budget_detail
-                                   where sales_budget_detail.sales_budget.status == Status.Documents_General.Approved
-                                   //where sales_budget_detail.sales_budget.contact.id_contact == _contact.id_contact
-                                   join sales_order_detail in db.sales_order_detail
-                                  on sales_budget_detail.id_sales_budget_detail equals sales_order_detail.id_sales_budget_detail into lst
-                                   from list in lst.DefaultIfEmpty()
-                                   group list by new
-                                   {
-                                       sales_budget_detail = sales_budget_detail,
-                                   }
-                                       into grouped
-                                       select new
-                                       {
-                                           id = grouped.Key.sales_budget_detail.id_sales_budget,
-                                           item = grouped.Key.sales_budget_detail.item_description,
-                                           quantity = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0,
-                                           balance = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0 - grouped.Sum(x => x.quantity > 0 ? x.quantity : 0),
-                                       }).ToList()
-                    .Where(x => x.balance > 0)
-                    .Select(x => x.id);
-
-                sales_budgetViewSource.Source = db.sales_budget.Where(x => salesBudget.Contains(x.id_sales_budget)).ToList();
+                load_SalesBudget(_contact.id_contact);
 
             }
         }
+        private void load_SalesBudget(int id_contact)
+        {
+            var salesBudget = (from sales_budget_detail in db.sales_budget_detail
+                               where sales_budget_detail.sales_budget.status == Status.Documents_General.Approved
+                               where sales_budget_detail.sales_budget.contact.id_contact == id_contact
+                               join sales_order_detail in db.sales_order_detail
+                              on sales_budget_detail.id_sales_budget_detail equals sales_order_detail.id_sales_budget_detail into lst
+                               from list in lst.DefaultIfEmpty()
+                               group list by new
+                               {
+                                   sales_budget_detail = sales_budget_detail,
+                               }
+                                   into grouped
+                                   select new
+                                   {
+                                       id = grouped.Key.sales_budget_detail.id_sales_budget,
+                                       item = grouped.Key.sales_budget_detail.item_description,
+                                       quantity = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0,
+                                       balance = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0 - grouped.Sum(x => x.quantity > 0 ? x.quantity : 0),
+                                   }).ToList()
+                  .Where(x => x.balance > 0)
+                  .Select(x => x.id);
+            sales_budgetViewSource = (CollectionViewSource)Resources["sales_budgetViewSource"];
+            sales_budgetViewSource.Source = db.sales_budget.Where(x => salesBudget.Contains(x.id_sales_budget)).ToList();
 
+        }
 
         public event btnSave_ClickedEventHandler SalesBudget_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);

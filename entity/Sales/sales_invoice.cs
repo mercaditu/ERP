@@ -43,6 +43,7 @@ namespace entity
                     foreach(sales_invoice_detail detail in sales_invoice_detail)
                     {
                         detail.State = value;
+                   
                     }
                 }
             }
@@ -82,6 +83,7 @@ namespace entity
                 _id_currencyfx = value;
                 RaisePropertyChanged("id_currencyfx");
 
+            
                 if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                 {
                     foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)

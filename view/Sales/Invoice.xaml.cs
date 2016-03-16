@@ -425,6 +425,7 @@ namespace Cognitivo.Sales
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                 _sales_invoice_detail.sales_invoice = sales_invoice;
+                _sales_invoice_detail.Contact = sales_invoice.contact;
                 _sales_invoice_detail.item_description = item.description;
                 _sales_invoice_detail.item = item;
                 _sales_invoice_detail.id_item = item.id_item;
@@ -455,16 +456,24 @@ namespace Cognitivo.Sales
                     sales_invoiceViewSource.View.Filter = i =>
                     {
                         sales_invoice sales_invoice = i as sales_invoice;
-                        if (sales_invoice.contact.name.ToLower().Contains(query.ToLower())
-                            || sales_invoice.number.ToLower().Contains(query.ToLower())
-                            || sales_invoice.trans_date.ToString() == query)
+                        if (sales_invoice.contact!=null)
                         {
-                            return true;
+                            if (sales_invoice.contact.name.ToLower().Contains(query.ToLower())
+                          || sales_invoice.number.ToLower().Contains(query.ToLower())
+                          || sales_invoice.trans_date.ToString() == query)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                         else
                         {
                             return false;
                         }
+                      
                     };
                 }
                 catch (Exception ex)
@@ -654,6 +663,7 @@ namespace Cognitivo.Sales
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
                         sales_invoice_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
                         sales_invoice_detail.sales_order_detail = _sales_order_detail;
+                        sales_invoice_detail.Contact = _sales_invoice.contact;
                         sales_invoice_detail.sales_invoice = _sales_invoice;
                         sales_invoice_detail.item = _sales_order_detail.item;
                         sales_invoice_detail.id_item = _sales_order_detail.id_item;

@@ -11,7 +11,7 @@
                 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
                 lex:ResxLocalizationProvider.DefaultDictionary="local"
                 lex:LocalizeDictionary.DesignCulture="en-US" 
-             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" GotFocus="_SmartBox_Contact_GotFocus" LostFocus="_SmartBox_Contact_LostFocus">
+             mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" GotFocus="_SmartBox_Contact_GotFocus" LostFocus="_SmartBox_Contact_LostFocus" IsEnabledChanged="_SmartBox_Contact_IsEnabledChanged">
     <UserControl.Resources>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>

@@ -113,7 +113,8 @@ namespace Cognitivo.Product
                     }
 
                     ProductTransferDB.SaveChangesAsync();
-                 
+
+                   entity.Brillo.Document.Start.Automatic(item_transfer, app_document_range);
                     toolBar.msgSaved();
                 }
             }

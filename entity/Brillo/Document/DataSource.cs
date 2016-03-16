@@ -52,6 +52,11 @@ namespace entity.Brillo.Document
                 purchase_tender purchase_tender = (purchase_tender)Document;
                 return PurchaseTender(purchase_tender);
             }
+            else if (Document.GetType().BaseType == typeof(item_transfer))
+            {
+                item_transfer item_transfer = (item_transfer)Document;
+                return ItemTransfer(item_transfer);
+            }
             return null;
         }
 
@@ -457,6 +462,30 @@ namespace entity.Brillo.Document
             //    }).ToList();
 
             return reportDataSource;
+        }
+
+        public ReportDataSource ItemTransfer(item_transfer item_transfer)
+        {
+            using (db db = new db())
+            {
+                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+                List<item_transfer_detail> item_transfer_detail = db.item_transfer_detail.Where(x => x.id_transfer == item_transfer.id_transfer).ToList();
+
+                reportDataSource.Value = item_transfer_detail
+                    .Select(g => new
+                    {
+                        transfer_number=g.item_transfer.number,
+                        location_origin_name =g.item_transfer.app_location_origin.name,
+                        location_destination_name = g.item_transfer.app_location_destination.name,
+                        item_code =g.item_product.item.code,
+                        quantity_origin =g.quantity_origin,
+                        item_name =g.item_product.item.name,
+                        trans_date =g.item_transfer.trans_date,
+                        comment=g.item_transfer.comment
+                    }).ToList();
+
+                return reportDataSource;
+            }
         }
     }
 }

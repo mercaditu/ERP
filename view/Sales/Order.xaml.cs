@@ -511,10 +511,11 @@ namespace Cognitivo.Sales
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();
                 _sales_order_detail.sales_order = sales_order;
+                _sales_order_detail.Contact = sales_order.contact;
                 _sales_order_detail.item_description = item.description;
                 _sales_order_detail.item = item;
                 _sales_order_detail.id_item = item.id_item;
-
+            
                 sales_order.sales_order_detail.Add(_sales_order_detail);
             }
             else

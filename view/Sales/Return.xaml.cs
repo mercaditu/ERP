@@ -395,10 +395,11 @@ namespace Cognitivo.Sales
             {
                 sales_return_detail _sales_return_detail = new sales_return_detail();
                 _sales_return_detail.sales_return = sales_return;
+                _sales_return_detail.Contact = sales_return.contact;
                 _sales_return_detail.item_description = item.description;
                 _sales_return_detail.item = item;
                 _sales_return_detail.id_item = item.id_item;
-
+             
                 sales_return.sales_return_detail.Add(_sales_return_detail);
             }
             else

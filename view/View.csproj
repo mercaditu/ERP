@@ -817,6 +817,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="bin\Debug\ItemTransfer.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="bin\Debug\payment.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -47,18 +47,15 @@ namespace cntrl.Curd
                 if (!isExternalCall)
                 {
 
-                    contactViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("contactViewSource")));
-                    contactViewSource.Source = _entity.db.contacts.Where(a => a.is_active == true && a.is_supplier == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).ToList();
+                  
                     stackMain.DataContext = item_brandViewSource;
                     _item_brand = item_brandViewSource.View.CurrentItem as entity.item_brand;
-                    if (_item_brand != null && _item_brand.contact != null)
-                        contactComboBox.Text = _item_brand.contact.name;
+                 
                 }
                 else
                 {
 
-                    contactViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("contactViewSource")));
-                    contactViewSource.Source = mydb.db.contacts.Where(a => a.is_active == true && a.is_supplier == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).ToList();
+                 
                     MainViewSource.View.MoveCurrentTo(curObject);
                     if (operationMode == Class.clsCommon.Mode.Add)
                     {
@@ -76,20 +73,7 @@ namespace cntrl.Curd
                         stackMain.DataContext = item_brandViewSource;
                         _item_brand = item_brandViewSource.View.CurrentItem as entity.item_brand;
                     }
-                    if (_item_brand != null)
-                    {
-                        if (_item_brand.contact != null)
-                        {
-                            contactComboBox.Text = _item_brand.contact.name;
-                        }
-                        else if (_item_brand.id_contact > 0)
-                        {
-                            if (operationMode == Class.clsCommon.Mode.Edit)
-                            {
-                                contactComboBox.Text = _entity.db.contacts.Where(a => a.id_contact == _item_brand.id_contact).FirstOrDefault().name;
-                            }
-                        }
-                    }
+                  
                 }
             }
         }
@@ -160,5 +144,20 @@ namespace cntrl.Curd
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
+        private void set_ContactPref(object sender, RoutedEventArgs e)
+        {
+            if (sbxContact.ContactID > 0)
+            {
+                entity.contact contact = mydb.db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                entity.item_brand item_brand = item_brandViewSource.View.CurrentItem as entity.item_brand;
+                item_brand.id_contact = contact.id_contact;
+              
+
+          
+            }
+        }
+
+     
     }
 }

@@ -156,7 +156,7 @@ namespace Cognitivo.Commercial
                     payment_detail.id_sales_return = payment_quick.payment_detail.id_sales_return;
                     
                     payment_detail.value = payment_quick.payment_detail.value;
-
+                    payment_detail.comment = payment_quick.payment_detail.comment;
                     payment_schedual _payment_schedual = new payment_schedual();
 
                     _payment_schedual.debit = Convert.ToDecimal(payment_quick.payment_detail.value);

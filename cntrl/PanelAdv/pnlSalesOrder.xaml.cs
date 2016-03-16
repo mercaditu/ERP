@@ -20,7 +20,7 @@ namespace cntrl.PanelAdv
         public module mode { get; set; }
         private List<sales_order> _selected_sales_order = null;
         public List<sales_order> selected_sales_order { get { return _selected_sales_order; } set { _selected_sales_order = value; } }
-       // public CollectionViewSource contactViewSource { get; set; }
+        // public CollectionViewSource contactViewSource { get; set; }
         public contact _contact { get; set; }
         public db _entity { get; set; }
         public pnlSalesOrder()
@@ -40,15 +40,14 @@ namespace cntrl.PanelAdv
             // Do not load your data at design time.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-               // contactComboBox.CollectionViewSource = contactViewSource;
+                // contactComboBox.CollectionViewSource = contactViewSource;
             }
             if (_contact != null)
             {
-                
-               
+
+
                 sbxContact.Text = _contact.name;
-                sales_orderViewSource = (CollectionViewSource)Resources["sales_orderViewSource"];
-                sales_orderViewSource.Source = _entity.sales_order.Where(x => x.id_contact == _contact.id_contact).ToList();
+                load_SalesOrder(_contact.id_contact);
             }
         }
 
@@ -58,36 +57,59 @@ namespace cntrl.PanelAdv
         {
             try
             {
-                if (sbxContact.ContactID >0)
+                if (sbxContact.ContactID > 0)
                 {
-                    contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); 
-                                    sales_orderViewSource = (CollectionViewSource)Resources["sales_orderViewSource"];
-                    sales_orderViewSource.Source = _entity.sales_order.Where(x => x.id_contact == contact.id_contact).ToList();
+                    contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    load_SalesOrder(contact.id_contact);
                 }
             }
-            catch
+            catch(Exception ex)
             {
-              //  toolBar.msgError(ex);
+                 MessageBox.Show(ex.ToString());
             }
         }
 
+        private void load_SalesOrder(int id_contact)
+        {
+            var order = (from sales_order_detail in _entity.sales_order_detail
+                         where sales_order_detail.sales_order.id_contact == id_contact
+                         join sales_invoice_detail in _entity.sales_invoice_detail
+                   on sales_order_detail.id_sales_order_detail equals sales_invoice_detail.id_sales_order_detail into lst
+                         from list in lst.DefaultIfEmpty()
+                         group list by new
+                         {
+                             sales_order_detail = sales_order_detail,
 
+                         }
+                             into grouped
+                             select new
+                             {
+                                 id_sales_order=grouped.Key.sales_order_detail.sales_order.id_sales_order,
+                                 salesOrder = grouped.Key.sales_order_detail.sales_order,
+                                 balance = grouped.Key.sales_order_detail.quantity != null ? grouped.Key.sales_order_detail.quantity : 0 - grouped.Sum(x => x.quantity != null ? x.quantity : 0)
+                             }).ToList().Where(x => x.balance > 0).Select(x => x.id_sales_order);
+       
+            sales_orderViewSource = (CollectionViewSource)Resources["sales_orderViewSource"];
+
+            sales_orderViewSource.Source = _entity.sales_order.Where(x => order.Contains(x.id_sales_order)).ToList();
+
+        }
         public event btnSave_ClickedEventHandler SalesOrder_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
             List<sales_order> sales_order = sales_orderDatagrid.ItemsSource.OfType<sales_order>().ToList();
             selected_sales_order = sales_order.Where(x => x.IsSelected == true).ToList();
-            if (mode==module.sales_invoice)
+            if (mode == module.sales_invoice)
             {
-                if (selected_sales_order.Count()>1)
+                if (selected_sales_order.Count() > 1)
                 {
                     MessageBox.Show("only one order will be linked..");
                     return;
                 }
             }
-        
-          
+
+
             if (SalesOrder_Click != null)
             {
                 SalesOrder_Click(sender);
@@ -101,7 +123,7 @@ namespace cntrl.PanelAdv
             int id_salesOrder = _sales_order.id_sales_order;
 
             Task task_PrimaryData = Task.Factory.StartNew(() => LoadOrderDetail(id_salesOrder, e));
-            
+
         }
         private void LoadOrderDetail(int id, DataGridRowDetailsEventArgs e)
         {
@@ -133,14 +155,14 @@ namespace cntrl.PanelAdv
                     RowDataGrid.ItemsSource = salesOrder;
                 }));
             }
-           
+
         }
         private void set_ContactPref(object sender, MouseButtonEventArgs e)
         {
             ContactPref(sender, e);
         }
 
-        
+
 
         //private void sales_orderDatagrid_Loaded(object sender, RoutedEventArgs e)
         //{

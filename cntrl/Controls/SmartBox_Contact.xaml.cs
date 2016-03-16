@@ -99,13 +99,7 @@ namespace cntrl.Controls
             }
         }
 
-        private static bool EmpSearch(entity.contact emp)
-        {
-            if (emp.name == "Anshu")
-                return true;
-            else
-                return false;
-        }
+       
         private void Search_OnThread(string SearchText)
         {
           
@@ -249,6 +243,11 @@ namespace cntrl.Controls
             {
                 Controls.smartBoxContactSetting.Default.OrderByText = "Default";
             }
+        }
+
+        private void _SmartBox_Contact_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ContactID = 0;
         }
 
        

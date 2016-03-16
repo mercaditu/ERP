@@ -25,7 +25,15 @@ namespace entity
         }  
         #region Contact => Variables & Navigation
         private int _id_contact;
-        public virtual contact contact { get { return _contact; } set { _contact = value; RaisePropertyChanged("contact"); } }
+        public virtual contact contact
+        {
+            get { return _contact; }
+            set
+            {
+                _contact = value; 
+               RaisePropertyChanged("contact");
+            }
+        }
         private contact _contact;
         #endregion
 

@@ -358,12 +358,12 @@ namespace Cognitivo.Sales
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();
                 _sales_budget_detail.sales_budget = sales_budget;
-             
+                _sales_budget_detail.Contact = sales_budget.contact;
                 _sales_budget_detail.item_description = item.description;
                 _sales_budget_detail.item = item;
             
                 _sales_budget_detail.id_item = item.id_item;
-
+           
                 sales_budget.sales_budget_detail.Add(_sales_budget_detail);
             }
             else

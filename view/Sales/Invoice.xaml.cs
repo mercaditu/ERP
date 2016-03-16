@@ -88,7 +88,7 @@ namespace Cognitivo.Sales
             }
             else
             {
-                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID 
+                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID
                                               && (a.is_head == true)).ToListAsync();
             }
 
@@ -168,7 +168,8 @@ namespace Cognitivo.Sales
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             SalesInvoiceDB.Entry(sales_invoice).State = EntityState.Added;
-            sales_invoiceViewSource.View.MoveCurrentToLast();
+            sales_invoiceViewSource.View.Refresh();
+            sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -653,9 +654,12 @@ namespace Cognitivo.Sales
             foreach (sales_order item in pnlSalesOrder.selected_sales_order)
             {
                 _sales_invoice.State = EntityState.Modified;
+                _sales_invoice.contact = item.contact;
+                _sales_invoice.id_contact = item.contact.id_contact;
                 _sales_invoice.id_condition = item.id_condition;
                 _sales_invoice.id_contract = item.id_contract;
                 _sales_invoice.id_currencyfx = item.id_currencyfx;
+                _sales_invoice.app_currencyfx = item.app_currencyfx;
                 _sales_invoice.id_sales_order = item.id_sales_order;
                 foreach (sales_order_detail _sales_order_detail in item.sales_order_detail)
                 {

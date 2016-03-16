@@ -281,6 +281,8 @@ namespace entity
         /// </summary>
         public string barcode { get; set; }
 
+
+
         #region Navigation
         public virtual app_currencyfx app_currencyfx { get; set; }
         #endregion

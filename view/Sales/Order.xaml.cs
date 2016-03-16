@@ -156,7 +156,7 @@ namespace Cognitivo.Sales
 
             dbContext.sales_order.Add(sales_order);
 
-            sales_orderViewSource.View.MoveCurrentToLast();
+            sales_orderViewSource.View.MoveCurrentTo(sales_order);
         }
 
         private void toolBar_btnEdit_Click(object sender)

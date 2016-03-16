@@ -57,11 +57,12 @@ namespace Cognitivo.Sales
                 sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));
                 if (_pref_SalesBudget.filterbyBranch)
                 {
-                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID && a.id_branch == _settings.branch_ID).Include(x => x.sales_budget_detail).Load();
+                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID && a.id_branch == _settings.branch_ID).Include(x => x.sales_budget_detail)
+                        .Load();
                 }
                 else
                 {
-                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID ).Include(x => x.sales_budget_detail).Load();
+                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID).Include(x => x.sales_budget_detail).Load();
                 }
                 sales_budgetViewSource.Source = dbContext.sales_budget.Local;
                 sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
@@ -124,7 +125,7 @@ namespace Cognitivo.Sales
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             dbContext.sales_budget.Add(sales_budget);
-            sales_budgetViewSource.View.MoveCurrentToLast();
+            sales_budgetViewSource.View.MoveCurrentTo(sales_budget);
         }
 
         private void toolBar_btnEdit_Click(object sender)

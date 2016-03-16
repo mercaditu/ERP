@@ -473,6 +473,11 @@
                         ValidatesOnExceptions=true, ValidatesOnDataErrors=True}"/>-->
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:P},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="75"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    
                     <Label Content="{lex:Loc Total}" FontWeight="Medium" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
                     <Label Content="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}}"
                                Style="{StaticResource H2}" ContentStringFormat="{}{0:N}" FontWeight="Normal"/>

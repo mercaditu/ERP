@@ -25,6 +25,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
             if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
+            timestamp = DateTime.Now;
         }
 
         [NotMapped]
@@ -155,15 +156,15 @@ namespace entity
 
 
 
-                decimal OriginalValue = GrandTotal * DiscountPercentage;
-                if (OriginalValue != 0)
+                decimal DiscountValue = GrandTotal * DiscountPercentage;
+                if (DiscountValue != 0)
                 {
-                    decimal DifferenceValue = OriginalValue / sales_invoice_detail.Count;
-                    foreach (var item in sales_invoice_detail)
+                    decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x=>x.quantity>0).Count();
+                    foreach (var item in sales_invoice_detail.Where(x=>x.quantity>0))
                     {
-                        DifferenceValue = DifferenceValue / item.quantity;
-                        item.discount = DifferenceValue;
-                        item.RaisePropertyChanged("discount");
+                      
+                        item.DiscountVat = PerRawDiscount / item.quantity;
+                        item.RaisePropertyChanged("DiscountVat");
                     }
 
 
@@ -238,6 +239,11 @@ namespace entity
                 {
                     if (id_currencyfx == 0)
                         return "Currency needs to be selected";
+                }
+                if (columnName == "DiscountPercentage")
+                {
+                    if (DiscountPercentage >1)
+                        return "Discount percentage not excedd 100%";
                 }
                 return "";
             }

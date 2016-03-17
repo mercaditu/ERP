@@ -151,24 +151,29 @@ namespace entity
             get { return _DiscountPercentage; }
             set
             {
-                _DiscountPercentage = value;
-                RaisePropertyChanged("DiscountPercentage");
-
-
-
-                decimal DiscountValue = GrandTotal * DiscountPercentage;
-                if (DiscountValue != 0)
+                if (value<=1)
                 {
-                    decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x=>x.quantity>0).Count();
-                    foreach (var item in sales_invoice_detail.Where(x=>x.quantity>0))
+                    _DiscountPercentage = value;
+                    RaisePropertyChanged("DiscountPercentage");
+
+
+
+                    decimal DiscountValue = GrandTotal * DiscountPercentage;
+                    if (DiscountValue != 0)
                     {
-                      
-                        item.DiscountVat = PerRawDiscount / item.quantity;
-                        item.RaisePropertyChanged("DiscountVat");
-                    }
+                        decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x => x.quantity > 0).Count();
+                        foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
+                        {
+
+                            item.DiscountVat = PerRawDiscount / item.quantity;
+                            item.RaisePropertyChanged("DiscountVat");
+                            RaisePropertyChanged("GrandTotal");
+                        }
 
 
+                    }   
                 }
+              
             }
         }
         private decimal _DiscountPercentage;

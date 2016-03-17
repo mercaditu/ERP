@@ -140,7 +140,7 @@
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource tree}, ConverterParameter={StaticResource IntOne}}">
-                                        <Panels:pnl_TreeView   StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        <Panels:pnl_TreeView   StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
                                              HorizontalAlignment="Stretch"
                                              TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

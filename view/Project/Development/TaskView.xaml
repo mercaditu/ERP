@@ -165,7 +165,7 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
                         <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                     </StackPanel>
 
-                    <StackPanel x:Name="stpdate" Visibility="Collapsed">
+                    <StackPanel x:Name="stpdate" Visibility="Collapsed" IsEnabled="False">
                         <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
                         <DatePicker Style="{StaticResource input_datepicker}"
 IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"                                    SelectedDate="{Binding start_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -174,7 +174,7 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
 IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"                                    SelectedDate="{Binding end_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     </StackPanel>
 
-                    <StackPanel x:Name="stpitem" Visibility="Collapsed">
+                    <StackPanel x:Name="stpitem" Visibility="Collapsed" IsEnabled="False">
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtqty" 
                                      IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"

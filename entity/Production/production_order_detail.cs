@@ -58,6 +58,28 @@ namespace entity
         }
 
         private decimal _quantity;
+        public Status.Production? status { get; set; }
+        [NotMapped]
+        public new bool IsSelected
+        {
+            get { return _is_selected; }
+            set
+            {
+                if (value != _is_selected)
+                {
+                    _is_selected = value;
+                    RaisePropertyChanged("IsSelected");
+
+                    foreach (var task in child)
+                    {
+                        if (task.status != Status.Production.QA_Rejected)
+                            task.IsSelected = value;
+
+                    }
+                }
+            }
+        }
+        private bool _is_selected;
         public bool is_input { get; set; }
 
         [Required]

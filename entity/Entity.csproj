@@ -381,6 +381,10 @@
     <Compile Include="Migrations\201603160547304_UpdatePaymentDetail.Designer.cs">
       <DependentUpon>201603160547304_UpdatePaymentDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603171338136_UpdateProductionOrder.cs" />
+    <Compile Include="Migrations\201603171338136_UpdateProductionOrder.Designer.cs">
+      <DependentUpon>201603171338136_UpdateProductionOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -812,6 +816,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603160547304_UpdatePaymentDetail.resx">
       <DependentUpon>201603160547304_UpdatePaymentDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603171338136_UpdateProductionOrder.resx">
+      <DependentUpon>201603171338136_UpdateProductionOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

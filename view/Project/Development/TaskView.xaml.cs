@@ -330,12 +330,16 @@ namespace Cognitivo.Project.Development
                 if (Item_Type == entity.item.item_type.Task)
                 {
                     stpdate.Visibility = Visibility.Visible;
+                    stpdate.IsEnabled = true;
                     stpitem.Visibility = Visibility.Collapsed;
+                    stpitem.IsEnabled = false;
                 }
                 else
                 {
                     stpdate.Visibility = Visibility.Collapsed;
+                    stpdate.IsEnabled = false;
                     stpitem.Visibility = Visibility.Visible;
+                    stpitem.IsEnabled = true;
                 }
                 if (Item_Type == entity.item.item_type.Service)
                 {

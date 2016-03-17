@@ -196,7 +196,7 @@ namespace entity
             {
                 if (_UnitPrice_Vat != value)
                 {
-                    if (_UnitPrice_Vat == 0)
+                    if (value == 0)
                     {
                         _UnitPrice_Vat = value;
                         RaisePropertyChanged("UnitPrice_Vat");

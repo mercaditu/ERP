@@ -104,7 +104,7 @@ namespace entity.Brillo.Document
                         comment = g.sales_budget.comment,
                         AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
                         NumToWords.IntToText(Convert.ToInt32(g.sales_budget != null ? g.sales_budget.GrandTotal : 0)) 
-                        : 
+                        :
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "",
                         
                         HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false

@@ -7,6 +7,7 @@ using System.Data.Entity;
 using entity;
 using System;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Cognitivo.Production
 {
@@ -26,11 +27,11 @@ namespace Cognitivo.Production
 
         //Production ORDER CollectionViewSource
         CollectionViewSource
-            production_orderViewSource, 
-            production_order_detaillProductViewSource, 
-            production_order_detaillRawViewSource, 
+            production_orderViewSource,
+            production_order_detaillProductViewSource,
+            production_order_detaillRawViewSource,
             production_order_detaillServiceViewSource,
-            production_order_detaillAssetViewSource, 
+            production_order_detaillAssetViewSource,
             production_order_detaillSupplyViewSource,
             item_dimensionViewSource;
 
@@ -87,7 +88,7 @@ namespace Cognitivo.Production
             hr_time_coefficientViewSource.Source = ExecutionDB.hr_time_coefficient.Local;
 
             cmbcoefficient.SelectedIndex = -1;
-            
+
             filter_Product();
             filter_Service();
             filter_Supply();
@@ -162,10 +163,10 @@ namespace Cognitivo.Production
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
 
                         if (objproduction_execution_detail.contact != null && production_order_detail != null)
-                            {
-                                return true;
-                            }
-                            else { return false; }
+                        {
+                            return true;
+                        }
+                        else { return false; }
                     };
                 }
             }
@@ -228,11 +229,11 @@ namespace Cognitivo.Production
             if (production_order_detaillProductViewSource != null)
             {
 
-                List<production_order_detail> _production_order_detail = 
-                    ExecutionDB.production_order_detail.Where(a => a.parent == null 
+                List<production_order_detail> _production_order_detail =
+                    ExecutionDB.production_order_detail.Where(a => a.parent == null
                          && a.production_order.status == Status.Production.Approved
-                         && (a.item.id_item_type == item.item_type.Product 
-                         || a.item.id_item_type == item.item_type.Task) 
+                         && (a.item.id_item_type == item.item_type.Product
+                         || a.item.id_item_type == item.item_type.Task)
                          && a.id_production_order == id_production_order)
                          .ToList();
                 if (_production_order_detail.Count() > 0)
@@ -361,60 +362,70 @@ namespace Cognitivo.Production
 
         private void itemserviceComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            adddatacontact(itemserviceComboBox,treeService);
+            adddatacontact(itemserviceComboBox, treeService);
         }
 
-        public void adddatacontact(cntrl.SearchableTextbox combo,TreeView treeview)
+        public void adddatacontact(cntrl.SearchableTextbox combo, TreeView treeview)
         {
-                production_order_detail production_order_detail = (production_order_detail)treeview.SelectedItem;
-                if (production_order_detail != null)
+            production_order_detail production_order_detail = (production_order_detail)treeview.SelectedItem;
+            if (production_order_detail != null)
+            {
+
+
+                if (combo.Data != null)
                 {
-
-
-                    if (combo.Data != null)
+                    itemserviceComboBox.focusGrid = false;
+                    itemserviceComboBox.Text = ((contact)combo.Data).name;
+                    //Product
+                    int id = Convert.ToInt32(((contact)combo.Data).id_contact);
+                    if (id > 0)
                     {
-                        itemserviceComboBox.focusGrid = false;
-                        itemserviceComboBox.Text = ((contact)combo.Data).name;
-                        //Product
-                        int id = Convert.ToInt32(((contact)combo.Data).id_contact);
-                        if (id > 0)
+                        production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
+
+                        production_execution_detail _production_execution_detail = new entity.production_execution_detail();
+                        //Check for contact
+
+                        _production_execution_detail.id_contact = ((contact)combo.Data).id_contact;
+                        _production_execution_detail.contact = (contact)combo.Data;
+                        _production_execution_detail.quantity = 1;
+                        _production_execution.RaisePropertyChanged("quantity");
+                        if (cmbcoefficient.SelectedValue != null)
                         {
-                            production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
+                            _production_execution_detail.id_time_coefficient = (int)cmbcoefficient.SelectedValue;
+                        }
+                        string start_date = dtpstartdate.Text + " " + dtpstarttime.Text;
+                        _production_execution_detail.start_date = Convert.ToDateTime(start_date);
+                        string end_date = dtpenddate.Text + " " + dtpendtime.Text;
+                        _production_execution_detail.end_date = Convert.ToDateTime(end_date);
 
-                            production_execution_detail _production_execution_detail = new entity.production_execution_detail();
-                            //Check for contact
 
-                            _production_execution_detail.id_contact = ((contact)combo.Data).id_contact;
-                            _production_execution_detail.contact = (contact)combo.Data;
-                            _production_execution_detail.quantity = 1;
-                            _production_execution.RaisePropertyChanged("quantity");
-                            if (cmbcoefficient.SelectedValue != null)
-                            {
-                                _production_execution_detail.id_time_coefficient = (int)cmbcoefficient.SelectedValue;
-                            }
-                             string start_date=dtpstartdate.Text +" "+ dtpstarttime.Text;
-                             _production_execution_detail.start_date = Convert.ToDateTime(start_date);
-                             string end_date = dtpenddate.Text + " " + dtpendtime.Text;
-                             _production_execution_detail.end_date = Convert.ToDateTime(end_date);
+                        _production_execution_detail.id_production_execution = _production_execution.id_production_execution;
+                        _production_execution_detail.production_execution = _production_execution;
+                        _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
+                        _production_execution_detail.production_order_detail = production_order_detail;
+
+                        ExecutionDB.production_execution_detail.Add(_production_execution_detail);
+
+                        production_execution_detailServiceViewSource.View.Refresh();
+                        production_execution_detailServiceViewSource.View.MoveCurrentToLast();
+
                         
-                         
-                            _production_execution_detail.id_production_execution = _production_execution.id_production_execution;
-                            _production_execution_detail.production_execution = _production_execution;
-                            _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-                            _production_execution_detail.production_order_detail = production_order_detail;
-                     
-                            ExecutionDB.production_execution_detail.Add(_production_execution_detail);
-
-                            production_execution_detailServiceViewSource.View.Refresh();
-                            production_execution_detailServiceViewSource.View.MoveCurrentToLast();
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
+                        decimal projectedqty = production_order_detail.quantity;
+                        lblProjectedempqty.Content = "Total:-" + projectedqty.ToString();
+                        lblTotalemp.Content = "Total:-" + actuallqty.ToString();
+                        if (actuallqty > projectedqty)
+                        {
+                            lblTotalemp.Foreground = Brushes.Red;
                         }
                     }
                 }
-                else
-                {
-                    toolBar.msgWarning("select Production order for insert");
+            }
+            else
+            {
+                toolBar.msgWarning("select Production order for insert");
 
-                }
+            }
         }
 
 
@@ -466,7 +477,7 @@ namespace Cognitivo.Production
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            
+
         }
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -508,12 +519,12 @@ namespace Cognitivo.Production
                 production_execution_detailServiceViewSource.View.Filter = i =>
                 {
                     production_execution_detail production_execution_detail = (production_execution_detail)i;
-                   
-                        if (production_execution_detail.id_order_detail == production_order_detail.id_order_detail)
-                        {
-                            return true;
-                        }
-                        else { return false; }
+
+                    if (production_execution_detail.id_order_detail == production_order_detail.id_order_detail)
+                    {
+                        return true;
+                    }
+                    else { return false; }
                 };
             }
         }
@@ -754,7 +765,7 @@ namespace Cognitivo.Production
         {
             try
             {
-                DataGrid exexustiondetail = (DataGrid)e.Source; 
+                DataGrid exexustiondetail = (DataGrid)e.Source;
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -822,6 +833,57 @@ namespace Cognitivo.Production
 
                     production_execution_detailAssetViewSource.View.Refresh();
                     production_execution_detailAssetViewSource.View.MoveCurrentToLast();
+                    if (btn.Name.Contains("Prod"))
+                    {
+                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product).Sum(x => x.quantity);
+                        decimal projectedqty = production_order_detail.quantity;
+                        lblProjectedProductQty.Content = "Total:-" + projectedqty.ToString();
+                        lblTotalProduct.Content = "Total:-" + actuallqty.ToString();
+                        if (actuallqty > projectedqty)
+                        {
+                            lblTotalProduct.Foreground = Brushes.Red;
+                        }
+                    }
+                    else if (btn.Name.Contains("Raw"))
+                    {
+                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.RawMaterial).Sum(x => x.quantity);
+                        decimal projectedqty = production_order_detail.quantity;
+                        lblProjectedRawQty.Content = "Total:-" + projectedqty.ToString();
+                        lblTotalRaw.Content = "Total:-" + actuallqty.ToString();
+                        if (actuallqty > projectedqty)
+                        {
+                            lblTotalRaw.Foreground = Brushes.Red;
+                        }
+                   
+                    }
+                    else if (btn.Name.Contains("Asset"))
+                    {
+                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.FixedAssets).Sum(x => x.quantity);
+                        decimal projectedqty = production_order_detail.quantity;
+                        lblProjectedassetqty.Content = "Total:-" + projectedqty.ToString();
+                        lblTotalasset.Content = "Total:-" + actuallqty.ToString();
+                        if (actuallqty > projectedqty)
+                        {
+                            lblTotalasset.Foreground = Brushes.Red;
+                        }
+                      
+                    }
+                    else if (btn.Name.Contains("Supp"))
+                    {
+                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
+                        decimal projectedqty = production_order_detail.quantity;
+                        lblProjectedSuppliesqty.Content = "Total:-" + projectedqty.ToString();
+                        lblTotalsupplies.Content = "Total:-" + actuallqty.ToString();
+                        if (actuallqty > projectedqty)
+                        {
+                            lblTotalsupplies.Foreground = Brushes.Red;
+                        }
+                       
+                    }
                 }
             }
             catch (Exception ex)

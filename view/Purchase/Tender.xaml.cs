@@ -174,9 +174,61 @@ namespace Cognitivo.Purchase
                 purchase_tender_contact.app_condition = (app_condition)cbxCondition.SelectedItem;
 
 
+
+
+                if (purchase_tender != null)
+                {
+
+
+                    List<purchase_tender_item> listtender = purchase_tender.purchase_tender_item_detail.ToList();
+                    foreach (purchase_tender_item purchase_tender_item in listtender)
+                    {
+                        if (purchase_tender_contact.id_purchase_tender_contact == 0)
+                        {
+                            if (purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).Count() == 0)
+                            {
+                                purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
+
+                                purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
+                                purchase_tender_detail.purchase_tender_item = purchase_tender_item;
+                                purchase_tender_detail.quantity = purchase_tender_item.quantity;
+                                purchase_tender_detail.unit_cost = 0;
+                                purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
+                            }
+                            else
+                            {
+                                purchase_tender_detail purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).FirstOrDefault();
+                                purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
+
+                            }
+
+                        }
+                        else
+                        {
+                            if (PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item) == null)
+                            {
+                                purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
+
+                                purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
+                                purchase_tender_detail.purchase_tender_item = purchase_tender_item;
+                                purchase_tender_detail.quantity = 1;
+                                purchase_tender_detail.unit_cost = 0;
+                                purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
+                            }
+                            else
+                            {
+                                purchase_tender_detail purchase_tender_detail = PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).FirstOrDefault();
+                                purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
+                            }
+                        }
+                    }
+
+                }
                 purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
 
                 purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
+
+                purchase_tenderpurchase_tender_contact_detailViewSource.View.MoveCurrentTo(purchase_tender_contact);
             }
         }
 
@@ -241,47 +293,8 @@ namespace Cognitivo.Purchase
 
 
 
-            purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
 
-            if (purchase_tender != null)
-            {
-                if (purchase_tenderpurchase_tender_contact_detailViewSource.View.CurrentItem != null)
-                {
-                    purchase_tender_contact purchase_tender_contact = ((purchase_tender_contact)purchase_tenderpurchase_tender_contact_detailViewSource.View.CurrentItem);
-                    List<purchase_tender_item> listtender = purchase_tender.purchase_tender_item_detail.ToList();
-                    foreach (purchase_tender_item purchase_tender_item in listtender)
-                    {
-                        if (purchase_tender_contact.id_purchase_tender_contact == 0)
-                        {
-                            if (purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).Count() == 0)
-                            {
-                                purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
 
-                                purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
-                                purchase_tender_detail.purchase_tender_item = purchase_tender_item;
-                                purchase_tender_detail.quantity = purchase_tender_item.quantity;
-                                purchase_tender_detail.unit_cost = 0;
-                                purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
-                            }
-
-                        }
-                        else
-                        {
-                            if (PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item) == null)
-                            {
-                                purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
-
-                                purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
-                                purchase_tender_detail.purchase_tender_item = purchase_tender_item;
-                                purchase_tender_detail.quantity = 1;
-                                purchase_tender_detail.unit_cost = 0;
-                                purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
-                            }
-                        }
-                    }
-                }
-            }
-            purchase_tenderpurchase_tender_item_detailViewSource.View.Refresh();
         }
 
         private void purchase_tender_itemDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)

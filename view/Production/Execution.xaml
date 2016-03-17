@@ -144,7 +144,8 @@
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
                                              HorizontalAlignment="Stretch"
                                              TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"/>
+                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
+                                                    />
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                                 <TreeView x:Name="treeProduct" ItemsSource="{Binding}" SelectedItemChanged="treeProduct_SelectedItemChanged" 
@@ -183,6 +184,8 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid >
+                            <Label x:Name="lblProjectedProductQty" Content="Total" VerticalAlignment="Bottom"/>
+                            <Label x:Name="lblTotalProduct" Content="Total" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Grid>
 
@@ -235,6 +238,8 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
+                            <Label x:Name="lblProjectedRawQty" Content="Total" VerticalAlignment="Bottom"/>
+                            <Label x:Name="lblTotalRaw" Content="Total" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Grid>
 
@@ -328,6 +333,8 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Label x:Name="lblProjectedempqty" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
+                        <Label x:Name="lblTotalemp" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc FixedAssets}">
@@ -377,6 +384,8 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
+                            <Label x:Name="lblProjectedassetqty" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
+                            <Label x:Name="lblTotalasset" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Grid>
                 </TabItem>
@@ -428,6 +437,8 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
+                            <Label x:Name="lblProjectedSuppliesqty" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
+                            <Label x:Name="lblTotalsupplies" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Grid>
                 </TabItem>

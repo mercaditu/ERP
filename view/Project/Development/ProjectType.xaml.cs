@@ -32,11 +32,11 @@ namespace Cognitivo.Project.Development
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-           
+
 
             project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
-            dbContext.project_template.Where(a => a.id_company == _Setting.company_ID).LoadAsync();
-            project_templateViewSource.Source = dbContext.project_template.Local;
+            
+            project_templateViewSource.Source =    dbContext.project_template.Where(a => a.id_company == _Setting.company_ID).ToList();
 
 
             //Loading Products
@@ -66,10 +66,17 @@ namespace Cognitivo.Project.Development
                     projectproject_template_detailViewSource.View.Filter = i =>
                     {
                         project_template_detail project_template_detail = (project_template_detail)i;
-                        if (project_template_detail.parent == null && project_template_detail.status!=Status.Project.Rejected)
-                            return true;
+                        if (project_template_detail.State != EntityState.Deleted)
+                        {
+                            if (project_template_detail.parent == null)
+                                return true;
+                            else
+                                return false;
+                        }
                         else
+                        {
                             return false;
+                        }
                     };
                 }
             }
@@ -181,7 +188,7 @@ namespace Cognitivo.Project.Development
                     return false;
             };
             project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
-          
+
             project_template_detail n_project_template = new project_template_detail();
             n_project_template.id_project_template = project_template.id_project_template;
             n_project_template.status = Status.Project.Approved;
@@ -223,16 +230,21 @@ namespace Cognitivo.Project.Development
                 projectproject_template_detailViewSource.View.Filter = null;
                 List<project_template_detail> project_template_detailLIST = treeProject.ItemsSource.Cast<project_template_detail>().ToList();
                 project_template_detailLIST = project_template_detailLIST.Where(x => x.IsSelected == true).ToList();
-                foreach (project_template_detail project_template_detail in project_template_detailLIST)
+                using (db db = new db())
                 {
-                    project_template_detail.status = Status.Project.Rejected;
-                    project_template_detail.IsSelected = false;
+                    foreach (project_template_detail project_template_detail in project_template_detailLIST)
+                    {
+                        project_template_detail _project_template_detail = db.project_template_detail.Where(x => x.id_template_detail == project_template_detail.id_template_detail).FirstOrDefault();
+
+                        db.project_template_detail.Remove(_project_template_detail);
+                       
+                    }
+                    db.SaveChanges();
                 }
-                dbContext.SaveChanges();
                 toolBar.msgDone();
-                filter_task();
+               
             }
-       
+
         }
 
         #endregion
@@ -279,7 +291,7 @@ namespace Cognitivo.Project.Development
                     project_templateViewSource.View.Filter = i =>
                     {
                         project_template project_template = i as project_template;
-                        if (project_template.name!=null)
+                        if (project_template.name != null)
                         {
                             if (project_template.name.ToLower().Contains(query.ToLower()))
                             {
@@ -289,13 +301,13 @@ namespace Cognitivo.Project.Development
                             {
                                 return false;
                             }
-                            
+
                         }
                         else
                         {
                             return false;
                         }
-                    
+
                     };
                 }
                 else
@@ -316,12 +328,12 @@ namespace Cognitivo.Project.Development
         }
 
 
-      
-      
 
-       
 
-        private void toolBar_btnApprove_Click(object sender,RoutedEventArgs e)
+
+
+
+        private void toolBar_btnApprove_Click(object sender, RoutedEventArgs e)
         {
             dbContext.Approve();
             project_templateViewSource.View.Refresh();
@@ -341,11 +353,11 @@ namespace Cognitivo.Project.Development
                 project_template_detail.id_item = item.id_item;
                 project_template_detail.item = item;
 
-             
+
             }
         }
 
-       
+
 
     }
 }

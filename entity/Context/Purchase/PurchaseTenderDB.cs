@@ -78,6 +78,9 @@ namespace entity
                         if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault() != null)
                         {
                             purchase_order.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault().id_range;
+                            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_order.id_range).FirstOrDefault();
+                            purchase_order.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                            purchase_order.RaisePropertyChanged("number");
                         }
 
                         purchase_order.id_contact = purchase_tender_contact.id_contact;
@@ -94,7 +97,14 @@ namespace entity
                             purchase_order_detail.item = purchase_tender_detail.purchase_tender_item.item;
                             purchase_order_detail.id_item = purchase_tender_detail.purchase_tender_item.id_item;
                             purchase_order_detail.unit_cost = purchase_tender_detail.unit_cost;
-                            purchase_order_detail.item_description = purchase_tender_detail.item_description;
+                            if (purchase_tender_detail.item_description=="")
+                            {
+                                purchase_order_detail.item_description = purchase_tender_detail.item_description;
+                            }
+                            else
+                            {
+                                purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item.name;
+                            }
                             purchase_order_detail.quantity = purchase_tender_detail.quantity;
                             if (base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault() != null)
                             {

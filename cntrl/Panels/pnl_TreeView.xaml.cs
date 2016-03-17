@@ -30,6 +30,8 @@ namespace cntrl.Panels
             set { SetValue(StatusColorProperty, value); }
         }
 
+     
+
         //Status for the Task
         public static readonly DependencyProperty StatusProperty =
             DependencyProperty.Register("Status", typeof(Status.Project), typeof(pnl_TreeView),

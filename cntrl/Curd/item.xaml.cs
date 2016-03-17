@@ -112,9 +112,9 @@ namespace cntrl.Curd
             //}
             //MainViewSource.View.Refresh();
             //MainViewSource.View.MoveCurrentTo(curObject);
-            Grid crud = this.Parent as Grid;
-            crud.Children.Clear();
-            crud.Visibility = System.Windows.Visibility.Hidden;
+            System.Windows.Controls.Primitives.Popup popup = this.Parent as System.Windows.Controls.Primitives.Popup;
+            popup.IsOpen=false;
+            popup.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         public event btnSave_ClickedEventHandler btnSave_Click;

@@ -542,9 +542,13 @@ namespace Cognitivo.Production
             production_order_detail obj = (production_order_detail)DataGrid.SelectedItem;
             if (obj != null)
             {
-                int _id_task = obj.project_task.id_project_task;
-                project_task_dimensionViewSource = (CollectionViewSource)FindResource("project_task_dimensionViewSource");
-                project_task_dimensionViewSource.Source = OrderDB.project_task_dimension.Where(x=>x.id_project_task==_id_task).ToList();
+                if ( obj.project_task!=null)
+                {
+                    int _id_task = obj.project_task.id_project_task;
+                    project_task_dimensionViewSource = (CollectionViewSource)FindResource("project_task_dimensionViewSource");
+                    project_task_dimensionViewSource.Source = OrderDB.project_task_dimension.Where(x => x.id_project_task == _id_task).ToList();
+                }
+              
             }
 
         }

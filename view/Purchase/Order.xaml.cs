@@ -561,7 +561,7 @@ namespace Cognitivo.Purchase
             //ItemLink 
             if (item != null)
             {
-                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null || !OrderSetting.AllowDuplicateItems)
+                if (purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null || OrderSetting.AllowDuplicateItems)
                 {
                     //Item Exists in Context, so add to sum.
                     purchase_order_detail _purchase_order_detail = purchase_order.purchase_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();

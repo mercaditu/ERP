@@ -31,7 +31,7 @@ namespace entity
 
 
         public Status.Project? status { get; set; }
-        public Status.ProjectStatus? ProjectStatus { get; set; }
+
         public int? id_item
         {
             get { return _id_item; }

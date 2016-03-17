@@ -37,7 +37,6 @@ namespace entity
 
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
-       // public Status.Project? status { get; set; }
 
         public virtual project_template project_template { get; set; }
         public virtual IEnumerator<sales_invoice> sales_invoice { get; set; }

@@ -12,9 +12,13 @@ namespace Cognitivo.Converters
             {
                 entity.Status.Project status = (entity.Status.Project)value;
 
-                if (status == entity.Status.Project.Approved)
+                if (status == entity.Status.Project.Management_Approved)
                 {
                     return Brushes.PaleGreen;
+                }
+                else if (status == entity.Status.Project.Approved)
+                {
+                    return Brushes.LimeGreen;
                 }
                 else if (status == entity.Status.Project.InProcess)
                 {

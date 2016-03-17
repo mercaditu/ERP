@@ -33,9 +33,11 @@ namespace Cognitivo.Project.Development
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
+
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
             project_templateproject_template_detailViewSource = ((CollectionViewSource)(FindResource("project_templateproject_template_detailViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
+
             _entity.db.projects.Where(a => a.is_active == true && a.id_company == _Setting.company_ID).Include("project_task").Load();
             projectViewSource.Source = _entity.db.projects.Local;
 
@@ -135,20 +137,13 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-                    //if (project_task.Error == null)
-                    //{
-                    if (project_task.ProjectStatus == Status.ProjectStatus.Approved)
+                    if (project_task.status == Status.Project.Management_Approved)
                     {
-                        if (project_task.status == Status.Project.Pending || project_task.status == null)
+                        if (project_task.status == Status.Project.Management_Approved || project_task.status == null)
                         {
                             project_task.status = Status.Project.Approved;
                         }
                     }
-                    //}
-                    //else
-                    //{
-                    //    toolBar.msgWarning(project_task.name + "Error");
-                    //}
 
                     project_task.IsSelected = false;
                 }
@@ -567,13 +562,10 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-
-                    if (project_task.ProjectStatus == Status.ProjectStatus.Pending || project_task.ProjectStatus == null)
+                    if (project_task.status == Status.Project.Pending || project_task.status == null)
                     {
-                        project_task.ProjectStatus = Status.ProjectStatus.Approved;
+                        project_task.status = Status.Project.Management_Approved;
                     }
-
-
 
                     project_task.IsSelected = false;
                 }
@@ -593,7 +585,7 @@ namespace Cognitivo.Project.Development
                 {
                     //if (project_task.Error == null)
                     //{
-                    project_task.ProjectStatus = Status.ProjectStatus.Rejected;
+                    project_task.status = Status.Project.Rejected;
                     project_task.IsSelected = false;
 
                     //}

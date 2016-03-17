@@ -26,19 +26,6 @@ namespace entity
         public string name { get; set; }
         public string code { get; set; }
         public bool is_active { get; set; }
-        //public Status.Documents_General status
-        //{
-        //    get
-        //    {
-        //        return _status;
-        //    }
-        //    set
-        //    {
-        //        _status = value;
-        //        RaisePropertyChanged("status");
-        //    }
-        //}
-        //private Status.Documents_General _status;
 
         public virtual IEnumerable<project> project { get; set; }
         public virtual ICollection<project_template_detail> project_template_detail { get; set; }

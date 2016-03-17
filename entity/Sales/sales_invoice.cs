@@ -131,7 +131,6 @@ namespace entity
                 {
                     _TotalVat += _sales_invoice_detail.SubTotal_Vat - _sales_invoice_detail.SubTotal;
                 }
-
                 return Math.Round(_TotalVat, 2);
             }
             set

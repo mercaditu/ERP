@@ -65,20 +65,12 @@ namespace entity
         {
             Pending = 1,
             Approved = 2,
-            InProcess = 3,
-            Executed = 4,
-            Rejected = 5
-        }
-       public enum ProjectStatus
-        {
-            Pending = 1,
-            Approved = 2,
+            Management_Approved = 6,
             InProcess = 3,
             Executed = 4,
             Rejected = 5
         }
         
-      //  [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Stock
         {
           //  [LocalizedDescription("OnTheWay")]

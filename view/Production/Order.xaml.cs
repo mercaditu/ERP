@@ -750,45 +750,50 @@ namespace Cognitivo.Production
 
         private void toolIcon_Click(object sender, RoutedEventArgs e)
         {
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_orderproduction_order_detailViewSource.View.Filter = null;
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
             _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true).ToList();
-            production_execution production_execution = new production_execution();
-
-            if (OrderDB.production_line.FirstOrDefault() != null)
+            if (production_order.production_execution.Count()==0)
             {
-                production_execution.id_production_line = OrderDB.production_line.FirstOrDefault().id_production_line;
-            }
-            else
-            {
-                MessageBox.Show("please Create Line");
-            }
+                production_execution production_execution = new production_execution();
 
-            if (_production_order_detail.Count() > 0)
-            {
-
-
-                production_execution.id_production_order = _production_order_detail.FirstOrDefault().id_production_order;
-
-                foreach (production_order_detail production_order_detail in _production_order_detail)
+                if (OrderDB.production_line.FirstOrDefault() != null)
                 {
-                    //production_execution_detail production_execution_detail = new production_execution_detail();
-
-                    //production_execution_detail.id_item = production_order_detail.id_item;
-                    //production_execution.production_order = production_order_detail.production_order;
-                    //production_execution.id_production_order = production_order_detail.id_production_order;
-                    //production_execution_detail.quantity = production_order_detail.quantity;
-                    //production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-                    //production_execution_detail.id_project_task = production_order_detail.id_project_task;
-
-                    //production_execution.production_execution_detail.Add(production_execution_detail);
-
-                    production_order_detail.status = entity.Status.Production.Approved;
-
+                    production_execution.id_production_line = OrderDB.production_line.FirstOrDefault().id_production_line;
                 }
-            }
+                else
+                {
+                    MessageBox.Show("please Create Line");
+                }
 
-            OrderDB.production_execution.Add(production_execution);
+                if (_production_order_detail.Count() > 0)
+                {
+
+
+                    production_execution.id_production_order = _production_order_detail.FirstOrDefault().id_production_order;
+
+                    foreach (production_order_detail production_order_detail in _production_order_detail)
+                    {
+                        //production_execution_detail production_execution_detail = new production_execution_detail();
+
+                        //production_execution_detail.id_item = production_order_detail.id_item;
+                        //production_execution.production_order = production_order_detail.production_order;
+                        //production_execution.id_production_order = production_order_detail.id_production_order;
+                        //production_execution_detail.quantity = production_order_detail.quantity;
+                        //production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
+                        //production_execution_detail.id_project_task = production_order_detail.id_project_task;
+
+                        //production_execution.production_execution_detail.Add(production_execution_detail);
+
+                        production_order_detail.status = entity.Status.Production.Approved;
+
+                    }
+                }
+
+                OrderDB.production_execution.Add(production_execution);
+            }
+         
             OrderDB.SaveChanges();
             toolBar.msgDone("Yay!");
             filter_task();

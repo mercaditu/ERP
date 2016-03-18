@@ -26,6 +26,7 @@
         <Converter:BooleanToIsStatusConverter x:Key="BoolToIssued"/>
         <Converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_returnViewSource}}"/>
         <!--<CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="sales_returnsales_return_detailViewSource" Source="{Binding sales_return_detail, Source={StaticResource sales_returnViewSource}}"/>
@@ -223,6 +224,14 @@
                               SelectedValue="{Binding return_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                       ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                       ValidatesOnDataErrors=True}"/>
+                    <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
+                    <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
+                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                          SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, 
+                          ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                          SelectedValuePath="id_branch" 
+                          ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"/>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="commentTextBox" Style="{StaticResource input_textbox}" Width="140"
                              Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" Margin="4,0,0,4" Height="64"/>

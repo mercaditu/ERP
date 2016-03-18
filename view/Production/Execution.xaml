@@ -308,7 +308,7 @@
                             </StackPanel>
                         </WrapPanel>
                             <DataGrid x:Name="dgService" Grid.Column="1" ItemsSource="{Binding Source={StaticResource production_execution_detailServiceViewSource}}" 
-                                      Margin="0,150,0,0" AutoGenerateColumns="False" >
+                                      Margin="0,70,0,0" AutoGenerateColumns="False" Height="150" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
                                                     Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

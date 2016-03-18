@@ -97,7 +97,7 @@
 
         <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}">
             <StackPanel Grid.Row="0">
-                <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" x:Name="TabLogistics">
+                <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" x:Name="TabLogistics" SelectionChanged="TabLogistics_SelectionChanged">
                     <TabItem Header="{lex:Loc Product}" x:Name="tabproduct">
                         <DataGrid x:Name="item_ProductDataGrid" 
                                   VerticalScrollBarVisibility="Auto"

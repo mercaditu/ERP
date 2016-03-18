@@ -101,25 +101,13 @@
                     <Label Content="{Binding security_user.name}" Style="{StaticResource input_label}"/>
                 </StackPanel>
                 <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
-                <ComboBox Name="cbxProject" DisplayMemberPath="name" SelectedValuePath="id_project"
-                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                          Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource projectViewSource}}"
-                          SelectedValue="{Binding id_project, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                <Label Content="{Binding project.name}" Style="{StaticResource input_label}"/>
+               
                 <Label Content="{lex:Loc SalesOrder}"  Style="{StaticResource input_label}"/>
-                <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="number"
-                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                          SelectedValue="{Binding id_sales_order, Mode=TwoWay, NotifyOnValidationError=True, 
-                          ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                          SelectedValuePath="id_sales_order" Grid.Row="1"  ItemsSource="{Binding Source={StaticResource sales_orderViewSource}}"/>
+                <Label Content="{Binding sales_order.number}" Style="{StaticResource input_label}"/>
+               
                 <Label Content="{lex:Loc ProductionOrder}"  Style="{StaticResource input_label}"/>
-                <ComboBox x:Name="cbxProduction" Style="{StaticResource input_combobox}"
-                          SelectedValue="{Binding id_production_order,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                          SelectedIndex="{Binding id_production_order}"
-                          DisplayMemberPath="{Binding id_production_order}"
-                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                          metro:ControlsHelper.MouseOverBorderBrush="Silver"/>
+                <Label Content="{Binding ProductionOrder.name}" Style="{StaticResource input_label}"/>
                 <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
                 <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

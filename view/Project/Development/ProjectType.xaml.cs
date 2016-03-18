@@ -242,7 +242,7 @@ namespace Cognitivo.Project.Development
                     db.SaveChanges();
                 }
                 toolBar.msgDone();
-               
+                filter_task();
             }
 
         }

@@ -105,6 +105,7 @@ namespace Cognitivo.Production
 
         public void filer_productioncapital_execution()
         {
+
             if (production_execution_detailAssetViewSource != null)
             {
                 if (production_execution_detailAssetViewSource.View != null)
@@ -122,11 +123,14 @@ namespace Cognitivo.Production
                         }
                         else { return false; }
                     };
+
+
                 }
             }
         }
         public void filer_productionitem_execution()
         {
+
             if (production_execution_detailProductViewSource != null)
             {
                 if (production_execution_detailProductViewSource.View != null)
@@ -148,12 +152,16 @@ namespace Cognitivo.Production
                         else { return false; }
 
                     };
+
+
+
                 }
             }
         }
         public void filer_productionservice_execution()
         {
             production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem;
+
             if (production_execution_detailServiceViewSource != null)
             {
                 if (production_execution_detailServiceViewSource.View != null)
@@ -168,11 +176,16 @@ namespace Cognitivo.Production
                         }
                         else { return false; }
                     };
+
+
+
+
                 }
             }
         }
         public void filer_productionsupply_execution()
         {
+
             if (production_execution_detailSupplyViewSource != null)
             {
                 if (production_execution_detailSupplyViewSource.View != null)
@@ -191,11 +204,16 @@ namespace Cognitivo.Production
                         else { return false; }
 
                     };
+
+
+
+
                 }
             }
         }
         public void filer_productionraw_execution()
         {
+
             if (production_execution_detailRawViewSource != null)
             {
                 if (production_execution_detailRawViewSource.View != null)
@@ -215,6 +233,8 @@ namespace Cognitivo.Production
                         else { return false; }
 
                     };
+
+
                 }
             }
         }
@@ -409,7 +429,7 @@ namespace Cognitivo.Production
                         production_execution_detailServiceViewSource.View.Refresh();
                         production_execution_detailServiceViewSource.View.MoveCurrentToLast();
 
-                        
+
                         decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
                         decimal projectedqty = production_order_detail.quantity;
                         lblProjectedempqty.Content = "Total:-" + projectedqty.ToString();
@@ -508,6 +528,18 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
+
+
+                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.RawMaterial).Sum(x => x.quantity);
+                decimal projectedqty = production_order_detail.quantity;
+                lblProjectedRawQty.Content = "Total:-" + projectedqty.ToString();
+                lblTotalRaw.Content = "Total:-" + actuallqty.ToString();
+                if (actuallqty > projectedqty)
+                {
+                    lblTotalRaw.Foreground = Brushes.Red;
+                }
+
             }
         }
 
@@ -526,6 +558,17 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
+
+                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
+                decimal projectedqty = production_order_detail.quantity;
+                lblProjectedempqty.Content = "Total:-" + projectedqty.ToString();
+                lblTotalemp.Content = "Total:-" + actuallqty.ToString();
+                if (actuallqty > projectedqty)
+                {
+                    lblTotalemp.Foreground = Brushes.Red;
+                }
+
             }
         }
 
@@ -543,6 +586,18 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
+
+
+                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.FixedAssets).Sum(x => x.quantity);
+                decimal projectedqty = production_order_detail.quantity;
+                lblProjectedassetqty.Content = "Total:-" + projectedqty.ToString();
+                lblTotalasset.Content = "Total:-" + actuallqty.ToString();
+                if (actuallqty > projectedqty)
+                {
+                    lblTotalasset.Foreground = Brushes.Red;
+                }
+
                 production_execution_detailProductViewSource.View.Filter = null;
             }
         }
@@ -687,6 +742,18 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
+
+
+                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
+                decimal projectedqty = production_order_detail.quantity;
+                lblProjectedSuppliesqty.Content = "Total:-" + projectedqty.ToString();
+                lblTotalsupplies.Content = "Total:-" + actuallqty.ToString();
+                if (actuallqty > projectedqty)
+                {
+                    lblTotalsupplies.Foreground = Brushes.Red;
+                }
+
             }
         }
 
@@ -708,6 +775,17 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
+
+                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product).Sum(x => x.quantity);
+                decimal projectedqty = production_order_detail.quantity;
+                lblProjectedProductQty.Content = "Total:-" + projectedqty.ToString();
+                lblTotalProduct.Content = "Total:-" + actuallqty.ToString();
+                if (actuallqty > projectedqty)
+                {
+                    lblTotalProduct.Foreground = Brushes.Red;
+                }
+
             }
         }
 
@@ -856,7 +934,7 @@ namespace Cognitivo.Production
                         {
                             lblTotalRaw.Foreground = Brushes.Red;
                         }
-                   
+
                     }
                     else if (btn.Name.Contains("Asset"))
                     {
@@ -869,7 +947,7 @@ namespace Cognitivo.Production
                         {
                             lblTotalasset.Foreground = Brushes.Red;
                         }
-                      
+
                     }
                     else if (btn.Name.Contains("Supp"))
                     {
@@ -882,7 +960,7 @@ namespace Cognitivo.Production
                         {
                             lblTotalsupplies.Foreground = Brushes.Red;
                         }
-                       
+
                     }
                 }
             }

@@ -19,7 +19,7 @@ namespace entity
             trans_date = DateTime.Now;
             production_order_detail = new List<production_order_detail>();
             item_request = new List<item_request>();
-
+            production_execution = new List<production_execution>();
            
         }
 

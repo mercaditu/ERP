@@ -69,6 +69,10 @@ namespace Cognitivo.Sales
 
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesReturn, _entity.branch_ID, _entity.terminal_ID);
 
+                CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
+                dbContext.app_branch.Load();
+                app_branchViewSource.Source = dbContext.app_branch.Local;
+
             }
             catch (Exception ex)
             {

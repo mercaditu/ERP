@@ -393,26 +393,26 @@ namespace entity.Brillo.Logic
 
                                 //If input is true, then we should DEBIT Stock.
                                 item_movement = debit_Movement(entity.Status.Stock.InStock,
-                                                        App.Names.ProductionExecustion,
+                                                        App.Names.ProductionExecution,
                                                         (int)detail.id_production_execution,
                                                         item_product.id_item_product,
                                                         (int)production_execution.production_line.id_location,
                                                         movement_debit_quantity,
                                                         production_execution.trans_date,
-                                                        comment_Generator(App.Names.ProductionExecustion,
+                                                        comment_Generator(App.Names.ProductionExecution,
                                                         production_execution.id_production_execution.ToString(), ""));
                             }
                             else
                             {
                                 //If input is false, then we should CREDIT Stock.
                                 item_movement = credit_Movement(entity.Status.Stock.InStock,
-                                                        App.Names.ProductionExecustion,
+                                                        App.Names.ProductionExecution,
                                                         (int)detail.id_production_execution,
                                                         item_product.id_item_product,
                                                         (int)production_execution.production_line.id_location,
                                                         qty_ExexustionDetail,
                                                         production_execution.trans_date,
-                                                        comment_Generator(App.Names.ProductionExecustion,
+                                                        comment_Generator(App.Names.ProductionExecution,
                                                         production_execution.id_production_execution.ToString(), ""));
                             }
 
@@ -435,13 +435,13 @@ namespace entity.Brillo.Logic
                     {
                         //Adding into List if _item_movementList is empty.
                         item_movementList.Add(debit_Movement(entity.Status.Stock.InStock,
-                                                App.Names.ProductionExecustion,
+                                                App.Names.ProductionExecution,
                                                 detail.id_production_execution,
                                                 item_product.id_item_product,
                                                 (int)production_execution.production_line.id_location,
                                                 qty_ExexustionDetail,
                                                 production_execution.trans_date,
-                                                comment_Generator(App.Names.ProductionExecustion, production_execution.id_production_execution.ToString(), "")
+                                                comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
                                             ));
                     }
                     // }

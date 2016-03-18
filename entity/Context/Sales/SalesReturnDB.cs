@@ -149,7 +149,6 @@ namespace entity
                             payment_detailreturn.id_currencyfx = sales_return.id_currencyfx;
                             payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
 
-
                             payment_detailreturn.id_sales_return = sales_return.id_sales_return;
 
                             payment_detailreturn.value = sales_return.GrandTotal;

@@ -95,7 +95,7 @@
                     Style="{StaticResource btn_green}" Click="btnProductionOrder"/>
 
         </Grid>
-        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" appName="ProjectExecustion"
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" appName="ProjectExecution"
 			           btnSearch_Click="toolBar_btnSearch_Click"/>
     </Grid>
 </Page>

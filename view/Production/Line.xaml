@@ -32,7 +32,7 @@
                        btnSave_Click="Save_Click" 
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click" 
-                       btnDelete_Click="toolBar_btnDelete_Click" appName="ProductionLine"
+                       btnDelete_Click="toolBar_btnDelete_Click" appName="Line"
                        State="{Binding State,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="project_templateDataGrid"

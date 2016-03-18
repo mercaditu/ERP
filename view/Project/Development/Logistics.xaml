@@ -276,7 +276,7 @@
             </StackPanel>
         </Grid>
 
-        <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar" appName="ProjectLogistics"
+        <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar" appName="Logistics"
                        btnSearch_Click="toolBar_btnSearch_Click"/>
     </Grid>
 </Page>

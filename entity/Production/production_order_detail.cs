@@ -23,7 +23,6 @@ namespace entity
         public int id_order_detail { get; set; }
         public int id_production_order { get; set; }
         public int? id_project_task { get; set; }
-      //  public Status.Production? status { get; set; }
         public int? id_item { get; set; }
         public string name { get; set; }
         public decimal quantity
@@ -58,7 +57,7 @@ namespace entity
         }
 
         private decimal _quantity;
-        public Status.Production? status { get; set; }
+        public Status.Project? status { get; set; }
         [NotMapped]
         public new bool IsSelected
         {
@@ -72,7 +71,7 @@ namespace entity
 
                     foreach (var task in child)
                     {
-                        if (task.status != Status.Production.QA_Rejected)
+                        if (task.status != Status.Project.Rejected)
                             task.IsSelected = value;
 
                     }

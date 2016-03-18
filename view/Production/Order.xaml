@@ -141,7 +141,7 @@
                                 <Grid.Resources>
                                     <HierarchicalDataTemplate DataType="{x:Type entity:production_order_detail}" 
             							ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <Panels:pnl_TreeView StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             								IsChecked="{Binding IsSelected,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             								HorizontalAlignment="Stretch"
             								TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -176,14 +176,14 @@
                                 <cntrl:toolIcon Click="toolIcon_Click" imgSource="j" icoName="{lex:Loc Approve}" VerticalAlignment="Center"/>
                                 <cntrl:toolIcon Click="toolIcon_Click_1" imgSource="k" icoName="{lex:Loc Annul}" VerticalAlignment="Center"/>
                             </StackPanel>
-                            <cntrl:toolBar_Mini appName="ActivityPlan"
+                            <!--<cntrl:toolBar_Mini appName="ActivityPlan"
                     btnNew_Click="toolBar_Mini_btnNew_Click"
                     btnEdit_Click="toolBar_Mini_btnEdit_Click"
                     btnSave_Click="toolBar_Mini_btnSave_Click"
                     btnDelete_Click="toolBar_Mini_btnDelete_Click"
                     btnApprove_Click="toolBar_Mini_btnApprove_Click"
                     btnAnull_Click="toolBar_Mini_btnAnull_Click"
-                    />
+                    />-->
                             <Grid>
                                 
                                 <Rectangle Margin="6" Height="1" Fill="Gainsboro"/>

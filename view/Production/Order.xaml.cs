@@ -155,10 +155,9 @@ namespace Cognitivo.Production
         private void toolBar_btnApprove_Click(object sender)
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            production_order.status = Status.Production.Approved;
+            production_order.status = Status.Production.Executed;
             OrderDB.SaveChanges();
-            toolBar.msgDone("Yay!");
-           
+            toolBar.msgDone();
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -166,26 +165,13 @@ namespace Cognitivo.Production
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order.status = Status.Production.QA_Rejected;
             OrderDB.SaveChanges();
-            toolBar.msgDone("Yay!");
         }
-
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    //  int id_line =(int) cmbline.SelectedValue;
-        //    crud_modal.Visibility = Visibility.Visible;
-        //    cntrl.Curd.itemMovement itemMovement = new cntrl.Curd.itemMovement();
-        //    itemMovement.operationMode = cntrl.Class.clsCommon.Mode.Add;
-        //    item_transfer item_transfer = new entity.item_transfer();
-        //    // item_transfer.id_location_destination = dbContext.production_line.Where(x => x.id_production_line == id_line).FirstOrDefault().id_location;
-        //    itemMovement.item_transferViewSource = item_transferViewSource;
-        //    itemMovement.dbContext=dbContext;
-        //    crud_modal.Children.Add(itemMovement);
-        //}
 
         private  void productionorderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Update_request();
         }
+        
         public async void Update_request()
         {
             try
@@ -321,6 +307,7 @@ namespace Cognitivo.Production
                 toolBar.msgError(ex);
             }
         }
+
         private void item_ProductDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int _id_production_order = 0;
@@ -447,8 +434,6 @@ namespace Cognitivo.Production
 
                 foreach (production_order_detail data in production_order_detaillist)
                 {
-                   
-
                     item_request_detail item_request_detail = new entity.item_request_detail();
                     item_request_detail.date_needed_by = ItemRequest.neededDate;
                     item_request_detail.id_order_detail = data.id_order_detail;
@@ -459,14 +444,8 @@ namespace Cognitivo.Production
                     item_request_detail.id_item = idItem;
                     item_request_detail.quantity = data.quantity;
                     item_request.item_request_detail.Add(item_request_detail);
-                   
-
-
-
-                
-
-                  
                 }
+
                 OrderDB.item_request.Add(item_request);
                 OrderDB.SaveChanges();
                 item_requestViewSource.View.Filter = i =>
@@ -477,8 +456,8 @@ namespace Cognitivo.Production
                     else
                         return false;
                 };
-
             }
+
             crud_modal_request.Children.Clear();
             crud_modal_request.Visibility = System.Windows.Visibility.Collapsed;
         }
@@ -534,45 +513,47 @@ namespace Cognitivo.Production
                 if (item != null && item.id_item > 0 && item.is_autorecepie && production_order != null)
                 {
                     production_order_detail production_order_detail_output = treeProject.SelectedItem as production_order_detail;
-                    production_order_detail_output.id_item = item.id_item;
-                    production_order_detail_output.item = item;
-                    production_order_detail_output.RaisePropertyChanged("item");
-                    production_order_detail_output.is_input = false;
-                    production_order_detail_output.quantity = 1;
-                    foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                    if (production_order_detail_output != null)
                     {
-                        production_order_detail production_order_detail = new production_order_detail();
-
-                        production_order_detail.name = item_recepie_detail.item.name;
-                        production_order_detail.id_item = item_recepie_detail.item.id_item;
-                        production_order_detail.item = item_recepie_detail.item;
-                        production_order_detail.RaisePropertyChanged("item");
-                        if (item_recepie_detail.quantity > 0)
+                        production_order_detail_output.id_item = item.id_item;
+                        production_order_detail_output.item = item;
+                        production_order_detail_output.RaisePropertyChanged("item");
+                        production_order_detail_output.is_input = false;
+                        production_order_detail_output.quantity = 1;
+                        foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                         {
-                            production_order_detail.quantity = (decimal)item_recepie_detail.quantity;
+                            production_order_detail production_order_detail = new production_order_detail();
+
+                            production_order_detail.name = item_recepie_detail.item.name;
+                            production_order_detail.id_item = item_recepie_detail.item.id_item;
+                            production_order_detail.item = item_recepie_detail.item;
+                            production_order_detail.RaisePropertyChanged("item");
+                            if (item_recepie_detail.quantity > 0)
+                            {
+                                production_order_detail.quantity = (decimal)item_recepie_detail.quantity;
+                            }
+
+                            production_order_detail.is_input = true;
+
+                            production_order_detail_output.child.Add(production_order_detail);
                         }
 
-                        production_order_detail.is_input = true;
-
-                        production_order_detail_output.child.Add(production_order_detail);
+                        filter_task();
                     }
-                
-                    filter_task();
                 }
                 else
                 {
                     production_order_detail production_order_detail_output = treeProject.SelectedItem as production_order_detail;
-                    production_order_detail_output.quantity = 1;
-                    production_order_detail_output.name = item.name;
-                    production_order_detail_output.id_item = item.id_item;
-                    production_order_detail_output.item = item;
-                    production_order_detail_output.RaisePropertyChanged("item");
-                    production_order_detail_output.is_input = true;
 
-
-                   
-                 
-
+                    if (production_order_detail_output != null)
+                    {
+                        production_order_detail_output.quantity = 1;
+                        production_order_detail_output.name = item.name;
+                        production_order_detail_output.id_item = item.id_item;
+                        production_order_detail_output.item = item;
+                        production_order_detail_output.RaisePropertyChanged("item");
+                        production_order_detail_output.is_input = true;
+                    }
                 }
             }
         }
@@ -666,17 +647,15 @@ namespace Cognitivo.Production
         {
             try
             {
-
+                cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
                 
-                    cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
-
-                    OrderDB.SaveChanges();
-                    production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-                    production_order.State = EntityState.Modified;
-                    Update_request();
-                    toolBar.msgDone("Yay!");
-                    stpcode.IsEnabled = false;
+                OrderDB.SaveChanges();
                 
+                production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+                production_order.State = EntityState.Modified;
+                Update_request();
+                toolBar.msgDone("Yay!");
+                stpcode.IsEnabled = false;
             }
             catch (Exception ex)
             {
@@ -689,18 +668,16 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource.View.Filter = null;
             List<production_order_detail> production_order_detailLIST = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
             production_order_detailLIST = production_order_detailLIST.Where(x => x.IsSelected == true).ToList();
+            
             foreach (production_order_detail production_order_detail in production_order_detailLIST)
             {
-                //if (project_task.Error == null)
-                //{
                 production_order_detail.production_order.status = Status.Production.Pending;
                 production_order_detail.IsSelected = false;
-
-                //}
             }
+
             OrderDB.SaveChanges();
-            toolBar.msgDone("Yay!");
-                    filter_task();
+            toolBar.msgDone();
+            filter_task();
         }
 
         private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -752,44 +729,21 @@ namespace Cognitivo.Production
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_orderproduction_order_detailViewSource.View.Filter = null;
+            
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
             _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true).ToList();
-            if (production_order.production_execution.Count()==0)
+
+            foreach (production_order_detail production_order_detail in _production_order_detail)
+            {
+                production_order_detail.status = entity.Status.Production.Approved;
+            }
+
+            if (production_order.production_execution.Count() == 0)
             {
                 production_execution production_execution = new production_execution();
                 production_execution.production_order = production_order;
-                if (OrderDB.production_line.FirstOrDefault() != null)
-                {
-                    production_execution.id_production_line = OrderDB.production_line.FirstOrDefault().id_production_line;
-                }
-                else
-                {
-                    MessageBox.Show("please Create Line");
-                }
-
-                if (_production_order_detail.Count() > 0)
-                {
-
-
-                    production_execution.id_production_order = _production_order_detail.FirstOrDefault().id_production_order;
-
-                    foreach (production_order_detail production_order_detail in _production_order_detail)
-                    {
-                        //production_execution_detail production_execution_detail = new production_execution_detail();
-
-                        //production_execution_detail.id_item = production_order_detail.id_item;
-                        //production_execution.production_order = production_order_detail.production_order;
-                        //production_execution.id_production_order = production_order_detail.id_production_order;
-                        //production_execution_detail.quantity = production_order_detail.quantity;
-                        //production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-                        //production_execution_detail.id_project_task = production_order_detail.id_project_task;
-
-                        //production_execution.production_execution_detail.Add(production_execution_detail);
-
-                        production_order_detail.status = entity.Status.Production.Approved;
-
-                    }
-                }
+                production_execution.id_production_line = production_order.id_production_line;
+                production_execution.trans_date = DateTime.Now;
 
                 OrderDB.production_execution.Add(production_execution);
             }

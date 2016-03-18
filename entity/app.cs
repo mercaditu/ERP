@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 39
+            /// Last Used : 43
             /// </summary>
 
             //Sales
@@ -81,6 +81,12 @@ namespace entity
             PaymentType=29,
             [LocalizedDescription("ItemTransfer")]
             PaymentWithHolding = 31,
+            [LocalizedDescription("AccountUtility")]
+            AccountUtility = 43,
+            [LocalizedDescription("Currency")]
+            Currency = 45,
+            [LocalizedDescription("Currency")]
+            Bank = 46,
 
             //Stock
             [LocalizedDescription("Item")]
@@ -91,52 +97,66 @@ namespace entity
             Movement = 13,
             [LocalizedDescription("Import")]
             Import= 14,
+            [LocalizedDescription("IncotermCondition")]
+            IncotermCondition = 44,
             [LocalizedDescription("Incoterm")]
             Incoterm = 33,
             [LocalizedDescription("Export")]
             Export = 34,
-            [LocalizedDescription("ItemRequest")]
-            ItemRequest = 18,
+            [LocalizedDescription("RequestResource")]
+            RequestResource = 18,
             [LocalizedDescription("Inventory")]
             Inventory = 26,
-            [LocalizedDescription("ItemTransfer")]
-            ItemTransfer = 30,
+            [LocalizedDescription("Transfer")]
+            Transfer = 30,
             [LocalizedDescription("ItemReceipe")]
-            ItemReceipe = 32,
-            
+            Receipe = 32,
+            [LocalizedDescription("Stock")]
+            Stock = 40,
+            [LocalizedDescription("ItemTag")]
+            ItemTag = 41,
+            [LocalizedDescription("PriceList")]
+            PriceList = 42,
+
             //Production
-            [LocalizedDescription("ProductionExecustion")]
-            ProductionExecustion =17,
+            [LocalizedDescription("ProductionExecution")]
+            ProductionExecution = 17,
             [LocalizedDescription("ProductionLine")]
-            ProductionLine=19,
+            Line=19,
             [LocalizedDescription("ProductionOrder")]
             ProductionOrder=20,
             [LocalizedDescription("ProductionTemplate")]
             ProductionTemplate=21,
 
             //Project
+            [LocalizedDescription("Template")]
+            Template = 48,
             [LocalizedDescription("Project")]
             Project = 22,
             [LocalizedDescription("ActivityPlan")]
             ActivityPlan = 28,
-            [LocalizedDescription("ProjectExecustion")]
-            ProjectExecustion = 23,
+            [LocalizedDescription("ProjectExecution")]
+            ProjectExecution = 23,
             [LocalizedDescription("ProjectType")]
             ProjectType = 24,
-            [LocalizedDescription("ProjectLogistics")]
-            ProjectLogistics = 25,
-            [LocalizedDescription("ProjectLogistics")]
-            EventType = 39,
+            [LocalizedDescription("Logistics")]
+            Logistics = 25,
+            //[LocalizedDescription("ProjectLogistics")]
+            //EventType = 39,
             [LocalizedDescription("EventCost")]
             EventCost = 39,
             [LocalizedDescription("PrintingPresstemplate")]
             PrintingPresstemplate = 39,
+            [LocalizedDescription("ProjectInvoice")]
+            ProjectInvoice = 53,
+
             //HR
             [LocalizedDescription("Employee")]
             Employee = 35,
             [LocalizedDescription("Talent")]
             Talent = 36,
-
+            [LocalizedDescription("HourCoeficient")]
+            HourCoeficient = 47,
 
         }
     }

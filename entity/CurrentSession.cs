@@ -118,10 +118,13 @@ namespace entity
 
         public static void Refresh_Security()
         {
-            Security_CurdList.Clear();
-            Security_CurdList = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault()
-                                   .security_role
-                                   .security_curd.ToList();
+            using (db db = new db())
+            {
+                Security_CurdList.Clear();
+                Security_CurdList = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault()
+                                       .security_role
+                                       .security_curd.ToList();
+            }
         }
     }
 }

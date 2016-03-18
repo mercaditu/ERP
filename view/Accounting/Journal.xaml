@@ -114,7 +114,7 @@
         </DataGrid>
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="2" VerticalAlignment="Top" 
                      
-                      appName="AccountJournal"
+                      appName="AccountingJournal"
                        
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

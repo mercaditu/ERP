@@ -103,7 +103,7 @@
     
      
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="2" VerticalAlignment="Top" 
-                       btnApprove_Click="toolBar_btnApprove_Click"
+                       btnApprove_Click="toolBar_btnApprove_Click" appName="BookofIncomes"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>

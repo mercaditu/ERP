@@ -280,6 +280,6 @@
                        btnSearch_Click="toolBar_btnSearch_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                         Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       appName="AccountingChart"/>
+                       appName="ChartofAccount"/>
     </Grid>
 </Page>

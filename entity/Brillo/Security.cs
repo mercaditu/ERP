@@ -23,8 +23,7 @@ namespace entity.Brillo
 
             if (AppName != 0)
             {
-                using (db db = new db())
-                {
+               
                     security_curd security_curd = 
                      CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault();
 
@@ -38,7 +37,7 @@ namespace entity.Brillo
                         approve = security_curd.can_approve;
                         annul = security_curd.can_annul;
                     }
-                }
+               
             }
         }
     }

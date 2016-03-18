@@ -634,7 +634,7 @@ namespace Cognitivo.Production
                         n_production_order_detail.production_order = production_order;
                         n_production_order_detail.production_order.status = Status.Production.Pending;
                         n_production_order_detail.quantity = 0;
-
+                        n_production_order_detail.status = Status.Production.Pending;
                         production_order_detail.child.Add(n_production_order_detail);
                         OrderDB.production_order_detail.Add(n_production_order_detail);
                         production_orderproduction_order_detailViewSource.View.Refresh();
@@ -757,7 +757,7 @@ namespace Cognitivo.Production
             if (production_order.production_execution.Count()==0)
             {
                 production_execution production_execution = new production_execution();
-
+                production_execution.production_order = production_order;
                 if (OrderDB.production_line.FirstOrDefault() != null)
                 {
                     production_execution.id_production_line = OrderDB.production_line.FirstOrDefault().id_production_line;

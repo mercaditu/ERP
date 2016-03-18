@@ -138,7 +138,7 @@ namespace entity
 
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
-        public virtual IEnumerable<production_execution> production_execution { get; set; }
+        public virtual ICollection<production_execution> production_execution { get; set; }
 
         public string Error
         {

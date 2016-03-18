@@ -193,7 +193,7 @@ namespace Cognitivo.Production
                     production_execution_detailSupplyViewSource.View.Filter = i =>
                     {
                         production_execution_detail objproduction_execution_detail = i as production_execution_detail;
-                        if (objproduction_execution_detail != null)
+                        if (objproduction_execution_detail != null && objproduction_execution_detail.item != null)
                         {
                             if (objproduction_execution_detail.item.id_item_type == item.item_type.Supplies)
                             {

@@ -149,7 +149,7 @@ namespace entity
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
-                            base.payment_schedual.AddRange(payment_schedualList);
+                            base.payment_schedual.RemoveRange(payment_schedualList);
                         }
                         if (item_movementList != null && item_movementList.Count > 0)
                         {

@@ -199,7 +199,9 @@
                                 Header="{lex:Loc Cognitivo:local:Available}" Binding="{Binding avlqty}" IsReadOnly="True" Width="*"/>
                             <DataGridTextColumn 
                                 Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                            
                         </DataGrid.Columns>
+                        
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Transfer}">

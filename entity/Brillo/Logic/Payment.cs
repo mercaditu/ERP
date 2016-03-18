@@ -251,12 +251,12 @@ namespace entity.Brillo.Logic
                 //    totalDebit = payment_schedual.payment_detail.Sum(x => x.value);
                 //}
 
-                payment_schedual payment_schedual_free = new payment_schedual();
-                payment_schedual_free.id_contact = payment_schedual.id_contact;
+                //payment_schedual payment_schedual_free = new payment_schedual();
+                //payment_schedual_free.id_contact = payment_schedual.id_contact;
 
             }
             //Basic Cleanup
-            payment_schedual.status = entity.Status.Documents_General.Annulled;
+            //payment_schedual.status = entity.Status.Documents_General.Annulled;
             payment_schedualList.Add(payment_schedual);
             return payment_schedualList;
         }

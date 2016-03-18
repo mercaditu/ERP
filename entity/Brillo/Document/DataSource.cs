@@ -202,6 +202,7 @@ namespace entity.Brillo.Document
                     quantity = g.quantity,
                     sub_Total = g.SubTotal,
                     sub_Total_vat = g.SubTotal_Vat,
+                    sub_Total_Vat_Discount = g.Discount_SubTotal_Vat,
                     unit_cost = g.unit_cost,
                     unit_price = g.unit_price,
                     unit_price_vat = g.UnitPrice_Vat,

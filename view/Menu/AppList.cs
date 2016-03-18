@@ -5,10 +5,10 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPFLocalizeExtension.Extensions;
-using entity;
+
 namespace Cognitivo.Menu
 {
-    class AppList
+    public class AppList
     {
         public DataTable dtApp { get; set; }
         public DataTable dtModule { get; set; }
@@ -38,7 +38,7 @@ namespace Cognitivo.Menu
             dtApp.Columns.Add("name");
             dtApp.Columns.Add("img");
 
-            //Sales
+            //Sales        //Module                 //Namespace      //App                 //Name     //Img
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.Contact", "Contact", "Contact");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transactions, "Sales.Budget", "SalesBudget", "");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transactions, "Sales.Order", "SalesOrder", "SalesOrder");
@@ -188,6 +188,19 @@ namespace Cognitivo.Menu
             
             cntrl.applicationIcon appIcon = new cntrl.applicationIcon();
             appIcon.Tag = "Cognitivo." + _app;
+
+            try
+            {
+                entity.Brillo.Security security = new entity.Brillo.Security((entity.App.Names)Enum.Parse(typeof(entity.App.Names), _name, true));
+                if (security.view == false)
+                {
+                    appIcon.IsEnabled = false;
+                }
+            }
+            catch
+            {
+                appIcon.IsEnabled = false;
+            }
                         
             if (_description != "") 
             { var appLocApplicationDescription = new LocTextExtension("Cognitivo:local:" + _description + "").SetBinding(appIcon, cntrl.applicationIcon.ApplicationDescriptionProperty); }
@@ -201,7 +214,7 @@ namespace Cognitivo.Menu
 
             return appIcon;
         }
-
+        
         public StackPanel get_ConfigIcon(DataRow app)
         {
             string _app = app["app"].ToString();

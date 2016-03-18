@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 43
+            /// Last Used : 48
             /// </summary>
 
             //Sales
@@ -65,14 +65,18 @@ namespace entity
             //Commercial
             [LocalizedDescription("FiscalPeriod")]
             FiscalPeriod = 37,
-            [LocalizedDescription("AccountingChart")]
-            AccountingChart = 38,
+            [LocalizedDescription("ChartofAccount")]
+            ChartofAccount = 38,
             [LocalizedDescription("AccountsPayable")]
             AccountsPayable = 9,
             [LocalizedDescription("AccountsRecievable")]
             AccountsRecievable = 27,
-            [LocalizedDescription("AccountJournal")]
-            AccountJournal = 29,
+            [LocalizedDescription("AccountingJournal")]
+            AccountingJournal = 29,
+            [LocalizedDescription("BookofExpenses")]
+            BookofExpenses = 49,
+            [LocalizedDescription("BookofIncomes")]
+            BookofIncomes = 50,
             [LocalizedDescription("Contact")]
             Contact = 10,
             [LocalizedDescription("PaymentUtility")]
@@ -157,7 +161,6 @@ namespace entity
             Talent = 36,
             [LocalizedDescription("HourCoeficient")]
             HourCoeficient = 47,
-
         }
     }
 }

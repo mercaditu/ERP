@@ -124,11 +124,11 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.ShopFloor", "Factory", "");
 
             //Accounting
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.Cycle", "FiscalPeriod", "AccountingPeriod");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.ChartOfAccounts", "ChartofAccount", "AccountingChart");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.Journal", "AccountingJournal", "");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.ExpenseJournal", "BookofExpenses", "ExpenseBook");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.IncomeJournal", "BookofIncomes", "IncomeBook");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.Cycle", entity.App.Names.FiscalPeriod, "AccountingPeriod");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.ChartOfAccounts", entity.App.Names.ChartofAccount, "AccountingChart");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.Journal", entity.App.Names.AccountingJournal, "");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.ExpenseJournal", entity.App.Names.BookofExpenses, "ExpenseBook");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.IncomeJournal", entity.App.Names.BookofIncomes, "IncomeBook");
 
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Preferences, "Configs.Language", "Language", "Language");

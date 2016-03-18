@@ -318,10 +318,14 @@ namespace Cognitivo.Product
                 {
                     if (item.item_product.Count == 0 || item.item_product == null)
                     {
-                        item_product _product = new item_product();
-                        item.item_product.Add(_product);
-                        itemitem_productViewSource.View.Refresh();
-                        itemitem_productViewSource.View.MoveCurrentTo(_product);
+                        if (itemitem_productViewSource.View!=null)
+                        {
+                            item_product _product = new item_product();
+                            item.item_product.Add(_product);
+                            itemitem_productViewSource.View.Refresh();
+                            itemitem_productViewSource.View.MoveCurrentTo(_product);
+                        }
+                    
                     }
 
                     if (item.item_asset.Count > 0)

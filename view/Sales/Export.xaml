@@ -41,7 +41,7 @@
 			btnSave_Click="toolBar_btnSave_Click"
 			btnCancel_Click="toolBar_btnCancel_Click"
 			btnApprove_Click="toolBar_btnApprove_Click"   
-			VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Stretch"/>
+			VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" appName="Export"/>
         <DataGrid x:Name="impexDataGrid" Grid.Column="0" Grid.Row="1" Style="{StaticResource main_Datagrid}" 
                   SelectionChanged="impexDataGrid_SelectionChanged"
                   ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">

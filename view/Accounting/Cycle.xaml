@@ -115,7 +115,7 @@
 			btnSave_Click="toolBar_btnSave_Click"
 			btnCancel_Click="toolBar_btnCancel_Click" 
             State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-            Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+            Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="FiscalPeriod"/>
         <ListBox x:Name="accounting_cycleDataGrid"  Background="{StaticResource AccentColor_Brush}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"

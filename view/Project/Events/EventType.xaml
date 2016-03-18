@@ -131,6 +131,6 @@
                        btnDelete_Click="toolBar_btnDelete_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click" 
                        btnSave_Click="toolBar_btnSave_Click"
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="EventType"/>
     </Grid>
 </Page>

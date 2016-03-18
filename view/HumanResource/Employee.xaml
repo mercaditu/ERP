@@ -287,7 +287,8 @@
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        VerticalAlignment="Top" Grid.ColumnSpan="3"
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       appName="Employee"/>
 
     </Grid>
 

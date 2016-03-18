@@ -26,9 +26,7 @@ namespace entity.Brillo
                 using (db db = new db())
                 {
                     security_curd security_curd = 
-                        db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault()
-                        .security_role
-                        .security_curd.Where(x => x.id_application == AppName).FirstOrDefault();
+                     CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault();
 
                     if (security_curd != null)
                     {

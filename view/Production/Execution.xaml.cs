@@ -304,12 +304,12 @@ namespace Cognitivo.Production
                            && (a.item.id_item_type == item.item_type.Supplies || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
-                    production_execution_detailSupplyViewSource.Source = _production_order_detail;
+                    production_order_detaillSupplyViewSource.Source = _production_order_detail;
                 }
 
                 else
                 {
-                    production_execution_detailSupplyViewSource.Source = null;
+                    production_order_detaillSupplyViewSource.Source = null;
 
                 }
             }

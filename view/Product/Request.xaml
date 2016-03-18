@@ -230,7 +230,7 @@
 
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" btnNew_Click="toolBar_btnNew_Click" btnEdit_Click="toolBar_btnEdit_Click" btnAnull_Click="toolBar_btnAnull_Click"
                        btnApprove_Click="toolBar_btnApprove_Click" btnSave_Click="toolBar_btnSave_Click"
-                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" appName="ItemRequest"
                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
     </Grid>

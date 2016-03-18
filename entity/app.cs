@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 31
+            /// Last Used : 39
             /// </summary>
 
             //Sales
@@ -63,6 +63,10 @@ namespace entity
             PurchaseReturn = 8,
 
             //Commercial
+            [LocalizedDescription("FiscalPeriod")]
+            FiscalPeriod = 37,
+            [LocalizedDescription("AccountingChart")]
+            AccountingChart = 38,
             [LocalizedDescription("AccountsPayable")]
             AccountsPayable = 9,
             [LocalizedDescription("AccountsRecievable")]
@@ -85,15 +89,21 @@ namespace entity
             Adjust = 12,
             [LocalizedDescription("Movement")]
             Movement = 13,
-            [LocalizedDescription("ImportExport")]
-            ImportExport = 14,
+            [LocalizedDescription("Import")]
+            Import= 14,
+            [LocalizedDescription("Incoterm")]
+            Incoterm = 33,
+            [LocalizedDescription("Export")]
+            Export = 34,
             [LocalizedDescription("ItemRequest")]
             ItemRequest = 18,
             [LocalizedDescription("Inventory")]
             Inventory = 26,
             [LocalizedDescription("ItemTransfer")]
             ItemTransfer = 30,
-
+            [LocalizedDescription("ItemReceipe")]
+            ItemReceipe = 32,
+            
             //Production
             [LocalizedDescription("ProductionExecustion")]
             ProductionExecustion =17,
@@ -115,6 +125,17 @@ namespace entity
             ProjectType = 24,
             [LocalizedDescription("ProjectLogistics")]
             ProjectLogistics = 25,
+            [LocalizedDescription("ProjectLogistics")]
+            EventType = 39,
+            [LocalizedDescription("EventCost")]
+            EventCost = 39,
+            [LocalizedDescription("PrintingPresstemplate")]
+            PrintingPresstemplate = 39,
+            //HR
+            [LocalizedDescription("Employee")]
+            Employee = 35,
+            [LocalizedDescription("Talent")]
+            Talent = 36,
 
 
         }

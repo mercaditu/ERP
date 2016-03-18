@@ -74,6 +74,7 @@
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnSave_Click="toolBar_btnSave_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       appName="Incoterm"/>
     </Grid>
 </Page>

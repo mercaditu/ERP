@@ -225,6 +225,7 @@
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnApprove_Click="toolBar_btnApprove_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       appName="Movement"/>
     </Grid>
 </Page>

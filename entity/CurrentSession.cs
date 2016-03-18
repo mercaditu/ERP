@@ -18,9 +18,9 @@ namespace entity
                 }
                 return _Id_Company;
             }
-            set 
-            { 
-                _Id_Company=value; 
+            set
+            {
+                _Id_Company = value;
             }
         }
         static int _Id_Company;
@@ -55,12 +55,24 @@ namespace entity
         }
         static int _Id_terminal;
 
+        public static List<security_curd> Security_CurdList
+        {
+            get
+            {
+
+                return _Security_CurdList;
+            }
+            set { _Security_CurdList = value; }
+        }
+        static List<security_curd> _Security_CurdList;
+
         public static security_user User { get; set; }
 
         private static db db = new db();
 
         public static void Start(string UserName, string Password)
         {
+            Security_CurdList = new List<security_curd>();
             //Set the User
             User = db.security_user.Where(user => user.name == UserName
                                                && user.password == Password
@@ -102,6 +114,11 @@ namespace entity
                                     terminal.id_terminal == Properties.Settings.Default.terminal_ID)
                                     .FirstOrDefault().id_terminal;
                 }
+                Security_CurdList = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault()
+                       .security_role
+                       .security_curd.ToList();
+
+
             }
         }
     }

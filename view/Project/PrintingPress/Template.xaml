@@ -34,7 +34,7 @@
         </Grid.ColumnDefinitions>
         <cntrl:toolBar x:Name="ctrlToolBar" Grid.Row="0" Grid.ColumnSpan="2" btnCancel_Click="ctrlToolBar_btnCancel_Click" 
                        btnDelete_Click="ctrlToolBar_btnDelete_Click" btnEdit_Click="ctrlToolBar_btnEdit_Click" 
-                       btnNew_Click="ctrlToolBar_btnNew_Click" btnSave_Click="ctrlToolBar_btnSave_Click" />
+                       btnNew_Click="ctrlToolBar_btnNew_Click" btnSave_Click="ctrlToolBar_btnSave_Click" appName="PrintingPresstemplate" />
 
         <ListBox x:Name="project_templateDataGrid" Background="{StaticResource AccentColor_Brush}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1"

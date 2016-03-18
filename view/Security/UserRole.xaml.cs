@@ -65,6 +65,7 @@ namespace Cognitivo.Security
             try
             {
                 dbContext.SaveChanges();
+                entity.CurrentSession.Refresh_Security();
             }
             catch (Exception ex)
             {

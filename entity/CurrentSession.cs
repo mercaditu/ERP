@@ -111,12 +111,17 @@ namespace entity
                                     terminal.id_terminal == Properties.Settings.Default.terminal_ID)
                                     .FirstOrDefault().id_terminal;
                 }
-                Security_CurdList = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault()
-                       .security_role
-                       .security_curd.ToList();
 
-
+                Refresh_Security();
             }
+        }
+
+        public static void Refresh_Security()
+        {
+            Security_CurdList.Clear();
+            Security_CurdList = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault()
+                                   .security_role
+                                   .security_curd.ToList();
         }
     }
 }

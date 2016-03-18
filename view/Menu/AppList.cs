@@ -46,7 +46,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transactions, "Sales.PointofSale", "PointofSale", "PointofSale");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transactions, "Sales.Return", entity.App.Names.SalesReturn, "SalesReturn");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "BankAccountTrans");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Financial, "Commercial.AccountsRecievable", entity.App.Names.AccountsRecievable, "Money");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Financial, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Inventory, "Sales.PackingList", entity.App.Names.PackingList, "ProductSend");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Inventory, "Sales.Packing", "Packing", "");
 
@@ -91,7 +91,7 @@ namespace Cognitivo.Menu
             //Finance
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Form, "Configs.AccountUtility", entity.App.Names.AccountUtility, "BankAccountTrans");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transactions, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transactions, "Commercial.AccountsRecievable", entity.App.Names.AccountsRecievable, "Money");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transactions, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Currency", entity.App.Names.Currency, "Currency");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Commercial.PaymentType", entity.App.Names.PaymentType, "");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Bank", entity.App.Names.Bank, "BankAccount");

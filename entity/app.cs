@@ -69,8 +69,8 @@ namespace entity
             ChartofAccount = 38,
             [LocalizedDescription("AccountsPayable")]
             AccountsPayable = 9,
-            [LocalizedDescription("AccountsRecievable")]
-            AccountsRecievable = 27,
+            [LocalizedDescription("AccountsReceivable")]
+            AccountsReceivable = 27,
             [LocalizedDescription("AccountingJournal")]
             AccountingJournal = 29,
             [LocalizedDescription("BookofExpenses")]

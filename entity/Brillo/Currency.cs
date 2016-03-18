@@ -102,7 +102,7 @@ namespace entity.Brillo
                 {
                     if (application == App.Names.SalesOrder
                         || application == App.Names.SalesReturn
-                        || application == App.Names.AccountsRecievable
+                        || application == App.Names.AccountsReceivable
                         || application == App.Names.SalesInvoice)
                     {
                         r = db.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault().buy_value;

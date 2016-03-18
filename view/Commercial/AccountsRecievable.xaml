@@ -84,7 +84,7 @@
             </StackPanel>
         </StackPanel>
 
-        <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3" appName="AccountsRecievable"
+        <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3" appName="AccountsReceivable"
 			btnApprove_Click="toolBar_btnApprove_Click"
 			btnAnull_Click="toolBar_btnAnull_Click"
             btnSearch_Click="toolBar_btnSearch_Click"/>

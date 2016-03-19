@@ -14,10 +14,10 @@ namespace entity
             sales_invoice.State = EntityState.Added;
             sales_invoice.status = Status.Documents_General.Pending;
             sales_invoice.id_range = Brillo.GetDefault.Range(App.Names.SalesInvoice);
-           
+
             sales_invoice.trans_date = DateTime.Now;
 
-       
+
             sales_invoice.IsSelected = true;
 
             return sales_invoice;
@@ -41,7 +41,7 @@ namespace entity
 
             foreach (sales_invoice invoice in sales_invoiceLIST)
             {
-                if(invoice.Error == null)
+                if (invoice.Error == null)
                 {
                     if (invoice.State == EntityState.Added)
                     {
@@ -105,14 +105,14 @@ namespace entity
 
         public void Approve()
         {
-            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x => 
+            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null))
             {
                 SpiltInvoice(invoice);
             }
 
-            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x => 
+            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null))
             {
@@ -128,22 +128,29 @@ namespace entity
                     Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
                     payment_schedualList = _Payment.insert_Schedual(invoice);
 
-                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                    List<item_movement> item_movementList = new List<item_movement>();
-                    item_movementList = _Stock.insert_Stock(this, invoice);
-
                     if (payment_schedualList != null && payment_schedualList.Count > 0)
                     {
                         payment_schedual.AddRange(payment_schedualList);
                     }
-
-                    if (item_movementList != null && item_movementList.Count > 0)
-                    {
-                        item_movement.AddRange(item_movementList);
-                    }
+                    //if (IsDiscountStock)
+                    //{
 
 
-                    if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range >0)
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.insert_Stock(this, invoice);
+                        if (item_movementList != null && item_movementList.Count > 0)
+                        {
+                            item_movement.AddRange(item_movementList);
+                        }
+                   // }
+
+                  
+
+               
+
+
+                    if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range > 0)
                     {
                         invoice.is_issued = true;
                         if (invoice.id_branch > 0)
@@ -174,7 +181,7 @@ namespace entity
                         invoice.HasErrors = true;
                     }
                 }
-                    
+
             }
         }
 
@@ -190,9 +197,9 @@ namespace entity
 
                 if (invoice.app_document_range.app_document.line_limit != null)
                 {
-                document_line_limit = (int)invoice.app_document_range.app_document.line_limit;
+                    document_line_limit = (int)invoice.app_document_range.app_document.line_limit;
                 }
-        
+
                 if (document_line_limit > 0 && invoice.sales_invoice_detail.Count > document_line_limit)
                 {
                     int NoOfInvoice = (int)Math.Ceiling(invoice.sales_invoice_detail.Count / (decimal)document_line_limit);
@@ -260,9 +267,9 @@ namespace entity
                     invoice.status = Status.Documents_General.Approved;
                 }
 
-                    SaveChanges();
+                SaveChanges();
 
-                    }
+            }
         }
 
         public void Anull()
@@ -273,7 +280,7 @@ namespace entity
             {
                 if (sales_invoice.IsSelected && sales_invoice.Error == null)
                 {
-                    if (sales_invoice.sales_return == null || sales_invoice.sales_return.Count == 0 )
+                    if (sales_invoice.sales_return == null || sales_invoice.sales_return.Count == 0)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
@@ -281,7 +288,7 @@ namespace entity
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.revert_Stock(this,App.Names.SalesInvoice, sales_invoice.id_sales_invoice);
+                        item_movementList = _Stock.revert_Stock(this, App.Names.SalesInvoice, sales_invoice.id_sales_invoice);
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {

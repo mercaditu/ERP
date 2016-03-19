@@ -46,6 +46,7 @@ namespace cntrl
             sales_order.id_contract = (int)cbxContract.SelectedValue;
             sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
             sales_order.comment = "Generate From Project";
+
             sales_order_detail sales_order_detail = null;
             foreach (project_task _project_task in project_task)
             {

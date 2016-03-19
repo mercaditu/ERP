@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 48
+            /// Last Used : 53
             /// </summary>
 
             //Sales
@@ -82,15 +82,15 @@ namespace entity
             [LocalizedDescription("PaymentUtility")]
             PaymentUtility = 16,
             [LocalizedDescription("PaymentType")]
-            PaymentType=29,
+            PaymentType=51,
             [LocalizedDescription("ItemTransfer")]
             PaymentWithHolding = 31,
             [LocalizedDescription("AccountUtility")]
-            AccountUtility = 43,
+            AccountUtility = 44,
             [LocalizedDescription("Currency")]
-            Currency = 45,
+            Currency = 46,
             [LocalizedDescription("Currency")]
-            Bank = 46,
+            Bank = 47,
 
             //Stock
             [LocalizedDescription("Item")]
@@ -102,7 +102,7 @@ namespace entity
             [LocalizedDescription("Import")]
             Import= 14,
             [LocalizedDescription("IncotermCondition")]
-            IncotermCondition = 44,
+            IncotermCondition = 45,
             [LocalizedDescription("Incoterm")]
             Incoterm = 33,
             [LocalizedDescription("Export")]
@@ -116,11 +116,11 @@ namespace entity
             [LocalizedDescription("ItemReceipe")]
             Receipe = 32,
             [LocalizedDescription("Stock")]
-            Stock = 40,
+            Stock = 41,
             [LocalizedDescription("ItemTag")]
-            ItemTag = 41,
+            ItemTag = 42,
             [LocalizedDescription("PriceList")]
-            PriceList = 42,
+            PriceList = 43,
 
             //Production
             [LocalizedDescription("ProductionExecution")]
@@ -134,7 +134,7 @@ namespace entity
 
             //Project
             [LocalizedDescription("Template")]
-            Template = 48,
+            Template = 52,
             [LocalizedDescription("Project")]
             Project = 22,
             [LocalizedDescription("ActivityPlan")]
@@ -150,7 +150,7 @@ namespace entity
             [LocalizedDescription("EventCost")]
             EventCost = 39,
             [LocalizedDescription("PrintingPresstemplate")]
-            PrintingPresstemplate = 39,
+            PrintingPresstemplate = 40,
             [LocalizedDescription("ProjectInvoice")]
             ProjectInvoice = 53,
 
@@ -160,7 +160,7 @@ namespace entity
             [LocalizedDescription("Talent")]
             Talent = 36,
             [LocalizedDescription("HourCoeficient")]
-            HourCoeficient = 47,
+            HourCoeficient = 48,
         }
     }
 }

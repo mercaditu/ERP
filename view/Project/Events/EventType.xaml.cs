@@ -90,7 +90,7 @@ namespace Cognitivo.Project
             {
                 e.CanExecute = true;
             }
-            else if (e.Parameter as project_event_template != null)
+            else if (e.Parameter as project_event_template_fixed != null)
             {
                 e.CanExecute = true;
             }
@@ -104,11 +104,13 @@ namespace Cognitivo.Project
                 if (e.Parameter as project_event_template_variable != null)
                 {
                     project_event_template_variableDataGrid.CancelEdit();
+                    ProjectTemplateDB.project_event_template_variable.Remove(e.Parameter as project_event_template_variable);
                     template_designerproject_event_template_variableViewSource.View.Refresh();
                 }
-                else if (e.Parameter as project_event_template != null)
+                else if (e.Parameter as project_event_template_fixed != null)
                 {
                     services_per_eventDataGrid.CancelEdit();
+                    ProjectTemplateDB.project_event_template_fixed.Remove(e.Parameter as project_event_template_fixed);
                     template_designerservices_per_eventViewSource.View.Refresh();
                 }
             }

@@ -248,7 +248,7 @@ namespace Cognitivo.Production
             {
 
                 List<production_order_detail> _production_order_detail =
-                    ExecutionDB.production_order_detail.Where(a => a.parent == null
+                    ExecutionDB.production_order_detail.Where(a => (a.parent == null || a.is_input==false)
                          && a.status == Status.Project.Approved
                          && (a.item.id_item_type == item.item_type.Product
                          || a.item.id_item_type == item.item_type.Task)
@@ -275,7 +275,7 @@ namespace Cognitivo.Production
 
             if (production_order_detaillServiceViewSource != null)
             {
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null && a.status == Status.Project.Approved
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => (a.parent == null || a.is_input == false) && a.status == Status.Project.Approved
                          && (a.item.id_item_type == item.item_type.Service || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
@@ -298,7 +298,7 @@ namespace Cognitivo.Production
             if (production_execution_detailSupplyViewSource != null)
             {
 
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null && a.status == Status.Project.Approved
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => (a.parent == null || a.is_input == false) && a.status == Status.Project.Approved
                            && (a.item.id_item_type == item.item_type.Supplies || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
@@ -323,7 +323,7 @@ namespace Cognitivo.Production
             if (production_order_detaillRawViewSource != null)
             {
 
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null && a.status == Status.Project.Approved
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => (a.parent == null || a.is_input == false) && a.status == Status.Project.Approved
                             && (a.item.id_item_type == item.item_type.RawMaterial || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)
                 {
@@ -346,7 +346,7 @@ namespace Cognitivo.Production
             if (production_order_detaillAssetViewSource != null)
             {
 
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => (a.parent == null || a.is_input == false)
                 && a.status == Status.Project.Approved
                          && (a.item.id_item_type == item.item_type.FixedAssets || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
                 if (_production_order_detail.Count() > 0)

@@ -457,6 +457,7 @@ namespace Cognitivo.Project.Development
                         project_task.id_item = item_recepie_detail.item.id_item;
                         project_task.items = item_recepie_detail.item;
                         project_task.id_project = project_task_output.id_project;
+                        project_task.status = Status.Project.Pending;
                         project_task.RaisePropertyChanged("item");
                         if (item_recepie_detail.quantity > 0)
                         {

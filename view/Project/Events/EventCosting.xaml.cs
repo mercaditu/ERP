@@ -15,11 +15,11 @@ namespace Cognitivo.Project
     public partial class EventCosting : Page, INotifyPropertyChanged, IDisposable
     {
         entity.EventManagement.EventDB EventDB = new entity.EventManagement.EventDB();
-        CollectionViewSource 
-            project_costingViewSource, 
-            project_costingproject_event_template_variable_detailsViewSource, 
-            project_costingservices_per_event_detailsViewSource, 
-            itemViewSource, 
+        CollectionViewSource
+            project_costingViewSource,
+            project_costingproject_event_template_variable_detailsViewSource,
+            project_costingservices_per_event_detailsViewSource,
+            itemViewSource,
             contractViewSource = null;
 
         entity.Properties.Settings _settings = new entity.Properties.Settings();
@@ -59,7 +59,7 @@ namespace Cognitivo.Project
             contactViewSource.Source = await EventDB.contacts.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_customer == true).ToListAsync();
 
             CollectionViewSource template_designerViewSource = FindResource("template_designerViewSource") as CollectionViewSource;
-            template_designerViewSource.Source = await EventDB.project_event_template.Where(a =>a.is_active==true && a.id_company == _settings.company_ID).ToListAsync();
+            template_designerViewSource.Source = await EventDB.project_event_template.Where(a => a.is_active == true && a.id_company == _settings.company_ID).ToListAsync();
 
             project_costingViewSource = FindResource("project_costingViewSource") as CollectionViewSource;
             EventDB.project_event.Where(a => a.is_active == true && a.id_company == _settings.company_ID).Load();
@@ -67,8 +67,8 @@ namespace Cognitivo.Project
             project_costingproject_event_template_variable_detailsViewSource = FindResource("project_costingproject_event_template_variable_detailsViewSource") as CollectionViewSource;
             project_costingservices_per_event_detailsViewSource = FindResource("project_costingservices_per_event_detailsViewSource") as CollectionViewSource;
 
-        
-       
+
+
 
             EstimateCost();
         }
@@ -224,11 +224,12 @@ namespace Cognitivo.Project
 
         private void EstimateCost()
         {
+            List<Event> EventList = new List<Event>();
             if (project_costingViewSource.View.CurrentItem != null)
             {
                 IDcurrencyfx = (project_costingViewSource.View.CurrentItem as project_event).id_currencyfx;
 
-            } 
+            }
             int adult_guest = 0;
             int child_guest = 0;
             try
@@ -256,17 +257,51 @@ namespace Cognitivo.Project
                 {
                     ICollection<project_event_variable> project_event_variableLIST = project_event.project_event_variable;
                     List<project_event_variable> Selectedlist = project_event_variableLIST.Where(x => x.is_included == true).ToList();
-                    CostForPerPersonServices = Selectedlist.Sum(x => ((x.adult_consumption  ) + (x.child_consumption)) * get_Price(contact, IDcurrencyfx, x.item));
+                    CostForPerPersonServices = Selectedlist.Sum(x => ((x.adult_consumption) + (x.child_consumption)) * get_Price(contact, IDcurrencyfx, x.item, entity.App.Modules.Purchase));
+                    foreach (project_event_variable item in Selectedlist)
+                    {
+                        Event Event = new Event();
+                        Event.code = item.item.code;
+                        Event.description = item.item.description;
+                        Event.Quantity = item.adult_consumption + item.child_consumption;
+                        Event.UnitPrice = get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
+                        Event.SubTotal = (item.adult_consumption + item.child_consumption) * get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
+                        EventList.Add(Event);
+                    }
 
                     ICollection<project_event_fixed> project_event_fixedLIST = project_event.project_event_fixed;
                     List<project_event_fixed> Selectedeventlist = project_event_fixedLIST.Where(x => x.is_included == true).ToList();
-                    CostForPerEventServices = Selectedeventlist.Sum(x => x.consumption * get_Price(contact, IDcurrencyfx, x.item));
+                    CostForPerEventServices = Selectedeventlist.Sum(x => x.consumption * get_Price(contact, IDcurrencyfx, x.item, entity.App.Modules.Purchase));
+
+                    foreach (project_event_fixed item in Selectedeventlist)
+                    {
+                        Event Event = new Event();
+                        Event.code = item.item.code;
+                        Event.description = item.item.description;
+                        Event.Quantity = item.consumption ;
+                        Event.UnitPrice = get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
+                        Event.SubTotal = item.consumption * get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
+                        EventList.Add(Event);
+                    }
 
                     if (project_event.item != null)
-                        CostForHall = get_Price(contact, IDcurrencyfx, project_event.item);
+                        CostForHall = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Purchase);
+
+                    Event EventForHall = new Event();
+                    if (project_event.item!=null)
+                    {
+                        EventForHall.code = project_event.item.code;
+                        EventForHall.description = project_event.item.description;
+                        EventForHall.Quantity = 1;
+                        EventForHall.UnitPrice = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Purchase);
+                        EventForHall.SubTotal = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Purchase);
+                        EventList.Add(EventForHall);   
+                    }
+            
                 }
                 TotalCost = CostForPerEventServices + CostForPerPersonServices + CostForHall;
             }
+            dgvorder.ItemsSource = EventList;
             RaisePropertyChanged("TotalCost");
             RaisePropertyChanged("CostForPerEventServices");
             RaisePropertyChanged("CostForPerPersonServices");
@@ -353,42 +388,42 @@ namespace Cognitivo.Project
                 {
                     using (SalesBudgetDB db = new SalesBudgetDB())
                     {
-                    sales_budget sales_budget = new sales_budget();
-                    sales_budget.IsSelected = true;
-                    sales_budget.State = EntityState.Added;
+                        sales_budget sales_budget = new sales_budget();
+                        sales_budget.IsSelected = true;
+                        sales_budget.State = EntityState.Added;
 
-                    sales_budget.id_contact = contact.id_contact;
-                    sales_budget.contact = db.contacts.Where(x => x.id_contact == contact.id_contact).FirstOrDefault();
+                        sales_budget.id_contact = contact.id_contact;
+                        sales_budget.contact = db.contacts.Where(x => x.id_contact == contact.id_contact).FirstOrDefault();
 
-                    if (_settings.branch_ID > 0)
-                        sales_budget.id_branch = _settings.branch_ID;
-                    else
-                        sales_budget.id_branch = db.app_branch.Where(a => a.is_active == true && a.id_company == _settings.company_ID).FirstOrDefault().id_branch;
-                    
-                    sales_budget.id_condition = app_condition.id_condition;
-                    sales_budget.id_contract = app_contract.id_contract;
-                    sales_budget.id_currencyfx = project_costing.id_currencyfx;
-                    sales_budget.number = txtBudgetNumber.Text;
+                        if (_settings.branch_ID > 0)
+                            sales_budget.id_branch = _settings.branch_ID;
+                        else
+                            sales_budget.id_branch = db.app_branch.Where(a => a.is_active == true && a.id_company == _settings.company_ID).FirstOrDefault().id_branch;
 
-                    foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
-                    {
-                        sales_budget_detail sales_budget_detail = new sales_budget_detail();
-                        sales_budget_detail.sales_budget = sales_budget;
-                        sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_variable.id_item).FirstOrDefault();
-                        sales_budget_detail.id_item = project_event_variable.id_item;
-                        sales_budget_detail.quantity = ((project_event_variable.adult_consumption ) + (project_event_variable.child_consumption));
-                        sales_budget.sales_budget_detail.Add(sales_budget_detail);
-                    }
+                        sales_budget.id_condition = app_condition.id_condition;
+                        sales_budget.id_contract = app_contract.id_contract;
+                        sales_budget.id_currencyfx = project_costing.id_currencyfx;
+                        sales_budget.number = txtBudgetNumber.Text;
 
-                    foreach (project_event_fixed project_event_fixed in project_costing.project_event_fixed.Where(a => a.is_included == true))
-                    {
-                        sales_budget_detail sales_budget_detail = new sales_budget_detail();
-                        sales_budget_detail.sales_budget = sales_budget;
-                        sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
-                        sales_budget_detail.id_item = project_event_fixed.id_item;
-                        sales_budget_detail.quantity = project_event_fixed.consumption;
-                        sales_budget.sales_budget_detail.Add(sales_budget_detail);
-                    }
+                        foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
+                        {
+                            sales_budget_detail sales_budget_detail = new sales_budget_detail();
+                            sales_budget_detail.sales_budget = sales_budget;
+                            sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_variable.id_item).FirstOrDefault();
+                            sales_budget_detail.id_item = project_event_variable.id_item;
+                            sales_budget_detail.quantity = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
+                            sales_budget.sales_budget_detail.Add(sales_budget_detail);
+                        }
+
+                        foreach (project_event_fixed project_event_fixed in project_costing.project_event_fixed.Where(a => a.is_included == true))
+                        {
+                            sales_budget_detail sales_budget_detail = new sales_budget_detail();
+                            sales_budget_detail.sales_budget = sales_budget;
+                            sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
+                            sales_budget_detail.id_item = project_event_fixed.id_item;
+                            sales_budget_detail.quantity = project_event_fixed.consumption;
+                            sales_budget.sales_budget_detail.Add(sales_budget_detail);
+                        }
 
                         sales_budget_detail sales_budget_detail_hall = new sales_budget_detail();
                         sales_budget_detail_hall.sales_budget = sales_budget;
@@ -430,7 +465,7 @@ namespace Cognitivo.Project
         }
         #endregion
 
-        public decimal get_Price(contact contact, int id_currencyfx, item item)
+        public decimal get_Price(contact contact, int id_currencyfx, item item, entity.App.Modules Module)
         {
             if (item != null && contact != null)
             {
@@ -462,17 +497,17 @@ namespace Cognitivo.Project
                 if (item_price != null)
                 {
                     return item_price.valuewithVAT;
-                  //  return Currency.convert_Value(item_price_value, id_currencyfx, entity.App.Modules.Sales);
+                    //  return Currency.convert_Value(item_price_value, id_currencyfx, entity.App.Modules.Sales);
                 }
                 else
                 {
                     decimal item_price_value = 0;
-                    decimal currencyfx = Currency.get_specificRate(id_currencyfx, entity.App.Names.SalesInvoice);
+                    //decimal currencyfx = Currency.get_specificRate(id_currencyfx, application);
                     if (item.item_price.Where(x => x.id_price_list == id_priceList) != null && item.item_price.Where(x => x.id_price_list == id_priceList).Count() > 0)
                     {
                         item_price_value = item.item_price.Where(x => x.id_price_list == id_priceList).FirstOrDefault().valuewithVAT;
                     }
-                    return Currency.convert_Value(item_price_value, id_currencyfx, entity.App.Modules.Sales);
+                    return Currency.convert_Value(item_price_value, id_currencyfx, Module);
                 }
             }
             return 0;
@@ -500,143 +535,89 @@ namespace Cognitivo.Project
         {
             //using (ProjectDB db = new ProjectDB())
             //{
-                project project = new project();
+            project project = new project();
 
-                contact contact = (contact)contactComboBox.Data;
-                project.id_contact = contact.id_contact;
+            contact contact = (contact)contactComboBox.Data;
+            project.id_contact = contact.id_contact;
 
-                project.IsSelected = true;
-                project.id_branch = _settings.branch_ID;
-                project.name = txtName.Text;
-                project.est_start_date = timestampCalendar.SelectedDate;
-                project.est_end_date = timestampCalendar.SelectedDate;
-                project.priority = 0;
+            project.IsSelected = true;
+            project.id_branch = _settings.branch_ID;
+            project.name = txtName.Text;
+            project.est_start_date = timestampCalendar.SelectedDate;
+            project.est_end_date = timestampCalendar.SelectedDate;
+            project.priority = 0;
 
-                project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
-                if (project_costing != null)
+            project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
+            if (project_costing != null)
+            {
+                foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
                 {
-                    foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
+                    item item = project_event_variable.item;
+                    if (item != null && item.id_item > 0 && item.is_autorecepie)
                     {
-                        item item = project_event_variable.item;
-                        if (item != null && item.id_item > 0 && item.is_autorecepie)
+                        project_task project_task = new project_task();
+                        project_task.status = Status.Project.Pending;
+                        //project_task.project = project;
+                        project_task.id_item = project_event_variable.id_item;
+                        project_task.item_description = project_event_variable.item.name;
+                        project_task.code = project_event_variable.item.code;
+                        project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Purchase);
+
+
+                        foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                         {
-                            project_task project_task = new project_task();
+                            project_task Subproject_task = new project_task();
+
+                            Subproject_task.code = item_recepie_detail.item.code;
+                            Subproject_task.item_description = item_recepie_detail.item.name;
+                            Subproject_task.id_item = item_recepie_detail.item.id_item;
+                            Subproject_task.items = item_recepie_detail.item;
                             project_task.status = Status.Project.Pending;
-                            //project_task.project = project;
-                            project_task.id_item = project_event_variable.id_item;
-                            project_task.item_description = project_event_variable.item.name;
-                            project_task.code = project_event_variable.item.code;
-                            project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item);
-                            
-
-                           foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
-                           {
-                                project_task Subproject_task = new project_task();
-
-                                Subproject_task.code = item_recepie_detail.item.code;
-                                Subproject_task.item_description = item_recepie_detail.item.name;
-                                Subproject_task.id_item = item_recepie_detail.item.id_item;
-                                Subproject_task.items = item_recepie_detail.item;
-                                Subproject_task.RaisePropertyChanged("item");
-                                if (item_recepie_detail.quantity > 0)
-                                {
-                                    Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
-                                }
-                                project_task.child.Add(Subproject_task);
-                           }
-
-                           project.project_task.Add(project_task);
-                        }
-                        else
-                        {
-                            project_task project_task = new project_task();
-                            project_task.status = Status.Project.Pending;
-                            //project_task.project = project;
-                            project_task.id_item = project_event_variable.id_item;
-                            project_task.item_description = project_event_variable.item.name;
-                            project_task.code = project_event_variable.item.code;
-                            project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item);
-                            project.project_task.Add(project_task);
-
-
-
-                        }
-                       
-                    }
-
-                    foreach (project_event_fixed per_event_service in project_costing.project_event_fixed.Where(a => a.is_included == true))
-                    {
-                        item item = per_event_service.item;
-                        if (item != null && item.id_item > 0 && item.is_autorecepie)
-                        {
-                            project_task project_task = new project_task();
-                            project_task.status = Status.Project.Pending;
-                            //project_task.project = project;
-                            project_task.id_item = per_event_service.id_item;
-                            project_task.item_description = per_event_service.item.name;
-                            project_task.code = per_event_service.item.code;
-                            project_task.quantity_est = per_event_service.consumption;
-                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item);
-
-
-                            foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                            Subproject_task.RaisePropertyChanged("item");
+                            if (item_recepie_detail.quantity > 0)
                             {
-                                project_task Subproject_task = new project_task();
-
-                                Subproject_task.code = item_recepie_detail.item.name;
-                                Subproject_task.item_description = item_recepie_detail.item.name;
-                                Subproject_task.id_item = item_recepie_detail.item.id_item;
-                                Subproject_task.items = item_recepie_detail.item;
-                                Subproject_task.RaisePropertyChanged("item");
-                                if (item_recepie_detail.quantity > 0)
-                                {
-                                    Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
-                                }
-
-
-
-                                project_task.child.Add(Subproject_task);
+                                Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
                             }
-                            project.project_task.Add(project_task);
-
-
+                            project_task.child.Add(Subproject_task);
                         }
-                        else
-                        {
-                            project_task project_task = new project_task();
-                            project_task.status = Status.Project.Pending;
-                            //project_task.project = project;
-                            project_task.id_item = per_event_service.id_item;
-                            project_task.item_description = per_event_service.item.name;
-                            project_task.code = per_event_service.item.code;
-                            project_task.quantity_est = per_event_service.consumption;
-                            project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item);
-                            project.project_task.Add(project_task);
 
-
-
-                        }
-                       
-                                      
+                        project.project_task.Add(project_task);
                     }
-                    item _item = project_costing.item;
-                    if (_item != null && _item.id_item > 0 && _item.is_autorecepie)
+                    else
                     {
-                        project_task _project_task = new project_task();
-                        _project_task.status = Status.Project.Pending;
-                        //_project_task.project = project;
-                        _project_task.id_item = project_costing.id_item;
-                        _project_task.item_description = project_costing.item.name;
-                        _project_task.code = project_costing.item.code;
-                        _project_task.quantity_est = 1;
-                        _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item);
+                        project_task project_task = new project_task();
+                        project_task.status = Status.Project.Pending;
+                        //project_task.project = project;
+                        project_task.id_item = project_event_variable.id_item;
+                        project_task.item_description = project_event_variable.item.name;
+                        project_task.code = project_event_variable.item.code;
+                        project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Purchase);
+                        project.project_task.Add(project_task);
 
 
 
+                    }
 
-                        foreach (item_recepie_detail item_recepie_detail in _item.item_recepie.FirstOrDefault().item_recepie_detail)
+                }
+
+                foreach (project_event_fixed per_event_service in project_costing.project_event_fixed.Where(a => a.is_included == true))
+                {
+                    item item = per_event_service.item;
+                    if (item != null && item.id_item > 0 && item.is_autorecepie)
+                    {
+                        project_task project_task = new project_task();
+                        project_task.status = Status.Project.Pending;
+                        //project_task.project = project;
+                        project_task.id_item = per_event_service.id_item;
+                        project_task.item_description = per_event_service.item.name;
+                        project_task.code = per_event_service.item.code;
+                        project_task.quantity_est = per_event_service.consumption;
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Purchase);
+
+
+                        foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                         {
                             project_task Subproject_task = new project_task();
 
@@ -647,48 +628,103 @@ namespace Cognitivo.Project
                             Subproject_task.RaisePropertyChanged("item");
                             if (item_recepie_detail.quantity > 0)
                             {
-                                Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * _project_task.quantity_est;
+                                Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
                             }
 
 
 
-                            _project_task.child.Add(Subproject_task);
+                            project_task.child.Add(Subproject_task);
                         }
-                        project.project_task.Add(_project_task);
+                        project.project_task.Add(project_task);
 
 
                     }
                     else
                     {
-                        project_task _project_task = new project_task();
-                        _project_task.status = Status.Project.Pending;
-                        //_project_task.project = project;
-                        _project_task.id_item = project_costing.id_item;
-                        _project_task.item_description = project_costing.item.name;
-                        _project_task.code = project_costing.item.code;
-                        _project_task.quantity_est = 1;
-                        _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item);
-                        project.project_task.Add(_project_task);
+                        project_task project_task = new project_task();
+                        project_task.status = Status.Project.Pending;
+                        //project_task.project = project;
+                        project_task.id_item = per_event_service.id_item;
+                        project_task.item_description = per_event_service.item.name;
+                        project_task.code = per_event_service.item.code;
+                        project_task.quantity_est = per_event_service.consumption;
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Purchase);
+                        project.project_task.Add(project_task);
 
 
 
                     }
 
-                  
 
-                    EventDB.projects.Add(project);
-                    EventDB.SaveChanges();
                 }
+                item _item = project_costing.item;
+                if (_item != null && _item.id_item > 0 && _item.is_autorecepie)
+                {
+                    project_task _project_task = new project_task();
+                    _project_task.status = Status.Project.Pending;
+                    //_project_task.project = project;
+                    _project_task.id_item = project_costing.id_item;
+                    _project_task.item_description = project_costing.item.name;
+                    _project_task.code = project_costing.item.code;
+                    _project_task.quantity_est = 1;
+                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Purchase);
+
+
+
+
+                    foreach (item_recepie_detail item_recepie_detail in _item.item_recepie.FirstOrDefault().item_recepie_detail)
+                    {
+                        project_task Subproject_task = new project_task();
+
+                        Subproject_task.code = item_recepie_detail.item.name;
+                        Subproject_task.item_description = item_recepie_detail.item.name;
+                        Subproject_task.id_item = item_recepie_detail.item.id_item;
+                        Subproject_task.items = item_recepie_detail.item;
+                        Subproject_task.RaisePropertyChanged("item");
+                        if (item_recepie_detail.quantity > 0)
+                        {
+                            Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * _project_task.quantity_est;
+                        }
+
+
+
+                        _project_task.child.Add(Subproject_task);
+                    }
+                    project.project_task.Add(_project_task);
+
+
+                }
+                else
+                {
+                    project_task _project_task = new project_task();
+                    _project_task.status = Status.Project.Pending;
+                    //_project_task.project = project;
+                    _project_task.id_item = project_costing.id_item;
+                    _project_task.item_description = project_costing.item.name;
+                    _project_task.code = project_costing.item.code;
+                    _project_task.quantity_est = 1;
+                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Purchase);
+                    project.project_task.Add(_project_task);
+
+
+
+                }
+
+
+
+                EventDB.projects.Add(project);
+                EventDB.SaveChanges();
+            }
             //}
         }
 
         private void contactComboBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key==Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 contactComboBox._focusgrid = false;
                 contactComboBox.Text = ((contact)contactComboBox.Data).name;
-                contact contact=(contact)contactComboBox.Data;
+                contact contact = (contact)contactComboBox.Data;
                 get_ActiveRateXContact(ref contact);
             }
         }
@@ -708,7 +744,7 @@ namespace Cognitivo.Project
                 app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
             if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
             {
-                cbxCurrency.SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); 
+                cbxCurrency.SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
             }
             else
             {
@@ -725,11 +761,18 @@ namespace Cognitivo.Project
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
-          
+
 
             EstimateCost();
         }
+        public class Event
+        {
+            public string code { get; set; }
+            public string description { get; set; }
+            public decimal Quantity { get; set; }
+            public decimal UnitPrice { get; set; }
+            public decimal SubTotal { get; set; }
+        }
 
-       
     }
 }

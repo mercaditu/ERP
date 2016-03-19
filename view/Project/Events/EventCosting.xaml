@@ -266,6 +266,18 @@
                         </TabControl>
                     </Grid>
                 </TabItem>
+                <TabItem Header="{lex:Loc Order}">
+                    <DataGrid x:Name="dgvorder" Style="{StaticResource detail_Datagrid}"  IsReadOnly="True"
+                              >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="code"/>
+                            <DataGridTextColumn Binding="{Binding description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="description"/>
+                            <DataGridTextColumn Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Quantity"/>
+                            <DataGridTextColumn Binding="{Binding UnitPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="UnitPrice"/>
+                            <DataGridTextColumn Binding="{Binding SubTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="SubTotal"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
             </TabControl>
 
             <Grid Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Background="{StaticResource AccentColor_Introvert}">

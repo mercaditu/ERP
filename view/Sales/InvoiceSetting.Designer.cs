@@ -192,5 +192,17 @@ namespace Cognitivo.Sales {
                 this["filter_Branch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DiscountStock {
+            get {
+                return ((bool)(this["DiscountStock"]));
+            }
+            set {
+                this["DiscountStock"] = value;
+            }
+        }
     }
 }

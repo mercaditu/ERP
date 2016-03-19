@@ -160,16 +160,25 @@ namespace Cognitivo.Sales
 
         private void btnNew_Click(object sender)
         {
-            InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
+            try
+            {
+                InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
 
-            sales_invoice sales_invoice = SalesInvoiceDB.New();
-            sales_invoice.trans_date = DateTime.Now.AddDays(_pref_SalesInvoice.TransDate_OffSet);
-            sales_invoice.State = EntityState.Added;
-            cbxCurrency.get_DefaultCurrencyActiveRate();
+                sales_invoice sales_invoice = SalesInvoiceDB.New();
+                sales_invoice.trans_date = DateTime.Now.AddDays(_pref_SalesInvoice.TransDate_OffSet);
+                sales_invoice.State = EntityState.Added;
+                cbxCurrency.get_DefaultCurrencyActiveRate();
 
-            SalesInvoiceDB.Entry(sales_invoice).State = EntityState.Added;
-            sales_invoiceViewSource.View.Refresh();
-            sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
+                SalesInvoiceDB.Entry(sales_invoice).State = EntityState.Added;
+                //sales_invoiceViewSource.View.Refresh();
+                sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
+            }
+            catch (Exception ex)
+            {
+                
+                throw ex;
+            }
+            
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -219,7 +228,8 @@ namespace Cognitivo.Sales
 
         private void btnApprove_Click(object sender)
         {
-            SalesInvoiceDB.Approve();
+            InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
+            SalesInvoiceDB.Approve(_pref_SalesInvoice.DiscountStock);
             filter_sales();
         }
 

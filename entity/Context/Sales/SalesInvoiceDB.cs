@@ -103,7 +103,7 @@ namespace entity
             }
         }
 
-        public void Approve()
+        public void Approve(bool IsDiscountStock)
         {
             foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
@@ -132,8 +132,8 @@ namespace entity
                     {
                         payment_schedual.AddRange(payment_schedualList);
                     }
-                    //if (IsDiscountStock)
-                    //{
+                    if (IsDiscountStock)
+                    {
 
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
@@ -143,7 +143,7 @@ namespace entity
                         {
                             item_movement.AddRange(item_movementList);
                         }
-                   // }
+                    }
 
                   
 

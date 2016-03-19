@@ -14,7 +14,7 @@ namespace entity
             sales_packing sales_packing = new sales_packing();
             sales_packing.State = EntityState.Added;
             sales_packing.id_range = Brillo.GetDefault.Range(App.Names.PackingList);
-            sales_packing.State = System.Data.Entity.EntityState.Added;
+          
             sales_packing.IsSelected = true;
 
             return sales_packing;

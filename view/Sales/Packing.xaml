@@ -21,8 +21,8 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <cntrl:toolIcon icoName="New" imgSource="+"/>
-            <cntrl:toolIcon icoName="Cancel" imgSource="c"/>
+            <cntrl:toolIcon icoName="New" imgSource="+" Click="toolIcon_Click"/>
+            <cntrl:toolIcon icoName="Cancel" imgSource="c" Click="toolIcon_Click_1"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
             <Label Style="{StaticResource input_label}" Content="Branch" FontSize="12"/>
@@ -36,7 +36,7 @@
             <cntrl:SearchableTextbox x:Name="InvocieComboBox"  KeyDown="set_InvoicePrefKeyStroke" MouseDoubleClick="set_InvoicePref"
                                                  CollectionViewSource="{StaticResource payment_schedualViewSource}"
                                                  IsDisplayed="True" KeyUp="InvocieComboBox_KeyUp"
-                                                 Data="{Binding sales_invocie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                 Data="{Binding sales_invoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <cntrl:SearchableTextbox.Columns>
                     <cntrl:SmartBoxColumn Header="Number" ForProperty="sales_invoice.number" Binding="{Binding sales_invoice.number, Mode=Default}" EnableSearch="True"/>
                     <cntrl:SmartBoxColumn Header="Name" ForProperty="sales_invoice.contact.name" Binding="{Binding sales_invoice.contact.name, Mode=Default}" EnableSearch="True"/>
@@ -47,7 +47,7 @@
         </StackPanel>
         <DataGrid x:Name="dgvItem" Grid.Row="2" Margin="32,8" AutoGenerateColumns="False" LoadingRowDetails="dgvItem_LoadingRowDetails">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Item" Binding="{Binding item.name, Mode=Default}" />
+                <DataGridTextColumn Header="Item" Binding="{Binding Name, Mode=Default}" />
                 <DataGridTextColumn Header="quantity" Binding="{Binding quantity, Mode=Default}" />
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>

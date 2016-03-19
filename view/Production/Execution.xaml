@@ -1,5 +1,6 @@
 ﻿<Page x:Class="Cognitivo.Production.Execution" Title="{lex:Loc ProductionExecution}" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+     
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
@@ -148,6 +149,7 @@
                                                     />
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
+
                                 <TreeView x:Name="treeProduct" ItemsSource="{Binding}" SelectedItemChanged="treeProduct_SelectedItemChanged" 
                                           IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                                     <TreeView.ItemContainerStyle>

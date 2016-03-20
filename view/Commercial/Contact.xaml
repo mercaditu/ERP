@@ -59,9 +59,9 @@
                  ItemsSource="{Binding Source={StaticResource contactViewSource}, IsAsync=True}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    <cntrl:navList recordCode="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                    recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                   recordSecondaryName="{Binding alias, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   recordSecondaryName="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>

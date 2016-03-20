@@ -198,14 +198,17 @@ namespace Cognitivo.Commercial
                         {
                             name = contact.name.ToLower();
                         }
+
                         if (contact.code != null)
                         {
                             code = contact.code.ToLower();
                         }
+                        
                         if (contact.gov_code != null)
                         {
                             gov_code = contact.gov_code.ToLower();
                         }
+
                         if (name.Contains(query.ToLower())
                             || code.Contains(query.ToLower())
                             || gov_code.Contains(query.ToLower()))

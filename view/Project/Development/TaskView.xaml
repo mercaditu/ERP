@@ -87,7 +87,7 @@
                                              TaskName="{Binding item_description}" Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
-                <TreeView x:Name="treeProject" Margin="0,70,0,-13" ItemsSource="{Binding}" 
+                <TreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}" 
                           VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
                           ScrollViewer.CanContentScroll="True" SelectedItemChanged="treeProject_SelectedItemChanged"  >
                     <TreeView.ItemContainerStyle>
@@ -112,45 +112,23 @@
                 <TextBlock Text="{Binding name}" Margin="0,-10,0,8"
                            Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
 
-                <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="16" Margin="16,8">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Margin="4">
-                        <Label Content="{lex:Loc User}" VerticalAlignment="Center"/>
-                        <cntrl:toolIcon Click="Label_MouseDown" imgSource="j" icoName="{lex:Loc Approve}" VerticalAlignment="Center"/>
-                        <cntrl:toolIcon Click="Label_MouseDown_1" imgSource="k" icoName="{lex:Loc Annul}" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-
-                <Grid>
-                    <Rectangle Margin="6" Height="1" Fill="Gainsboro"/>
-                    <Border CornerRadius="10" Background="White" HorizontalAlignment="Center">
-                        <Border.Effect>
-                            <DropShadowEffect ShadowDepth="0"/>
-                        </Border.Effect>
-                        <StackPanel Orientation="Horizontal">
-                            <Label MouseDown="btnAddParentTask_Click" ToolTip="{lex:Loc NewParentTask}"
-                                   Style="{StaticResource btn_Label}" Foreground="Purple" Content="+" Margin="10,4" FontSize="15"/>
-                            <Label MouseDown="btnNewTask_Click" ToolTip="{lex:Loc New}"
-                                   Style="{StaticResource btn_Label}" Content="+" Margin="10,4"/>
-                            <Label MouseDown="btnEditTask_Click" ToolTip="{lex:Loc Edit}" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
-                                   Style="{StaticResource btn_Label}" Content="e" Margin="10,4"/>
-                            <Label MouseDown="btnSaveTask_Click" ToolTip="{lex:Loc Save}" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
-                                   Style="{StaticResource btn_Label}" Content="s" Margin="10,4"/>
-                            <Rectangle Width="1" Fill="Gainsboro" Margin="4"/>
-                            <Label MouseDown="btnDeleteTask_Click" ToolTip="{lex:Loc Delete}"
-                                   Style="{StaticResource btn_Label}" Content="d" Margin="10,4"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
+                <cntrl:toolBar_Mini appName="ActivityPlan" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    btnNew_Click="btnNewTask_Click"
+                    btnEdit_Click="btnEditTask_Click"
+                    btnSave_Click="btnSaveTask_Click"
+                    btnDelete_Click="btnDeleteTask_Click"
+                    btnApprove_Click="btnApprove_Click"
+                    btnAnull_Click="btnAnull_Click"/>
+                
                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
                     <StackPanel x:Name="stpcode" IsEnabled="False">
                         <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
                         <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}" 
-IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" SelectedValue="{Binding items.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-							SelectionChanged="cbxItemType_SelectionChanged"/>
+                                  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" SelectedValue="{Binding items.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+							      SelectionChanged="cbxItemType_SelectionChanged"/>
                         <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                         <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" Style="{StaticResource input_textbox}"/>
+                                 IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
                         <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding items.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc description}" Style="{StaticResource input_label}"/>

@@ -67,41 +67,52 @@ namespace cntrl
 
         private static void OnStatusChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            string s = (string)e.NewValue;
+            string s = (string) e.NewValue;
             toolBar_Mini toolBar_Mini = sender as toolBar_Mini;
             toolBar_Mini.OnStatusPropertyChanged(s);
         }
 
         protected virtual void OnStatusPropertyChanged(string Status)
         {
-            if (Status == "Pending")
+            if (Status != null)
             {
-                //IsEditable = false;
-                Edit_IsEnabled = true;
-                Delete_IsEnabled = true;
-                Approve_IsEnabled = true;
-                Annul_IsEnabled = false;
-            }
-            else if (Status == "Approved")
-            {
-                IsEditable = false;
-                Edit_IsEnabled = false;
-                Delete_IsEnabled = false;
-                Approve_IsEnabled = false;
-                Annul_IsEnabled = true;
-            }
-            else
-            {
-                IsEditable = false;
-                Edit_IsEnabled = true;
-                Delete_IsEnabled = false;
-                Approve_IsEnabled = true;
-                Annul_IsEnabled = false;
+                if (Status.Contains("Pending"))
+                {
+                    Edit_IsEnabled = true;
+                    Delete_IsEnabled = true;
+                    Approve_IsEnabled = true;
+                    Annul_IsEnabled = false;
+                }
+                else if (Status.Contains("Approved"))
+                {
+                    IsEditable = false;
+                    Edit_IsEnabled = false;
+                    Delete_IsEnabled = false;
+                    Approve_IsEnabled = false;
+                    Annul_IsEnabled = true;
+                }
+                else if (Status.Contains("InProcess"))
+                {
+                    IsEditable = false;
+                    Edit_IsEnabled = false;
+                    Delete_IsEnabled = false;
+                    Approve_IsEnabled = false;
+                    Annul_IsEnabled = true;
+                }
+                else
+                {
+                    IsEditable = false;
+                    Edit_IsEnabled = true;
+                    Delete_IsEnabled = false;
+                    Approve_IsEnabled = true;
+                    Annul_IsEnabled = false;
+                }
             }
         }
         #endregion
 
         #region "State Properties & Events"
+
         public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(System.Data.Entity.EntityState), typeof(toolBar_Mini), 
             new PropertyMetadata(OnStateChangeCallBack));
         public System.Data.Entity.EntityState State
@@ -130,28 +141,6 @@ namespace cntrl
                 Edit_IsEnabled = true;
             }
         }
-        #endregion
-
-        #region "Progress Bar Properties"
-        public bool IsIndeterminate { get; set; }
-        public int Maximum { get; set; }
-        public int Value { get; set; }
-
-        public Visibility ProgressBar
-        {
-            get
-            {
-                return _ProgressBar;
-            }
-            set
-            {
-                if (value != _ProgressBar)
-                {
-                    _ProgressBar = value;
-                }
-            }
-        }
-        private Visibility _ProgressBar = Visibility.Collapsed;
         #endregion
 
         public App.Names appName { get; set; }

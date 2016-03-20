@@ -160,7 +160,7 @@
                     <RadioButton x:Name="rbtnVATasset" Content="{lex:Loc VAT}" Style="{StaticResource input_radiobutton}" Margin="5"  
                                         Tag="6" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                     <StackPanel Orientation="Horizontal" Margin="23,0" 
-						                Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnVAT}">
+						                Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnVATasset}">
                         <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"
                                           IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVAT, Converter={StaticResource TrueFalse}}"
                                           ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
@@ -250,11 +250,11 @@
                         <CheckBox x:Name="chbxGenericAdminExpenses" Content="{lex:Loc Generic}" Style="{StaticResource input_checkbox}"
                                           IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-
-                    <RadioButton x:Name="rbtnDepreciation" Content="{lex:Loc Depreciation}" Style="{StaticResource input_radiobutton}" Margin="5" 
-                                     Tag="18" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
+                    
+                    <RadioButton x:Name="rbtnServiceIncome" Content="{lex:Loc Service}" Style="{StaticResource input_radiobutton}" Margin="5" 
+                                 Tag="16" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                     <StackPanel Orientation="Horizontal" Margin="23,0" 
-						    Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnDepreciation}">
+						        Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnServiceIncome}">
 
                         <CheckBox x:Name="chkGenricDepreciation" Content="Generic" Style="{StaticResource input_checkbox}"
                                       IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -267,6 +267,11 @@
                     <Label Content="{lex:Loc Income}" Style="{StaticResource H3}"/>
                     <RadioButton x:Name="rbtnRevenue" Content="{lex:Loc Revenue}" Style="{StaticResource input_radiobutton}" Margin="5" 
                                              Tag="13" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
+                    
+                    <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"
+							              ItemsSource="{Binding Source={StaticResource item_tagViewSource}}"
+                                          SelectedValuePath="id_tag" DisplayMemberPath="name"
+                                          SelectedValue="{Binding id_tag, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

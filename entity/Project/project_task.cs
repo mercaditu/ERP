@@ -2,10 +2,8 @@ namespace entity
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Text;
     using System.Linq;
 
     public partial class project_task : Audit
@@ -165,6 +163,7 @@ namespace entity
 
             }
         }
+
         item _items;
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
@@ -184,6 +183,7 @@ namespace entity
             }
         }
         private ICollection<project_task> _child;
+        
         //TreeView Heirarchy Fields
         public virtual project_task parent
         {

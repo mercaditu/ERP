@@ -228,6 +228,9 @@
   <data name="Behavior" xml:space="preserve">
     <value>Behavior</value>
   </data>
+  <data name="BelongsTo" xml:space="preserve">
+    <value>Belongs To</value>
+  </data>
   <data name="BloodType" xml:space="preserve">
     <value>Blood Type</value>
   </data>
@@ -438,6 +441,9 @@
   <data name="desc_ContactRole" xml:space="preserve">
     <value>Define roles and rights for our contacts</value>
   </data>
+  <data name="desc_contactTag" xml:space="preserve">
+    <value>Tags help search &amp; sort contacts quickly</value>
+  </data>
   <data name="desc_Currency" xml:space="preserve">
     <value>Allows transactions in different currencies and rates</value>
   </data>
@@ -489,6 +495,9 @@
   <data name="DifferenceinDate" xml:space="preserve">
     <value>Difference in Date</value>
   </data>
+  <data name="Discount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
   <data name="Document" xml:space="preserve">
     <value>Document</value>
   </data>
@@ -530,6 +539,9 @@
   </data>
   <data name="Enter" xml:space="preserve">
     <value>Enter</value>
+  </data>
+  <data name="Equity" xml:space="preserve">
+    <value>Equity</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -612,6 +624,9 @@
   <data name="Hello" xml:space="preserve">
     <value>Hello</value>
   </data>
+  <data name="HourCoeficient" xml:space="preserve">
+    <value>Hour Coeficient</value>
+  </data>
   <data name="HumanResources" xml:space="preserve">
     <value>Human Resources</value>
   </data>
@@ -626,6 +641,9 @@
   </data>
   <data name="Inactivate" xml:space="preserve">
     <value>Inactivate</value>
+  </data>
+  <data name="Incomes" xml:space="preserve">
+    <value>Incomes</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
     <value>Incoterm</value>
@@ -876,6 +894,9 @@
   <data name="ProjectExecution" xml:space="preserve">
     <value>Project Execution</value>
   </data>
+  <data name="ProjectFinance" xml:space="preserve">
+    <value>Project Finance</value>
+  </data>
   <data name="Promoted" xml:space="preserve">
     <value>Promoted</value>
   </data>
@@ -945,11 +966,17 @@
   <data name="Receipt" xml:space="preserve">
     <value>Receipt</value>
   </data>
+  <data name="Receivable" xml:space="preserve">
+    <value>Receivable</value>
+  </data>
   <data name="RecievePayment" xml:space="preserve">
     <value>Recieve Payment</value>
   </data>
   <data name="Recipe" xml:space="preserve">
     <value>Recipe</value>
+  </data>
+  <data name="Refinance" xml:space="preserve">
+    <value>Refinance</value>
   </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>Related To</value>

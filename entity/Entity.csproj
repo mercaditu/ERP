@@ -206,6 +206,7 @@
     <Compile Include="Context\Product\ProductTransferDB.cs" />
     <Compile Include="Context\Project\Event\EventDB.cs" />
     <Compile Include="Context\Project\Event\TemplateDB.cs" />
+    <Compile Include="Context\Project\ProjectTaskDB.cs" />
     <Compile Include="Context\Project\ProjectDB.cs" />
     <Compile Include="Context\Project\ProjectTemplateDB.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />

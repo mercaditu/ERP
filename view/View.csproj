@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>329</ApplicationRevision>
+    <ApplicationRevision>330</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -406,8 +406,8 @@
     <Compile Include="Project\Development\ProjectExecution.xaml.cs">
       <DependentUpon>ProjectExecution.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Project\Development\ProjectInvoice.xaml.cs">
-      <DependentUpon>ProjectInvoice.xaml</DependentUpon>
+    <Compile Include="Project\Development\ProjectFinance.xaml.cs">
+      <DependentUpon>ProjectFinance.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project\Events\EventCosting.xaml.cs">
       <DependentUpon>EventCosting.xaml</DependentUpon>
@@ -1348,7 +1348,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Project\Development\ProjectInvoice.xaml">
+    <Page Include="Project\Development\ProjectFinance.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

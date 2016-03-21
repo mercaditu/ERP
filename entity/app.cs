@@ -113,7 +113,7 @@ namespace entity
             Inventory = 26,
             [LocalizedDescription("Transfer")]
             Transfer = 30,
-            [LocalizedDescription("ItemReceipe")]
+            [LocalizedDescription("Receipe")]
             Receipe = 32,
             [LocalizedDescription("Stock")]
             Stock = 41,
@@ -145,14 +145,12 @@ namespace entity
             ProjectType = 24,
             [LocalizedDescription("Logistics")]
             Logistics = 25,
-            //[LocalizedDescription("ProjectLogistics")]
-            //EventType = 39,
-            [LocalizedDescription("EventCost")]
-            EventCost = 39,
+            [LocalizedDescription("EventManagement")]
+            EventManagement = 39,
             [LocalizedDescription("PrintingPresstemplate")]
             PrintingPresstemplate = 40,
-            [LocalizedDescription("ProjectInvoice")]
-            ProjectInvoice = 53,
+            [LocalizedDescription("ProjectFinance")]
+            ProjectFinance = 53,
 
             //HR
             [LocalizedDescription("Employee")]

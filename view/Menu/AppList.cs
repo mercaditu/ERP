@@ -102,7 +102,7 @@ namespace Cognitivo.Menu
 
             //Projects Event
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Form, "Project.EventType", entity.App.Names.Template, "ProjectCategory");
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transactions, "Project.EventCosting", entity.App.Names.EventCost, "ProjectTaskWizard");
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transactions, "Project.EventCosting", entity.App.Names.EventManagement, "ProjectTaskWizard");
 
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transactions, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transactions, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics");
@@ -114,7 +114,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectInvoice", entity.App.Names.ProjectInvoice, "");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectInvoice", entity.App.Names.ProjectFinance, "");
 
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Form, "Production.Line", entity.App.Names.Line, "");

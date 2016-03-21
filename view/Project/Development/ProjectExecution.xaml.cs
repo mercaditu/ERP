@@ -13,7 +13,7 @@ namespace Cognitivo.Project
     {
         dbContext dbContext = new dbContext();
         CollectionViewSource project_taskViewSource, projectViewSource;
-        //entity.Properties.Settings _Setting = new entity.Properties.Settings();
+
         public List<project_task> project_task { get; set; }
         public List<project_task> project_main_task { get; set; }
 

@@ -81,13 +81,13 @@
                               ItemsSource="{Binding Source={StaticResource security_rolesecurity_curdViewSource}}" Grid.Row="1" CanUserDeleteRows="False" CanUserAddRows="False"
                               RowDetailsVisibilityMode="VisibleWhenSelected" FontSize="16" SelectionUnit="Cell">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding id_application, Converter={StaticResource Localized}}" 
-                                                Header="{lex:Loc Cognitivo:local:Application}" 
-                                                IsReadOnly="True" Width="*"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_read, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     Header="View" Width="SizeToHeader"/>
+                            <DataGridTextColumn Binding="{Binding id_application, Converter={StaticResource Localized}}" 
+                                                Header="{lex:Loc Cognitivo:local:Application}" FontWeight="Bold"
+                                                IsReadOnly="True" Width="*"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_create, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -97,21 +97,17 @@
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     Header="{lex:Loc Cognitivo:local:Edit}" Width="SizeToHeader"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_delete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                                      ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     Header="{lex:Loc Cognitivo:local:Delete}" Width="SizeToHeader"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_approve, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                                      ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     Header="{lex:Loc Cognitivo:local:Approve}" Width="SizeToHeader"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_annul, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                                      ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     Header="{lex:Loc Cognitivo:local:Annul}" Width="SizeToHeader"/>
-                            <DataGridCheckBoxColumn Binding="{Binding has_full_control, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                    Header="Full" Width="SizeToHeader"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -126,7 +122,7 @@
                             <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource security_privilageViewSource}}" 
 						                                SelectedValueBinding="{Binding id_privilage, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="name" 
-						                                SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privalge}" Width="*"/>
+						                                SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privilage}" Width="*"/>
                             <DataGridCheckBoxColumn Binding="{Binding has_privilage}" Header="{lex:Loc Cognitivo:local:Allow}" Width="SizeToHeader"/>
                             <DataGridTextColumn Binding="{Binding value_max}" Header="{lex:Loc Cognitivo:local:Value}" Width="SizeToHeader"/>
                         </DataGrid.Columns>

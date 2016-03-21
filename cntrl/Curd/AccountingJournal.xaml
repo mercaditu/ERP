@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="cntrl.Curd.AccountingJournal"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-               xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:entity="clr-namespace:entity;assembly=entity"

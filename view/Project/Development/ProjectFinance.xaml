@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Project.ProjectInvoice"
+﻿<Page x:Class="Cognitivo.Project.ProjectFinance"
      x:Name="_ProjectInvocie" Title="{lex:Loc ActivityPlan}"
        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -175,7 +175,7 @@
             </StackPanel>
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                       appName="ProjectInvoice" />
+                       appName="ProjectFinance" />
 
       
 

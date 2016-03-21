@@ -15,7 +15,7 @@ namespace Cognitivo.Project
     /// <summary>
     /// Interaction logic for ProjectInvoice.xaml
     /// </summary>
-    public partial class ProjectInvoice : Page, INotifyPropertyChanged
+    public partial class ProjectFinance : Page, INotifyPropertyChanged
     {
         SalesOrderDB SalesOrderDB = new entity.SalesOrderDB();
 
@@ -23,7 +23,7 @@ namespace Cognitivo.Project
         CollectionViewSource projectViewSource;
         entity.Properties.Settings _Setting = new entity.Properties.Settings();
         public Boolean ViewAll { get; set; }
-        public ProjectInvoice()
+        public ProjectFinance()
         {
             InitializeComponent();
         }

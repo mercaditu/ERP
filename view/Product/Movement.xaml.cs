@@ -165,36 +165,31 @@ namespace Cognitivo.Product
 
                 item_movement item_movement_origin = new item_movement();
                 item_movement_origin.debit =  item.quantity_origin;
-                item_movement_origin.credit =0;
-                item_movement_origin.id_application = global::entity.App.Names.SalesInvoice;
+                item_movement_origin.credit = 0;
+                item_movement_origin.id_application = global::entity.App.Names.Movement;
                 item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
                 item_movement_origin.transaction_id = 0;
                 item_movement_origin.status = Status.Stock.InStock;
                 item_movement_origin.trans_date = item.item_transfer.trans_date;
+                
                 if (item.item_product.id_item_product != 0)
                 {
-                    //if (ProductMovementDB.item_product.Where(x => x.id_item_product == item.item_product.id_item_product).FirstOrDefault() != null)
-                    //{
                     item_movement_origin.id_item_product = item.item_product.id_item_product;
-                    //}
                 }
 
                 ProductMovementDB.item_movement.Add(item_movement_origin);
                 item_movement item_movement_dest = new item_movement();
                 item_movement_dest.debit = 0;
-                item_movement_dest.credit =item.quantity_destination ;
-                item_movement_dest.id_application = global::entity.App.Names.PurchaseInvoice;
+                item_movement_dest.credit = item.quantity_destination;
+                item_movement_dest.id_application = global::entity.App.Names.Movement;
                 item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
                 item_movement_dest.transaction_id = 0;
                 item_movement_dest.status = Status.Stock.InStock;
                 item_movement_dest.trans_date = item.item_transfer.trans_date;
+
                 if (item.item_product.id_item_product != 0)
                 {
-                    //if (ProductMovementDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
-                    //{
                     item_movement_dest.id_item_product = item.item_product.id_item_product;
-                   // }
-
                 }
 
                 ProductMovementDB.item_movement.Add(item_movement_dest);
@@ -218,6 +213,7 @@ namespace Cognitivo.Product
         {
             insertDetail();
         }
+
         void insertDetail()
         {
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
@@ -264,8 +260,6 @@ namespace Cognitivo.Product
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             if (item_transfer != null)
             {
-               
-
                 CollectionViewSource location_destViewSource = ((CollectionViewSource)(FindResource("location_destViewSource")));
                 location_destViewSource.Source =  dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch).OrderBy(a => a.name).ToList();
                 CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));

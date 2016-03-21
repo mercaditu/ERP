@@ -106,7 +106,6 @@ namespace cntrl.Controls
 
             var param = smartBoxContactSetting.Default.SearchFilter;
 
-            List<entity.contact> results = new List<entity.contact>();
             var predicate = PredicateBuilder.True<entity.contact>();
 
             predicate = (x => x.is_active);
@@ -126,25 +125,30 @@ namespace cntrl.Controls
                 predicate = predicate.And(x => x.is_employee == true);
             }
 
-            if (param.Contains("Code"))
-            {
-                predicate = predicate.And(x => x.code == SearchText);
-            }
+            predicate = predicate.And
+            (
+                (if (param.Contains("Code"))
+                {
+                    predicate = predicate.And(x => x.code == SearchText);
+                }
 
-            if (param.Contains("Name"))
-            {
-                predicate = predicate.And(x => x.name == SearchText);
-            }
+                if (param.Contains("Name"))
+                {
+                    predicate = predicate.And(x => x.name.Contains(SearchText));
+                }
 
-            if (param.Contains("GovID"))
-            {
-                predicate = predicate.And(x => x.gov_code == SearchText);
-            }
+                if (param.Contains("GovID"))
+                {
+                    predicate = predicate.And(x => x.gov_code.Contains(SearchText));
+                }
 
-            if (param.Contains("Tel"))
-            {
-                predicate = predicate.And(x => x.telephone == SearchText);
-            }
+                if (param.Contains("Tel"))
+                {
+                    predicate = predicate.And(x => x.telephone.Contains(SearchText));
+                }
+            )
+
+            
 
             predicate = predicate.And(x => x.contact_role.can_transact);
 
@@ -152,6 +156,8 @@ namespace cntrl.Controls
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
+
+                List<entity.contact> results = new List<entity.contact>();
 
                 //Getting the data based on Predicates
                 results.AddRange(db.contacts
@@ -193,8 +199,6 @@ namespace cntrl.Controls
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
         }
-
-      
 
         private void Edit_PreviewMouseUp_1(object sender, MouseButtonEventArgs e)
         {

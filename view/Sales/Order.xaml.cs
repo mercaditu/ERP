@@ -553,10 +553,7 @@ namespace Cognitivo.Sales
                         }
                     };
                 }
-                catch (Exception ex)
-                {
-                    toolBar.msgError(ex);
-                }
+                catch { }
             }
             else
             {

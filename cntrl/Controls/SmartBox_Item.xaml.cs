@@ -38,6 +38,8 @@ namespace cntrl.Controls
                     ItemID = 0;
                     Text = tbxSearch.Text;
                 }
+
+                tbxSearch.SelectAll();
             }
 
             if (Select != null)

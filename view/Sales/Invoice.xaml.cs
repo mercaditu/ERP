@@ -440,6 +440,7 @@ namespace Cognitivo.Sales
                 _sales_invoice_detail.item_description = item.description;
                 _sales_invoice_detail.item = item;
                 _sales_invoice_detail.id_item = item.id_item;
+                _sales_invoice_detail.quantity += 1;
 
                 sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
             }
@@ -455,6 +456,8 @@ namespace Cognitivo.Sales
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 calculate_vat(null, null);
+
+                sbxItem.Focus();
             }));
         }
 
@@ -487,10 +490,7 @@ namespace Cognitivo.Sales
                       
                     };
                 }
-                catch (Exception ex)
-                {
-                    toolBar.msgError(ex);
-                }
+                catch { }
             }
             else
             {

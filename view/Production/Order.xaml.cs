@@ -566,47 +566,9 @@ namespace Cognitivo.Production
             }
         }
 
-        private void toolBar_Mini_btnNew_Click(object sender)
-        {
-
-        }
-
-        private void toolBar_Mini_btnEdit_Click(object sender)
-        {
-
-        }
-
-        private void toolBar_Mini_btnSave_Click(object sender)
-        {
-
-        }
-
-        private void toolBar_Mini_btnDelete_Click(object sender)
-        {
-
-        }
-
-        private void toolBar_Mini_btnApprove_Click(object sender)
-        {
-
-        }
-
-        private void toolBar_Mini_btnAnull_Click(object sender)
-        {
-
-        }
-
-        private void btnNewTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnNewTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
-            //itemSearchViewSource.View.Filter = i =>
-            //{
-            //    item item = (item)i;
-            //    if (item.is_active == true)
-            //        return true;
-            //    else
-            //        return false;
-            //};
 
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order_detail production_order_detail = treeProject.SelectedItem as production_order_detail;
@@ -646,12 +608,12 @@ namespace Cognitivo.Production
 
         }
 
-        private void btnEditTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnEditTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
         }
 
-        private void btnSaveTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnSaveTask_Click(object sender)
         {
             try
             {
@@ -671,7 +633,7 @@ namespace Cognitivo.Production
             }
         }
 
-        private void btnDeleteTask_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnDeleteTask_Click(object sender)
         {
             production_orderproduction_order_detailViewSource.View.Filter = null;
             List<production_order_detail> production_order_detailLIST = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
@@ -733,7 +695,7 @@ namespace Cognitivo.Production
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void toolIcon_Click(object sender, RoutedEventArgs e)
+        private void toolIcon_Click(object sender)
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_orderproduction_order_detailViewSource.View.Filter = null;
@@ -761,7 +723,7 @@ namespace Cognitivo.Production
             filter_task();
         }
 
-        private void toolIcon_Click_1(object sender, RoutedEventArgs e)
+        private void toolIcon_Click_1(object sender)
         {
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
             _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true).ToList();

@@ -40,11 +40,11 @@
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentColor_Brush}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding Source={StaticResource security_roleViewSource}, IsAsync=True}">
+                 ItemsSource="{Binding Source={StaticResource security_roleViewSource}}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding security_user.Count}" 
-                                   recordName="{Binding name}"
+                    <cntrl:navList recordCode="{Binding app_department.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                   recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
@@ -54,7 +54,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="32,16">
             <Label Style="{StaticResource input_label}" Content="{lex:Loc UserRole}"/>
             <TextBox Style="{StaticResource input_textbox}"
-                     Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                     Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
             <Label Style="{StaticResource input_label}" Content="{lex:Loc Department}"/>
             <ComboBox x:Name="id_departmentComboBox" ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" Style="{StaticResource input_combobox}" 
                       SelectedValuePath="id_department" DisplayMemberPath="name" SelectedValue="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">

@@ -13,7 +13,7 @@ namespace Cognitivo.Security
     {
         //entity.dbContext dbContext = new entity.dbContext();
         UserRoleDB dbContext = new UserRoleDB();
-        CollectionViewSource security_rolesecurity_curdViewSource, security_roleViewSource;
+        CollectionViewSource security_rolesecurity_curdViewSource, security_roleViewSource, security_privilageViewSource, security_rolesecurity_role_privilageViewSource;
 
         public UserRole()
         {
@@ -33,8 +33,8 @@ namespace Cognitivo.Security
 
 
             security_rolesecurity_curdViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_curdViewSource");
-            CollectionViewSource security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
-            CollectionViewSource security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
+             security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
+            security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
             security_privilageViewSource.Source = dbContext.security_privilage.OrderBy(a => a.name).ToList();
 
             CollectionViewSource app_departmentViewSource = (CollectionViewSource)this.FindResource("app_departmentViewSource");
@@ -126,9 +126,10 @@ namespace Cognitivo.Security
                 {
                     security_role_privilage _security_role_privilage = new security_role_privilage();
                     _security_role_privilage.id_privilage = item.id_privilage;
-                    _security_role_privilage.security_role = security_role;
+                   // _security_role_privilage.security_role = security_role;
                     _security_role_privilage.has_privilage = false;
-                    dbContext.security_role_privilage.Add(_security_role_privilage);
+                    security_role.security_role_privilage.Add(_security_role_privilage);
+                    
                 }
 
                 List<security_curd> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
@@ -139,7 +140,7 @@ namespace Cognitivo.Security
                 {
                     security_curd _security_curd = new security_curd();
                     _security_curd.id_application = AppName;
-                    _security_curd.security_role = security_role;
+                   // _security_curd.security_role = security_role;
                     _security_curd.has_full_control = false;
                     _security_curd.can_update = false;
                     _security_curd.can_read = false;
@@ -147,8 +148,11 @@ namespace Cognitivo.Security
                     _security_curd.can_create = false;
                     _security_curd.can_approve = false;
                     _security_curd.can_annul = false;
-                    dbContext.security_curd.Add(_security_curd);
+                   security_role.security_curd.Add(_security_curd);
+                   // dbContext.security_curd.Add(_security_curd);
                 }
+                security_rolesecurity_curdViewSource.View.Refresh();
+                security_rolesecurity_role_privilageViewSource.View.Refresh();
             }
         }
     }

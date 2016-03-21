@@ -125,34 +125,70 @@ namespace Cognitivo.Accounting
 
                 }
             }
-            if (accounting_journal_detailDataGrid != null)
+             if (accounting_journalViewSource != null)
             {
-                accounting_journal_detailDataGrid.ItemsSource = entity.db.accounting_journal_detail.Where(x =>x.id_company==_settings.company_ID && x.trans_date <= AccountDate && x.accounting_journal.id_cycle == id).ToList();
+                if (accounting_journalViewSource.View != null)
+                {
+                
+                        accounting_journalViewSource.View.Filter = i =>
+                        {
+                            accounting_journal accounting_journal = (accounting_journal)i;
+                            if (accounting_journal.id_cycle == id && accounting_journal.trans_date<=AccountDate)
+                                return true;
+                            else
+                                return false;
+                        };
+                    
+                }
             }
         }
 
-        private void accounting_journal_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
-            crud_modal.Visibility = Visibility.Visible;
-            AccountingJournal = new cntrl.Curd.AccountingJournal();
-            AccountingJournal.accounting_journal = accounting_journal_detail.accounting_journal;
-            AccountingJournal.db =entity.db;
+        //private void accounting_journal_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        //{
+        //    accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
+        //    crud_modal.Visibility = Visibility.Visible;
+        //    AccountingJournal = new cntrl.Curd.AccountingJournal();
+        //    AccountingJournal.accounting_journal = accounting_journal_detail.accounting_journal;
+        //    AccountingJournal.db =entity.db;
 
-            crud_modal.Children.Add(AccountingJournal);
-        }
+        //    crud_modal.Children.Add(AccountingJournal);
+        //}
 
-        private void accounting_journal_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
-            crud_modal.Visibility = Visibility.Visible;
-            AccountingJournal = new cntrl.Curd.AccountingJournal();
-            AccountingJournal.accounting_journal = accounting_journal_detail.accounting_journal;
-            AccountingJournal.db = entity.db;
-           // AccountingJournal.Save_Click += Savejouranl_Click;
+        //private void accounting_journal_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        //{
+        //    accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
+        //    crud_modal.Visibility = Visibility.Visible;
+        //    AccountingJournal = new cntrl.Curd.AccountingJournal();
+        //    AccountingJournal.accounting_journal = accounting_journal_detail.accounting_journal;
+        //    AccountingJournal.db = entity.db;
+        //   // AccountingJournal.Save_Click += Savejouranl_Click;
 
-            crud_modal.Children.Add(AccountingJournal);
-        }
+        //    crud_modal.Children.Add(AccountingJournal);
+        //}
+        //public void Savejouranl_Click(object sender)
+        //{
+        //    try
+        //    {
+        //        if (AccountingJournal.accounting_journal.accounting_journal_detail.Sum(x => x.credit) != AccountingJournal.accounting_journal.accounting_journal_detail.Sum(x => x.debit))
+        //        {
+        //            MessageBox.Show("Verify balance :-" + AccountingJournal.accounting_journal.code);
+        //        }
+        //        else
+        //        {
+        //            entity.db.accounting_journal.Add(Acocunting_Template_Entry.accounting_journal);
+        //            IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
+        //            if (validationresult.Count() == 0)
+        //            {
+        //                entity.db.SaveChanges();
+        //                crud_modal.Children.Clear();
+        //                crud_modal.Visibility = Visibility.Collapsed;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    { throw ex; }
+        //    filter_date();
+        //}
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -184,30 +220,7 @@ namespace Cognitivo.Accounting
              { throw ex; }
              filter_date();
         }
-        public void Savejouranl_Click(object sender)
-        {
-            try
-            {
-                if (AccountingJournal.accounting_journal.accounting_journal_detail.Sum(x => x.credit) != AccountingJournal.accounting_journal.accounting_journal_detail.Sum(x => x.debit))
-                {
-                    MessageBox.Show("Verify balance :-" + AccountingJournal.accounting_journal.code);
-                }
-                else
-                {
-                    entity.db.accounting_journal.Add(Acocunting_Template_Entry.accounting_journal);
-                    IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-                    if (validationresult.Count() == 0)
-                    {
-                        entity.db.SaveChanges();
-                        crud_modal.Children.Clear();
-                        crud_modal.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-            catch (Exception ex)
-            { throw ex; }
-            filter_date();
-        }
+     
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -280,6 +293,28 @@ namespace Cognitivo.Accounting
             accounting_journalViewSource.View.Refresh();
             filter_date();
         }
+
+       
+        private void EditCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as accounting_journal != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            crud_modal.Visibility = Visibility.Visible;
+            AccountingJournal = new cntrl.Curd.AccountingJournal();
+            AccountingJournal.accounting_journal = e.Parameter as accounting_journal;
+            AccountingJournal.db = entity.db;
+
+            crud_modal.Children.Add(AccountingJournal);
+
+        }
+
+       
 
        
 

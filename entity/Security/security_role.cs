@@ -24,7 +24,8 @@ namespace entity
         public int id_company { get; set; }
         public int? id_department { get; set; }
         [Required]
-        public string name { get; set; }
+        public string name { get { return _name; } set { _name = value; RaisePropertyChanged(name); } }
+        string _name;
         public bool is_active { get; set; }
 
         public virtual app_company app_company { get; set; }

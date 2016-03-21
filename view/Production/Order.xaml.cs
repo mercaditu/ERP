@@ -132,6 +132,7 @@ namespace Cognitivo.Production
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
+         
         }
 
         public void filter_task()

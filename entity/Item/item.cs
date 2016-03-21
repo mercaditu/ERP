@@ -70,7 +70,7 @@ namespace entity
                     {
                         foreach (item_price _item_price in item_price)
                         {
-                            _item_price.return_ValueWithVAT();
+                            _item_price.return_ValueWithVAT(_id_vat_group);
                         }
                     }
                    

@@ -77,15 +77,15 @@ namespace entity
         }
         decimal _valuewithVAT;
 
-        public void return_ValueWithVAT()
+        public void return_ValueWithVAT(int id_vat_group)
         {
-              int id_vat_group;
+             
               if (id_item>0)
               {
-                  using (db db = new db())
-                  {
-                      id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
-                  }
+                  //using (db db = new db())
+                  //{
+                  //    id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
+                  //}
                   _valuewithVAT = Brillo.Vat.return_ValueWithVAT(id_vat_group, _value);
                   
               }
@@ -97,6 +97,27 @@ namespace entity
                
                 RaisePropertyChanged("valuewithVAT");
             
+        }
+        public void return_ValueWithVAT()
+        {
+            int id_vat_group;
+            if (id_item > 0)
+            {
+                using (db db = new db())
+                {
+                    id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
+                }
+                _valuewithVAT = Brillo.Vat.return_ValueWithVAT(id_vat_group, _value);
+
+            }
+            else
+            {
+                // id_vat_group = db.items.Where(x => x.id_item == id_item).FirstOrDefault().id_vat_group;
+                _valuewithVAT = Brillo.Vat.return_ValueWithVAT(item.id_vat_group, _value);
+            }
+
+            RaisePropertyChanged("valuewithVAT");
+
         }
 
 

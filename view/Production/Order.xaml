@@ -128,7 +128,7 @@
 
 
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" Grid.Row="2" Grid.ColumnSpan="2" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                <TabItem Header="{lex:Loc Order}">
+                <TabItem Header="{lex:Loc Order}" Margin="10,0,-10,0">
 
                     <Grid Grid.Row="1"  Background="White" 
                               DataContext="{StaticResource production_orderproduction_order_detailViewSource}">
@@ -169,7 +169,7 @@
                                    Content="{Binding parent.name, FallbackValue=---}"/>
                                 <TextBlock Text="{Binding name}" Margin="0,-10,0,8"
                                        Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
-                                <cntrl:toolBar_Mini appName="ProductionOrder" Status="{Binding state}"
+                                <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 btnNew_Click="btnNewTask_Click"
                                                 btnEdit_Click="btnEditTask_Click"
                                                 btnSave_Click="btnSaveTask_Click"
@@ -378,14 +378,14 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
                                             <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  
                                   ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected"  >
                                                 <DataGrid.Columns>
-                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
+                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
+                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
                                                     <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
 									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="*"/>
+									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="auto"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </DataTemplate>

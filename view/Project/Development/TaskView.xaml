@@ -118,7 +118,7 @@
                     btnSave_Click="btnSaveTask_Click"
                     btnDelete_Click="btnDeleteTask_Click"
                     btnApprove_Click="btnApprove_Click"
-                    btnAnull_Click="btnAnull_Click"/>
+                    btnAnull_Click="btnAnull_Click" />
                 
                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
                     <StackPanel x:Name="stpcode" IsEnabled="False">
@@ -156,7 +156,7 @@
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
-									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                 <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
                                 <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
 									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  

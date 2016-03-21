@@ -19,6 +19,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_task_dimension { get; set; }
         public int id_project_task { get; set; }
+         [Required]
         public int id_dimension { get; set; }
         public int id_measurement { get; set; }
         [Required]

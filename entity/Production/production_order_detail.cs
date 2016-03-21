@@ -9,10 +9,12 @@ namespace entity
 
     public partial class production_order_detail : Audit
     {
+        Project.clsproject objclsproject = new Project.clsproject();
         public production_order_detail()
         {
+
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             child = new List<production_order_detail>();
             trans_date = DateTime.Now;
@@ -35,23 +37,43 @@ namespace entity
                     _quantity = value;
                     RaisePropertyChanged("quantity");
 
-                    foreach (production_order_detail production_order_detail in child)
-                    {
-                        using (db db = new db())
-                        {
-                            if (db.item_recepie.Where(x => x.id_item == id_item).FirstOrDefault() != null)
-                            {
-                                production_order_detail.quantity = db.item_recepie.Where(x => x.id_item == id_item)
-                                    .FirstOrDefault()
-                                    .item_recepie_detail
-                                    .Where(x => x.id_item == production_order_detail.id_item)
-                                    .FirstOrDefault()
-                                    .quantity * quantity;
 
-                                production_order_detail.RaisePropertyChanged("quantity");
+
+                    if (parent != null && parent.item != null)
+                    {
+                        if (!parent.item.is_autorecepie)
+                        {
+                            parent.quantity = objclsproject.getsumquantityProduction(parent.id_order_detail, parent.child);
+                            parent.RaisePropertyChanged("quantity");
+                        }
+
+
+                    }
+
+                    if (this.item != null)
+                    {
+
+
+                        if (this.item.is_autorecepie)
+                        {
+
+                            if (child.Count > 0)
+                            {
+                                foreach (production_order_detail production_order_detail in child)
+                                {
+                                    production_order_detail.quantity = production_order_detail.item.item_recepie_detail.FirstOrDefault().quantity * this.quantity;
+                                    project_task.RaisePropertyChanged("quantity");
+
+
+
+                                }
+
                             }
+
+
                         }
                     }
+
                 }
             }
         }

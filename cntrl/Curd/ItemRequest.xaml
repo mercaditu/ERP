@@ -39,7 +39,7 @@
                          Style="{StaticResource input_textbox}"/>
                 <Label Content="{lex:Loc DateNeeded}" Style="{StaticResource input_label}"/>
                 <DatePicker x:Name="cbxdate" Style="{StaticResource input_datepicker}"
-                             Text="{Binding neededDate,ElementName=Item_Request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                             SelectedDate="{Binding neededDate, ElementName=Item_Request, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Urgency}" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="cbxurgencies" Style="{StaticResource input_combobox}"
                           SelectedValue="{Binding Urgencies,ElementName=Item_Request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>

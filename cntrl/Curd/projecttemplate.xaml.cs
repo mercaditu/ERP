@@ -106,17 +106,17 @@ namespace cntrl.Curd
                 if (validationresult.Count() == 0)
                 {
                     entity.SaveChanges();
-                    if (operationMode == Class.clsCommon.Mode.Add)
-                    {
-                        project_template project_template = _projecttemplateViewSource.View.CurrentItem as project_template;
-                        project_template_detail n_project_template = new project_template_detail();
-                        n_project_template.id_project_template = project_template.id_project_template;
-                        // n_project_template.name = "task";
-                        entity.project_template_detail.Add(n_project_template);
-                        entity.SaveChanges();
-                    }
+                    //if (operationMode == Class.clsCommon.Mode.Add)
+                    //{
+                    //    project_template project_template = _projecttemplateViewSource.View.CurrentItem as project_template;
+                    //    project_template_detail n_project_template = new project_template_detail();
+                    //    n_project_template.id_project_template = project_template.id_project_template;
+                    //    // n_project_template.name = "task";
+                    //    entity.project_template_detail.Add(n_project_template);
+                    //    entity.SaveChanges();
+                    //}
                     
-                        projecttemplatedetailViewSource.View.Filter = null;
+                       // projecttemplatedetailViewSource.View.Filter = null;
 
                         filter_task();
                         
@@ -127,7 +127,7 @@ namespace cntrl.Curd
                     parentGrid.Children.Clear();
                     parentGrid.Visibility = Visibility.Hidden;
                     projecttemplateViewSource.View.Refresh();
-                    projecttemplatedetailViewSource.View.Refresh();
+                   // projecttemplatedetailViewSource.View.Refresh();
                 }
             }
             catch (Exception ex)

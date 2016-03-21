@@ -106,7 +106,7 @@ namespace cntrl.Curd
             if (accounting_journal.accounting_journal_detail.Sum(x => x.credit) == accounting_journal.accounting_journal_detail.Sum(x => x.debit))
             {
                 db.SaveChanges();
-
+                btnCancel_Click(sender, null);
             }
             else
             {

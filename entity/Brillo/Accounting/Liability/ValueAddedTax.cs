@@ -8,13 +8,13 @@ namespace entity.Brillo.Accounting.Liability
         {
             if(vat != null)
             {
-                if (context.accounting_chart.Where(i => i.id_vat == vat.id_vat && i.chart_type == accounting_chart.ChartType.Assets).FirstOrDefault() != null)
+                if (context.accounting_chart.Where(i => i.id_vat == vat.id_vat && i.chart_type == accounting_chart.ChartType.Liability).FirstOrDefault() != null)
                 {
                     return context.accounting_chart.Where(i => i.id_vat == vat.id_vat).FirstOrDefault();
                 }
-                else if (context.accounting_chart.Where(i => i.chartsub_type == accounting_chart.ChartSubType.VAT && i.chart_type == accounting_chart.ChartType.Assets && i.is_generic == true).FirstOrDefault() != null)
+                else if (context.accounting_chart.Where(i => i.chartsub_type == accounting_chart.ChartSubType.VAT && i.chart_type == accounting_chart.ChartType.Liability && i.is_generic == true).FirstOrDefault() != null)
                 {
-                    return context.accounting_chart.Where(i => i.chartsub_type == accounting_chart.ChartSubType.VAT && i.chart_type == accounting_chart.ChartType.Assets && i.is_generic == true).FirstOrDefault();
+                    return context.accounting_chart.Where(i => i.chartsub_type == accounting_chart.ChartSubType.VAT && i.chart_type == accounting_chart.ChartType.Liability && i.is_generic == true).FirstOrDefault();
                 }
             }
 

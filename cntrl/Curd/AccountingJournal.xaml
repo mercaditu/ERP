@@ -31,20 +31,20 @@
                     <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png" 
                        Height="32" Opacity="0.64"/>
                 </Border>
-                <Label x:Name="lblTitle" Content="{lex:Loc Accounting Journal}" FontSize="25" Margin="50,0,0,0"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc AccountingJournal}" FontSize="25" Margin="50,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
-            <TextBlock Style="{StaticResource text_Instructions}" 
-                       Text=""/>
+            
+            <TextBlock Style="{StaticResource text_Instructions}" Text=""/>
             <StackPanel HorizontalAlignment="Center" >
                <StackPanel x:Name="stpsub">
                     <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Column="1" 
-                  RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RowEditEnding="accounting_journal_detailDataGrid_RowEditEnding" 
-                  CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding"  >
+                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RowEditEnding="accounting_journal_detailDataGrid_RowEditEnding" 
+                              CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding"  >
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_journalViewSource}}" 
 						                                SelectedValueBinding="{Binding id_journal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -53,16 +53,15 @@
                             <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
 						                                SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="name" 
-						                                SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="*"/>
+						                                SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="128"/>
                             <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" CellStyle="{StaticResource Number_CellStyle}"
-                                    Header="{lex:Loc Cognitivo:local:Debit}" Width="auto" />
+                                                        Header="{lex:Loc Cognitivo:local:Debit}" Width="auto" />
                             <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" CellStyle="{StaticResource Number_CellStyle}"
-                                    Header="{lex:Loc Cognitivo:local:Credit}" Width="auto"/>
+                                                        Header="{lex:Loc Cognitivo:local:Credit}" Width="auto"/>
                             <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
 						                                SelectedValueBinding="{Binding id_currencyfx,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="app_currency.name" 
 						                                SelectedValuePath="id_currencyfx" Header="{lex:Loc Cognitivo:local:Currency}" Width="auto"/>
-                            <!--<DataGridTextColumn x:Name="rateColumn" Binding="{Binding app_currencyfx.sell_value ,StringFormat={}{0:N2}}" Header="" Width="64" CellStyle="{StaticResource Number_CellStyle}"/>-->
                             <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

@@ -102,7 +102,7 @@
                 <!-- Asset -->
 
                 <StackPanel Visibility="{Binding SelectedValue, Converter={StaticResource AccountChartGroupAsset}, ElementName=cbxChartType}">
-                    <Label Content="{lex:Loc Asset}" Style="{StaticResource H3}"/>
+                    <Label Content="{lex:Loc Assets}" Style="{StaticResource H3}"/>
                     <!-- All Accounts (Bank or Terminal) -->
                     <RadioButton x:Name="rbtnCash" Content="{lex:Loc Accounts}" Style="{StaticResource input_radiobutton}" Margin="5" Tag="2" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                     <StackPanel Orientation="Horizontal" Margin="23,0" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnCash}" >
@@ -175,7 +175,7 @@
                 <!-- Liability -->
 
                 <StackPanel Visibility="{Binding SelectedValue, Converter={StaticResource AccountChartGroupLiabillity}, ElementName=cbxChartType}">
-                    <Label Content="{lex:Loc Liability}" Style="{StaticResource H3}"/>
+                    <Label Content="{lex:Loc Liabilities}" Style="{StaticResource H3}"/>
                     <!-- This is for Suppliers -->
                     <RadioButton x:Name="rbtnAccPayable" Content="{lex:Loc AccountsPayable}" Style="{StaticResource input_radiobutton}" Margin="5" 
                                           Tag="5" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
@@ -227,7 +227,7 @@
                 <!-- Expense -->
 
                 <StackPanel Visibility="{Binding SelectedValue, Converter={StaticResource AccountingChartGroupExpense}, ElementName=cbxChartType}">
-                    <Label Content="{lex:Loc Expense}" Style="{StaticResource H3}"/>
+                    <Label Content="{lex:Loc Expenses}" Style="{StaticResource H3}"/>
                     <!-- This is for Suppliers -->
                     <RadioButton x:Name="rbtnHR" Content="{lex:Loc HumanResources}" Style="{StaticResource input_radiobutton}" Margin="5" 
                                            Tag="15" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>

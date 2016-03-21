@@ -90,13 +90,14 @@
                     <cntrl:SmartBoxColumn Header="name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
                 </cntrl:SearchableTextbox.Columns>
             </cntrl:SearchableTextbox>
-            <DataGrid  ItemsSource="{Binding Source={StaticResource accounting_journalaccounting_journal_detailViewSource}}" AutoGenerateColumns="False">
+            <DataGrid  ItemsSource="{Binding Source={StaticResource accounting_journalaccounting_journal_detailViewSource}}" 
+                       IsReadOnly="True"
+                       AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn  Binding="{Binding accounting_chart.code}" Header="Code" Width="64" IsReadOnly="True"/>
-                    <DataGridTextColumn  Binding="{Binding accounting_chart.name}" Header="Name" Width="64" IsReadOnly="True"/>
+                    <DataGridTextColumn  Binding="{Binding accounting_chart.code}" Header="Code" Width="128" IsReadOnly="True"/>
+                    <DataGridTextColumn  Binding="{Binding accounting_chart.name}" Header="Name" Width="*" IsReadOnly="True"/>
                     <DataGridTextColumn  Binding="{Binding debit, StringFormat={}{0:N2}}" Header="Debit" Width="128" CellStyle="{StaticResource Number_CellStyle}"/>
                     <DataGridTextColumn  Binding="{Binding credit, StringFormat={}{0:N2}}" Header="Credit" Width="128" CellStyle="{StaticResource Number_CellStyle}"/>
-                    <!--<DataGridTextColumn  Binding="{Binding trans_date, StringFormat={}{0:d}}" Header="Date" Width="64"/>-->
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

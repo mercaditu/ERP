@@ -99,7 +99,7 @@
                 <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
                 <DatePicker SelectedDate="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
             </StackPanel>
-            <StackPanel Grid.Column="1" Background="WhiteSmoke" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+            <StackPanel Grid.Column="1" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>

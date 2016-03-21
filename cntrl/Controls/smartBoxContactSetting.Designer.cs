@@ -25,13 +25,12 @@ namespace cntrl.Controls {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Default")]
-        public string OrderByText {
+        public global::System.Collections.Specialized.StringCollection SearchFilter {
             get {
-                return ((string)(this["OrderByText"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["SearchFilter"]));
             }
             set {
-                this["OrderByText"] = value;
+                this["SearchFilter"] = value;
             }
         }
         

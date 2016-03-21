@@ -13,7 +13,7 @@ namespace Cognitivo.Purchase
 {
     public partial class Import : Page
     {
-        ImpexDB dbContext = new ImpexDB();
+        ImpexDB ImpexDB = new ImpexDB();
         CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource = null;
         int company_ID = entity.Properties.Settings.Default.company_ID;
 
@@ -30,29 +30,29 @@ namespace Cognitivo.Purchase
                 purchase_invoiceViewSource = FindResource("purchase_invoiceViewSource") as CollectionViewSource;
 
                 impexViewSource = FindResource("impexViewSource") as CollectionViewSource;
-                dbContext.impex
+                ImpexDB.impex
                     .Include(x => x.impex_import)
                     .Include(x => x.impex_expense)
                     .Where(x => x.impex_type == impex._impex_type.Import && x.is_active == true && x.id_company == company_ID)
                     .Load();
-                impexViewSource.Source = dbContext.impex.Local;
+                impexViewSource.Source = ImpexDB.impex.Local;
                 impeximpex_expenseViewSource = FindResource("impeximpex_expenseViewSource") as CollectionViewSource;
 
                 //contactViewSource
                 CollectionViewSource contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
-                contactViewSource.Source = await dbContext.contacts.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToListAsync();
+                contactViewSource.Source = await ImpexDB.contacts.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToListAsync();
                 //incotermViewSource
                 CollectionViewSource incotermViewSource = FindResource("incotermViewSource") as CollectionViewSource;
-                incotermViewSource.Source = await dbContext.impex_incoterm.OrderBy(a => a.name).AsNoTracking().ToListAsync();
+                incotermViewSource.Source = await ImpexDB.impex_incoterm.OrderBy(a => a.name).AsNoTracking().ToListAsync();
 
                 CollectionViewSource itemsViewSource = FindResource("itemsViewSource") as CollectionViewSource;
-                itemsViewSource.Source = await dbContext.items.Where(a => a.is_active == true && a.id_company == company_ID).AsNoTracking().ToListAsync();
+                itemsViewSource.Source = await ImpexDB.items.Where(a => a.is_active == true && a.id_company == company_ID).AsNoTracking().ToListAsync();
                 //CurrencyFx
                 CollectionViewSource currencyfxViewSource = FindResource("currencyfxViewSource") as CollectionViewSource;
-                currencyfxViewSource.Source = await dbContext.app_currencyfx.Include("app_currency").AsNoTracking().Where(a => a.is_active == true && a.app_currency.id_company == company_ID).ToListAsync();
+                currencyfxViewSource.Source = await ImpexDB.app_currencyfx.Include("app_currency").AsNoTracking().Where(a => a.is_active == true && a.app_currency.id_company == company_ID).ToListAsync();
                 //incotermconditionViewSource
                 CollectionViewSource incotermconditionViewSource = FindResource("incotermconditionViewSource") as CollectionViewSource;
-                incotermconditionViewSource.Source = await dbContext.impex_incoterm_condition.OrderBy(a => a.name).AsNoTracking().ToListAsync();
+                incotermconditionViewSource.Source = await ImpexDB.impex_incoterm_condition.OrderBy(a => a.name).AsNoTracking().ToListAsync();
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace Cognitivo.Purchase
         {
             impeximpex_expenseDataGrid.CancelEdit();
             impexViewSource.View.MoveCurrentToFirst();
-            dbContext.CancelAllChanges();
+            ImpexDB.CancelAllChanges();
         }
 
         private void toolBar_btnDelete_Click_1(object sender)
@@ -73,7 +73,7 @@ namespace Cognitivo.Purchase
             if (res == MessageBoxResult.Yes)
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
-                dbContext.impex.Remove(impex);
+                ImpexDB.impex.Remove(impex);
                 toolBar_btnSave_Click_1(sender);
             }
         }
@@ -85,7 +85,7 @@ namespace Cognitivo.Purchase
                 impex impex = (impex)impexDataGrid.SelectedItem;
                 impex.IsSelected = true;
                 impex.State = EntityState.Modified;
-                dbContext.Entry(impex).State = EntityState.Modified;
+                ImpexDB.Entry(impex).State = EntityState.Modified;
             }
             else
             {
@@ -95,7 +95,7 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnNew_Click_1(object sender)
         {
-            purchase_invoiceViewSource.Source = dbContext.purchase_invoice.Where(a => a.id_company == company_ID && a.id_contact == 0 && a.is_issued == true).OrderByDescending(a => a.trans_date).ToList();
+            purchase_invoiceViewSource.Source = ImpexDB.purchase_invoice.Where(a => a.id_company == company_ID && a.id_contact == 0 && a.is_issued == true).OrderByDescending(a => a.trans_date).ToList();
             impex impex = new impex();
             impex.impex_type = entity.impex._impex_type.Import;
             impex.eta = DateTime.Now;
@@ -104,7 +104,7 @@ namespace Cognitivo.Purchase
             id_pur_invoiceComboBox.SelectedIndex = 0;
             impex.State = EntityState.Added;
             impex.IsSelected = true;
-            dbContext.impex.Add(impex);
+            ImpexDB.impex.Add(impex);
             impexViewSource.View.MoveCurrentToLast();
         }
 
@@ -112,10 +112,10 @@ namespace Cognitivo.Purchase
         {
             try
             {
-                IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
+                IEnumerable<DbEntityValidationResult> validationresult = ImpexDB.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {
-                    dbContext.SaveChanges();
+                    ImpexDB.SaveChanges();
                     toolBar.msgSaved();
                 }
             }
@@ -153,10 +153,11 @@ namespace Cognitivo.Purchase
                     List<Class.clsImpexImportDetails> clsImpexImportDetails = new List<Class.clsImpexImportDetails>();
                     impex_importDataGrid.ItemsSource = clsImpexImportDetails;
                 }
-                if (impex.contact != null)
-                    contactComboBox.Text = impex.contact.name;
-                else
-                    contactComboBox.Text = "";
+
+                //if (impex.contact != null)
+                //    contactComboBox.Text = impex.contact.name;
+                //else
+                //    contactComboBox.Text = "";
             }
         }
 
@@ -210,7 +211,7 @@ namespace Cognitivo.Purchase
                 Class.clsImpexImportDetails ImpexImportDetails = new Class.clsImpexImportDetails();
                 ImpexImportDetails.number = item.purchase_invoice.number;
                 ImpexImportDetails.id_item = (int)item.id_item;
-                ImpexImportDetails.item = dbContext.items.Where(a => a.id_item == item.id_item).FirstOrDefault().name;
+                ImpexImportDetails.item = ImpexDB.items.Where(a => a.id_item == item.id_item).FirstOrDefault().name;
                 ImpexImportDetails.quantity = item.quantity;
                 ImpexImportDetails.unit_cost = item.unit_cost;
                 ImpexImportDetails.id_invoice = item.id_purchase_invoice;
@@ -247,12 +248,12 @@ namespace Cognitivo.Purchase
                     if (impex.impex_type == entity.impex._impex_type.Import)
                     {
                         //Only fetch buyer expence
-                        impex_incoterm_detail = dbContext.impex_incoterm_detail.Where(i => i.id_incoterm == impex_incoterm.id_incoterm && i.buyer == true).ToList();
+                        impex_incoterm_detail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == impex_incoterm.id_incoterm && i.buyer == true).ToList();
                     }
                     if (impex.impex_type == entity.impex._impex_type.Export)
                     {
                         //Only fetch seller expence
-                        impex_incoterm_detail = dbContext.impex_incoterm_detail.Where(i => i.id_incoterm == impex_incoterm.id_incoterm && i.seller == true).ToList();
+                        impex_incoterm_detail = ImpexDB.impex_incoterm_detail.Where(i => i.id_incoterm == impex_incoterm.id_incoterm && i.seller == true).ToList();
                     }
                     if (impex.impex_expense != null)
                         impex.impex_expense.Clear();
@@ -291,8 +292,8 @@ namespace Cognitivo.Purchase
                             //Get total value of a Product Row
                             decimal itemTotal = detail.quantity * detail.unit_cost;
 
-                            purchase_invoice purchase_invoice = dbContext.purchase_invoice.Where(x => x.id_purchase_invoice == detail.id_invoice).FirstOrDefault();
-                            item_movement item_movement = dbContext.item_movement.Where(x => x.transaction_id == detail.id_invoice).FirstOrDefault();
+                            purchase_invoice purchase_invoice = ImpexDB.purchase_invoice.Where(x => x.id_purchase_invoice == detail.id_invoice).FirstOrDefault();
+                            item_movement item_movement = ImpexDB.item_movement.Where(x => x.transaction_id == detail.id_invoice).FirstOrDefault();
 
                             foreach (impex_expense _impex_expense in impex_expenses)
                             {
@@ -308,7 +309,7 @@ namespace Cognitivo.Purchase
                                     item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
                                     item_movement.item_movement_value.Add(item_movement_detail);
 
-                                    dbContext.SaveChanges();
+                                    ImpexDB.SaveChanges();
                                 }
                             }
                         }
@@ -336,7 +337,7 @@ namespace Cognitivo.Purchase
             {
                 //DeleteDetailGridRow
                 impeximpex_expenseDataGrid.CancelEdit();
-                dbContext.impex_expense.Remove(e.Parameter as impex_expense);
+                ImpexDB.impex_expense.Remove(e.Parameter as impex_expense);
                 impeximpex_expenseViewSource.View.Refresh();
             }
         }
@@ -344,42 +345,6 @@ namespace Cognitivo.Purchase
         private void btn_Calculate(object sender, RoutedEventArgs e)
         {
             //impeximpex_expenseViewSource.
-        }
-
-        private void contactComboBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.Key == Key.Enter)
-            {
-                contactComboBox_MouseDoubleClick(sender, e);
-            }
-        }
-
-        private void contactComboBox_MouseDoubleClick(object sender, EventArgs e)
-        {
-          try
-            {
-                if (contactComboBox.Data != null)
-                {
-                    contact contact = (contact)contactComboBox.Data;
-                    impex_import impex_import = (impex_import)impex_importDataGrid.SelectedItem;
-                    if (contact != null)
-                    {
-                        purchase_invoiceViewSource.Source = dbContext.purchase_invoice
-                            .Where(a => 
-                                   a.id_company == company_ID 
-                                && a.is_impex 
-                                && a.id_contact == contact.id_contact)
-                            .OrderByDescending(a => a.trans_date)
-                            .ToList();
-                    }
-                    contactComboBox.focusGrid = false;
-                    contactComboBox.Text = contact.name;
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
         }
 
         private void Calculate_Click(object sender, RoutedEventArgs e)
@@ -403,6 +368,36 @@ namespace Cognitivo.Purchase
             }
         }
 
+        private void set_ContactPref(object sender, RoutedEventArgs e)
+        {
+            try
+            {
 
+                if (sbxContact.ContactID > 0)
+                {
+                    contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+
+                    impex_import impex_import = (impex_import)impex_importDataGrid.SelectedItem;
+                    impex_import.impex.contact = contact;
+
+                    if (contact != null)
+                    {
+                        purchase_invoiceViewSource.Source = 
+                            ImpexDB.purchase_invoice
+                            .Where(a =>
+                                   a.id_company == company_ID
+                                && a.is_impex
+                                && a.id_contact == contact.id_contact
+                                && a.status == Status.Documents_General.Approved)
+                            .OrderByDescending(a => a.trans_date)
+                            .ToList();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
     }
 }

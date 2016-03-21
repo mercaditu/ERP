@@ -280,7 +280,9 @@ namespace entity
             {
                 if (sales_invoice.IsSelected && sales_invoice.Error == null)
                 {
-                    if (sales_invoice.sales_return == null || sales_invoice.sales_return.Count == 0)
+                    if (sales_invoice.sales_return == null || 
+                        sales_invoice.sales_return.Count == 0 ||
+                        sales_invoice.accounting_journal == null)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();

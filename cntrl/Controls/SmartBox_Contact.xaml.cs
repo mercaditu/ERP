@@ -103,15 +103,13 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
-          
-           
             using(entity.db db = new entity.db())
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
                 List<entity.contact> results = new List<entity.contact>();
-                var param = smartBoxContactSetting.Default.OrderByText;
+                var param = smartBoxContactSetting.Default.SearchFilter;
                 var propertyInfo = typeof(entity.contact).GetProperty(param);
                
                 var predicate = PredicateBuilder.True<entity.contact>();
@@ -131,17 +129,24 @@ namespace cntrl.Controls
                     predicate = predicate.And(x => x.is_employee == true);
                 }
 
-                if (param=="code")
+                if (param.Contains("Code"))
                 {
-                    predicate = predicate.And(x => x.code == SearchText);
+                    predicate = predicate.Or(x => x.code == SearchText);
                 }
-                else if (param=="name")
+                
+                if (param.Contains("Name"))
                 {
-                    predicate = predicate.And(x => x.name == SearchText);
+                    predicate = predicate.Or(x => x.name == SearchText);
                 }
-                else if (param=="Default" || param=="")
+
+                if (param.Contains("GovID"))
                 {
-                    predicate = predicate.And(x => x.code.Contains(SearchText) || x.name.Contains(SearchText));
+                    predicate = predicate.Or(x => x.gov_code == SearchText);
+                }
+                
+                if (param.Contains("Tel"))
+                {
+                    predicate = predicate.Or(x => x.telephone == SearchText);
                 }
 
                 predicate = predicate.And(x => x.contact_role.can_transact);
@@ -160,13 +165,6 @@ namespace cntrl.Controls
             }
         }
 
-       
-
-        private void _SmartBox_Contact_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //popToolBar.IsOpen = true;
-        }
-
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             crudContact.contactobject = new entity.contact();
@@ -175,12 +173,10 @@ namespace cntrl.Controls
             popCrud.IsOpen = true;
 
             popCrud.Visibility = Visibility.Visible;
-
         }
 
         private void crudContact_btnSave_Click(object sender)
         {
-            
                 if (crudContact.contactList.Count()>0)
                 {
                     foreach (entity.contact contact in crudContact.contactList)
@@ -189,16 +185,11 @@ namespace cntrl.Controls
                         {
                             db.db.contacts.Add(contact);
                         }
-                        
-                        
                     }
-                    
                     db.SaveChanges();
                 }
-           
-                 popCrud.IsOpen = false;
+            popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
-
         }
 
       
@@ -209,12 +200,6 @@ namespace cntrl.Controls
             crudContact.entity = db;
             popCrud.IsOpen = true;
             popCrud.Visibility = System.Windows.Visibility.Visible;
-        }
-
-        private void _SmartBox_Contact_LostFocus(object sender, RoutedEventArgs e)
-        {
-            //popToolBar.IsOpen = false;
-            //popToolBar.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -232,25 +217,31 @@ namespace cntrl.Controls
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (rbtncode.IsChecked==true)
+            Controls.smartBoxContactSetting.Default.SearchFilter.Clear();
+
+            if (rbtnCode.IsChecked==true)
             {
-                Controls.smartBoxContactSetting.Default.OrderByText = "code";
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
             }
-            if (rbtnname.IsChecked==true)
+            if (rbtnName.IsChecked==true)
             {
-                Controls.smartBoxContactSetting.Default.OrderByText = "name";
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
             }
-            if (rbtndefault.IsChecked==true)
+            if (rbtnGov_ID.IsChecked == true)
             {
-                Controls.smartBoxContactSetting.Default.OrderByText = "Default";
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
             }
+            if (rbtnTel.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
+            }
+
+            Controls.smartBoxContactSetting.Default.Save();
         }
 
         private void _SmartBox_Contact_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ContactID = 0;
         }
-
-       
     }
 }

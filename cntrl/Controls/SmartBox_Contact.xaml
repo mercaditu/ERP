@@ -32,37 +32,37 @@
             <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
                 <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="9" VerticalAlignment="Center" Margin="0" 
-                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
-                   PreviewMouseUp="Label_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
+                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" Cursor="Hand"
+                           PreviewMouseUp="Label_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
                     <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
-                        <StackPanel Orientation="Vertical" Background="White" >
-                            <RadioButton x:Name="rbtncode" Content="Select By Code" Checked="RadioButton_Checked"/>
-                            <RadioButton x:Name="rbtnname" Content="Select By Name" Checked="RadioButton_Checked"/>
-                            <RadioButton x:Name="rbtndefault" Content="Select By Default" Checked="RadioButton_Checked"/>
-                            <CheckBox x:Name="chkprincipal" Content="Search By Principal" IsChecked="{Binding Source={x:Static prf:smartBoxContactSetting.Default}, Path=is_principal, Mode=TwoWay}"/>
-                            
-                            
+                        <StackPanel Orientation="Vertical" Background="White" Margin="4">
+                            <StackPanel.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="6" />
+                            </StackPanel.Effect>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L"
+                                       Foreground="{StaticResource Label_ImportantColor}" VerticalAlignment="Center"/>
+                                <Label Style="{StaticResource input_label}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc Search}"/>
+                            </StackPanel>
+                            <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" Checked="RadioButton_Checked"/>
+                            <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}" Checked="RadioButton_Checked"/>
+                            <CheckBox x:Name="rbtnGov_ID" Style="{StaticResource input_checkbox}" Content="{lex:Loc GovernmentID}" Checked="RadioButton_Checked"/>
+                            <CheckBox x:Name="rbtnTel" Style="{StaticResource input_checkbox}" Content="{lex:Loc Telephone}" Checked="RadioButton_Checked"/>
                         </StackPanel>
                     </Popup>
-
-
-
                 </StackPanel>
             </StackPanel>
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" Cursor="Hand"
                    PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
 
             <Label Content="|" Foreground="Silver" VerticalAlignment="Center" Margin="0" FontSize="9"/>
 
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                                       HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                                       HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Brush2}" Cursor="Hand"
                                        PreviewMouseUp="Edit_PreviewMouseUp_1" Padding="4" FontWeight="Bold"/>
         </StackPanel>
-
-        <!-- Progress Ring -->
-        <!--<ProgressBar x:Name="progBar" IsIndeterminate="True" Background="White" Opacity="0.16" Height="26"/>-->
 
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center"

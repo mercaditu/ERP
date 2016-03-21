@@ -127,24 +127,24 @@ namespace cntrl.Controls
 
             predicate = predicate.And
             (
-                (if (param.Contains("Code"))
+                if (param.Contains("Code"))
                 {
-                    predicate = predicate.And(x => x.code == SearchText);
+                    predicate = predicate.Or(x => x.code == SearchText);
                 }
 
                 if (param.Contains("Name"))
                 {
-                    predicate = predicate.And(x => x.name.Contains(SearchText));
+                    predicate = predicate.Or(x => x.name.Contains(SearchText));
                 }
 
                 if (param.Contains("GovID"))
                 {
-                    predicate = predicate.And(x => x.gov_code.Contains(SearchText));
+                    predicate = predicate.Or(x => x.gov_code.Contains(SearchText));
                 }
 
                 if (param.Contains("Tel"))
                 {
-                    predicate = predicate.And(x => x.telephone.Contains(SearchText));
+                    predicate = predicate.Or(x => x.telephone.Contains(SearchText));
                 }
             )
 

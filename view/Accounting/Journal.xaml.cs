@@ -290,8 +290,8 @@ namespace Cognitivo.Accounting
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            accounting_journalViewSource.View.Refresh();
-            filter_date();
+            //accounting_journalViewSource.View.Refresh();
+            //filter_date();
         }
 
        

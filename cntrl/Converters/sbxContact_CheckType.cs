@@ -11,29 +11,28 @@ namespace cntrl.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            int i = (int)parameter;
-            Controls.smartBoxContactSetting set = (Controls.smartBoxContactSetting)value;
+            //string val = (string)value;
 
 
-            if (set.SearchFilter.Contains("Code") && i == 1)
-            {
-                return true;
-            }
+            //if (val.Contains("Code") && (int)parameter == 1)
+            //{
+            //    return true;
+            //}
 
-            if (set.SearchFilter.Contains("Name") && i == 2)
-            {
-                return true;
-            }
+            //if (val.Contains("Name") && (int)parameter == 2)
+            //{
+            //    return true;
+            //}
 
-            if (set.SearchFilter.Contains("GovID") && i == 3)
-            {
-                return true;
-            }
+            //if (val.Contains("GovID") && (int)parameter == 3)
+            //{
+            //    return true;
+            //}
 
-            if (set.SearchFilter.Contains("Tel") && i == 4)
-            {
-                return true;
-            }
+            //if (val.Contains("Tel") && (int)parameter == 4)
+            //{
+            //    return true;
+            //}
 
             return false;
         }

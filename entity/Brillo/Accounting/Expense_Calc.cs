@@ -116,7 +116,7 @@ namespace entity.Brillo.Accounting
                 }
 
                 app_contract_detail app_contract_detail;
-                app_contract_detail = AccountingJournalDB.app_contract_detail.Where(e => e.interval == 0).FirstOrDefault();
+                app_contract_detail = AccountingJournalDB.app_contract_detail.Where(e => e.interval == 0 && e.app_contract.app_contract_detail.Count == 1).FirstOrDefault();
 
                 if (app_contract_detail.app_contract.id_contract != purchase_invoice.app_contract.id_contract)
                 {

@@ -54,7 +54,7 @@ namespace cntrl.Controls
         CancellationToken token;
 
         CollectionViewSource contactViewSource;
-       
+
         public SmartBox_Contact()
         {
             InitializeComponent();
@@ -68,7 +68,7 @@ namespace cntrl.Controls
                 ContactGrid_MouseDoubleClick(sender, e);
             }
 
-            else if(e.Key == Key.Up)
+            else if (e.Key == Key.Up)
             {
                 contactViewSource.View.MoveCurrentToPrevious();
                 contactViewSource.View.Refresh();
@@ -99,7 +99,7 @@ namespace cntrl.Controls
             }
         }
 
-       
+
 
         private void Search_OnThread(string SearchText)
         {
@@ -125,30 +125,33 @@ namespace cntrl.Controls
                 predicate = predicate.And(x => x.is_employee == true);
             }
 
+            var predicateOR = PredicateBuilder.False<entity.contact>();
+            if (param.Contains("Code"))
+            {
+                predicateOR = predicateOR.Or(x => x.code == SearchText);
+            }
+
+            if (param.Contains("Name"))
+            {
+                predicateOR = predicateOR.Or(x => x.name.Contains(SearchText));
+            }
+
+            if (param.Contains("GovID"))
+            {
+                predicateOR = predicateOR.Or(x => x.gov_code.Contains(SearchText));
+            }
+
+            if (param.Contains("Tel"))
+            {
+                predicateOR = predicateOR.Or(x => x.telephone.Contains(SearchText));
+            }
+
             predicate = predicate.And
             (
-                if (param.Contains("Code"))
-                {
-                    predicate = predicate.Or(x => x.code == SearchText);
-                }
+                predicateOR
+            );
 
-                if (param.Contains("Name"))
-                {
-                    predicate = predicate.Or(x => x.name.Contains(SearchText));
-                }
 
-                if (param.Contains("GovID"))
-                {
-                    predicate = predicate.Or(x => x.gov_code.Contains(SearchText));
-                }
-
-                if (param.Contains("Tel"))
-                {
-                    predicate = predicate.Or(x => x.telephone.Contains(SearchText));
-                }
-            )
-
-            
 
             predicate = predicate.And(x => x.contact_role.can_transact);
 
@@ -176,7 +179,7 @@ namespace cntrl.Controls
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             crudContact.contactobject = new entity.contact();
-            
+
             crudContact.entity = db;
             popCrud.IsOpen = true;
 
@@ -185,17 +188,17 @@ namespace cntrl.Controls
 
         private void crudContact_btnSave_Click(object sender)
         {
-                if (crudContact.contactList.Count()>0)
+            if (crudContact.contactList.Count() > 0)
+            {
+                foreach (entity.contact contact in crudContact.contactList)
                 {
-                    foreach (entity.contact contact in crudContact.contactList)
+                    if (contact.id_contact == 0)
                     {
-                        if (contact.id_contact==0)
-                        {
-                            db.db.contacts.Add(contact);
-                        }
+                        db.db.contacts.Add(contact);
                     }
-                    db.SaveChanges();
                 }
+                db.SaveChanges();
+            }
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
         }
@@ -228,11 +231,11 @@ namespace cntrl.Controls
                 Controls.smartBoxContactSetting.Default.SearchFilter.Clear();
             }
 
-            if (rbtnCode.IsChecked==true)
+            if (rbtnCode.IsChecked == true)
             {
                 Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
             }
-            if (rbtnName.IsChecked==true)
+            if (rbtnName.IsChecked == true)
             {
                 Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
             }

@@ -103,57 +103,60 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
-            using(entity.db db = new entity.db())
+
+            var param = smartBoxContactSetting.Default.SearchFilter;
+
+            List<entity.contact> results = new List<entity.contact>();
+            var predicate = PredicateBuilder.True<entity.contact>();
+
+            predicate = (x => x.is_active);
+
+            if (Get_Customers)
+            {
+                predicate = predicate.And(x => x.is_customer == true);
+            }
+
+            if (Get_Suppliers)
+            {
+                predicate = predicate.And(x => x.is_supplier == true);
+            }
+
+            if (Get_Employees)
+            {
+                predicate = predicate.And(x => x.is_employee == true);
+            }
+
+            if (param.Contains("Code"))
+            {
+                predicate = predicate.And(x => x.code == SearchText);
+            }
+
+            if (param.Contains("Name"))
+            {
+                predicate = predicate.And(x => x.name == SearchText);
+            }
+
+            if (param.Contains("GovID"))
+            {
+                predicate = predicate.And(x => x.gov_code == SearchText);
+            }
+
+            if (param.Contains("Tel"))
+            {
+                predicate = predicate.And(x => x.telephone == SearchText);
+            }
+
+            predicate = predicate.And(x => x.contact_role.can_transact);
+
+            using (entity.db db = new entity.db())
             {
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
-                var param = smartBoxContactSetting.Default.SearchFilter;
-
-                List<entity.contact> results = new List<entity.contact>();
-                var predicate = PredicateBuilder.True<entity.contact>();
-
-                if (Get_Customers)
-                {
-                    predicate = predicate.And(x => x.is_customer == true);
-                }
-
-                if (Get_Suppliers)
-                {
-                    predicate = predicate.And(x => x.is_supplier == true);
-                }
-
-                if (Get_Employees)
-                {
-                    predicate = predicate.And(x => x.is_employee == true);
-                }
-
-                if (param.Contains("Code"))
-                {
-                    predicate = predicate.Or(x => x.code == SearchText);
-                }
-
-                if (param.Contains("Name"))
-                {
-                    predicate = predicate.Or(x => x.name == SearchText);
-                }
-
-                if (param.Contains("GovID"))
-                {
-                    predicate = predicate.Or(x => x.gov_code == SearchText);
-                }
-
-                if (param.Contains("Tel"))
-                {
-                    predicate = predicate.Or(x => x.telephone == SearchText);
-                }
-
-                predicate = predicate.And(x => x.contact_role.can_transact);
-                predicate = predicate.And(x => x.is_active);
-                
-
+                //Getting the data based on Predicates
                 results.AddRange(db.contacts
-                   .Where(predicate).OrderBy(x=>x.name).ToList());
+                    .Where(predicate).OrderBy(x => x.name).ToList());
+
                 Dispatcher.InvokeAsync(new Action(() =>
                 {
                     contactViewSource.Source = results;
@@ -216,7 +219,10 @@ namespace cntrl.Controls
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            Controls.smartBoxContactSetting.Default.SearchFilter.Clear();
+            if (Controls.smartBoxContactSetting.Default.SearchFilter != null)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Clear();
+            }
 
             if (rbtnCode.IsChecked==true)
             {

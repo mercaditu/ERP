@@ -3,7 +3,11 @@
   <Profiles />
   <Settings>
     <Setting Name="SearchFilter" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Name&lt;/string&gt;
+  &lt;string&gt;Code&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="is_principal" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

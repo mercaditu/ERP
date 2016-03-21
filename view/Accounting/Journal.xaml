@@ -3,8 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      
-                xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US"       
@@ -65,9 +64,9 @@
                   RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{Binding Source={StaticResource accounting_journalViewSource}}" 
                   IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="code" Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="auto"/>
-                <DataGridTextColumn x:Name="Cycle" Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:comment}" Width="auto"/>
-                <DataGridTextColumn x:Name="TranDate" Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:DAte}" Width="auto"/>
+                <DataGridTextColumn x:Name="code" Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="64"/>
+                <DataGridTextColumn x:Name="TranDate" Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:DAte}" Width="128"/>
+                <DataGridTextColumn x:Name="Cycle" Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:comment}" Width="*"/>
                 <DataGridTemplateColumn Width="Auto" Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -77,46 +76,36 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
             </DataGrid.Columns>
+            
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"   ItemsSource="{Binding Source={StaticResource accounting_journalaccounting_journal_detailViewSource}}" 
-                  RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" 
-                  IsEnabled="False" >
-                        <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_journalViewSource}}" 
-                SelectedValueBinding="{Binding id_journal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                DisplayMemberPath="code" 
-                SelectedValuePath="id_journal" Header="{lex:Loc Cognitivo:local:Code}" Width="auto"/>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
-                SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                DisplayMemberPath="name" IsReadOnly="True"
-                SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#}}" CellStyle="{StaticResource Number_CellStyle}"
-                                    Header="{lex:Loc Cognitivo:local:Debit}" Width="auto" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" CellStyle="{StaticResource Number_CellStyle}"
-                                    Header="{lex:Loc Cognitivo:local:Credit}" Width="auto" IsReadOnly="True"/>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
-                                SelectedValueBinding="{Binding id_currencyfx,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                DisplayMemberPath="app_currency.name" 
-                                SelectedValuePath="id_currencyfx" Header="{lex:Loc Cognitivo:local:Currency}" Width="auto"/>
-                            <!--<DataGridTextColumn x:Name="rateColumn" Binding="{Binding app_currencyfx.sell_value ,StringFormat={}{0:N2}}" Header="" Width="64" CellStyle="{StaticResource Number_CellStyle}"/>-->
-                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding trans_date, StringFormat=\{0:dd-MM-yyyy\},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn x:Name="commentColumn" Binding="{Binding accounting_journal.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Comment}" Width="auto"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid Background="{StaticResource AccentColor_Brush}">
+                        <DataGrid x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                                  ItemsSource="{Binding Source={StaticResource accounting_journalaccounting_journal_detailViewSource}}" 
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" IsReadOnly="True" Margin="8">
+                            <DataGrid.Columns>
+                                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
+                                                    SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                    DisplayMemberPath="code"
+                                                    SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Code}" Width="128"/>
+                                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
+                                                    SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                    DisplayMemberPath="name" IsReadOnly="True"
+                                                    SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="128"/>
+                                <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+                                                    CellStyle="{StaticResource Number_CellStyle}"
+                                                    Header="{lex:Loc Cognitivo:local:Debit}" Width="128" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+                                                    CellStyle="{StaticResource Number_CellStyle}"
+                                                    Header="{lex:Loc Cognitivo:local:Credit}" Width="128" IsReadOnly="True"/>
+                                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
+                                                    SelectedValueBinding="{Binding id_currencyfx,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                    DisplayMemberPath="app_currency.name" 
+                                                    SelectedValuePath="id_currencyfx" Header="{lex:Loc Cognitivo:local:Currency}" Width="64"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

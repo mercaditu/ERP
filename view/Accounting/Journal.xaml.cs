@@ -311,7 +311,6 @@ namespace Cognitivo.Accounting
             AccountingJournal.db = entity.db;
 
             crud_modal.Children.Add(AccountingJournal);
-
         }
 
        

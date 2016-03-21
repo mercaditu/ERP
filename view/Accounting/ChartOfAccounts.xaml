@@ -97,7 +97,7 @@
 
             <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=chbxAutomatic}">
                 <Label Content="{lex:Loc Integration}" Style="{StaticResource H2}"/>
-                <TextBlock Text="Select the data type that this account plan represents." Style="{StaticResource text_Instructions}"/>
+                <TextBlock Text="Select the data type that this account plan represents." Style="{StaticResource text_Instructions}" Margin="5,5,0,5"/>
 
                 <!-- Asset -->
 
@@ -195,12 +195,13 @@
                     <RadioButton x:Name="rbtnVAT" Content="{lex:Loc VAT}" Style="{StaticResource input_radiobutton}" Margin="5"  
                                         Tag="6" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                     <StackPanel Orientation="Horizontal" Margin="23,0" 
-						                Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnVAT}">
+						        Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnVAT}">
                         <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"
-                                          IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVAT, Converter={StaticResource TrueFalse}}"
-                                          ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
-                                          SelectedValuePath="id_vat" DisplayMemberPath="name"
-                                          SelectedValue="{Binding id_vat,Source={StaticResource accounting_chartViewSource}, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                  IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVAT, Converter={StaticResource TrueFalse}}"
+                                  ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
+                                  SelectedValuePath="id_vat" DisplayMemberPath="name"
+                                  SelectedValue="{Binding id_vat, Source={StaticResource accounting_chartViewSource}, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                        
                         <Label Content="or" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
                         <CheckBox x:Name="chkGenricVAT" Content="{lex:Loc Generic}" Style="{StaticResource input_checkbox}"
                                           IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

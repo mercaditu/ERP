@@ -164,6 +164,7 @@
     <Compile Include="Application\app_name_template_detail.cs" />
     <Compile Include="Application\app_name_template.cs" />
     <Compile Include="Brillo\Accounting\AccountingCycle.cs" />
+    <Compile Include="Brillo\Accounting\Asset\ValueAddedTax.cs" />
     <Compile Include="Brillo\Currency.cs" />
     <Compile Include="Brillo\DeepCopy.cs" />
     <Compile Include="Brillo\Document\DataSource.cs" />

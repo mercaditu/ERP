@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace entity.Brillo.Accounting.Liability
+namespace entity.Brillo.Accounting.Asset
 {
     class ValueAddedTax
     {

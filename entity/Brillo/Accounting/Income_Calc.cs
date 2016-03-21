@@ -74,18 +74,18 @@ namespace entity.Brillo.Accounting
                         INV_Chart = Inventory.find_Chart(context, null);
                     }
 
-                                if (INV_Chart != null)
-                                {
-                                    accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
-                                    INV_accounting_journal.accounting_chart = INV_Chart;
-                                    INV_accounting_journal.id_currencyfx = sales_invoice_detail.sales_invoice.id_currencyfx;
-                                    INV_accounting_journal.credit = sales_invoice_detail.SubTotal;
-                                    INV_accounting_journal.trans_date = sales_invoice.trans_date;
-                                    accounting_journal_detailList.Add(INV_accounting_journal);
-                                }
-                            }
+                    if (INV_Chart != null)
+                    {
+                        accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
+                        INV_accounting_journal.accounting_chart = INV_Chart;
+                        INV_accounting_journal.id_currencyfx = sales_invoice_detail.sales_invoice.id_currencyfx;
+                        INV_accounting_journal.credit = sales_invoice_detail.SubTotal;
+                        INV_accounting_journal.trans_date = sales_invoice.trans_date;
+                        accounting_journal_detailList.Add(INV_accounting_journal);
+                    }
+                }
 
-                Liability.ValueAddedTax VAT = new Liability.ValueAddedTax();
+                Asset.ValueAddedTax VAT = new Asset.ValueAddedTax();
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail.ToList())
                 {
                     foreach (app_vat_group_details app_vat_group in sales_invoice_detail.app_vat_group.app_vat_group_details)

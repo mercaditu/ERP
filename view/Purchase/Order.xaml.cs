@@ -49,12 +49,12 @@ namespace Cognitivo.Purchase
             if (OrderSetting.filterbyBranch)
             {
                 await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID && a.id_branch==_setting.branch_ID
-                                      ).Include(x => x.purchase_order_detail).ToListAsync();
+                                      ).OrderByDescending(x => x.trans_date).Include(x => x.purchase_order_detail).ToListAsync();
             }
             else
             {
                 await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID
-                                      ).Include(x => x.purchase_order_detail).ToListAsync();
+                                      ).OrderByDescending(x => x.trans_date).Include(x => x.purchase_order_detail).ToListAsync();
             }
             await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID
                                            ).Include(x => x.purchase_order_detail).ToListAsync();

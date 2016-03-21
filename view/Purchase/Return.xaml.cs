@@ -29,7 +29,7 @@ namespace Cognitivo.Purchase
         {
             //PurchaseReturn
             purchaseReturnViewSource = (CollectionViewSource)FindResource("purchase_returnViewSource");
-            dbContext.purchase_return.Where(a => a.id_company == _entity.company_ID).Load();
+            dbContext.purchase_return.Where(a => a.id_company == _entity.company_ID).OrderByDescending(x => x.trans_date).Load();
             purchaseReturnViewSource.Source = dbContext.purchase_return.Local;
             purchase_returnpurchase_return_detailViewSource = FindResource("purchase_returnpurchase_return_detailViewSource") as CollectionViewSource;
 

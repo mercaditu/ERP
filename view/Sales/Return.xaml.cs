@@ -36,7 +36,7 @@ namespace Cognitivo.Sales
 
 
                 salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-                dbContext.sales_return.Where(a => a.id_company == _entity.company_ID).Load();
+                dbContext.sales_return.Where(a => a.id_company == _entity.company_ID).OrderByDescending(x => x.trans_date).Load();
                 salesReturnViewSource.Source = dbContext.sales_return.Local;
                 sales_returnsales_return_detailViewSource = FindResource("sales_returnsales_return_detailViewSource") as CollectionViewSource;
 
@@ -126,8 +126,9 @@ namespace Cognitivo.Sales
         }
         private void toolBar_btnNew_Click(object sender)
         {
+            ReturnSetting _pref_SalesReturn = new ReturnSetting();
             sales_return objSalRtn = dbContext.New() ;
-         
+            objSalRtn.trans_date = DateTime.Now.AddDays(_pref_SalesReturn.TransDate_OffSet);
             dbContext.sales_return.Add(objSalRtn);
             salesReturnViewSource.View.MoveCurrentToLast();
         }
@@ -634,6 +635,24 @@ namespace Cognitivo.Sales
             {
                 toolBar.msgWarning("Please select");
             }
+        }
+
+        private void popupCustomize_Closed(object sender, EventArgs e)
+        {
+            ReturnSetting _pref_SalesReturn = new ReturnSetting();
+
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            ReturnSetting.Default.Save();
+            _pref_SalesReturn = ReturnSetting.Default;
+            popupCustomize.IsOpen = false;
+
+        }
+
+        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            popupCustomize.StaysOpen = false;
+            popupCustomize.IsOpen = true;
         }
 
       

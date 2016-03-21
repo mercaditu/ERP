@@ -53,11 +53,11 @@ namespace Cognitivo.Purchase
             Cognitivo.Purchase.InvoiceSetting InvoiceSetting = new Cognitivo.Purchase.InvoiceSetting();
             if (InvoiceSetting.filterbyBranch)
             {
-                await dbContext.purchase_invoice.Where(a => a.id_company == _setting.company_ID && a.id_branch==_setting.branch_ID).ToListAsync();   
+                await dbContext.purchase_invoice.Where(a => a.id_company == _setting.company_ID && a.id_branch == _setting.branch_ID).OrderByDescending(x => x.trans_date).ToListAsync();   
             }
             else
             {
-                await dbContext.purchase_invoice.Where(a => a.id_company == _setting.company_ID).ToListAsync();
+                await dbContext.purchase_invoice.Where(a => a.id_company == _setting.company_ID).OrderByDescending(x => x.trans_date).ToListAsync();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>

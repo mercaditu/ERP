@@ -83,13 +83,13 @@ namespace Cognitivo.Sales
             if (InvoiceSetting.filter_Branch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID && a.id_branch == branch_ID
-                                               && (a.is_head == true)).ToListAsync();
+                                               && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
                 
             }
             else
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID
-                                              && (a.is_head == true)).ToListAsync();
+                                              && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
             
@@ -170,7 +170,7 @@ namespace Cognitivo.Sales
                 cbxCurrency.get_DefaultCurrencyActiveRate();
 
                 SalesInvoiceDB.Entry(sales_invoice).State = EntityState.Added;
-                //sales_invoiceViewSource.View.Refresh();
+                sales_invoiceViewSource.View.Refresh();
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }
             catch (Exception ex)

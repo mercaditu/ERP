@@ -65,7 +65,7 @@ namespace Cognitivo.Sales
                     //a.trans_date >= navPagination.start_Date
                     // && a.trans_date <= navPagination.end_Date 
                     // && 
-                                             a.is_head == true)).Include("sales_order_detail").ToListAsync();
+                                             a.is_head == true)).OrderByDescending(x => x.trans_date).Include("sales_order_detail").ToListAsync();
             }
             else
             {
@@ -74,7 +74,7 @@ namespace Cognitivo.Sales
                     //a.trans_date >= navPagination.start_Date
                     // && a.trans_date <= navPagination.end_Date 
                     // && 
-                                             a.is_head == true)).Include("sales_order_detail").ToListAsync();
+                                             a.is_head == true)).OrderByDescending(x => x.trans_date).Include("sales_order_detail").ToListAsync();
             }
             
             await Dispatcher.InvokeAsync(new Action(() =>

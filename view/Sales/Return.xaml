@@ -14,6 +14,7 @@
     xmlns:lex="http://wpflocalizeextension.codeplex.com" 
     lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
     lex:ResxLocalizationProvider.DefaultDictionary="local"
+         xmlns:pref="clr-namespace:Cognitivo.Sales"
     lex:LocalizeDictionary.DesignCulture="en-US" 
     d:DesignHeight="450" d:DesignWidth="750" Loaded="Page_Loaded"
 	Title="Sales Return">
@@ -181,6 +182,26 @@
                 </ScrollViewer>
                
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1">
+                    <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal">
+                        <Label Content="A" Style="{StaticResource btn_Label}"/>
+                        <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
+                            <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
+
+                        <Popup x:Name="popupCustomize" IsOpen="False" StaysOpen="False" Closed="popupCustomize_Closed"
+                                   PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
+                            <Border BorderThickness="1" BorderBrush="Gray">
+                                <StackPanel Background="WhiteSmoke" Width="180">
+                                    <Label Content="{lex:Loc Sales Invoice Header}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                    <WrapPanel>
+                                        <TextBox Width="30" HorizontalAlignment="Left"   Margin="6,2,2,2"
+                                             Text="{Binding Source={x:Static pref:ReturnSetting.Default}, Path=TransDate_OffSet, Mode=TwoWay}"
+                                           ></TextBox>
+                                        <Label Content="Offset Date" Style="{StaticResource generic_Label}"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1"
                                    >
                         <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_checkbox}" Width="61" Content="Impex"/>

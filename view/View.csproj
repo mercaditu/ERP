@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V326\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V327\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>327</ApplicationRevision>
+    <ApplicationRevision>328</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -464,6 +464,11 @@
     </Compile>
     <Compile Include="Sales\Packing.xaml.cs">
       <DependentUpon>Packing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\ReturnSetting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ReturnSetting.settings</DependentUpon>
     </Compile>
     <Compile Include="Security\UserRole.xaml.cs">
       <DependentUpon>UserRole.xaml</DependentUpon>
@@ -1125,6 +1130,10 @@
     <None Include="Sales\POS.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>POS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Sales\ReturnSetting.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ReturnSetting.Designer.cs</LastGenOutput>
     </None>
     <None Include="View_TemporaryKey.pfx" />
   </ItemGroup>

@@ -110,8 +110,6 @@ namespace cntrl.Controls
 
                 List<entity.contact> results = new List<entity.contact>();
                 var param = smartBoxContactSetting.Default.SearchFilter;
-                var propertyInfo = typeof(entity.contact).GetProperty(param);
-               
                 var predicate = PredicateBuilder.True<entity.contact>();
 
                 if (Get_Customers)

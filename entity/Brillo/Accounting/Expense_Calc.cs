@@ -69,7 +69,7 @@ namespace entity.Brillo.Accounting
                                 accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
                                 INV_accounting_journal.accounting_chart = INV_Chart;
                                 INV_accounting_journal.trans_date = purchase_invoice.trans_date;
-                                INV_accounting_journal.debit = purchase_invoice_detail.SubTotal;
+                                INV_accounting_journal.debit = Math.Round(purchase_invoice_detail.SubTotal,2);
                                 INV_accounting_journal.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
                                 accounting_journal_detailList.Add(INV_accounting_journal);
                             }
@@ -90,7 +90,7 @@ namespace entity.Brillo.Accounting
                             accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
                             INV_accounting_journal.accounting_chart = Exp_Chart;
                             INV_accounting_journal.trans_date = purchase_invoice.trans_date;
-                            INV_accounting_journal.debit = purchase_invoice_detail.SubTotal;
+                            INV_accounting_journal.debit =Math.Round( purchase_invoice_detail.SubTotal,2);
                             INV_accounting_journal.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
                             accounting_journal_detailList.Add(INV_accounting_journal);
                         }
@@ -108,7 +108,7 @@ namespace entity.Brillo.Accounting
                             accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
                             INV_accounting_journal.accounting_chart = VAT_Chart;
                             INV_accounting_journal.trans_date = purchase_invoice.trans_date;
-                            INV_accounting_journal.debit = Vat.calculate_Vat(purchase_invoice_detail.unit_cost, app_vat_group.app_vat.coefficient);
+                            INV_accounting_journal.debit = Math.Round(Vat.calculate_Vat(purchase_invoice_detail.unit_cost, app_vat_group.app_vat.coefficient),2);
                             INV_accounting_journal.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
                             accounting_journal_detailList.Add(INV_accounting_journal);
                         }
@@ -127,7 +127,7 @@ namespace entity.Brillo.Accounting
                         accounting_journal_detail AR_accounting_journal_detail = new accounting_journal_detail();
                         AR_accounting_journal_detail.accounting_chart = AR_Chart;
                         AR_accounting_journal_detail.trans_date = purchase_invoice.trans_date;
-                        AR_accounting_journal_detail.debit = purchase_invoice.GrandTotal;
+                        AR_accounting_journal_detail.debit = Math.Round(purchase_invoice.GrandTotal,2);
                         AR_accounting_journal_detail.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
                         accounting_journal_detailList.Add(AR_accounting_journal_detail);
                     }
@@ -156,7 +156,7 @@ namespace entity.Brillo.Accounting
                             accounting_journal_detail PAYaccounting_journal_detail = new accounting_journal_detail();
                             PAYaccounting_journal_detail.accounting_chart = AR_Chart;
                             PAYaccounting_journal_detail.trans_date = schedual.trans_date;
-                            PAYaccounting_journal_detail.credit = schedual.debit;
+                            PAYaccounting_journal_detail.credit = Math.Round(schedual.debit,2);
                             PAYaccounting_journal_detail.id_currencyfx = schedual.app_currencyfx.id_currencyfx;
                             accounting_journal_detailList.Add(PAYaccounting_journal_detail);
                         }
@@ -172,8 +172,8 @@ namespace entity.Brillo.Accounting
                         PAYaccounting_journal_detail.id_chart = accounting_journal_detail.accounting_chart.id_chart;
                         PAYaccounting_journal_detail.accounting_chart = accounting_journal_detail.accounting_chart;
                         PAYaccounting_journal_detail.trans_date = accounting_journal_detail.trans_date;
-                        PAYaccounting_journal_detail.credit = accounting_journal_detail.credit;
-                        PAYaccounting_journal_detail.debit = accounting_journal_detail.debit;
+                        PAYaccounting_journal_detail.credit = Math.Round(accounting_journal_detail.credit,2);
+                        PAYaccounting_journal_detail.debit = Math.Round(accounting_journal_detail.debit,2);
                         PAYaccounting_journal_detail.id_currencyfx = accounting_journal_detail.id_currencyfx;
                         accounting_journal.accounting_journal_detail.Add(PAYaccounting_journal_detail);
                         
@@ -181,8 +181,8 @@ namespace entity.Brillo.Accounting
                     else
                     {
                         accounting_journal_detail PAYaccounting_journal_detail = accounting_journal.accounting_journal_detail.Where(x => x.id_chart == id_chart).FirstOrDefault();
-                        PAYaccounting_journal_detail.credit += accounting_journal_detail.credit;
-                        PAYaccounting_journal_detail.debit += accounting_journal_detail.debit;
+                        PAYaccounting_journal_detail.credit += Math.Round(accounting_journal_detail.credit,2);
+                        PAYaccounting_journal_detail.debit += Math.Round(accounting_journal_detail.debit,2);
                     }
                 }
                 accounting_journal.purchase_invoice.Add(purchase_invoice);

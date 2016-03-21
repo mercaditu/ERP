@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:crud="clr-namespace:cntrl.Curd"
-             xmlns:prf="clr-namespace:cntrl.Controls"
+             xmlns:pref="clr-namespace:cntrl.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:Converter="clr-namespace:cntrl.Converters"
                 xmlns:entity="clr-namespace:entity;assembly=entity"
                 xmlns:lex="http://wpflocalizeextension.codeplex.com" 
                 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -13,6 +14,7 @@
                 lex:LocalizeDictionary.DesignCulture="en-US" 
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4">
     <UserControl.Resources>
+        <Converter:sbxContact_CheckType x:Key="sbxContact_CheckType"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid HorizontalAlignment="Right" Width="256">
@@ -45,10 +47,18 @@
                                        Foreground="{StaticResource Label_ImportantColor}" VerticalAlignment="Center"/>
                                 <Label Style="{StaticResource input_label}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" Content="{lex:Loc Search}"/>
                             </StackPanel>
-                            <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" Checked="RadioButton_Checked"/>
-                            <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}" Checked="RadioButton_Checked"/>
-                            <CheckBox x:Name="rbtnGov_ID" Style="{StaticResource input_checkbox}" Content="{lex:Loc GovernmentID}" Checked="RadioButton_Checked"/>
-                            <CheckBox x:Name="rbtnTel" Style="{StaticResource input_checkbox}" Content="{lex:Loc Telephone}" Checked="RadioButton_Checked"/>
+                            <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" 
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=1}"
+                                      Checked="RadioButton_Checked"/>
+                            <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=2}" 
+                                      Checked="RadioButton_Checked"/>
+                            <CheckBox x:Name="rbtnGov_ID" Style="{StaticResource input_checkbox}" Content="{lex:Loc GovernmentID}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=3}" 
+                                      Checked="RadioButton_Checked"/>
+                            <CheckBox x:Name="rbtnTel" Style="{StaticResource input_checkbox}" Content="{lex:Loc Telephone}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxContactSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxContact_CheckType}, ConverterParameter=4}" 
+                                      Checked="RadioButton_Checked"/>
                         </StackPanel>
                     </Popup>
                 </StackPanel>

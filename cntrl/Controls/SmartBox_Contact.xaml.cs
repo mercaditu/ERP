@@ -18,7 +18,9 @@ namespace cntrl.Controls
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
+        
         entity.dbContext db = new entity.dbContext();
+
         public event RoutedEventHandler Select;
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
@@ -59,6 +61,24 @@ namespace cntrl.Controls
         {
             InitializeComponent();
             contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
+
+            if (rbtnCode.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
+            }
+            if (rbtnName.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
+            }
+            if (rbtnGov_ID.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
+            }
+            if (rbtnTel.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
+            }
+
         }
 
         private void StartSearch(object sender, KeyEventArgs e)
@@ -126,6 +146,7 @@ namespace cntrl.Controls
             }
 
             var predicateOR = PredicateBuilder.False<entity.contact>();
+            
             if (param.Contains("Code"))
             {
                 predicateOR = predicateOR.Or(x => x.code == SearchText);

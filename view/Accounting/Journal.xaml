@@ -28,8 +28,7 @@
     </Page.Resources>
     <Grid Background="White" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="46"/>
-            <RowDefinition Height="46"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -61,25 +60,6 @@
             <Button Content="{lex:Loc Template}" Click="Button_Click_1" Margin="8,4"/>
             <Label Foreground="{StaticResource Label_ImportantColor}" FontWeight="Medium" Content="{lex:Loc Code}"/>
             <Button Content="{lex:Loc Order}" Click="Button_Click_2" Margin="8,4"/>
-        </StackPanel>
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center">
-            <TextBlock Text="{Binding AccountDate, ElementName=JournalPage, Mode=TwoWay, StringFormat=D, UpdateSourceTrigger=PropertyChanged}" 
-				       HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray"  MouseDown="Today_MouseDown"/>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label Content="&#xE893;" Style="{StaticResource ico_Label}" Cursor="Hand"
-					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="RRMonth_MouseDown"/>
-                <Label Content="&#xE895;" Style="{StaticResource ico_Label}" Cursor="Hand"
-					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="RRDay_MouseDown"/>
-
-                <Slider x:Name="slider" Width="256" VerticalAlignment="Center" Minimum="1" Ticks="1"
-					Value="{Binding sliderValue, ElementName=JournalPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-					Focusable="False" SmallChange="1" ValueChanged="slider_ValueChanged"/>
-
-                <Label Content="&#xE894;" Style="{StaticResource ico_Label}" Cursor="Hand"
-					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="FFDay_MouseDown"/>
-                <Label Content="&#xE892;" Style="{StaticResource ico_Label}" Cursor="Hand"  MouseDown="FFMonth_MouseDown"
-					HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
-            </StackPanel>
         </StackPanel>
         <DataGrid Grid.Row="2" x:Name="accounting_journalDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Column="1" 
                   RowDetailsVisibilityMode="VisibleWhenSelected"  ItemsSource="{Binding Source={StaticResource accounting_journalViewSource}}" 
@@ -146,5 +126,24 @@
                        
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding AccountDate, ElementName=JournalPage, Mode=TwoWay, StringFormat=D, UpdateSourceTrigger=PropertyChanged}" 
+				       HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray"  MouseDown="Today_MouseDown"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Content="&#xE893;" Style="{StaticResource ico_Label}" Cursor="Hand"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="RRMonth_MouseDown"/>
+                <Label Content="&#xE895;" Style="{StaticResource ico_Label}" Cursor="Hand"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="RRDay_MouseDown"/>
+
+                <Slider x:Name="slider" Width="256" VerticalAlignment="Center" Minimum="1" Ticks="1"
+					Value="{Binding sliderValue, ElementName=JournalPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					Focusable="False" SmallChange="1" ValueChanged="slider_ValueChanged"/>
+
+                <Label Content="&#xE894;" Style="{StaticResource ico_Label}" Cursor="Hand"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="FFDay_MouseDown"/>
+                <Label Content="&#xE892;" Style="{StaticResource ico_Label}" Cursor="Hand"  MouseDown="FFMonth_MouseDown"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

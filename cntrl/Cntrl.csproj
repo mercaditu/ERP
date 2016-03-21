@@ -184,6 +184,7 @@
       <DependentUpon>TextBox_Template.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\Expiry2ColorConverter.cs" />
+    <Compile Include="Converters\sbxContact_CheckType.cs" />
     <Compile Include="Converters\Status2ColorConverter.cs" />
     <Compile Include="Converters\State2IconConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
@@ -427,7 +428,7 @@
     <Resource Include="Resources\Entypo.ttf" />
     <Resource Include="Resources\cognitivo.ttf" />
     <None Include="Controls\smartBoxContactSetting.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>smartBoxContactSetting.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />

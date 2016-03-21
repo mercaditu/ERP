@@ -165,7 +165,7 @@
 
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                        <Label Content="{lex:Loc UnitPrice}" Style="{StaticResource input_label}"/>
+                        <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_cost_est,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                     </StackPanel>
 

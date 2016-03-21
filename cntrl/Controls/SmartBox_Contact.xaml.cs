@@ -108,8 +108,9 @@ namespace cntrl.Controls
                 db.Configuration.LazyLoadingEnabled = false;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
-                List<entity.contact> results = new List<entity.contact>();
                 var param = smartBoxContactSetting.Default.SearchFilter;
+
+                List<entity.contact> results = new List<entity.contact>();
                 var predicate = PredicateBuilder.True<entity.contact>();
 
                 if (Get_Customers)
@@ -131,7 +132,7 @@ namespace cntrl.Controls
                 {
                     predicate = predicate.Or(x => x.code == SearchText);
                 }
-                
+
                 if (param.Contains("Name"))
                 {
                     predicate = predicate.Or(x => x.name == SearchText);
@@ -141,7 +142,7 @@ namespace cntrl.Controls
                 {
                     predicate = predicate.Or(x => x.gov_code == SearchText);
                 }
-                
+
                 if (param.Contains("Tel"))
                 {
                     predicate = predicate.Or(x => x.telephone == SearchText);

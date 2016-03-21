@@ -439,8 +439,16 @@ namespace Cognitivo.Production
                     item_request_detail.date_needed_by = ItemRequest.neededDate;
                     item_request_detail.id_order_detail = data.id_order_detail;
                     item_request_detail.urgency = ItemRequest.Urgencies;
-                    item_request_detail.comment = ItemRequest.comment;
+                   
                     item_request_detail.id_project_task = data.project_task.id_project_task;
+                    string comment = "";
+                    foreach (item_dimension item in data.item.item_dimension)
+                    {
+                        comment += item.value.ToString();
+                        comment += "X";
+                        
+                    }
+                    item_request_detail.comment = comment.Substring(0, comment.Length - 1);
                     int idItem = data.item.id_item;
                     item_request_detail.id_item = idItem;
                     item_request_detail.quantity = data.quantity;

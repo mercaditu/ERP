@@ -176,6 +176,8 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item_request_detail.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="item" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding item_request_detail.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="item" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="decision" Width="*"/>
                             <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

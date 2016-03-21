@@ -406,6 +406,8 @@ namespace Cognitivo.Production
                         _production_execution_detail.id_contact = ((contact)combo.Data).id_contact;
                         _production_execution_detail.contact = (contact)combo.Data;
                         _production_execution_detail.quantity = 1;
+                        _production_execution_detail.item = production_order_detail.item;
+                        _production_execution_detail.id_item = production_order_detail.item.id_item;
                         _production_execution.RaisePropertyChanged("quantity");
                         if (cmbcoefficient.SelectedValue != null)
                         {

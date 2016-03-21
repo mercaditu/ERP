@@ -154,6 +154,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.Bank", "Bank", "BankAccount");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.Account", "Account", "BankAccountTrans");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.FiscalPeriod", "FiscalPeriod", "BankAccountTrans");
+            dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "");
 
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Transactions, "Configs.Condition", "Condition", "Condition");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Transactions, "Configs.Contract", "Contract", "Contract");

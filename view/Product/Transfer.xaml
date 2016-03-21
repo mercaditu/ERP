@@ -148,8 +148,8 @@
                                   ItemsSource="{Binding Source={StaticResource transfercostViewSource}}" 
                                   Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding costname,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="name" Width="SizeToHeader"/>
-                                <DataGridTextColumn Binding="{Binding cost,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="cost" Width="SizeToHeader"/>
+                                <DataGridTextColumn Binding="{Binding costname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Name}" Width="SizeToHeader"/>
+                                <DataGridTextColumn Binding="{Binding cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Cost}" Width="SizeToHeader"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
@@ -162,6 +162,8 @@
                        btnDelete_Click="toolBar_btnDelete_Click" 
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
+                       btnApprove_Click="toolBar_btnApprove_Click"
+                       btnAnull_Click="toolBar_btnAnull_Click"
                        State="{Binding State, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                        appName="Transfer"/>
     </Grid>

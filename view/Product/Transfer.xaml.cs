@@ -42,86 +42,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            try
-            {
-                item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
-
-                app_document_range app_document_range = ProductTransferDB.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
-                item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
-                item_transfer.RaisePropertyChanged("number");
-
-                item_transfer.app_branch_origin = (app_branch)id_branch_originComboBox.SelectedItem;
-                item_transfer.app_branch_destination = (app_branch)id_branch_destinComboBox.SelectedItem;
-                item_transfer.app_location_origin = ((app_branch)id_branch_originComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
-                item_transfer.app_location_destination = ((app_branch)id_branch_destinComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
-
-                IEnumerable<DbEntityValidationResult> validationresult = ProductTransferDB.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    for (int i = 0; i < item_transfer_detailDataGrid.Items.Count - 1; i++)
-                    {
-
-                        item_transfer_detail item = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
-
-                        item_movement item_movement_origin = new item_movement();
-                        item_movement_origin.debit = 0;
-                        item_movement_origin.credit = item.quantity_origin;
-                        item_movement_origin.id_application = global::entity.App.Names.SalesInvoice;
-                        item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
-                        item_movement_origin.transaction_id = 0;
-                        item_movement_origin.status = Status.Stock.InStock;
-                        item_movement_origin.trans_date = item.item_transfer.trans_date;
-                        if (item.item_product.id_item_product != 0)
-                        {
-                            if (ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
-                            {
-                                item_movement_origin.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
-                            }
-                        }
-
-                        ProductTransferDB.item_movement.Add(item_movement_origin);
-                        item_movement item_movement_dest = new item_movement();
-                        item_movement_dest.debit = item.quantity_destination;
-                        item_movement_dest.credit = 0;
-                        item_movement_dest.id_application = global::entity.App.Names.PurchaseInvoice;
-                        item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
-                        item_movement_dest.transaction_id = 0;
-                        item_movement_dest.status = Status.Stock.InStock;
-                        item_movement_dest.trans_date = item.item_transfer.trans_date;
-                        if (item.item_product.id_item_product != 0)
-                        {
-                            if (ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault() != null)
-                            {
-                                item_movement_dest.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item.item_product.id_item_product).FirstOrDefault().id_item_product;
-                            }
-
-                        }
-                        clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-                        foreach (Class.transfercost _clsTotalGrid in clsTotalGrid)
-                        {
-                            if (item.quantity_origin == 0)
-                            {
-                                item_movement_value item_movement_detail = new item_movement_value();
-                                item_movement_detail.unit_value = _clsTotalGrid.cost / item.quantity_destination;
-                                item_movement_detail.id_currencyfx = 0;
-                                item_movement_detail.comment = String.Format("Transaction from transfer");
-                                item_movement_origin.item_movement_value.Add(item_movement_detail);
-                            }
-
-                        }
-                        ProductTransferDB.item_movement.Add(item_movement_dest);
-                    }
-
-                    ProductTransferDB.SaveChangesAsync();
-
-                   entity.Brillo.Document.Start.Automatic(item_transfer, app_document_range);
-                    toolBar.msgSaved();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            ProductTransferDB.SaveChanges();
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -196,6 +117,96 @@ namespace Cognitivo.Product
             }
             item_transferViewSource.View.Refresh();
             item_transferitem_transfer_detailViewSource.View.Refresh();
+        }
+
+        private void toolBar_btnApprove_Click(object sender)
+        {
+            try
+            {
+                item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+
+                app_document_range app_document_range = ProductTransferDB.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
+                item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                item_transfer.RaisePropertyChanged("number");
+
+                item_transfer.app_branch_origin = (app_branch)id_branch_originComboBox.SelectedItem;
+                item_transfer.app_branch_destination = (app_branch)id_branch_destinComboBox.SelectedItem;
+                item_transfer.app_location_origin = ((app_branch)id_branch_originComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
+                item_transfer.app_location_destination = ((app_branch)id_branch_destinComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
+
+                IEnumerable<DbEntityValidationResult> validationresult = ProductTransferDB.GetValidationErrors();
+                if (validationresult.Count() == 0)
+                {
+                    for (int i = 0; i < item_transfer_detailDataGrid.Items.Count - 1; i++)
+                    {
+                        item_transfer_detail item_transfer_detail = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
+
+                        item_movement item_movement_origin = new item_movement();
+                        item_movement_origin.debit = 0;
+                        item_movement_origin.credit = item_transfer_detail.quantity_origin;
+                        item_movement_origin.id_application = global::entity.App.Names.Transfer;
+                        item_movement_origin.id_location = item_transfer.app_location_origin.id_location;
+                        item_movement_origin.transaction_id = 0;
+                        item_movement_origin.status = Status.Stock.InStock;
+                        item_movement_origin.trans_date = item_transfer_detail.item_transfer.trans_date;
+                        if (item_transfer_detail.item_product.id_item_product != 0)
+                        {
+                            if (ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault() != null)
+                            {
+                                item_movement_origin.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault().id_item_product;
+                            }
+                        }
+
+                        ProductTransferDB.item_movement.Add(item_movement_origin);
+                        item_movement item_movement_dest = new item_movement();
+                        item_movement_dest.debit = item_transfer_detail.quantity_destination;
+                        item_movement_dest.credit = 0;
+                        item_movement_dest.id_application = global::entity.App.Names.Transfer;
+                        item_movement_dest.id_location = item_transfer.app_location_destination.id_location;
+                        item_movement_dest.transaction_id = 0;
+                        item_movement_dest.status = Status.Stock.InStock;
+                        item_movement_dest.trans_date = item_transfer_detail.item_transfer.trans_date;
+                        if (item_transfer_detail.item_product.id_item_product != 0)
+                        {
+                            if (ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault() != null)
+                            {
+                                item_movement_dest.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault().id_item_product;
+                            }
+                        }
+
+                        clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
+                        foreach (Class.transfercost _clsTotalGrid in clsTotalGrid)
+                        {
+                            if (item_transfer_detail.quantity_origin == 0)
+                            {
+                                item_movement_value item_movement_value = new item_movement_value();
+                                item_movement_value.unit_value = _clsTotalGrid.cost / item_transfer_detail.quantity_destination;
+                                item_movement_value.id_currencyfx = 0;
+                                item_movement_value.comment = String.Format("Transaction from transfer");
+                                item_movement_origin.item_movement_value.Add(item_movement_value);
+                            }
+
+                        }
+                        ProductTransferDB.item_movement.Add(item_movement_dest);
+                    }
+
+                    item_transfer.status = Status.Documents_General.Approved;
+
+                    ProductTransferDB.SaveChangesAsync();
+
+                    entity.Brillo.Document.Start.Automatic(item_transfer, app_document_range);
+                    toolBar.msgSaved();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
+
+        private void toolBar_btnAnull_Click(object sender)
+        {
+
         }
     }
 }

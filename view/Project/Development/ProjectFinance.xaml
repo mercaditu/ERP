@@ -161,12 +161,12 @@
                     <StackPanel x:Name="stpcode"  IsEnabled="{Binding sales_detail, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
                                                                    Converter={StaticResource salesorderdetailtoEnable}}">
 
-                        <Button Content="{lex:Loc SalesOrder}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="Button_Click"/>
-
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_cost_est,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
+                        <Button Content="{lex:Loc SalesOrder}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
 
                   

@@ -47,8 +47,10 @@
                  ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding app_location_origin.app_branch.name}" recordSecondaryName="{Binding trans_date}"
-                                   recordName="{Binding app_location_destination.app_branch.name}"     Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <cntrl:navList recordCode="{Binding app_location_origin.app_branch.name}" 
+                                   recordSecondaryName="{Binding trans_date}"
+                                   recordName="{Binding app_location_destination.app_branch.name}"
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

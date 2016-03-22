@@ -2,7 +2,8 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
@@ -42,7 +43,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Grid Grid.Column="1" Grid.Row="1">
-            <cntrl:SearchableTextbox x:Name="itemComboBox" Margin="4" focusGrid="True" Width="256" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" 
+            <!--<cntrl:SearchableTextbox x:Name="itemComboBox" Margin="4" focusGrid="True" Width="256" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" 
                                              CollectionViewSource="{StaticResource itemViewSource}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                                              KeyDown="itemComboBox_KeyDown" MouseDoubleClick="itemComboBox_MouseDoubleClick">
                 <cntrl:SearchableTextbox.Columns>
@@ -50,8 +51,8 @@
                     <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Item}" ForProperty="name" Binding="{Binding name, Mode=Default}"/>
                     <cntrl:SmartBoxColumn Header="ID" ForProperty="id_item" Binding="{Binding id_item, Mode=Default}"/>
                 </cntrl:SearchableTextbox.Columns>
-            </cntrl:SearchableTextbox>
-            <DataGrid x:Name="item_movementDataGrid" Margin="0,40,0,0"
+            </cntrl:SearchableTextbox>-->
+            <DataGrid x:Name="item_movementDataGrid"
                     VerticalScrollBarVisibility="Auto"
                     AutoGenerateColumns="False" Grid.Column="1"
                     EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="item_movementDataGrid_SelectionChanged"
@@ -79,7 +80,11 @@
                 </DataGrid.RowDetailsTemplate>
             </DataGrid>
         </Grid>
-    
+
+        <controls:SmartBox_Item Grid.Column="1" Width="155" Margin="8"
+                                VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Select="SmartBox_Item_Select"/>
+        
         <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <TextBlock Text="{Binding ElementName=InventoryPage, Path=InventoryDate,
                                       StringFormat=D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

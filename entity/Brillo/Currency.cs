@@ -29,7 +29,7 @@ namespace entity.Brillo
         /// <param name="app_currencyfx"></param>
         /// <param name="Modules"></param>
         /// <returns></returns>
-        public static decimal convert_Value(decimal originalValue, int id_app_currencyfx, App.Names Modules)
+        public static decimal convert_Value(decimal originalValue, int id_app_currencyfx, App.Modules? Modules)
         {
             decimal rate = 0;
             app_currencyfx app_currencyfx = null;
@@ -38,9 +38,17 @@ namespace entity.Brillo
             {
                 app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
 
+
                 if (app_currencyfx != null)
                 {
-                    rate = get_specificRate(app_currencyfx.id_currencyfx, Modules);
+                    if (Modules == App.Modules.Sales)
+                    {
+                        rate = app_currencyfx.buy_value;
+                    }
+                    else //Purchase Rates
+                    {
+                        rate = app_currencyfx.sell_value;
+                    }
 
                     if (app_currencyfx.app_currency == null)
                     {
@@ -71,28 +79,20 @@ namespace entity.Brillo
             decimal r = 0;
             using (db db = new db())
             {
-                if (application == App.Names.SalesBudget ||
-                    application == App.Names.SalesOrder || 
-                    application == App.Names.SalesInvoice)
+                if (application == App.Names.SalesOrder 
+                    || application == App.Names.SalesInvoice)
                 {
                     r = db.app_currencyfx.Where(x => x.id_currency == id_currency && x.is_active == true).FirstOrDefault().buy_value;
-                }
-                else if (application == App.Names.PurchaseTender ||
-                        application == App.Names.PurchaseOrder || 
-                        application == App.Names.PurchaseInvoice)
+                } 
+                else if (application == App.Names.PurchaseOrder 
+                         || application == App.Names.PurchaseInvoice)
                 {
                     r = db.app_currencyfx.Where(x => x.id_currency == id_currency && x.is_active == true).FirstOrDefault().sell_value;
                 }
             }
             return r;
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id_currencyfx"></param>
-        /// <param name="application"></param>
-        /// <returns></returns>
+
         public static decimal get_specificRate(int id_currencyfx, App.Names application)
         {
             decimal r = 0;

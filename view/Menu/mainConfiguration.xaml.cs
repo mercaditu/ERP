@@ -36,7 +36,7 @@ namespace Cognitivo.Menu
             }
             catch 
             {
-                MessageBox.Show(configName);
+                //MessageBox.Show(configName);
                 dynamic taskAuth = Task.Factory.StartNew(() => load_Thread(configName));
             }
         }

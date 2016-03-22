@@ -50,8 +50,7 @@ namespace entity.Brillo.Logic
                                              detail.app_location,
                                              detail.quantity,
                                              sales_invoice.trans_date,
-                                             comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name),
-                                             detail.unit_price
+                                             comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
                                              );
                 }
                 //Return List so we can save into context.
@@ -76,8 +75,7 @@ namespace entity.Brillo.Logic
                                              (int)sales_return_detail.id_location,
                                              sales_return_detail.quantity,
                                              sales_return.trans_date,
-                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name),
-                                             sales_return_detail.unit_price
+                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name)
                                              ));
                 }
                 //Return List so we can save into context.
@@ -107,8 +105,7 @@ namespace entity.Brillo.Logic
                                              purchase_return_detail.app_location,
                                              purchase_return_detail.quantity,
                                              purchase_return.trans_date,
-                                             comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name),
-                                             purchase_return_detail.unit_cost
+                                             comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name)
                                              );
                 }
                 //Return List so we can save into context.
@@ -149,8 +146,7 @@ namespace entity.Brillo.Logic
                                              sales_order_detail.app_location,
                                              sales_order_detail.quantity,
                                               sales_order.trans_date,
-                                             comment_Generator(App.Names.SalesOrder, sales_order.number, sales_order.contact.name),
-                                             sales_order_detail.unit_price
+                                             comment_Generator(App.Names.SalesOrder, sales_order.number, sales_order.contact.name)
                                              );
                 }
 
@@ -179,8 +175,7 @@ namespace entity.Brillo.Logic
                                              purchase_invoice_detail.app_location,
                                              purchase_invoice_detail.quantity,
                                               purchase_invoice.trans_date,
-                                             comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number, purchase_invoice.contact.name),
-                                             purchase_invoice_detail.unit_cost
+                                             comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number, purchase_invoice.contact.name)
                                              );
 
                         //Adding into List
@@ -196,8 +191,7 @@ namespace entity.Brillo.Logic
                                               (int)purchase_invoice_detail.id_location,
                                               purchase_invoice_detail.quantity,
                                               purchase_invoice.trans_date,
-                                              comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number, purchase_invoice.contact.name),
-                                              purchase_invoice_detail.unit_cost
+                                              comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number, purchase_invoice.contact.name)
                                               ));
                 }
                 //Return List so we can save into context.
@@ -225,8 +219,7 @@ namespace entity.Brillo.Logic
                                                 (int)purchase_order_detail.id_location,
                                                 purchase_order_detail.quantity,
                                                 purchase_order.trans_date,
-                                                comment_Generator(App.Names.PurchaseOrder, purchase_order.number, purchase_order.contact.name),
-                                                purchase_order_detail.unit_cost
+                                                comment_Generator(App.Names.PurchaseOrder, purchase_order.number, purchase_order.contact.name)
                                                 ));
                     }
                 }
@@ -254,8 +247,7 @@ namespace entity.Brillo.Logic
                                                detail.quantity,
                                                         production_execution.trans_date,
                                                         comment_Generator(App.Names.ProductionExecution,
-                                                        production_execution.id_production_execution.ToString(), ""),
-                                               detail.unit_cost
+                                                        production_execution.id_production_execution.ToString(), "")
                                                );
 
                             }
@@ -270,8 +262,7 @@ namespace entity.Brillo.Logic
                                                detail.quantity,
                                                 production_execution.trans_date,
                                            comment_Generator(App.Names.ProductionExecution,
-                                                        production_execution.id_production_execution.ToString(), ""),
-                                               detail.unit_cost
+                                                        production_execution.id_production_execution.ToString(), "")
                                             ));
 
                     }
@@ -320,7 +311,7 @@ namespace entity.Brillo.Logic
         public List<item_movement> Debit_MovementLIST( entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
                                                        app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                                        decimal Quantity, DateTime TransDate,
-                                          string Comment, decimal unit_price)
+                                          string Comment)
         {
 
             List<item_movement> Items_InStockLIST = new List<item_movement>();
@@ -421,7 +412,7 @@ namespace entity.Brillo.Logic
      
         public item_movement Credit_Movement( entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
                                               int CurrencyFXID, item_product item_product, int LocationID,
-                                              decimal Quantity, DateTime TransDate, string Comment, decimal unit_price)
+                                              decimal Quantity, DateTime TransDate, string Comment)
         {
                 if (Quantity > 0)
                 {
@@ -454,49 +445,32 @@ namespace entity.Brillo.Logic
         }
 
         public List<item_movement> DebitCredit_MovementList( entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
-                                              int CurrencyFXID, item_product item_product, int LocationID,
+                                              app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                               decimal Quantity, DateTime TransDate, string Comment, decimal unit_price)
         {
             List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
 
-            item_movement credit_movement = new item_movement();
-            credit_movement = Credit_Movement(Status, ApplicationID, TransactionID, CurrencyFXID,
-                                              item_product, LocationID, Quantity, TransDate,
-                                              Comment, unit_price);
-
             //Bring Debit Function form above. IT should handle child and parent values.
-            item_movement debit_movement = new item_movement();
-            if (Quantity > 0)
+            List<item_movement> debit_movementLIST = new List<item_movement>();
+            debit_movementLIST = Debit_MovementLIST(Status, ApplicationID, TransactionID, app_currencyfx, 
+                                                    item_product, app_location, Quantity, TransDate, Comment);
+
+            List<item_movement> credit_movementLIST = new List<item_movement>();
+            foreach (item_movement debit_movement in debit_movementLIST)
             {
-                item_movement item_movement = new item_movement();
-                //Adding into List if Movement List for this Location is empty.
-                item_movement.comment = Comment;
-                item_movement.id_item_product = item_product.id_item_product;
-                item_movement.debit = Quantity;
-                item_movement.credit = 0;
-                item_movement.status = Status;
-                item_movement.id_location = LocationID;
-                item_movement._parent = null;
-                item_movement.id_application = ApplicationID;
-                item_movement.transaction_id = TransactionID;
-                item_movement.trans_date = TransDate;
-
-                item_movement._parent = credit_movement;
-
-                //Logic for Value in case Parent does not Exist, we will take from 
-                item_movement_value item_movement_value = new item_movement_value();
-                //logic to check fx rate of parent.
-                item_movement_value.unit_value = credit_movement.item_movement_value.Sum(x => x.unit_value); 
-                item_movement_value.id_currencyfx = credit_movement.item_movement_value.Max(x => x.id_currencyfx);
-                item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
-                item_movement.item_movement_value.Add(item_movement_value);
-                //Adding into List
-                Final_ItemMovementLIST.Add(item_movement);
+                item_movement credit_movement = new item_movement();
+                credit_movement = Credit_Movement(Status, ApplicationID, TransactionID, app_currencyfx.id_currencyfx,
+                                              item_product, app_location.id_location, debit_movement.debit, TransDate,
+                                              Comment);
+                credit_movement._parent = debit_movement;
+                credit_movementLIST.Add(credit_movement);
             }
 
-           credit_movement._child.Add(debit_movement);
-            Final_ItemMovementLIST.Add(credit_movement);
-
+            if (credit_movementLIST.Count > 0)
+            {
+                Final_ItemMovementLIST.AddRange(credit_movementLIST);
+            }
+            
             return Final_ItemMovementLIST;
         }
 
@@ -541,7 +515,7 @@ namespace entity.Brillo.Logic
             return item_movement;
         }
 
-       
+        #region
         public item_product FindNFix_ItemProduct(item item)
         {
             if (item.item_product == null)
@@ -568,5 +542,6 @@ namespace entity.Brillo.Logic
 
             return app_location.id_location;
         }
+        #endregion
     }
 }

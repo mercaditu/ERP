@@ -191,7 +191,7 @@
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
                                 <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductTag.png" />
-                                <TextBlock Text="{lex:Loc Tags}" MouseUp="config_MouseUp" Tag="ContactTag"
+                                <TextBlock Text="{lex:Loc ContactTags}" MouseUp="config_MouseUp" Tag="ContactTag"
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                             </StackPanel>
@@ -223,7 +223,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
-                    <Label Content="{lex:Loc Inventory}" Style="{StaticResource H2}"/>
+                    <Label Content="{lex:Loc Stock}" Style="{StaticResource H2}"/>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/BranchLocation.png" />
@@ -273,19 +273,19 @@
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/Measurement.png" />
-                            <TextBlock Text="{lex:Loc ByDimension}" MouseUp="config_MouseUp" Tag="Dimension"
+                            <TextBlock Text="{lex:Loc Dimension}" MouseUp="config_MouseUp" Tag="Dimension"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                         <TextBlock Text="Specify item dimensions" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
-                    <StackPanel Margin="32,5">
+                    <!--<StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/ProductWeight.png" />
                             <TextBlock Text="{lex:Loc Property}" MouseUp="config_MouseUp" Tag="Property"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                         <TextBlock Text="Define properties of item" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
-                    </StackPanel>
+                    </StackPanel>-->
               
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270">
@@ -320,7 +320,7 @@
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />
-                            <TextBlock Text="{lex:Loc Coefficient}" MouseUp="config_MouseUp" Tag="Hr_coefficient"
+                            <TextBlock Text="{lex:Loc HourCoeficient}" MouseUp="config_MouseUp" Tag="Hr_coefficient"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                         <!--<TextBlock Text="{lex:Loc desc_Account}" Style="{StaticResource text_Instructions}" 
@@ -372,17 +372,6 @@
                         </StackPanel>
                         <TextBlock Text="{lex:Loc desc_Document}" Style="{StaticResource text_Instructions}" 
                                        Margin="28,0,0,0" Width="188"/>
-                    </StackPanel>
-                    <StackPanel Margin="32,5" IsEnabled="False" Opacity="0.32">
-                        <StackPanel.Effect>
-                            <BlurEffect Radius="5"/>
-                        </StackPanel.Effect>
-                        <StackPanel Orientation="Horizontal" Margin="0">
-                            <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DocumentDesign.png" />
-                            <TextBlock Text="{lex:Loc Designer}" MouseUp="config_MouseUp" Tag="DocumentDesigner"
-                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
-                        </StackPanel>
-                        <TextBlock Text="Contracts help create a structured method of payment for a specific condition" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">

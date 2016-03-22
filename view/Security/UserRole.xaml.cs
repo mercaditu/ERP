@@ -11,9 +11,12 @@ namespace Cognitivo.Security
 {
     public partial class UserRole : Page
     {
-        //entity.dbContext dbContext = new entity.dbContext();
         UserRoleDB dbContext = new UserRoleDB();
-        CollectionViewSource security_rolesecurity_curdViewSource, security_roleViewSource, security_privilageViewSource, security_rolesecurity_role_privilageViewSource;
+        CollectionViewSource 
+            security_rolesecurity_curdViewSource, 
+            security_roleViewSource, 
+            security_privilageViewSource, 
+            security_rolesecurity_role_privilageViewSource;
 
         public UserRole()
         {
@@ -26,34 +29,20 @@ namespace Cognitivo.Security
 
             dbContext.security_role.Where(a =>
                                             a.is_active == true &&
-                                            a.id_company == entity.Properties.Settings.Default.company_ID)
+                                            a.id_company == CurrentSession.Id_Company)
                                             .OrderBy(a => a.name)
                                             .Load();
             security_roleViewSource.Source = dbContext.security_role.Local;
 
 
             security_rolesecurity_curdViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_curdViewSource");
-             security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
+            security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
+            
             security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
             security_privilageViewSource.Source = dbContext.security_privilage.OrderBy(a => a.name).ToList();
 
             CollectionViewSource app_departmentViewSource = (CollectionViewSource)this.FindResource("app_departmentViewSource");
             app_departmentViewSource.Source = dbContext.app_department.Where(x => x.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
-
-         
-
-            if (!dbContext.security_role.Where(x => x.name == "master").Any())
-            {
-                security_role security_role = new security_role();
-                security_role.State = EntityState.Added;
-                security_role.IsSelected = true;
-                security_role.is_master = true;
-                security_role.name = "master";
-                dbContext.security_role.Add(security_role);
-                security_roleViewSource.View.MoveCurrentToLast();
-                add_MissingRecords();
-
-            }
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -91,28 +80,27 @@ namespace Cognitivo.Security
             security_role.IsSelected = true;
             dbContext.security_role.Add(security_role);
 
+            add_MissingRecords();
 
             security_roleViewSource.View.Refresh();
             security_roleViewSource.View.MoveCurrentToLast();
-            add_MissingRecords();
-
         }
 
         private void toolBar_btnEdit_Click(object sender)
         {
-            add_MissingRecords();
             if (security_roleDataGrid.SelectedItem != null)
             {
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
                 security_role.IsSelected = true;
                 security_role.State = EntityState.Modified;
                 dbContext.Entry(security_role).State = EntityState.Modified;
+
+                add_MissingRecords();
             }
             else
             {
                 toolBar.msgWarning("Please Select a record");
             }
-
         }
 
         private void add_MissingRecords()
@@ -150,7 +138,6 @@ namespace Cognitivo.Security
                     _security_curd.can_annul = false;
                    security_role.security_curd.Add(_security_curd);
                 }
-                
                 security_rolesecurity_curdViewSource.View.Refresh();
                 security_rolesecurity_role_privilageViewSource.View.Refresh();
             }

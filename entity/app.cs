@@ -37,7 +37,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 53
+            /// Last Used : 55
             /// </summary>
 
             //Sales
@@ -159,6 +159,56 @@ namespace entity
             Talent = 36,
             [LocalizedDescription("HourCoeficient")]
             HourCoeficient = 48,
+
+            //Configuration
+            [LocalizedDescription("User")]
+            User = 54,
+            [LocalizedDescription("UserRole")]
+            UserRole = 55,
+            [LocalizedDescription("Document")]
+            Document = 56,
+            [LocalizedDescription("Range")]
+            Range = 57,
+            [LocalizedDescription("Contract")]
+            Contract = 58,
+            [LocalizedDescription("Condition")]
+            Condition = 59,
+            [LocalizedDescription("Account")]
+            Account = 60,
+            [LocalizedDescription("Terminal")]
+            Terminal = 61,
+            [LocalizedDescription("VATGrouping")]
+            VATGrouping = 62,
+            [LocalizedDescription("VAT")]
+            VAT = 63,
+            [LocalizedDescription("Geography")]
+            Geography = 64,
+            [LocalizedDescription("Department")]
+            Department = 65,
+            [LocalizedDescription("Company")]
+            Company = 66,
+            [LocalizedDescription("Branch")]
+            Branch = 67,
+            [LocalizedDescription("ContactRole")]
+            ContactRole = 68,
+            [LocalizedDescription("Salesman")]
+            Salesman = 69,
+            [LocalizedDescription("Location")]
+            Location = 70,
+            [LocalizedDescription("Measurement")]
+            Measurement = 71,
+            [LocalizedDescription("Brand")]
+            Brand = 72,
+            [LocalizedDescription("Tags")]
+            Tags = 73,
+            [LocalizedDescription("ContactTags")]
+            ContactTags = 74,
+            [LocalizedDescription("Dimension")]
+            Dimension = 75,
+            [LocalizedDescription("Type")]
+            Type = 76,
+            [LocalizedDescription("CostCenter")]
+            CostCenter = 77,
         }
     }
 }

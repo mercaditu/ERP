@@ -15,7 +15,6 @@ namespace Cognitivo.Product
         StockDB StockDB = new StockDB();
         
         CollectionViewSource item_movementViewSource;
-        List<int> tag = new List<int>();
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DateTime InventoryDate
@@ -29,7 +28,7 @@ namespace Cognitivo.Product
                 slider.Maximum = DateTime.DaysInMonth(_InventoryDate.Year, _InventoryDate.Month);
                 slider.Value = InventoryDate.Day;
 
-                calc_Inventory(0);
+                calc_Inventory();
             }
         }
         DateTime _InventoryDate = DateTime.Now;
@@ -41,12 +40,7 @@ namespace Cognitivo.Product
 
         private async void StockPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            StockDB.items.Where(a => a.id_company == entity.CurrentSession.Id_Company && a.is_active == true).ToList();
-
-            CollectionViewSource itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
-            itemViewSource.Source = StockDB.items.Local;
-
-            await StockDB.app_branch.Include("app_location")
+            await StockDB.app_branch.Include(x => x.app_location)
                 .Where(a => a.can_stock == true
                          && a.is_active == true
                          && a.id_company == entity.CurrentSession.Id_Company)
@@ -56,7 +50,7 @@ namespace Cognitivo.Product
             InventoryDate = DateTime.Now;
         }
 
-        private void calc_Inventory(int id_item)
+        private void calc_Inventory()
         {
             app_branch app_branch = (app_branch)dgvBranch.SelectedItem;
 
@@ -64,76 +58,40 @@ namespace Cognitivo.Product
             {
                 int id_branch = app_branch.id_branch;
 
-                if (id_item > 0)
-                {
-                    var movement =
-                      (from items in StockDB.items
-                       join item_product in StockDB.item_product on items.id_item equals item_product.id_item
-                           into its
-                       from p in its
-                       join item_movement in StockDB.item_movement on p.id_item_product equals item_movement.id_item_product
-                       into IMS
-                       from a in IMS
-                       join AM in StockDB.app_branch on a.app_location.id_branch equals AM.id_branch
-                       where a.status == Status.Stock.InStock
-                          && a.trans_date <= InventoryDate
-                          && a.app_location.id_branch == id_branch && a.item_product.id_item == id_item
-                       group a by new { a.item_product ,a.app_location}
-                           into last
-                           select new
-                           {
-                               code = last.Key.item_product.item.code,
-                               name = last.Key.item_product.item.name,
-                               location = last.Key.app_location.name,
-                               //location = last.OrderBy(m => m.app_location.name),
-                               itemid = last.Key.item_product.item.id_item,
-                               quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
-                               id_item_product = last.Key.item_product.id_item_product,
-                               measurement = last.Key.item_product.item.id_measurement,
-                               id_location=last.Key.app_location.id_location
-                           }).ToList();
+                var movement =
+                (from items in StockDB.items
+                    join item_product in StockDB.item_product on items.id_item equals item_product.id_item
+                        into its
+                    from p in its
+                    join item_movement in StockDB.item_movement on p.id_item_product equals item_movement.id_item_product
+                    into IMS
+                    from a in IMS
+                    join AM in StockDB.app_branch on a.app_location.id_branch equals AM.id_branch
+                    where a.status == Status.Stock.InStock
+                    && a.trans_date <= InventoryDate
+                    && a.app_location.id_branch == id_branch
+                    group a by new { a.item_product,a.app_location }
+                        into last
+                        select new
+                        {
+                            code = last.Key.item_product.item.code,
+                            name = last.Key.item_product.item.name,
+                            location = last.Key.app_location.name,
+                            itemid = last.Key.item_product.item.id_item,
+                            quantity = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
+                            id_item_product = last.Key.item_product.id_item_product,
+                            measurement = last.Key.item_product.item.id_measurement,
+                            id_location=last.Key.app_location.id_location
+                        }).ToList();
 
-                    item_movementDataGrid.ItemsSource = movement;
-
-                }
-                else
-                {
-                    var movement =
-                    (from items in StockDB.items
-                     join item_product in StockDB.item_product on items.id_item equals item_product.id_item
-                         into its
-                     from p in its
-                     join item_movement in StockDB.item_movement on p.id_item_product equals item_movement.id_item_product
-                     into IMS
-                     from a in IMS
-                     join AM in StockDB.app_branch on a.app_location.id_branch equals AM.id_branch
-                     where a.status == Status.Stock.InStock
-                        && a.trans_date <= InventoryDate
-                        && a.app_location.id_branch == id_branch
-                     group a by new { a.item_product,a.app_location }
-                         into last
-                         select new
-                         {
-                             code = last.Key.item_product.item.code,
-                             name = last.Key.item_product.item.name,
-                          
-                             location = last.Key.app_location.name,
-                             itemid = last.Key.item_product.item.id_item,
-                             quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
-                             id_item_product = last.Key.item_product.id_item_product,
-                             measurement = last.Key.item_product.item.id_measurement,
-                              id_location=last.Key.app_location.id_location
-                         }).ToList();
-
-                    item_movementDataGrid.ItemsSource = movement;
-                }
+                item_movementDataGrid.ItemsSource = movement;
 
             }
         }
 
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            calc_Inventory(0);
+            calc_Inventory();
         }
 
         private void slider_ValueChanged(object sender, EventArgs e)
@@ -177,12 +135,11 @@ namespace Cognitivo.Product
         private async void item_movementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dynamic _item_movement = item_movementDataGrid.SelectedItem;
+
             if (_item_movement != null)
             {
                 int id_item_product = _item_movement.id_item_product;
 
-                app_branch app_branch = (app_branch)dgvBranch.SelectedItem;
-                int id_branch = app_branch.id_branch;
                 int id_location = _item_movement.id_location;
                 using (db db = new db())
                 {
@@ -196,11 +153,5 @@ namespace Cognitivo.Product
                 }
             }
         }
-
-        private void SmartBox_Item_Select(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
-
     }
 }

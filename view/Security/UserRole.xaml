@@ -64,18 +64,11 @@
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
             </ComboBox>
-            <CheckBox IsChecked="{Binding is_master, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <Label Content="{lex:Loc Master}" Style="{StaticResource generic_Label}"/>
-            </CheckBox>
+            <CheckBox IsChecked="{Binding is_master, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                      Content="{lex:Loc Master}" Style="{StaticResource input_checkbox}"/>
         </StackPanel>     
         
         <TabControl Grid.Row="1" Grid.Column="1" Margin="0,155,0,0">
-            <TabItem Header="{lex:Loc List}">
-                <Grid>
-
-                </Grid>
-            </TabItem>
-
             <TabItem Header="{lex:Loc Basic}">
                 <Grid>
                     <DataGrid x:Name="security_curdDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
@@ -90,7 +83,7 @@
                                                     Header="View" Width="SizeToHeader"/>
                             <DataGridTextColumn Binding="{Binding id_application, Converter={StaticResource Localized}}" 
                                                 Header="{lex:Loc Cognitivo:local:Application}" FontWeight="Bold"
-                                                IsReadOnly="True" Width="*"/>
+                                                IsReadOnly="True" Width="*" SortDirection="Descending"/>
                             <DataGridCheckBoxColumn Binding="{Binding can_create, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                     EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -130,11 +123,10 @@
                             <DataGridTextColumn Binding="{Binding value_max}" Header="{lex:Loc Cognitivo:local:Value}" Width="SizeToHeader"/>
                         </DataGrid.Columns>
                     </DataGrid>
-
                 </Grid>
             </TabItem>
         </TabControl>
-        <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" 
+        <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" appName="UserRole"
                        btnSearch_Click="toolBar_btnSearch_Click"
                        btnNew_Click="New_Click" 
                        btnSave_Click="Save_Click" 
@@ -143,6 +135,5 @@
                        btnEdit_Click="toolBar_btnEdit_Click" 
                        State="{Binding State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Grid.ColumnSpan="2" />
-
     </Grid>
 </Page>

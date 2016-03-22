@@ -26,7 +26,7 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(detail.item);
                     detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
-
+                    detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
                     //Add Logic for removing Reserved Stock 
                     if (item_product != null && detail.sales_order_detail != null)
                     {
@@ -42,7 +42,7 @@ namespace entity.Brillo.Logic
                                             ));
                     }
 
-                    item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
+                    item_movementList = Debit_MovementLIST(db,entity.Status.Stock.InStock,
                                              App.Names.SalesInvoice,
                                              detail.id_sales_invoice,
                                              sales_invoice.app_currencyfx,
@@ -66,7 +66,7 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(sales_return_detail.item);
                     sales_return_detail.id_location = FindNFix_Location(item_product, sales_return_detail.app_location, sales_return.app_branch);
-
+                    sales_return_detail.app_location = db.app_location.Where(x => x.id_location == sales_return_detail.id_location).FirstOrDefault();
                     item_movementList.Add(Credit_Movement(entity.Status.Stock.InStock,
                                              App.Names.SalesReturn,
                                              sales_return_detail.id_sales_return,
@@ -94,10 +94,10 @@ namespace entity.Brillo.Logic
 
                     item_product item_product = FindNFix_ItemProduct(purchase_return_detail.item);
                     purchase_return_detail.id_location = FindNFix_Location(item_product, purchase_return_detail.app_location, purchase_return.app_branch);
+                    purchase_return_detail.app_location = db.app_location.Where(x => x.id_location == purchase_return_detail.id_location).FirstOrDefault();
 
-                    
 
-                    item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
+                    item_movementList = Debit_MovementLIST(db, entity.Status.Stock.InStock,
                                              App.Names.PurchaseReturn,
                                              purchase_return_detail.id_purchase_return,
                                              purchase_return.app_currencyfx,
@@ -122,7 +122,7 @@ namespace entity.Brillo.Logic
 
                     item_product item_product = FindNFix_ItemProduct(sales_order_detail.item);
                     sales_order_detail.id_location = FindNFix_Location(item_product, sales_order_detail.app_location, sales_order.app_branch);
-
+                    sales_order_detail.app_location = db.app_location.Where(x => x.id_location == sales_order_detail.id_location).FirstOrDefault();
                     //Add Logic for removing Reserved Stock 
                     if (item_product != null && sales_order_detail.sales_budget_detail != null)
                     {
@@ -138,7 +138,7 @@ namespace entity.Brillo.Logic
                                             ));
                     }
 
-                    item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
+                    item_movementList = Debit_MovementLIST(db, entity.Status.Stock.InStock,
                                              App.Names.SalesOrder,
                                             sales_order_detail.id_sales_order,
                                               sales_order.app_currencyfx,
@@ -164,10 +164,10 @@ namespace entity.Brillo.Logic
 
                     item_product item_product = FindNFix_ItemProduct(purchase_invoice_detail.item);
                     purchase_invoice_detail.id_location = FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
-
+                    purchase_invoice_detail.app_location = db.app_location.Where(x => x.id_location == purchase_invoice_detail.id_location).FirstOrDefault();
                     if (purchase_invoice_detail.purchase_order_detail != null)
                     {
-                        item_movementList = Debit_MovementLIST(entity.Status.Stock.OnTheWay,
+                        item_movementList = Debit_MovementLIST(db, entity.Status.Stock.OnTheWay,
                                              App.Names.PurchaseInvoice,
                                              purchase_invoice_detail.id_purchase_invoice,
                                              purchase_invoice.app_currencyfx,
@@ -208,7 +208,7 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(purchase_order_detail.item);
                     purchase_order_detail.id_location = FindNFix_Location(item_product, purchase_order_detail.app_location, purchase_order.app_branch);
-
+                    purchase_order_detail.app_location = db.app_location.Where(x => x.id_location == purchase_order_detail.id_location).FirstOrDefault();
                     if (item_product != null)
                     {
                         item_movementList.Add(Credit_Movement(entity.Status.Stock.InStock,
@@ -238,7 +238,7 @@ namespace entity.Brillo.Logic
 
                             if (detail.is_input)
                             {
-                        item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
+                                item_movementList = Debit_MovementLIST(db, entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
                                                detail.id_production_execution,
                                             Currency.get_Default(CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
@@ -308,7 +308,7 @@ namespace entity.Brillo.Logic
         }
 
 
-        public List<item_movement> Debit_MovementLIST( entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
+        public List<item_movement> Debit_MovementLIST(db db, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
                                                        app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                                        decimal Quantity, DateTime TransDate,
                                           string Comment)
@@ -317,10 +317,13 @@ namespace entity.Brillo.Logic
             List<item_movement> Items_InStockLIST = new List<item_movement>();
             List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
 
-            using (db db = new db())
-            {
-                Items_InStockLIST = db.item_movement.Where(x => x.id_location == app_location.id_location
-                                                                      && x.id_item_product == item_product.id_item_product
+            int id_location = app_location.id_location;
+            int id_item_product = item_product.id_item_product;
+            //using (db db = new db())
+            //{
+                
+                Items_InStockLIST = db.item_movement.Where(x => x.id_location == id_location
+                                                                      && x.id_item_product == id_item_product
                                                                       && x.status == entity.Status.Stock.InStock
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
@@ -353,7 +356,7 @@ namespace entity.Brillo.Logic
 
                         item_movement.comment = Comment;
                         item_movement.id_item_product = item_product.id_item_product;
-                        item_movement.debit = Quantity;
+                        item_movement.debit = movement_debit_quantity;
                         item_movement.credit = 0;
                         item_movement.status = Status;
                         item_movement.id_location = app_location.id_location;
@@ -405,7 +408,7 @@ namespace entity.Brillo.Logic
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);
                 }
-            }
+            //}
             return Final_ItemMovementLIST;
         }
 
@@ -444,7 +447,7 @@ namespace entity.Brillo.Logic
                 return null;
         }
 
-        public List<item_movement> DebitCredit_MovementList( entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
+        public List<item_movement> DebitCredit_MovementList(db db, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
                                               app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                               decimal Quantity, DateTime TransDate, string Comment, decimal unit_price)
         {
@@ -452,7 +455,7 @@ namespace entity.Brillo.Logic
 
             //Bring Debit Function form above. IT should handle child and parent values.
             List<item_movement> debit_movementLIST = new List<item_movement>();
-            debit_movementLIST = Debit_MovementLIST(Status, ApplicationID, TransactionID, app_currencyfx, 
+            debit_movementLIST = Debit_MovementLIST(db, Status, ApplicationID, TransactionID, app_currencyfx, 
                                                     item_product, app_location, Quantity, TransDate, Comment);
 
             List<item_movement> credit_movementLIST = new List<item_movement>();

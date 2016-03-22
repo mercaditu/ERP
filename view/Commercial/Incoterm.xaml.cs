@@ -130,6 +130,7 @@ namespace Cognitivo.Commercial
         {
             try
             {
+               
                 IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {

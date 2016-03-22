@@ -10,7 +10,7 @@
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-      MinWidth="800" MinHeight="600" Loaded="Page_Loaded">
+      MinWidth="800" MinHeight="600" >
     <Grid>
         <Grid VerticalAlignment="Top">
             <Grid.Background>

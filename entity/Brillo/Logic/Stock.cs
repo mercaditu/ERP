@@ -42,7 +42,7 @@ namespace entity.Brillo.Logic
                                             ));
                     }
 
-                    item_movementList = debit_Movement(entity.Status.Stock.InStock,
+                    item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
                                              App.Names.SalesInvoice,
                                              detail.id_sales_invoice,
                                              sales_invoice.id_currencyfx,
@@ -494,86 +494,41 @@ namespace entity.Brillo.Logic
             return string.Format(strAPP + " {0} / {1}", TransNumber, ContactName);
         }
 
-        public item_movement credit_Movement(
-            entity.Status.Stock Status,
-            App.Names ApplicationID,
-            int TransactionID,
-            int Item_ProductID,
-            int LocationID,
-            decimal Quantity,
-            DateTime TransDate,
-            string Comment)
+        public List<item_movement> Debit_MovementLIST(
+                                          entity.Status.Stock Status,
+                                          App.Names ApplicationID,
+                                          int TransactionID,
+                                          int CurrencyFXID,
+                                          item_product item_product,
+                                          int LocationID,
+                                          decimal Quantity,
+                                          DateTime TransDate,
+                                          string Comment, decimal unit_price)
         {
-            item_movement item_movement = new item_movement();
-            item_movement.comment = Comment;
-            item_movement.id_item_product = Item_ProductID;
-            item_movement.debit = 0;
-            item_movement.credit = Quantity;
-            item_movement.status = Status;
-            item_movement.id_location = LocationID;
-            item_movement.id_application = ApplicationID;
-            item_movement.transaction_id = TransactionID;
-            item_movement.trans_date = TransDate;
-            return item_movement;
-        }
-
-        public item_movement debit_Movement(
-            entity.Status.Stock Status,
-            App.Names ApplicationID,
-            int TransactionID,
-            int Item_ProductID,
-            int LocationID,
-            decimal Quantity,
-            DateTime TransDate,
-            string Comment)
-        {
-            item_movement item_movement = new item_movement();
-            item_movement.comment = Comment;
-            item_movement.id_item_product = Item_ProductID;
-            item_movement.debit = Quantity;
-            item_movement.credit = 0;
-            item_movement.status = Status;
-            item_movement.id_location = LocationID;
-            item_movement._parent = null;
-            item_movement.id_application = ApplicationID;
-            item_movement.transaction_id = TransactionID;
-            item_movement.trans_date = TransDate;
-            return item_movement;
-        }
-
-        public List<item_movement> debit_Movement(
-          entity.Status.Stock Status,
-          App.Names ApplicationID,
-          int TransactionID,
-             int CurrencyFXID,
-          item_product item_product,
-          int LocationID,
-          decimal Quantity,
-          DateTime TransDate,
-          string Comment, decimal unit_price)
-        {
-            List<item_movement> _item_movementList = new List<item_movement>();
-            List<item_movement> Returnitem_movementList = new List<item_movement>();
-
-
+            List<item_movement> Items_InStockLIST = new List<item_movement>();
+            List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
 
             using (db db = new db())
             {
-                _item_movementList = db.item_movement.Where(x => x.id_location == LocationID
+                Items_InStockLIST = db.item_movement.Where(x => x.id_location == LocationID
                                                                       && x.id_item_product == item_product.id_item_product
                                                                       && x.status == entity.Status.Stock.InStock
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
-                if (item_product.cogs_type == item_product.COGS_Types.LIFO && _item_movementList != null)
+                if (item_product.cogs_type == item_product.COGS_Types.LIFO && Items_InStockLIST != null)
                 {
-                    _item_movementList = _item_movementList.OrderBy(x => x.trans_date).ToList();
+                    Items_InStockLIST = Items_InStockLIST.OrderBy(x => x.trans_date).ToList();
                 }
-                else if (_item_movementList != null)
+                else if (Items_InStockLIST != null)
                 {
-                    _item_movementList = _item_movementList.OrderByDescending(x => x.trans_date).ToList();
+                    Items_InStockLIST = Items_InStockLIST.OrderByDescending(x => x.trans_date).ToList();
                 }
+
                 decimal qty_SalesDetail = Quantity;
-                foreach (item_movement parent_Movement in _item_movementList)
+                
+                ///Will create new Item Movements 
+                ///if split from Parents is needed.
+                foreach (item_movement parent_Movement in Items_InStockLIST)
                 {
                     if (qty_SalesDetail > 0)
                     {
@@ -581,60 +536,173 @@ namespace entity.Brillo.Logic
 
                         decimal movement_debit_quantity = qty_SalesDetail;
 
+                        //If Parent Movement is lesser than Quantity, then only take total value of Parent.
                         if (parent_Movement.credit <= qty_SalesDetail)
                         {
                             movement_debit_quantity = parent_Movement.credit;
                         }
 
-                        //Adding into List if Movement List for this Location is empty.
-                        item_movement = debit_Movement(entity.Status.Stock.InStock,
-                                                App.Names.SalesInvoice,
-                                              TransactionID,
-                                                item_product.id_item_product,
-                                                (int)LocationID,
-                                                movement_debit_quantity,
-                                                TransDate,
-                                                Comment);
+                        item_movement.comment = Comment;
+                        item_movement.id_item_product = item_product.id_item_product;
+                        item_movement.debit = Quantity;
+                        item_movement.credit = 0;
+                        item_movement.status = Status;
+                        item_movement.id_location = LocationID;
+                        item_movement._parent = null;
+                        item_movement.id_application = ApplicationID;
+                        item_movement.transaction_id = TransactionID;
+                        item_movement.trans_date = TransDate;
+
                         item_movement._parent = parent_Movement;
 
                         //Logic for Value
                         item_movement_value item_movement_value = new item_movement_value();
                         item_movement_value.unit_value = parent_Movement.item_movement_value.Sum(i => i.unit_value);
                         item_movement_value.id_currencyfx = CurrencyFXID;
-                        item_movement_value.comment = item_movement.comment;
+                        item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                         item_movement.item_movement_value.Add(item_movement_value);
 
                         //Adding into List
-                        Returnitem_movementList.Add(item_movement);
+                        Final_ItemMovementLIST.Add(item_movement);
                         qty_SalesDetail = qty_SalesDetail - parent_Movement.credit;
                     }
                 }
+
+                ///In case Parent does not exist, will enter this code.
                 if (qty_SalesDetail > 0)
                 {
                     item_movement item_movement = new item_movement();
                     //Adding into List if Movement List for this Location is empty.
-                    item_movement = debit_Movement(entity.Status.Stock.InStock,
-                                            App.Names.SalesInvoice,
-                                           TransactionID,
-                                            item_product.id_item_product,
-                                            LocationID,
-                                            qty_SalesDetail,
-                                            TransDate,
-                                            Comment);
+                    item_movement.comment = Comment;
+                    item_movement.id_item_product = item_product.id_item_product;
+                    item_movement.debit = Quantity;
+                    item_movement.credit = 0;
+                    item_movement.status = Status;
+                    item_movement.id_location = LocationID;
+                    item_movement._parent = null;
+                    item_movement.id_application = ApplicationID;
+                    item_movement.transaction_id = TransactionID;
+                    item_movement.trans_date = TransDate;
 
                     item_movement._parent = null;
 
-                    //Logic for Value
+                    //Logic for Value in case Parent does not Exist, we will take from 
                     item_movement_value item_movement_value = new item_movement_value();
-                    item_movement_value.unit_value = unit_price;
+                    item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
                     item_movement_value.id_currencyfx = CurrencyFXID;
-                    item_movement_value.comment = item_movement.comment;
+                    item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                     item_movement.item_movement_value.Add(item_movement_value);
                     //Adding into List
-                    Returnitem_movementList.Add(item_movement);
+                    Final_ItemMovementLIST.Add(item_movement);
                 }
             }
-            return Returnitem_movementList;
+            return Final_ItemMovementLIST;
+        }
+
+        public item_movement Credit_Movement(
+                                              entity.Status.Stock Status,
+                                              App.Names ApplicationID,
+                                              int TransactionID,
+                                              int CurrencyFXID,
+                                              item_product item_product,
+                                              int LocationID,
+                                              decimal Quantity,
+                                              DateTime TransDate,
+                                              string Comment, decimal unit_price)
+        {
+            List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
+
+            using (db db = new db())
+            {
+                ///
+                if (Quantity > 0)
+                {
+                    item_movement item_movement = new item_movement();
+                    //Adding into List if Movement List for this Location is empty.
+                    item_movement.comment = Comment;
+                    item_movement.id_item_product = item_product.id_item_product;
+                    item_movement.debit = Quantity;
+                    item_movement.credit = 0;
+                    item_movement.status = Status;
+                    item_movement.id_location = LocationID;
+                    item_movement._parent = null;
+                    item_movement.id_application = ApplicationID;
+                    item_movement.transaction_id = TransactionID;
+                    item_movement.trans_date = TransDate;
+
+                    item_movement._parent = null;
+
+                    //Logic for Value in case Parent does not Exist, we will take from 
+                    item_movement_value item_movement_value = new item_movement_value();
+                    item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                    item_movement_value.id_currencyfx = CurrencyFXID;
+                    item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
+                    item_movement.item_movement_value.Add(item_movement_value);
+                    //Adding into List
+                    Final_ItemMovementLIST.Add(item_movement);
+                }
+            }
+
+            return Final_ItemMovementLIST;
+        }
+
+        public List<item_movement> DebitCredit_MovementList(
+                                              entity.Status.Stock Status,
+                                              App.Names ApplicationID,
+                                              int TransactionID,
+                                              int CurrencyFXID,
+                                              item_product item_product,
+                                              int LocationID,
+                                              decimal Quantity,
+                                              DateTime TransDate,
+                                              string Comment, decimal unit_price)
+        {
+            List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
+
+            item_movement credit_movement = new item_movement();
+            credit_movement = Credit_Movement(Status,
+                                              ApplicationID,
+                                              TransactionID,
+                                              CurrencyFXID,
+                                              item_product,
+                                              LocationID,
+                                              Quantity,
+                                              TransDate,
+                                              Comment, unit_price);
+
+            item_movement debit_movement = new item_movement();
+            if (Quantity > 0)
+            {
+                item_movement item_movement = new item_movement();
+                //Adding into List if Movement List for this Location is empty.
+                item_movement.comment = Comment;
+                item_movement.id_item_product = item_product.id_item_product;
+                item_movement.debit = Quantity;
+                item_movement.credit = 0;
+                item_movement.status = Status;
+                item_movement.id_location = LocationID;
+                item_movement._parent = null;
+                item_movement.id_application = ApplicationID;
+                item_movement.transaction_id = TransactionID;
+                item_movement.trans_date = TransDate;
+
+                item_movement._parent = credit_movement;
+
+                //Logic for Value in case Parent does not Exist, we will take from 
+                item_movement_value item_movement_value = new item_movement_value();
+                //logic to check fx rate of parent.
+                item_movement_value.unit_value = credit_movement.item_movement_value.Sum(x => x.unit_value);
+                item_movement_value.id_currencyfx = CurrencyFXID;
+                item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
+                item_movement.item_movement_value.Add(item_movement_value);
+                //Adding into List
+                Final_ItemMovementLIST.Add(item_movement);
+            }
+
+            credit_movement._child.Add(debit_movement);
+            Final_ItemMovementLIST.Add(credit_movement);
+
+            return Final_ItemMovementLIST;
         }
 
         public item_product FindNFix_ItemProduct(item item)

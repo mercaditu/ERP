@@ -180,7 +180,7 @@
                     </ComboBox>
                 </StackPanel>
             </StackPanel>
-            <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Row="1" Grid.ColumnSpan="3" >
+            <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
                 <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
 
 

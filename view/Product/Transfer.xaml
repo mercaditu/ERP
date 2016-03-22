@@ -149,7 +149,7 @@
                                   Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding costname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Name}" Width="SizeToHeader"/>
-                                <DataGridTextColumn Binding="{Binding cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Cost}" Width="SizeToHeader"/>
+                                <DataGridTextColumn Binding="{Binding cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Cost}" Width="SizeToHeader"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>

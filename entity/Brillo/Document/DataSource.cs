@@ -102,6 +102,7 @@ namespace entity.Brillo.Document
                         condition = g.sales_budget.app_contract.app_condition.name,
                         Number = g.sales_budget.number,
                         comment = g.sales_budget.comment,
+                        security_user_name = g.sales_budget.security_user != null ? g.sales_budget.security_user.name : "",
                         AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
                         NumToWords.IntToText(Convert.ToInt32(g.sales_budget != null ? g.sales_budget.GrandTotal : 0)) 
                         :

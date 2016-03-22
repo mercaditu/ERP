@@ -241,15 +241,14 @@ namespace Cognitivo.Product
 
         #region Toolbar Events
         private void toolBar_btnCancel_Click(object sender)
-
         {
-             item item = (item)itemDataGrid.SelectedItem;
+            item item = (item)itemDataGrid.SelectedItem;
             // item_vatDataGrid.CancelEdit();
             item_priceDataGrid.CancelEdit();
             item_dimentionDataGrid.CancelEdit();
             item_propertyDataGrid.CancelEdit();
             itemViewSource.View.MoveCurrentToFirst();
-            if (item.State==EntityState.Added)
+            if (item.State == EntityState.Added)
             {
                 dbContext.Entry(item).State = EntityState.Detached;
             }
@@ -318,14 +317,14 @@ namespace Cognitivo.Product
                 {
                     if (item.item_product.Count == 0 || item.item_product == null)
                     {
-                        if (itemitem_productViewSource.View!=null)
+                        if (itemitem_productViewSource.View != null)
                         {
                             item_product _product = new item_product();
                             item.item_product.Add(_product);
                             itemitem_productViewSource.View.Refresh();
                             itemitem_productViewSource.View.MoveCurrentTo(_product);
                         }
-                    
+
                     }
 
                     if (item.item_asset.Count > 0)
@@ -389,11 +388,20 @@ namespace Cognitivo.Product
             IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
-                //dbContext.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Load();
-                dbContext.SaveChanges();
-                itemViewSource.View.Refresh();
-                //SetIsEnable = false;
-                toolBar.msgSaved();
+                item item = itemViewSource.View.CurrentItem as item;
+                if (!(dbContext.items.Any(x => x.name.Contains(item.name))))
+                {
+                    //dbContext.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Load();
+                    dbContext.SaveChanges();
+                    itemViewSource.View.Refresh();
+                    //SetIsEnable = false;
+                    toolBar.msgSaved();
+                }
+                else
+                {
+                    toolBar.msgWarning("Product Already Exist..");
+
+                }
             }
         }
 
@@ -514,13 +522,13 @@ namespace Cognitivo.Product
                         dbContext.item_property.Remove(e.Parameter as item_property);
                         itemitem_propertyViewSource.View.Refresh();
                     }
-                     if (e.Parameter as item_tag_detail != null)
+                    if (e.Parameter as item_tag_detail != null)
                     {
-                    //DeleteDetailGridRow
-                    item_tag_detailDataGrid.CancelEdit();
-                    dbContext.item_tag_detail.Remove(e.Parameter as item_tag_detail);
-                    itemitem_tagdetailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
+                        //DeleteDetailGridRow
+                        item_tag_detailDataGrid.CancelEdit();
+                        dbContext.item_tag_detail.Remove(e.Parameter as item_tag_detail);
+                        itemitem_tagdetailViewSource.View.Refresh();
+                        //calculate_total(sender, e);
                     }
                 }
             }
@@ -772,12 +780,12 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-             dbContext.item_brand
-               .Where(a => a.id_company == CurrentSession.Id_Company)
-               .OrderBy(a => a.name).Load();
-          
+            dbContext.item_brand
+              .Where(a => a.id_company == CurrentSession.Id_Company)
+              .OrderBy(a => a.name).Load();
+
             item_brandViewSource.Source = dbContext.item_brand.Local;
-          
+
         }
     }
 }

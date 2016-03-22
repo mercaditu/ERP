@@ -430,7 +430,7 @@ namespace Cognitivo.Production
                         production_execution_detailServiceViewSource.View.MoveCurrentToLast();
 
 
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Service && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
                         decimal projectedqty = production_order_detail.quantity;
                         lblProjectedempqty.Content = "Total:-" + projectedqty.ToString();
                         lblTotalemp.Content = "Total:-" + actuallqty.ToString();
@@ -914,7 +914,7 @@ namespace Cognitivo.Production
                     if (btn.Name.Contains("Prod"))
                     {
                         production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product).Sum(x => x.quantity);
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product && x.id_order_detail==production_order_detail.id_order_detail).Sum(x => x.quantity);
                         decimal projectedqty = production_order_detail.quantity;
                         lblProjectedProductQty.Content = "Total:-" + projectedqty.ToString();
                         lblTotalProduct.Content = "Total:-" + actuallqty.ToString();
@@ -926,7 +926,7 @@ namespace Cognitivo.Production
                     else if (btn.Name.Contains("Raw"))
                     {
                         production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.RawMaterial).Sum(x => x.quantity);
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.RawMaterial && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
                         decimal projectedqty = production_order_detail.quantity;
                         lblProjectedRawQty.Content = "Total:-" + projectedqty.ToString();
                         lblTotalRaw.Content = "Total:-" + actuallqty.ToString();
@@ -939,7 +939,7 @@ namespace Cognitivo.Production
                     else if (btn.Name.Contains("Asset"))
                     {
                         production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.FixedAssets).Sum(x => x.quantity);
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.FixedAssets && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
                         decimal projectedqty = production_order_detail.quantity;
                         lblProjectedassetqty.Content = "Total:-" + projectedqty.ToString();
                         lblTotalasset.Content = "Total:-" + actuallqty.ToString();
@@ -952,7 +952,7 @@ namespace Cognitivo.Production
                     else if (btn.Name.Contains("Supp"))
                     {
                         production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
                         decimal projectedqty = production_order_detail.quantity;
                         lblProjectedSuppliesqty.Content = "Total:-" + projectedqty.ToString();
                         lblTotalsupplies.Content = "Total:-" + actuallqty.ToString();
@@ -962,6 +962,7 @@ namespace Cognitivo.Production
                         }
 
                     }
+
                 }
             }
             catch (Exception ex)

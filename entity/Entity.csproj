@@ -391,6 +391,10 @@
     <Compile Include="Migrations\201603171831596_ProjectTask_CleanColumns.Designer.cs">
       <DependentUpon>201603171831596_ProjectTask_CleanColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603220839042_UpdateSecurity_roleanditem_movement_value.cs" />
+    <Compile Include="Migrations\201603220839042_UpdateSecurity_roleanditem_movement_value.Designer.cs">
+      <DependentUpon>201603220839042_UpdateSecurity_roleanditem_movement_value.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -828,6 +832,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603171831596_ProjectTask_CleanColumns.resx">
       <DependentUpon>201603171831596_ProjectTask_CleanColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603220839042_UpdateSecurity_roleanditem_movement_value.resx">
+      <DependentUpon>201603220839042_UpdateSecurity_roleanditem_movement_value.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

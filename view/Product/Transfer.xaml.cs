@@ -133,7 +133,7 @@ namespace Cognitivo.Product
                 item_transfer.app_branch_destination = (app_branch)id_branch_destinComboBox.SelectedItem;
                 item_transfer.app_location_origin = ((app_branch)id_branch_originComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
                 item_transfer.app_location_destination = ((app_branch)id_branch_destinComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
-
+                item_transfer.status = Status.Documents_General.Approved;
                 IEnumerable<DbEntityValidationResult> validationresult = ProductTransferDB.GetValidationErrors();
                 if (validationresult.Count() == 0)
                 {

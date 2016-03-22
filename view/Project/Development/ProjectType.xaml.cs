@@ -132,7 +132,7 @@ namespace Cognitivo.Project.Development
 
         #region Project Type Events
 
-        private void btnNewTask_Click(object sender, EventArgs e)
+        private void btnNewTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
             itemSearchViewSource.View.Filter = i =>
@@ -176,7 +176,7 @@ namespace Cognitivo.Project.Development
             }
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
         }
-        private void btnAddParentTask_Click(object sender, EventArgs e)
+        private void btnAddParentTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
             itemSearchViewSource.View.Filter = i =>
@@ -200,12 +200,12 @@ namespace Cognitivo.Project.Development
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
         }
 
-        private void btnEditTask_Click(object sender, EventArgs e)
+        private void btnEditTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
         }
 
-        private void btnSaveTask_Click(object sender, EventArgs e)
+        private void btnSaveTask_Click(object sender)
         {
 
             try
@@ -223,7 +223,7 @@ namespace Cognitivo.Project.Development
 
         }
 
-        private void btnDeleteTask_Click(object sender, EventArgs e)
+        private void btnDeleteTask_Click(object sender)
         {
             if (projectproject_template_detailViewSource.View != null)
             {
@@ -356,6 +356,9 @@ namespace Cognitivo.Project.Development
 
             }
         }
+
+       
+        
 
 
 

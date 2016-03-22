@@ -64,9 +64,12 @@
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
             </ComboBox>
+            <CheckBox IsChecked="{Binding is_master, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <Label Content="{lex:Loc Master}" Style="{StaticResource generic_Label}"/>
+            </CheckBox>
         </StackPanel>     
         
-        <TabControl Grid.Row="1" Grid.Column="1" Margin="0,134,0,0">
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="0,155,0,0">
             <TabItem Header="{lex:Loc List}">
                 <Grid>
 

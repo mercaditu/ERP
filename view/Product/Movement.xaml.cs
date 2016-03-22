@@ -157,7 +157,8 @@ namespace Cognitivo.Product
             }
             entity.Properties.Settings setting = new entity.Properties.Settings();
             item_transfer.user_given = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-
+            item_transfer.status = Status.Documents_General.Approved;
+            dbContext.SaveChanges();
             ProductMovementDB ProductMovementDB = new ProductMovementDB();
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
             {
@@ -221,6 +222,7 @@ namespace Cognitivo.Product
             {
                 item_transfer_detail item_transfer_detail = new item_transfer_detail();
                 item_transfer_detail.id_item_product = ((item)cbxItem.Data).item_product.FirstOrDefault().id_item_product;
+                item_transfer_detail.item_product = ((item)cbxItem.Data).item_product.FirstOrDefault();
                 item_transfer_detail.quantity_destination = 1;
                 item_transfer_detail.quantity_origin = 1;
                 item_transfer.item_transfer_detail.Add(item_transfer_detail);

@@ -97,7 +97,14 @@
                            Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
                     <!--<cntrl:toolBar_Mini
                         btnNew_Click="toolBar_Mini_btnNew_Click"/>-->
-                    <Grid>
+                    <cntrl:toolBar_Mini appName="ProjectType" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    btnNew_Click="btnNewTask_Click"
+                    btnEdit_Click="btnEditTask_Click"
+                    btnSave_Click="btnSaveTask_Click"
+                    btnDelete_Click="btnDeleteTask_Click"
+                          btnParent_Click="btnAddParentTask_Click"
+                    />
+                    <!--<Grid>
                         <Rectangle Margin="6" Height="1" Fill="Gainsboro"/>
                         <Border CornerRadius="10" Background="White" HorizontalAlignment="Center">
                             <Border.Effect>
@@ -117,7 +124,7 @@
                                    Style="{StaticResource btn_Label}" Content="d" Margin="10,4"/>
                             </StackPanel>
                         </Border>
-                    </Grid>
+                    </Grid>-->
 
                     <StackPanel HorizontalAlignment="Center" Margin="0,16">
 

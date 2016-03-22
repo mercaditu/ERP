@@ -53,12 +53,12 @@ namespace entity
             get
             {
                 //apply property level validation rules
-                //if (columnName == "value")
-                //{
-                //    if (value <= 0)
-                //        return "Value cannot be zero";
+                if (columnName == "id_dimension")
+                {
+                    if (id_dimension <= 0)
+                        return "id_dimension cannot be zero";
                
-                //}
+                }
                 return "";
             }
         }

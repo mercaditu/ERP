@@ -29,6 +29,13 @@ namespace cntrl
             get { return (bool)GetValue(Delete_IsEnabledProperty); }
             set { SetValue(Delete_IsEnabledProperty, value); }
         }
+        private static readonly DependencyProperty Save_IsEnabledProperty
+         = DependencyProperty.Register("Save_IsEnabled", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(false));
+        public bool Save_IsEnabled
+        {
+            get { return (bool)GetValue(Save_IsEnabledProperty); }
+            set { SetValue(Save_IsEnabledProperty, value); }
+        }
 
         private static readonly DependencyProperty Edit_IsEnabledProperty
             = DependencyProperty.Register("Edit_IsEnabled", typeof(bool), typeof(toolBar_Mini), new UIPropertyMetadata(true));
@@ -80,6 +87,7 @@ namespace cntrl
                 {
                     Edit_IsEnabled = true;
                     Delete_IsEnabled = true;
+                    Save_IsEnabled = true;
                     Approve_IsEnabled = true;
                     Annul_IsEnabled = false;
                 }
@@ -104,6 +112,7 @@ namespace cntrl
                     IsEditable = false;
                     Edit_IsEnabled = true;
                     Delete_IsEnabled = false;
+                    Save_IsEnabled = true;
                     Approve_IsEnabled = true;
                     Annul_IsEnabled = false;
                 }
@@ -146,6 +155,22 @@ namespace cntrl
         public App.Names appName { get; set; }
 
         #region "Events"
+        //Parent
+        public event btnParent_ClickedEventHandler btnParent_Click;
+        public delegate void btnParent_ClickedEventHandler(object sender);
+        public void btnParent_MouseUp(object sender, EventArgs e)
+        {
+            if (sender != null)
+            {
+                toolIcon_Mini _toolicon = (toolIcon_Mini)sender;
+                _toolicon.Focus();
+            }
+
+            if (btnParent_Click != null)
+            {
+                btnParent_Click(this);
+            }
+        }
 
         //NEW
         public event btnNew_ClickedEventHandler btnNew_Click;
@@ -348,7 +373,7 @@ namespace cntrl
             else if (btnSave_Click != null & iconName == "Save")
             {
                 toolIcon_Mini.Click += btnSave_MouseUp;
-                toolIcon_Mini = bind_toolIcon(toolIcon_Mini, "IsEditable", false);
+                toolIcon_Mini = bind_toolIcon(toolIcon_Mini, "Save_IsEnabled", false);
             }
             else if (btnCancel_Click != null & iconName == "Cancel")
             {
@@ -366,6 +391,11 @@ namespace cntrl
                 toolIcon_Mini.Click += btnAnull_MouseUp;
                 toolIcon_Mini.icoColor = Brushes.Crimson;
                 toolIcon_Mini = bind_toolIcon(toolIcon_Mini, "Annul_IsEnabled", false);
+            }
+            else if (btnParent_Click != null & iconName == "Parent" )
+            {
+                toolIcon_Mini.Click += btnParent_MouseUp;
+                
             }
             else
             {

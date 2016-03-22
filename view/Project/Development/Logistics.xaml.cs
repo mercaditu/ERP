@@ -78,7 +78,7 @@ namespace Cognitivo.Project.Development
                     item_ServiceDataGrid.ItemsSource = null;
                     item_CapitalDataGrid.ItemsSource = null;
                     dgvSupplies.ItemsSource = null;
-                
+
                     int _id_project = 0;
                     _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
 
@@ -325,6 +325,13 @@ namespace Cognitivo.Project.Development
                     item_request_dimension.id_dimension = project_task_dimension.id_dimension;
                     item_request_dimension.id_measurement = project_task_dimension.id_measurement;
                     item_request_dimension.value = project_task_dimension.value;
+                    string comment = "";
+
+                    comment += project_task_dimension.value.ToString();
+                    comment += "X";
+
+
+                    item_request_detail.comment = comment.Substring(0, comment.Length - 1);
                     item_request_detail.item_request_dimension.Add(item_request_dimension);
                 }
 
@@ -552,13 +559,13 @@ namespace Cognitivo.Project.Development
 
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.Source.GetType()==typeof(TabControl))
+            if (e.Source.GetType() == typeof(TabControl))
             {
                 LoadData();
-                itemDataGrid.ItemsSource=null;
+                itemDataGrid.ItemsSource = null;
             }
-         
-    
+
+
         }
 
 

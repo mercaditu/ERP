@@ -59,6 +59,23 @@ namespace Cognitivo.Project.Development
 
             //Filter to remove all items that are not top level.
             filter_task();
+            entity.Brillo.Security security = new entity.Brillo.Security(entity.App.Names.ActivityPlan);
+            if (security.approve)
+            {
+                btnapprove.IsEnabled = true;
+            }
+            else
+            {
+                btnapprove.IsEnabled = false;
+            }
+            if (security.annul)
+            {
+                btnanull.IsEnabled = true;
+            }
+            else
+            {
+                btnanull.IsEnabled = false;
+            }
         }
 
         public void filter_task()

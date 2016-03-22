@@ -32,6 +32,7 @@ namespace entity
         public string code { get; set; }
         public DateTime? est_start_date { get; set; }
         public DateTime? est_end_date { get; set; }
+
         public int priority { get; set; }
         public bool is_active { get; set; }
 

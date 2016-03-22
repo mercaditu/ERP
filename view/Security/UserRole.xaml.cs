@@ -47,6 +47,7 @@ namespace Cognitivo.Security
                 security_role security_role = new security_role();
                 security_role.State = EntityState.Added;
                 security_role.IsSelected = true;
+                security_role.is_master = true;
                 security_role.name = "master";
                 dbContext.security_role.Add(security_role);
                 security_roleViewSource.View.MoveCurrentToLast();
@@ -90,9 +91,11 @@ namespace Cognitivo.Security
             security_role.IsSelected = true;
             dbContext.security_role.Add(security_role);
 
+
+            security_roleViewSource.View.Refresh();
+            security_roleViewSource.View.MoveCurrentToLast();
             add_MissingRecords();
 
-            security_roleViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnEdit_Click(object sender)

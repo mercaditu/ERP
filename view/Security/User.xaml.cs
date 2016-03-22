@@ -38,6 +38,23 @@ namespace Cognitivo.Security
             security_role_view_source = ((CollectionViewSource)(this.FindResource("securityRoleViewSource")));
             dbContext.security_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
             security_role_view_source.Source = dbContext.security_role.Local;
+
+            if (!dbContext.security_user.Where(x => x.name == "master").Any())
+            {
+                security_user security_user = new security_user();
+                security_user.State = EntityState.Added;
+                security_user.IsSelected = true;
+                if (dbContext.security_role.Where(x => x.is_master).FirstOrDefault()!=null)
+                {
+                    security_user.security_role = dbContext.security_role.Where(x => x.is_master).FirstOrDefault();
+                }
+             
+                security_user.name = "master";
+                dbContext.security_user.Add(security_user);
+                security_user_view_source.View.MoveCurrentToLast();
+           
+
+            }
         }
 
         private void toolBar_btnNew_Click(object sender)

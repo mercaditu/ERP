@@ -10,7 +10,7 @@
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-      MinWidth="800" MinHeight="600">
+      MinWidth="800" MinHeight="600" Loaded="Page_Loaded">
     <Grid>
         <Grid VerticalAlignment="Top">
             <Grid.Background>
@@ -74,7 +74,7 @@
                                         VerticalAlignment="Center" HorizontalAlignment="Center" 
                                         FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                 <Rectangle Width="1" Fill="Silver" Margin="4,6"/>
-                <TextBlock Text="A" ToolTip="{lex:Loc Configuration}" Margin="4" 
+                <TextBlock x:Name="setting" Text="A" ToolTip="{lex:Loc Configuration}" Margin="4" 
                                         Foreground="Black" FontSize="18" Cursor="Hand" Tag="Config" MouseUp="get_Apps"
                                         VerticalAlignment="Center" HorizontalAlignment="Center" 
                                         FontFamily="/Cognitivo;component/Resources/#cognitivo"/>

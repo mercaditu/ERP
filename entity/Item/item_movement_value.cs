@@ -21,7 +21,7 @@ namespace entity
         public decimal unit_value { get; set; }
         public string comment { get; set; }
 
-        //public bool is_estimate { get; set; }
+        public bool is_estimate { get; set; }
 
         public virtual item_movement item_movement { get; set; }
         public virtual app_currencyfx app_currencyfx { get; set; }

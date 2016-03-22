@@ -79,7 +79,7 @@ namespace Cognitivo.Menu
                         arrNamespace.Add(_namespace);
                     }
                 }
-          
+
             }
         }
 
@@ -115,6 +115,20 @@ namespace Cognitivo.Menu
                 rootWindow.mainFrame.Navigate(objPage);
                 this.Cursor = Cursors.Arrow;
             }));
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            if (entity.CurrentSession.User.security_role.is_master)
+            {
+                setting.IsEnabled = true;
+            }
+            else
+            {
+                setting.IsEnabled = false;
+            }
+
         }
     }
 }

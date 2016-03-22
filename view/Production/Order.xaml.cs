@@ -132,7 +132,7 @@ namespace Cognitivo.Production
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
-         
+
         }
 
         public void filter_task()
@@ -439,19 +439,29 @@ namespace Cognitivo.Production
                     item_request_detail.date_needed_by = ItemRequest.neededDate;
                     item_request_detail.id_order_detail = data.id_order_detail;
                     item_request_detail.urgency = ItemRequest.Urgencies;
-                   
+
                     item_request_detail.id_project_task = data.project_task.id_project_task;
-                    string comment = "";
-                    foreach (item_dimension item in data.item.item_dimension)
-                    {
-                        comment += item.value.ToString();
-                        comment += "X";
-                        
-                    }
-                    item_request_detail.comment = comment.Substring(0, comment.Length - 1);
+
                     int idItem = data.item.id_item;
                     item_request_detail.id_item = idItem;
                     item_request_detail.quantity = data.quantity;
+
+                    List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == data.project_task.id_project_task).ToList();
+                    foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
+                    {
+                        item_request_dimension item_request_dimension = new item_request_dimension();
+                        item_request_dimension.id_dimension = project_task_dimension.id_dimension;
+                        item_request_dimension.id_measurement = project_task_dimension.id_measurement;
+                        item_request_dimension.value = project_task_dimension.value;
+                        string comment = "";
+
+                        comment += project_task_dimension.value.ToString();
+                        comment += "X";
+
+
+                        item_request_detail.comment = comment.Substring(0, comment.Length - 1);
+                        item_request_detail.item_request_dimension.Add(item_request_dimension);
+                    }
                     item_request.item_request_detail.Add(item_request_detail);
                 }
 

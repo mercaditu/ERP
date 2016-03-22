@@ -48,5 +48,28 @@ namespace entity
         public virtual item_product item_product { get; set; }
         public virtual ICollection<item_movement_value> item_movement_value { get; set; }
         public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
+
+        public decimal GetValue_ByCurrency(app_currency app_currency)
+        {
+            decimal Value = 0M;
+
+            foreach (item_movement_value item_movement_valueLIST in item_movement_value)
+            {
+                if(item_movement_valueLIST.app_currencyfx.app_currency == app_currency)
+                {
+                    Value = Value + item_movement_valueLIST.unit_value;
+                }
+                else
+                {
+                    //Take value in that currency fx. do not convert into new fx rate.
+                    app_currencyfx app_currencyfx = item_movement_valueLIST.app_currencyfx;
+
+                    //convert into current currency.
+                    Value = Value + Brillo.Currency.convert_Value(item_movement_valueLIST.unit_value, app_currencyfx.id_currencyfx, App.Modules.Purchase);
+                }
+            }
+
+            return Value;
+        }
     }
 }

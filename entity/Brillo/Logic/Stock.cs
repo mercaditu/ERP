@@ -34,8 +34,8 @@ namespace entity.Brillo.Logic
                         item_movementList.Add(debit_Movement(entity.Status.Stock.Reserved,
                                             App.Names.SalesInvoice,
                                             detail.id_sales_invoice,
-                                            item_product.id_item_product,
-                                            (int)detail.id_location,
+                                            item_product,
+                                            detail.app_location,
                                             detail.quantity,
                                             sales_invoice.trans_date,
                                             comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
@@ -45,9 +45,9 @@ namespace entity.Brillo.Logic
                     item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
                                              App.Names.SalesInvoice,
                                              detail.id_sales_invoice,
-                                             sales_invoice.id_currencyfx,
+                                             sales_invoice.app_currencyfx,
                                              item_product,
-                                             (int)detail.id_location,
+                                             detail.app_location,
                                              detail.quantity,
                                              sales_invoice.trans_date,
                                              comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name),
@@ -196,9 +196,9 @@ namespace entity.Brillo.Logic
                     item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
                                              App.Names.PurchaseReturn,
                                              purchase_return_detail.id_purchase_return,
-                                             purchase_return.id_currencyfx,
+                                             purchase_return.app_currencyfx,
                                              item_product,
-                                             (int)purchase_return_detail.id_location,
+                                             purchase_return_detail.app_location,
                                              purchase_return_detail.quantity,
                                              purchase_return.trans_date,
                                              comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name),
@@ -227,8 +227,8 @@ namespace entity.Brillo.Logic
                         item_movementList.Add(debit_Movement(entity.Status.Stock.Reserved,
                                             App.Names.SalesOrder,
                                             sales_order_detail.id_sales_order,
-                                            item_product.id_item_product,
-                                            (int)sales_order_detail.id_location,
+                                            item_product,
+                                            sales_order_detail.app_location,
                                             sales_order_detail.quantity,
                                             sales_order.trans_date,
                                             comment_Generator(App.Names.SalesOrder, sales_order.number, sales_order.contact.name)
@@ -238,9 +238,9 @@ namespace entity.Brillo.Logic
                     item_movementList = Debit_MovementLIST(entity.Status.Stock.InStock,
                                              App.Names.SalesOrder,
                                             sales_order_detail.id_sales_order,
-                                              sales_order.id_currencyfx,
+                                              sales_order.app_currencyfx,
                                              item_product,
-                                             (int)sales_order_detail.id_location,
+                                             sales_order_detail.app_location,
                                              sales_order_detail.quantity,
                                               sales_order.trans_date,
                                              comment_Generator(App.Names.SalesOrder, sales_order.number, sales_order.contact.name),
@@ -267,10 +267,10 @@ namespace entity.Brillo.Logic
                     {
                         item_movementList = Debit_MovementLIST(entity.Status.Stock.OnTheWay,
                                              App.Names.PurchaseInvoice,
-                                            purchase_invoice_detail.id_purchase_invoice,
-                                              purchase_invoice.id_currencyfx,
+                                             purchase_invoice_detail.id_purchase_invoice,
+                                             purchase_invoice.app_currencyfx,
                                              item_product,
-                                             (int)purchase_invoice_detail.id_location,
+                                             purchase_invoice_detail.app_location,
                                              purchase_invoice_detail.quantity,
                                               purchase_invoice.trans_date,
                                              comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number, purchase_invoice.contact.name),
@@ -379,8 +379,8 @@ namespace entity.Brillo.Logic
                                 item_movement = debit_Movement(entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
                                                         (int)detail.id_production_execution,
-                                                        item_product.id_item_product,
-                                                        (int)production_execution.production_line.id_location,
+                                                        item_product,
+                                                        production_execution.production_line.app_location,
                                                         movement_debit_quantity,
                                                         production_execution.trans_date,
                                                         comment_Generator(App.Names.ProductionExecution,
@@ -420,8 +420,8 @@ namespace entity.Brillo.Logic
                         item_movementList.Add(debit_Movement(entity.Status.Stock.InStock,
                                                 App.Names.ProductionExecution,
                                                 detail.id_production_execution,
-                                                item_product.id_item_product,
-                                                (int)production_execution.production_line.id_location,
+                                                item_product,
+                                                production_execution.production_line.app_location,
                                                 qty_ExexustionDetail,
                                                 production_execution.trans_date,
                                                 comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
@@ -473,9 +473,9 @@ namespace entity.Brillo.Logic
                                           entity.Status.Stock Status,
                                           App.Names ApplicationID,
                                           int TransactionID,
-                                          int CurrencyFXID,
+                                          app_currencyfx app_currencyfx,
                                           item_product item_product,
-                                          int LocationID,
+                                          app_location app_location,
                                           decimal Quantity,
                                           DateTime TransDate,
                                           string Comment, decimal unit_price)
@@ -485,7 +485,7 @@ namespace entity.Brillo.Logic
 
             using (db db = new db())
             {
-                Items_InStockLIST = db.item_movement.Where(x => x.id_location == LocationID
+                Items_InStockLIST = db.item_movement.Where(x => x.id_location == app_location.id_location
                                                                       && x.id_item_product == item_product.id_item_product
                                                                       && x.status == entity.Status.Stock.InStock
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
@@ -522,7 +522,7 @@ namespace entity.Brillo.Logic
                         item_movement.debit = Quantity;
                         item_movement.credit = 0;
                         item_movement.status = Status;
-                        item_movement.id_location = LocationID;
+                        item_movement.id_location = app_location.id_location;
                         item_movement._parent = null;
                         item_movement.id_application = ApplicationID;
                         item_movement.transaction_id = TransactionID;
@@ -533,8 +533,8 @@ namespace entity.Brillo.Logic
                         //Logic for Value
                         item_movement_value item_movement_value = new item_movement_value();
 
-                        item_movement_value.unit_value = parent_Movement.item_movement_value.Sum(i => i.unit_value);
-                        item_movement_value.id_currencyfx = CurrencyFXID;
+                        item_movement_value.unit_value = parent_Movement.GetValue_ByCurrency(app_currencyfx.app_currency);
+                        item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
                         item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                         item_movement.item_movement_value.Add(item_movement_value);
 
@@ -554,7 +554,7 @@ namespace entity.Brillo.Logic
                     item_movement.debit = Quantity;
                     item_movement.credit = 0;
                     item_movement.status = Status;
-                    item_movement.id_location = LocationID;
+                    item_movement.id_location = app_location.id_location;
                     item_movement._parent = null;
                     item_movement.id_application = ApplicationID;
                     item_movement.transaction_id = TransactionID;
@@ -565,7 +565,7 @@ namespace entity.Brillo.Logic
                     //Logic for Value in case Parent does not Exist, we will take from 
                     item_movement_value item_movement_value = new item_movement_value();
                     item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
-                    item_movement_value.id_currencyfx = CurrencyFXID;
+                    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
                     item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                     item_movement.item_movement_value.Add(item_movement_value);
                     //Adding into List
@@ -682,27 +682,29 @@ namespace entity.Brillo.Logic
 
 
         public item_movement debit_Movement(
-     entity.Status.Stock Status,
-     App.Names ApplicationID,
-     int TransactionID,
-     int Item_ProductID,
-     int LocationID,
-     decimal Quantity,
-     DateTime TransDate,
-     string Comment)
+                             entity.Status.Stock Status,
+                             App.Names ApplicationID,
+                             int TransactionID,
+                             item_product item_product,
+                             app_location app_location,
+                             decimal Quantity,
+                             DateTime TransDate,
+                             string Comment)
         {
             item_movement item_movement = new item_movement();
             item_movement.comment = Comment;
-            item_movement.id_item_product = Item_ProductID;
+            item_movement.id_item_product = item_product.id_item_product;
             item_movement.debit = Quantity;
             item_movement.credit = 0;
             item_movement.status = Status;
-            item_movement.id_location = LocationID;
+            item_movement.id_location = app_location.id_location;
             item_movement.id_application = ApplicationID;
             item_movement.transaction_id = TransactionID;
             item_movement.trans_date = TransDate;
             return item_movement;
         }
+
+
         public item_movement credit_Movement(
           entity.Status.Stock Status,
           App.Names ApplicationID,

@@ -55,6 +55,7 @@ namespace entity.Brillo
                         Rate_Previous = rate;
                         return originalValue * rate;
                     }
+
                     if (app_currencyfx.app_currency.is_priority == true) //Towards Default
                     {
                         if (Rate_Previous == 0)

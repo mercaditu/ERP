@@ -691,7 +691,7 @@ namespace entity.Brillo.Logic
                 //Logic for Value in case Parent does not Exist, we will take from 
                 item_movement_value item_movement_value = new item_movement_value();
                 //logic to check fx rate of parent.
-                item_movement_value.unit_value = Currency.convert_Value(unit_price, credit_movement.item_movement_value.Max(x=>x.id_currencyfx), App.Modules.Sales); ;
+                item_movement_value.unit_value = Currency.convert_Value(unit_price, credit_movement.item_movement_value.Max(x => x.id_currencyfx), ); 
                 item_movement_value.id_currencyfx = credit_movement.item_movement_value.Max(x => x.id_currencyfx);
                 item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                 item_movement.item_movement_value.Add(item_movement_value);

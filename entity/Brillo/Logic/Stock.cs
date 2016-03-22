@@ -533,8 +533,6 @@ namespace entity.Brillo.Logic
                         //Logic for Value
                         item_movement_value item_movement_value = new item_movement_value();
 
-                      
-
                         item_movement_value.unit_value = parent_Movement.item_movement_value.Sum(i => i.unit_value);
                         item_movement_value.id_currencyfx = CurrencyFXID;
                         item_movement_value.comment = Brillo.Localize.StringText("DirectCost");

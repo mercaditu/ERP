@@ -573,7 +573,7 @@ namespace entity.Brillo.Logic
                     _item_movementList = _item_movementList.OrderByDescending(x => x.trans_date).ToList();
                 }
                 decimal qty_SalesDetail = Quantity;
-                foreach (item_movement object_Movement in _item_movementList)
+                foreach (item_movement parent_Movement in _item_movementList)
                 {
                     if (qty_SalesDetail > 0)
                     {
@@ -581,9 +581,9 @@ namespace entity.Brillo.Logic
 
                         decimal movement_debit_quantity = qty_SalesDetail;
 
-                        if (object_Movement.credit <= qty_SalesDetail)
+                        if (parent_Movement.credit <= qty_SalesDetail)
                         {
-                            movement_debit_quantity = object_Movement.credit;
+                            movement_debit_quantity = parent_Movement.credit;
                         }
 
                         //Adding into List if Movement List for this Location is empty.
@@ -595,18 +595,18 @@ namespace entity.Brillo.Logic
                                                 movement_debit_quantity,
                                                 TransDate,
                                                 Comment);
-                        item_movement._parent = object_Movement;
+                        item_movement._parent = parent_Movement;
 
                         //Logic for Value
                         item_movement_value item_movement_value = new item_movement_value();
-                        item_movement_value.unit_value = object_Movement.item_movement_value.Sum(i => i.unit_value);
+                        item_movement_value.unit_value = parent_Movement.item_movement_value.Sum(i => i.unit_value);
                         item_movement_value.id_currencyfx = CurrencyFXID;
                         item_movement_value.comment = item_movement.comment;
                         item_movement.item_movement_value.Add(item_movement_value);
 
                         //Adding into List
                         Returnitem_movementList.Add(item_movement);
-                        qty_SalesDetail = qty_SalesDetail - object_Movement.credit;
+                        qty_SalesDetail = qty_SalesDetail - parent_Movement.credit;
                     }
                 }
                 if (qty_SalesDetail > 0)

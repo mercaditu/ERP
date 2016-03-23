@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Cuenta</value>
+  </data>
   <data name="Accountant" xml:space="preserve">
     <value>Contador</value>
   </data>
@@ -165,8 +168,14 @@
   <data name="Advanced" xml:space="preserve">
     <value>Avanzado</value>
   </data>
+  <data name="Alias" xml:space="preserve">
+    <value>Alias</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Cantidad</value>
+  </data>
+  <data name="AmountPaid" xml:space="preserve">
+    <value>Cantidad Pagada</value>
   </data>
   <data name="Annul" xml:space="preserve">
     <value>Anular</value>
@@ -255,8 +264,17 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
+  <data name="CanExpire" xml:space="preserve">
+    <value>Pueden Caducar</value>
+  </data>
+  <data name="CapitalResource" xml:space="preserve">
+    <value>Recursos De Capital</value>
+  </data>
   <data name="CaractersLeft" xml:space="preserve">
     <value>Carácteres Izquierda</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categoría</value>
   </data>
   <data name="ChartofAccount" xml:space="preserve">
     <value>Plan De Cuentas</value>
@@ -266,6 +284,9 @@
   </data>
   <data name="City" xml:space="preserve">
     <value>Ciudad</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Código</value>
   </data>
   <data name="Coeficient" xml:space="preserve">
     <value>Coeficiente</value>
@@ -320,6 +341,9 @@
   </data>
   <data name="Contacts" xml:space="preserve">
     <value>Contactos</value>
+  </data>
+  <data name="ContactTags" xml:space="preserve">
+    <value>Contacto Etiquetas</value>
   </data>
   <data name="Contract" xml:space="preserve">
     <value>Contrato</value>
@@ -473,6 +497,12 @@
   </data>
   <data name="DifferenceinDate" xml:space="preserve">
     <value>Diferencia En La Fecha</value>
+  </data>
+  <data name="Dimension" xml:space="preserve">
+    <value>Dimensión</value>
+  </data>
+  <data name="DirectCost" xml:space="preserve">
+    <value>Costo Directo</value>
   </data>
   <data name="Discount" xml:space="preserve">
     <value>Descuento</value>
@@ -1028,6 +1058,9 @@
   </data>
   <data name="Service" xml:space="preserve">
     <value>Servicio</value>
+  </data>
+  <data name="ServiceContract" xml:space="preserve">
+    <value>Contrato De Servicios</value>
   </data>
   <data name="ServicesperEvent" xml:space="preserve">
     <value>Servicios Por Evento</value>

@@ -288,12 +288,18 @@ namespace cntrl
             InitializeComponent();
         }
 
+        bool HasLoaded = false;
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            if (!DesignerProperties.GetIsInDesignMode(this) && HasLoaded == false)
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
                 get_Icons(toolBarIcons.Basic.ToString(), ref security);
+
+                ///Loaded prevents the Parent Tab Controls from rendering the code twice. 
+                ///The enclosing If function checks for this to be True to Skip.
+                HasLoaded = true;
             }
         }
         

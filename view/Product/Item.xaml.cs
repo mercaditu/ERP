@@ -22,7 +22,7 @@ namespace Cognitivo.Product
 
         CollectionViewSource itemViewSource,
             itemitem_priceViewSource,
-            itemitem_propertyViewSource,
+            //itemitem_propertyViewSource,
             itemitem_dimentionViewSource,
             itemitem_capitalViewSource,
             item_brandViewSource,
@@ -41,7 +41,7 @@ namespace Cognitivo.Product
 
             itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
             itemitem_priceViewSource = FindResource("itemitem_priceViewSource") as CollectionViewSource;
-            itemitem_propertyViewSource = FindResource("itemitem_propertyViewSource") as CollectionViewSource;
+            //itemitem_propertyViewSource = FindResource("itemitem_propertyViewSource") as CollectionViewSource;
             itemitem_dimentionViewSource = FindResource("itemitem_dimentionViewSource") as CollectionViewSource;
             itemitem_productViewSource = FindResource("itemitem_productViewSource") as CollectionViewSource;
             itemitem_capitalViewSource = FindResource("itemitem_capitalViewSource") as CollectionViewSource;
@@ -126,12 +126,6 @@ namespace Cognitivo.Product
                 app_dimentionViewSource.Source = dbContext.app_dimension.Local;
             }));
 
-            //await dbContext.app_property.OrderBy(a => a.name).AsNoTracking().LoadAsync();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            //    app_propertyViewSource.Source = dbContext.app_property.Local;
-            //}));
-
             await dbContext.app_vat_group
                 .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
@@ -194,7 +188,6 @@ namespace Cognitivo.Product
             //Loads Primary and Secondary Data
             load_PrimaryData();
 
-            //Item Type Enum
             cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type));
         }
 
@@ -388,20 +381,20 @@ namespace Cognitivo.Product
             IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
+                //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
                 item item = itemViewSource.View.CurrentItem as item;
-                if (!(dbContext.items.Any(x => x.name.Contains(item.name))))
-                {
-                    //dbContext.item_tag.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).Load();
-                    dbContext.SaveChanges();
-                    itemViewSource.View.Refresh();
-                    //SetIsEnable = false;
-                    toolBar.msgSaved();
-                }
-                else
+                if (dbContext.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item))
                 {
                     toolBar.msgWarning("Product Already Exist..");
-
+                    return;
                 }
+
+                //Save Changes
+                dbContext.SaveChanges();
+
+                itemViewSource.View.Refresh();
+                toolBar.msgSaved();
+
             }
         }
 
@@ -482,14 +475,6 @@ namespace Cognitivo.Product
                 e.CanExecute = true;
                 //}
             }
-            if (e.Parameter as item_property != null)
-            {
-                //item_property item_property = e.Parameter as item_property;
-                //if (string.IsNullOrEmpty(item_property.Error))
-                //{
-                e.CanExecute = true;
-                //}
-            }
             if (e.Parameter as item_tag_detail != null)
             {
                 e.CanExecute = true;
@@ -516,18 +501,12 @@ namespace Cognitivo.Product
                         dbContext.item_dimension.Remove(e.Parameter as item_dimension);
                         itemitem_dimentionViewSource.View.Refresh();
                     }
-                    //if (e.Parameter as item_property != null)
-                    //{
-                    //    dbContext.item_property.Remove(e.Parameter as item_property);
-                    //    itemitem_propertyViewSource.View.Refresh();
-                    //}
+
                     if (e.Parameter as item_tag_detail != null)
                     {
-                        //DeleteDetailGridRow
                         item_tag_detailDataGrid.CancelEdit();
                         dbContext.item_tag_detail.Remove(e.Parameter as item_tag_detail);
                         itemitem_tagdetailViewSource.View.Refresh();
-                        //calculate_total(sender, e);
                     }
                 }
             }
@@ -698,37 +677,6 @@ namespace Cognitivo.Product
             }
         }
 
-        //private void AddProperty_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    crud_modal.Visibility = Visibility.Visible;
-        //    cntrl.Curd.property _property = new cntrl.Curd.property();
-        //    _property.app_propertyViewSource = app_propertyViewSource;
-        //    _property.MainViewSource = itemViewSource;
-        //    _property.curObject = itemViewSource.View.CurrentItem;
-        //    //_property._entity = dbContext;
-        //    _property.operationMode = cntrl.Class.clsCommon.Mode.Add;
-        //    _property.isExternalCall = true;
-        //    crud_modal.Children.Add(_property);
-        //}
-
-        //private void EditProperty_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    item_property item_property = item_propertyDataGrid.SelectedItem as item_property;
-        //    app_property app_property = item_property.app_property;
-        //    if (app_property != null)
-        //    {
-        //        crud_modal.Visibility = Visibility.Visible;
-        //        cntrl.Curd.property _property = new cntrl.Curd.property();
-        //        _property.app_propertyViewSource = app_propertyViewSource;
-        //        _property.MainViewSource = itemViewSource;
-        //        _property.curObject = itemViewSource.View.CurrentItem;
-        //        //_property._entity = dbContext;
-        //        _property.objapp_property = app_property;
-        //        _property.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-        //        _property.isExternalCall = true;
-        //        crud_modal.Children.Add(_property);
-        //    }
-        //}
         #endregion
 
         private void cbxTag_KeyDown(object sender, KeyEventArgs e)
@@ -736,7 +684,6 @@ namespace Cognitivo.Product
             if (e.Key == Key.Enter)
             {
                 Add_Tag();
-
             }
         }
 
@@ -744,9 +691,9 @@ namespace Cognitivo.Product
         {
             Add_Tag();
         }
+
         void Add_Tag()
         {
-            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
             if (cbxTag.Data != null)
             {
                 int id = Convert.ToInt32(((item_tag)cbxTag.Data).id_tag);

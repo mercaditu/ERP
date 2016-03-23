@@ -736,6 +736,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ContactTags.
+        /// </summary>
+        public static string ContactTags {
+            get {
+                return ResourceManager.GetString("ContactTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Contract.
         /// </summary>
         public static string Contract {
@@ -1191,6 +1200,24 @@ namespace Cognitivo.Resources {
         public static string DifferenceinDate {
             get {
                 return ResourceManager.GetString("DifferenceinDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Dimension.
+        /// </summary>
+        public static string Dimension {
+            get {
+                return ResourceManager.GetString("Dimension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DirectCost.
+        /// </summary>
+        public static string DirectCost {
+            get {
+                return ResourceManager.GetString("DirectCost", resourceCulture);
             }
         }
         
@@ -2856,6 +2883,15 @@ namespace Cognitivo.Resources {
         public static string Service {
             get {
                 return ResourceManager.GetString("Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ServiceContract.
+        /// </summary>
+        public static string ServiceContract {
+            get {
+                return ResourceManager.GetString("ServiceContract", resourceCulture);
             }
         }
         

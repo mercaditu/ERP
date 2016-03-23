@@ -278,7 +278,7 @@ namespace Cognitivo.Project.Development
         //    }
         //}
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnRequestResource_Click(object sender, RoutedEventArgs e)
         {
             ItemRequest = new cntrl.Curd.ItemRequest();
             crud_modal.Visibility = Visibility.Visible;
@@ -307,8 +307,6 @@ namespace Cognitivo.Project.Development
 
             foreach (project_task project_task in productlist)
             {
-
-
                 item_request_detail item_request_detail = new entity.item_request_detail();
                 item_request_detail.date_needed_by = ItemRequest.neededDate;
                 item_request_detail.id_project_task = project_task.id_project_task;
@@ -347,24 +345,6 @@ namespace Cognitivo.Project.Development
         }
 
         #endregion
-
-        //private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    //Contract
-        //    if (cbxCondition.SelectedItem != null)
-        //    {
-        //        app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-        //        contractViewSource.View.Filter = i =>
-        //        {
-        //            app_contract objContract = (app_contract)i;
-        //            if (objContract.id_condition == app_condition.id_condition)
-        //            { return true; }
-        //            else
-        //            { return false; }
-        //        };
-        //        cbxContract.SelectedIndex = 0;
-        //    }
-        //}
 
         private void item_ProductDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -550,8 +530,6 @@ namespace Cognitivo.Project.Development
 
         private void itemDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-
-
             List<project_task> productlist = entity.db.project_task.ToList();
             noofrows = productlist.Where(x => x.IsSelected == true).Count();
             RaisePropertyChanged("noofrows");
@@ -564,8 +542,6 @@ namespace Cognitivo.Project.Development
                 LoadData();
                 itemDataGrid.ItemsSource = null;
             }
-
-
         }
 
         private void dgvServiceContract_SelectionChanged(object sender, SelectionChangedEventArgs e)

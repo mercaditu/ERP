@@ -318,7 +318,16 @@ namespace Cognitivo.Purchase
 
         private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)purchase_tender_contact_detailDataGrid.SelectedItem;
+            if (purchase_tender_contact != null)
+            {
+                decimal total = 0M;
+                foreach (var item in purchase_tender_contact.purchase_tender_detail)
+                {
+                    total = item.unit_cost * item.quantity;
+                }
+                LblTotal.Content = total.ToString();
+            }
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)

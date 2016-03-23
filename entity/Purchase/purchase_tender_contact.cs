@@ -37,5 +37,7 @@ namespace entity
         public virtual app_condition app_condition { get; set; }
         public virtual app_contract app_contract { get; set; }
         public virtual ICollection<purchase_tender_detail> purchase_tender_detail { get; set; }
+
+
     }
 }

@@ -8,6 +8,7 @@
         mc:Ignorable="d" d:DesignHeight="650" d:DesignWidth="800"
         xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+        xmlns:converter="clr-namespace:Cognitivo.Converters"
         xmlns:customcmd="clr-namespace:Cognitivo.Class"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -19,6 +20,7 @@
                         Executed="DeleteCommandBinding_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
         <CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_contact_detailViewSource" Source="{Binding purchase_tender_contact_detail, Source={StaticResource purchase_tenderViewSource}}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_item_detailViewSource" Source="{Binding purchase_tender_detail, Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}"/>
@@ -65,7 +67,7 @@
             </Grid.RowDefinitions>
             
             <ScrollViewer>
-                <Grid>
+                <Grid IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
@@ -162,11 +164,13 @@
                 <TabItem Header="{lex:Loc Order}">
                     <StackPanel Margin="4">
                         <Label Style="{StaticResource input_label}" Content="{lex:Loc Item}"/>
-                        <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select"/>
+                        <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
 
                         <DataGrid x:Name="purchase_tender_itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                  ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"  LoadingRowDetails="purchase_tender_itemDataGrid_LoadingRowDetails"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected">
+                                  ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"  
+                                  LoadingRowDetails="purchase_tender_itemDataGrid_LoadingRowDetails"
+                                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                                  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item.name}" Header="{lex:Loc Cognitivo:local:Name}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Description}" Width="*"/>
@@ -197,46 +201,33 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal">
 
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="4" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                             <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
                             <ComboBox x:Name="cbxCondition" Style="{StaticResource input_combobox}" DisplayMemberPath="name" Width="75"
                               metro:ControlsHelper.FocusBorderBrush="RoyalBlue" ItemsSource="{Binding Source={StaticResource app_conditionViewSource}}"
                               metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                SelectedValuePath="id_condition" Grid.Row="1" SelectionChanged="cbxCondition_SelectionChanged"/>
-                                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
+                            <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
                             <ComboBox Style="{StaticResource input_combobox}" DisplayMemberPath="name" 
                               metro:ControlsHelper.FocusBorderBrush="RoyalBlue"     ItemsSource="{Binding Source={StaticResource app_contractViewSource}}"
                               metro:ControlsHelper.MouseOverBorderBrush="Silver"
 					          SelectedValuePath="id_contract" x:Name="cbxContract" Width="75"/>
                             <Label Style="{StaticResource input_label}" Content="{lex:Loc Contact}"/>
-                            <Controls:SmartBox_Contact x:Name="sbxContact" Select="set_ContactPref" Get_Suppliers="True" Height="20" VerticalAlignment="Top" />
-                        
-					         
-                    
-                            <!--<cntrl:SearchableTextbox x:Name="contactComboBox" Width="256" HorizontalAlignment="Left"
-                                             CollectionViewSource="{StaticResource contactViewSource}" 
-                                             IsDisplayed="True" KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref" 
-                                             Data="{Binding contact,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                <cntrl:SearchableTextbox.Columns>
-                                    <cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                                    <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                                    <cntrl:SmartBoxColumn Header="GovId" ForProperty="gov_code" Binding="{Binding gov_code, Mode=Default}" EnableSearch="True"/>
-                                    <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
-                                    <cntrl:SmartBoxColumn Header="Telephone" ForProperty="telephone" Binding="{Binding telephone, Mode=Default}" Hide="True"/>
-                                </cntrl:SearchableTextbox.Columns>
-                            </cntrl:SearchableTextbox>-->
-                            
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Select="set_ContactPref" Get_Suppliers="True" VerticalAlignment="Top" />
                         </StackPanel>
                      
                         <DataGrid x:Name="purchase_tender_contact_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                  ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}" Margin="4,60,4,0"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="purchase_tender_contact_detailDataGrid_SelectionChanged" CellEditEnding="purchase_tender_contact_detailDataGrid_CellEditEnding">
+                                  ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}" Margin="4,35,4,0"
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="purchase_tender_contact_detailDataGrid_SelectionChanged" 
+                                  CellEditEnding="purchase_tender_contact_detailDataGrid_CellEditEnding"
+                                  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ArrivalDate}" Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <DatePicker SelectedDate="{Binding recieve_date_est, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                            <DatePicker SelectedDate="{Binding recieve_date_est, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+                                                        IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -265,8 +256,10 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <DataGrid x:Name="purchase_tender_item_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="1"
-                                  ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4" CellEditEnding="purchase_tender_item_detailDataGrid_CellEditEnding"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" >
+                                  ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4" 
+                                  CellEditEnding="purchase_tender_item_detailDataGrid_CellEditEnding"
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -289,7 +282,7 @@
                         </DataGrid>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                             <Label Content="Total"/>
-                            <Label x:Name="LblTotal"/>
+                            <Label x:Name="LblTotal" ContentStringFormat="{}{0:N}"/>
                         </StackPanel>
 
                     </Grid>

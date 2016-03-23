@@ -560,10 +560,10 @@ namespace Cognitivo.Production
                 };
 
                 production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies).Sum(x => x.quantity);
+                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Service).Sum(x => x.quantity);
                 decimal projectedqty = production_order_detail.quantity;
-                lblProjectedempqty.Content = "Total:-" + projectedqty.ToString();
-                lblTotalemp.Content = "Total:-" + actuallqty.ToString();
+                lblProjectedempqty.Content = "Total Projectado: " + projectedqty.ToString();
+                lblTotalemp.Content = "Total Real: " + actuallqty.ToString();
                 if (actuallqty > projectedqty)
                 {
                     lblTotalemp.Foreground = Brushes.Red;

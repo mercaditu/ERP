@@ -45,8 +45,6 @@ namespace Cognitivo.Project.Development
             entity.db.projects.Where(a => a.is_active && a.id_company == _entity.company_ID).Load();
             projectViewSource.Source = entity.db.projects.Local;
 
-
-
             contractViewSource = (CollectionViewSource)this.FindResource("contractViewSource");
             contractViewSource.Source = entity.db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
 
@@ -62,11 +60,11 @@ namespace Cognitivo.Project.Development
             app_measurementViewSource.Source = entity.db.app_measurement.Local;
         }
 
-
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadData();
         }
+
         public void LoadData()
         {
             try
@@ -121,9 +119,9 @@ namespace Cognitivo.Project.Development
 
                         item_ProductDataGrid.ItemsSource = productlist.Where(IT => IT.item.id_item_type == item.item_type.Product).ToList();
 
-                        item_RawDataGrid.ItemsSource = productlist.Where(IT => IT.item.id_item_type == item.item_type.RawMaterial).ToList(); ;
+                        item_RawDataGrid.ItemsSource = productlist.Where(IT => IT.item.id_item_type == item.item_type.RawMaterial).ToList();
                         var servicelist = (from IT in entity.db.project_task
-                                           where IT.status == Status.Project.Approved //) 
+                                           where IT.status == Status.Project.Approved
                                            && IT.status != null && IT.id_project == _id_project
 
                                            group IT by new { IT.items } into last
@@ -135,10 +133,12 @@ namespace Cognitivo.Project.Development
                                                _id_task = last.Max(x => x.id_project_task),
                                                _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
                                                item = last.Key.items
-                                               // avlqtyColumn =  entity.db.item_movement.Where(x => x.item_product.id_item == last.Key.items.id_item)!=null?entity.db.item_movement.Where(x => x.item_product.id_item == last.Key.items.id_item).Sum(x => x.credit != 0 ? x.credit : 0 - x.debit != 0 ? x.debit : 0):0
                                            }).ToList();
+
                         item_ServiceDataGrid.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.Service).ToList();
-                        item_CapitalDataGrid.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.FixedAssets).ToList(); ;
+                        item_CapitalDataGrid.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.FixedAssets).ToList();
+                        dgvServiceContract.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.ServiceContract).ToList();
+
                         dgvSupplies.ItemsSource = servicelist.Where(IT => IT.item.id_item_type == item.item_type.Supplies).ToList(); ;
                     }
                 }
@@ -151,141 +151,27 @@ namespace Cognitivo.Project.Development
         }
 
         #region Add Purchase Tender
-        //private void btnNewTender_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        project objProject = projectViewSource.View.CurrentItem as project;
-        //        if (objProject != null)
-        //        {
-        //            txtName.Text = string.Empty;
-        //            txtComment.Text = string.Empty;
 
-        //            int idContact = Convert.ToInt32(objProject.id_contact);
-        //            contact contact = entity.db.contacts.Where(a => a.id_contact == idContact).Include("app_contract").Include("app_currency").FirstOrDefault();
-        //            if (contact.app_contract != null)
-        //            {
-        //                cbxCondition.SelectedValue = Convert.ToInt32(contact.app_contract.app_condition.id_condition);
-        //                cbxContract.SelectedValue = Convert.ToInt32(contact.app_contract.id_contract);
-        //            }
-        //            if (contact.app_currency != null && contact.app_currency.app_currencyfx != null)
-        //            {
-        //                cbxCurrency.SelectedValue = Convert.ToInt32(contact.app_currency.app_currencyfx.Where(a => a.is_active == true).FirstOrDefault().id_currencyfx);
-        //            }
-        //            crud_modal.Visibility = System.Windows.Visibility.Visible;
-        //        }
-        //        else
-        //        {
-        //            toolBar.msgWarning("Error getting Project Details");
-        //        }
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
-        //private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    crud_modal.Visibility = System.Windows.Visibility.Hidden;
-        //}
-
-        //private void btnSaveTender_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        project objProject = projectViewSource.View.CurrentItem as project;
-        //        if (objProject != null)
-        //        {
-        //            using (db dbTender = new db())
-        //            {
-        //                int idProject = objProject.id_project;
-        //                purchase_tender purchase_tender = new purchase_tender();
-        //                if (idProject > 0)
-        //                    purchase_tender.id_project = idProject;
-        //                purchase_tender.name = txtName.Text;
-        //                //purchase_tender.code = Convert.ToInt16(txtCode.Text);
-        //                purchase_tender.comment = txtComment.Text;
-
-        //                purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
-        //                int idContact = Convert.ToInt32(objProject.id_contact);
-        //                contact contact = entity.db.contacts.Where(a => a.id_contact == idContact).Include("app_contract").Include("app_currency").FirstOrDefault();
-        //                if (contact.app_contract != null)
-        //                {
-        //                    purchase_tender_contact.id_condition = Convert.ToInt32(contact.app_contract.app_condition.id_condition);
-        //                    purchase_tender_contact.id_contract = Convert.ToInt32(contact.app_contract.id_contract);
-        //                }
-        //                else
-        //                {
-        //                    purchase_tender_contact.id_condition = Convert.ToInt32(entity.db.app_contract.FirstOrDefault().app_condition.id_condition);
-        //                    purchase_tender_contact.id_contract = Convert.ToInt32(entity.db.app_contract.FirstOrDefault().id_contract);
-        //                }
-        //                if (contact.app_currency != null && contact.app_currency.app_currencyfx != null)
-        //                {
-        //                    purchase_tender_contact.id_currencyfx = Convert.ToInt32(contact.app_currency.app_currencyfx.Where(a => a.is_active == true).FirstOrDefault().id_currencyfx);
-        //                }
-        //                else
-        //                {
-        //                    purchase_tender_contact.id_currencyfx = Convert.ToInt32(entity.db.app_currencyfx.Where(a => a.is_active == true).FirstOrDefault().id_currencyfx);
-        //                }
-        //                purchase_tender_contact.id_contact = Convert.ToInt32(objProject.id_contact);
-
-        //                purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
-
-        //                int id = ((project)projectDataGrid.SelectedItem).id_project;
-
-
-        //                List<project_task> productlist = itemDataGrid.ItemsSource.OfType<project_task>().ToList();
-        //                productlist = productlist.Where(x => x.IsSelected == true && x.items.id_item_type != item.item_type.Task).ToList();
-        //                foreach (project_task data in productlist)
-        //                {
-        //                    //if (data._selectd == true && data._type != item.item_type.Task)
-        //                    //{
-        //                        purchase_tender_item purchase_tender_item = new purchase_tender_item();
-        //                        if (dbTender.app_cost_center.Where(a => a.id_company == _entity.company_ID && a.is_active == true && a.is_administrative == true).FirstOrDefault()!=null)
-        //                        {
-        //                            purchase_tender_item.id_cost_center = dbTender.app_cost_center.Where(a => a.id_company == _entity.company_ID && a.is_active == true && a.is_administrative == true).FirstOrDefault().id_cost_center;
-        //                        }
-        //                        else
-        //                        {
-        //                            MessageBox.Show("Please enter cost center", "Cognitivo", MessageBoxButton.OK, MessageBoxImage.Error);
-        //                            return;
-        //                        }
-
-        //                      int idItem = data.items.id_item;
-        //                        purchase_tender_item.id_item = idItem;
-        //                        purchase_tender_item.item_description = dbTender.items.Where(a => a.id_item == idItem).FirstOrDefault().name;
-        //                        purchase_tender_item.quantity = (decimal)data.quantity_est;
-        //                        purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
-        //                   // }
-
-        //                }
-
-        //                dbTender.purchase_tender.Add(purchase_tender);
-        //                dbTender.SaveChanges();
-        //                //dbTender.Entry(purchase_tender).State = EntityState.Detached;
-        //                //entity.db.purchase_tender.Attach(purchase_tender);
-        //            }
-        //            lblCancel_MouseDown(null, null);
-        //        }
-        //        else
-        //        {
-        //            toolBar.msgWarning("Error getting Project Details");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        toolBar.msgError(ex);
-        //    }
-        //}
-
-        private void btnRequestResource_Click(object sender, RoutedEventArgs e)
+        private void btnRequestResource_Click(object sender, EventArgs e)
         {
-            ItemRequest = new cntrl.Curd.ItemRequest();
-            crud_modal.Visibility = Visibility.Visible;
-            ItemRequest.listdepartment = entity.db.app_department.ToList();
-            ItemRequest.item_request_Click += item_request_Click;
-            crud_modal.Children.Add(ItemRequest);
+            if (itemDataGrid.ItemsSource != null)
+            {
+                //List<project_task> project_task = new List<entity.project_task>();
+                //project_task = entity.db.project_task.Where(x => x.IsSelected == true).ToList();
 
+                if (entity.db.project_task.Local.Where(x => x.IsSelected == true).Count() > 0)
+                {
+                    ItemRequest = new cntrl.Curd.ItemRequest();
+                    crud_modal.Visibility = Visibility.Visible;
+                    ItemRequest.listdepartment = entity.db.app_department.ToList();
+                    ItemRequest.item_request_Click += item_request_Click;
+                    crud_modal.Children.Add(ItemRequest);
+                }
+                else
+                {
+                    toolBar.msgWarning("Select a Task");
+                }
+            }
         }
 
 

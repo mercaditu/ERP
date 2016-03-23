@@ -128,9 +128,8 @@
 
 
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" 
-                        Grid.Row="2" Grid.ColumnSpan="2">
-                <TabItem Header="{lex:Loc Order}" Margin="10,0,-10,0">
-
+                        Grid.Row="2" Grid.ColumnSpan="2" Margin="8">
+                <TabItem Header="{lex:Loc Order}">
                     <Grid Grid.Row="1"  Background="White" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                               DataContext="{StaticResource production_orderproduction_order_detailViewSource}">
                         <Grid.ColumnDefinitions>

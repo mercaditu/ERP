@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Cognitivo.Production
 {
-    public partial class Order : Page, INotifyPropertyChanged
+    public partial class Order : Page
     {
         OrderDB OrderDB = new OrderDB();
 
@@ -34,7 +34,6 @@ namespace Cognitivo.Production
             production_order.IsSelected = true;
             OrderDB.production_order.Add(production_order);
 
-            //production_orderViewSource.View.Refresh();
             production_orderViewSource.View.MoveCurrentToLast();
         }
 
@@ -69,7 +68,6 @@ namespace Cognitivo.Production
             production_order _production_order = (production_order)production_orderDataGrid.SelectedItem;
             if ((_production_order.work_number == null || _production_order.work_number == string.Empty) && _production_order.id_range > 0)
             {
-
                 if (_production_order.id_branch > 0)
                 {
                     entity.Brillo.Logic.Range.branch_Code = OrderDB.app_branch.Where(x => x.id_branch == _production_order.id_branch).FirstOrDefault().code;
@@ -79,15 +77,10 @@ namespace Cognitivo.Production
                     entity.Brillo.Logic.Range.terminal_Code = OrderDB.app_terminal.Where(x => x.id_terminal == _production_order.id_terminal).FirstOrDefault().code;
                 }
 
-
-
                 app_document_range app_document_range = OrderDB.app_document_range.Where(x => x.id_range == _production_order.id_range).FirstOrDefault();
                 _production_order.work_number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                 _production_order.RaisePropertyChanged("work_number");
-
-
             }
-
             OrderDB.SaveChanges();
         }
 
@@ -98,7 +91,6 @@ namespace Cognitivo.Production
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
             projectViewSource.Source = OrderDB.projects.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
@@ -177,7 +169,6 @@ namespace Cognitivo.Production
         {
             try
             {
-
                 int _id_production_order = 0;
                 _id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
 
@@ -648,6 +639,12 @@ namespace Cognitivo.Production
         }
 
 
+        private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<production_order_detail> production_order_detaillist = OrderDB.production_order_detail.ToList();
+            noofrows = production_order_detaillist.Where(x => x.IsSelected == true).Count();
+            RaisePropertyChanged("noofrows");
+        }
 
         private void itemDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -723,5 +720,6 @@ namespace Cognitivo.Production
                 itemDataGrid.ItemsSource = list.ToList();
             }
         }
+
     }
 }

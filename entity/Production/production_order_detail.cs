@@ -95,12 +95,13 @@ namespace entity
                     {
                         if (task.status != Status.Project.Rejected)
                             task.IsSelected = value;
-
                     }
                 }
             }
         }
         private bool _is_selected;
+
+
         public bool is_input { get; set; }
 
         [Required]

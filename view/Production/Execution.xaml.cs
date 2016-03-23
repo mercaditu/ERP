@@ -275,8 +275,12 @@ namespace Cognitivo.Production
 
             if (production_order_detaillServiceViewSource != null)
             {
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.parent == null && a.status == Status.Project.Approved
-                         && (a.item.id_item_type == item.item_type.Service || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => 
+                         a.parent == null && 
+                         a.status == Status.Project.Approved && 
+                        (a.item.id_item_type == item.item_type.Service || a.item.id_item_type == item.item_type.ServiceContract || a.item.id_item_type == item.item_type.Task) && 
+                         a.id_production_order == id_production)
+                          .ToList();
                 if (_production_order_detail.Count() > 0)
                 {
                     production_order_detaillServiceViewSource.Source = _production_order_detail;

@@ -297,8 +297,10 @@
                                     <Label Content="{Binding noofrows,ElementName=Productionorder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                
-                                <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" RowBackground="Gainsboro" CellEditEnding="itemDataGrid_CellEditEnding"
-                		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" >
+                                <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" RowBackground="Gainsboro" 
+                                          CellEditEnding="itemDataGrid_CellEditEnding" SelectionChanged="itemDataGrid_SelectionChanged"
+                		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                          LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" >
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="24" />
                                         <DataGridTextColumn Binding="{Binding parent.name}" Header="{lex:Loc Cognitivo:local:Task}" Width="*" IsReadOnly="True" />

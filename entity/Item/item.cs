@@ -25,7 +25,9 @@ namespace entity
             [LocalizedDescription("Task")]
             Task = 5,
             [LocalizedDescription("Supplies")]
-            Supplies = 6
+            Supplies = 6,
+            [LocalizedDescription("ServiceContract")]
+            ServiceContract = 6
         }
 
         public item()

@@ -355,7 +355,20 @@ IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={Stat
 
                                 </DataGrid>
                             </TabItem>
-
+                            <TabItem Header="{lex:Loc ServiceContract}">
+                                <DataGrid x:Name="item_ServiceContractDataGrid" 
+            				                  VerticalScrollBarVisibility="Auto"
+            				                  AutoGenerateColumns="False" Grid.Column="1"
+            				                  EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="item_ServiceContractDataGrid_SelectionChanged" 
+            				                  RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Supplies}" Width="*" />
+                                        <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
                         </TabControl>
                         <Grid Grid.Column="1">
                             <StackPanel Grid.Row="0" Margin="0,10,0,0">

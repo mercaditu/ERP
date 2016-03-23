@@ -568,9 +568,15 @@ namespace Cognitivo.Project.Development
 
         }
 
-
-
-
-
+        private void dgvServiceContract_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int _id_project = _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
+            dynamic obj = (dynamic)dgvServiceContract.SelectedItem;
+            if (obj != null)
+            {
+                int _id_item = obj._id_item;
+                listLogistics(item.item_type.ServiceContract, _id_project, _id_item);
+            }
+        }
     }
 }

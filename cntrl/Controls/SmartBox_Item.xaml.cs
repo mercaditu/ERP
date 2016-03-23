@@ -164,14 +164,15 @@ namespace cntrl.Controls
             }
         }
 
-     
-
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            crudItem.itemobject = new entity.item();
-            popCrud.IsOpen = true;
-            popCrud.Visibility = System.Windows.Visibility.Visible;
-
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+            if (Sec.edit)
+            {
+                crudItem.itemobject = new entity.item();
+                popCrud.IsOpen = true;
+                popCrud.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         private void crudItem_btnSave_Click(object sender)
@@ -186,27 +187,23 @@ namespace cntrl.Controls
                         {
                             db.items.Add(item);
                         }
-
-
                     }
-
                     db.SaveChanges();
                 }
             }
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
-
         }
-
-
 
         private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            crudItem.itemobject = new entity.item();
-            popCrud.IsOpen = true;
-            popCrud.Visibility = System.Windows.Visibility.Visible;
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+            if (Sec.edit)
+            {
+                crudItem.itemobject = new entity.item();
+                popCrud.IsOpen = true;
+                popCrud.Visibility = System.Windows.Visibility.Visible;
+            }
         }
-
-        
     }
 }

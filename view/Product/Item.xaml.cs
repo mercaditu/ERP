@@ -32,8 +32,8 @@ namespace Cognitivo.Product
             app_dimentionViewSource,
             itemitem_tagdetailViewSource,
             hr_talentViewSource,
-            itemitem_serviceViewSource,
-            app_propertyViewSource;
+            itemitem_serviceViewSource;
+            //app_propertyViewSource;
 
         public Item()
         {
@@ -49,7 +49,7 @@ namespace Cognitivo.Product
             item_brandViewSource = ((CollectionViewSource)(FindResource("item_brandViewSource")));
             item_price_listViewSource = ((CollectionViewSource)(FindResource("item_price_listViewSource")));
             app_vat_groupViewSource = ((CollectionViewSource)(FindResource("app_vat_groupViewSource")));
-            app_propertyViewSource = ((CollectionViewSource)(FindResource("app_propertyViewSource")));
+            //app_propertyViewSource = ((CollectionViewSource)(FindResource("app_propertyViewSource")));
             app_dimentionViewSource = (CollectionViewSource)FindResource("app_dimentionViewSource");
             hr_talentViewSource = (CollectionViewSource)FindResource("hr_talentViewSource");
             itemitem_serviceViewSource = (CollectionViewSource)FindResource("itemitem_serviceViewSource");
@@ -126,11 +126,11 @@ namespace Cognitivo.Product
                 app_dimentionViewSource.Source = dbContext.app_dimension.Local;
             }));
 
-            await dbContext.app_property.OrderBy(a => a.name).AsNoTracking().LoadAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                app_propertyViewSource.Source = dbContext.app_property.Local;
-            }));
+            //await dbContext.app_property.OrderBy(a => a.name).AsNoTracking().LoadAsync();
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
+            //    app_propertyViewSource.Source = dbContext.app_property.Local;
+            //}));
 
             await dbContext.app_vat_group
                 .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
@@ -246,8 +246,8 @@ namespace Cognitivo.Product
             // item_vatDataGrid.CancelEdit();
             item_priceDataGrid.CancelEdit();
             item_dimentionDataGrid.CancelEdit();
-            item_propertyDataGrid.CancelEdit();
             itemViewSource.View.MoveCurrentToFirst();
+
             if (item.State == EntityState.Added)
             {
                 dbContext.Entry(item).State = EntityState.Detached;
@@ -337,7 +337,7 @@ namespace Cognitivo.Product
                     }
                 }
                 //Service
-                else if (item.id_item_type == item.item_type.Service)
+                else if (item.id_item_type == item.item_type.Service || item.id_item_type == entity.item.item_type.ServiceContract)
                 {
                     if (item.item_asset.Count > 0)
                     {
@@ -516,12 +516,11 @@ namespace Cognitivo.Product
                         dbContext.item_dimension.Remove(e.Parameter as item_dimension);
                         itemitem_dimentionViewSource.View.Refresh();
                     }
-                    if (e.Parameter as item_property != null)
-                    {
-                        item_propertyDataGrid.CancelEdit();
-                        dbContext.item_property.Remove(e.Parameter as item_property);
-                        itemitem_propertyViewSource.View.Refresh();
-                    }
+                    //if (e.Parameter as item_property != null)
+                    //{
+                    //    dbContext.item_property.Remove(e.Parameter as item_property);
+                    //    itemitem_propertyViewSource.View.Refresh();
+                    //}
                     if (e.Parameter as item_tag_detail != null)
                     {
                         //DeleteDetailGridRow
@@ -699,37 +698,37 @@ namespace Cognitivo.Product
             }
         }
 
-        private void AddProperty_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.property _property = new cntrl.Curd.property();
-            _property.app_propertyViewSource = app_propertyViewSource;
-            _property.MainViewSource = itemViewSource;
-            _property.curObject = itemViewSource.View.CurrentItem;
-            //_property._entity = dbContext;
-            _property.operationMode = cntrl.Class.clsCommon.Mode.Add;
-            _property.isExternalCall = true;
-            crud_modal.Children.Add(_property);
-        }
+        //private void AddProperty_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    crud_modal.Visibility = Visibility.Visible;
+        //    cntrl.Curd.property _property = new cntrl.Curd.property();
+        //    _property.app_propertyViewSource = app_propertyViewSource;
+        //    _property.MainViewSource = itemViewSource;
+        //    _property.curObject = itemViewSource.View.CurrentItem;
+        //    //_property._entity = dbContext;
+        //    _property.operationMode = cntrl.Class.clsCommon.Mode.Add;
+        //    _property.isExternalCall = true;
+        //    crud_modal.Children.Add(_property);
+        //}
 
-        private void EditProperty_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            item_property item_property = item_propertyDataGrid.SelectedItem as item_property;
-            app_property app_property = item_property.app_property;
-            if (app_property != null)
-            {
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.Curd.property _property = new cntrl.Curd.property();
-                _property.app_propertyViewSource = app_propertyViewSource;
-                _property.MainViewSource = itemViewSource;
-                _property.curObject = itemViewSource.View.CurrentItem;
-                //_property._entity = dbContext;
-                _property.objapp_property = app_property;
-                _property.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-                _property.isExternalCall = true;
-                crud_modal.Children.Add(_property);
-            }
-        }
+        //private void EditProperty_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    item_property item_property = item_propertyDataGrid.SelectedItem as item_property;
+        //    app_property app_property = item_property.app_property;
+        //    if (app_property != null)
+        //    {
+        //        crud_modal.Visibility = Visibility.Visible;
+        //        cntrl.Curd.property _property = new cntrl.Curd.property();
+        //        _property.app_propertyViewSource = app_propertyViewSource;
+        //        _property.MainViewSource = itemViewSource;
+        //        _property.curObject = itemViewSource.View.CurrentItem;
+        //        //_property._entity = dbContext;
+        //        _property.objapp_property = app_property;
+        //        _property.operationMode = cntrl.Class.clsCommon.Mode.Edit;
+        //        _property.isExternalCall = true;
+        //        crud_modal.Children.Add(_property);
+        //    }
+        //}
         #endregion
 
         private void cbxTag_KeyDown(object sender, KeyEventArgs e)

@@ -231,13 +231,30 @@
                         </DataGrid>
                     </TabItem>
 
+                    <TabItem Header="{lex:Loc ServiceContract}" x:Name="tabServiceContract">
+                        <DataGrid x:Name="dgvServiceContract" 
+                                  VerticalScrollBarVisibility="Auto"
+                                  AutoGenerateColumns="False" Grid.Column="1"
+                                  EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="dgvServiceContract_SelectionChanged"
+                                  RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True" Margin="0,0,300,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding _code}" Header="Code" Width="SizeToHeader" />
+                                <DataGridTextColumn Binding="{Binding _name}" Header="Product" Width="*" />
+                                <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="Qty Needed" Width="SizeToHeader" />
+                                <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
+                                <DataGridTextColumn Binding="{Binding buyqty}" Header="Buy qty" Width="SizeToHeader" />
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+                    </TabItem>
+
                 </TabControl>
 
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2" Margin="0,42,0,0" Background="WhiteSmoke" HorizontalAlignment="Right">
             <StackPanel  Grid.Column="3" >
-                <Button Content="{lex:Loc ItemRequest}" Style="{StaticResource btn_green}" 
+                <Button Content="{lex:Loc RequestResource}" Style="{StaticResource btn_green}" 
                    HorizontalAlignment="Center" 
                     Margin="0,7,7,0" VerticalAlignment="Top" Click="Button_Click" />
                 <StackPanel Orientation="Horizontal">

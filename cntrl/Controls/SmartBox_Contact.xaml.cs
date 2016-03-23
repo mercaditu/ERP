@@ -199,12 +199,16 @@ namespace cntrl.Controls
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            crudContact.contactobject = new entity.contact();
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
+            if(Sec.create)
+            {
+                crudContact.contactobject = new entity.contact();
 
-            crudContact.entity = db;
-            popCrud.IsOpen = true;
+                crudContact.entity = db;
+                popCrud.IsOpen = true;
 
-            popCrud.Visibility = Visibility.Visible;
+                popCrud.Visibility = Visibility.Visible;
+            }
         }
 
         private void crudContact_btnSave_Click(object sender)
@@ -226,10 +230,14 @@ namespace cntrl.Controls
 
         private void Edit_PreviewMouseUp_1(object sender, MouseButtonEventArgs e)
         {
-            crudContact.contactobject = Contact;
-            crudContact.entity = db;
-            popCrud.IsOpen = true;
-            popCrud.Visibility = System.Windows.Visibility.Visible;
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
+            if(Sec.edit)
+            {
+                crudContact.contactobject = Contact;
+                crudContact.entity = db;
+                popCrud.IsOpen = true;
+                popCrud.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)

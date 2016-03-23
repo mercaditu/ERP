@@ -691,8 +691,6 @@ namespace Cognitivo.Production
                     stpdate.Visibility = Visibility.Collapsed;
                     stpitem.Visibility = Visibility.Visible;
                 }
-
-
             }
         }
 
@@ -755,8 +753,21 @@ namespace Cognitivo.Production
             OrderDB.SaveChanges();
         }
 
-
-
-
+        private void item_ServiceContractDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int _id_production_order = 0;
+            _id_production_order = ((production_order)production_orderViewSource.View.CurrentItem).id_production_order;
+            dynamic obj = (dynamic)item_ServiceContractDataGrid.SelectedItem;
+            if (obj != null)
+            {
+                int _id_item = obj._id_item;
+                List<production_order_detail> list = OrderDB.production_order_detail.Where(od => od.item.id_item_type == item.item_type.ServiceContract && 
+                    (od.production_order.status != Status.Production.Pending || 
+                    od.production_order.status != null) && 
+                    od.id_production_order == _id_production_order && 
+                    od.id_item == _id_item).ToList();
+                itemDataGrid.ItemsSource = list.ToList();
+            }
+        }
     }
 }

@@ -486,7 +486,6 @@
     <Compile Include="Commercial\impex_export.cs" />
     <Compile Include="Commercial\impex_import.cs" />
     <Compile Include="Commercial\impex_incoterm.cs" />
-    <Compile Include="DependentProperties.cs" />
     <Compile Include="HumanResource\hr_position.cs" />
     <Compile Include="HumanResource\hr_family.cs" />
     <Compile Include="HumanResource\hr_education.cs" />

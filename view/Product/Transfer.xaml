@@ -167,6 +167,7 @@
                        btnApprove_Click="toolBar_btnApprove_Click"
                        btnAnull_Click="toolBar_btnAnull_Click"
                        State="{Binding State, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
+                       Status="{Binding status, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                        appName="Transfer"/>
     </Grid>
 </Page>

@@ -54,11 +54,11 @@ namespace entity
             }
         }
 
-        public void Approve(decimal cost)
+        public void Approve(decimal cost,int origin ,int dest)
         {
             foreach (item_transfer item_transfer in base.item_transfer.Local)
             {
-                if (CurrentSession.Id_Branch == item_transfer.app_branch_origin.id_branch)
+                if (CurrentSession.Id_Branch == origin)
                 {
                     foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
                     {
@@ -97,7 +97,7 @@ namespace entity
                     }
                 }
 
-                if (CurrentSession.Id_Branch == item_transfer.app_branch_destination.id_branch)
+                if (CurrentSession.Id_Branch == dest)
                 {
                     foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
                     {

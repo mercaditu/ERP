@@ -34,7 +34,7 @@ namespace Cognitivo.Product
             item_transfer.State = System.Data.Entity.EntityState.Added;
             item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
             item_transfer.IsSelected = true;
-
+            item_transfer.status = Status.Documents_General.Pending;
             ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
 
             item_transferViewSource.View.MoveCurrentToLast();
@@ -42,6 +42,11 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
+            item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+            item_transfer.app_branch_destination = (id_branch_destinComboBox.SelectedItem as app_branch);
+            item_transfer.app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
+            item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.FirstOrDefault();
+            item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.FirstOrDefault();
             ProductTransferDB.SaveChanges();
         }
 
@@ -106,7 +111,7 @@ namespace Cognitivo.Product
         {
             item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-
+            
             if (item != null && item.item_product != null && item_transfer != null)
             {
                 item_transfer_detail item_transfer_detail = new item_transfer_detail();
@@ -126,7 +131,7 @@ namespace Cognitivo.Product
 
 
                 clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-                ProductTransferDB.Approve(clsTotalGrid.Sum(x => x.cost));
+                ProductTransferDB.Approve(clsTotalGrid.Sum(x => x.cost), (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue);
 
 
 

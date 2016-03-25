@@ -213,6 +213,10 @@
     <Compile Include="Migrations\201603251122101_UpdateProjects.Designer.cs">
       <DependentUpon>201603251122101_UpdateProjects.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603251310327_updateitem_transfer.cs" />
+    <Compile Include="Migrations\201603251310327_updateitem_transfer.Designer.cs">
+      <DependentUpon>201603251310327_updateitem_transfer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
     <Compile Include="Context\Purchase\ImpexDB.cs" />
@@ -843,6 +847,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603251122101_UpdateProjects.resx">
       <DependentUpon>201603251122101_UpdateProjects.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603251310327_updateitem_transfer.resx">
+      <DependentUpon>201603251310327_updateitem_transfer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

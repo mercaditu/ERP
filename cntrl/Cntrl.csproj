@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="Controls\NotificationIcon.xaml.cs">
       <DependentUpon>NotificationIcon.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\PrecateBuilder.cs" />
     <Compile Include="Controls\smartBoxContactSetting.Designer.cs">
@@ -572,8 +573,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NotificationIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SmartBox_Geography.xaml">
       <SubType>Designer</SubType>

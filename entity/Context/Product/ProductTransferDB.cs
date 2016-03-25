@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Threading.Tasks;
-
+using System.Linq;
 namespace entity
 {
     public partial class ProductTransferDB : BaseDB
@@ -68,7 +68,7 @@ namespace entity
                             item_movement_origin.debit = 0;
                             item_movement_origin.credit = item_transfer_detail.quantity_origin;
                             item_movement_origin.id_application = global::entity.App.Names.Transfer;
-                            item_movement_origin.id_location = item_transfer.app_location_origin.id_location;
+                            item_movement_origin.id_location = base.app_location.Where(x=>x.id_branch==origin).FirstOrDefault().id_location;
                             item_movement_origin.transaction_id = 0;
                             item_movement_origin.status = Status.Stock.InStock;
                             item_movement_origin.trans_date = item_transfer_detail.item_transfer.trans_date;
@@ -107,7 +107,7 @@ namespace entity
                             item_movement_dest.debit = 0;
                             item_movement_dest.credit = item_transfer_detail.quantity_origin;
                             item_movement_dest.id_application = global::entity.App.Names.Transfer;
-                            item_movement_dest.id_location = item_transfer.app_location_origin.id_location;
+                            item_movement_dest.id_location = base.app_location.Where(x => x.id_branch == dest).FirstOrDefault().id_location; ;
                             item_movement_dest.transaction_id = 0;
                             item_movement_dest.status = Status.Stock.InStock;
                             item_movement_dest.trans_date = item_transfer_detail.item_transfer.trans_date;

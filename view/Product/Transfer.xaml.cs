@@ -81,7 +81,6 @@ namespace Cognitivo.Product
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
             ProductTransferDB.item_transfer.Where(a =>
                 a.id_company == CurrentSession.Id_Company &&
-                a.id_branch == CurrentSession.Id_Branch &&
                 a.transfer_type == item_transfer.Transfer_type.transfer)
                 .Include(i => i.item_transfer_detail)
                 .Load();

@@ -32,8 +32,8 @@
         </Grid>
         <TextBlock Text="Create Production Order" Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center" DataContext="{StaticResource production_orderViewSource}">
-            <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding project.name}" Style="{StaticResource input_label}"/>
+            <!--<Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding project.name}" Style="{StaticResource input_label}"/>-->
             <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
             <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>

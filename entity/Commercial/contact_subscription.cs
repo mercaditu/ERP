@@ -36,6 +36,7 @@ namespace entity
 
         [NotMapped]
         public int quantity { get; set; }
+
         public decimal unit_price { get; set; }
 
         public DateTime start_date { get; set; }

@@ -209,13 +209,9 @@
     <Compile Include="Context\Project\ProjectTaskDB.cs" />
     <Compile Include="Context\Project\ProjectDB.cs" />
     <Compile Include="Context\Project\ProjectTemplateDB.cs" />
-    <Compile Include="Migrations\201603251122101_UpdateProjects.cs" />
-    <Compile Include="Migrations\201603251122101_UpdateProjects.Designer.cs">
-      <DependentUpon>201603251122101_UpdateProjects.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603251310327_updateitem_transfer.cs" />
-    <Compile Include="Migrations\201603251310327_updateitem_transfer.Designer.cs">
-      <DependentUpon>201603251310327_updateitem_transfer.cs</DependentUpon>
+    <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.cs" />
+    <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.Designer.cs">
+      <DependentUpon>201603251402215_updateprojectitemtransfer.cs</DependentUpon>
     </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
@@ -845,11 +841,8 @@
     <EmbeddedResource Include="Migrations\201603220839042_UpdateSecurity_roleanditem_movement_value.resx">
       <DependentUpon>201603220839042_UpdateSecurity_roleanditem_movement_value.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603251122101_UpdateProjects.resx">
-      <DependentUpon>201603251122101_UpdateProjects.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603251310327_updateitem_transfer.resx">
-      <DependentUpon>201603251310327_updateitem_transfer.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603251402215_updateprojectitemtransfer.resx">
+      <DependentUpon>201603251402215_updateprojectitemtransfer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

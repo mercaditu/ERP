@@ -3,7 +3,7 @@ namespace entity.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class UpdateProjects : DbMigration
+    public partial class updateprojectitemtransfer : DbMigration
     {
         public override void Up()
         {
@@ -50,6 +50,7 @@ namespace entity.Migrations
             AddColumn("project_task", "id_range", c => c.Int());
             AddColumn("project_task", "number", c => c.String(unicode: false));
             AddColumn("purchase_tender_detail", "id_vat_group", c => c.Int(nullable: false));
+            AddColumn("item_transfer_detail", "status", c => c.Int(nullable: false));
             CreateIndex("project_task", "id_range");
             AddForeignKey("project_task", "id_range", "app_document_range", "id_range");
         }
@@ -70,6 +71,7 @@ namespace entity.Migrations
             DropIndex("project_tag_detail", new[] { "id_tag" });
             DropIndex("project_tag_detail", new[] { "id_project" });
             DropIndex("project_task", new[] { "id_range" });
+            DropColumn("item_transfer_detail", "status");
             DropColumn("purchase_tender_detail", "id_vat_group");
             DropColumn("project_task", "number");
             DropColumn("project_task", "id_range");

@@ -11,7 +11,7 @@ namespace cntrl.Controls
         {
             InitializeComponent();
         }
-
+        `
         private static readonly DependencyProperty NumberProperty
                     = DependencyProperty.Register("Number", typeof(int), typeof(NotificationIcon), new PropertyMetadata(OnTextChangedCallBack));
         public int Number

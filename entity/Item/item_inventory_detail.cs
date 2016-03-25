@@ -7,7 +7,6 @@ namespace entity
     {
         public item_inventory_detail()
         {
-           
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;

@@ -15,16 +15,16 @@ namespace entity
         }
         public item_transfer()
         {
-            Properties.Settings _settings = new Properties.Settings();
+            //Properties.Settings _settings = new Properties.Settings();
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            if (_settings.terminal_ID > 0) { id_terminal = _settings.terminal_ID; }
+            if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
 
             item_transfer_detail = new List<item_transfer_detail>();
             trans_date = DateTime.Now;
 
-            if ( Properties.Settings.Default.branch_ID > 0) { id_branch =  Properties.Settings.Default.branch_ID; }
+            if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
         }
 
         [Key]
@@ -81,6 +81,7 @@ namespace entity
             }
         }
         private int? _id_range;
+
         public string number { get; set; }
         /// <summary>
         /// 

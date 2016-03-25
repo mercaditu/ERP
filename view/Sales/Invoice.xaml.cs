@@ -16,14 +16,15 @@ namespace Cognitivo.Sales
 {
     public partial class Invoice : INotifyPropertyChanged
     {
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
-        int company_ID;
-        int branch_ID;
+        //entity.Properties.Settings _setting = new entity.Properties.Settings();
+        //int company_ID;
+        //int branch_ID;
 
         //Global Variables
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailViewSource, 
             sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
+        
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         
         cntrl.PanelAdv.pnlPacking pnlPacking;
@@ -32,9 +33,6 @@ namespace Cognitivo.Sales
         public Invoice()
         {
             InitializeComponent();
-
-            company_ID = _setting.company_ID;
-            branch_ID = _setting.branch_ID;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -82,13 +80,13 @@ namespace Cognitivo.Sales
             InvoiceSetting InvoiceSetting = new InvoiceSetting();
             if (InvoiceSetting.filter_Branch)
             {
-                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID && a.id_branch == branch_ID
+                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company
                                                && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
                 
             }
             else
             {
-                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == company_ID
+                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company
                                               && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
@@ -102,13 +100,13 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            SalesInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == company_ID ).ToList();
+            SalesInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxContract.ItemsSource = SalesInvoiceDB.app_contract.Local;
             }));
 
-            SalesInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID ).OrderBy(a => a.name).ToList();
+            SalesInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxCondition.ItemsSource = SalesInvoiceDB.app_condition.Local;
@@ -116,27 +114,27 @@ namespace Cognitivo.Sales
 
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
-          
 
-            SalesInvoiceDB.sales_rep.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
+
+            SalesInvoiceDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Local;
             }));
 
-            SalesInvoiceDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
+            SalesInvoiceDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxBranch.ItemsSource = SalesInvoiceDB.app_branch.Local;
             }));
 
-            SalesInvoiceDB.app_terminal.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
+            SalesInvoiceDB.app_terminal.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Local;
             }));
 
-            SalesInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
+            SalesInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
@@ -276,8 +274,8 @@ namespace Cognitivo.Sales
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
                 }));
 
-                await SalesInvoiceDB.projects.Where(a => a.is_active == true 
-                                                 && a.id_company == company_ID 
+                await SalesInvoiceDB.projects.Where(a => a.is_active == true
+                                                 && a.id_company == CurrentSession.Id_Company 
                                                  && a.id_contact == objContact.id_contact)
                                             .OrderBy(a => a.name)
                                             .ToListAsync();
@@ -295,7 +293,7 @@ namespace Cognitivo.Sales
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 cbxContract.ItemsSource = await SalesInvoiceDB.app_contract.Where(a => a.is_active == true
-                                                                        && a.id_company == company_ID
+                                                                        && a.id_company == CurrentSession.Id_Company
                                                                         && a.id_condition == app_condition.id_condition).ToListAsync();
                 cbxContract.SelectedIndex = 0;
             }
@@ -383,7 +381,7 @@ namespace Cognitivo.Sales
             using (db db = new db())
             {
                 CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).Load();
+                db.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
                 conditionViewSource.Source = db.app_condition.Local;
                 //dbContext entity = new dbContext();
                 crud_modal.Visibility = Visibility.Visible;
@@ -397,7 +395,7 @@ namespace Cognitivo.Sales
             using (db db = new db())
             {
                 CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).Load();
+                db.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
                 conditionViewSource.Source = db.app_condition.Local;
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 if (app_condition != null)
@@ -702,17 +700,17 @@ namespace Cognitivo.Sales
         {
             if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Day)
             {
-                List<sales_invoice> sales_invoiceList = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == company_ID && (x.trans_date >= navPagination.start_Date)).ToList();
+                List<sales_invoice> sales_invoiceList = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
                 sales_invoiceViewSource.Source = sales_invoiceList;
             }
             if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Month)
             {
-                List<sales_invoice> sales_invoice = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == company_ID && (x.trans_date >= navPagination.start_Date)).ToList();
+                List<sales_invoice> sales_invoice = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
                 sales_invoiceViewSource.Source = sales_invoice;
             }
             if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Year)
             {
-                List<sales_invoice> sales_invoice = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == company_ID && (x.trans_date >= navPagination.start_Date)).ToList();
+                List<sales_invoice> sales_invoice = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
                 sales_invoiceViewSource.Source = sales_invoice;
             }
         }

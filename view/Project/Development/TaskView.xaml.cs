@@ -18,8 +18,8 @@ namespace Cognitivo.Project.Development
 
         CollectionViewSource project_taskViewSource;
         CollectionViewSource projectViewSource;
-        CollectionViewSource project_templateproject_template_detailViewSource;
-        CollectionViewSource project_templateViewSource;
+        //CollectionViewSource project_templateproject_template_detailViewSource;
+        //CollectionViewSource project_templateViewSource;
         CollectionViewSource project_task_dimensionViewSource;
 
         public Boolean ViewAll { get; set; }
@@ -34,7 +34,7 @@ namespace Cognitivo.Project.Development
             project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
 
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
-            project_templateproject_template_detailViewSource = ((CollectionViewSource)(FindResource("project_templateproject_template_detailViewSource")));
+            //project_templateproject_template_detailViewSource = ((CollectionViewSource)(FindResource("project_templateproject_template_detailViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
 
             ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).Include(x => x.project_task).Load();
@@ -43,9 +43,9 @@ namespace Cognitivo.Project.Development
             ProjectTaskDB.project_task_dimension.Where(a => a.id_company == entity.CurrentSession.Id_Company).Load();
             project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Local;
 
-            project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
-            await ProjectTaskDB.project_template.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).LoadAsync();
-            project_templateViewSource.Source = ProjectTaskDB.project_template.Local;
+            //project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
+            //await ProjectTaskDB.project_template.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).LoadAsync();
+            //project_templateViewSource.Source = ProjectTaskDB.project_template.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
             await ProjectTaskDB.app_dimension.Where(a => a.id_company == entity.CurrentSession.Id_Company).LoadAsync();
@@ -59,6 +59,7 @@ namespace Cognitivo.Project.Development
 
             //Filter to remove all items that are not top level.
             filter_task();
+            
             entity.Brillo.Security security = new entity.Brillo.Security(entity.App.Names.ActivityPlan);
             if (security.approve)
             {
@@ -68,6 +69,7 @@ namespace Cognitivo.Project.Development
             {
                 btnapprove.IsEnabled = false;
             }
+
             if (security.annul)
             {
                 btnanull.IsEnabled = true;
@@ -364,6 +366,7 @@ namespace Cognitivo.Project.Development
                     stpitem.Visibility = Visibility.Visible;
                     stpitem.IsEnabled = true;
                 }
+
                 if (Item_Type == entity.item.item_type.Service)
                 {
                     project_task_dimensionDataGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -456,7 +459,6 @@ namespace Cognitivo.Project.Development
                     {
                         MessageBox.Show("can't add becuse item is auto receipe");
                     }
-                    
                 }
                
                 if (item != null && item.id_item > 0 && item.is_autorecepie )
@@ -515,6 +517,7 @@ namespace Cognitivo.Project.Development
             ViewAll = !ViewAll;
             RaisePropertyChanged("ViewAll");
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
         {

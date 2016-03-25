@@ -16,6 +16,7 @@ namespace Cognitivo.Product
         CollectionViewSource item_requestViewSource;
         CollectionViewSource item_movementViewSource;
         CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
+        
         public Request()
         {
             InitializeComponent();
@@ -35,7 +36,6 @@ namespace Cognitivo.Product
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             dbContext.item_movement.Load();
             item_movementViewSource.Source = dbContext.item_movement.Local;
-
 
             CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
             app_currencyViewSource.Source = dbContext.app_currency.ToList();
@@ -100,11 +100,6 @@ namespace Cognitivo.Product
                 toolBar.msgError(ex);
             }
         }
-
-
-
-
-
 
         private void item_request_detailMovementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -227,6 +222,9 @@ namespace Cognitivo.Product
 
                 }
             }
+
+            item_request_detail.item_request.GetTotalDecision();
+
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -281,6 +279,7 @@ namespace Cognitivo.Product
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
+            
             if (item_request_decisiontransferDataGrid.SelectedItem != null)
             {
                 desion desion = (desion)item_request_decisiontransferDataGrid.SelectedItem;
@@ -301,6 +300,9 @@ namespace Cognitivo.Product
                     item_request_detail.item_request_decision.Add(item_request_decision);
                 }
             }
+
+            item_request_detail.item_request.GetTotalDecision();
+
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -310,14 +312,14 @@ namespace Cognitivo.Product
         private void item_request_decisionpurchaseDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
-            item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
+            item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+            
             if (item_request_decisionpurchaseDataGrid.SelectedItem != null)
             {
                 desion desion = (desion)item_request_decisionpurchaseDataGrid.SelectedItem;
            
                 if (desion.decisionState == state.added)
                 {
-
                     desion.decisionState = state.modified;
                     item_request_decision item_request_decision = new global::entity.item_request_decision();
                     item_request_decision.IsSelected = true;
@@ -326,6 +328,9 @@ namespace Cognitivo.Product
                     item_request_detail.item_request_decision.Add(item_request_decision);
                 }
             }
+
+            item_request_detail.item_request.GetTotalDecision();
+
             dbContext.SaveChanges();
             item_requestViewSource.View.MoveCurrentToLast();
             item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
@@ -336,6 +341,7 @@ namespace Cognitivo.Product
         {
             added, modified
         }
+
         public class desion
         {
             public int id_item { get; set; }
@@ -361,7 +367,5 @@ namespace Cognitivo.Product
                 }
             }
         }
-
-      
     }
 }

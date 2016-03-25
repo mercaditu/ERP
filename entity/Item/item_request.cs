@@ -49,6 +49,9 @@ namespace entity
         }
         private Status.Documents_General _status;
 
+        [NotMapped]
+        public int TotalSelected { get; set; }
+
         public virtual sales_order sales_order { get; set; }
         public virtual project project { get; set; }
         public virtual production_order production_order { get; set; }
@@ -59,45 +62,46 @@ namespace entity
         public virtual app_department app_department { get; set; }
         public virtual app_branch app_branch { get; set; }
 
-        public string Error
+        public void GetTotalDecision()
         {
-            get
+            int i = 0;
+            
+            foreach (item_request_detail detail in item_request_detail)
             {
-                StringBuilder error = new StringBuilder();
-
-                // iterate over all of the properties
-                // of this object - aggregating any validation errors
-                PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
-                foreach (PropertyDescriptor prop in props)
-                {
-                    String propertyError = this[prop.Name];
-                    if (propertyError != string.Empty)
-                    {
-                        error.Append((error.Length != 0 ? ", " : "") + propertyError);
-                    }
-                }
-
-                return error.Length == 0 ? null : error.ToString();
+                i += detail.GetTotalDecision();
             }
-        }
-        public string this[string columnName]
-        {
-            get
-            {
-                // apply property level validation rules
-                //if (columnName == "qty")
-                //{
-                //    if (qty == 0)
-                //        return "qty needs to be selected";
-                //}
 
-                //if (columnName == "value")
-                //{
-                //    if (value == 0)
-                //        return "Value needs to be filled";
-                //}
-                return "";
-            }
+            TotalSelected = i;
+            RaisePropertyChanged("TotalSelected");
         }
+
+        //public string Error
+        //{
+        //    get
+        //    {
+        //        StringBuilder error = new StringBuilder();
+
+        //        // iterate over all of the properties
+        //        // of this object - aggregating any validation errors
+        //        PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
+        //        foreach (PropertyDescriptor prop in props)
+        //        {
+        //            String propertyError = this[prop.Name];
+        //            if (propertyError != string.Empty)
+        //            {
+        //                error.Append((error.Length != 0 ? ", " : "") + propertyError);
+        //            }
+        //        }
+
+        //        return error.Length == 0 ? null : error.ToString();
+        //    }
+        //}
+        //public string this[string columnName]
+        //{
+        //    get
+        //    {
+        //        return "";
+        //    }
+        //}
     }
 }

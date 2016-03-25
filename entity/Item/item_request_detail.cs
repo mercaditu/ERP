@@ -65,6 +65,19 @@ namespace entity
         public virtual project_task project_task { get; set; }
         public virtual production_order_detail production_order_detail { get; set; }
 
+        public int GetTotalDecision()
+        {
+            int i = 0;
+
+            foreach (item_request_decision decision in item_request_decision)
+            {
+                i += 1;
+            }
+
+            return i;
+        }
+
+        #region Error
         public string Error
         {
             get
@@ -105,5 +118,6 @@ namespace entity
                 return "";
             }
         }
+        #endregion
     }
 }

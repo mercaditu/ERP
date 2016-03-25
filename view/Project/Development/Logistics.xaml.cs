@@ -210,46 +210,52 @@ namespace Cognitivo.Project.Development
 
         private void item_ProductDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgv_SelectionChanged(item.item_type.Product);
+            DataGrid DataGrid = sender as DataGrid;
+            dgv_SelectionChanged(item.item_type.Product, DataGrid);
         }
 
         private void item_RawDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgv_SelectionChanged(item.item_type.RawMaterial);
+            DataGrid DataGrid = sender as DataGrid;
+            dgv_SelectionChanged(item.item_type.RawMaterial, DataGrid);
         }
 
         private void item_ServiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgv_SelectionChanged(item.item_type.Service);
+            DataGrid DataGrid = sender as DataGrid;
+            dgv_SelectionChanged(item.item_type.Service, DataGrid);
         }
 
         private void item_CapitalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgv_SelectionChanged(item.item_type.FixedAssets);
+            DataGrid DataGrid = sender as DataGrid;
+            dgv_SelectionChanged(item.item_type.FixedAssets, DataGrid);
         }
 
         private void dgvSupplies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgv_SelectionChanged(item.item_type.Supplies);
+            DataGrid DataGrid = sender as DataGrid;
+            dgv_SelectionChanged(item.item_type.Supplies, DataGrid);
         }
 
         private void dgvServiceContract_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dgv_SelectionChanged(item.item_type.ServiceContract);
+            DataGrid DataGrid = sender as DataGrid;
+            dgv_SelectionChanged(item.item_type.ServiceContract, DataGrid);
         }
 
-        private void dgv_SelectionChanged(item.item_type type)
+        private void dgv_SelectionChanged(item.item_type Type, DataGrid DataGrid)
         {
             try
             {
                 int _id_project = _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
-                dynamic obj = (dynamic)dgvSupplies.SelectedItem;
+                dynamic obj = (dynamic)DataGrid.SelectedItem;
                 if (obj != null)
                 {
                     int _id_item = obj._id_item;
 
-                    List<project_task> list = ProjectTaskDB.project_task.Where(IT => 
-                            IT.items.id_item_type == type && 
+                    List<project_task> list = ProjectTaskDB.project_task.Where(IT =>
+                            IT.items.id_item_type == Type && 
                             IT.status == Status.Project.Approved && 
                             IT.status != null && 
                             IT.id_project == _id_project && 

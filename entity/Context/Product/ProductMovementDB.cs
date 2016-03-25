@@ -24,7 +24,6 @@ namespace entity
             foreach (item_movement item_movement in base.item_movement.Local)
             {
                 if (item_movement.IsSelected)
-                    //&& item_movement.Error == null)
                 {
                     if (item_movement.State == EntityState.Added)
                     {
@@ -54,6 +53,5 @@ namespace entity
                 }
             }
         }
-   
     }
 }

@@ -30,7 +30,7 @@
         <CollectionViewSource x:Key="salesRepViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
         <CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
-        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="contactcontact_subscriptionViewSource" Source="{Binding contact_subscription, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}"/>
@@ -271,18 +271,17 @@
                                   EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource contactcontact_subscriptionViewSource}}" 
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="itemcolumn" 
-                                                Binding="{Binding item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                            <!-- add here contact column. only show contacts that exist in relationship including current contact. -->
+                            <DataGridTextColumn Binding="{Binding item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:Item}" 
                                                 Width="SizeToHeader"/>
-                            <DataGridComboBoxColumn x:Name="contractCombo" 
-                                                    Header="{lex:Loc Cognitivo:local:Contract}" Width="SizeToHeader"
+                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Contract}" Width="SizeToHeader"
                                                     ItemsSource="{Binding Source={StaticResource appContractViewSource}}"
                                                     DisplayMemberPath="name" SelectedValuePath="id_contract" SelectedValueBinding="{Binding id_contract,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                            <DataGridTextColumn Binding="{Binding bill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                Header="{lex:Loc Cognitivo:local:InvoiceInterval}" 
-                                                Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="bill_onColumn" Binding="{Binding billon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:InvoiceInterval}" Width="SizeToHeader"
+                                                    ItemsSource="{Binding Source={StaticResource appContractViewSource}}"
+                                                    DisplayMemberPath="name" SelectedValuePath="id_contract" SelectedValueBinding="{Binding bill_cycle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <DataGridTextColumn Binding="{Binding bill_on, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:InvoiceDay}" Width="SizeToHeader"/>
                             <DataGridTemplateColumn x:Name="start_dateColumn" Header="{lex:Loc Cognitivo:local:StartDate}" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -291,15 +290,14 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn x:Name="end_dateColumn" Header="{lex:Loc Cognitivo:local:EndDate}" Width="100">
+                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:EndDate}" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <DatePicker SelectedDate="{Binding end_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridCheckBoxColumn x:Name="is_activeColumn" 
-                                                    Binding="{Binding is_active,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                            <DataGridCheckBoxColumn Binding="{Binding is_active,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                     Header="{lex:Loc Cognitivo:local:Active}" Width="SizeToHeader"/>
                             <DataGridTemplateColumn Width="25">
                                 <DataGridTemplateColumn.CellTemplate>

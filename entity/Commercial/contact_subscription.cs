@@ -13,6 +13,7 @@ namespace entity
             Weekly,
             Monthly
         }
+
         public contact_subscription()
         {
             id_company = CurrentSession.Id_Company;
@@ -21,6 +22,8 @@ namespace entity
             is_active = true;
             start_date = DateTime.Now;
             end_date = DateTime.Now.AddDays(365);
+
+            quantity = 1;
         }
 
 
@@ -31,6 +34,8 @@ namespace entity
         public int id_item { get; set; }
         public int id_contract { get; set; }
 
+        [NotMapped]
+        public int quantity { get; set; }
         public decimal unit_price { get; set; }
 
         public DateTime start_date { get; set; }

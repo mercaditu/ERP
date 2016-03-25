@@ -88,7 +88,7 @@
         <TabControl Custom:TabControlHelper.IsUnderlined="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
                     SelectedIndex="0" Margin="0,128,0,0" >
             <TabItem Header="{lex:Loc Information}">
-                <WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <WrapPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="8">
                     <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264"
                                IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="{lex:Loc General}" Style="{StaticResource H2}"/>
@@ -172,7 +172,7 @@
                 </WrapPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Relationship}" HorizontalAlignment="Right">
-                <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
                     <Label Content="{lex:Loc ContactRole}" Style="{StaticResource H2}"/>
                     <Label Content="{lex:Loc ContactRole}" Style="{StaticResource input_label}"/>
                     <ComboBox x:Name="cbxContactRole" Style="{StaticResource input_combobox}"
@@ -194,7 +194,7 @@
                               ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" Binding="{Binding code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Width="*" Binding="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Width="*" FontWeight="Medium" Binding="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovernmentID}" Width="Auto" Binding="{Binding gov_code, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:ContactRole}" Width="Auto" Binding="{Binding contact_role.name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
@@ -203,7 +203,7 @@
             </TabItem>
             <TabItem x:Name="tabFinance" Header="{lex:Loc Finance}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
                         <StackPanel>
                             <Label Content="{lex:Loc Behavior}" Style="{StaticResource H2}"/>
                             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Margin="3" 
@@ -212,10 +212,10 @@
                                   IsChecked="{Binding is_customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                 <CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" Margin="3" 
                                   IsChecked="{Binding is_supplier, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                <CheckBox x:Name="is_sales_repCheckBox" 
+                                <!--<CheckBox x:Name="is_sales_repCheckBox" 
                                           Content="{lex:Loc SalesRepresentative}" 
                                           HorizontalAlignment="Left" Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
-                                  IsChecked="{Binding is_sales_rep, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="3"/>
+                                          IsChecked="{Binding is_sales_rep, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Margin="3"/>-->
                             </StackPanel>
                         </StackPanel>
                         <Label Content="{lex:Loc Invoice}" Style="{StaticResource H2}"/>
@@ -263,39 +263,45 @@
             </TabItem>
             <TabItem x:Name="tabSubscription" Header="{lex:Loc Subscription}">
                 <StackPanel>
+                    <Label Content="{lex:Loc Subscription}" Style="{StaticResource H2}" Margin="8"/>
                     <cntrls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
-                                                 IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
-                    <Label Content="{lex:Loc Subscription}" Style="{StaticResource H2}"/>
+                                          IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                     <DataGrid x:Name="contactcontact_subscriptionDataGrid" AutoGenerateColumns="False" Margin="8"
                                 IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                                   EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource contactcontact_subscriptionViewSource}}" 
                                   RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="itemcolumn" 
-                                                    Binding="{Binding item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="item" 
-                                                    Width="SizeToHeader"/>
-                            <DataGridComboBoxColumn x:Name="contractCombo" Header="Contract" Width="SizeToHeader"
+                                                Binding="{Binding item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="{lex:Loc Cognitivo:local:Item}" 
+                                                Width="SizeToHeader"/>
+                            <DataGridComboBoxColumn x:Name="contractCombo" 
+                                                    Header="{lex:Loc Cognitivo:local:Contract}" Width="SizeToHeader"
                                                     ItemsSource="{Binding Source={StaticResource appContractViewSource}}"
                                                     DisplayMemberPath="name" SelectedValuePath="id_contract" SelectedValueBinding="{Binding id_contract,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                             <DataGridTextColumn x:Name="bill_cycleColumn" 
-                                                    Binding="{Binding bill_cycle,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="BillCycle" 
-                                                    Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="bill_onColumn" Binding="{Binding bill_on,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="BillOn" Width="SizeToHeader"/>
-                            <DataGridTemplateColumn x:Name="start_dateColumn" Header="StartDate" Width="100">
+                                                Binding="{Binding bill_cycle,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="{lex:Loc Cognitivo:local:Cycle}" 
+                                                Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="bill_onColumn" Binding="{Binding bill_on,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="{lex:Loc Cognitivo:local:BillOn}" Width="SizeToHeader"/>
+                            <DataGridTemplateColumn x:Name="start_dateColumn" Header="{lex:Loc Cognitivo:local:StartDate}" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <DatePicker SelectedDate="{Binding start_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn x:Name="end_dateColumn" Header="EndDate" Width="100">
+                            <DataGridTemplateColumn x:Name="end_dateColumn" Header="{lex:Loc Cognitivo:local:EndDate}" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <DatePicker SelectedDate="{Binding end_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridCheckBoxColumn x:Name="is_activeColumn" Binding="{Binding is_active,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Active" Width="SizeToHeader"/>
+                            <DataGridCheckBoxColumn x:Name="is_activeColumn" 
+                                                    Binding="{Binding is_active,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                    Header="{lex:Loc Cognitivo:local:Active}" Width="SizeToHeader"/>
                             <DataGridTemplateColumn Width="25">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -305,6 +311,10 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Label Content="{lex:Loc Total}" Style="{StaticResource H3}" Foreground="{StaticResource Label_ImportantColor}" HorizontalAlignment="Right"/>
+                        <Label Content="{Binding GrandTotal, FallbackValue=0, StringFormat={}{0:N0}}" FontSize="20" Style="{StaticResource generic_Label}" />
+                    </StackPanel>
                 </StackPanel>
             </TabItem>
         </TabControl>

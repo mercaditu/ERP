@@ -279,12 +279,11 @@
                                                     Header="{lex:Loc Cognitivo:local:Contract}" Width="SizeToHeader"
                                                     ItemsSource="{Binding Source={StaticResource appContractViewSource}}"
                                                     DisplayMemberPath="name" SelectedValuePath="id_contract" SelectedValueBinding="{Binding id_contract,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                            <DataGridTextColumn x:Name="bill_cycleColumn" 
-                                                Binding="{Binding bill_cycle,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                Header="{lex:Loc Cognitivo:local:Cycle}" 
+                            <DataGridTextColumn Binding="{Binding bill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="{lex:Loc Cognitivo:local:InvoiceInterval}" 
                                                 Width="SizeToHeader"/>
-                            <DataGridTextColumn x:Name="bill_onColumn" Binding="{Binding bill_on,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                Header="{lex:Loc Cognitivo:local:BillOn}" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="bill_onColumn" Binding="{Binding billon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                Header="{lex:Loc Cognitivo:local:InvoiceDay}" Width="SizeToHeader"/>
                             <DataGridTemplateColumn x:Name="start_dateColumn" Header="{lex:Loc Cognitivo:local:StartDate}" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

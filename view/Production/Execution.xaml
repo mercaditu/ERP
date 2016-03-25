@@ -1,6 +1,5 @@
 ﻿<Page x:Class="Cognitivo.Production.Execution" Title="{lex:Loc ProductionExecution}" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-     
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
@@ -9,6 +8,7 @@
     xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
     xmlns:data="clr-namespace:entity;assembly=entity"
     xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
     xmlns:converter="clr-namespace:Cognitivo.Converters"
     xmlns:sys="clr-namespace:System;assembly=mscorlib" 
     xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -61,12 +61,14 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+        <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" 
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="projectDataGrid"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-			     ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="projectDataGrid_SelectionChanged">
+			     ItemContainerStyle="{StaticResource nav_ListSelection}" 
+                 Style="{StaticResource nav_List}" ItemsSource="{Binding}" Grid.Row="1" 
+                 SelectionChanged="projectDataGrid_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding production_line.name, StringFormat=d}" 
@@ -300,7 +302,8 @@
                             
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
-                                <cntrl:SearchableTextbox x:Name="itemserviceComboBox" Margin="4,0" focusGrid="True" Height="27" Width="235" HorizontalAlignment="Left"
+                                <controls:SmartBox_Contact Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
+                                <!--<cntrl:SearchableTextbox x:Name="itemserviceComboBox" Margin="4,0" focusGrid="True" Height="27" Width="235" HorizontalAlignment="Left"
                                              CollectionViewSource="{StaticResource employeeViewSource}" 
                                              KeyDown="itemserviceComboBox_KeyDown" MouseDoubleClick="itemserviceComboBox_MouseDoubleClick">
                                     <cntrl:SearchableTextbox.Columns>
@@ -308,11 +311,12 @@
                                         <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}"/>
                                         <cntrl:SmartBoxColumn Header="id_contact" ForProperty="id_contact" Binding="{Binding id_item, Mode=Default}"/>
                                     </cntrl:SearchableTextbox.Columns>
-                                </cntrl:SearchableTextbox>
+                                </cntrl:SearchableTextbox>-->
                             </StackPanel>
                         </WrapPanel>
-                            <DataGrid x:Name="dgService" Grid.Column="1" ItemsSource="{Binding Source={StaticResource production_execution_detailServiceViewSource}}" 
-                                      Margin="0,70,0,50" AutoGenerateColumns="False">
+                            <DataGrid x:Name="dgService" Grid.Column="1" 
+                                      ItemsSource="{Binding Source={StaticResource production_execution_detailServiceViewSource}}" 
+                                      Margin="0,145,0,50" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
                                                     Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -425,30 +429,39 @@
                             </Grid>
                             <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                         </Grid>
-                        <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke"  DataContext="{StaticResource production_execution_detailSupplyViewSource}" IsEnabled="{Binding SelectedItem.item, ElementName=treeSupply, Converter={StaticResource Type2Enable}}">
+                        <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
+                                    DataContext="{StaticResource production_execution_detailSupplyViewSource}" 
+                                    IsEnabled="{Binding SelectedItem.item, ElementName=treeSupply, Converter={StaticResource Type2Enable}}">
                             <StackPanel Orientation="Horizontal" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
                                 <TextBox x:Name="txtSupply" Width="64" VerticalAlignment="Top" KeyDown="txtsupplier_KeyDown"/>
                                 <Button x:Name="btnInsert_Supplies" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                             </StackPanel>
-                            <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgSupplier"  AutoGenerateColumns="False" 
+                            <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgSupplier" AutoGenerateColumns="False" 
                                       ItemsSource="{Binding Source={StaticResource production_execution_detailSupplyViewSource}}" 
                                       SelectionChanged="dgSupplier_SelectionChanged">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" 
+                                                        Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
+                                                        Width="100"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" 
+                                                        Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                                        Width="100"/>
                                     <DataGridTemplateColumn Width="Auto" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                                <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" 
+                                                        Style="{StaticResource btnDeleteChildStyle}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <StackPanel>
-                                <Label x:Name="lblProjectedSuppliesqty" Grid.Column="1" Content="Total"/>
-                                <Label x:Name="lblTotalsupplies" Grid.Column="1" Content="Total"/>
+                                <Label x:Name="lblProjectedSuppliesqty" 
+                                       Grid.Column="1" Content="Total"/>
+                                <Label x:Name="lblTotalsupplies" 
+                                       Grid.Column="1" Content="Total"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>

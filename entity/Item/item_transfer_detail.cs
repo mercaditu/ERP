@@ -16,6 +16,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_transfer_detail { get; set; }
+        public Status.Documents_General status { get; set; }
         public int id_transfer { get; set; }
         public int? id_project_task { get; set; }
         public int id_item_product { get; set; }

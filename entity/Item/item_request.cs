@@ -9,7 +9,7 @@ namespace entity
     using System.Text;
     using System.Linq;
 
-    public partial class item_request : Audit, IDataErrorInfo
+    public partial class item_request : Audit
     {
       
         public item_request()

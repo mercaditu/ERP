@@ -36,9 +36,9 @@ namespace Cognitivo.Product
             item_transfer.IsSelected = true;
 
             ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
-       
+
             item_transferViewSource.View.MoveCurrentToLast();
-         }
+        }
 
         private void toolBar_btnSave_Click(object sender)
         {
@@ -74,8 +74,8 @@ namespace Cognitivo.Product
         {
             //Filter by branch.
             item_transferViewSource = ((CollectionViewSource)(this.FindResource("item_transferViewSource")));
-            ProductTransferDB.item_transfer.Where(a => 
-                a.id_company == CurrentSession.Id_Company && 
+            ProductTransferDB.item_transfer.Where(a =>
+                a.id_company == CurrentSession.Id_Company &&
                 a.id_branch == CurrentSession.Id_Branch &&
                 a.transfer_type == item_transfer.Transfer_type.transfer)
                 .Include(i => i.item_transfer_detail)
@@ -102,10 +102,10 @@ namespace Cognitivo.Product
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.Transfer, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
         }
 
-        private async void SmartBox_Item_Select(object sender, RoutedEventArgs e)
+        private void SmartBox_Item_Select(object sender, RoutedEventArgs e)
         {
             item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
-            item item = await ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefaultAsync();
+            item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
             if (item != null && item.item_product != null && item_transfer != null)
             {
@@ -123,80 +123,15 @@ namespace Cognitivo.Product
         {
             try
             {
-                item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
 
-                app_document_range app_document_range = ProductTransferDB.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
-                item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
-                item_transfer.RaisePropertyChanged("number");
 
-                item_transfer.app_branch_origin = (app_branch)id_branch_originComboBox.SelectedItem;
-                item_transfer.app_branch_destination = (app_branch)id_branch_destinComboBox.SelectedItem;
-                item_transfer.app_location_origin = ((app_branch)id_branch_originComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
-                item_transfer.app_location_destination = ((app_branch)id_branch_destinComboBox.SelectedItem).app_location.Where(x => x.is_default == true).FirstOrDefault();
-                item_transfer.status = Status.Documents_General.Approved;
-                IEnumerable<DbEntityValidationResult> validationresult = ProductTransferDB.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    for (int i = 0; i < item_transfer_detailDataGrid.Items.Count - 1; i++)
-                    {
-                        item_transfer_detail item_transfer_detail = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
+                clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
+                ProductTransferDB.Approve(clsTotalGrid.Sum(x => x.cost));
 
-                        item_movement item_movement_origin = new item_movement();
-                        item_movement_origin.debit = 0;
-                        item_movement_origin.credit = item_transfer_detail.quantity_origin;
-                        item_movement_origin.id_application = global::entity.App.Names.Transfer;
-                        item_movement_origin.id_location = item_transfer.app_location_origin.id_location;
-                        item_movement_origin.transaction_id = 0;
-                        item_movement_origin.status = Status.Stock.InStock;
-                        item_movement_origin.trans_date = item_transfer_detail.item_transfer.trans_date;
-                        if (item_transfer_detail.item_product.id_item_product != 0)
-                        {
-                            if (ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault() != null)
-                            {
-                                item_movement_origin.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault().id_item_product;
-                            }
-                        }
 
-                        ProductTransferDB.item_movement.Add(item_movement_origin);
-                        item_movement item_movement_dest = new item_movement();
-                        item_movement_dest.debit = item_transfer_detail.quantity_destination;
-                        item_movement_dest.credit = 0;
-                        item_movement_dest.id_application = global::entity.App.Names.Transfer;
-                        item_movement_dest.id_location = item_transfer.app_location_destination.id_location;
-                        item_movement_dest.transaction_id = 0;
-                        item_movement_dest.status = Status.Stock.InStock;
-                        item_movement_dest.trans_date = item_transfer_detail.item_transfer.trans_date;
-                        if (item_transfer_detail.item_product.id_item_product != 0)
-                        {
-                            if (ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault() != null)
-                            {
-                                item_movement_dest.id_item_product = ProductTransferDB.item_product.Where(x => x.id_item == item_transfer_detail.item_product.id_item_product).FirstOrDefault().id_item_product;
-                            }
-                        }
 
-                        clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-                        foreach (Class.transfercost _clsTotalGrid in clsTotalGrid)
-                        {
-                            if (item_transfer_detail.quantity_origin == 0)
-                            {
-                                item_movement_value item_movement_value = new item_movement_value();
-                                item_movement_value.unit_value = _clsTotalGrid.cost / item_transfer_detail.quantity_destination;
-                                item_movement_value.id_currencyfx = 0;
-                                item_movement_value.comment = String.Format("Transaction from transfer");
-                                item_movement_origin.item_movement_value.Add(item_movement_value);
-                            }
+                toolBar.msgSaved();
 
-                        }
-                        ProductTransferDB.item_movement.Add(item_movement_dest);
-                    }
-
-                    item_transfer.status = Status.Documents_General.Approved;
-
-                    ProductTransferDB.SaveChangesAsync();
-
-                    entity.Brillo.Document.Start.Automatic(item_transfer, app_document_range);
-                    toolBar.msgSaved();
-                }
             }
             catch (Exception ex)
             {

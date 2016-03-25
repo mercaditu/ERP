@@ -25,7 +25,7 @@ namespace entity
         {
             foreach (item_request item_request in base.item_request.Local)
             {
-                if (item_request.IsSelected && item_request.Error == null)
+                if (item_request.IsSelected )
                 {
                     if (item_request.State == EntityState.Added)
                     {
@@ -61,7 +61,7 @@ namespace entity
 
             foreach (item_request item_request in base.item_request.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
-                                                        && x.IsSelected && x.Error == null))
+                                                        && x.IsSelected ))
             {
                 item_transfer item_transfer = new item_transfer();
 

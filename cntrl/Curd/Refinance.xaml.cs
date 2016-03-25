@@ -12,6 +12,12 @@ namespace cntrl.Curd
 {
     public partial class Refinance : UserControl
     {
+      public  enum Mode
+	{
+            AccountReceivable,
+            AccountPayable
+	         
+	}
         CollectionViewSource _payment_schedualViewSource = null;
         public CollectionViewSource payment_schedualViewSource { get { return _payment_schedualViewSource; } set { _payment_schedualViewSource = value; } }
 
@@ -19,7 +25,7 @@ namespace cntrl.Curd
         public dbContext objEntity { get { return _entity; } set { _entity = value; } }
         public int id_contact { get; set; }
         public int id_currency { get; set; }
-
+        public Mode WindowsMode { get; set; }
         decimal total = 0;
        
 
@@ -55,8 +61,21 @@ namespace cntrl.Curd
                         }
                     };
                     stackMain.DataContext = payment_schedualViewSource;
-                    lblBalance.Content = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
-                    total = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
+                    decimal amount = 0;
+                 
+                    if (WindowsMode == Mode.AccountPayable)
+                    {
+                        amount = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
+                             total  = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
+                    }
+                    else
+                    {
+
+                        amount = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
+                        total = payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
+                    }
+                    lblBalance.Content = amount;
+               
                     // payment
 
                 }
@@ -102,23 +121,48 @@ namespace cntrl.Curd
                 payment_schedual Firstpayment_schedual = payment_schedualViewSource.View.OfType<payment_schedual>().ToList().FirstOrDefault() as payment_schedual;
 
 
-                payment_schedual.credit = 0;
-                payment_schedual.debit = payment_schedual.debit;
-                payment_schedual.AccountReceivableBalance = payment_schedual.debit;
-                payment_schedual.id_currencyfx = Firstpayment_schedual.sales_invoice.id_currencyfx;
-                payment_schedual.app_currencyfx = Firstpayment_schedual.sales_invoice.app_currencyfx;
-                payment_schedual.RaisePropertyChanged("app_currencyfx");
-                payment_schedual.sales_invoice = Firstpayment_schedual.sales_invoice;
-                payment_schedual.id_sales_invoice = Firstpayment_schedual.sales_invoice.id_sales_invoice;
-                payment_schedual.trans_date = Firstpayment_schedual.sales_invoice.trans_date;
-                payment_schedual.status = entity.Status.Documents_General.Pending;
-                payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
-                payment_schedual.id_contact = Firstpayment_schedual.sales_invoice.id_contact;
-                payment_schedual.contact = Firstpayment_schedual.sales_invoice.contact;
+                
+                if (WindowsMode == Mode.AccountPayable)
+                {
+                    payment_schedual.credit = payment_schedual.credit;
+                    payment_schedual.debit = 0;
+                    payment_schedual.AccountPayableBalance = payment_schedual.credit;
+                    payment_schedual.id_currencyfx = Firstpayment_schedual.purchase_invoice.id_currencyfx;
+                    payment_schedual.app_currencyfx = Firstpayment_schedual.purchase_invoice.app_currencyfx;
+                    payment_schedual.RaisePropertyChanged("app_currencyfx");
+                    payment_schedual.purchase_invoice = Firstpayment_schedual.purchase_invoice;
+                    payment_schedual.id_purchase_invoice = Firstpayment_schedual.purchase_invoice.id_purchase_invoice;
+                    payment_schedual.trans_date = Firstpayment_schedual.purchase_invoice.trans_date;
+                    payment_schedual.status = entity.Status.Documents_General.Pending;
+                    payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
+                    payment_schedual.id_contact = Firstpayment_schedual.purchase_invoice.id_contact;
+                    payment_schedual.contact = Firstpayment_schedual.purchase_invoice.contact;
+                    lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
+                }
+                else
+                {
+                    payment_schedual.credit = 0;
+                    payment_schedual.debit = payment_schedual.debit;
+                    payment_schedual.AccountReceivableBalance = payment_schedual.debit;
+                    payment_schedual.id_currencyfx = Firstpayment_schedual.sales_invoice.id_currencyfx;
+                    payment_schedual.app_currencyfx = Firstpayment_schedual.sales_invoice.app_currencyfx;
+                    payment_schedual.RaisePropertyChanged("app_currencyfx");
+                    payment_schedual.sales_invoice = Firstpayment_schedual.sales_invoice;
+                    payment_schedual.id_sales_invoice = Firstpayment_schedual.sales_invoice.id_sales_invoice;
+                    payment_schedual.trans_date = Firstpayment_schedual.sales_invoice.trans_date;
+                    payment_schedual.status = entity.Status.Documents_General.Pending;
+                    payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
+                    payment_schedual.id_contact = Firstpayment_schedual.sales_invoice.id_contact;
+                    payment_schedual.contact = Firstpayment_schedual.sales_invoice.contact;
+                    lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
+                }
+             
+              
+             
                 payment_schedual.RaisePropertyChanged("contact");
             }
            
-            lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
+        
             
         
          

@@ -6,6 +6,7 @@ using entity;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Windows.Input;
+using System;
 
 namespace cntrl.Curd
 {
@@ -151,6 +152,74 @@ namespace cntrl.Curd
                 _project.contact = contact;
 
             }
-        }       
+        }
+        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Add_Tag();
+
+            }
+        }
+
+        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Add_Tag();
+        }
+        void Add_Tag()
+        {
+            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+            if (cbxTag.Data != null)
+            {
+                int id = Convert.ToInt32(((project_tag)cbxTag.Data).id_tag);
+                if (id > 0)
+                {
+                    entity.project project = projectViewSource.View.CurrentItem as entity.project;
+                    if (project != null)
+                    {
+                        project_tag_detail project_tag_detail = new project_tag_detail();
+                        project_tag_detail.id_tag = ((project_tag)cbxTag.Data).id_tag;
+                        project_tag_detail.project_tag = ((project_tag)cbxTag.Data);
+                        project.project_tag_detail.Add(project_tag_detail);
+                        CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+                        Projectproject_tag_detail.View.Refresh();
+
+                    }
+                }
+            }
+        }
+        private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+           
+            if (e.Parameter as project_tag_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    //DeleteDetailGridRow
+                   
+                    if (e.Parameter as project_tag_detail != null)
+                    {
+                        project_tag_detailDataGrid.CancelEdit();
+                        db.project_tag_detail.Remove(e.Parameter as project_tag_detail);
+
+                        CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+                        Projectproject_tag_detail.View.Refresh();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+        }
     }
 }

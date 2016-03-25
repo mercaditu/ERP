@@ -17,6 +17,7 @@ namespace entity
             is_head = true;
             is_active = true;
             project_task = new List<project_task>();
+            project_tag_detail = new List<project_tag_detail>();
             est_start_date = DateTime.Now.Date;
             est_end_date = DateTime.Now.Date;
         }
@@ -53,6 +54,7 @@ namespace entity
         public virtual IEnumerator<purchase_tender> purchase_tender { get; set; }
         public virtual IEnumerable<item_request> item_request { get; set; }
         public virtual ICollection<project_task> project_task { get; set; }
+        public virtual ICollection<project_tag_detail> project_tag_detail { get; set; }
 
         public string Error
         {

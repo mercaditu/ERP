@@ -96,9 +96,43 @@ namespace entity
                     {
                         //if (item.IsSelected == true)
                         //{
+                        if (item.decision == entity.item_request_decision.Decisions.Movement)
+                        {
+                            int id_location = (int)item.id_location;
+                            item_movement item_movement_origin = new item_movement();
+                            item_movement_origin.debit = item.quantity;
+                            item_movement_origin.credit = 0;
+                            item_movement_origin.id_application = global::entity.App.Names.Movement;
+                            item_movement_origin.id_location=(int)item.id_location; 
+                            item_movement_origin.transaction_id = 0;
+                            item_movement_origin.status = Status.Stock.InStock;
+                            item_movement_origin.trans_date = DateTime.Now;
 
+                            if (item_request_detail.item.item_product.FirstOrDefault().id_item_product != 0)
+                            {
+                                item_movement_origin.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+                            }
+
+                            base.item_movement.Add(item_movement_origin);
+                            item_movement item_movement_dest = new item_movement();
+                            item_movement_dest.debit = 0;
+                            item_movement_dest.credit = item.quantity;
+                            item_movement_dest.id_application = global::entity.App.Names.Movement;
+                            item_movement_dest.id_location = (int)item.id_location;
+                            item_movement_dest.transaction_id = 0;
+                            item_movement_dest.status = Status.Stock.InStock;
+                            item_movement_dest.trans_date = DateTime.Now; 
+
+                            if (item_request_detail.item.item_product.FirstOrDefault().id_item_product != 0)
+                            {
+                                item_movement_dest.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+                            }
+
+                            base.item_movement.Add(item_movement_dest);
+                           
+                        }
                       
-                        if (item.decision == entity.item_request_decision.Decisions.Movement || item.decision == entity.item_request_decision.Decisions.Transfer)
+                        else if ( item.decision == entity.item_request_decision.Decisions.Transfer)
                         {
                             int id_location = (int)item.id_location;
                             item_transfer.app_location_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();

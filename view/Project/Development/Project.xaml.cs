@@ -24,7 +24,7 @@ namespace Cognitivo.Project.Development
         ProjectDB ProjectDB = new ProjectDB();
         entity.Properties.Settings _setting = new entity.Properties.Settings();
         int company_ID;
-        CollectionViewSource ProjectViewSource;
+        CollectionViewSource ProjectViewSource, Projectproject_tag_detail;
         public Project()
         {
             InitializeComponent();
@@ -127,6 +127,16 @@ namespace Cognitivo.Project.Development
 
             ProjectViewSource = ((CollectionViewSource)(FindResource("ProjectViewSource")));
             ProjectViewSource.Source = ProjectDB.projects.Local;
+
+
+            ProjectDB.project_tag
+            .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
+            .OrderBy(x => x.name).LoadAsync();
+
+            Projectproject_tag_detail = ((CollectionViewSource)(FindResource("Projectproject_tag_detail")));
+            CollectionViewSource project_tagViewSource = ((CollectionViewSource)(FindResource("project_tagViewSource")));
+            project_tagViewSource.Source = ProjectDB.project_tag.Local;
+           
             
         }
 
@@ -143,6 +153,75 @@ namespace Cognitivo.Project.Development
         {
             ProjectDB.DeActivateProject();
             ProjectViewSource.View.Refresh();
+        }
+        private void DeleteCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+          
+            if (e.Parameter as project_tag_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    //DeleteDetailGridRow
+
+
+                    if (e.Parameter as project_tag_detail != null)
+                    {
+                        project_tag_detailDataGrid.CancelEdit();
+                        ProjectDB.project_tag_detail.Remove(e.Parameter as project_tag_detail);
+                        Projectproject_tag_detail.View.Refresh();
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Add_Tag();
+
+            }
+        }
+
+        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Add_Tag();
+        }
+        void Add_Tag()
+        {
+            // CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+            if (cbxTag.Data != null)
+            {
+                int id = Convert.ToInt32(((project_tag)cbxTag.Data).id_tag);
+                if (id > 0)
+                {
+                    project project = ProjectViewSource.View.CurrentItem as project;
+                    if (project != null)
+                    {
+                        project_tag_detail project_tag_detail = new project_tag_detail();
+                        project_tag_detail.id_tag = ((project_tag)cbxTag.Data).id_tag;
+                        project_tag_detail.project_tag = ((project_tag)cbxTag.Data);
+                        project.project_tag_detail.Add(project_tag_detail);
+                       CollectionViewSource Projectproject_tag_detail = FindResource("Projectproject_tag_detail") as CollectionViewSource;
+                        Projectproject_tag_detail.View.Refresh();
+
+                    }
+                }
+            }
         }
     }
 }

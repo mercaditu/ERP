@@ -336,6 +336,9 @@
     <Compile Include="Configs\ItemBrand.xaml.cs">
       <DependentUpon>ItemBrand.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\ProjectTag.xaml.cs">
+      <DependentUpon>ProjectTag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\Update.xaml.cs">
       <DependentUpon>Update.xaml</DependentUpon>
     </Compile>
@@ -1286,6 +1289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Configs\ItemBrand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\ProjectTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

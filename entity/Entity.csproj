@@ -209,6 +209,11 @@
     <Compile Include="Context\Project\ProjectTaskDB.cs" />
     <Compile Include="Context\Project\ProjectDB.cs" />
     <Compile Include="Context\Project\ProjectTemplateDB.cs" />
+    <Compile Include="Migrations\201603251024175_addproject_tag.cs" />
+    <Compile Include="Migrations\201603251024175_addproject_tag.Designer.cs">
+      <DependentUpon>201603251024175_addproject_tag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
     <Compile Include="Context\Purchase\ImpexDB.cs" />
     <Compile Include="Context\Purchase\PurchaseReturnDB.cs" />
@@ -395,6 +400,10 @@
     <Compile Include="Migrations\201603220839042_UpdateSecurity_roleanditem_movement_value.Designer.cs">
       <DependentUpon>201603220839042_UpdateSecurity_roleanditem_movement_value.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603250610438_UpdatePurchaseTender.cs" />
+    <Compile Include="Migrations\201603250610438_UpdatePurchaseTender.Designer.cs">
+      <DependentUpon>201603250610438_UpdatePurchaseTender.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\Event\project_event.cs" />
     <Compile Include="Project\Event\project_event_template_fixed.cs" />
     <Compile Include="Project\Event\project_event_fixed.cs" />
@@ -402,6 +411,7 @@
     <Compile Include="Project\Event\project_event_variable.cs" />
     <Compile Include="Project\Event\project_event_template.cs" />
     <Compile Include="Generic\CommercialHead.cs" />
+    <Compile Include="Project\project_tag_detail.cs" />
     <Compile Include="Purchase\purchase_invoice_dimension.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -834,6 +844,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603220839042_UpdateSecurity_roleanditem_movement_value.resx">
       <DependentUpon>201603220839042_UpdateSecurity_roleanditem_movement_value.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603250610438_UpdatePurchaseTender.resx">
+      <DependentUpon>201603250610438_UpdatePurchaseTender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603251024175_addproject_tag.resx">
+      <DependentUpon>201603251024175_addproject_tag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -166,6 +166,72 @@ namespace entity
         }
 
         item _items;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? id_range
+        {
+            get
+            {
+                return _id_range;
+            }
+            set
+            {
+                if (_id_range != value)
+                {
+                    _id_range = value;
+
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+                    {
+                        using (db db = new db())
+                        {
+                            if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
+                            {
+                                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+
+                                if (db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault().code;
+                                }
+                               
+                                if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                                }
+                                if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                }
+
+                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
+                                RaisePropertyChanged("NumberWatermark");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private int? _id_range;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string number { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public string NumberWatermark { get; set; }
+
+        #region Document Range => Navigation
+        public virtual app_document_range app_document_range { get; set; }
+        #endregion
+
+
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
         public virtual ICollection<sales_budget_detail> sales_budget_detail { get; set; }

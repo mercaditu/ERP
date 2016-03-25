@@ -110,6 +110,8 @@
         public virtual DbSet<production_line> production_line { get; set; }
         public virtual DbSet<production_execution> production_execution { get; set; }
         public virtual DbSet<project> projects { get; set; }
+        public virtual DbSet<project_tag_detail> project_tag_detail { get; set; }
+        public virtual DbSet<project_tag> project_tag { get; set; }
         public virtual DbSet<project_template> project_template { get; set; }
         public virtual DbSet<project_template_detail> project_template_detail { get; set; }
         public virtual DbSet<production_execution_detail> production_execution_detail { get; set; }

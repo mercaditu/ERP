@@ -18,9 +18,15 @@
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d"
       MinHeight="550" MinWidth="750" Loaded="Project_Loaded">
-  
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
+    </Page.CommandBindings>
     <Page.Resources>
           <CollectionViewSource x:Key="ProjectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}" />
+        <CollectionViewSource x:Key="Projectproject_tag_detail" Source="{Binding project_tag_detail, Source={StaticResource ProjectViewSource}}"/>
+
+        <CollectionViewSource x:Key="project_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_tag}, CreateList=True}"/>
         <converter:ActiveToStatus x:Key="ActiveToStatus"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource ProjectViewSource}" Background="White">
@@ -65,6 +71,32 @@
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
 					            SelectedDate="{Binding est_end_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
+                                                 CollectionViewSource="{StaticResource project_tagViewSource}"
+                                                 focusGrid="True" Height="27" Width="256"
+                                                 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                    <cntrl:SearchableTextbox.Columns>
+                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+                                                          Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                    </cntrl:SearchableTextbox.Columns>
+                </cntrl:SearchableTextbox>
+                <DataGrid x:Name="project_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                      HeadersVisibility="None" 
+                                      ItemsSource="{Binding Source={StaticResource Projectproject_tag_detail}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding project_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
+                        <DataGridTemplateColumn Width="Auto" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
 
         </ScrollViewer>

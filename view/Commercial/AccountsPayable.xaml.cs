@@ -22,6 +22,7 @@ namespace Cognitivo.Commercial
 
         //List<contact> contactLIST;
         cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick();
+        cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance();
         cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
         public AccountsPayable()
         {
@@ -269,6 +270,31 @@ namespace Cognitivo.Commercial
              
             }
             
+        }
+        private void Refince_Click(object sender, RoutedEventArgs e)
+        {
+            payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
+
+
+            Refinance.objEntity = dbContext;
+            Refinance.payment_schedualViewSource = payment_schedualViewSource;
+            Refinance.id_contact = PaymentSchedual.id_contact;
+            Refinance.id_currency = PaymentSchedual.app_currencyfx.id_currency;
+            Refinance.btnSave_Click += SaveRefinance_Click;
+            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Children.Add(Refinance);
+        }
+
+        public void SaveRefinance_Click(object sender)
+        {
+            IEnumerable<DbEntityValidationResult> validationresult = dbContext.db.GetValidationErrors();
+            if (validationresult.Count() == 0)
+            {
+                dbContext.db.SaveChanges();
+                crud_modal.Children.Clear();
+                crud_modal.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            load_Schedual();
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

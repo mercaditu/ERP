@@ -162,6 +162,7 @@
       <DependentUpon>applicationIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class\clsCommon.cs" />
+    <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
@@ -387,6 +388,9 @@
     </Compile>
     <Compile Include="Panels\pnl_TreeView.xaml.cs">
       <DependentUpon>pnl_TreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Curd\ProjectTag.xaml.cs">
+      <DependentUpon>ProjectTag.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -829,6 +833,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Panels\pnl_TreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\ProjectTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

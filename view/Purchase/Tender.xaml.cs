@@ -120,6 +120,12 @@ namespace Cognitivo.Purchase
 
             app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
+
+            PurchaseTenderDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+
+            CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
+            app_vat_groupViewSource.Source = PurchaseTenderDB.app_vat_group.Local;
+
         }
 
 

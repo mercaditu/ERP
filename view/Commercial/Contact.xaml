@@ -312,7 +312,7 @@
                     </DataGrid>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Label Content="{lex:Loc Total}" Style="{StaticResource H3}" Foreground="{StaticResource Label_ImportantColor}" HorizontalAlignment="Right"/>
-                        <Label Content="{Binding GrandTotal, FallbackValue=0, StringFormat={}{0:N0}}" FontSize="20" Style="{StaticResource generic_Label}" />
+                        <Label Content="{Binding GrandTotal, FallbackValue=0, StringFormat={}{0:N0}}" FontSize="18" Style="{StaticResource generic_Label}" />
                     </StackPanel>
                 </StackPanel>
             </TabItem>

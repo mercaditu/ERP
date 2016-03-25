@@ -49,6 +49,7 @@ namespace cntrl.PanelAdv
             {
                 //production_order production_order = new production_order();
                 production_order.id_project = project_taskLIST.FirstOrDefault().id_project;
+                production_order.name = project_taskLIST.FirstOrDefault().project.name;
 
                 foreach (var item in project_taskLIST)
                 {

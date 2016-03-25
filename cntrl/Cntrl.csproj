@@ -377,6 +377,9 @@
     <Compile Include="PanelAdv\pnlSalesOrder.xaml.cs">
       <DependentUpon>pnlSalesOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PanelAdv\Project_TaskApprove.xaml.cs">
+      <DependentUpon>Project_TaskApprove.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Panels\pnl_Curd.xaml.cs">
       <DependentUpon>pnl_Curd.xaml</DependentUpon>
     </Compile>
@@ -817,6 +820,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PanelAdv\pnlSalesOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\Project_TaskApprove.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

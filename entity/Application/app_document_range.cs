@@ -59,6 +59,7 @@ namespace entity
         public virtual IEnumerable<payment_withholding_tax> payment_withholding_tax { get; set; }
         public virtual IEnumerable<payment> payment { get; set; }
         public virtual IEnumerable<payment_detail> payment_detail { get; set; }
+        public virtual IEnumerable<project_task> project_task { get; set; }
         public string Error
         {
             get

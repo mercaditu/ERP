@@ -3,7 +3,7 @@ namespace entity.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addproject_tag : DbMigration
+    public partial class UpdateProjects : DbMigration
     {
         public override void Up()
         {
@@ -47,10 +47,16 @@ namespace entity.Migrations
                 .Index(t => t.id_company)
                 .Index(t => t.id_user);
             
+            AddColumn("project_task", "id_range", c => c.Int());
+            AddColumn("project_task", "number", c => c.String(unicode: false));
+            AddColumn("purchase_tender_detail", "id_vat_group", c => c.Int(nullable: false));
+            CreateIndex("project_task", "id_range");
+            AddForeignKey("project_task", "id_range", "app_document_range", "id_range");
         }
         
         public override void Down()
         {
+            DropForeignKey("project_task", "id_range", "app_document_range");
             DropForeignKey("project_tag_detail", "id_user", "security_user");
             DropForeignKey("project_tag", "id_user", "security_user");
             DropForeignKey("project_tag_detail", "id_tag", "project_tag");
@@ -63,6 +69,10 @@ namespace entity.Migrations
             DropIndex("project_tag_detail", new[] { "id_company" });
             DropIndex("project_tag_detail", new[] { "id_tag" });
             DropIndex("project_tag_detail", new[] { "id_project" });
+            DropIndex("project_task", new[] { "id_range" });
+            DropColumn("purchase_tender_detail", "id_vat_group");
+            DropColumn("project_task", "number");
+            DropColumn("project_task", "id_range");
             DropTable("project_tag");
             DropTable("project_tag_detail");
         }

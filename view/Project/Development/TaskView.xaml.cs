@@ -21,7 +21,7 @@ namespace Cognitivo.Project.Development
         //CollectionViewSource project_templateproject_template_detailViewSource;
         //CollectionViewSource project_templateViewSource;
         CollectionViewSource project_task_dimensionViewSource;
-
+        cntrl.PanelAdv.Project_TaskApprove Project_TaskApprove;
         public Boolean ViewAll { get; set; }
 
         public TaskView()
@@ -146,6 +146,12 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
+                    if (Project_TaskApprove.id_range!=null)
+                    {
+                        project_task.id_range = Project_TaskApprove.id_range;
+                       
+                    }
+                    project_task.number = Project_TaskApprove.number;
                     if (project_task.status == Status.Project.Management_Approved)
                     {
                         if (project_task.status == Status.Project.Management_Approved || project_task.status == null)
@@ -429,7 +435,11 @@ namespace Cognitivo.Project.Development
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            toolBar_btnApprove_Click(sender);
+            crud_modal.Visibility = Visibility.Visible;
+            Project_TaskApprove = new cntrl.PanelAdv.Project_TaskApprove();
+            Project_TaskApprove.Save_Click += toolBar_btnApprove_Click;
+            crud_modal.Children.Add(Project_TaskApprove);
+         
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

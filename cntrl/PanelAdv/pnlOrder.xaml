@@ -10,7 +10,7 @@
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
       lex:ResxLocalizationProvider.DefaultDictionary="local"
-      lex:LocalizeDictionary.DesignCulture="en-US" Width="288" Height="560"
+      lex:LocalizeDictionary.DesignCulture="en-US" Width="288"
       mc:Ignorable="d" Background="White"
       Loaded="UserControl_Loaded">
     <UserControl.Resources>

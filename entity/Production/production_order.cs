@@ -110,7 +110,6 @@ namespace entity
             }
         }
         private int? _id_range;
-
         #region Document Range => Navigation
         public virtual app_document_range app_document_range { get; set; }
         #endregion
@@ -119,27 +118,40 @@ namespace entity
         /// 
         /// </summary>
         [NotMapped]
+        public int SelectedCount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
         public string NumberWatermark { get; set; }
+
         public string work_number { get; set; }
+        
         public string project_cost_center { get; set; }
 
         public Status.Production? status { get; set; }
+        
         public string name { get; set; }
+        
         public string barcode { get; set; }
 
         [Required]
         public DateTime trans_date { get; set; }
 
         public DateTime? start_date_est { get; set; }
+        
         public DateTime? end_date_est { get; set; }
         
         public virtual production_line production_line { get; set; }
+        
         public virtual project project { get; set; }
 
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
         public virtual ICollection<production_execution> production_execution { get; set; }
 
+        #region Error
         public string Error
         {
             get
@@ -175,6 +187,19 @@ namespace entity
                 return "";
             }
         }
+        #endregion
 
+        public void Update_SelectedCount()
+        {
+
+            int i = 0;
+            foreach (production_order_detail detail in production_order_detail.Where(x => x.IsSelected))
+            {
+                i += 1;
+            }
+
+            SelectedCount = i;
+            RaisePropertyChanged("SelectedCount");
+        }
     }
 }

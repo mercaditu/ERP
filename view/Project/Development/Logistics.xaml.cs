@@ -4,60 +4,36 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 using System.Data.Entity;
 using entity;
-using Microsoft.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.ComponentModel;
 
 namespace Cognitivo.Project.Development
 {
-    public partial class Logistics : Page, INotifyPropertyChanged
+    public partial class Logistics : Page
     {
-        public bool is_select { get; set; }
-        entity.dbContext entity = new dbContext();
-        CollectionViewSource projectViewSource, contractViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
+        ProjectTaskDB ProjectTaskDB = new ProjectTaskDB();
+
+        CollectionViewSource projectViewSource;
         cntrl.Curd.ItemRequest ItemRequest;
-        //SetIsEnableProperty
-        public static readonly DependencyProperty SetIsEnableProperty =
-            DependencyProperty.Register("SetIsEnable", typeof(bool), typeof(Logistics),
-            new FrameworkPropertyMetadata(false));
-        public int noofrows { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string prop)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
-        }
+
         public Logistics()
         {
             InitializeComponent();
-            is_select = false;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            projectViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("projectViewSource")));
-            entity.db.projects.Where(a => a.is_active && a.id_company == _entity.company_ID).Load();
-            projectViewSource.Source = entity.db.projects.Local;
-
-            contractViewSource = (CollectionViewSource)this.FindResource("contractViewSource");
-            contractViewSource.Source = entity.db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
-
-            CollectionViewSource conditionViewSource = (CollectionViewSource)this.FindResource("conditionViewSource");
-            conditionViewSource.Source = entity.db.app_condition.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
+            projectViewSource = ((CollectionViewSource)(this.FindResource("projectViewSource")));
+            await ProjectTaskDB.projects.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).LoadAsync();
+            projectViewSource.Source = ProjectTaskDB.projects.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            entity.db.app_dimension.Where(a => a.id_company == _entity.company_ID).Load();
-            app_dimensionViewSource.Source = entity.db.app_dimension.Local;
+            await ProjectTaskDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+            app_dimensionViewSource.Source = ProjectTaskDB.app_dimension.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            entity.db.app_measurement.Where(a => a.id_company == _entity.company_ID).Load();
-            app_measurementViewSource.Source = entity.db.app_measurement.Local;
+            await ProjectTaskDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).LoadAsync();
+            app_measurementViewSource.Source = ProjectTaskDB.app_measurement.Local;
         }
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,11 +58,11 @@ namespace Cognitivo.Project.Development
 
                     if (_id_project > 0)
                     {
-                        var productlistbasic = (from IT in entity.db.project_task
+                        var productlistbasic = (from IT in ProjectTaskDB.project_task
                                                 where (IT.status == Status.Project.Approved)
                                                 && IT.status != null && IT.id_project == _id_project
-                                                join IK in entity.db.item_product on IT.id_item equals IK.id_item
-                                                join IO in entity.db.item_movement on IK.id_item_product equals IO.id_item_product into a
+                                                join IK in ProjectTaskDB.item_product on IT.id_item equals IK.id_item
+                                                join IO in ProjectTaskDB.item_movement on IK.id_item_product equals IO.id_item_product into a
                                                 from IM in a.DefaultIfEmpty()
                                                 group IT by new { IM, IT.items }
                                                     into last
@@ -120,7 +96,7 @@ namespace Cognitivo.Project.Development
                         item_ProductDataGrid.ItemsSource = productlist.Where(IT => IT.item.id_item_type == item.item_type.Product).ToList();
 
                         item_RawDataGrid.ItemsSource = productlist.Where(IT => IT.item.id_item_type == item.item_type.RawMaterial).ToList();
-                        var servicelist = (from IT in entity.db.project_task
+                        var servicelist = (from IT in ProjectTaskDB.project_task
                                            where IT.status == Status.Project.Approved
                                            && IT.status != null && IT.id_project == _id_project
 
@@ -157,13 +133,13 @@ namespace Cognitivo.Project.Development
             if (itemDataGrid.ItemsSource != null)
             {
                 //List<project_task> project_task = new List<entity.project_task>();
-                //project_task = entity.db.project_task.Where(x => x.IsSelected == true).ToList();
+                //project_task = entity.project_task.Where(x => x.IsSelected == true).ToList();
 
-                if (entity.db.project_task.Local.Where(x => x.IsSelected == true).Count() > 0)
+                if (ProjectTaskDB.project_task.Local.Where(x => x.IsSelected == true).Count() > 0)
                 {
                     ItemRequest = new cntrl.Curd.ItemRequest();
                     crud_modal.Visibility = Visibility.Visible;
-                    ItemRequest.listdepartment = entity.db.app_department.ToList();
+                    ItemRequest.listdepartment = ProjectTaskDB.app_department.ToList();
                     ItemRequest.item_request_Click += item_request_Click;
                     crud_modal.Children.Add(ItemRequest);
                 }
@@ -180,7 +156,7 @@ namespace Cognitivo.Project.Development
             project project = ((project)projectViewSource.View.CurrentItem);
             int id_project = ((project)projectViewSource.View.CurrentItem).id_project;
 
-            List<project_task> productlist = entity.db.project_task.ToList();
+            List<project_task> productlist = ProjectTaskDB.project_task.ToList();
             productlist = productlist.Where(x => x.IsSelected == true).ToList();
 
             item_request item_request = new item_request();
@@ -202,7 +178,7 @@ namespace Cognitivo.Project.Development
                 item_request_detail.id_item = idItem;
                 item_request_detail.quantity = (int)project_task.quantity_est;
 
-                List<project_task_dimension> project_task_dimensionList = entity.db.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList();
+                List<project_task_dimension> project_task_dimensionList = ProjectTaskDB.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList();
                 foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
                 {
                     item_request_dimension item_request_dimension = new item_request_dimension();
@@ -223,8 +199,8 @@ namespace Cognitivo.Project.Development
                 item_request.item_request_detail.Add(item_request_detail);
 
             }
-            entity.db.item_request.Add(item_request);
-            entity.db.SaveChanges();
+            ProjectTaskDB.item_request.Add(item_request);
+            ProjectTaskDB.SaveChanges();
 
             crud_modal.Children.Clear();
             crud_modal.Visibility = System.Windows.Visibility.Collapsed;
@@ -234,77 +210,35 @@ namespace Cognitivo.Project.Development
 
         private void item_ProductDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                int _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
-                dynamic obj = (dynamic)item_ProductDataGrid.SelectedItem;
-                if (obj != null)
-                {
-                    int _id_item = obj._id_item;
-                    listLogistics(item.item_type.Product, _id_project, _id_item);
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            dgv_SelectionChanged(item.item_type.Product);
         }
 
         private void item_RawDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                int _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
-                dynamic obj = (dynamic)item_RawDataGrid.SelectedItem;
-                if (obj != null)
-                {
-                    int _id_item = obj._id_item;
-                    listLogistics(item.item_type.RawMaterial, _id_project, _id_item);
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            dgv_SelectionChanged(item.item_type.RawMaterial);
         }
 
         private void item_ServiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                int _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
-                dynamic obj = (dynamic)item_ServiceDataGrid.SelectedItem;
-                if (obj != null)
-                {
-                    int _id_item = obj._id_item;
-                    listLogistics(item.item_type.Service, _id_project, _id_item);
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            dgv_SelectionChanged(item.item_type.Service);
         }
 
         private void item_CapitalDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                int _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
-                dynamic obj = (dynamic)item_CapitalDataGrid.SelectedItem;
-                if (obj != null)
-                {
-                    int _id_item = obj._id_item;
-                    listLogistics(item.item_type.FixedAssets, _id_project, _id_item);
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            dgv_SelectionChanged(item.item_type.FixedAssets);
         }
 
         private void dgvSupplies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dgv_SelectionChanged(item.item_type.Supplies);
+        }
+
+        private void dgvServiceContract_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dgv_SelectionChanged(item.item_type.ServiceContract);
+        }
+
+        private void dgv_SelectionChanged(item.item_type type)
         {
             try
             {
@@ -313,19 +247,21 @@ namespace Cognitivo.Project.Development
                 if (obj != null)
                 {
                     int _id_item = obj._id_item;
-                    listLogistics(item.item_type.Supplies, _id_project, _id_item);
+
+                    List<project_task> list = ProjectTaskDB.project_task.Where(IT => 
+                            IT.items.id_item_type == type && 
+                            IT.status == Status.Project.Approved && 
+                            IT.status != null && 
+                            IT.id_project == _id_project && 
+                            IT.id_item == _id_item)
+                              .ToList();
+                    itemDataGrid.ItemsSource = list.ToList();
                 }
             }
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
             }
-        }
-
-        private void listLogistics(item.item_type type, int _id_project, int _id_item)
-        {
-            List<project_task> list = entity.db.project_task.Where(IT => IT.items.id_item_type == type && IT.status == Status.Project.Approved && IT.status != null && IT.id_project == _id_project && IT.id_item == _id_item).ToList();
-            itemDataGrid.ItemsSource = list.ToList();
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -352,10 +288,8 @@ namespace Cognitivo.Project.Development
                     projectViewSource.View.Filter = null;
                 }
             }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            catch
+            { }
         }
 
         private void item_ProductDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
@@ -364,15 +298,15 @@ namespace Cognitivo.Project.Development
             int id_product = _item_product._id_item;
             DataGrid item_movementDataGrid = e.DetailsElement as DataGrid;
             var movement =
-                (from items in entity.db.items
+                (from items in ProjectTaskDB.items
 
-                 join item_product in entity.db.item_product on items.id_item equals item_product.id_item
+                 join item_product in ProjectTaskDB.item_product on items.id_item equals item_product.id_item
                      into its
                  from p in its
-                 join item_movement in entity.db.item_movement on p.id_item_product equals item_movement.id_item_product
+                 join item_movement in ProjectTaskDB.item_movement on p.id_item_product equals item_movement.id_item_product
                  into IMS
                  from a in IMS
-                 join AM in entity.db.app_branch on a.app_location.id_branch equals AM.id_branch
+                 join AM in ProjectTaskDB.app_branch on a.app_location.id_branch equals AM.id_branch
                  where a.status == Status.Stock.InStock && a.item_product.id_item == id_product
 
                  group a by new { a.item_product }
@@ -409,16 +343,7 @@ namespace Cognitivo.Project.Development
             project_task project_task = (project_task)itemDataGrid.SelectedItem;
             CollectionViewSource project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
 
-            project_task_dimensionViewSource.Source = entity.db.project_task_dimension.Where(a => a.id_company == _entity.company_ID && a.id_project_task == project_task.id_project_task).ToList();
-        }
-
-
-
-        private void itemDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            List<project_task> productlist = entity.db.project_task.ToList();
-            noofrows = productlist.Where(x => x.IsSelected == true).Count();
-            RaisePropertyChanged("noofrows");
+            project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Where(a => a.id_company == CurrentSession.Id_Company && a.id_project_task == project_task.id_project_task).ToList();
         }
 
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -427,17 +352,6 @@ namespace Cognitivo.Project.Development
             {
                 LoadData();
                 itemDataGrid.ItemsSource = null;
-            }
-        }
-
-        private void dgvServiceContract_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int _id_project = _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
-            dynamic obj = (dynamic)dgvServiceContract.SelectedItem;
-            if (obj != null)
-            {
-                int _id_item = obj._id_item;
-                listLogistics(item.item_type.ServiceContract, _id_project, _id_item);
             }
         }
     }

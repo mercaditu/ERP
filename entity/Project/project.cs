@@ -5,6 +5,7 @@ namespace entity
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
     using System.Text;
 
     public partial class project : Audit, IDataErrorInfo
@@ -35,6 +36,12 @@ namespace entity
 
         public int priority { get; set; }
         public bool is_active { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public int SelectedCount { get; set; }
 
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
@@ -77,6 +84,19 @@ namespace entity
                 }
                 return "";
             }
+        }
+
+        public void Update_SelectedCount()
+        {
+
+            int i = 0;
+            foreach (project_task detail in project_task.Where(x => x.IsSelected))
+            {
+                i += 1;
+            }
+
+            SelectedCount = i;
+            RaisePropertyChanged("SelectedCount");
         }
     }
 }

@@ -165,6 +165,12 @@
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NotificationButton.xaml.cs">
+      <DependentUpon>NotificationButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NotificationIcon.xaml.cs">
+      <DependentUpon>NotificationIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PrecateBuilder.cs" />
     <Compile Include="Controls\smartBoxContactSetting.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -560,6 +566,14 @@
     <Page Include="Controls\AttachmentViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NotificationButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NotificationIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\SmartBox_Geography.xaml">
       <SubType>Designer</SubType>

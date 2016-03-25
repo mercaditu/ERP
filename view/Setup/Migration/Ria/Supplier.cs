@@ -147,7 +147,7 @@ namespace Cognitivo.Setup.Migration
                               Dispatcher.BeginInvoke((Action)(() => progSupplier.Value = value));
                               Dispatcher.BeginInvoke((Action)(() => supplierValue.Text = value.ToString()));
                           }
-                          catch(Exception ex)
+                          catch
                           {
                               throw;
                           }

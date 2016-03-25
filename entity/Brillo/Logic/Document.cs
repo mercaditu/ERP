@@ -165,7 +165,7 @@ namespace entity.Brillo.Logic
                     throw ex;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 DocumentViewr MainWindow = new DocumentViewr();
                 MainWindow.loadSalesOrderReport(sales_order.id_sales_order);

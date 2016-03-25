@@ -80,6 +80,7 @@ namespace entity
 
         private decimal _quantity;
         public Status.Project? status { get; set; }
+
         [NotMapped]
         public new bool IsSelected
         {
@@ -91,11 +92,7 @@ namespace entity
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
 
-                    foreach (var task in child)
-                    {
-                        if (task.status != Status.Project.Rejected)
-                            task.IsSelected = value;
-                    }
+                    production_order.Update_SelectedCount();
                 }
             }
         }

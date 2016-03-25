@@ -23,10 +23,10 @@
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
         <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}"/>
-        <CollectionViewSource x:Key="projectpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource projectViewSource}}"/>
+        <!--<CollectionViewSource x:Key="projectpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource projectViewSource}}"/>-->
         <CollectionViewSource x:Key="production_orderproduction_order_detailViewSource" Source="{Binding production_order_detail, Source={StaticResource production_orderViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
-        <CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}"/>
+        <!--<CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>-->
+        <!--<CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
@@ -225,9 +225,9 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" CellStyle="{StaticResource Number_CellStyle}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" Header="Qty Available" CellStyle="{StaticResource Number_CellStyle}" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" Header="buy qty" CellStyle="{StaticResource Number_CellStyle}" Width="SizeToHeader" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -240,9 +240,9 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding avlqtyColumn}" Header="Qty Available" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding buyqty}" Header="buy qty" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="Qty Available" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="buy qty" Width="SizeToHeader" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -255,8 +255,9 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:FixedAssets}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" 
+                                                            Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -269,56 +270,63 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Supplies}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="{lex:Loc ServiceContract}">
                                 <DataGrid x:Name="item_ServiceContractDataGrid" 
-            				                  VerticalScrollBarVisibility="Auto"
-            				                  AutoGenerateColumns="False" Grid.Column="1"
-            				                  EnableRowVirtualization="True"  Grid.Row="1" SelectionChanged="item_ServiceContractDataGrid_SelectionChanged" 
-            				                  RowDetailsVisibilityMode="VisibleWhenSelected"  IsReadOnly="True">
+            				              VerticalScrollBarVisibility="Auto"
+            				              AutoGenerateColumns="False" Grid.Column="1"
+            				              EnableRowVirtualization="True" Grid.Row="1" 
+                                          SelectionChanged="item_ServiceContractDataGrid_SelectionChanged" 
+            				              RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
-                                        <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Supplies}" Width="*" />
-                                        <DataGridTextColumn Binding="{Binding _ordered_quantity}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Service}" Width="*" />
+                                        <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
                         </TabControl>
                         <Grid Grid.Column="1">
                             <StackPanel Grid.Row="0" Margin="0,10,0,0">
-                                <Button Content="{lex:Loc RequestResource}" Click="btnRequestResource_Click" Style="{StaticResource btn_green}"
-                                        Margin="4" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                                <StackPanel Orientation="Vertical">
-                                    <Label Content="Selected Rows:-"/>
-                                    <Label Content="{Binding noofrows,ElementName=Productionorder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                               
-                                <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" RowBackground="Gainsboro" 
-                                          CellEditEnding="itemDataGrid_CellEditEnding" SelectionChanged="itemDataGrid_SelectionChanged"
+                                <Controls:NotificationButton Text="{lex:Loc RequestResource}" 
+                                                             Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             Icon="" Click="btnRequestResource_Click" 
+                                                             VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                 		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" 
                                           LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" >
                                     <DataGrid.Columns>
-                                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="24" />
+                                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24" 
+                                                                EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                                         <DataGridTextColumn Binding="{Binding parent.name}" Header="{lex:Loc Cognitivo:local:Task}" Width="*" IsReadOnly="True" />
-                                        <DataGridTextColumn Binding="{Binding quantity}" Header="Needed" Width="auto" IsReadOnly="True" />
+                                        <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" 
+                                                            CellStyle="{StaticResource Number_CellStyle}"
+                                                            Width="auto" IsReadOnly="True" />
                                     </DataGrid.Columns>
                                     <DataGrid.RowDetailsTemplate>
                                         <DataTemplate>
-                                            <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  
-                                  ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected"  >
+                                            <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
+                                                      EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
+                                                      ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
+                                                      RowDetailsVisibilityMode="VisibleWhenSelected">
                                                 <DataGrid.Columns>
-                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"
-									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
-									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
+                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
+									                                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" 
+                                                                            DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                                                                        Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}"
+                                                                        Width="auto"/>
                                                     <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
-									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="auto"/>
+									                                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
+									                                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                            Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </DataTemplate>

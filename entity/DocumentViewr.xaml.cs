@@ -96,7 +96,7 @@ namespace entity
                             throw ex;
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_PackingList.rdlc"; // Path of the rdlc file
                         reportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -222,7 +222,7 @@ namespace entity
                                 throw ex;
                             }
                         }
-                        catch (Exception ex)
+                        catch
                         {
                             reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_Order.rdlc"; // Path of the rdlc file
                             reportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -374,7 +374,7 @@ namespace entity
 
 
             }
-            catch (Exception ex)
+            catch
             {
                 
 
@@ -482,7 +482,7 @@ namespace entity
                             throw ex;
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_Budget.rdlc"; // Path of the rdlc file
                         reportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -497,7 +497,7 @@ namespace entity
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_Budget.rdlc"; // Path of the rdlc file
                 reportViewer.LocalReport.DataSources.Add(reportDataSource);
@@ -719,7 +719,7 @@ namespace entity
                 reportViewer.LocalReport.DataSources.Add(reportDataSource);
                 reportViewer.RefreshReport();
             }
-            catch(Exception ex)
+            catch
             { }
         }
 

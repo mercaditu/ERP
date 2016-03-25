@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Data.Entity;
-using cntrl;
 using entity;
 using System.Data.Entity.Validation;
 
 namespace cntrl.Curd
 {
-    /// <summary>
-    /// Interaction logic for Accounting_template.xaml
-    /// </summary>
     public partial class Accounting_template : UserControl
     {
         CollectionViewSource accounting_templateViewSource = null;
-        CollectionViewSource accounting_templateaccounting_template_detailViewSource = null;
+        //CollectionViewSource accounting_templateaccounting_template_detailViewSource = null;
 
         private dbContext entity = new dbContext();
        // public entity.dbContext entity { get { return _entity; } set { _entity = value; } }

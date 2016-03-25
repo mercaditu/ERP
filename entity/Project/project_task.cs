@@ -139,8 +139,9 @@ namespace entity
                     {
                         if (task.status != Status.Project.Rejected)
                             task.IsSelected = value;
-
                     }
+
+                    project.Update_SelectedCount();
                 }
             }
         }

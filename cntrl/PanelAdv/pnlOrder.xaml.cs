@@ -14,7 +14,7 @@ namespace cntrl.PanelAdv
 {
     public partial class pnlOrder : UserControl
     {
-        CollectionViewSource production_orderViewSource, production_lineViewSource, itemViewSource;
+        CollectionViewSource production_orderViewSource, production_lineViewSource; //, itemViewSource;
         public List<project_task> project_taskLIST { get; set; }
         public dbContext shared_dbContext { get; set; }
         public CollectionViewSource projectViewSource { get; set; }

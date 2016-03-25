@@ -139,9 +139,9 @@ namespace Cognitivo.Setup.Migration
                                }
                         }
                         int SEXO = Convert.ToInt32((reader[33] is DBNull) ? null : reader[33].ToString());
-                        if (SEXO!=null)
+                        if (SEXO != null)
                         {
-                            if (SEXO==0)
+                            if (SEXO == 0)
                             {
                                 contacts.gender = contact.Genders.Male;
                             }
@@ -150,17 +150,18 @@ namespace Cognitivo.Setup.Migration
                                 contacts.gender = contact.Genders.Female;
                             }
                         }
+
                         DateTime FECHANACIMINETO = Convert.ToDateTime((reader[34] is DBNull) ? null : reader[34].ToString());
+
                         if (FECHANACIMINETO != null)
                         {
                             if (FECHANACIMINETO.Year <2014 )
                             {
                                 contacts.date_birth = FECHANACIMINETO;
                             }
-                         
                         }
-
                     }
+
                     if (!(reader["DESZONA"] is DBNull))
                     {
                         string name = (string)reader["DESZONA"];
@@ -191,10 +192,7 @@ namespace Cognitivo.Setup.Migration
                             contacts.id_geography = _app_geography.id_geography;
                         }
                     }
-
-
-
-
+                    
                     //Contact Relationship
                     //1) Find & Insert Type
                     //if customfiled.isnumeric == main contact
@@ -231,7 +229,6 @@ namespace Cognitivo.Setup.Migration
                         Contact_ErrorList.Add(contacts);
                     }
                 }
-
             }
 
 

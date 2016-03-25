@@ -13,7 +13,7 @@ namespace cntrl.Curd
     {
         entity.dbContext mydb = new entity.dbContext();
         CollectionViewSource myViewSource = new CollectionViewSource();
-        CollectionViewSource contactViewSource = null;
+        //CollectionViewSource contactViewSource = null;
         public bool isExternalCall { get; set; }
 
         CollectionViewSource _MainViewSource = null;

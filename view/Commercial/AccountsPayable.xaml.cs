@@ -20,7 +20,7 @@ namespace Cognitivo.Commercial
         CollectionViewSource contactViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-        List<contact> ContactList;
+        //List<contact> contactLIST;
         cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick();
         cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
         public AccountsPayable()
@@ -127,7 +127,7 @@ namespace Cognitivo.Commercial
             }
         
             payment_quick.payment_detail.App_Name = global::entity.App.Names.PurchaseInvoice;
-            payment_quick.contacts = ContactList;
+            //payment_quick.contacts = ContactList;
             payment_quick.mode = cntrl.Curd.payment_quick.modes.purchase; 
             payment_quick.btnSave_Click += Save_Click;
             crud_modal.Visibility = System.Windows.Visibility.Visible;

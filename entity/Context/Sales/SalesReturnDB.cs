@@ -16,8 +16,14 @@ namespace entity
             sales_return.status = Status.Documents_General.Pending;
             sales_return.trans_date = DateTime.Now;
 
+            sales_return.id_branch = CurrentSession.Id_Branch;
+
             sales_return.State = EntityState.Added;
             sales_return.IsSelected = true;
+
+            //Get any value, so that it doesn't cause NotNull Exception. This data is not important.
+            sales_return.app_condition = base.app_condition.FirstOrDefault();
+            sales_return.app_contract = base.app_contract.Where(x => x.id_condition == sales_return.app_condition.id_condition).FirstOrDefault();
 
             return sales_return;
         }

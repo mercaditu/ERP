@@ -242,20 +242,32 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
-                    <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
+
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=quicklook_SalesRep, Converter={StaticResource BoolToVisibility}, 
+                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                        <Label Content="" Style="{StaticResource ico_Label}"/>
+                        <TextBlock Text="{lex:Loc Type}" Style="{StaticResource text_Label}"/>
+                        <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
                               Name="cbxReturnType"
                               SelectedValue="{Binding return_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                       ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                       ValidatesOnDataErrors=True}"/>
-                    <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
-                    <ComboBox  Style="{StaticResource ComboToLabelStyle}" DisplayMemberPath="name"
+                    </StackPanel>
+
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=quicklook_SalesRep, Converter={StaticResource BoolToVisibility}, 
+                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                        <Label Content="" Style="{StaticResource ico_Label}"/>
+                        <Label Content="{lex:Loc Branch}"  Style="{StaticResource text_Label}"/>
+                        <ComboBox  Style="{StaticResource ComboToLabelStyle}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                           metro:ControlsHelper.MouseOverBorderBrush="Silver"
                           SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, 
                           ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                           SelectedValuePath="id_branch" 
                           ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"/>
+                    </StackPanel>
+
+
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="commentTextBox" Style="{StaticResource input_textbox}" Width="140"
                              Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" Margin="4,0,0,4" Height="64"/>

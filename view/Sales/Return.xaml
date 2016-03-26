@@ -89,16 +89,17 @@
             </ListBox>
 
         </ScrollViewer>
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Background="{StaticResource winBackground}" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
+        <Grid Grid.Column="1" Grid.Row="1"
+                    Background="{StaticResource winBackground}" 
+                    IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="340"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
                 </Grid.RowDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="0" Grid.Row="0" Margin="8,0" MinHeight="256" HorizontalAlignment="Center">
@@ -125,13 +126,13 @@
                         <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                         <Controls:CurrencyBox x:Name="cbxCurrency" Width="256" HorizontalAlignment="Left" 
                                               SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus"/>
-                        <Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Discount}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}" Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <!--<Controls:CurrencyBox x:Name="cbxCurrencyfx"  ItemsSource="{StaticResource app_currencyfxViewSource}"  SelectedItem="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
                         <!--<ComboBox Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
                               DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
                               SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
-                        <Grid>
+                        <!--<Grid>
                             <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
                                 <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="CreateNewCondition_PreviewMouseUp" 
@@ -139,8 +140,8 @@
                                 <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditCondition_PreviewMouseUp" 
                                    Style="{StaticResource btn_Label}"/>
                             </StackPanel>
-                        </Grid>
-                        <ComboBox  Style="{DynamicResource input_combobox}" 
+                        </Grid>-->
+                        <!--<ComboBox  Style="{DynamicResource input_combobox}" 
 					x:Name="cbxCondition"
 					DisplayMemberPath="name" SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 					SelectedValuePath="id_condition"
@@ -169,7 +170,7 @@
                                     <VirtualizingStackPanel/>
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
-                        </ComboBox>
+                        </ComboBox>-->
                         <!--<Label Content="{lex:Loc Invoice}" Style="{StaticResource input_label}"/>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <ComboBox x:Name="cbxSalesInvoice" Style="{StaticResource input_combobox}" 
@@ -182,6 +183,8 @@
                 </ScrollViewer>
                
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1">
+                    <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+
                     <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal">
                         <Label Content="A" Style="{StaticResource btn_Label}"/>
                         <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
@@ -191,25 +194,34 @@
                                    PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                             <Border BorderThickness="1" BorderBrush="Gray">
                                 <StackPanel Background="WhiteSmoke" Width="180">
-                                    <Label Content="{lex:Loc Sales Invoice Header}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                    <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <WrapPanel>
                                         <TextBox Width="30" HorizontalAlignment="Left"   Margin="6,2,2,2"
-                                             Text="{Binding Source={x:Static pref:ReturnSetting.Default}, Path=TransDate_OffSet, Mode=TwoWay}"
-                                           ></TextBox>
+                                             Text="{Binding Source={x:Static pref:ReturnSetting.Default}, Path=TransDate_OffSet, Mode=TwoWay}">
+                                        </TextBox>
                                         <Label Content="Offset Date" Style="{StaticResource generic_Label}"/>
                                     </WrapPanel>
                                 </StackPanel>
                             </Border>
                         </Popup>
                     </StackPanel>
-                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1"
-                                   >
-                        <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_checkbox}" Width="61" Content="Impex"/>
+                    <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
+                        <Label Content="" Style="{StaticResource btn_Label}"/>
+                        <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                        <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+                                            <Run Text="{lex:Loc Document}"/>
+                                        </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
+                    
                     <StackPanel  Orientation="Horizontal" VerticalAlignment="Center">
-                        <Label Content="T" Style="{StaticResource ico_Label}" 
+                        <Label Content="" Style="{StaticResource ico_Label}" 
                                 FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                        <TextBlock Style="{StaticResource text_Data}"><Hyperlink PreviewMouseUp="btnSalesInvoice_Click"><Run Text="{lex:Loc Salesnvoice}" /></Hyperlink></TextBlock>
+                        <TextBlock Style="{StaticResource text_Data}">
+                            <Hyperlink PreviewMouseUp="btnSalesInvoice_Click">
+                                <Run Text="{lex:Loc SalesInvoice}"/>
+                            </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
 
                     <ItemsControl  ItemsSource="{Binding Source={StaticResource sales_returnsales_return_detailViewSource}}" Margin="0">
@@ -230,23 +242,14 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
-                        <Label Content="" Style="{StaticResource btn_Label}"/>
-                        <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                        <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
-                                            <Run Text="{lex:Loc Document}"/>
-                                        </Hyperlink>
-                        </TextBlock>
-                    </StackPanel>
                     <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
-                    <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" Width="140"
+                    <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
                               Name="cbxReturnType"
                               SelectedValue="{Binding return_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                       ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                       ValidatesOnDataErrors=True}"/>
                     <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
-                    <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
+                    <ComboBox  Style="{StaticResource ComboToLabelStyle}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                           metro:ControlsHelper.MouseOverBorderBrush="Silver"
                           SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, 
@@ -327,6 +330,6 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>

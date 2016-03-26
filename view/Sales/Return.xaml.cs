@@ -19,7 +19,8 @@ namespace Cognitivo.Sales
     /// </summary>
     public partial class Return : Page
     {
-        SalesReturnDB dbContext = new SalesReturnDB();
+        SalesReturnDB SalesReturnDB = new SalesReturnDB();
+
         CollectionViewSource salesReturnViewSource, sales_invoiceViewSource, sales_returnsales_return_detailViewSource;
         cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
      
@@ -32,46 +33,30 @@ namespace Cognitivo.Sales
         {
             try
             {
-                entity.Properties.Settings _entity = new entity.Properties.Settings();
-
+                //entity.Properties.Settings _entity = new entity.Properties.Settings();
 
                 salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
-                dbContext.sales_return.Where(a => a.id_company == _entity.company_ID).OrderByDescending(x => x.trans_date).Load();
-                salesReturnViewSource.Source = dbContext.sales_return.Local;
+                SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).Load();
+                salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
                 sales_returnsales_return_detailViewSource = FindResource("sales_returnsales_return_detailViewSource") as CollectionViewSource;
 
                 sales_invoiceViewSource = (CollectionViewSource)FindResource("sales_invoiceViewSource");
-                sales_invoiceViewSource.Source = dbContext.sales_invoice.Where(a => a.status == Status.Documents_General.Approved && a.id_company == _entity.company_ID).ToList();
-
-           
+                sales_invoiceViewSource.Source = SalesReturnDB.sales_invoice.Where(a => a.status == Status.Documents_General.Approved && a.id_company == CurrentSession.Id_Company).ToList();
 
                 CollectionViewSource currencyfxViewSource = (CollectionViewSource)FindResource("app_currencyfxViewSource");
-                dbContext.app_currencyfx.Include("app_currency").Where(x => x.app_currency.id_company == _entity.company_ID).Load();
-                currencyfxViewSource.Source = dbContext.app_currencyfx.Local;
+                SalesReturnDB.app_currencyfx.Include("app_currency").Where(x => x.app_currency.id_company == CurrentSession.Id_Company).Load();
+                currencyfxViewSource.Source = SalesReturnDB.app_currencyfx.Local;
 
-              
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
-
-                dbContext.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
-
-                cbxContract.ItemsSource = dbContext.app_contract.Local;
+                app_vat_groupViewSource.Source = SalesReturnDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
                 cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
 
-                dbContext.app_condition.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
-                cbxCondition.ItemsSource = dbContext.app_condition.Local;
-
-
-                //dbContext.app_document_range.Where(d => d.is_active == true
-                //                          && d.app_document.id_application == entity.App.Names.SalesReturn
-                //                          && d.id_company == _entity.company_ID).Include(i => i.app_document).ToList();
-
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesReturn, _entity.branch_ID, _entity.terminal_ID);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
                 CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
-                dbContext.app_branch.Load();
-                app_branchViewSource.Source = dbContext.app_branch.Local;
+                SalesReturnDB.app_branch.Load();
+                app_branchViewSource.Source = SalesReturnDB.app_branch.Local;
 
             }
             catch (Exception ex)
@@ -85,7 +70,7 @@ namespace Cognitivo.Sales
         {
             sales_return_detailDataGrid.CancelEdit();
             salesReturnViewSource.View.MoveCurrentToFirst();
-            dbContext.CancelAllChanges();
+            SalesReturnDB.CancelAllChanges();
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -95,7 +80,7 @@ namespace Cognitivo.Sales
                 MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (res == MessageBoxResult.Yes)
                 {
-                    dbContext.sales_return.Remove((sales_return)sales_returnDataGrid.SelectedItem);
+                    SalesReturnDB.sales_return.Remove((sales_return)sales_returnDataGrid.SelectedItem);
                     salesReturnViewSource.View.MoveCurrentToFirst();
                     toolBar_btnSave_Click(sender);
                 }
@@ -115,7 +100,7 @@ namespace Cognitivo.Sales
                 sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
                 sales_return.IsSelected = true;
                 sales_return.State = System.Data.Entity.EntityState.Modified;
-                dbContext.Entry(sales_return).State = EntityState.Modified;
+                SalesReturnDB.Entry(sales_return).State = EntityState.Modified;
             }
 
             else
@@ -127,14 +112,14 @@ namespace Cognitivo.Sales
         private void toolBar_btnNew_Click(object sender)
         {
             ReturnSetting _pref_SalesReturn = new ReturnSetting();
-            sales_return objSalRtn = dbContext.New() ;
+            sales_return objSalRtn = SalesReturnDB.New();
             objSalRtn.trans_date = DateTime.Now.AddDays(_pref_SalesReturn.TransDate_OffSet);
-            dbContext.sales_return.Add(objSalRtn);
+            SalesReturnDB.sales_return.Add(objSalRtn);
             salesReturnViewSource.View.MoveCurrentToLast();
         }
         private void toolBar_btnSave_Click(object sender)
         {
-            dbContext.SaveChanges();
+            SalesReturnDB.SaveChanges();
         }
         #endregion
 
@@ -189,7 +174,7 @@ namespace Cognitivo.Sales
             //       }).ToList();
             List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
             dgvvat.ItemsSource = sales_return_detail
-                 .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                 .Join(SalesReturnDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                       , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
                       .GroupBy(a => new { a.name, a.id_vat, a.ad })
                .Select(g => new
@@ -283,7 +268,7 @@ namespace Cognitivo.Sales
                     sales_return sales_return = salesReturnViewSource.View.CurrentItem as sales_return;
                     //DeleteDetailGridRow
                     sales_return_detailDataGrid.CancelEdit();
-                    dbContext.sales_return_detail.Remove(e.Parameter as sales_return_detail);
+                    SalesReturnDB.sales_return_detail.Remove(e.Parameter as sales_return_detail);
                     sales_returnsales_return_detailViewSource.View.Refresh();
                     //calculate_total(sender, e);
                 }
@@ -300,7 +285,7 @@ namespace Cognitivo.Sales
             {
                 if (sbxContact.ContactID > 0)
                 {
-                    contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                     sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
                     sales_return.id_contact = contact.id_contact;
                     sales_return.contact = contact;
@@ -322,17 +307,12 @@ namespace Cognitivo.Sales
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    //Condition
-                    if (objContact.app_contract != null)
-                        cbxCondition.SelectedValue = objContact.app_contract.id_condition;
-                    //Contract
-                    if (objContact.id_contract != null)
-                        cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
                     //Currency
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
                 }));
 
                 //await SalesInvoiceDB.projects.Where(a => a.is_active == true && a.id_company == company_ID && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToListAsync();
+                
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
                     //cbxProject.ItemsSource = SalesInvoiceDB.projects.Local;
@@ -385,7 +365,7 @@ namespace Cognitivo.Sales
             if (sbxItem.ItemID > 0)
             {
                 sales_return sales_return = salesReturnViewSource.View.CurrentItem as sales_return;
-                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = SalesReturnDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
                 if (item != null && item.id_item > 0 && sales_return != null)
                 {
@@ -448,12 +428,12 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            dbContext.Approve();
+            SalesReturnDB.Approve();
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            dbContext.Anull();
+            SalesReturnDB.Anull();
         }
 
         private void sales_return_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -469,111 +449,78 @@ namespace Cognitivo.Sales
             calculate_vat(sender, e);
         }
 
-        private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            entity.Properties.Settings _entity = new entity.Properties.Settings();
-            if (cbxCondition.SelectedItem != null)
-            {
-                app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = dbContext.app_contract.Where(a => a.is_active == true
-                                                                        && a.id_company == _entity.company_ID
-                                                                        && a.id_condition == app_condition.id_condition).ToList();
-                //Selects first Item
-                cbxContract.SelectedIndex = 0;
-            }
-        }
+        //private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //    if (cbxCondition.SelectedItem != null)
+        //    {
+        //        app_condition app_condition = cbxCondition.SelectedItem as app_condition;
+        //        cbxContract.ItemsSource = dbContext.app_contract.Where(a => a.is_active == true
+        //                                                                && a.id_company == _entity.company_ID
+        //                                                                && a.id_condition == app_condition.id_condition).ToList();
+        //        //Selects first Item
+        //        cbxContract.SelectedIndex = 0;
+        //    }
+        //}
 
-        private void CreateNewCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            entity.Properties.Settings _entity = new entity.Properties.Settings();
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                //dbContext entity = new dbContext();
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.condition condition = new cntrl.condition();
-                crud_modal.Children.Add(condition);
-            }
+        //private void hrefAddContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //    using (db db = new db())
+        //    {
+        //        CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
+        //        db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
+        //        contractViewSource.Source = db.app_contract.Local;
 
-        }
-        private void hrefEditCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            entity.Properties.Settings _entity = new entity.Properties.Settings();
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                if (app_condition != null)
-                {
-                    crud_modal.Visibility = Visibility.Visible;
-                    cntrl.condition condition = new cntrl.condition();
-                    crud_modal.Children.Add(condition);
-                }
-            }
-        }
+        //        dbContext entity = new dbContext();
+        //        crud_modal.Visibility = Visibility.Visible;
+        //        cntrl.contract contract = new cntrl.contract();
+        //        contract.app_contractViewSource = contractViewSource;
+        //        contract.MainViewSource = sales_invoiceViewSource;
+        //        contract.curObject = sales_invoiceViewSource.View.CurrentItem;
+        //        contract.entity = entity;
+        //        contract.operationMode = cntrl.Class.clsCommon.Mode.Add;
+        //        contract.isExternalCall = true;
+        //        crud_modal.Children.Add(contract);
+        //    }
+        //}
 
-        private void hrefAddContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            entity.Properties.Settings _entity = new entity.Properties.Settings();
-            using (db db = new db())
-            {
-                CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
-                db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
-                contractViewSource.Source = db.app_contract.Local;
+        //private void hrefEditContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    entity.Properties.Settings _entity = new entity.Properties.Settings();
+        //    using (db db = new db())
+        //    {
+        //        CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
+        //        db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
+        //        contractViewSource.Source = db.app_contract.Local;
 
-                dbContext entity = new dbContext();
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.contract contract = new cntrl.contract();
-                contract.app_contractViewSource = contractViewSource;
-                contract.MainViewSource = sales_invoiceViewSource;
-                contract.curObject = sales_invoiceViewSource.View.CurrentItem;
-                contract.entity = entity;
-                contract.operationMode = cntrl.Class.clsCommon.Mode.Add;
-                contract.isExternalCall = true;
-                crud_modal.Children.Add(contract);
-            }
-        }
-
-        private void hrefEditContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            entity.Properties.Settings _entity = new entity.Properties.Settings();
-            using (db db = new db())
-            {
-                CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
-                db.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
-                contractViewSource.Source = db.app_contract.Local;
-
-                app_contract app_contract = cbxContract.SelectedItem as app_contract;
-                if (app_contract != null)
-                {
-                    dbContext entity = new dbContext();
-                    crud_modal.Visibility = System.Windows.Visibility.Visible;
-                    cntrl.contract contract = new cntrl.contract();
-                    contract.app_contractViewSource = contractViewSource;
-                    contract.MainViewSource = sales_invoiceViewSource;
-                    contract.curObject = sales_invoiceViewSource.View.CurrentItem;
-                    contract.entity = entity;
-                    contract.app_contractobject = app_contract;
-                    contract.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-                    contract.isExternalCall = true;
-                    crud_modal.Children.Add(contract);
-                }
-            }
-        }
+        //        app_contract app_contract = cbxContract.SelectedItem as app_contract;
+        //        if (app_contract != null)
+        //        {
+        //            dbContext entity = new dbContext();
+        //            crud_modal.Visibility = System.Windows.Visibility.Visible;
+        //            cntrl.contract contract = new cntrl.contract();
+        //            contract.app_contractViewSource = contractViewSource;
+        //            contract.MainViewSource = sales_invoiceViewSource;
+        //            contract.curObject = sales_invoiceViewSource.View.CurrentItem;
+        //            contract.entity = entity;
+        //            contract.app_contractobject = app_contract;
+        //            contract.operationMode = cntrl.Class.clsCommon.Mode.Edit;
+        //            contract.isExternalCall = true;
+        //            crud_modal.Children.Add(contract);
+        //        }
+        //    }
+        //}
 
         private void btnSalesInvoice_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
             pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
-            pnlSalesInvoice._entity = dbContext;
+            pnlSalesInvoice._entity = SalesReturnDB;
         //    pnlSalesInvoice.contactViewSource = contactViewSource;
             if (sbxContact.ContactID > 0)
             {
-                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                  pnlSalesInvoice._contact = contact;
             }
           
@@ -605,14 +552,14 @@ namespace Cognitivo.Sales
                         sales_return_detail.item = _sales_invoice_detail.item;
                         sales_return_detail.id_item = _sales_invoice_detail.id_item;
 
-                        sales_return_detail.quantity = _sales_invoice_detail.quantity - dbContext.sales_return_detail
+                        sales_return_detail.quantity = _sales_invoice_detail.quantity - SalesReturnDB.sales_return_detail
                                                                                      .Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
                                                                                      .GroupBy(x => x.id_sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
                         sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
                                    
                         _sales_return.sales_return_detail.Add(sales_return_detail);
                     }
-                    dbContext.Entry(_sales_return).Entity.State = EntityState.Added;
+                    SalesReturnDB.Entry(_sales_return).Entity.State = EntityState.Added;
                     crud_modal.Children.Clear();
                     crud_modal.Visibility = Visibility.Collapsed;
                     salesReturnViewSource.View.Refresh();

@@ -119,6 +119,9 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
+                //Clears out values until Logistic is selected.
+                itemDataGrid.ItemsSource = null;
+
             }
             catch (Exception ex)
             {

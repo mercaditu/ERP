@@ -43,6 +43,7 @@ namespace entity
         {
             foreach (sales_return sales_return in base.sales_return.Local)
             {
+              
                 if (sales_return.IsSelected && sales_return.Error == null)
                 {
                     if (sales_return.State == EntityState.Added)
@@ -121,7 +122,7 @@ namespace entity
                             sales_return.RaisePropertyChanged("number");
                             sales_return.is_issued = true;
 
-                            Brillo.Document.Start.Automatic(sales_order, app_document_range);
+                            Brillo.Document.Start.Automatic(sales_return, app_document_range);
                         }
                         else
                         {

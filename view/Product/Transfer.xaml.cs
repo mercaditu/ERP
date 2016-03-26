@@ -128,10 +128,10 @@ namespace Cognitivo.Product
             try
             {
 
-
+                TransferSetting TransferSetting = new Product.TransferSetting();
                //clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
                // ProductTransferDB.Approve(clsTotalGrid.Sum(x => x.cost), (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue);
-                ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue);
+                ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
 
 
                 toolBar.msgSaved();
@@ -147,9 +147,27 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApproveDestination_Click(object sender, RoutedEventArgs e)
         {
+            TransferSetting TransferSetting = new Product.TransferSetting();
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-            ProductTransferDB.ApproveDestination(clsTotalGrid.Sum(x => x.cost), (int)id_branch_destinComboBox.SelectedValue);
+            ProductTransferDB.ApproveDestination(clsTotalGrid.Sum(x => x.cost), (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
             toolBar.msgSaved();
+        }
+
+        private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            popupCustomize.StaysOpen = false;
+            popupCustomize.IsOpen = true;
+        }
+
+        private void popupCustomize_Closed(object sender, EventArgs e)
+        {
+            TransferSetting TransferSetting = new TransferSetting();
+
+            popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            TransferSetting.Default.Save();
+            TransferSetting = TransferSetting.Default;
+            popupCustomize.IsOpen = false;
         }
 
         

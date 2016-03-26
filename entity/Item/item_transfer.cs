@@ -23,7 +23,7 @@ namespace entity
 
             item_transfer_detail = new List<item_transfer_detail>();
             trans_date = DateTime.Now;
-
+            timestamp = DateTime.Now;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
         }
 

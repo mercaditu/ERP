@@ -76,13 +76,15 @@ namespace Cognitivo.Commercial
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
 
-             ContactDB.contact_tag
-              .Where(x => x.id_company == _entity.company_ID && x.is_active == true)
-              .OrderBy(x => x.name).Load();
+            ContactDB.contact_tag
+             .Where(x => x.id_company == _entity.company_ID && x.is_active == true)
+             .OrderBy(x => x.name).Load();
 
-             CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
-             contact_tagViewSource.Source = ContactDB.contact_tag.Local;
-      
+            CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
+            contact_tagViewSource.Source = ContactDB.contact_tag.Local;
+
+            CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
+            app_vat_groupViewSource.Source = ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
         }
         #endregion
 
@@ -140,8 +142,8 @@ namespace Cognitivo.Commercial
             try
             {
                 ContactDB.SaveChanges();
-             
-             
+
+
                 contactViewSource.View.Refresh();
                 toolBar.msgSaved();
             }
@@ -203,7 +205,7 @@ namespace Cognitivo.Commercial
                         {
                             code = contact.code.ToLower();
                         }
-                        
+
                         if (contact.gov_code != null)
                         {
                             gov_code = contact.gov_code.ToLower();
@@ -324,7 +326,7 @@ namespace Cognitivo.Commercial
         private async void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
         {
             contact contact = (contact)contactViewSource.View.CurrentItem;
-            if (smtgeo.GeographyID>0)
+            if (smtgeo.GeographyID > 0)
             {
                 contact.app_geography = await ContactDB.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
             }
@@ -381,16 +383,23 @@ namespace Cognitivo.Commercial
         {
             if (sbxItem.ItemID > 0)
             {
-                contact contact = contactViewSource.View.CurrentItem as contact;
-                item item = ContactDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-                   
-                contact_subscription contact_subscription = new contact_subscription();
-                contact_subscription.id_item =(int)item.id_item;
-                contact_subscription.item = item;
-                contact_subscription.contact = contact;
-                ContactDB.contact_subscription.Add(contact_subscription);
-                contactViewSource.View.Refresh();
-                contactcontact_subscriptionViewSource.View.Refresh();
+                int id_contact = Convert.ToInt32(cbxContactRelation.SelectedValue);
+                if (id_contact > 0)
+                {
+                    contact contact = ContactDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
+                    item item = ContactDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+
+                    contact_subscription contact_subscription = new contact_subscription();
+                    contact_subscription.id_item = (int)item.id_item;
+                    contact_subscription.item = item;
+                    contact_subscription.contact = contact;
+                    ContactDB.contact_subscription.Add(contact_subscription);
+                    contactViewSource.View.Refresh();
+                    contactcontact_subscriptionDataGrid.ItemsSource = contact.contact_subscription.ToList();
+
+
+                }
+                
             }
         }
 
@@ -405,5 +414,23 @@ namespace Cognitivo.Commercial
                 Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(relatedto_contact));
             }
         }
+
+        private void cbxContactRelation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxContactRelation.SelectedValue != null)
+            {
+
+
+                int id_contact = Convert.ToInt32(cbxContactRelation.SelectedValue);
+                if (id_contact > 0)
+                {
+                    contact contact = ContactDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
+                    contactcontact_subscriptionDataGrid.ItemsSource = contact.contact_subscription.ToList();
+
+                }
+            }
+        }
+
+        
     }
 }

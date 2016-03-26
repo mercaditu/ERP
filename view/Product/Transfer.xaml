@@ -2,6 +2,7 @@
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:pref="clr-namespace:Cognitivo.Product"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:entity="clr-namespace:entity;assembly=entity" 
@@ -50,7 +51,8 @@
                     <cntrl:navList recordCode="{Binding app_location_origin.app_branch.name}" 
                                    recordSecondaryName="{Binding trans_date}"
                                    recordName="{Binding app_location_destination.app_branch.name}"
-                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -99,6 +101,30 @@
                           Style="{StaticResource input_combobox}" />-->
             </StackPanel>
             <StackPanel Grid.Column="1">
+                <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
+                    <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
+                        <Label Content="A" Style="{StaticResource btn_Label}"/>
+                        <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
+                                    <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
+                        <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
+                               PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
+                            <Border BorderThickness="1" BorderBrush="Gray">
+                                <StackPanel Background="WhiteSmoke" Width="180">
+                                    <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                    <WrapPanel>
+                                        <CheckBox Margin="6,0,0,0" x:Name="chkDiscountStock" 
+                                                      IsChecked="{Binding Source={x:Static pref:TransferSetting.Default}, Path=movebytruck, Mode=TwoWay}">
+                                            <Label Content="{lex:Loc movebytruck}" Style="{StaticResource generic_Label}"/>
+                                        </CheckBox>
+
+                                    </WrapPanel>
+
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+
+                </StackPanel>
                 <Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Margin="5,5,5,1"/>
                 <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="WrapWithOverflow" Height="46"
                          Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
@@ -148,6 +174,8 @@
                                         <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Item}" Width="Auto"/>
                                         <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                                        Header="{lex:Loc Quantity}" Width="SizeToHeader"/>
+                                        <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                                                         Header="{lex:Loc Quantity}" Width="SizeToHeader"/>
                                     </DataGrid.Columns>
                                 </DataGrid>

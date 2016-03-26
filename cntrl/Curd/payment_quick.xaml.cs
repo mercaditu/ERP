@@ -176,8 +176,8 @@ namespace cntrl.Curd
                         payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                         sales_return sales_return = (sales_return)salesreturnComboBox.Data;
                         salesreturnComboBox.Text = sales_return.number;
-                        payment_detail.value = (Convert.ToDecimal(txtAmount.Text) - sales_return.GrandTotal);
-                        payment_detail.RaisePropertyChanged("value");
+                        //payment_detail.value = (Convert.ToDecimal(txtAmount.Text) - sales_return.GrandTotal);
+                        //payment_detail.RaisePropertyChanged("value");
                     }
                 }
                 catch (Exception ex)
@@ -199,8 +199,8 @@ namespace cntrl.Curd
                     payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                     sales_return sales_return = (sales_return)salesreturnComboBox.Data;
                     salesreturnComboBox.Text = sales_return.number;
-                    payment_detail.value = (payment_detail.value - sales_return.GrandTotal);
-                    payment_detail.RaisePropertyChanged("value");
+                    //payment_detail.value = (payment_detail.value - sales_return.GrandTotal);
+                    //payment_detail.RaisePropertyChanged("value");
                 }
             }
             catch (Exception ex)

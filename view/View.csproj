@@ -395,6 +395,11 @@
     <Compile Include="HumanResource\Talent.xaml.cs">
       <DependentUpon>Talent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product\TransferSetting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>TransferSetting.settings</DependentUpon>
+    </Compile>
     <Compile Include="Product\Request.xaml.cs">
       <DependentUpon>Request.xaml</DependentUpon>
     </Compile>
@@ -826,7 +831,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="bin\Debug\ItemTransfer.rdlc">
+    <Content Include="bin\Debug\Transfer.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="bin\Debug\payment.rdlc">
@@ -900,6 +905,10 @@
       <LastGenOutput>appListSetting.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Product\TransferSetting.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>TransferSetting.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Product\ProductSettings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>ProductSettings.Designer.cs</LastGenOutput>

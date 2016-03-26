@@ -213,6 +213,10 @@
     <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.Designer.cs">
       <DependentUpon>201603251402215_updateprojectitemtransfer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603261235553_updateContactwithvat.cs" />
+    <Compile Include="Migrations\201603261235553_updateContactwithvat.Designer.cs">
+      <DependentUpon>201603261235553_updateContactwithvat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
     <Compile Include="Context\Purchase\ImpexDB.cs" />
@@ -744,6 +748,7 @@
   <ItemGroup>
     <EmbeddedResource Include="DocumentViewer.resx">
       <DependentUpon>DocumentViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201601200756285_CreateDB.resx">
       <DependentUpon>201601200756285_CreateDB.cs</DependentUpon>
@@ -843,6 +848,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603251402215_updateprojectitemtransfer.resx">
       <DependentUpon>201603251402215_updateprojectitemtransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261235553_updateContactwithvat.resx">
+      <DependentUpon>201603261235553_updateContactwithvat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

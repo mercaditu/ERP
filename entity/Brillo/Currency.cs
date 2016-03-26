@@ -9,15 +9,14 @@ namespace entity.Brillo
         /// </summary>
         public static decimal Rate_Previous { get; set; }
 
-        public static app_currency get_Default(int id_company)
+        public static app_currency get_Default(db db,int id_company)
         {
             app_currency app_currency = new app_currency();
             if (id_company > 0)
             {
-                using (db db = new db())
-                {
+                
                     app_currency = db.app_currency.Where(x => x.id_company == id_company).FirstOrDefault();
-                }
+                
             }
             return app_currency;
         }

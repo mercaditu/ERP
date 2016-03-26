@@ -371,37 +371,35 @@ namespace Cognitivo.Production
             ExecutionDB.SaveChanges();
         }
 
-        private void itemserviceComboBox_KeyDown(object sender, KeyEventArgs e)
+        private void itemserviceComboBox_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (CmbService.ContactID > 0)
             {
-                adddatacontact(itemserviceComboBox, treeService);
-            }
-            else
-            {
-                itemserviceComboBox.Data = null;
+
+                contact contact = ExecutionDB.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
+                adddatacontact(contact, treeService);
+
             }
         }
 
-        public void adddatacontact(cntrl.SearchableTextbox combo, TreeView treeview)
+        public void adddatacontact(contact Data, TreeView treeview)
         {
             production_order_detail production_order_detail = (production_order_detail)treeview.SelectedItem;
             if (production_order_detail != null)
             {
-                if (combo.Data != null)
+                if (Data != null)
                 {
-                    itemserviceComboBox.focusGrid = false;
-                    itemserviceComboBox.Text = ((contact)combo.Data).name;
+                    
                     //Product
-                    int id = Convert.ToInt32(((contact)combo.Data).id_contact);
+                    int id = Convert.ToInt32(((contact)Data).id_contact);
                     if (id > 0)
                     {
                         production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
                         production_execution_detail _production_execution_detail = new entity.production_execution_detail();
                         
                         //Check for contact
-                        _production_execution_detail.id_contact = ((contact)combo.Data).id_contact;
-                        _production_execution_detail.contact = (contact)combo.Data;
+                        _production_execution_detail.id_contact = ((contact)Data).id_contact;
+                        _production_execution_detail.contact =Data;
                         _production_execution_detail.quantity = 1;
                         _production_execution_detail.item = production_order_detail.item;
                         _production_execution_detail.id_item = production_order_detail.item.id_item;
@@ -847,6 +845,7 @@ namespace Cognitivo.Production
                     //DeleteDetailGridRow
                     exexustiondetail.CancelEdit();
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
+                    production_execution_detail.State = EntityState.Deleted;
                     //production_execution.production_execution_detail.Remove(production_execution_detail);
                     ExecutionDB.production_execution_detail.Remove(production_execution_detail);
                     production_execution_detailAssetViewSource.View.Refresh();
@@ -974,7 +973,7 @@ namespace Cognitivo.Production
         {
             production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
             production_execution_detail _production_execution_detail = new entity.production_execution_detail();
-
+            _production_execution_detail.State = EntityState.Added;
             _production_execution_detail.id_item = production_order_detail.id_item;
             _production_execution_detail.item = production_order_detail.item;
             _production_execution_detail.quantity = Quantity;
@@ -983,5 +982,9 @@ namespace Cognitivo.Production
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution.production_execution_detail.Add(_production_execution_detail);
         }
+
+      
+
+     
     }
 }

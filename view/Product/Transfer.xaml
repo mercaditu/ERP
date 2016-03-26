@@ -39,7 +39,7 @@
 
         <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Margin="0,-36,0,0"
               Grid.ColumnSpan="2" Grid.RowSpan="2" Panel.ZIndex="10"/>
-        
+
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="itemDataGrid" DataContext="{Binding}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -83,12 +83,12 @@
                              Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
                 <ComboBox x:Name="id_branch_originComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_branch" Grid.Row="2" 
+                          SelectedValuePath="id_branch" Grid.Row="2"  SelectedItem="{Binding app_branch_origin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                           ItemsSource="{Binding Source={StaticResource branch_originViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
                 <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
                 <ComboBox x:Name="id_branch_destinComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_branch" Grid.Row="2" 
+                          SelectedValuePath="id_branch" Grid.Row="2" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                           ItemsSource="{Binding Source={StaticResource branch_destViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
                 <!--<Label Content="{lex:Loc Status}" Style="{DynamicResource input_label}"/>
@@ -109,6 +109,10 @@
                 <TabItem Header="{lex:Loc Origin}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <cntrl:toolIcon imgSource="j" Grid.Column="1" HorizontalAlignment="Right" Click="toolBar_btnApproveOrigin_Click" VerticalAlignment="Top"/>
+                                <cntrl:toolIcon imgSource="k" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                            </StackPanel>
                             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
                             <control:SmartBox_Item x:Name="sbxItem" Width="256" HorizontalAlignment="Left" Select="SmartBox_Item_Select"/>
                             <DataGrid x:Name="item_transfer_detailDataGrid" 
@@ -122,23 +126,33 @@
                                     <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Quantity}" Width="Auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
+                         
                         </StackPanel>
+
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{lex:Loc Destination}">
+                <TabItem Header="{lex:Loc Destination}" Margin="2,0,-2,0">
                     <StackPanel>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <DataGrid AutoGenerateColumns="False" Grid.ColumnSpan="2" 
+                            
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <cntrl:toolIcon imgSource="j" Grid.Column="1" HorizontalAlignment="Right" Click="toolBar_btnApproveDestination_Click" VerticalAlignment="Top"/>
+                                    <cntrl:toolIcon imgSource="k" Grid.Column="1" HorizontalAlignment="Right"  VerticalAlignment="Top" />
+                                </StackPanel>
+                                <DataGrid AutoGenerateColumns="False" Grid.ColumnSpan="2" 
                                       EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
                                       ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
                                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Item}" Width="Auto"/>
-                                    <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                         Header="{lex:Loc Quantity}" Width="SizeToHeader"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                              
+                            </StackPanel>
                         </ScrollViewer>
                     </StackPanel>
                 </TabItem>
@@ -164,8 +178,7 @@
                        btnDelete_Click="toolBar_btnDelete_Click" 
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
-                       btnApprove_Click="toolBar_btnApprove_Click"
-                       btnAnull_Click="toolBar_btnAnull_Click"
+                      
                        State="{Binding State, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                        Status="{Binding status, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                        appName="Transfer"/>

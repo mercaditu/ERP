@@ -28,21 +28,49 @@ namespace entity
                 {
                     if (production_execution.State == EntityState.Added)
                     {
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.insert_Stock(this, production_execution);
+
+                        if (item_movementList != null && item_movementList.Count > 0)
+                        {
+                            item_movement.AddRange(item_movementList);
+                        }
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         Entry(production_execution).State = EntityState.Added;
+                        
                     }
                     else if (production_execution.State == EntityState.Modified)
                     {
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.insert_Stock(this, production_execution);
+
+                        if (item_movementList != null && item_movementList.Count > 0)
+                        {
+                            item_movement.AddRange(item_movementList);
+                        }
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         Entry(production_execution).State = EntityState.Modified;
+                      
+                      
                     }
                     else if (production_execution.State == EntityState.Deleted)
                     {
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.insert_Stock(this, production_execution);
+
+                        if (item_movementList != null && item_movementList.Count > 0)
+                        {
+                            item_movement.AddRange(item_movementList);
+                        }
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         base.production_execution.Remove(production_execution);
+                      
                     }
                 }
                 else if (production_execution.State > 0)

@@ -123,15 +123,15 @@ namespace Cognitivo.Product
             item_transferitem_transfer_detailViewSource.View.Refresh();
         }
 
-        private void toolBar_btnApprove_Click(object sender)
+        private void toolBar_btnApproveOrigin_Click(object sender,RoutedEventArgs e)
         {
             try
             {
 
 
-                clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-                ProductTransferDB.Approve(clsTotalGrid.Sum(x => x.cost), (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue);
-
+               //clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
+               // ProductTransferDB.Approve(clsTotalGrid.Sum(x => x.cost), (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue);
+                ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue);
 
 
                 toolBar.msgSaved();
@@ -143,9 +143,17 @@ namespace Cognitivo.Product
             }
         }
 
-        private void toolBar_btnAnull_Click(object sender)
-        {
+      
 
+        private void toolBar_btnApproveDestination_Click(object sender, RoutedEventArgs e)
+        {
+            clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
+            ProductTransferDB.ApproveDestination(clsTotalGrid.Sum(x => x.cost), (int)id_branch_destinComboBox.SelectedValue);
+            toolBar.msgSaved();
         }
+
+        
+
+        
     }
 }

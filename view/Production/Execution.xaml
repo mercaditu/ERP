@@ -302,7 +302,7 @@
                             
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
-                                <controls:SmartBox_Contact Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
+                                <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
                                 <!--<cntrl:SearchableTextbox x:Name="itemserviceComboBox" Margin="4,0" focusGrid="True" Height="27" Width="235" HorizontalAlignment="Left"
                                              CollectionViewSource="{StaticResource employeeViewSource}" 
                                              KeyDown="itemserviceComboBox_KeyDown" MouseDoubleClick="itemserviceComboBox_MouseDoubleClick">

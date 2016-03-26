@@ -36,7 +36,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
         <ListBox x:Name="impexDataGrid"  Background="{StaticResource AccentColor_Brush}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="impexDataGrid_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -99,6 +100,17 @@
                 <ComboBox x:Name="statusComboBox" Style="{StaticResource input_combobox}"
                           ItemsSource="{Binding Source={StaticResource statusViewSource}}" Width="180"
                           DisplayMemberPath="name" SelectedValuePath="status" SelectedValue="{Binding status,Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                <StackPanel  Orientation="Horizontal" VerticalAlignment="Center">
+                    <Label Content="" Style="{StaticResource ico_Label}" 
+                                FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                    <TextBlock Style="{StaticResource text_Data}">
+                            <Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">
+                                <Run Text="{lex:Loc PurchaseInvoice}"/>
+                            </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+
+              
                 <CheckBox x:Name="is_activeCheckBox" Width="180" Content="{lex:Loc Active}" IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
             </StackPanel>
             

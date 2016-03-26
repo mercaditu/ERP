@@ -16,7 +16,7 @@ namespace Cognitivo.Purchase
         ImpexDB ImpexDB = new ImpexDB();
         CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource = null;
         int company_ID = entity.Properties.Settings.Default.company_ID;
-
+        cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
         public Import()
         {
             InitializeComponent();
@@ -397,6 +397,36 @@ namespace Cognitivo.Purchase
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
+            }
+        }
+
+        private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            crud_modal.Visibility = Visibility.Visible;
+            pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
+            pnlPurchaseInvoice._entity = ImpexDB;
+            //    pnlSalesInvoice.contactViewSource = contactViewSource;
+            if (sbxContact.ContactID > 0)
+            {
+                contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                pnlPurchaseInvoice._contact = contact;
+            }
+
+            pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
+            crud_modal.Children.Add(pnlPurchaseInvoice);
+        }
+        public void PurchaseInvoice_Click(object sender)
+        {
+            contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+
+            impex_import impex_import = (impex_import)impex_importDataGrid.SelectedItem;
+            impex_import.impex.contact = contact;
+
+            sbxContact.Text = contact.name;
+            if (contact != null)
+            {
+                purchase_invoiceViewSource.Source =
+                   pnlPurchaseInvoice.selected_purchase_invoice;
             }
         }
     }

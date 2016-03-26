@@ -602,6 +602,7 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = true;
         }
 
+        
       
 
         //private void cbxSalesInvoice_MouseDoubleClick(object sender, MouseButtonEventArgs e)

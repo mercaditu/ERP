@@ -365,6 +365,9 @@
     <Compile Include="PanelAdv\pnlPacking.xaml.cs">
       <DependentUpon>pnlPacking.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PanelAdv\pnlPurchaseInvoice.xaml.cs">
+      <DependentUpon>pnlPurchaseInvoice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PanelAdv\pnlSalesBudget.xaml.cs">
       <DependentUpon>pnlSalesBudget.xaml</DependentUpon>
     </Compile>
@@ -804,6 +807,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PanelAdv\pnlPacking.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PanelAdv\pnlPurchaseInvoice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -327,30 +327,37 @@ namespace Cognitivo.Commercial
 
         private void FilterSubscription()
         {
-            contact contact = contactViewSource.View.CurrentItem as contact;
-            if (contact != null)
+            try
             {
-
-
-                if (contact_subscriptionViewSource != null)
+                contact contact = contactViewSource.View.CurrentItem as contact;
+                if (contact != null)
                 {
 
-                    if (contact_subscriptionViewSource.View != null)
+
+                    if (contact_subscriptionViewSource != null)
                     {
 
-                        contact_subscriptionViewSource.View.Filter = i =>
+                        if (contact_subscriptionViewSource.View != null)
                         {
-                            contact_subscription _contact_subscription = (contact_subscription)i;
-                           if (_contact_subscription.id_contact == contact.id_contact || (contact.child!=null?contact.child.Contains(_contact_subscription.contact):false))
-                                return true;
-                            else
-                                return false;
-                        };
+
+                            contact_subscriptionViewSource.View.Filter = i =>
+                            {
+                                contact_subscription _contact_subscription = (contact_subscription)i;
+                                if (_contact_subscription.id_contact == contact.id_contact || (contact.child != null ? contact.child.Contains(_contact_subscription.contact) : false))
+                                    return true;
+                                else
+                                    return false;
+                            };
+
+                        }
+
 
                     }
-
-
                 }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
             }
         }
 
@@ -409,14 +416,15 @@ namespace Cognitivo.Commercial
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
             contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
+            
             if (contact_role != null)
             {
                 if (contact_role.is_principal == true)
                 {
-
                    LoadRelatedContactOnThread(contact);
                 }
             }
+
             if (contact_subscriptionViewSource != null)
             {
                 if (contact_subscriptionViewSource.View != null)
@@ -426,6 +434,7 @@ namespace Cognitivo.Commercial
                 }
             }
         }
+
         private void item_Select(object sender, EventArgs e)
         {
             if (sbxItem.ItemID > 0)
@@ -434,21 +443,22 @@ namespace Cognitivo.Commercial
 
                 if (contact != null)
                 {
-
                     item item = ContactDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
                     contact_subscription contact_subscription = new contact_subscription();
                     contact_subscription.contact = contact;
+                    contact_subscription.id_contact = contact.id_contact;
                     contact_subscription.id_item = (int)item.id_item;
                     contact_subscription.item = item;
+                    contact_subscription.id_vat_group = item.id_vat_group;
+                    contact_subscription.id_contract = contact.app_contract == null ? 0 : (int)contact.id_contract;
+
                     ContactDB.contact_subscription.Add(contact_subscription);
                     contactViewSource.View.Refresh();
                     contact_subscriptionViewSource.View.Refresh();
+
                     FilterSubscription();
-
-
                 }
-
             }
         }
 
@@ -464,8 +474,9 @@ namespace Cognitivo.Commercial
             }
         }
 
-
-
-
+        private void contactcontact_subscriptionDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //FilterSubscription();
+        }
     }
 }

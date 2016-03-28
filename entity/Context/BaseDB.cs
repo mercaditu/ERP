@@ -54,8 +54,7 @@ namespace entity
         }
 
         public object GetClone(object obj,Type a)
-        {
-            
+        {   
             var source = obj;
             var clone = Activator.CreateInstance(a);
             

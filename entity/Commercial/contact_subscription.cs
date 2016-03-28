@@ -5,6 +5,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using entity.Brillo;
+
     public partial class contact_subscription : Audit
     {
        public enum Billng_Cycles
@@ -92,6 +93,7 @@ namespace entity
             }
         }
         private decimal _unit_price;
+
         [NotMapped]
         public decimal UnitPrice_Vat
         {
@@ -116,6 +118,7 @@ namespace entity
             }
         }
         private decimal _UnitPrice_Vat;
+        
         [NotMapped]
         public decimal SubTotal
         {
@@ -128,6 +131,7 @@ namespace entity
             }
         }
         private decimal _SubTotal;
+        
         [NotMapped]
         public decimal SubTotal_Vat
         {

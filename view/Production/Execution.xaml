@@ -113,7 +113,7 @@
                 <ComboBox  Style="{DynamicResource input_combobox}" x:Name="cmborder"
 				    DisplayMemberPath="name" SelectedValue="{Binding id_production_order, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 					SelectedValuePath="id_production_order"
-					ItemsSource="{Binding Source={StaticResource production_orderViewSource}}" SelectionChanged="ComboBox_SelectionChanged">
+					ItemsSource="{Binding Source={StaticResource production_orderViewSource}}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>

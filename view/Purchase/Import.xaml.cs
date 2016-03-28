@@ -101,7 +101,7 @@ namespace Cognitivo.Purchase
             impex.eta = DateTime.Now;
             impex.etd = DateTime.Now;
             impex.is_active = true;
-            id_pur_invoiceComboBox.SelectedIndex = 0;
+           // id_pur_invoiceComboBox.SelectedIndex = 0;
             impex.State = EntityState.Added;
             impex.IsSelected = true;
             ImpexDB.impex.Add(impex);
@@ -130,9 +130,9 @@ namespace Cognitivo.Purchase
         {
             if (impexDataGrid.SelectedItem != null)
             {
-                if (id_pur_invoiceComboBox.SelectedItem != null)
+                if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() != null)
                 {
-                    purchase_invoice purchase_invoice = id_pur_invoiceComboBox.SelectedItem as purchase_invoice;
+                    purchase_invoice purchase_invoice = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() as purchase_invoice;
                     getProratedCostCounted(purchase_invoice, true);
                 }
             }
@@ -204,7 +204,7 @@ namespace Cognitivo.Purchase
             decimal TotalInvoiceAmount = 0;
             foreach (var item in purchase_invoice_detail)
             {
-                TotalInvoiceAmount += (item.quantity * item.unit_cost);
+                TotalInvoiceAmount += (item.quantity * item.UnitCost_Vat);
             }
             foreach (var item in purchase_invoice_detail)
             {
@@ -213,7 +213,7 @@ namespace Cognitivo.Purchase
                 ImpexImportDetails.id_item = (int)item.id_item;
                 ImpexImportDetails.item = ImpexDB.items.Where(a => a.id_item == item.id_item).FirstOrDefault().name;
                 ImpexImportDetails.quantity = item.quantity;
-                ImpexImportDetails.unit_cost = item.unit_cost;
+                ImpexImportDetails.unit_cost = item.UnitCost_Vat;
                 ImpexImportDetails.id_invoice = item.id_purchase_invoice;
 
 
@@ -221,7 +221,7 @@ namespace Cognitivo.Purchase
                 if (totalExpence > 0)
                 {
                     //  ImpexImportDetails.prorated_cost = Math.Round(item.unit_cost + (ImpexImportDetails.unit_cost / TotalInvoiceAmount) * totalExpence, 2);
-                    ImpexImportDetails.prorated_cost = Math.Round(item.unit_cost + (totalExpence / ImpexImportDetails.quantity), 2);
+                    ImpexImportDetails.prorated_cost = Math.Round(item.UnitCost_Vat + (totalExpence / ImpexImportDetails.quantity), 2);
                 }
                 else
                 {
@@ -238,10 +238,10 @@ namespace Cognitivo.Purchase
         {
             if (impexDataGrid.SelectedItem != null)
             {
-                if (id_incotermComboBox.SelectedItem != null && id_pur_invoiceComboBox.SelectedItem != null)
+                if (id_incotermComboBox.SelectedItem != null && pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() != null)
                 {
                     impex impex = impexDataGrid.SelectedItem as impex;
-                    purchase_invoice purchase_invoice = id_pur_invoiceComboBox.SelectedItem as purchase_invoice;
+                    purchase_invoice purchase_invoice = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() as purchase_invoice;
                     impex_incoterm impex_incoterm = id_incotermComboBox.SelectedItem as impex_incoterm;
                     List<impex_incoterm_detail> impex_incoterm_detail = null;
 
@@ -377,8 +377,8 @@ namespace Cognitivo.Purchase
                 {
                     contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
-                    impex_import impex_import = (impex_import)impex_importDataGrid.SelectedItem;
-                    impex_import.impex.contact = contact;
+                    impex impex = (impex)impexViewSource.View.CurrentItem;
+                    impex.contact = contact;
 
                     if (contact != null)
                     {
@@ -414,20 +414,24 @@ namespace Cognitivo.Purchase
 
             pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
             crud_modal.Children.Add(pnlPurchaseInvoice);
+         
         }
         public void PurchaseInvoice_Click(object sender)
         {
             contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
-            impex_import impex_import = (impex_import)impex_importDataGrid.SelectedItem;
-            impex_import.impex.contact = contact;
+            impex impex = (impex)impexViewSource.View.CurrentItem;
+                    impex.contact = contact;
 
             sbxContact.Text = contact.name;
             if (contact != null)
             {
                 purchase_invoiceViewSource.Source =
                    pnlPurchaseInvoice.selected_purchase_invoice;
+                btnImportInvoice_Click(sender, null);
             }
+            crud_modal.Children.Clear();
+            crud_modal.Visibility = Visibility.Collapsed;
         }
     }
 }

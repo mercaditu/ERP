@@ -6,7 +6,8 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    public partial class item_transfer : Audit
+    using System.Text;
+    public partial class item_transfer : Audit, IDataErrorInfo
     {
         public enum Transfer_type
         {
@@ -17,7 +18,7 @@ namespace entity
         {
             //Properties.Settings _settings = new Properties.Settings();
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
 
@@ -114,10 +115,46 @@ namespace entity
         public virtual item_request item_request { get; set; }
         public virtual app_location app_location_origin { get; set; }
         public virtual app_location app_location_destination { get; set; }
+        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public virtual app_branch app_branch_origin { get; set; }
+        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public virtual app_branch app_branch_destination { get; set; }
         public virtual contact employee { get; set; }
         public virtual security_user user_requested { get; set; }
         public virtual security_user user_given { get; set; }
+
+        public string Error
+        {
+            get
+            {
+                StringBuilder error = new StringBuilder();
+
+                PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
+                foreach (PropertyDescriptor prop in props)
+                {
+                    String propertyError = this[prop.Name];
+                    if (propertyError != string.Empty)
+                    {
+                        error.Append((error.Length != 0 ? ", " : "") + propertyError);
+                    }
+                }
+
+                return error.Length == 0 ? null : error.ToString();
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                // apply property level validation rules
+                if (columnName == "app_branch_origin" || columnName == "app_branch_destination")
+                {
+                    if (app_branch_origin == app_branch_destination)
+                        return "please select diffrent origin and destination";
+                }
+                return "";
+            }
+        }
     }
 }

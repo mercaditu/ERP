@@ -85,12 +85,12 @@
                              Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
                 <ComboBox x:Name="id_branch_originComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_branch" Grid.Row="2"  SelectedItem="{Binding app_branch_origin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          SelectedValuePath="id_branch" Grid.Row="2"  SelectedItem="{Binding app_branch_origin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                           ItemsSource="{Binding Source={StaticResource branch_originViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
                 <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
                 <ComboBox x:Name="id_branch_destinComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_branch" Grid.Row="2" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          SelectedValuePath="id_branch" Grid.Row="2" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                           ItemsSource="{Binding Source={StaticResource branch_destViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
                 <!--<Label Content="{lex:Loc Status}" Style="{DynamicResource input_label}"/>
@@ -173,7 +173,7 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Item}" Width="Auto"/>
-                                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                        <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                         Header="{lex:Loc Quantity}" Width="SizeToHeader"/>
                                         <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                                                         Header="{lex:Loc Quantity}" Width="SizeToHeader"/>

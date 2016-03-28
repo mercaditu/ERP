@@ -77,20 +77,20 @@
                                                HorizontalAlignment="Left" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="{lex:Loc Incoterm}" Style="{StaticResource input_label}"/>
                     <ComboBox x:Name="id_incotermComboBox" Style="{StaticResource input_combobox}"
-                              ItemsSource="{Binding Source={StaticResource incotermViewSource}}"
+                              ItemsSource="{Binding Source={StaticResource incotermViewSource}}" 
                               DisplayMemberPath="name" SelectedValuePath="id_incoterm" SelectedValue="{Binding id_incoterm, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <Label Content="{lex:Loc DepartureDate}" Style="{StaticResource input_label}"/>
                     <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
                     <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}"/>
                     <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding eta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
-                    <Label Content="{lex:Loc Invoice}" Style="{StaticResource input_label}"/>
+                    <!--<Label Content="{lex:Loc Invoice}" Style="{StaticResource input_label}"/>
                     <StackPanel Orientation="Horizontal">
                         <ComboBox x:Name="id_pur_invoiceComboBox" Style="{StaticResource input_combobox}"
                                   ItemsSource="{Binding Source={StaticResource purchase_invoiceViewSource}}"
                                   DisplayMemberPath="number" SelectedValuePath="id_purchase_invoice"/>
                         <Button x:Name="btnImportInvoice" Content="O" VerticalAlignment="Top" FontFamily="/Cognitivo;component/Resources/#cognitivo"  
                                 Click="btnImportInvoice_Click" Height="18"/>
-                    </StackPanel>
+                    </StackPanel>-->
                 </StackPanel>
             </ScrollViewer>
             <StackPanel IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}" 

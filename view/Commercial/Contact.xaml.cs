@@ -341,7 +341,7 @@ namespace Cognitivo.Commercial
                         contact_subscriptionViewSource.View.Filter = i =>
                         {
                             contact_subscription _contact_subscription = (contact_subscription)i;
-                           if (_contact_subscription.id_contact == contact.id_contact || contact.child!=null?contact.child.Contains(_contact_subscription.contact):false)
+                           if (_contact_subscription.id_contact == contact.id_contact || (contact.child!=null?contact.child.Contains(_contact_subscription.contact):false))
                                 return true;
                             else
                                 return false;

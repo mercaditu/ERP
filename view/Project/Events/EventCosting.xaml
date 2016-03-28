@@ -316,6 +316,6 @@
                        btnSave_Click="toolBar_btnSave_Click" 
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       appName="EventCost"/>
+                       appName="EventManagement"/>
     </Grid>
 </Page>

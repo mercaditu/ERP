@@ -137,7 +137,11 @@ namespace entity
                 _SubTotal_Vat = value;
                 RaisePropertyChanged("SubTotal_Vat");
 
-                RaisePropertyChanged("GrandTotal");
+                if (contact!=null)
+                {
+                    contact.RaisePropertyChanged("GrandTotal");
+                }
+              
             }
         }
         private decimal _SubTotal_Vat;

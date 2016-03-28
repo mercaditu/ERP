@@ -263,7 +263,7 @@ namespace entity.Brillo.Logic
                                                                     && x.id_item_product == item_product.id_item_product
                                                                     && x.status == entity.Status.Stock.InStock
                                                                     && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-                                item_movementList = Debit_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
+                                item_movementList.AddRange(Debit_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
                                                detail.id_production_execution,
                                             Currency.get_Default(db,CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
@@ -273,7 +273,7 @@ namespace entity.Brillo.Logic
                                                         production_execution.trans_date,
                                                         comment_Generator(App.Names.ProductionExecution,
                                                         production_execution.id_production_execution.ToString(), "")
-                                               );
+                                               ));
                             }
                             else
                             {
@@ -315,7 +315,7 @@ namespace entity.Brillo.Logic
                                                                    && x.id_item_product == item_product.id_item_product
                                                                    && x.status == entity.Status.Stock.InStock
                                                                    && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-                                item_movementList = Debit_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
+                                item_movementList.AddRange(Debit_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
                                                detail.id_production_execution,
                                             Currency.get_Default(db, CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
@@ -325,7 +325,7 @@ namespace entity.Brillo.Logic
                                                         production_execution.trans_date,
                                                         comment_Generator(App.Names.ProductionExecution,
                                                         production_execution.id_production_execution.ToString(), "")
-                                               );
+                                               ));
 
                             }
 

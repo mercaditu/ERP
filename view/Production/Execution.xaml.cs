@@ -276,10 +276,10 @@ namespace Cognitivo.Production
 
             if (production_order_detaillServiceViewSource != null)
             {
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => 
-                         a.parent == null && 
-                         a.status == Status.Project.Approved && 
-                        (a.item.id_item_type == item.item_type.Service || a.item.id_item_type == item.item_type.ServiceContract || a.item.id_item_type == item.item_type.Task) && 
+                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a =>
+                         a.parent == null &&
+                         a.status == Status.Project.Approved &&
+                        (a.item.id_item_type == item.item_type.Service || a.item.id_item_type == item.item_type.ServiceContract || a.item.id_item_type == item.item_type.Task) &&
                          a.id_production_order == id_production)
                           .ToList();
                 if (_production_order_detail.Count() > 0)
@@ -389,17 +389,17 @@ namespace Cognitivo.Production
             {
                 if (Data != null)
                 {
-                    
+
                     //Product
                     int id = Convert.ToInt32(((contact)Data).id_contact);
                     if (id > 0)
                     {
                         production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
                         production_execution_detail _production_execution_detail = new entity.production_execution_detail();
-                        
+
                         //Check for contact
                         _production_execution_detail.id_contact = ((contact)Data).id_contact;
-                        _production_execution_detail.contact =Data;
+                        _production_execution_detail.contact = Data;
                         _production_execution_detail.quantity = 1;
                         _production_execution_detail.item = production_order_detail.item;
                         _production_execution_detail.id_item = production_order_detail.item.id_item;
@@ -897,6 +897,7 @@ namespace Cognitivo.Production
                 {
                     Insert_IntoDetail(production_order_detail, Quantity);
 
+                   
                     production_execution_detailRawViewSource.View.Refresh();
                     production_execution_detailRawViewSource.View.MoveCurrentToLast();
 
@@ -908,11 +909,11 @@ namespace Cognitivo.Production
 
                     production_execution_detailAssetViewSource.View.Refresh();
                     production_execution_detailAssetViewSource.View.MoveCurrentToLast();
-                    
+
                     if (btn.Name.Contains("Prod"))
                     {
                         production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product && x.id_order_detail==production_order_detail.id_order_detail).Sum(x => x.quantity);
+                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
                         decimal projectedqty = production_order_detail.quantity;
                         lblProjectedProductQty.Content = "Total:-" + projectedqty.ToString();
                         lblTotalProduct.Content = "Total:-" + actuallqty.ToString();
@@ -980,11 +981,19 @@ namespace Cognitivo.Production
             _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
             _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
+            if (production_order_detail.item.is_autorecepie)
+            {
+                _production_execution_detail.is_input = false;
+            }
+            else
+            {
+                _production_execution_detail.is_input = true;
+            }
             _production_execution.production_execution_detail.Add(_production_execution_detail);
         }
 
-      
 
-     
+
+
     }
 }

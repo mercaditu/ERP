@@ -135,6 +135,27 @@ namespace entity
             }
         }
         decimal _credit_availability;
+        [NotMapped]
+        public decimal GrandTotal
+        {
+            get
+            {
+                _GrandTotal = 0;
+                foreach (contact_subscription _contact_subscription in contact_subscription)
+                {
+                    _GrandTotal += _contact_subscription.SubTotal_Vat;
+                }
+
+               
+                return Math.Round(_GrandTotal, 2);
+            }
+            set
+            {
+                _GrandTotal = value;
+                RaisePropertyChanged("GrandTotal");
+            }
+        }
+        private decimal _GrandTotal;
 
         [NotMapped]
         public int? Age { get; set; }

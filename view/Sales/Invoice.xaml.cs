@@ -94,7 +94,7 @@ namespace Cognitivo.Sales
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-                sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
+                sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local.OrderByDescending(x => x.trans_date);
             }));
         }
 

@@ -94,15 +94,15 @@ namespace entity
                     SaveChanges();
                 }
 
-                //Logic
-                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                List<item_movement> item_movementList = new List<item_movement>();
-                item_movementList = _Stock.insert_Stock(this, production_execution);
+                ////Logic
+                //Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                //List<item_movement> item_movementList = new List<item_movement>();
+                //item_movementList = _Stock.insert_Stock(this, production_execution);
              
-                if (item_movementList != null && item_movementList.Count > 0)
-                {
-                    item_movement.AddRange(item_movementList);
-                }
+                //if (item_movementList != null && item_movementList.Count > 0)
+                //{
+                //    item_movement.AddRange(item_movementList);
+                //}
                 production_execution.status = Status.Documents_General.Approved;
               
                 SaveChanges();

@@ -49,19 +49,19 @@ namespace Cognitivo.Purchase
             if (OrderSetting.filterbyBranch)
             {
                 await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID && a.id_branch==_setting.branch_ID
-                                      ).OrderByDescending(x => x.trans_date).Include(x => x.purchase_order_detail).ToListAsync();
+                                      ).OrderByDescending(x => x.trans_date).Include(x => x.purchase_order_detail).OrderByDescending(x => x.trans_date).ToListAsync();
             }
             else
             {
                 await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID
-                                      ).OrderByDescending(x => x.trans_date).Include(x => x.purchase_order_detail).ToListAsync();
+                                      ).OrderByDescending(x => x.trans_date).Include(x => x.purchase_order_detail).OrderByDescending(x => x.trans_date).ToListAsync();
             }
             await dbContext.purchase_order.Where(a => a.id_company == _setting.company_ID
                                            ).Include(x => x.purchase_order_detail).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 purchase_orderViewSource = ((CollectionViewSource)(FindResource("purchase_orderViewSource")));
-                purchase_orderViewSource.Source = dbContext.purchase_order.Local;
+                purchase_orderViewSource.Source = dbContext.purchase_order.Local.OrderByDescending(x => x.trans_date);
             }));
         }
 

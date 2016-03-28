@@ -551,7 +551,7 @@ namespace Cognitivo.Production
             {
                 //Adding First Item
                 production_order_detail n_production_order_detail = new production_order_detail();
-
+                n_production_order_detail.status = Status.Project.Pending;
                 production_order.production_order_detail.Add(n_production_order_detail);
 
                 production_orderproduction_order_detailViewSource.View.Refresh();

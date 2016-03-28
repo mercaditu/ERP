@@ -16,7 +16,7 @@ namespace Cognitivo.Commercial
         ContactDB ContactDB = new ContactDB();
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
-        CollectionViewSource contactcontact_subscriptionViewSource;
+        CollectionViewSource contact_subscriptionViewSource;
         #region Initilize and load
         public Contact()
         {
@@ -39,8 +39,9 @@ namespace Cognitivo.Commercial
             contactChildListViewSource.Source = ContactDB.contacts.Local;
 
 
-            contactcontact_subscriptionViewSource = (CollectionViewSource)FindResource("contactcontact_subscriptionViewSource");
-
+            contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
+            ContactDB.contact_subscription.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
+            contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
             //ContactRole
             CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
             contactRoleViewSource.Source = ContactDB.contact_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
@@ -85,6 +86,8 @@ namespace Cognitivo.Commercial
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
+            contact_subscriptionViewSource.View.Refresh();
+            FilterSubscription();
         }
         #endregion
 
@@ -258,6 +261,7 @@ namespace Cognitivo.Commercial
         {
             try
             {
+
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -273,8 +277,8 @@ namespace Cognitivo.Commercial
                         contactcontact_subscriptionDataGrid.CancelEdit();
                         ContactDB.contact_subscription.Remove(e.Parameter as contact_subscription);
 
-                        CollectionViewSource contactcontact_subscriptionViewSource = FindResource("contactcontact_subscriptionViewSource") as CollectionViewSource;
-                        contactcontact_subscriptionViewSource.View.Refresh();
+                        contact_subscriptionViewSource.View.Refresh();
+                        FilterSubscription();
                     }
                     else if (e.Parameter as contact_tag_detail != null)
                     {
@@ -294,25 +298,59 @@ namespace Cognitivo.Commercial
 
         private void LoadRelatedContactOnThread(contact _contact)
         {
+
             if (contactChildListViewSource != null)
             {
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
+               
                     if (contactChildListViewSource.View != null)
                     {
-
+                        
                         contactChildListViewSource.View.Filter = i =>
                         {
                             contact contact = (contact)i;
-                            if (contact.parent == _contact && _contact != null)
+                            if (_contact != null)
+                            {
+                                if (contact.parent == _contact || contact.id_contact == _contact.id_contact)
+                                    return true;
+                                else
+                                    return false;
+                            }
+                            else
+                                return false;
+                        };
+
+                    }
+               
+
+            }
+        }
+
+        private void FilterSubscription()
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+
+
+                if (contact_subscriptionViewSource != null)
+                {
+
+                    if (contact_subscriptionViewSource.View != null)
+                    {
+
+                        contact_subscriptionViewSource.View.Filter = i =>
+                        {
+                            contact_subscription _contact_subscription = (contact_subscription)i;
+                           if (_contact_subscription.id_contact == contact.id_contact || contact.child!=null?contact.child.Contains(_contact_subscription.contact):false)
                                 return true;
                             else
                                 return false;
                         };
 
                     }
-                }));
 
+
+                }
             }
         }
 
@@ -369,13 +407,22 @@ namespace Cognitivo.Commercial
 
         private void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            contact contact = contactViewSource.View.CurrentItem as contact;
             contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
             if (contact_role != null)
             {
                 if (contact_role.is_principal == true)
                 {
-                    contact contact = contactViewSource.View.CurrentItem as contact;
-                    Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(contact));
+
+                   LoadRelatedContactOnThread(contact);
+                }
+            }
+            if (contact_subscriptionViewSource != null)
+            {
+                if (contact_subscriptionViewSource.View != null)
+                {
+                    contact_subscriptionViewSource.View.Refresh();
+                    FilterSubscription();
                 }
             }
         }
@@ -383,23 +430,25 @@ namespace Cognitivo.Commercial
         {
             if (sbxItem.ItemID > 0)
             {
-                int id_contact = Convert.ToInt32(cbxContactRelation.SelectedValue);
-                if (id_contact > 0)
+                contact contact = contactViewSource.View.CurrentItem as contact;
+
+                if (contact != null)
                 {
-                    contact contact = ContactDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
+
                     item item = ContactDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
                     contact_subscription contact_subscription = new contact_subscription();
+                    contact_subscription.contact = contact;
                     contact_subscription.id_item = (int)item.id_item;
                     contact_subscription.item = item;
-                    contact_subscription.contact = contact;
                     ContactDB.contact_subscription.Add(contact_subscription);
                     contactViewSource.View.Refresh();
-                    contactcontact_subscriptionDataGrid.ItemsSource = contact.contact_subscription.ToList();
+                    contact_subscriptionViewSource.View.Refresh();
+                    FilterSubscription();
 
 
                 }
-                
+
             }
         }
 
@@ -411,26 +460,12 @@ namespace Cognitivo.Commercial
                 contact relatedto_contact = await ContactDB.contacts.Where(x => x.id_contact == cbxRelation.ContactID).FirstOrDefaultAsync();
                 contact.parent = relatedto_contact;
 
-                Task taskdb = Task.Factory.StartNew(() => LoadRelatedContactOnThread(relatedto_contact));
+                LoadRelatedContactOnThread(relatedto_contact);
             }
         }
 
-        private void cbxContactRelation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cbxContactRelation.SelectedValue != null)
-            {
 
 
-                int id_contact = Convert.ToInt32(cbxContactRelation.SelectedValue);
-                if (id_contact > 0)
-                {
-                    contact contact = ContactDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault();
-                    contactcontact_subscriptionDataGrid.ItemsSource = contact.contact_subscription.ToList();
 
-                }
-            }
-        }
-
-        
     }
 }

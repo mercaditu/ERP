@@ -62,7 +62,7 @@ namespace entity
                                 foreach (production_order_detail production_order_detail in child)
                                 {
                                     production_order_detail.quantity = production_order_detail.item.item_recepie_detail.FirstOrDefault().quantity * this.quantity;
-                                    project_task.RaisePropertyChanged("quantity");
+                                    production_order_detail.RaisePropertyChanged("quantity");
 
 
 
@@ -91,8 +91,11 @@ namespace entity
                 {
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
-
-                    production_order.Update_SelectedCount();
+                    if (production_order!=null)
+                    {
+                        production_order.Update_SelectedCount();
+                    }
+                  
                 }
             }
         }

@@ -217,6 +217,7 @@ namespace Cognitivo.Commercial
                             app_account_detail.id_account = (int)payment_quick.payment_detail.id_account;
                             app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
                             app_account_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
+                            app_account_detail.trans_date = payment_quick.payment_detail.trans_date;
                             app_account_detail.debit = 0;
                             app_account_detail.credit = Convert.ToDecimal(payment_quick.payment_detail.value);
                             _entity.db.app_account_detail.Add(app_account_detail);

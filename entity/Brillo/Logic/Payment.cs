@@ -46,7 +46,6 @@ namespace entity.Brillo.Logic
                 payment_schedual.can_calculate = false;
                 payment_schedualList.Add(payment_schedual);
 
-              
                 return payment_schedualList;
             }
 
@@ -234,27 +233,8 @@ namespace entity.Brillo.Logic
             if (payment_schedual.payment_detail != null)
             {
                 List<payment_detail> payment_detailList = new List<payment_detail>();
-                //using(db db = new db())
-                //{
-                //    payment_detailList.Where(x => x.id_payment_schedual == payment_schedual.id_payment_schedual).ToList();
-                //}
-
-                //decimal totalCredit;
-                //decimal totalDebit;
-                    
-                //if (payment_schedual.credit > 0)
-                //{
-                //    totalCredit = payment_schedual.payment_detail.Sum(x => x.value);
-                //}
-                //else
-                //{
-                //    totalDebit = payment_schedual.payment_detail.Sum(x => x.value);
-                //}
-
-                //payment_schedual payment_schedual_free = new payment_schedual();
-                //payment_schedual_free.id_contact = payment_schedual.id_contact;
-
             }
+
             //Basic Cleanup
             //payment_schedual.status = entity.Status.Documents_General.Annulled;
             payment_schedualList.Add(payment_schedual);

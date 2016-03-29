@@ -104,10 +104,10 @@ namespace entity
         private decimal? _quantity_est;
         public decimal? unit_cost_est
         {
-            get { return _unit_cost_est; }
+            get { return _unit_price_vat; }
             set
             {
-                _unit_cost_est = value;
+                _unit_price_vat = value;
                 RaisePropertyChanged("unit_cost_est");
 
                 if (parent != null)
@@ -119,6 +119,21 @@ namespace entity
             }
         }
         private decimal? _unit_cost_est;
+
+        [NotMapped]
+        public decimal? unit_price_vat
+        {
+            get { return _unit_price_vat; }
+            set
+            {
+                _unit_price_vat = value;
+                RaisePropertyChanged("unit_price_vat");
+
+              
+
+            }
+        }
+        private decimal? _unit_price_vat;
         public DateTime? start_date_est { get; set; }
         public DateTime? end_date_est { get; set; }
         public DateTime? trans_date { get; set; }

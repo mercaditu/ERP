@@ -44,6 +44,13 @@ namespace entity
         [NotMapped]
         public int SelectedCount { get; set; }
 
+        [NotMapped]
+        public decimal total_cost { get; set; }
+        [NotMapped]
+        public decimal total_paid { get; set; }
+        [NotMapped]
+        public decimal pending_payment { get; set; }
+
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
 

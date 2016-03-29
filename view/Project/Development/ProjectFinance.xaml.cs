@@ -9,6 +9,8 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace Cognitivo.Project
 {
@@ -28,16 +30,31 @@ namespace Cognitivo.Project
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
 
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-            await SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Include(x => x.project_task).LoadAsync();
+            SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Include(x => x.project_task).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
 
             //Filter to remove all items that are not top level.
             filter_task();
+
+            set_price();
+        }
+
+        public void set_price()
+        {
+
+            foreach (project_task project_task in project_taskViewSource.View.OfType<project_task>())
+            {
+                if (project_task.sales_detail != null)
+                {
+                    project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
+                    project_task.RaisePropertyChanged("unit_price_vat");
+                }
+            }
         }
         public void filter_task()
         {
@@ -84,8 +101,42 @@ namespace Cognitivo.Project
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             filter_task();
-        }
+           calculate_total();
+            
 
+        }
+        private void calculate_total()
+        {
+            project project = projectViewSource.View.CurrentItem as project;
+            if (project != null)
+            {
+                project.total_cost = (decimal)project.project_task.Sum(x => x.unit_price_vat);
+                project.RaisePropertyChanged("total_cost");
+                project.total_paid = 0;
+                foreach (project_task project_task in project.project_task)
+                {
+                    if (project_task.sales_detail != null)
+                    {
+                        sales_order_detail sales_order_detail = project_task.sales_detail;
+                        if (sales_order_detail.sales_invoice_detail != null)
+                        {
+                            foreach (sales_invoice_detail sales_invoice_detail in sales_order_detail.sales_invoice_detail)
+                            {
+                                sales_invoice sales_invoice = sales_invoice_detail.sales_invoice;
+                                if (sales_invoice.payment_schedual.Sum(x => x.AccountReceivableBalance) == 0)
+                                {
+                                    project.total_paid = Convert.ToDecimal(project.total_paid + project_task.unit_price_vat);
+                                }
+                            }
+                        }
+                    }
+
+                }
+                project.RaisePropertyChanged("total_paid");
+                project.pending_payment = project.total_cost - project.total_paid;
+                project.RaisePropertyChanged("pending_payment");
+            }
+        }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -134,6 +185,16 @@ namespace Cognitivo.Project
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             filter_task();
+        }
+
+        private void salesorder_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Hyperlink Hyperlink = (Hyperlink)sender;
+            sales_order sales_order = (sales_order)Hyperlink.Tag;
+            if (sales_order != null)
+            {
+                entity.Brillo.Document.Start.Automatic(sales_order, sales_order.app_document_range);
+            }
         }
     }
 }

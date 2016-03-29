@@ -70,6 +70,7 @@ namespace entity
 
                 if (ex is TimeoutException)
                 {
+                    
                     retry = true;
                 }
 

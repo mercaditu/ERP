@@ -58,7 +58,7 @@ namespace cntrl
                     sales_order_detail.id_item = (int)_project_task.id_item;
                     sales_order_detail.item_description = _project_task.item_description;
                     sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 0 : _project_task.quantity_est);
-                    sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_cost_est == null ? 0 : _project_task.unit_cost_est);
+                    sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0 : _project_task.unit_price_vat);
                     _project_task.sales_detail = sales_order_detail;
                     _project_task.IsSelected = false;
                 }

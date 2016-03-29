@@ -382,6 +382,8 @@ namespace entity.Brillo.Logic
                 {
                     ///If cost is 0, then take hand written cost from Items Table.
                     ///In most cases, item_unit_cost will be zero, but in case it is not, we can use it as a reference.
+                    ///Also we are assuming item.unit_cost is in default currency. But if this transaction is in a different currency
+                    ///we can have mis-guided information.
                     item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
                 }
 

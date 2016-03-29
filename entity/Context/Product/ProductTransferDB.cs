@@ -134,11 +134,13 @@ namespace entity
                                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                                     app_location app_location = base.app_location.Where(x => x.id_branch == origin).FirstOrDefault();
 
+                                    //item_movement_destination
+
                                     ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
-                                    item_movement_destination = stock.Debit_Movement(
+                                    item_movement_destination = stock.DebitCredit_MovementList(
                                           Status.Stock.InStock,
                                           App.Names.Transfer,
-                                          0,
+                                          item_transfer_detail.id_transfer_detail,
                                           item_transfer_detail.item_product,
                                           app_location,
                                           item_transfer_detail.quantity_destination,
@@ -146,18 +148,20 @@ namespace entity
                                           stock.comment_Generator(App.Names.Transfer, item_transfer.number, item_transfer.app_branch_origin.name + " <= " + item_transfer.app_branch_destination.name)
                                     );
 
-                                    ///Add it to Origin.
-                                    item_movement_origin = stock.CreditOnly_Movement(
-                                          Status.Stock.InStock, 
-                                          App.Names.Transfer, 
-                                          0, 
-                                          app_currencyfx.id_currencyfx, 
-                                          item_transfer_detail.item_product, 
-                                          app_location.id_location,
-                                          item_transfer_detail.quantity_destination, 
-                                          item_transfer_detail.item_transfer.trans_date, 
-                                          stock.comment_Generator(App.Names.Transfer, item_transfer.number, item_transfer.app_branch_origin.name + " => " + item_transfer.app_branch_destination.name)
-                                    );
+                                    /////Add it to Origin.
+                                    //item_movement_origin = stock.CreditOnly_Movement(
+                                    //      Status.Stock.InStock, 
+                                    //      App.Names.Transfer,
+                                    //      item_transfer_detail.id_transfer_detail, 
+                                    //      app_currencyfx, 
+                                    //      item_transfer_detail.item_product, 
+                                    //      app_location,
+                                    //      item_transfer_detail.quantity_destination, 
+                                    //      item_transfer_detail.item_transfer.trans_date, 
+                                    //      //Pankeel -> fix this issue
+                                    //      0,
+                                    //      stock.comment_Generator(App.Names.Transfer, item_transfer.number, item_transfer.app_branch_origin.name + " => " + item_transfer.app_branch_destination.name)
+                                    //);
 
                                     base.item_movement.Add(item_movement_destination);
                                     base.item_movement.Add(item_movement_origin);

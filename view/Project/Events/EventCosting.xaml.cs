@@ -71,6 +71,15 @@ namespace Cognitivo.Project
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
             app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, _settings.branch_ID, _settings.terminal_ID);
 
+            cbxDocument.SelectedIndex = 0;
+            if (cbxDocument.SelectedValue != null)
+            {
+                sales_budget sales_budget = EventDB.sales_budget.FirstOrDefault();
+                sales_budget.id_range = (int)cbxDocument.SelectedValue;
+                txtBudgetNumber.Text = sales_budget.NumberWatermark;
+
+            }
+
             EstimateCost();
         }
 
@@ -364,7 +373,7 @@ namespace Cognitivo.Project
         #region Plase Order
         private void btnPlaceOrder_Click(object sender, RoutedEventArgs e)
         {
-            txtBudgetNumber.Text = string.Empty;
+           
             id_conditionComboBox.SelectedIndex = -1;
             id_contractComboBox.SelectedIndex = -1;
             crud_modal.Visibility = System.Windows.Visibility.Visible;
@@ -780,17 +789,16 @@ namespace Cognitivo.Project
 
         private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            using (db db = new db())
-            {
+          
                 if (cbxDocument.SelectedValue != null)
                 {
-                    sales_budget sales_budget = db.sales_budget.FirstOrDefault();
+                    sales_budget sales_budget = EventDB.sales_budget.FirstOrDefault();
                     sales_budget.id_range =(int)cbxDocument.SelectedValue;
                     txtBudgetNumber.Text = sales_budget.NumberWatermark;
                    
                 }
 
-            }
+            
         }
 
     }

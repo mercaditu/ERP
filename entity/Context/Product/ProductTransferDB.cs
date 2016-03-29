@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+
 namespace entity
 {
     public partial class ProductTransferDB : BaseDB
@@ -63,26 +64,26 @@ namespace entity
             {
                 if (item_transfer.IsSelected)
                 {
-
                     foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
                     {
-
-
                         if (item_transfer_detail.status != Status.Documents_General.Approved)
                         {
-
                             if (item_transfer_detail.item_product != null)
                             {
-                                List<item_movement> item_movement_originList;
                                 app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                                 app_location app_location = base.app_location.Where(x => x.id_branch == origin).FirstOrDefault();
+
                                 List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
                                                                       && x.id_item_product == item_transfer_detail.id_item_product
                                                                       && x.status == entity.Status.Stock.InStock
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-                                item_movement_originList = stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfx, item_transfer_detail.item_product, app_location,
+
+                                List<item_movement> item_movement_originList;
+                                item_movement_originList = stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
                                       item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, "", ""));
+                                
                                 base.item_movement.AddRange(item_movement_originList);
+                                
                                 if (movebytruck)
                                 {
                                     item_movement item_movement_Dest;
@@ -90,11 +91,21 @@ namespace entity
                                     app_location app_locationdest = base.app_location.Where(x => x.id_branch == dest).FirstOrDefault();
 
 
-                                    item_movement_Dest = stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfxdest.id_currencyfx,
-                                        item_transfer_detail.item_product, app_locationdest.id_location,
-                                          item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, "", ""));
+                                    item_movement_Dest = stock.CreditOnly_Movement(
+                                        Status.Stock.InStock, 
+                                        App.Names.Transfer, 
+                                        item_transfer_detail.id_transfer_detail, 
+                                        app_currencyfxdest,
+                                        item_transfer_detail.item_product,
+                                        app_locationdest,
+                                          item_transfer_detail.quantity_origin, 
+                                          item_transfer_detail.item_transfer.trans_date,
+                                          0,
+                                          stock.comment_Generator(App.Names.Transfer, "", ""));
+                                    
                                     base.item_movement.Add(item_movement_Dest);
                                 }
+
                                 item_transfer_detail.status = Status.Documents_General.Approved;
                             }
                         }
@@ -111,8 +122,8 @@ namespace entity
             {
                 throw ex;
             }
-          
         }
+
         public void ApproveDestination(decimal cost,int origin,int dest,bool MoveByTruck)
         {
             foreach (item_transfer item_transfer in base.item_transfer.Local)
@@ -129,60 +140,36 @@ namespace entity
 
                                 if (MoveByTruck)
                                 {
-                                    item_movement item_movement_origin;
-                                    item_movement item_movement_destination;
-                                    app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                                    app_location app_location = base.app_location.Where(x => x.id_branch == origin).FirstOrDefault();
-
-                                    //item_movement_destination
+                                    List<item_movement> item_movement_LIST = new List<item_movement>();
+                                    app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
 
                                     ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
-                                    item_movement_destination = stock.DebitCredit_MovementList(
-                                          Status.Stock.InStock,
-                                          App.Names.Transfer,
-                                          item_transfer_detail.id_transfer_detail,
-                                          item_transfer_detail.item_product,
-                                          app_location,
-                                          item_transfer_detail.quantity_destination,
-                                          item_transfer_detail.item_transfer.trans_date,
-                                          stock.comment_Generator(App.Names.Transfer, item_transfer.number, item_transfer.app_branch_origin.name + " <= " + item_transfer.app_branch_destination.name)
-                                    );
+                                    item_movement_LIST =
+                                        stock.DebitCredit_MovementList(this, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer_detail,
+                                        app_currencyfx, item_transfer_detail.item_product, item_transfer.app_location_origin, item_transfer_detail.quantity_destination,
+                                        item_transfer_detail.timestamp, "");
 
-                                    /////Add it to Origin.
-                                    //item_movement_origin = stock.CreditOnly_Movement(
-                                    //      Status.Stock.InStock, 
-                                    //      App.Names.Transfer,
-                                    //      item_transfer_detail.id_transfer_detail, 
-                                    //      app_currencyfx, 
-                                    //      item_transfer_detail.item_product, 
-                                    //      app_location,
-                                    //      item_transfer_detail.quantity_destination, 
-                                    //      item_transfer_detail.item_transfer.trans_date, 
-                                    //      //Pankeel -> fix this issue
-                                    //      0,
-                                    //      stock.comment_Generator(App.Names.Transfer, item_transfer.number, item_transfer.app_branch_origin.name + " => " + item_transfer.app_branch_destination.name)
-                                    //);
-
-                                    base.item_movement.Add(item_movement_destination);
-                                    base.item_movement.Add(item_movement_origin);
+                                    base.item_movement.AddRange(item_movement_LIST);
                                 }
                                 else
                                 {
                                     item_movement item_movement_Dest;
-                                    app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                                    app_location app_location = base.app_location.Where(x => x.id_branch == dest).FirstOrDefault();
+
+                                    app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault();
+                                    app_location app_location = base.app_location.Where(x => x.id_branch == dest && x.is_default).FirstOrDefault();
 
                                     item_movement_Dest = 
                                         stock.CreditOnly_Movement(
                                             Status.Stock.InStock, 
-                                            App.Names.Transfer, 
-                                            0, 
-                                            app_currencyfx.id_currencyfx, 
+                                            App.Names.Transfer,
+                                            item_transfer_detail.id_transfer_detail, 
+                                            app_currencyfx, 
                                             item_transfer_detail.item_product, 
-                                            app_location.id_location,
+                                            app_location,
                                             item_transfer_detail.quantity_destination, 
-                                            item_transfer_detail.item_transfer.trans_date, 
-                                            stock.comment_Generator(App.Names.Transfer, "", "")
+                                            item_transfer_detail.item_transfer.trans_date,
+                                            0,
+                                            stock.comment_Generator(App.Names.Transfer, item_transfer_detail.id_transfer_detail.ToString(), "")
                                             );
 
                                     if (item_transfer_detail.quantity_destination == 0)

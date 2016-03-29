@@ -401,16 +401,17 @@ namespace entity.Brillo.Logic
 
         public List<item_movement> DebitCredit_MovementList(db db, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
                                               app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
-                                              decimal Quantity, DateTime TransDate, string Comment, decimal unit_price)
+                                              decimal Quantity, DateTime TransDate, string Comment)
         {
             List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
 
             //Bring Debit Function form above. IT should handle child and parent values.
-            List<item_movement> debit_movementLIST = new List<item_movement>();
             List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == app_location.id_location
                                                                     && x.id_item_product == item_product.id_item_product
                                                                     && x.status == entity.Status.Stock.InStock
                                                                     && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+
+            List<item_movement> debit_movementLIST = new List<item_movement>();
             debit_movementLIST = DebitOnly_MovementLIST(Items_InStockLIST, Status, ApplicationID, TransactionID, app_currencyfx,
                                                     item_product, app_location, Quantity, TransDate, Comment);
 

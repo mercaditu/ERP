@@ -135,10 +135,9 @@
                 <TabItem Header="{lex:Loc Origin}">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <cntrl:toolIcon imgSource="j" Grid.Column="1" HorizontalAlignment="Right" Click="toolBar_btnApproveOrigin_Click" VerticalAlignment="Top"/>
-                                <cntrl:toolIcon imgSource="k" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" />
-                            </StackPanel>
+                            <Grid HorizontalAlignment="Right" Width="256" DataContext="{Binding Source={StaticResource item_transferViewSource}}">
+                                <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status}"/>
+                            </Grid>
                             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
                             <control:SmartBox_Item x:Name="sbxItem" Width="256" HorizontalAlignment="Left" Select="SmartBox_Item_Select"/>
                             <DataGrid x:Name="item_transfer_detailDataGrid" 
@@ -148,8 +147,9 @@
                                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Item}" Width="Auto"/>
-                                    <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Quantity}" Width="Auto"/>
+                                                        Header="{lex:Loc Cognitivo:local:Item}" Width="Auto" IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                                        Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                          
@@ -160,26 +160,26 @@
                 <TabItem Header="{lex:Loc Destination}" Margin="2,0,-2,0">
                     <StackPanel>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            
                             <StackPanel>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <cntrl:toolIcon imgSource="j" Grid.Column="1" HorizontalAlignment="Right" Click="toolBar_btnApproveDestination_Click" VerticalAlignment="Top"/>
-                                    <cntrl:toolIcon imgSource="k" Grid.Column="1" HorizontalAlignment="Right"  VerticalAlignment="Top" />
-                                </StackPanel>
+                                <Grid HorizontalAlignment="Right" Width="256" DataContext="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" >
+                                    <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}"/>
+                                </Grid>
                                 <DataGrid AutoGenerateColumns="False" Grid.ColumnSpan="2" 
-                                      EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
-                                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                      Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+                                          EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
+                                          ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
+                                          Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                                     <DataGrid.Columns>
+                                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                                EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                                         <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Item}" Width="Auto"/>
+                                                            Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="Auto"/>
                                         <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                                        Header="{lex:Loc Quantity}" Width="SizeToHeader"/>
+                                                            Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader"/>
                                         <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
-                                                        Header="{lex:Loc Quantity}" Width="SizeToHeader"/>
+                                                            Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                              
                             </StackPanel>
                         </ScrollViewer>
                     </StackPanel>

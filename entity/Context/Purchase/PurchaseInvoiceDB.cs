@@ -85,23 +85,26 @@ namespace entity
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
+                        ///Insert Payment Schedual Logic
                         payment_schedualList = _Payment.insert_Schedual(invoice);
-
-                     
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(this,invoice);
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
                             payment_schedual.AddRange(payment_schedualList);
                         }
+
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        ///Insert Stock Logic
+                        item_movementList = _Stock.insert_Stock(this, invoice);
+
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             item_movement.AddRange(item_movementList);
                         }
 
                         invoice.status = Status.Documents_General.Approved;
+
                         SaveChanges();
                     }
                 }

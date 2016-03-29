@@ -4,8 +4,10 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+
     public partial class CommercialHead : Audit
     {
+
         /// <summary>
         /// Contact ID
         /// </summary>
@@ -281,7 +283,10 @@ namespace entity
         /// </summary>
         public string barcode { get; set; }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public Status.TransactionTypes trans_type { get; set; }
 
         #region Navigation
         public virtual app_currencyfx app_currencyfx { get; set; }

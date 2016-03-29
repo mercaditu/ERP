@@ -8,7 +8,6 @@ using MySql.Data.MySqlClient;
 using System.Windows;
 namespace entity
 {
-  
     public class Execustionstrategy : DbExecutionStrategy
     {
         public bool IsHandeled { get; set; }
@@ -42,22 +41,23 @@ namespace entity
                 if (sqlException != null)
                 {
                     int[] errorsToRetry =
-                {
-                    1042  //Deadlock
-                          //Timeout
-                };
+                    {
+                        1042,  //Deadlock
+                        1205   //Timeout
+                    };
 
                     if (errorsToRetry.Contains(sqlException.Number))
                     {
                         if (IsHandeled == false)
                         {
                             AboutBox1 box = new AboutBox1();
-                            box.ShowDialog();
+                            box.Show();
 
                             IsHandeled = true;
                         }
 
-                        retry = true;
+                        //Tells the code to retry the connection.
+                        return true;
                     }
                     else
                     {

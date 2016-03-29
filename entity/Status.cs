@@ -21,6 +21,17 @@ namespace entity
             Freight = 6
         }
 
+        //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        public enum TransactionTypes
+        {
+            Normal,
+            Bonificacion,
+            Cambio,
+            Marketing,
+            Muestra,
+            Otros
+        }
+
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum geo_types
         {

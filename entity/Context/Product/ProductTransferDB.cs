@@ -97,55 +97,69 @@ namespace entity
                                 }
                                 item_transfer_detail.status = Status.Documents_General.Approved;
                             }
-
-
-
-
-
                         }
-
-
-
                     }
 
                 }
-
             }
-            try { base.SaveChanges(); }
+
+            try 
+            { 
+                base.SaveChanges(); 
+            }
             catch (Exception ex)
             {
                 throw ex;
             }
           
         }
-        public void ApproveDestination(decimal cost,int origin,int dest,bool movebytruck)
+        public void ApproveDestination(decimal cost,int origin,int dest,bool MoveByTruck)
         {
-            entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
-
             foreach (item_transfer item_transfer in base.item_transfer.Local)
             {
                 if (item_transfer.IsSelected)
                 {
                     foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
                     {
-
-
                         if (item_transfer.status != Status.Documents_General.Approved)
                         {
-
                             if (item_transfer_detail.item_product != null)
                             {
-                                if (movebytruck)
+                                entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
+
+                                if (MoveByTruck)
                                 {
                                     item_movement item_movement_origin;
+                                    item_movement item_movement_destination;
                                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                                     app_location app_location = base.app_location.Where(x => x.id_branch == origin).FirstOrDefault();
 
+                                    ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
+                                    item_movement_destination = stock.Debit_Movement(
+                                          Status.Stock.InStock,
+                                          App.Names.Transfer,
+                                          0,
+                                          item_transfer_detail.item_product,
+                                          app_location,
+                                          item_transfer_detail.quantity_destination,
+                                          item_transfer_detail.item_transfer.trans_date,
+                                          stock.comment_Generator(App.Names.Transfer, item_transfer.number, item_transfer.app_branch_origin.name + " <= " + item_transfer.app_branch_destination.name)
+                                    );
 
-                                    item_movement_origin = stock.Credit_Movement(Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, app_location.id_location,
-                                          item_transfer_detail.quantity_destination, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, "", ""));
+                                    ///Add it to Origin.
+                                    item_movement_origin = stock.Credit_Movement(
+                                          Status.Stock.InStock, 
+                                          App.Names.Transfer, 
+                                          0, 
+                                          app_currencyfx.id_currencyfx, 
+                                          item_transfer_detail.item_product, 
+                                          app_location.id_location,
+                                          item_transfer_detail.quantity_destination, 
+                                          item_transfer_detail.item_transfer.trans_date, 
+                                          stock.comment_Generator(App.Names.Transfer, item_transfer.number, item_transfer.app_branch_origin.name + " => " + item_transfer.app_branch_destination.name)
+                                    );
 
-                                   
+                                    base.item_movement.Add(item_movement_destination);
                                     base.item_movement.Add(item_movement_origin);
                                 }
                                 else
@@ -154,9 +168,18 @@ namespace entity
                                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                                     app_location app_location = base.app_location.Where(x => x.id_branch == dest).FirstOrDefault();
 
-
-                                    item_movement_Dest = stock.Credit_Movement(Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfx.id_currencyfx, item_transfer_detail.item_product, app_location.id_location,
-                                          item_transfer_detail.quantity_destination, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, "", ""));
+                                    item_movement_Dest = 
+                                        stock.Credit_Movement(
+                                            Status.Stock.InStock, 
+                                            App.Names.Transfer, 
+                                            0, 
+                                            app_currencyfx.id_currencyfx, 
+                                            item_transfer_detail.item_product, 
+                                            app_location.id_location,
+                                            item_transfer_detail.quantity_destination, 
+                                            item_transfer_detail.item_transfer.trans_date, 
+                                            stock.comment_Generator(App.Names.Transfer, "", "")
+                                            );
 
                                     if (item_transfer_detail.quantity_destination == 0)
                                     {
@@ -195,20 +218,13 @@ namespace entity
                                 app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
                                 item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                                 item_transfer.RaisePropertyChanged("number");
-
-                               // Brillo.Document.Start.Automatic(item_transfer, app_document_range);
                             }
-                           
-
-
                         }
 
                     }
                 }
-
-
-
             }
+
             base.SaveChanges();
         }
     }

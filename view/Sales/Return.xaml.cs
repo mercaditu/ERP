@@ -33,8 +33,6 @@ namespace Cognitivo.Sales
         {
             try
             {
-                //entity.Properties.Settings _entity = new entity.Properties.Settings();
-
                 salesReturnViewSource = (CollectionViewSource)FindResource("sales_returnViewSource");
                 SalesReturnDB.sales_return.Where(a => a.id_company == CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).Load();
                 salesReturnViewSource.Source = SalesReturnDB.sales_return.Local;
@@ -57,8 +55,8 @@ namespace Cognitivo.Sales
                 CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
                 SalesReturnDB.app_branch.Load();
                 app_branchViewSource.Source = SalesReturnDB.app_branch.Local;
-
             }
+
             catch (Exception ex)
             {
                 toolBar.msgError(ex);

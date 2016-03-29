@@ -29,6 +29,8 @@ namespace entity
         public int? id_branch { get; set; }
         public int? id_contact { get; set; }
 
+        public int? id_currency { get; set; }
+
         [Required]
         public string name { get; set; }
         public string code { get; set; }
@@ -53,8 +55,9 @@ namespace entity
 
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
-
+        public virtual app_currency app_currency { get; set; }
         public virtual project_template project_template { get; set; }
+
         public virtual IEnumerator<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerator<sales_order> sales_order { get; set; }
         public virtual IEnumerator<purchase_order> purchase_order { get; set; }
@@ -97,7 +100,6 @@ namespace entity
 
         public void Update_SelectedCount()
         {
-
             int i = 0;
             foreach (project_task detail in project_task.Where(x => x.IsSelected))
             {

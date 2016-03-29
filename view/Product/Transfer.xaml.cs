@@ -35,6 +35,7 @@ namespace Cognitivo.Product
             item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
             item_transfer.IsSelected = true;
             item_transfer.status = Status.Documents_General.Pending;
+            item_transfer.app_branch_origin = ProductTransferDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
             ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
 
             item_transferViewSource.View.MoveCurrentToLast();
@@ -45,8 +46,8 @@ namespace Cognitivo.Product
             item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
             item_transfer.app_branch_destination = (id_branch_destinComboBox.SelectedItem as app_branch);
             item_transfer.app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
-            item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.FirstOrDefault();
-            item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.FirstOrDefault();
+            item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
+            item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
             ProductTransferDB.SaveChanges();
         }
 
@@ -111,31 +112,41 @@ namespace Cognitivo.Product
             item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
             
-            if (item != null && item.item_product != null && item_transfer != null)
+            if (item != null && 
+                item.item_product != null && 
+                item_transfer != null &&
+                item.id_item_type != entity.item.item_type.Task && 
+                item.id_item_type != entity.item.item_type.Service &&
+                item.id_item_type != entity.item.item_type.ServiceContract)
             {
                 item_transfer_detail item_transfer_detail = new item_transfer_detail();
+
+                item_transfer_detail.status = Status.Documents_General.Pending;
                 item_transfer_detail.quantity_origin = 1;
+                //Add 5 Days as default. But user may ask for a preference in this case. Just update code here and we should be fine.
+                item_transfer_detail.timestamp = DateTime.Now.AddDays(5);
                 item_transfer_detail.item_product = item.item_product.FirstOrDefault();
+                item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
                 item_transfer_detail.RaisePropertyChanged("item_product");
+
                 item_transfer.item_transfer_detail.Add(item_transfer_detail);
             }
+            else
+            {
+                toolBar.msgWarning("Item Error");
+            }
+
             item_transferViewSource.View.Refresh();
             item_transferitem_transfer_detailViewSource.View.Refresh();
         }
 
-        private void toolBar_btnApproveOrigin_Click(object sender,RoutedEventArgs e)
+        private void toolBar_btnApproveOrigin_Click(object sender)
         {
             try
             {
-
                 TransferSetting TransferSetting = new Product.TransferSetting();
-               //clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-               // ProductTransferDB.Approve(clsTotalGrid.Sum(x => x.cost), (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue);
                 ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
-
-
                 toolBar.msgSaved();
-
             }
             catch (Exception ex)
             {
@@ -143,9 +154,7 @@ namespace Cognitivo.Product
             }
         }
 
-      
-
-        private void toolBar_btnApproveDestination_Click(object sender, RoutedEventArgs e)
+        private void toolBar_btnApproveDestination_Click(object sender)
         {
             TransferSetting TransferSetting = new Product.TransferSetting();
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
@@ -169,9 +178,5 @@ namespace Cognitivo.Product
             TransferSetting = TransferSetting.Default;
             popupCustomize.IsOpen = false;
         }
-
-        
-
-        
     }
 }

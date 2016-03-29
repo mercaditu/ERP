@@ -21,11 +21,12 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
+            if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
 
             item_transfer_detail = new List<item_transfer_detail>();
             trans_date = DateTime.Now;
             timestamp = DateTime.Now;
-            if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
+            status = Status.Documents_General.Pending;
         }
 
         [Key]
@@ -84,11 +85,13 @@ namespace entity
         private int? _id_range;
 
         public string number { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -99,6 +102,7 @@ namespace entity
         public string comment { get; set; }
         public DateTime trans_date { get; set; }
         public Transfer_type transfer_type { get; set; }
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_branch { get; set; }
@@ -115,10 +119,13 @@ namespace entity
         public virtual item_request item_request { get; set; }
         public virtual app_location app_location_origin { get; set; }
         public virtual app_location app_location_destination { get; set; }
+
         [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
         public virtual app_branch app_branch_origin { get; set; }
+        
         [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
         public virtual app_branch app_branch_destination { get; set; }
+        
         public virtual contact employee { get; set; }
         public virtual security_user user_requested { get; set; }
         public virtual security_user user_given { get; set; }

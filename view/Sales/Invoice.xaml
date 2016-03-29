@@ -253,9 +253,9 @@
                             <StackPanel Orientation="Horizontal" >
                                 <Label Content="" Style="{StaticResource btn_Label}"/>
                                 <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                        <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
-                                            <Run Text="{lex:Loc Document}"/>
-                                        </Hyperlink>
+                                    <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+                                        <Run Text="{lex:Loc Document}"/>
+                                    </Hyperlink>
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" IsEnabled="False">
@@ -263,10 +263,10 @@
                                 <TextBlock Margin="5,0" VerticalAlignment="Center"><Hyperlink>
                                 <Run Text="{lex:Loc BurnInvoice}"/></Hyperlink></TextBlock>
                             </StackPanel>
-                            <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
+                            <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}"
                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                                <Label Content="" Style="{StaticResource ico_Label}"/>
-                                <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
+                                <Label Content="" Style="{StaticResource btn_Label}"/>
+                                <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                     <Hyperlink PreviewMouseUp="btnSalesOrder_Click">
                                         <Run Text="{lex:Loc SalesOrder}" />
                                     </Hyperlink>
@@ -343,6 +343,17 @@
                                     </ComboBox.ItemsPanel>
                                 </ComboBox>
                             </StackPanel>
+
+                            <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" >
+                                <Label Content="" Style="{StaticResource ico_Label}"/>
+                                <TextBlock Text="{lex:Loc Type}" Style="{StaticResource text_Label}"/>
+                                <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
+                                          Name="cbxTransType"
+                                          SelectedValue="{Binding trans_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                                  ValidatesOnDataErrors=True}"/>
+                            </StackPanel>
+
                             <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                 <Label Content="" Style="{StaticResource ico_Label}"/>

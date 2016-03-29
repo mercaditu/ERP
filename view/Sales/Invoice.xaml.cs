@@ -16,14 +16,11 @@ namespace Cognitivo.Sales
 {
     public partial class Invoice : INotifyPropertyChanged
     {
-        //entity.Properties.Settings _setting = new entity.Properties.Settings();
-        //int company_ID;
-        //int branch_ID;
 
         //Global Variables
         CollectionViewSource sales_invoiceViewSource;
-        CollectionViewSource sales_invoicesales_invoice_detailViewSource, 
-            sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
+        CollectionViewSource sales_invoicesales_invoice_detailViewSource;
+        CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
         
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         
@@ -140,6 +137,9 @@ namespace Cognitivo.Sales
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
                 app_vat_groupViewSource.Source = SalesInvoiceDB.app_vat_group.Local;
             }));
+
+            cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));
+
         }
         #endregion
 
@@ -165,16 +165,17 @@ namespace Cognitivo.Sales
                 sales_invoice sales_invoice = SalesInvoiceDB.New();
                 sales_invoice.trans_date = DateTime.Now.AddDays(_pref_SalesInvoice.TransDate_OffSet);
                 sales_invoice.State = EntityState.Added;
+                sales_invoice.trans_type = Status.TransactionTypes.Normal;
+
                 cbxCurrency.get_DefaultCurrencyActiveRate();
 
                 SalesInvoiceDB.Entry(sales_invoice).State = EntityState.Added;
                 sales_invoiceViewSource.View.Refresh();
                 sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
             }
-            catch (Exception ex)
+            catch
             {
-                
-                throw ex;
+                throw;
             }
             
         }

@@ -225,6 +225,10 @@
     <Compile Include="Migrations\201603261235553_updateContactwithvat.Designer.cs">
       <DependentUpon>201603261235553_updateContactwithvat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603291822067_CommericalType_ProjectCurrency.cs" />
+    <Compile Include="Migrations\201603291822067_CommericalType_ProjectCurrency.Designer.cs">
+      <DependentUpon>201603291822067_CommericalType_ProjectCurrency.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
     <Compile Include="Context\Purchase\ImpexDB.cs" />
@@ -862,6 +866,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603261235553_updateContactwithvat.resx">
       <DependentUpon>201603261235553_updateContactwithvat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603291822067_CommericalType_ProjectCurrency.resx">
+      <DependentUpon>201603291822067_CommericalType_ProjectCurrency.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

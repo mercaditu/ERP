@@ -71,14 +71,7 @@ namespace Cognitivo.Project
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
             app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, _settings.branch_ID, _settings.terminal_ID);
 
-            cbxDocument.SelectedIndex = 0;
-            if (cbxDocument.SelectedValue != null)
-            {
-                sales_budget sales_budget = EventDB.sales_budget.FirstOrDefault();
-                sales_budget.id_range = (int)cbxDocument.SelectedValue;
-                txtBudgetNumber.Text = sales_budget.NumberWatermark;
-
-            }
+          
 
             EstimateCost();
         }
@@ -413,7 +406,7 @@ namespace Cognitivo.Project
                         sales_budget.id_condition = app_condition.id_condition;
                         sales_budget.id_contract = app_contract.id_contract;
                         sales_budget.id_currencyfx = project_costing.id_currencyfx;
-                        sales_budget.number = txtBudgetNumber.Text;
+                       
 
                         foreach (project_event_variable project_event_variable in project_costing.project_event_variable.Where(a => a.is_included == true))
                         {
@@ -787,19 +780,7 @@ namespace Cognitivo.Project
             public decimal SubTotal { get; set; }
         }
 
-        private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-          
-                if (cbxDocument.SelectedValue != null)
-                {
-                    sales_budget sales_budget = EventDB.sales_budget.FirstOrDefault();
-                    sales_budget.id_range =(int)cbxDocument.SelectedValue;
-                    txtBudgetNumber.Text = sales_budget.NumberWatermark;
-                   
-                }
-
-            
-        }
+     
 
     }
 }

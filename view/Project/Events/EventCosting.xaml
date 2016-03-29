@@ -57,16 +57,7 @@
                     </Grid>
                     <TextBlock Text="Place Sales Budget." Style="{StaticResource text_Instructions}"/>
                     <StackPanel HorizontalAlignment="Center">
-                        <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
-                              metro:TextBoxHelper.Watermark="{lex:Loc Document}" SelectedIndex="0"
-                              metro:TextBoxHelper.SelectAllOnFocus="True"
-                              Style="{StaticResource input_combobox}"
-                             
-                              ItemsSource="{Binding Source={StaticResource app_document_rangeViewSource}}"
-                              SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" SelectionChanged="cbxDocument_SelectionChanged" />
-                        <Label Content="{lex:Loc BudgetNumber}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtBudgetNumber" Style="{StaticResource input_textbox}"/>
-                        <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
+                                               <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
                         <ComboBox Style="{DynamicResource input_combobox}" x:Name="id_conditionComboBox" SelectionChanged="id_conditionComboBox_SelectionChanged"
                                 DisplayMemberPath="name" SelectedValuePath="id_condition" ItemsSource="{Binding Source={StaticResource conditionViewSource}}"/>
                         <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>

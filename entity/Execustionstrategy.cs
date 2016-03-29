@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Windows;
 namespace entity
 {
   
@@ -16,6 +17,7 @@ namespace entity
         /// </summary>
         public Execustionstrategy()
         {
+
         }
 
         /// <summary>
@@ -24,40 +26,47 @@ namespace entity
         /// </summary>
         /// <param name="maxRetryCount"> The maximum number of retry attempts. </param>
         /// <param name="maxDelay"> The maximum delay in milliseconds between retries. </param>
-        public Execustionstrategy(int maxRetryCount, TimeSpan maxDelay)
-            : base(maxRetryCount, maxDelay)
+        public Execustionstrategy(int maxRetryCount, TimeSpan maxDelay) : base (maxRetryCount, maxDelay)
         {
+
         }
 
         protected override bool ShouldRetryOn(Exception ex)
         {
             bool retry = false;
 
-            MySqlException sqlException = ex as MySqlException;
-            if (sqlException != null)
-            {
-                int[] errorsToRetry =
+           
+                MySqlException sqlException = ex as MySqlException;
+
+                if (sqlException != null)
+                {
+                    int[] errorsToRetry =
                 {
                     1042  //Deadlock
-                      //Timeout
-                 
+                          //Timeout
                 };
-                if (errorsToRetry.Contains(sqlException.Number))
+
+                    if (errorsToRetry.Contains(sqlException.Number))
+                    {
+                        if (MessageBox.Show("Connection Error. Would you like to retry??", "Entity Services", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        {
+                            retry = true;
+                        }
+                    }
+                    else
+                    {
+                        //Add some error logging on this line for errors we aren't retrying.
+                        //Make sure you record the Number property of sqlError. 
+                        //If you see an error pop up that you want to retry, you can look in 
+                        //your log and add that number to the list above.
+                    }
+                }
+
+                if (ex is TimeoutException)
                 {
                     retry = true;
                 }
-                else
-                {
-                    //Add some error logging on this line for errors we aren't retrying.
-                    //Make sure you record the Number property of sqlError. 
-                    //If you see an error pop up that you want to retry, you can look in 
-                    //your log and add that number to the list above.
-                }
-            }
-            if (ex is TimeoutException)
-            {
-                retry = true;
-            }
+
             return retry;
         }
     } 

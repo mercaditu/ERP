@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace entity
 {
@@ -11,10 +12,9 @@ namespace entity
         public DataConfiguration()
         {
             //in ctor, call the config methods
-
+            
             //for Azure, retry common transient exceptions
-            SetExecutionStrategy("MySql.Data.MySqlClient",
-                () => new Execustionstrategy());
+            SetExecutionStrategy("MySql.Data.MySqlClient", () => new Execustionstrategy());
         }
     }
 }

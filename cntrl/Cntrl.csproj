@@ -191,6 +191,9 @@
     <Compile Include="Controls\TextBox_Template.xaml.cs">
       <DependentUpon>TextBox_Template.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Totals.xaml.cs">
+      <DependentUpon>Totals.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\Expiry2ColorConverter.cs" />
     <Compile Include="Converters\sbxContact_CheckType.cs" />
     <Compile Include="Converters\Status2ColorConverter.cs" />
@@ -599,6 +602,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TextBox_Template.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Totals.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

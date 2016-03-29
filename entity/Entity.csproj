@@ -144,6 +144,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Accounting\accounting_chart.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -748,6 +754,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DocumentViewer.resx">
       <DependentUpon>DocumentViewer.cs</DependentUpon>
       <SubType>Designer</SubType>

@@ -178,7 +178,7 @@ namespace entity
             [LocalizedDescription("Terminal")]
             Terminal = 61,
             [LocalizedDescription("VATGrouping")]
-            VATGrouping = 62,
+            VATGroup = 62,
             [LocalizedDescription("VAT")]
             VAT = 63,
             [LocalizedDescription("Geography")]

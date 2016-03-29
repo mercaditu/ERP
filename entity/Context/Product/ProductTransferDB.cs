@@ -80,7 +80,7 @@ namespace entity
                                                                       && x.id_item_product == item_transfer_detail.id_item_product
                                                                       && x.status == entity.Status.Stock.InStock
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-                                item_movement_originList = stock.Debit_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfx, item_transfer_detail.item_product, app_location,
+                                item_movement_originList = stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfx, item_transfer_detail.item_product, app_location,
                                       item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, "", ""));
                                 base.item_movement.AddRange(item_movement_originList);
                                 if (movebytruck)
@@ -90,7 +90,7 @@ namespace entity
                                     app_location app_locationdest = base.app_location.Where(x => x.id_branch == dest).FirstOrDefault();
 
 
-                                    item_movement_Dest = stock.Credit_Movement(Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfxdest.id_currencyfx,
+                                    item_movement_Dest = stock.CreditOnly_Movement(Status.Stock.InStock, App.Names.Transfer, 0, app_currencyfxdest.id_currencyfx,
                                         item_transfer_detail.item_product, app_locationdest.id_location,
                                           item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, "", ""));
                                     base.item_movement.Add(item_movement_Dest);
@@ -147,7 +147,7 @@ namespace entity
                                     );
 
                                     ///Add it to Origin.
-                                    item_movement_origin = stock.Credit_Movement(
+                                    item_movement_origin = stock.CreditOnly_Movement(
                                           Status.Stock.InStock, 
                                           App.Names.Transfer, 
                                           0, 
@@ -169,7 +169,7 @@ namespace entity
                                     app_location app_location = base.app_location.Where(x => x.id_branch == dest).FirstOrDefault();
 
                                     item_movement_Dest = 
-                                        stock.Credit_Movement(
+                                        stock.CreditOnly_Movement(
                                             Status.Stock.InStock, 
                                             App.Names.Transfer, 
                                             0, 

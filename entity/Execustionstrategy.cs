@@ -11,13 +11,15 @@ namespace entity
   
     public class Execustionstrategy : DbExecutionStrategy
     {
+        public bool IsHandeled { get; set; }
+
         /// <summary>
         /// The default retry limit is 5, which means that the total amount of time spent 
         /// between retries is 26 seconds plus the random factor.
         /// </summary>
         public Execustionstrategy()
         {
-
+            IsHandeled = false;
         }
 
         /// <summary>
@@ -28,13 +30,12 @@ namespace entity
         /// <param name="maxDelay"> The maximum delay in milliseconds between retries. </param>
         public Execustionstrategy(int maxRetryCount, TimeSpan maxDelay) : base (maxRetryCount, maxDelay)
         {
-
+            IsHandeled = false;
         }
 
         protected override bool ShouldRetryOn(Exception ex)
         {
             bool retry = false;
-
            
                 MySqlException sqlException = ex as MySqlException;
 
@@ -48,10 +49,15 @@ namespace entity
 
                     if (errorsToRetry.Contains(sqlException.Number))
                     {
-                        if (MessageBox.Show("Connection Error. Would you like to retry??", "Entity Services", MessageBoxButton.YesNo, MessageBoxImage.Error) == MessageBoxResult.Yes)
+                        if (IsHandeled == false)
                         {
-                            retry = true;
+                            AboutBox1 box = new AboutBox1();
+                            box.ShowDialog();
+
+                            IsHandeled = true;
                         }
+
+                        retry = true;
                     }
                     else
                     {

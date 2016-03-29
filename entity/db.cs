@@ -8,12 +8,14 @@
         public db() : base("name=Cognitivo.Properties.Settings.MySQLconnString")
         {
             Configuration.LazyLoadingEnabled = true;
+           
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // TODO:Define mapping
             modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 4));
+
         }
         
         public virtual DbSet<accounting_cycle> accounting_cycle { get; set; }

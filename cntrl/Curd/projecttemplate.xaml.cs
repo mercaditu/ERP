@@ -83,11 +83,11 @@ namespace cntrl.Curd
               
                 if (operationMode == Class.clsCommon.Mode.Add)
                 {
-                    entity.project_template newItem = new entity.project_template();
-                    newItem.IsSelected = true;
-                   //  newItem.status = Status.Documents_General.Approved;
-                    _entity.project_template.Add(newItem);
-                    _projecttemplateViewSource.View.MoveCurrentToLast();
+                   // entity.project_template newItem = new entity.project_template();
+                   // newItem.IsSelected = true;
+                   ////  newItem.status = Status.Documents_General.Approved;
+                   // _entity.project_template.Add(newItem);
+                    _projecttemplateViewSource.View.MoveCurrentTo(projecttemplateobject);
                 }
                 else
                 {

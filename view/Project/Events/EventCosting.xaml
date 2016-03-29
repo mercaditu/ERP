@@ -20,6 +20,7 @@
     </Page.CommandBindings>
     <Page.Resources>
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+              <CollectionViewSource x:Key="app_document_rangeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_document_range}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}"/>
         <CollectionViewSource x:Key="contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}"/>
@@ -56,6 +57,13 @@
                     </Grid>
                     <TextBlock Text="Place Sales Budget." Style="{StaticResource text_Instructions}"/>
                     <StackPanel HorizontalAlignment="Center">
+                        <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
+                              metro:TextBoxHelper.Watermark="{lex:Loc Document}" SelectedIndex="0"
+                              metro:TextBoxHelper.SelectAllOnFocus="True"
+                              Style="{StaticResource input_combobox}"
+                             
+                              ItemsSource="{Binding Source={StaticResource app_document_rangeViewSource}}"
+                              SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" SelectionChanged="cbxDocument_SelectionChanged" />
                         <Label Content="{lex:Loc BudgetNumber}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtBudgetNumber" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
@@ -273,8 +281,8 @@
                             <DataGridTextColumn Binding="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="code"/>
                             <DataGridTextColumn Binding="{Binding description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="description"/>
                             <DataGridTextColumn Binding="{Binding Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Quantity"/>
-                            <DataGridTextColumn Binding="{Binding UnitPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="UnitPrice"/>
-                            <DataGridTextColumn Binding="{Binding SubTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="SubTotal"/>
+                            <DataGridTextColumn Binding="{Binding UnitPrice, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="UnitPrice"/>
+                            <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="SubTotal"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

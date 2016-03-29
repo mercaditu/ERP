@@ -68,7 +68,8 @@ namespace Cognitivo.Project
             project_costingservices_per_event_detailsViewSource = FindResource("project_costingservices_per_event_detailsViewSource") as CollectionViewSource;
 
 
-
+            CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
+            app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, _settings.branch_ID, _settings.terminal_ID);
 
             EstimateCost();
         }
@@ -262,7 +263,7 @@ namespace Cognitivo.Project
                     {
                         Event Event = new Event();
                         Event.code = item.item.code;
-                        Event.description = item.item.description;
+                        Event.description = item.item.name;
                         Event.Quantity = item.adult_consumption + item.child_consumption;
                         Event.UnitPrice = get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
                         Event.SubTotal = (item.adult_consumption + item.child_consumption) * get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
@@ -412,6 +413,7 @@ namespace Cognitivo.Project
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_variable.id_item).FirstOrDefault();
                             sales_budget_detail.id_item = project_event_variable.id_item;
                             sales_budget_detail.quantity = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
+                            sales_budget_detail.unit_price = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Purchase);
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
 
@@ -422,6 +424,7 @@ namespace Cognitivo.Project
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
                             sales_budget_detail.id_item = project_event_fixed.id_item;
                             sales_budget_detail.quantity = project_event_fixed.consumption;
+                            sales_budget_detail.unit_price = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Purchase);
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
 
@@ -430,6 +433,7 @@ namespace Cognitivo.Project
                         sales_budget_detail_hall.item = db.items.Where(a => a.id_item == project_costing.id_item).FirstOrDefault();
                         sales_budget_detail_hall.id_item = project_costing.id_item;
                         sales_budget_detail_hall.quantity = 1;
+                        sales_budget_detail_hall.unit_price = get_Price(contact, IDcurrencyfx, sales_budget_detail_hall.item, entity.App.Modules.Purchase);
                         sales_budget.sales_budget_detail.Add(sales_budget_detail_hall);
 
                         db.sales_budget.Add(sales_budget);
@@ -772,6 +776,21 @@ namespace Cognitivo.Project
             public decimal Quantity { get; set; }
             public decimal UnitPrice { get; set; }
             public decimal SubTotal { get; set; }
+        }
+
+        private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            using (db db = new db())
+            {
+                if (cbxDocument.SelectedValue != null)
+                {
+                    sales_budget sales_budget = db.sales_budget.FirstOrDefault();
+                    sales_budget.id_range =(int)cbxDocument.SelectedValue;
+                    txtBudgetNumber.Text = sales_budget.NumberWatermark;
+                   
+                }
+
+            }
         }
 
     }

@@ -111,7 +111,12 @@ namespace entity
                 }
 
             }
-            base.SaveChanges();
+            try { base.SaveChanges(); }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+          
         }
         public void ApproveDestination(decimal cost,int origin,int dest,bool movebytruck)
         {

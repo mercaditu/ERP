@@ -274,12 +274,24 @@ namespace entity.Brillo.Document
                                   item_description = g.item.name,
                                   item_brand = g.item.item_brand != null ? g.item.item_brand.name : "",
                                   quantity = g.quantity,
+                                  sales_invoice_number = g.sales_packing != null ? g.sales_packing_relation != null ? GetInvoice(g.sales_packing_relation.ToList()) : "" : ""
                               }).ToList();
 
                 return reportDataSource;
             }
         }
-
+        private string GetInvoice(List<sales_packing_relation> sales_packing_relation)
+        {
+            string PackingList = "";
+            foreach (sales_packing_relation _sales_packing_relation in sales_packing_relation)
+            {
+                if (PackingList.Contains(_sales_packing_relation.sales_invoice_detail.sales_invoice.number))
+                {
+                    PackingList = PackingList + ", " + _sales_packing_relation.sales_invoice_detail.sales_invoice.number;
+                }
+            }
+            return PackingList;
+        }
         public ReportDataSource SalesReturn(sales_return sales_return)
         {
             using (db db = new db())

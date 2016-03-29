@@ -72,6 +72,21 @@ namespace cntrl.PanelAdv
             parentGrid.Visibility = Visibility.Hidden;
         }
 
+        private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            using (db db = new db())
+            {
+                if (id_range!=null)
+                {
+                    project_task project_task = db.project_task.FirstOrDefault();
+                    project_task.id_range = id_range;
+                    number = project_task.NumberWatermark;
+                    RaisePropertyChanged("number"); 
+                }
+              
+            }
+        }
+
      
     }
 }

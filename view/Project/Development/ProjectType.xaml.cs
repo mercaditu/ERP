@@ -35,8 +35,8 @@ namespace Cognitivo.Project.Development
 
 
             project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
-            
-            project_templateViewSource.Source =    dbContext.project_template.Where(a => a.id_company == _Setting.company_ID).ToList();
+            dbContext.project_template.Where(a => a.id_company == _Setting.company_ID).Load();
+            project_templateViewSource.Source = dbContext.project_template.Local;
 
 
             //Loading Products
@@ -88,10 +88,14 @@ namespace Cognitivo.Project.Development
 
             crud_modal.Visibility = Visibility.Visible;
             cntrl.Curd.projecttemplate projecttemplate = new cntrl.Curd.projecttemplate();
+            project_template projecttemplateobject = new project_template();
+            dbContext.project_template.Add(projecttemplateobject);
+            project_templateViewSource.View.Refresh();
+            projecttemplate.projecttemplateobject = projecttemplateobject;
             projecttemplate.projecttemplateViewSource = project_templateViewSource;
             projecttemplate.projecttemplatedetailViewSource = projectproject_template_detailViewSource;
             projecttemplate._entity = dbContext;
-
+          
             crud_modal.Children.Add(projecttemplate);
             //project_templateViewSource.View.MoveCurrentToLast();
             //project_templateViewSource.View.Refresh();

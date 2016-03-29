@@ -691,7 +691,11 @@ namespace entity
                                   contact_name = g.payment.contact.name,
                                   payment_name = g.payment_type.name,
                                   trans_date = g.trans_date,
-                                  currency_name=g.app_currencyfx.app_currency.name
+                                  currency_name=g.app_currencyfx.app_currency.name,
+                                  receipt_number = g.payment_type_number,
+                                  gov_id=g.payment.contact.gov_code,
+                                  subtotal=g.value,
+                         
                               }).ToList();
 
                 //copy report to the template folder

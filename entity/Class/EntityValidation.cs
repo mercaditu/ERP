@@ -16,5 +16,12 @@ namespace entity.Class
             else
                 return new ValidationResult("Invalid Id");
         }
+        public static ValidationResult Checkbranch(app_branch app_branch_origin)
+        {
+            if (app_branch_origin!= null)
+                return ValidationResult.Success;
+            else
+                return new ValidationResult("Invalid branch");
+        }
     }
 }

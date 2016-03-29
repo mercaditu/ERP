@@ -436,6 +436,7 @@ namespace Cognitivo.Project.Development
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
+            crud_modal.Height = 150;
             Project_TaskApprove = new cntrl.PanelAdv.Project_TaskApprove();
             Project_TaskApprove.Save_Click += toolBar_btnApprove_Click;
             crud_modal.Children.Add(Project_TaskApprove);

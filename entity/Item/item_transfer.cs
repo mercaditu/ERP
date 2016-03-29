@@ -115,9 +115,9 @@ namespace entity
         public virtual item_request item_request { get; set; }
         public virtual app_location app_location_origin { get; set; }
         public virtual app_location app_location_destination { get; set; }
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+        [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
         public virtual app_branch app_branch_origin { get; set; }
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+        [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
         public virtual app_branch app_branch_destination { get; set; }
         public virtual contact employee { get; set; }
         public virtual security_user user_requested { get; set; }
@@ -156,5 +156,9 @@ namespace entity
                 return "";
             }
         }
+
+      
+          
+        
     }
 }

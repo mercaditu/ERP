@@ -9,7 +9,7 @@ namespace entity.Migrations
             AutomaticMigrationsEnabled = false;
             SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator());
             SetHistoryContextFactory("MySql.Data.MySqlClient", (conn, schema) => new MySqlHistoryContext(conn, schema)); //here s the  
-
+       
             CodeGenerator = new MySql.Data.Entity.MySqlMigrationCodeGenerator();
         }
 

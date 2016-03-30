@@ -86,17 +86,11 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            //dbContext.sales_budget.Where(x => x.status == Status.Documents_General.Approved && x.id_company == company_ID).ToList();
+            //dbContext.projects.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
             //await Dispatcher.InvokeAsync(new Action(() =>
             //{
-            //    cbxContract.ItemsSource = dbContext.sales_budget.Local;
+            //    cbxProject.ItemsSource = dbContext.projects.Local;
             //}));
-
-            dbContext.projects.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxProject.ItemsSource = dbContext.projects.Local;
-            }));
 
             dbContext.app_contract.Where(a => a.is_active == true && a.id_company == company_ID).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -109,7 +103,6 @@ namespace Cognitivo.Sales
             {
                 cbxCondition.ItemsSource = dbContext.app_condition.Local;
             }));
-
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -129,8 +122,11 @@ namespace Cognitivo.Sales
                 app_vat_groupViewSource.Source = dbContext.app_vat_group.Local;
             }));
 
-
-
+            dbContext.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                cbxSalesRep.ItemsSource = dbContext.sales_rep.Local;
+            }));
 
         }
 
@@ -248,15 +244,21 @@ namespace Cognitivo.Sales
                     //Condition
                     if (objContact.app_contract != null)
                         cbxCondition.SelectedValue = objContact.app_contract.id_condition;
+
                     //Contract
                     if (objContact.id_contract != null)
                         cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
+
                     //Currency
                     app_currencyfx app_currencyfx = null;
                     if (objContact.app_currency != null && objContact.app_currency.app_currencyfx.Any(a => a.is_active) && objContact.app_currency.app_currencyfx.Count > 0)
                         app_currencyfx = objContact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
                     if (app_currencyfx != null)
                         cbxCurrency.SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
+
+                    //SalesMan
+                    if (objContact.sales_rep != null)
+                        cbxSalesRep.SelectedValue = objContact.sales_rep.id_sales_rep;
                 }));
 
                 await dbContext.projects.Where(a => a.is_active == true && a.id_company == company_ID && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToListAsync();

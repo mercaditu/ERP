@@ -80,20 +80,9 @@
                             <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                             <DatePicker x:Name="trans_dateDatePicker" Style="{StaticResource input_datepicker}"
                             SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
-                            <Grid>
-                                <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="AddNewContact_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                    <Label Content="e" HorizontalAlignment="Right"  Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                </StackPanel>
-                            </Grid>
-                            <StackPanel>
-                                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
+                            <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
                                                    Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                               
-                            </StackPanel>
 
                             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                             <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
@@ -107,15 +96,7 @@
                             <TextBox Style="{StaticResource input_textbox}" 
                                      metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                      Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                            <Grid>
-                                <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-                                    <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="AddNewCondition_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                    <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="EditCondition_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                </StackPanel>
-                            </Grid>
+                            <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
                             <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxCondition" 
                                       Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id_condition" 
                                       SelectedValue="{Binding id_condition, Source={StaticResource sales_budgetViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -126,19 +107,11 @@
                                     </ItemsPanelTemplate>
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
-                            <Grid>
-                                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-                                    <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="AddNewContract_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                    <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="EditContract_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                </StackPanel>
-                            </Grid>
+                            <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
                             <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxContract" 
-                          DisplayMemberPath="name" SelectedValuePath="id_contract"
-                          SelectedValue="{Binding id_contract, Source={StaticResource sales_budgetViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                          ItemsSource="{Binding Source={StaticResource contractViewSource}}">
+                                      DisplayMemberPath="name" SelectedValuePath="id_contract"
+                                      SelectedValue="{Binding id_contract, Source={StaticResource sales_budgetViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                      ItemsSource="{Binding Source={StaticResource contractViewSource}}">
                                 <ComboBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel/>

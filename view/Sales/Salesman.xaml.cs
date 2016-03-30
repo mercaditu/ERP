@@ -17,17 +17,15 @@ using System.Data.Entity.Validation;
 
 namespace Cognitivo.Sales
 {
-    public partial class Representative : Page
+    public partial class Salesman : Page
     {
         //dbContextContext entity = new dbContextContext();
         SalesmanDB dbContext = new SalesmanDB();
         CollectionViewSource sales_repViewSource, contactViewSource = null;
-        Properties.Settings _pref_Cognitivo = new Properties.Settings();
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
         ContactDB ContactdbContext = new ContactDB();
         contact _contact = new contact();
 
-        public Representative()
+        public Salesman()
         {
             InitializeComponent();
         }
@@ -35,11 +33,11 @@ namespace Cognitivo.Sales
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             sales_repViewSource = this.FindResource("sales_repViewSource") as CollectionViewSource;
-            dbContext.sales_rep.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            dbContext.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             sales_repViewSource.Source = dbContext.sales_rep.Local;
 
             contactViewSource = ((CollectionViewSource)(this.FindResource("contactViewSource")));
-            dbContext.contacts.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+            dbContext.contacts.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
             contactViewSource.Source = dbContext.contacts.Local;
 
             cbxSalesRepType.ItemsSource = Enum.GetValues(typeof(sales_rep.SalesRepType));
@@ -190,49 +188,8 @@ namespace Cognitivo.Sales
             }
         }
 
-      
-
-    
-
         #endregion
 
-        private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            _contact.State = EntityState.Added;
-            _contact.is_customer = true;
-            contactComboBox.Text = "";
-            contactComboBox.Data = null;
-            crud_modal.Visibility = Visibility.Visible;
-            contactComboBox.IsDisplayed = false;
-            cntrl.Curd.contact contact = new cntrl.Curd.contact();
-           // contact.btnSave_Click += Save_Click;
-            contact.contactobject = _contact;
-            crud_modal.Children.Add(contact);
-
-        }
-
-        private void hrefEditCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            contact selectedcontact = (contact)contactComboBox.Data;
-            _contact = ContactdbContext.contacts.Where(x => x.id_contact == selectedcontact.id_contact).FirstOrDefault();
-            _contact.State = EntityState.Modified;
-            ContactdbContext.contacts.Add(_contact);
-            if (_contact != null)
-            {
-                contactComboBox.Text = "";
-                contactComboBox.Data = null;
-                crud_modal.Visibility = Visibility.Visible;
-                contactComboBox.IsDisplayed = false;
-                cntrl.Curd.contact contact = new cntrl.Curd.contact();
-                contact.contactobject = _contact;
-                //contact.btnSave_Click += Save_Click;
-                crud_modal.Children.Add(contact);
-            }
-            else
-            {
-                MessageBox.Show("Please select contact first.", "Cognitivo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            }
-        }
         public void Save_Click(object sender)
         {
             if (_contact.State == EntityState.Added)

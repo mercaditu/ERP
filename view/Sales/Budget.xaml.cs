@@ -21,80 +21,67 @@ namespace Cognitivo.Sales
 
         contact _contact;
 
-        ContactDB ContactdbContext = new ContactDB();
-        SalesBudgetDB dbContext = new SalesBudgetDB();
+        ContactDB ContactSalesBudgetDB = new ContactDB();
+        SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
-        CollectionViewSource sales_budgetViewSource, 
-            sales_budgetsales_budget_detailViewSource, 
-            projectViewSource, 
-            contractViewSource, 
-             
-            contactViewSource, 
-            conditionViewSource;
-
-        BudgetSetting _pref_SalesBudget = new BudgetSetting();
+        CollectionViewSource sales_budgetViewSource,
+            sales_budgetsales_budget_detailViewSource,
+            projectViewSource;
 
         public Budget()
         {
             InitializeComponent();
         }
 
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //public void RaisePropertyChanged(string propertyName)
-        //{
-        //    if (PropertyChanged != null)
-        //    {
-        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        //    }
-        //}
-
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                entity.Properties.Settings _settings = new entity.Properties.Settings();
+                BudgetSetting _pref_SalesBudget = new BudgetSetting();
 
-                sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));
                 if (_pref_SalesBudget.filterbyBranch)
                 {
-                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID && a.id_branch == _settings.branch_ID).OrderByDescending(x => x.trans_date).Include(x => x.sales_budget_detail)
-                        .Load();
+                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company && a.id_branch == entity.CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).Include(x => x.sales_budget_detail).Load();
                 }
                 else
                 {
-                    dbContext.sales_budget.Where(a => a.id_company == _settings.company_ID).OrderByDescending(x => x.trans_date).Include(x => x.sales_budget_detail).Load();
+                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).Include(x => x.sales_budget_detail).Load();
                 }
-                sales_budgetViewSource.Source = dbContext.sales_budget.Local;
+
+                sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));
+                sales_budgetViewSource.Source = SalesBudgetDB.sales_budget.Local;
                 sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
                 CollectionViewSource branchViewSource = ((CollectionViewSource)(FindResource("branchViewSource")));
-                branchViewSource.Source = dbContext.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == _settings.company_ID).OrderBy(b => b.name).ToList();
+                branchViewSource.Source = SalesBudgetDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == entity.CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
 
-                contractViewSource = ((CollectionViewSource)(FindResource("contractViewSource")));
+                CollectionViewSource contractViewSource = ((CollectionViewSource)(FindResource("contractViewSource")));
                 // Load data by setting the CollectionViewSource.Source property:
-                dbContext.app_contract.Where(a => a.is_active == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).Load();
-                contractViewSource.Source = dbContext.app_contract.Local;
+                SalesBudgetDB.app_contract.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+                contractViewSource.Source = SalesBudgetDB.app_contract.Local;
 
-                conditionViewSource = ((CollectionViewSource)(FindResource("conditionViewSource")));
+                CollectionViewSource conditionViewSource = ((CollectionViewSource)(FindResource("conditionViewSource")));
                 // Load data by setting the CollectionViewSource.Source property:
-                dbContext.app_condition.Where(a => a.is_active == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = dbContext.app_condition.Local;
+                SalesBudgetDB.app_condition.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+                conditionViewSource.Source = SalesBudgetDB.app_condition.Local;
 
                 projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
                 // Load data by setting the CollectionViewSource.Source property:
-                dbContext.projects.Where(a => a.is_active == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).Load();
-                projectViewSource.Source = dbContext.projects.Local;
+                SalesBudgetDB.projects.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).OrderBy(a => a.name).Load();
+                projectViewSource.Source = SalesBudgetDB.projects.Local;
+
+                SalesBudgetDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                await Dispatcher.InvokeAsync(new Action(() =>
+                {
+                    cbxSalesRep.ItemsSource = SalesBudgetDB.sales_rep.Local;
+                }));
 
                 CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, _settings.branch_ID, _settings.terminal_ID);
-         
-
-                //CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-                //app_document_rangeViewSource.Source = await dbContext.app_document_range.Where(d => d.is_active == true && d.app_document.id_application ==entity.App.Names.SalesBudget && d.id_company == _settings.company_ID).ToListAsync();
+                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, entity.CurrentSession.Id_Branch, entity.CurrentSession.Id_terminal);
 
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = await dbContext.app_vat_group
-                    .Where(a => a.is_active == true && a.id_company == _settings.company_ID)
+                app_vat_groupViewSource.Source = await SalesBudgetDB.app_vat_group
+                    .Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company)
                     .OrderBy(a => a.name).ToListAsync();
                 
             }
@@ -121,10 +108,10 @@ namespace Cognitivo.Sales
         #region toolbar Events
         private void New_Click(object sender)
         {
-            sales_budget sales_budget = dbContext.New();
+            sales_budget sales_budget = SalesBudgetDB.New();
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
-            dbContext.sales_budget.Add(sales_budget);
+            SalesBudgetDB.sales_budget.Add(sales_budget);
             sales_budgetViewSource.View.MoveCurrentTo(sales_budget);
         }
 
@@ -135,7 +122,7 @@ namespace Cognitivo.Sales
                 sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
                 sales_budget.IsSelected = true;
                 sales_budget.State = EntityState.Modified;
-                dbContext.Entry(sales_budget).State = EntityState.Modified;
+                SalesBudgetDB.Entry(sales_budget).State = EntityState.Modified;
             }
 
             else
@@ -146,7 +133,7 @@ namespace Cognitivo.Sales
 
         private void Save_Click(object sender)
         {
-                dbContext.SaveChanges();
+                SalesBudgetDB.SaveChanges();
                 sales_budgetViewSource.View.Refresh();
                 toolBar.msgSaved();
         }
@@ -156,7 +143,7 @@ namespace Cognitivo.Sales
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                dbContext.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);
+                SalesBudgetDB.sales_budget.Remove((sales_budget)sales_budgetDataGrid.SelectedItem);
                 sales_budgetViewSource.View.MoveCurrentToFirst();
                 Save_Click(sender);
             }
@@ -166,7 +153,7 @@ namespace Cognitivo.Sales
         {
             sales_budget_detailDataGrid.CancelEdit();
             sales_budgetViewSource.View.MoveCurrentToFirst();
-            dbContext.CancelAllChanges();
+            SalesBudgetDB.CancelAllChanges();
             
             if (sales_budgetsales_budget_detailViewSource.View != null)
                 sales_budgetsales_budget_detailViewSource.View.Refresh();
@@ -182,6 +169,8 @@ namespace Cognitivo.Sales
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
+
+                CollectionViewSource contractViewSource = ((CollectionViewSource)(FindResource("contractViewSource")));
                 contractViewSource.View.Filter = i =>
                 {
                     app_contract objContract = (app_contract)i;
@@ -204,6 +193,8 @@ namespace Cognitivo.Sales
         }
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
+            BudgetSetting _pref_SalesBudget = new BudgetSetting();
+
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
             BudgetSetting.Default.Save();
             _pref_SalesBudget = BudgetSetting.Default;
@@ -216,7 +207,7 @@ namespace Cognitivo.Sales
             sales_budget.RaisePropertyChanged("GrandTotal");
             List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
             dgvvat.ItemsSource = sales_budget_detail
-                 .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                 .Join(SalesBudgetDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                       , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
                       .GroupBy(a => new { a.name, a.id_vat, a.ad })
                .Select(g => new
@@ -227,114 +218,29 @@ namespace Cognitivo.Sales
                }).ToList();
         }
 
-        //private void calculate_total(object sender, EventArgs e)
-        //{
-        //    sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
-        //    if (sales_budget != null)
-        //    {
-        //        sales_budget.get_Sales_Budget_Total();
-        //    }
-        //}
-
         private void sales_budgetDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
+
             if (sales_budget != null)
             {
                 calculate_vat(sender, e);
-                
-               
             }
-            //calculate_total(sender, e);
         }
-
-        //private void sales_budgetDataGrid_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    calculate_total(sender, e);
-        //}
 
         private void sales_budget_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
 
-        #region ExpressAdd/Edit
-        private void AddNewContact_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            sbxContact.Contact.State = EntityState.Added;
-            sbxContact.Contact.is_customer = true;
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.contact contact = new cntrl.Curd.contact();
-           // contact.btnSave_Click += ContactSave_Click;
-            contact.contactobject = sbxContact.Contact;
-            crud_modal.Children.Add(contact);
-        }
-
-       
-        public void ContactSave_Click(object sender)
-        {
-            crud_modal.Children.Clear();
-            crud_modal.Visibility = Visibility.Collapsed;
-            
-        }
-        private void AddNewCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.condition condition = new cntrl.condition();
-            crud_modal.Children.Add(condition);
-        }
-
-        private void EditCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-            if (app_condition != null)
-            {
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.condition condition = new cntrl.condition();
-                crud_modal.Children.Add(condition);
-            }
-        }
-
-        private void AddNewContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.contract contract = new cntrl.contract();
-            contract.app_contractViewSource = contractViewSource;
-            contract.MainViewSource = sales_budgetViewSource;
-            contract.curObject = sales_budgetViewSource.View.CurrentItem;
-            contract.operationMode = cntrl.Class.clsCommon.Mode.Add;
-            contract.isExternalCall = true;
-            crud_modal.Children.Add(contract);
-        }
-
-        private void EditContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            app_contract app_contract = cbxContract.SelectedItem as app_contract;
-            if (app_contract != null)
-            {
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.contract contract = new cntrl.contract();
-                contract.app_contractViewSource = contractViewSource;
-                contract.MainViewSource = sales_budgetViewSource;
-                contract.curObject = sales_budgetViewSource.View.CurrentItem;
-                //contract.entity = _entity;
-                contract.app_contractobject = app_contract;
-                contract.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-                contract.isExternalCall = true;
-                crud_modal.Children.Add(contract);
-            }
-        }
-        #endregion
-
         private void toolBar_btnApprove_Click(object sender)
         {
-            dbContext.Approve();
+            SalesBudgetDB.Approve();
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            dbContext.Anull();
+            SalesBudgetDB.Anull();
         }
 
         private void item_Select(object sender, EventArgs e)
@@ -343,7 +249,7 @@ namespace Cognitivo.Sales
             if (sbxItem.ItemID > 0)
             {
                 sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-                item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                item item = SalesBudgetDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
                 if (item != null && item.id_item > 0 && sales_budget!= null)
                 {
@@ -354,6 +260,7 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_budget sales_budget, item item)
         {
+            BudgetSetting _pref_SalesBudget = new BudgetSetting();
 
             if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || _pref_SalesBudget.AllowDuplicateItems)
             {
@@ -426,12 +333,9 @@ namespace Cognitivo.Sales
                 if (result == MessageBoxResult.Yes)
                 {
                     //sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-                    //DeleteDetailGridRow
                     sales_budget_detailDataGrid.CancelEdit();
-                    dbContext.sales_budget_detail.Remove(e.Parameter as sales_budget_detail);
+                    SalesBudgetDB.sales_budget_detail.Remove(e.Parameter as sales_budget_detail);
                     sales_budgetsales_budget_detailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
-
                 }
             }
             catch (Exception ex)
@@ -440,39 +344,15 @@ namespace Cognitivo.Sales
             }
         }
 
-        //private void contactComboBox_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (contactComboBox.Data != null)
-        //    {
-        //        contact contact = (contact)contactComboBox.Data;
-        //        GetContactDetail_PreviewMouseUp(null, null);
-        //    }
-        //}
-
-        //private void contactComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        //{
-        //    if (contactComboBox.Data != null)
-        //    {
-        //        contact contact = (contact)contactComboBox.Data;
-        //        GetContactDetail_PreviewMouseUp(null, null);
-        //        contactComboBox.focusGrid = false;
-        //        contactComboBox.Text = contact.name;
-        //    }
-        //}
-
-       
-
         private void set_ContactPref(object sender, EventArgs e)
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                contact contact = SalesBudgetDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 sales_budget sales_budget = (sales_budget)sales_budgetDataGrid.SelectedItem;
                 sales_budget.id_contact = contact.id_contact;
                 sales_budget.contact = contact;
                 Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
-
-               
             }
         }
 
@@ -482,18 +362,24 @@ namespace Cognitivo.Sales
             {
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    cbxContactRelation.ItemsSource = dbContext.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+                    cbxContactRelation.ItemsSource = SalesBudgetDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
                     //Condition
                     if (objContact.app_contract != null)
                         cbxCondition.SelectedValue = objContact.app_contract.id_condition;
+
                     //Contract
                     if (objContact.id_contract != null)
                         cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
+
                     //Currency
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
 
-                    projectViewSource.Source = dbContext.projects.Where(a => a.is_active == true
+                    //SalesMan
+                    if (objContact.sales_rep != null)
+                        cbxCondition.SelectedValue = objContact.sales_rep.id_sales_rep;
+
+                    projectViewSource.Source = SalesBudgetDB.projects.Where(a => a.is_active == true
                                  && a.id_company == entity.Properties.Settings.Default.company_ID
                                  && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToList();
                 }));
@@ -502,7 +388,6 @@ namespace Cognitivo.Sales
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
 
@@ -513,8 +398,8 @@ namespace Cognitivo.Sales
             {
                 if (sales_budget.id_sales_budget != 0)
                 {
-                    var originalEntity = dbContext.sales_budget.AsNoTracking().FirstOrDefault(x => x.id_sales_budget == sales_budget.id_sales_budget);
-                    dbContext.sales_budget.Add(originalEntity);
+                    var originalEntity = SalesBudgetDB.sales_budget.AsNoTracking().FirstOrDefault(x => x.id_sales_budget == sales_budget.id_sales_budget);
+                    SalesBudgetDB.sales_budget.Add(originalEntity);
                     sales_budgetViewSource.View.Refresh();
                     sales_budgetViewSource.View.MoveCurrentToLast();
                 }
@@ -537,43 +422,9 @@ namespace Cognitivo.Sales
             calculate_vat(sender, e);
         }
 
-        //private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (cbxDocument.SelectedValue != null)
-        //    {
-        //        entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
-              
-        //        app_document_range app_document_range = (app_document_range)cbxDocument.SelectedItem;
-        //        sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
-
-        //        entity.Brillo.Range.branch_Code = dbContext.app_branch.Where(x => x.id_branch == sales_budget.id_branch).FirstOrDefault().code;
-        //        entity.Brillo.Range.terminal_Code = dbContext.app_terminal.Where(x => x.id_terminal == sales_budget.id_terminal).FirstOrDefault().code;
-        //        budget_number = entity.Brillo.Range.calc_Range(app_document_range, false);
-        //        RaisePropertyChanged("budget_number");
-        //    }
-        //}
-
         private void lblEditProduct_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            //item _item = (item)itemComboBox.Data;
-            //if (_item != null)
-            //{
-                
-            //    crud_modal.Visibility = Visibility.Visible;
-            //    cntrl.Curd.item item = new cntrl.Curd.item();
-            //    item.itemViewSource = itemViewSource;
-            //    item.MainViewSource = sales_budgetViewSource;
-            //    item.curObject = sales_budgetViewSource.View.CurrentItem;
-            //    //item._entity = _entity;
-            //    item.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-            //    item.STbox = itemComboBox;
-            //    item.itemobject = _item;
-            //    crud_modal.Children.Add(item);
-            //}
-            //else
-            //{
-            //    toolBar.msgWarning("No Item Selected");
-            //}
+
         }
     }
 }

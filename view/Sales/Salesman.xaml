@@ -7,7 +7,7 @@
       xmlns:curd="clr-namespace:cntrl.Curd"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-      xmlns:Curd="clr-namespace:cntrl.Curd;assembly=cntrl" x:Class="Cognitivo.Sales.Representative" 
+      xmlns:Curd="clr-namespace:cntrl.Curd;assembly=cntrl" x:Class="Cognitivo.Sales.Salesman" 
       mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="700"
     
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -42,28 +42,20 @@
 						SelectedValue="{Binding enum_type, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" SelectionChanged="cbxSalesRepType_SelectionChanged"/>
                 </StackPanel>
                 <StackPanel x:Name="stackContact" Background="White">
-                    <Grid>
-                        <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                            <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditCust_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                        </StackPanel>
-                    </Grid>
+                    <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
                     <StackPanel Orientation="Horizontal">
-                                  <cntrl:SearchableTextbox x:Name="contactComboBox" KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref"
-                                                 CollectionViewSource="{StaticResource contactViewSource}"
-                                                 IsDisplayed="True" 
-                                                 Data="{Binding contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="254">
-                            <cntrl:SearchableTextbox.Columns>
-                                <cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                                <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                                <cntrl:SmartBoxColumn Header="GovId" ForProperty="gov_code" Binding="{Binding gov_code, Mode=Default}" EnableSearch="True"/>
-                                <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
-                                <cntrl:SmartBoxColumn Header="Telephone" ForProperty="telephone" Binding="{Binding telephone, Mode=Default}" Hide="True"/>
-                            </cntrl:SearchableTextbox.Columns>
-                        </cntrl:SearchableTextbox>
+                            <cntrl:SearchableTextbox x:Name="contactComboBox" KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref"
+                                            CollectionViewSource="{StaticResource contactViewSource}"
+                                            IsDisplayed="True" 
+                                            Data="{Binding contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="254">
+                                <cntrl:SearchableTextbox.Columns>
+                                    <cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
+                                    <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
+                                    <cntrl:SmartBoxColumn Header="GovId" ForProperty="gov_code" Binding="{Binding gov_code, Mode=Default}" EnableSearch="True"/>
+                                    <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
+                                    <cntrl:SmartBoxColumn Header="Telephone" ForProperty="telephone" Binding="{Binding telephone, Mode=Default}" Hide="True"/>
+                                </cntrl:SearchableTextbox.Columns>
+                            </cntrl:SearchableTextbox>
                         <TextBlock x:Name="txtblkAddContact" Visibility="Collapsed" Margin="2"><Hyperlink PreviewMouseDown="Hyperlink_PreviewMouseDown"><Run Text="Add New Contact"/></Hyperlink></TextBlock>
                     </StackPanel>
                 </StackPanel>

@@ -191,13 +191,12 @@
                                         <Run  Text="{Binding sales_detail.sales_order.number}" />
                                     </Hyperlink>
                                         </TextBlock>
-
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <TextBox x:Name="txtDesc" Text="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>

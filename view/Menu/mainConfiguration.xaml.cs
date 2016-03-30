@@ -9,8 +9,6 @@ namespace Cognitivo.Menu
 {
     public partial class mainConfiguration : Page
     {
-        MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
-
         public mainConfiguration()
         {
             InitializeComponent();
@@ -49,14 +47,11 @@ namespace Cognitivo.Menu
 
             string _app = string.Empty;
             string _namespace = string.Empty;
-            //string _img = string.Empty;
 
             AppList appList = new AppList();
             foreach (DataRow app in appList.dtApp.Select("name = '" + configName + "'"))
             {
                 _app = app["app"].ToString();
-                //_img = app["img"].ToString();
-                //_img = "../Images/Application/128/" + _img + ".png";
                 configName = "Cognitivo." + _app;
             }
 
@@ -67,11 +62,13 @@ namespace Cognitivo.Menu
                     PageInstanceType = Type.GetType(configName, true, true);
                     objPage = (Page)Activator.CreateInstance(PageInstanceType);
                     objPage.Tag = 0;
+
+                    MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
                     rootWindow.mainFrame.Navigate(objPage);
                 }
                 catch
                 {
-                    MessageBox.Show("a");
+                    MessageBox.Show(configName);
                 }
                 finally 
                 { 
@@ -82,6 +79,7 @@ namespace Cognitivo.Menu
 
         private void showMenu_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
             rootWindow.mainFrame.Navigate(null);
         }
     }

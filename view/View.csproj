@@ -748,16 +748,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Sales\PointOfSale.xaml.cs">
-      <DependentUpon>PointOfSale.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sales\POS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>POS.settings</DependentUpon>
     </Compile>
-    <Compile Include="Sales\Representative.xaml.cs">
-      <DependentUpon>Representative.xaml</DependentUpon>
+    <Compile Include="Sales\Salesman.xaml.cs">
+      <DependentUpon>Salesman.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sales\Return.xaml.cs">
       <DependentUpon>Return.xaml</DependentUpon>
@@ -1625,11 +1622,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Sales\PointOfSale.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sales\Representative.xaml">
+    <Page Include="Sales\Salesman.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

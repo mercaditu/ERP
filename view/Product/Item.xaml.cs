@@ -383,7 +383,7 @@ namespace Cognitivo.Product
             {
                 //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
                 item item = itemViewSource.View.CurrentItem as item;
-                if (dbContext.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item))
+                if (dbContext.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item) && item.State==EntityState.Added)
                 {
                     toolBar.msgWarning("Product Already Exist..");
                     return;

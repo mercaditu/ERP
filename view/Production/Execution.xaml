@@ -147,7 +147,7 @@
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
                                              HorizontalAlignment="Stretch"
                                              TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
+                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     />
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
@@ -212,7 +212,7 @@
                                              IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
                                               HorizontalAlignment="Stretch"
                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
-                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"/>
+                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                                 <TreeView x:Name="treeRaw" ItemsSource="{Binding}" SelectedItemChanged="treeraw_SelectedItemChanged">
@@ -265,7 +265,7 @@
                                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
                                                              HorizontalAlignment="Stretch"
                                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
-                                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"/>
+                                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                                 <TreeView x:Name="treeService" ItemsSource="{Binding}" SelectedItemChanged="treeservice_SelectedItemChanged">
@@ -362,7 +362,7 @@
                                             IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item, Converter={StaticResource Type2Enable}}"
                                             HorizontalAlignment="Stretch"
                                             TaskName="{Binding name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
-                                            Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"/>
+                                            Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                                 <TreeView x:Name="treeAsset" ItemsSource="{Binding}" SelectedItemChanged="treecapital_SelectedItemChanged">
@@ -416,7 +416,7 @@
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
                                               HorizontalAlignment="Stretch"
                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
-                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"/>
+                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                                 <TreeView x:Name="treeSupply" ItemsSource="{Binding}" SelectedItemChanged="treeSupply_SelectedItemChanged">

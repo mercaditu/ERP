@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cntrl.Controls"
              mc:Ignorable="d">
-    
     <UserControl.Resources>
         <Storyboard x:Key="TextChanged">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="border">
@@ -22,11 +21,11 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <UserControl.Triggers>
+    <!--<UserControl.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="textBlock">
             <BeginStoryboard Storyboard="{StaticResource TextChanged}"/>
         </EventTrigger>
-    </UserControl.Triggers>
+    </UserControl.Triggers>-->
     <Border x:Name="border" CornerRadius="10" Background="Crimson" 
             MinWidth="18" RenderTransformOrigin="0.5,0.5">
         <Border.RenderTransform>

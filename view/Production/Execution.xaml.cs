@@ -309,27 +309,8 @@ namespace Cognitivo.Production
                     production_order_detaillServiceViewSource.Source = null;
                 }
             }
-            if (production_order_detaillServiceViewSource != null)
-            {
-                if (production_order_detaillServiceViewSource.View != null)
-                {
-                    production_order_detaillServiceViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
-
         }
+
         public void filter_Supply()
         {
             int id_production = 0;
@@ -353,26 +334,8 @@ namespace Cognitivo.Production
 
                 }
             }
-            if (production_order_detaillSupplyViewSource != null)
-            {
-                if (production_order_detaillSupplyViewSource.View != null)
-                {
-                    production_order_detaillSupplyViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
         }
+
         public void filter_Raw()
         {
             int id_production = 0;
@@ -393,25 +356,6 @@ namespace Cognitivo.Production
                 {
                     production_order_detaillRawViewSource.Source = null;
 
-                }
-            }
-            if (production_order_detaillRawViewSource != null)
-            {
-                if (production_order_detaillRawViewSource.View != null)
-                {
-                    production_order_detaillRawViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
                 }
             }
         }
@@ -435,25 +379,6 @@ namespace Cognitivo.Production
                 {
                     production_order_detaillAssetViewSource.Source = null;
 
-                }
-            }
-            if (production_order_detaillAssetViewSource != null)
-            {
-                if (production_order_detaillAssetViewSource.View != null)
-                {
-                    production_order_detaillAssetViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
                 }
             }
         }

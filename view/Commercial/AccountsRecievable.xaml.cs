@@ -339,6 +339,11 @@ namespace Cognitivo.Commercial
 
             }
         }
+
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            load_Schedual();
+        }
     }
 }
 

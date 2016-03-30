@@ -124,6 +124,12 @@ namespace entity
                                 }
 
                                 item_transfer_detail.status = Status.Documents_General.Approved;
+
+                                if (item_transfer != null)
+                                {
+                                    entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
+                                }
+                                
                             }
                         }
                     }
@@ -242,6 +248,8 @@ namespace entity
                             app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
                             item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             item_transfer.RaisePropertyChanged("number");
+
+
                         }
                     }
 

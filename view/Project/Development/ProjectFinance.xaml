@@ -199,20 +199,14 @@
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
                         <Button Content="{lex:Loc SalesOrder}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
-
-
                 </StackPanel>
-
             </StackPanel>
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                        appName="ProjectFinance" />
-
-      
-
     </Grid>
 </Page>

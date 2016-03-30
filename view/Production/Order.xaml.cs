@@ -367,7 +367,11 @@ namespace Cognitivo.Production
                 item_request.id_branch = production_order.project.id_branch;
                 item_request.id_department = ItemRequest.id_department;
                 item_request.id_production_order = id_production_order;
-                item_request.id_project = production_order.project.id_project;
+                if (production_order.project!=null)
+                {
+                    item_request.id_project = production_order.project.id_project;
+                }
+            
                 item_request.request_date = DateTime.Now;
 
                 foreach (production_order_detail data in production_order_detaillist)

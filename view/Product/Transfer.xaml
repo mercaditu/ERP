@@ -160,7 +160,7 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>
                                 <Grid HorizontalAlignment="Right" Width="256" 
-                                      DataContext="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" >
+                                      DataContext="{Binding Source={StaticResource item_transferViewSource}}" >
                                     <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}"/>
                                 </Grid>
                                 <DataGrid AutoGenerateColumns="False" Grid.ColumnSpan="2" 

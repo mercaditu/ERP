@@ -77,7 +77,7 @@ namespace Cognitivo.Setup.Migration
             //    SqlDataReader reader = cmd.ExecuteReader();
             //    while (reader.Read())
             //    {
-            //        using (db db = new db())
+            //        using (PurchaseInvoiceDB db = new PurchaseInvoiceDB())
             //        {
 
             //            db.Configuration.AutoDetectChangesEnabled = false;
@@ -85,14 +85,7 @@ namespace Cognitivo.Setup.Migration
             //            purchase_invoice purchase_invoice = new purchase_invoice();
             //            purchase_invoice.id_company = id_company;
 
-            //            if (reader.IsDBNull(23))
-            //            {
-            //                purchase_invoice.is_accounted = false;
-            //            }
-            //            else
-            //            {
-            //                purchase_invoice.is_accounted = (reader.GetByte(23) == 0) ? false : true;
-            //            }
+                      
             //            purchase_invoice.is_issued = false;
             //            //purchase_invoice.is_head = true;
             //            //purchase_invoice.version = 1;
@@ -251,22 +244,7 @@ namespace Cognitivo.Setup.Migration
             //                //Commit Sales Invoice Detail
             //                purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
 
-            //                _desMoneda = row["DESMONEDA"].ToString();
-
-            //                if (_iva == "10.00")
-            //                {
-            //                    purchase_invoice_vat purchase_invoice_vat = new purchase_invoice_vat();
-            //                    purchase_invoice_vat.unit_value = purchase_invoice_detail.unit_cost * (decimal)0.1;
-            //                    purchase_invoice_vat.id_vat = db.app_vat.Where(x => x.coefficient == 0.10M).FirstOrDefault().id_vat;
-            //                    purchase_invoice_detail.purchase_invoice_vat.Add(purchase_invoice_vat);
-            //                }
-            //                else if (_iva == "5.00")
-            //                {
-            //                    purchase_invoice_vat purchase_invoice_vat = new purchase_invoice_vat();
-            //                    purchase_invoice_vat.unit_value = purchase_invoice_detail.unit_cost * (decimal)0.05;
-            //                    purchase_invoice_vat.id_vat = db.app_vat.Where(x => x.coefficient == (decimal)0.05).FirstOrDefault().id_vat;
-            //                    purchase_invoice_detail.purchase_invoice_vat.Add(purchase_invoice_vat);
-            //                }
+                            
             //            }
 
 
@@ -277,8 +255,10 @@ namespace Cognitivo.Setup.Migration
 
             //                try
             //                {
-
-            //                    db.purchase_invoice.Add(purchase_invoice);
+            //                    purchase_invoice.State = System.Data.Entity.EntityState.Added;
+            //                    purchase_invoice.IsSelected = true;
+                                
+            //                   // db.purchase_invoice.Add(purchase_invoice);
             //                    IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
             //                    if (validationresult.Count() == 0)
             //                    {
@@ -323,7 +303,7 @@ namespace Cognitivo.Setup.Migration
 
             //    _customer_Current = _customer_Max;
             //}
-            //catch(Exception EX)
+            //catch (Exception EX)
             //{
             //    throw EX;
             //}

@@ -76,9 +76,9 @@ namespace Cognitivo.Setup.Migration
             DataTable dt_sales = exeDT(sql);
             foreach (DataRow reader in dt_sales.Rows)
             {
-                using (db db = new db())
+                using (SalesInvoiceDB db = new SalesInvoiceDB())
                 {
-                  
+
                     db.Configuration.AutoDetectChangesEnabled = false;
 
                     sales_invoice sales_invoice = new sales_invoice();
@@ -105,12 +105,14 @@ namespace Cognitivo.Setup.Migration
                     {
                         string _customer = reader[26].ToString();
                         contact contact = db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
-                        if (contact!=null)
+                        if (contact != null)
                         {
+
                             sales_invoice.id_contact = contact.id_contact;
+                            sales_invoice.contact = contact;
                         }
-                    
-                    
+
+
                     }
 
                     //Condition (Cash or Credit)
@@ -119,27 +121,28 @@ namespace Cognitivo.Setup.Migration
                         app_condition app_condition = db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
                         sales_invoice.id_condition = app_condition.id_condition;
                         //Contract...
-                      
-                            app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == sales_invoice.id_condition && x.app_contract.id_company == id_company).FirstOrDefault();
-                            if (app_contract_detail != null)
-                            {
-                                sales_invoice.id_contract = app_contract_detail.id_contract;
-                            }
-                            else
-                            {
-                                app_contract app_contract = new app_contract();
-                                app_contract.app_condition = app_condition;
-                                app_contract.name = "0 Días";
-                                app_contract_detail _app_contract_detail = new app_contract_detail();
-                                _app_contract_detail.coefficient = 1;
-                                _app_contract_detail.app_contract = app_contract;
-                                _app_contract_detail.interval = 0;
-                                db.app_contract_detail.Add(_app_contract_detail);
-                                sales_invoice.app_contract = app_contract;
-                                sales_invoice.id_contract = app_contract.id_contract;
 
-                            }
-                       
+                        app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == sales_invoice.id_condition && x.app_contract.id_company == id_company).FirstOrDefault();
+                        if (app_contract_detail != null)
+                        {
+                            sales_invoice.app_contract = app_contract_detail.app_contract;
+                            sales_invoice.id_contract = app_contract_detail.id_contract;
+                        }
+                        else
+                        {
+                            app_contract app_contract = new app_contract();
+                            app_contract.app_condition = app_condition;
+                            app_contract.name = "0 Días";
+                            app_contract_detail _app_contract_detail = new app_contract_detail();
+                            _app_contract_detail.coefficient = 1;
+                            _app_contract_detail.app_contract = app_contract;
+                            _app_contract_detail.interval = 0;
+                            db.app_contract_detail.Add(_app_contract_detail);
+                            sales_invoice.app_contract = app_contract;
+                            sales_invoice.id_contract = app_contract.id_contract;
+
+                        }
+
                     }
                     else if (!(reader[13] is DBNull) && Convert.ToByte(reader[13]) == 1)
                     {
@@ -148,11 +151,12 @@ namespace Cognitivo.Setup.Migration
                         //Contract...
                         if (!(reader[30] is DBNull))
                         {
-                            DateTime _due_date = Convert.ToDateTime(reader[30]); 
+                            DateTime _due_date = Convert.ToDateTime(reader[30]);
                             int interval = (_due_date - sales_invoice.trans_date).Days;
-                            app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == sales_invoice.id_condition && x.app_contract.id_company == id_company && x.interval==interval).FirstOrDefault();
+                            app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == sales_invoice.id_condition && x.app_contract.id_company == id_company && x.interval == interval).FirstOrDefault();
                             if (app_contract_detail != null)
                             {
+                                sales_invoice.app_contract = app_contract_detail.app_contract;
                                 sales_invoice.id_contract = app_contract_detail.id_contract;
                             }
                             else
@@ -163,14 +167,41 @@ namespace Cognitivo.Setup.Migration
                                 app_contract_detail _app_contract_detail = new app_contract_detail();
                                 _app_contract_detail.coefficient = 1;
                                 _app_contract_detail.app_contract = app_contract;
-                                _app_contract_detail.interval =(short)interval;
+                                _app_contract_detail.interval = (short)interval;
                                 db.app_contract_detail.Add(_app_contract_detail);
                                 sales_invoice.app_contract = app_contract;
                                 sales_invoice.id_contract = app_contract.id_contract;
                             }
                         }
+                        else
+                        {
+                            app_contract app_contract = new app_contract();
+                            app_contract.app_condition = app_condition;
+                            app_contract.name = "0 Días";
+                            app_contract_detail _app_contract_detail = new app_contract_detail();
+                            _app_contract_detail.coefficient = 1;
+                            _app_contract_detail.app_contract = app_contract;
+                            _app_contract_detail.interval = 0;
+                            db.app_contract_detail.Add(_app_contract_detail);
+                            sales_invoice.app_contract = app_contract;
+                            sales_invoice.id_contract = app_contract.id_contract;
+                        }
                     }
-
+                    else
+                    {
+                        app_condition app_condition = db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
+                        sales_invoice.id_condition = app_condition.id_condition;
+                        app_contract app_contract = new app_contract();
+                        app_contract.app_condition = app_condition;
+                        app_contract.name = "0 Días";
+                        app_contract_detail _app_contract_detail = new app_contract_detail();
+                        _app_contract_detail.coefficient = 1;
+                        _app_contract_detail.app_contract = app_contract;
+                        _app_contract_detail.interval = 0;
+                        db.app_contract_detail.Add(_app_contract_detail);
+                        sales_invoice.app_contract = app_contract;
+                        sales_invoice.id_contract = app_contract.id_contract;
+                    }
                     //Sales Rep
                     if (!(reader[25] is DBNull))
                     {
@@ -180,6 +211,7 @@ namespace Cognitivo.Setup.Migration
                     }
 
                     int id_location = 0;
+                    app_location app_location = null;
                     //Branch
                     if (!(reader[28] is DBNull))
                     {
@@ -190,7 +222,7 @@ namespace Cognitivo.Setup.Migration
 
                         //Location
                         id_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch).FirstOrDefault().id_location;
-
+                        app_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch).FirstOrDefault();
                         //Terminal
                         sales_invoice.id_terminal = db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
                     }
@@ -219,7 +251,8 @@ namespace Cognitivo.Setup.Migration
                     foreach (DataRow row in dt.Rows)
                     {
                         //db Related Insertion.
-                        sales_invoice.id_currencyfx = 1;
+                        sales_invoice.id_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
+                        sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
 
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
@@ -227,13 +260,14 @@ namespace Cognitivo.Setup.Migration
                         item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
                         sales_invoice_detail.id_item = item.id_item;
                         sales_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADVENTA"]);
-                        
+
                         sales_invoice_detail.id_location = id_location;
+                        sales_invoice_detail.app_location = app_location;
 
                         string _iva = row["IVA"].ToString();
                         if (_iva == "10.00")
                         {
-                            sales_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name =="10%").FirstOrDefault().id_vat_group;
+                            sales_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
                         }
                         else if (_iva == "5.00")
                         {
@@ -241,17 +275,17 @@ namespace Cognitivo.Setup.Migration
                         }
                         else
                         {
-                            if (db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault()!=null)
+                            if (db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
                             {
                                 sales_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
                             }
-                           
+
                         }
 
                         decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
-                        sales_invoice_detail.unit_price = ( Convert.ToDecimal(row["PRECIOVENTANETO"]) / sales_invoice_detail.quantity ) / cotiz1;
+                        sales_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / sales_invoice_detail.quantity) / cotiz1;
                         sales_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]);
-                        
+
                         //Commit Sales Invoice Detail
                         sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
 
@@ -273,33 +307,18 @@ namespace Cognitivo.Setup.Migration
                         //}
                     }
 
-                    crm_opportunity crm_opportunity = new crm_opportunity();
-                    crm_opportunity.id_contact = sales_invoice.id_contact;
-                    int id_currencyfx=sales_invoice.id_currencyfx;
-                    if (db.app_currencyfx.Where(x=>x.id_currencyfx==id_currencyfx).FirstOrDefault()!=null)
-                    {
-                        crm_opportunity.id_currency = db.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault().id_currency;
-                    }
-                    else
-                    {
-                        crm_opportunity.id_currency = db.app_currencyfx.FirstOrDefault().id_currencyfx;
-                    }
-                    
-                    crm_opportunity.value = sales_invoice.sales_invoice_detail.Sum(x => x.SubTotal_Vat);
-                    sales_invoice.crm_opportunity = crm_opportunity;
 
                     if (sales_invoice.Error == null)
                     {
 
-                     
-                            db.sales_invoice.Add(sales_invoice);
-                            IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
-                            if (validationresult.Count() == 0)
-                            {
-                                db.SaveChanges();
-                            }
+                        sales_invoice.State = System.Data.Entity.EntityState.Added;
+                        sales_invoice.IsSelected = true;
+                        db.sales_invoice.Add(sales_invoice);
 
-                       
+                        db.SaveChanges();
+                        db.Approve(true);
+
+
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
@@ -311,7 +330,7 @@ namespace Cognitivo.Setup.Migration
                     }
                 }
             }
-           // reader.Close();
+            // reader.Close();
             //cmd.Dispose();
             conn.Close();
 

@@ -82,7 +82,7 @@ namespace entity
         /// 
         /// </summary>
         [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+       
         public int id_contract
         {
             get { return _id_contract; }

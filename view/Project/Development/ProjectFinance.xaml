@@ -137,16 +137,16 @@
                 </TreeView>
             </Grid>
 
-            <StackPanel Background="WhiteSmoke" Grid.Column="2" DataContext="{Binding SelectedItem, ElementName=treeProject}">
+            <StackPanel Background="WhiteSmoke" Grid.Column="2">
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Cost"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                       Content="{Binding total_cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Paid"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_paid,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                       Content="{Binding total_paid,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Pending Payment"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding pending_payment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                       Content="{Binding pending_payment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding parent.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, FallbackValue=---}"/>
                 <TextBlock Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
@@ -160,14 +160,14 @@
                     btnAnull_Click="toolBar_Mini_btnAnull_Click"
                     />-->
 
-               
 
-             
+
+
 
                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
                     <StackPanel x:Name="stpcode" >
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                                     
+
                             <Label Content="" Style="{StaticResource ico_Label}"/>
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
                                     <Hyperlink >
@@ -204,7 +204,7 @@
                         <Button Content="{lex:Loc SalesOrder}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
 
-                  
+
                 </StackPanel>
 
             </StackPanel>

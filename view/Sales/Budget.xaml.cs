@@ -16,12 +16,8 @@ namespace Cognitivo.Sales
 {
     public partial class Budget : Page
     {
-
         public string budget_number { get; set; }
-
-        contact _contact;
-
-        ContactDB ContactSalesBudgetDB = new ContactDB();
+     
         SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
         CollectionViewSource sales_budgetViewSource,
@@ -41,11 +37,11 @@ namespace Cognitivo.Sales
 
                 if (_pref_SalesBudget.filterbyBranch)
                 {
-                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company && a.id_branch == entity.CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).Include(x => x.sales_budget_detail).Load();
+                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company && a.id_branch == entity.CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).Load();
                 }
                 else
                 {
-                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).Include(x => x.sales_budget_detail).Load();
+                    SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company).OrderByDescending(x => x.trans_date).Load();
                 }
 
                 sales_budgetViewSource = ((CollectionViewSource)(FindResource("sales_budgetViewSource")));

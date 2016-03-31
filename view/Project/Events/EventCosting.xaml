@@ -185,7 +185,17 @@
                             <TabItem Header="{lex:Loc ServicesperPerson}">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <StackPanel>
-                                        <ItemsControl x:Name="project_event_template_variable_detailsDataGrid"
+                                        <DataGrid x:Name="dgvServicePerperson" Style="{StaticResource detail_Datagrid}" CanUserAddRows="False"
+                                     ItemsSource="{Binding Source={StaticResource project_costingproject_event_template_variable_detailsViewSource}}"  IsEnabled = "{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CellEditEnding="dgvServicePerperson_CellEditEnding"                               >
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn Binding="{Binding is_included, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Tag"/>
+                                                <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Item"/>
+                                                <DataGridTextColumn Binding="{Binding adult_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="adult Consumption" />
+                                                <DataGridTextColumn Binding="{Binding child_consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="Child Consumption" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <!--<ItemsControl x:Name="project_event_template_variable_detailsDataGrid"
                                                     ItemsSource="{Binding Source={StaticResource project_costingproject_event_template_variable_detailsViewSource}}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
@@ -221,14 +231,24 @@
                                                     </ToggleButton>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
+                                        </ItemsControl>-->
                                     </StackPanel>
                                 </ScrollViewer>
                             </TabItem>
                             <TabItem Header="{lex:Loc ServicesperEvent}">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1">
                                     <StackPanel>
-                                        <ItemsControl x:Name="services_per_event_detailsDataGrid"
+                                        <DataGrid x:Name="dgvServicePerEvent" Style="{StaticResource detail_Datagrid}" CanUserAddRows="False"
+                                     ItemsSource="{Binding Source={StaticResource project_costingservices_per_event_detailsViewSource}}"  IsEnabled = "{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CellEditEnding="dgvServicePerEvent_CellEditEnding"                               >
+                                            <DataGrid.Columns>
+                                                <DataGridCheckBoxColumn Binding="{Binding is_included, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Tag"/>
+                                                <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Item"/>
+
+                                                <DataGridTextColumn Binding="{Binding consumption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="Consumption" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <!--<ItemsControl x:Name="services_per_event_detailsDataGrid"
                                   ItemsSource="{Binding Source={StaticResource project_costingservices_per_event_detailsViewSource}}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
@@ -258,7 +278,7 @@
                                                     </ToggleButton>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
+                                        </ItemsControl>-->
                                     </StackPanel>
                                 </ScrollViewer>
                             </TabItem>

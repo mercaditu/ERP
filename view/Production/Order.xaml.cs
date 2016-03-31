@@ -364,12 +364,13 @@ namespace Cognitivo.Production
                 item_request item_request = new item_request();
                 item_request.name = ItemRequest.name;
                 item_request.comment = ItemRequest.comment;
-                item_request.id_branch = production_order.project.id_branch;
+            
                 item_request.id_department = ItemRequest.id_department;
                 item_request.id_production_order = id_production_order;
                 if (production_order.project!=null)
                 {
                     item_request.id_project = production_order.project.id_project;
+                    item_request.id_branch = production_order.project.id_branch;
                 }
             
                 item_request.request_date = DateTime.Now;
@@ -688,6 +689,20 @@ namespace Cognitivo.Production
                             .ToList();
                 itemDataGrid.ItemsSource = list.ToList();
             }
+        }
+
+        private void btnAddParentTask_Click(object sender)
+        {
+            stpcode.IsEnabled = true;
+
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            production_order_detail n_production_order_detail = new production_order_detail();
+            n_production_order_detail.status = Status.Project.Pending;
+            production_order.production_order_detail.Add(n_production_order_detail);
+
+            production_orderproduction_order_detailViewSource.View.Refresh();
+            production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
+            filter_task();
         }
 
     }

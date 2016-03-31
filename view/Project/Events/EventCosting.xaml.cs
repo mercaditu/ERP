@@ -164,61 +164,73 @@ namespace Cognitivo.Project
 
         private void GetServices(object sender, RoutedEventArgs e)
         {
+            EventDB.SaveChanges();
+          toolBar_btnEdit_Click(sender);
+
             if (project_costingViewSource != null)
             {
                 project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
-                if (project_event != null && id_template_designerComboBox.SelectedItem != null)
+                if (project_event.project_event_fixed.Count()==0)
                 {
-                    project_event_template project_event_template = id_template_designerComboBox.SelectedItem as project_event_template;
-                    if (project_event_template.project_event_template_variable != null && project_event_template.project_event_template_variable.Count > 0)
+
+
+                    if (project_event != null && id_template_designerComboBox.SelectedItem != null)
                     {
-                        EventDB.project_event_variable.RemoveRange(project_event.project_event_variable);
-                        foreach (project_event_template_variable person_service in project_event_template.project_event_template_variable)
+                        project_event_template project_event_template = id_template_designerComboBox.SelectedItem as project_event_template;
+                        if (project_event_template.project_event_template_variable != null && project_event_template.project_event_template_variable.Count > 0)
                         {
-                            item_tag item_tag = person_service.item_tag;
-                            foreach (item_tag_detail tag_detail in item_tag.item_tag_detail)
+                            EventDB.project_event_variable.RemoveRange(project_event.project_event_variable);
+                            foreach (project_event_template_variable person_service in project_event_template.project_event_template_variable)
                             {
-                                if (tag_detail.item.is_active)
+                                item_tag item_tag = person_service.item_tag;
+                                foreach (item_tag_detail tag_detail in item_tag.item_tag_detail)
                                 {
+                                    if (tag_detail.item.is_active)
+                                    {
 
 
-                                    project_event_variable project_event_variable = new project_event_variable();
-                                    project_event_variable.item = tag_detail.item;
-                                    project_event_variable.id_item = tag_detail.id_item;
-                                    project_event_variable.item_tag = tag_detail.item_tag;
-                                    project_event_variable.id_tag = tag_detail.id_tag;
-                                    project_event_variable.adult_consumption = person_service.adult_consumption * project_event.quantity_adult;
-                                    project_event_variable.child_consumption = person_service.child_consumption * project_event.quantity_child;
-                                    project_event_variable.is_included = false;
-                                    project_event.project_event_variable.Add(project_event_variable);
+                                        project_event_variable project_event_variable = new project_event_variable();
+                                        project_event_variable.item = tag_detail.item;
+                                        project_event_variable.id_item = tag_detail.id_item;
+                                        project_event_variable.item_tag = tag_detail.item_tag;
+                                        project_event_variable.id_tag = tag_detail.id_tag;
+                                        project_event_variable.adult_consumption = person_service.adult_consumption * project_event.quantity_adult;
+                                        project_event_variable.child_consumption = person_service.child_consumption * project_event.quantity_child;
+                                        project_event_variable.is_included = false;
+                                        project_event.project_event_variable.Add(project_event_variable);
+                                    }
                                 }
                             }
+                            project_costingproject_event_template_variable_detailsViewSource.View.Refresh();
                         }
-                        project_costingproject_event_template_variable_detailsViewSource.View.Refresh();
                     }
 
-                    if (project_event_template.project_event_template_fixed != null && project_event_template.project_event_template_fixed.Count > 0)
+                    if (project_event != null && id_template_designerComboBox.SelectedItem != null)
                     {
-                        EventDB.project_event_fixed.RemoveRange(project_event.project_event_fixed);
-                        foreach (project_event_template_fixed project_event_template_fixed in project_event_template.project_event_template_fixed)
+                        project_event_template project_event_template = id_template_designerComboBox.SelectedItem as project_event_template;
+                        if (project_event_template.project_event_template_fixed != null && project_event_template.project_event_template_fixed.Count > 0)
                         {
-                            item_tag item_tag = project_event_template_fixed.item_tag;
-                            foreach (item_tag_detail tag_detail in item_tag.item_tag_detail)
+                            EventDB.project_event_fixed.RemoveRange(project_event.project_event_fixed);
+                            foreach (project_event_template_fixed project_event_template_fixed in project_event_template.project_event_template_fixed)
                             {
-                                if (tag_detail.item.is_active)
+                                item_tag item_tag = project_event_template_fixed.item_tag;
+                                foreach (item_tag_detail tag_detail in item_tag.item_tag_detail)
                                 {
-                                    project_event_fixed services_per_event_details = new project_event_fixed();
-                                    services_per_event_details.item = tag_detail.item;
-                                    services_per_event_details.id_item = tag_detail.id_item;
-                                    services_per_event_details.item_tag = tag_detail.item_tag;
-                                    services_per_event_details.id_tag = tag_detail.id_tag;
-                                    services_per_event_details.consumption = 1;
-                                    services_per_event_details.is_included = false;
-                                    project_event.project_event_fixed.Add(services_per_event_details);
+                                    if (tag_detail.item.is_active)
+                                    {
+                                        project_event_fixed services_per_event_details = new project_event_fixed();
+                                        services_per_event_details.item = tag_detail.item;
+                                        services_per_event_details.id_item = tag_detail.id_item;
+                                        services_per_event_details.item_tag = tag_detail.item_tag;
+                                        services_per_event_details.id_tag = tag_detail.id_tag;
+                                        services_per_event_details.consumption = 1;
+                                        services_per_event_details.is_included = false;
+                                        project_event.project_event_fixed.Add(services_per_event_details);
+                                    }
                                 }
                             }
+                            project_costingservices_per_event_detailsViewSource.View.Refresh();
                         }
-                        project_costingservices_per_event_detailsViewSource.View.Refresh();
                     }
                 }
                 EstimateCost();
@@ -778,6 +790,23 @@ namespace Cognitivo.Project
             public decimal Quantity { get; set; }
             public decimal UnitPrice { get; set; }
             public decimal SubTotal { get; set; }
+        }
+
+        private void dgvServicePerEvent_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+
+            if (e.Column.DisplayIndex == 0 || e.Column.DisplayIndex == 3)
+            {
+                EstimateCost();
+            }
+        }
+
+        private void dgvServicePerperson_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.Column.DisplayIndex == 0 || e.Column.DisplayIndex == 3 || e.Column.DisplayIndex == 4)
+            {
+                EstimateCost();
+            }
         }
 
      

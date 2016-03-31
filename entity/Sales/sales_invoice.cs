@@ -184,8 +184,10 @@ namespace entity
 
         public void UpdateVAT_Totals()
         {
+            ICollection<CommercialVAT> _CommercialVAT;
             foreach (sales_invoice_detail detail in sales_invoice_detail)
             {
+                _CommercialVAT.Add(null);
                 //Calculate here, and return sum values into. Put entire code into VAT Brillo.
             }
         }

@@ -23,8 +23,37 @@ namespace cntrl
     public partial class SalesOrder : UserControl
     {
        
-        public project project { get; set; }
+        public project project 
+        {
+            get { return _project; }
+            set
+            {
+                if (_project != value)
+                {
+                    _project = value;
+
+                    if (_project != null)
+                    {
+                        if (_project.contact != null) 
+                        {
+                            contact contact = _project.contact;
+
+                            if (contact.app_contract != null)
+                                cbxCondition.SelectedValue = contact.app_contract.id_condition;
+                            //Contract
+                            if (contact.id_contract != null)
+                                cbxContract.SelectedValue = Convert.ToInt32(contact.id_contract);
+
+                            cbxCurrency.get_ActiveRateXContact(ref contact);
+                        }
+                    }
+                }
+            }
+        }
+        
+        private project _project;
         public db db { get; set; }
+
         public SalesOrder()
         {
             InitializeComponent();
@@ -32,60 +61,59 @@ namespace cntrl
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            
-            List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
-            sales_order sales_order = new entity.sales_order();
-            sales_order.id_contact = (int)project.id_contact;
-            sales_order.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
-            if (db.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.SalesOrder && x.is_active == true).FirstOrDefault() != null)
+            if (project != null)
             {
-                sales_order.id_range = db.app_document_range.Where(x => x.app_document.id_application == entity.App.Names.SalesOrder && x.is_active == true).FirstOrDefault().id_range;
-            }
-            sales_order.id_project = project.id_project;
-            sales_order.id_condition = (int)cbxCondition.SelectedValue;
-            sales_order.id_contract = (int)cbxContract.SelectedValue;
-            sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
-            sales_order.comment = "Generate From Project";
+                List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
 
-            sales_order_detail sales_order_detail = null;
-            foreach (project_task _project_task in project_task)
-            {
-                if (_project_task.items.id_item_type==item.item_type.Task)
+                sales_order sales_order = new entity.sales_order();
+                sales_order.id_contact = (int)project.id_contact;
+                sales_order.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+
+                sales_order.id_project = project.id_project;
+                sales_order.id_condition = (int)cbxCondition.SelectedValue;
+                sales_order.id_contract = (int)cbxContract.SelectedValue;
+                sales_order.id_currencyfx = (int)cbxCurrency.SelectedValue;
+                sales_order.comment = "Project -> " + project.name;
+
+                sales_order_detail sales_order_detail = null;
+
+                foreach (project_task _project_task in project_task)
                 {
-                    sales_order_detail = new sales_order_detail();
-                    sales_order_detail.id_sales_order = sales_order.id_sales_order;
-                    sales_order_detail.sales_order = sales_order;
-                    sales_order_detail.id_item = (int)_project_task.id_item;
-                    sales_order_detail.item_description = _project_task.item_description;
-                    sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 0 : _project_task.quantity_est);
-                    sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0 : _project_task.unit_price_vat);
-                    _project_task.sales_detail = sales_order_detail;
-                    _project_task.IsSelected = false;
-                }
-                else
-                {
-                    if (sales_order_detail!=null)
+                    if (_project_task.items.id_item_type == item.item_type.Task)
                     {
+                        sales_order_detail = new sales_order_detail();
+                        sales_order_detail.id_sales_order = sales_order.id_sales_order;
+                        sales_order_detail.sales_order = sales_order;
+                        sales_order_detail.id_item = (int)_project_task.id_item;
+                        sales_order_detail.item_description = _project_task.item_description;
+                        sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 0M : _project_task.quantity_est);
+                        sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0M : _project_task.unit_price_vat);
                         _project_task.sales_detail = sales_order_detail;
                         _project_task.IsSelected = false;
                     }
-                    
+                    else
+                    {
+                        if (sales_order_detail != null)
+                        {
+                            _project_task.sales_detail = sales_order_detail;
+                            _project_task.IsSelected = false;
+                        }
+                    }
+                    sales_order.sales_order_detail.Add(sales_order_detail);
                 }
-                sales_order.sales_order_detail.Add(sales_order_detail);
-              
+
+                sales_order.State = EntityState.Added;
+                sales_order.IsSelected = true;
+                db.sales_order.Add(sales_order);
+                db.SaveChanges();
+                btnCancel_Click(null, null);
             }
-            sales_order.State = EntityState.Added;
-            sales_order.IsSelected = true;
-            db.sales_order.Add(sales_order);
-            db.SaveChanges();
-            btnCancel_Click(null, null);
         }
 
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             try
-            {
-               
+            {  
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -97,12 +125,9 @@ namespace cntrl
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             db.app_contract.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).ToList();
-
             cbxContract.ItemsSource = db.app_contract.Local;
 
-
             db.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
-
             cbxCondition.ItemsSource = db.app_condition.Local;
 
             stackMain.DataContext = project;

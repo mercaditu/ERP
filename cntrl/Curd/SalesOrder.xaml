@@ -19,12 +19,11 @@
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
-    <StackPanel x:Name="stackMain" Background="White">
+    <StackPanel x:Name="stackMain" Background="White" Height="430">
         <Grid>
             <Border Background="WhiteSmoke" />
             <Border Width="45" HorizontalAlignment="Left" Background="#990099">
-                <Image 
-                       Height="32" Opacity="0.64" Source="/cntrl;component/Images/Outline_White/SalesOrder.png"/>
+                <Label Content="S" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="32" HorizontalContentAlignment="Center" Opacity=".64" Foreground="White"/>
             </Border>
             <Label Content="{lex:Loc SalesOrder}" FontSize="25" Margin="50,0,0,0"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
@@ -38,15 +37,15 @@
         <StackPanel HorizontalAlignment="Center">
 
             <Label Content="{lex:Loc name}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding contact.name}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding contact.name}" Style="{StaticResource generic_Label}"/>
             <Label Content="{lex:Loc email}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding contact.email}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding contact.email}" Style="{StaticResource generic_Label}"/>
             <Label Content="{lex:Loc telephone}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding contact.telephone}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding contact.telephone}" Style="{StaticResource generic_Label}"/>
             <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding name}" Style="{StaticResource input_label}"/>
-            <Label Content="{lex:Loc GovCode}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding gov_code}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding name}" Style="{StaticResource generic_Label}"/>
+            <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}"/>
+            <Label Content="{Binding gov_code}" Style="{StaticResource generic_Label}"/>
             <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
 
 
@@ -71,12 +70,12 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-            <Controls:CurrencyBox x:Name="cbxCurrency" Width="252" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  Height="19"/>
+            <Controls:CurrencyBox x:Name="cbxCurrency" Width="256" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-            
+        		FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
+
         </Grid>
     </StackPanel>
 </UserControl>

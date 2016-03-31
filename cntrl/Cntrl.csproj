@@ -389,9 +389,6 @@
     <Compile Include="Panels\pnl_Curd.xaml.cs">
       <DependentUpon>pnl_Curd.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\pnl_EventCosting.xaml.cs">
-      <DependentUpon>pnl_EventCosting.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Panels\pnl_TreeChart.xaml.cs">
       <DependentUpon>pnl_TreeChart.xaml</DependentUpon>
     </Compile>
@@ -842,10 +839,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\pnl_Curd.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Panels\pnl_EventCosting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

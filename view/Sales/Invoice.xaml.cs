@@ -16,7 +16,6 @@ namespace Cognitivo.Sales
 {
     public partial class Invoice : INotifyPropertyChanged
     {
-
         //Global Variables
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailViewSource;
@@ -65,9 +64,6 @@ namespace Cognitivo.Sales
         #region DataLoad
         private void load_PrimaryData()
         {
-            //Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
-            //Task thread_SecondaryData = task_PrimaryData.ContinueWith(antTask => load_SecondaryDataThread());
-
             load_PrimaryDataThread();
             load_SecondaryDataThread();
         }
@@ -109,9 +105,7 @@ namespace Cognitivo.Sales
                 cbxCondition.ItemsSource = SalesInvoiceDB.app_condition.Local;
             }));
 
-
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
-
 
             SalesInvoiceDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -448,8 +442,6 @@ namespace Cognitivo.Sales
                     dgvSalesDetail.CancelEdit();
                     SalesInvoiceDB.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
                     sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
-
                 }
             }
             catch (Exception ex)
@@ -460,8 +452,6 @@ namespace Cognitivo.Sales
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
-
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
 
@@ -528,7 +518,6 @@ namespace Cognitivo.Sales
             foreach (sales_packing item in pnlPacking.selected_sales_packing)
             {
                 sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault(); 
-              //  _sales_invoice.State = EntityState.Modified;
 
                 foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail)
                 {
@@ -536,7 +525,6 @@ namespace Cognitivo.Sales
                     if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_packing_detail.id_item).Count() == 0)
                     {
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-                        
                         sales_invoice_detail.sales_invoice = _sales_invoice;
 
                         sales_invoice_detail.item = _sales_packing_detail.item;
@@ -547,7 +535,6 @@ namespace Cognitivo.Sales
                         sales_packing_relation sales_packing_relation = new sales_packing_relation();
                         sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
                         sales_packing_relation.sales_packing_detail = _sales_packing_detail;
-                        //sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
 
                         sales_invoice_detail.sales_packing_relation.Add(sales_packing_relation);
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
@@ -567,8 +554,6 @@ namespace Cognitivo.Sales
                     sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
 
                 }
-               // SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
-                //sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.View.Refresh();
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = Visibility.Collapsed;
             }
@@ -674,7 +659,6 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
             if (sales_invoice != null)
             {
-                //  sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 entity.Brillo.Document.Start.Manual(sales_invoice, sales_invoice.app_document_range);
             }
             else
@@ -692,8 +676,6 @@ namespace Cognitivo.Sales
             {
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
-
-                //sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
             }
             else
             {

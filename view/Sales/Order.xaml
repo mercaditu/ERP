@@ -78,15 +78,7 @@
                         <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                         <DatePicker x:Name="trans_dateDatePicker" Style="{StaticResource input_datepicker}"
                             SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <Grid>
-                            <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditCust_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                            </StackPanel>
-                        </Grid>
+                        <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
                         <StackPanel>
                             <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
                                                        Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -103,15 +95,8 @@
                         <TextBox Style="{StaticResource input_textbox}" 
                                  metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                  Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <Grid>
-                            <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-                                <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCondition_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditCondition_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                            </StackPanel>
-                        </Grid>
+                        <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
+
                         <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxCondition" 
                                   Grid.Column="1" DisplayMemberPath="name" SelectedValuePath="id_condition"
                                   SelectedValue="{Binding id_condition, Source={StaticResource sales_orderViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -122,15 +107,7 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <Grid>
-                            <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-                                <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddContract_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                                <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="hrefEditContract_PreviewMouseUp" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                            </StackPanel>
-                        </Grid>
+                        <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
                         <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxContract" 
                           DisplayMemberPath="name" SelectedValuePath="id_contract"
                           SelectedValue="{Binding id_contract, Source={StaticResource sales_orderViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
@@ -364,15 +341,11 @@
                             </Popup>
                         </StackPanel>
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
-                                <Label x:Name="lblEditProduct" Content="+" VerticalAlignment="Center" ToolTip="{lex:Loc New}" 
-                                        Margin="4,0" Style="{StaticResource btn_Label}"
-                                       FontFamily="/Cognitivo;component/Resources/#cognitivo" IsEnabled="False"/>
-                            </StackPanel>
+                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
                             <Grid>
-                                <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
-                                                 IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+                                <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" 
+                                                        Width="256" Height="26" Select="item_Select"
+                                                        IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                             </Grid>
                         </StackPanel>
                         <DataGrid x:Name="dgvSalesDetail" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"

@@ -13,10 +13,9 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 
-
 namespace Cognitivo.Sales
 {
-    public partial class Order : Page, INotifyPropertyChanged
+    public partial class Order : Page
     {
         CollectionViewSource sales_orderViewSource;
         SalesOrderDB dbContext = new SalesOrderDB();
@@ -129,9 +128,7 @@ namespace Cognitivo.Sales
             sales_order.trans_date = DateTime.Now.AddDays(_pref_SalesOrder.TransDate_OffSet);
 
             cbxCurrency.get_DefaultCurrencyActiveRate();
-
             dbContext.sales_order.Add(sales_order);
-
             sales_orderViewSource.View.MoveCurrentTo(sales_order);
         }
 
@@ -199,8 +196,6 @@ namespace Cognitivo.Sales
 
         #region Filter Data
 
-     
-
         private void set_ContactPref(object sender, EventArgs e)
         {
             if (sbxContact.ContactID > 0)
@@ -264,15 +259,6 @@ namespace Cognitivo.Sales
 
         #endregion
 
-        //private void calculate_total(object sender, EventArgs e)
-        //{
-        //    sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
-        //    if (sales_order != null)
-        //    {
-        //        sales_order.get_Sales_order_Total();
-        //    }
-        //}
-
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
@@ -301,11 +287,6 @@ namespace Cognitivo.Sales
             calculate_vat(sender, e);
         }
 
-        //private void sales_orderDataGrid_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    calculate_total(sender, e);
-        //}
-
         private void sales_orderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -314,10 +295,7 @@ namespace Cognitivo.Sales
                 if (sales_order != null)
                 {
                     calculate_vat(sender, e);
-
-
                 }
-                //calculate_total(sender, e);
             }
             catch (Exception ex)
             {
@@ -444,8 +422,6 @@ namespace Cognitivo.Sales
                     dbContext.sales_order_detail.Remove(sales_order_detail);
                     CollectionViewSource sales_ordersales_order_detailViewSource = FindResource("sales_ordersales_order_detailViewSource") as CollectionViewSource;
                     sales_ordersales_order_detailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
-
                 }
             }
             catch (Exception ex)
@@ -455,7 +431,6 @@ namespace Cognitivo.Sales
         }
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
 
@@ -463,28 +438,8 @@ namespace Cognitivo.Sales
 
         private void sales_order_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
-
-        //public string number { get; set; }
-
-        //private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (cbxDocument.SelectedValue != null)
-        //    {
-        //        entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
-        //        app_document_range app_document_range = (app_document_range)cbxDocument.SelectedItem;
-        //        sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
-
-        //        entity.Brillo.Range.branch_Code = dbContext.app_branch.Where(x => x.id_branch == sales_order.id_branch).FirstOrDefault().code;
-        //        entity.Brillo.Range.terminal_Code = dbContext.app_terminal.Where(x => x.id_terminal == sales_order.id_terminal).FirstOrDefault().code;
-        //        orderNumber = entity.Brillo.Range.calc_Range(app_document_range, false);
-        //        RaisePropertyChanged("orderNumber");
-        //    }
-        //}
-
-      
 
         private void btnDuplicateInvoice_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {

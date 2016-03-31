@@ -43,7 +43,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="420"/>
+            <RowDefinition Height="360"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -210,7 +210,7 @@
                         <TextBlock Margin="5,0" Text="{lex:Loc Imports}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
                         <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-
+                    
                     <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
                                     Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Telephone, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                         <Label Content="P" Style="{StaticResource ico_Label}"/>
@@ -278,8 +278,6 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-
-
         <Grid Grid.Column="1" Grid.Row="2" Background="White">
             <Rectangle Height="0.7" Fill="Silver" VerticalAlignment="Top" Margin="32,0"/>
             <StackPanel Orientation="Horizontal" Margin="4" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">

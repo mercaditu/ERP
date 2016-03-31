@@ -184,7 +184,7 @@ namespace entity
 
         public void UpdateVAT_Totals()
         {
-            ICollection<CommercialVAT> _CommercialVAT;
+            ICollection<CommercialVAT> _CommercialVAT = new List<CommercialVAT>();
             foreach (sales_invoice_detail detail in sales_invoice_detail)
             {
                 _CommercialVAT.Add(null);

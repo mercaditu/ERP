@@ -35,7 +35,13 @@ namespace cntrl.PanelAdv
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
 
-                load_SalesBudget(_contact.id_contact);
+                if (_contact != null)
+                {
+
+
+                   
+                    load_SalesBudget(_contact.id_contact);
+                }
 
             }
         }

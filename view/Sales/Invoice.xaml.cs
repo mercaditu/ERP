@@ -158,26 +158,13 @@ namespace Cognitivo.Sales
 
         private void btnNew_Click(object sender)
         {
-            try
-            {
-                InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
+            InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
+            sales_invoice sales_invoice = SalesInvoiceDB.New(_pref_SalesInvoice.TransDate_OffSet);
+            cbxCurrency.get_DefaultCurrencyActiveRate();
 
-                sales_invoice sales_invoice = SalesInvoiceDB.New();
-                sales_invoice.trans_date = DateTime.Now.AddDays(_pref_SalesInvoice.TransDate_OffSet);
-                sales_invoice.State = EntityState.Added;
-                sales_invoice.trans_type = Status.TransactionTypes.Normal;
+            SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
-                cbxCurrency.get_DefaultCurrencyActiveRate();
-
-                SalesInvoiceDB.Entry(sales_invoice).State = EntityState.Added;
-                //sales_invoiceViewSource.View.Refresh();
-                //sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
-            }
-            catch
-            {
-                throw;
-            }
-            
+            sales_invoiceViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -356,63 +343,6 @@ namespace Cognitivo.Sales
 
             sales_invoice_detail.sales_invoice = sales_invoice;
         }
-
-        #region QuickLinks
-        private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            sbxContact.Contact.State = EntityState.Added;
-            sbxContact.Contact.is_customer = true;
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.contact contact = new cntrl.Curd.contact();
-          //  contact.btnSave_Click += Save_Click;
-            contact.contactobject = sbxContact.Contact;
-            crud_modal.Children.Add(contact);
-
-        }
-
-        public void Save_Click(object sender)
-        {
-            crud_modal.Children.Clear();
-            crud_modal.Visibility = Visibility.Collapsed;
-            load_PrimaryData();
-        }
-
-        private void hrefAddCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                //dbContext entity = new dbContext();
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.condition condition = new cntrl.condition();
-                crud_modal.Children.Add(condition);
-            }
-        }
-
-        private void hrefEditCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                if (app_condition != null)
-                {
-                    crud_modal.Visibility = Visibility.Visible;
-                    cntrl.condition condition = new cntrl.condition();
-                    crud_modal.Children.Add(condition);
-                }
-            }
-        }
-
-        private void EditProduct(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-        #endregion
 
         private void item_Select(object sender, EventArgs e)
         {

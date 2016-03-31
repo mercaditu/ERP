@@ -8,15 +8,16 @@ namespace entity
 {
     public partial class SalesInvoiceDB : BaseDB
     {
-        public sales_invoice New()
+        public sales_invoice New(int TransDate_OffSet)
         {
             sales_invoice sales_invoice = new sales_invoice();
             sales_invoice.State = EntityState.Added;
             sales_invoice.status = Status.Documents_General.Pending;
             sales_invoice.id_range = Brillo.GetDefault.Range(App.Names.SalesInvoice);
 
-            sales_invoice.trans_date = DateTime.Now;
-
+            sales_invoice.trans_type = Status.TransactionTypes.Normal;
+            sales_invoice.trans_date = DateTime.Now.AddDays(TransDate_OffSet);
+            sales_invoice.State = EntityState.Added;
 
             sales_invoice.IsSelected = true;
 

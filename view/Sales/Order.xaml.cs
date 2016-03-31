@@ -18,22 +18,13 @@ namespace Cognitivo.Sales
 {
     public partial class Order : Page, INotifyPropertyChanged
     {
-        //public string orderNumber { get; set; }
-
         CollectionViewSource sales_orderViewSource;
         SalesOrderDB dbContext = new SalesOrderDB();
         contact _contact = new contact();
-        ContactDB ContactdbContext = new ContactDB();
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
-        int company_ID;
-        int branch_ID;
-        //cntrl.PanelAdv.pnlSalesBudget pnlSalesBudget = new cntrl.PanelAdv.pnlSalesBudget();
 
         public Order()
         {
             InitializeComponent();
-            company_ID = _setting.company_ID;
-            branch_ID = _setting.branch_ID;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,9 +39,6 @@ namespace Cognitivo.Sales
         #region DataLoad
         private void load_PrimaryData()
         {
-            //Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
-            //Task thread_SecondaryData = task_PrimaryData.ContinueWith(antTask => load_SecondaryDataThread());
-
             load_PrimaryDataThread();
             load_SecondaryDataThread();
         }
@@ -60,21 +48,21 @@ namespace Cognitivo.Sales
             OrderSetting OrderSetting = new OrderSetting();
             if (OrderSetting.filterbyBranch)
             {
-                await dbContext.sales_order.Where(a => a.id_company == company_ID && a.id_branch == branch_ID
+                await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
                                             && (
                     //a.trans_date >= navPagination.start_Date
                     // && a.trans_date <= navPagination.end_Date 
                     // && 
-                                             a.is_head == true)).OrderByDescending(x => x.trans_date).Include("sales_order_detail").ToListAsync();
+                                             a.is_head == true)).OrderByDescending(x => x.trans_date).ToListAsync();
             }
             else
             {
-                await dbContext.sales_order.Where(a => a.id_company == company_ID 
+                await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company 
                                             && (
                     //a.trans_date >= navPagination.start_Date
                     // && a.trans_date <= navPagination.end_Date 
                     // && 
-                                             a.is_head == true)).OrderByDescending(x => x.trans_date).Include("sales_order_detail").ToListAsync();
+                                             a.is_head == true)).OrderByDescending(x => x.trans_date).ToListAsync();
             }
             
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -86,19 +74,14 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            //dbContext.projects.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            //    cbxProject.ItemsSource = dbContext.projects.Local;
-            //}));
 
-            dbContext.app_contract.Where(a => a.is_active == true && a.id_company == company_ID).ToList();
+            dbContext.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxContract.ItemsSource = dbContext.app_contract.Local;
             }));
 
-            dbContext.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
+            dbContext.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxCondition.ItemsSource = dbContext.app_condition.Local;
@@ -106,16 +89,16 @@ namespace Cognitivo.Sales
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, _setting.branch_ID, _setting.terminal_ID);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
             }));
 
-            dbContext.app_branch.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
+            dbContext.app_branch.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxBranch.ItemsSource = dbContext.app_branch.Local;
             }));
 
-            dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
+            dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
@@ -131,13 +114,10 @@ namespace Cognitivo.Sales
         }
 
         #endregion
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                load_PrimaryData();
-            }
-            catch (Exception ex) { toolBar.msgError(ex); }
+           load_PrimaryData();
         }
 
         #region toolbar Events
@@ -261,7 +241,7 @@ namespace Cognitivo.Sales
                         cbxSalesRep.SelectedValue = objContact.sales_rep.id_sales_rep;
                 }));
 
-                await dbContext.projects.Where(a => a.is_active == true && a.id_company == company_ID && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToListAsync();
+                await dbContext.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToListAsync();
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
                     cbxProject.ItemsSource = dbContext.projects.Local;
@@ -276,7 +256,7 @@ namespace Cognitivo.Sales
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 cbxContract.ItemsSource = await dbContext.app_contract.Where(a => a.is_active == true
-                                                                        && a.id_company == company_ID
+                                                                        && a.id_company == CurrentSession.Id_Company
                                                                         && a.id_condition == app_condition.id_condition).ToListAsync();
                 cbxContract.SelectedIndex = 0;
             }
@@ -369,128 +349,6 @@ namespace Cognitivo.Sales
 
             sales_order_detail.sales_order = sales_order;
         }
-
-        #region ExpressAdd/Edit
-        private void hrefAddCust_PreviewMouseUp(object sender, RoutedEventArgs e)
-        {
-            sbxContact.Contact.State = EntityState.Added;
-            sbxContact.Contact.is_customer = true;
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.contact contact = new cntrl.Curd.contact();
-           // contact.btnSave_Click += ContactSave_Click;
-            contact.contactobject = sbxContact.Contact;
-            crud_modal.Children.Add(contact);
-
-        }
-
-        private void hrefEditCust_PreviewMouseUp(object sender, RoutedEventArgs e)
-        {
-            ////dbContext entity = new dbContext();
-            //contact selectedcontact = (contact)contactComboBox.Data;
-            //_contact = ContactdbContext.contacts.Where(x => x.id_contact == selectedcontact.id_contact).FirstOrDefault();
-            //_contact.State = EntityState.Modified;
-            //ContactdbContext.contacts.Add(_contact);
-            //if (_contact != null)
-            //{
-            //    contactComboBox.Text = "";
-            //    contactComboBox.Data = null;
-            //    crud_modal.Visibility = Visibility.Visible;
-            //    contactComboBox.IsDisplayed = false;
-            //    cntrl.Curd.contact contact = new cntrl.Curd.contact();
-            //    contact.contactobject = _contact;
-            //    contact.btnSave_Click += ContactSave_Click;
-            //    crud_modal.Children.Add(contact);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Please select contact first.", "Cognitivo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            //}
-        }
-        public void ContactSave_Click(object sender)
-        {
-            crud_modal.Children.Clear();
-            crud_modal.Visibility = Visibility.Collapsed;
-
-        }
-        private void hrefAddCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                //dbContext entity = new dbContext();
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.condition condition = new cntrl.condition();
-                crud_modal.Children.Add(condition);
-            }
-        }
-
-        private void hrefEditCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                if (app_condition != null)
-                {
-                    //dbContext entity = new dbContext();
-                    crud_modal.Visibility = Visibility.Visible;
-                    cntrl.condition condition = new cntrl.condition();
-                    crud_modal.Children.Add(condition);
-                }
-            }
-        }
-        private void hrefAddContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
-                db.app_contract.Where(a => a.is_active == true && a.id_company == company_ID).Load();
-                contractViewSource.Source = db.app_contract.Local;
-
-                dbContext entity = new dbContext();
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.contract contract = new cntrl.contract();
-                contract.app_contractViewSource = contractViewSource;
-                contract.MainViewSource = sales_orderViewSource;
-                contract.curObject = sales_orderViewSource.View.CurrentItem;
-                contract.entity = entity;
-                contract.operationMode = cntrl.Class.clsCommon.Mode.Add;
-                contract.isExternalCall = true;
-                crud_modal.Children.Add(contract);
-            }
-        }
-        private void hrefEditContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
-                db.app_contract.Where(a => a.is_active == true && a.id_company == company_ID).Load();
-                contractViewSource.Source = db.app_contract.Local;
-
-                app_contract app_contract = cbxContract.SelectedItem as app_contract;
-                if (app_contract != null)
-                {
-                    dbContext entity = new dbContext();
-                    crud_modal.Visibility = System.Windows.Visibility.Visible;
-                    cntrl.contract contract = new cntrl.contract();
-                    contract.app_contractViewSource = contractViewSource;
-                    contract.MainViewSource = sales_orderViewSource;
-                    contract.curObject = sales_orderViewSource.View.CurrentItem;
-                    contract.entity = entity;
-                    contract.app_contractobject = app_contract;
-                    contract.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-                    contract.isExternalCall = true;
-                    crud_modal.Children.Add(contract);
-                }
-            }
-        }
-
-
-        #endregion
 
         private void item_Select(object sender, EventArgs e)
         {
@@ -655,17 +513,17 @@ namespace Cognitivo.Sales
         {
             if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Day)
             {
-                List<sales_invoice> sales_invoiceList = dbContext.sales_invoice.Local.Where(x => x.id_company == company_ID && (x.trans_date >= navPagination.start_Date)).ToList();
+                List<sales_invoice> sales_invoiceList = dbContext.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
                 sales_orderViewSource.Source = sales_invoiceList;
             }
             if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Month)
             {
-                List<sales_invoice> sales_invoice = dbContext.sales_invoice.Local.Where(x => x.id_company == company_ID && (x.trans_date >= navPagination.start_Date)).ToList();
+                List<sales_invoice> sales_invoice = dbContext.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
                 sales_orderViewSource.Source = sales_invoice;
             }
             if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Year)
             {
-                List<sales_invoice> sales_invoice = dbContext.sales_invoice.Local.Where(x => x.id_company == company_ID && (x.trans_date >= navPagination.start_Date)).ToList();
+                List<sales_invoice> sales_invoice = dbContext.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
                 sales_orderViewSource.Source = sales_invoice;
             }
         }

@@ -11,7 +11,7 @@
           lex:LocalizeDictionary.DesignCulture="en-US"
         xmlns:entity="clr-namespace:entity;assembly=entity" 
         mc:Ignorable="d" Background="White"
-        Height="512" Width="512" Loaded="UserControl_Loaded">
+        Height="512" Width="620" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}"/>
     </UserControl.Resources>
@@ -21,32 +21,35 @@
     <StackPanel DataContext="{StaticResource sales_orderViewSource}" Background="WhiteSmoke">
         <Grid>
             <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Introvert}">
-                <Image Source="/cntrl;component/Images/Outline_White/import-26.png" Margin="4"/>
-                <Label Foreground="White" Content="{lex:Loc SalesOrder}" Style="{StaticResource H3}"/>
+                <Label Content="" FontSize="32" HorizontalContentAlignment="Center" Opacity="0.8" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
+                <Label Foreground="White" Content="{lex:Loc SalesOrder}" Style="{StaticResource H2}"/>
             </StackPanel>
             <Label Content="c" FontSize="22" VerticalAlignment="Center" Margin="0"
 				HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White" 
 				FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <Grid Margin="8">
-            <StackPanel Orientation="Horizontal" >
-                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="300"/>
-            </StackPanel>
+            <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="256" HorizontalAlignment="Left"/>
             <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp"/>
         </Grid>
-        <DataGrid x:Name="sales_orderDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails"
-                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False"  >
+        <DataGrid x:Name="sales_orderDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails" Background="{StaticResource AccentColor_Brush}"
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" VerticalScrollBarVisibility="Auto" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" 
+                  Height="407"  >
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Select}" Width="SizeToHeader" />
-                <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Date}" Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding number}" Header="OrderNumber" Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding order_Total}" Header="OrderTotal" Width="Auto" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
+                <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="SizeToHeader" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding order_Total}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True"/>
             </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
+            <!--<DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <!--<StackPanel Background="Gainsboro" Opacity="0.64">
+                    -->
+            <!--<StackPanel Background="Gainsboro" Opacity="0.64">
                         <Label Content="{lex:Loc Details}" Style="{StaticResource H3}" Foreground="White"/>-->
+            <!--
                         <DataGrid AutoGenerateColumns="False" Margin="16">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding name}" Header="name" Width="SizeToHeader" IsReadOnly="True"/>
@@ -54,9 +57,11 @@
                                 <DataGridTextColumn Binding="{Binding balance}" Header="Balance" Width="SizeToHeader" IsReadOnly="True"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                    <!--</StackPanel>-->
+                    -->
+            <!--</StackPanel>-->
+            <!--
                 </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
+            </DataGrid.RowDetailsTemplate>-->
         </DataGrid>
     </StackPanel>
 </UserControl>

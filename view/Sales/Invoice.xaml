@@ -137,11 +137,7 @@
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
-                        <Grid>
-                            <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                            <Label Content="e" HorizontalAlignment="Right"
-                                   Style="{StaticResource btn_Label}" IsEnabled="False"/>
-                        </Grid>
+                        <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                         <Controls:CurrencyBox x:Name="cbxCurrency" 
                                           SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                           LostFocus="cbxCurrency_LostFocus"/>
@@ -471,20 +467,6 @@
                     </Grid>
                     <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
                                                  IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
-                    <!--<cntrl:SearchableTextbox x:Name="cbxItem" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256"
-                                                 CollectionViewSource="{StaticResource itemViewSource}" Height="26"  
-                                                 KeyDown="cbxItem_KeyDown" MouseDoubleClick="cbxItem_MouseDoubleClick"
-                                                 IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                        <cntrl:SearchableTextbox.Columns>
-                            <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Code}" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                            <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Product}" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                            <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:ID}" ForProperty="id_item" Binding="{Binding id_item, Mode=Default}" Hide="True" EnableSearch="False"/>
-                        </cntrl:SearchableTextbox.Columns>
-                    </cntrl:SearchableTextbox>-->
-                    <!--<Label Content="{lex:Loc Quantity}"/>
-                    <TextBox Text="{Binding quantity, Mode=TwoWay, 
-                        NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, 
-                        ValidatesOnExceptions=true, ValidatesOnDataErrors=True}"/>-->
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Label Content="Discount" Style="{StaticResource input_label}"/>

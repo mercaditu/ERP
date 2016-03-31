@@ -50,14 +50,14 @@ namespace Cognitivo.Setup.Migration
                        + " dbo.SUCURSAL RIGHT OUTER JOIN"
                        + " dbo.VENTAS ON dbo.SUCURSAL.CODSUCURSAL = dbo.VENTAS.CODSUCURSAL LEFT OUTER JOIN"
                        + " dbo.VENDEDOR ON dbo.VENTAS.CODVENDEDOR = dbo.VENDEDOR.CODVENDEDOR ON dbo.CLIENTES.CODCLIENTE = dbo.VENTAS.CODCLIENTE"
-                       + " LEFT OUTER JOIN FACTURACOBRAR ON VENTAS.CODVENTA = FACTURACOBRAR.CODVENTA";
+                       + " LEFT OUTER JOIN FACTURACOBRAR ON VENTAS.CODVENTA = FACTURACOBRAR.CODVENTA where FECHAVENTA>'1/1/2016'";
 
             SqlConnection conn = new SqlConnection(_connString);
 
             //Counts Total number of Rows we have to process
             SqlCommand cmd = new SqlCommand(sql, conn);
             conn.Open();
-            cmd.CommandText = "SELECT COUNT(*) FROM VENTAS";
+            cmd.CommandText = "SELECT COUNT(*) FROM VENTAS where FECHAVENTA>'1/1/2016'";
             cmd.CommandType = CommandType.Text;
             int count = (int)cmd.ExecuteScalar();
             conn.Close();

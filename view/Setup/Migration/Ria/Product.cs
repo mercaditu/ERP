@@ -167,6 +167,7 @@ namespace Cognitivo.Setup.Migration
                                 if (item_price_list != null && app_currency != null && _vat_coeficient != -1)
                                 {
                                     item_price item_price = new item_price();
+                                    item_price.item = item;
                                     item_price.value = ((decimal)price_row["PRECIOVENTA"] / (1 + coefficient));
                                     item_price.min_quantity = (price_row.IsNull("CANTIDAD")) ? 0 : Convert.ToDecimal(price_row["CANTIDAD"]);
                                     item_price.id_currency = app_currency.id_currency;
@@ -176,7 +177,10 @@ namespace Cognitivo.Setup.Migration
                             }
                         }
                     }
-                    catch { }
+                    catch(Exception ex) 
+                    {
+                        throw ex;
+                    }
 
                     try
                     {

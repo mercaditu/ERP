@@ -217,6 +217,7 @@
     <Compile Include="Context\Project\ProjectTemplateDB.cs" />
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="Execustionstrategy.cs" />
+    <Compile Include="Generic\CommercialVAT.cs" />
     <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.cs" />
     <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.Designer.cs">
       <DependentUpon>201603251402215_updateprojectitemtransfer.cs</DependentUpon>

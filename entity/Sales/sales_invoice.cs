@@ -181,7 +181,15 @@ namespace entity
         //TimeCapsule
         public ICollection<sales_invoice> older { get; set; }
         public sales_invoice newer { get; set; }
-        
+
+        public void UpdateVAT_Totals()
+        {
+            foreach (sales_invoice_detail detail in sales_invoice_detail)
+            {
+                //Calculate here, and return sum values into. Put entire code into VAT Brillo.
+            }
+        }
+
         #region "Foreign Key"
         public virtual crm_opportunity crm_opportunity { get; set; }
         public virtual sales_order sales_order { get; set; }

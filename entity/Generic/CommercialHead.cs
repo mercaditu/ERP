@@ -1,6 +1,7 @@
 namespace entity
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
@@ -287,6 +288,9 @@ namespace entity
         /// 
         /// </summary>
         public Status.TransactionTypes trans_type { get; set; }
+
+        [NotMapped]
+        public ICollection<CommercialVAT> CommercialVAT { get; set; }
 
         #region Navigation
         public virtual app_currencyfx app_currencyfx { get; set; }

@@ -75,10 +75,11 @@ namespace entity
                 decimal OriginalValue = value - _GrandTotal;
                 if (OriginalValue != 0)
                 {
-                    decimal DifferenceValue = OriginalValue / purchase_order_detail.Sum(x => x.quantity);
+                    decimal DifferenceValue = OriginalValue / purchase_order_detail.Count;
                     foreach (var item in purchase_order_detail)
                     {
-                        item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue;
+
+                        item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue / item.quantity;
                         item.RaisePropertyChanged("UnitCost_Vat");
                     }
 

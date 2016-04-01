@@ -20,7 +20,7 @@ namespace Cognitivo.Configs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             app_terminalViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_terminalViewSource")));
-            entity.db.app_terminal.Include("app_branch").OrderByDescending(a => a.is_active).Load();
+            entity.db.app_terminal.Where(x => x.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_terminalViewSource.Source = entity.db.app_terminal.Local;
         }
 

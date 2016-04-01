@@ -186,7 +186,6 @@
                               SelectionChanged="cbxContactRole_SelectionChanged"/>
                     <Label Content="{lex:Loc RelatedTo}" Style="{StaticResource input_label}"/>
                     <cntrls:SmartBox_Contact x:Name="cbxRelation" Margin="4" Width="256" HorizontalAlignment="Left" Select="cbxRelation_Select"
-                                             Get_Customers="True" Get_Suppliers="True"
                                              Text="{Binding parent.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <!--<ComboBox x:Name="cbxRelation" Style="{StaticResource input_combobox}"
                               ItemsSource="{Binding Source={StaticResource contactParentViewSource}}" 

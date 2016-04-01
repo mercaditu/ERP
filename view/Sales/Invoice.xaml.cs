@@ -582,19 +582,21 @@ namespace Cognitivo.Sales
             sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
 
             sbxContact.Text = pnlSalesOrder.selected_sales_order.FirstOrDefault().contact.name;
-            foreach (sales_order item in pnlSalesOrder.selected_sales_order)
+            foreach (sales_order sales_order in pnlSalesOrder.selected_sales_order)
             {
                 _sales_invoice.State = EntityState.Modified;
-                _sales_invoice.contact = item.contact;
-                _sales_invoice.id_contact = item.contact.id_contact;
-                _sales_invoice.id_condition = item.id_condition;
-                _sales_invoice.id_contract = item.id_contract;
-                _sales_invoice.id_currencyfx = item.id_currencyfx;
-                _sales_invoice.app_currencyfx = item.app_currencyfx;
-                _sales_invoice.id_sales_order = item.id_sales_order;
-                foreach (sales_order_detail _sales_order_detail in item.sales_order_detail)
+                _sales_invoice.contact = sales_order.contact;
+
+                cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == sales_order.contact.id_contact).ToList();
+
+                _sales_invoice.id_contact = sales_order.contact.id_contact;
+                _sales_invoice.id_condition = sales_order.id_condition;
+                _sales_invoice.id_contract = sales_order.id_contract;
+                _sales_invoice.id_currencyfx = sales_order.id_currencyfx;
+                _sales_invoice.app_currencyfx = sales_order.app_currencyfx;
+                _sales_invoice.id_sales_order = sales_order.id_sales_order;
+                foreach (sales_order_detail _sales_order_detail in sales_order.sales_order_detail)
                 {
-                    
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
                         sales_invoice_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
                         sales_invoice_detail.sales_order_detail = _sales_order_detail;
@@ -609,7 +611,6 @@ namespace Cognitivo.Sales
                                                                                      .FirstOrDefault();
                         sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
-                  
                 }
                 SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
                 crud_modal.Children.Clear();

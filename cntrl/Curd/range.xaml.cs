@@ -19,8 +19,6 @@ namespace cntrl
         private dbContext _entity = null;
         public dbContext entity { get { return _entity; } set { _entity = value; } }
 
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
-
         public range()
         {
             InitializeComponent();
@@ -34,12 +32,12 @@ namespace cntrl
                 stackMain.DataContext = document_rangeViewSource;
 
                 CollectionViewSource app_documentViewSource = (CollectionViewSource)FindResource("app_documentViewSource");
-                app_documentViewSource.Source = entity.db.app_document.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).ToList();
+                app_documentViewSource.Source = entity.db.app_document.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource app_branchViewSource = (CollectionViewSource)FindResource("app_branchViewSource");
-                app_branchViewSource.Source = entity.db.app_branch.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).ToList();
+                app_branchViewSource.Source = entity.db.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                 CollectionViewSource app_terminalViewSource = (CollectionViewSource)FindResource("app_terminalViewSource");
-                app_terminalViewSource.Source = entity.db.app_terminal.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).ToList();
+                app_terminalViewSource.Source = entity.db.app_terminal.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                 List<string> listOfSysPrinters = new List<string>();
                 foreach (string printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)

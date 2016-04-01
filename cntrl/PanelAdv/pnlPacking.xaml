@@ -22,10 +22,7 @@
     <StackPanel DataContext="{StaticResource sales_packingViewSource}">
         <Grid Background="{StaticResource appConfig}">
             <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal" >
-                    <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="sbxContact_Select" Width="300"
-                                                   />
-                </StackPanel>
+                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" VerticalAlignment="Center" Select="sbxContact_Select" Width="256"/>
                 <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp"/>
             </StackPanel>
 

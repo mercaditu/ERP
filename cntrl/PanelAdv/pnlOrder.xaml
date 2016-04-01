@@ -11,7 +11,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" Width="288"
-             mc:Ignorable="d" Background="White"
+             mc:Ignorable="d" Background="Purple"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
@@ -19,16 +19,14 @@
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderproduction_order_detailViewSource" Source="{Binding production_order_detail, Source={StaticResource production_orderViewSource}}"/>
     </UserControl.Resources>
-    <StackPanel Background="White" x:Name="stackFields" DataContext="{StaticResource production_orderproduction_order_detailViewSource}">
-        <Grid>
-            <Border Background="WhiteSmoke" />
-            <Border Width="45" HorizontalAlignment="Left" Background="Purple">
-                <Label Content="" FontSize="32" HorizontalContentAlignment="Center" Opacity="0.8"
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
-            </Border>
-            <Label x:Name="lblTitle" Content="{lex:Loc ProductionOrder}" FontSize="25" Margin="50,0,0,0"/>
-            <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                               HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+    <StackPanel x:Name="stackFields" Background="White" Margin="3"
+                DataContext="{StaticResource production_orderproduction_order_detailViewSource}">
+        <Grid Background="Purple" >
+            <Label Content="" FontSize="32" Margin="3,0" HorizontalContentAlignment="Left" Opacity="0.8"
+                   FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
+            <Label x:Name="lblTitle" Content="{lex:Loc ProductionOrder}" Foreground="White" FontSize="25" Margin="45,0,0,0"/>
+            <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Foreground="White" Margin="2" 
+                   HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
         <TextBlock Text="Create Production Order" Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center" DataContext="{StaticResource production_orderViewSource}">
@@ -54,7 +52,7 @@
             <DatePicker Text="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
         </StackPanel>
         <DataGrid x:Name="production_order_detailDataGrid" AutoGenerateColumns="False" IsReadOnly="True" EnableRowVirtualization="True" 
-                  Height="174" ItemsSource="{Binding}" Margin="8" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
+                  Height="164" ItemsSource="{Binding}" Margin="8" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding item.name}" Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
                 <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>

@@ -17,7 +17,8 @@
     <StackPanel DataContext="{StaticResource purchase_orderViewSource}">
         <Grid Background="{StaticResource appConfig}">
             <StackPanel Orientation="Horizontal">
-                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="300"/>
+                <cntrl:SmartBox_Contact x:Name="sbxContact" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                        Get_Customers="True" Select="ContactPref" Width="256"/>
             </StackPanel>
             <Button Content="Link" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,30,0" Click="btnSave_MouseUp"/>
             <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"

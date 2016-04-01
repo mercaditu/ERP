@@ -21,19 +21,26 @@ namespace entity.Brillo
             approve = true;
             annul = true;
 
-            if (CurrentSession.User.security_role.is_master != true)
+            try
             {
-                if (CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault() != null)
+                if (CurrentSession.User.security_role.is_master != true)
                 {
-                    security_curd security_curd = CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault();
+                    if (CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault() != null)
+                    {
+                        security_curd security_curd = CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault();
 
-                    view = security_curd.can_read;
-                    create = security_curd.can_create;
-                    edit = security_curd.can_update;
-                    delete = security_curd.can_delete;
-                    approve = security_curd.can_approve;
-                    annul = security_curd.can_annul;
+                        view = security_curd.can_read;
+                        create = security_curd.can_create;
+                        edit = security_curd.can_update;
+                        delete = security_curd.can_delete;
+                        approve = security_curd.can_approve;
+                        annul = security_curd.can_annul;
+                    }
                 }
+            }
+            catch
+            {
+
             }
         }
     }

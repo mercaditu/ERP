@@ -522,6 +522,8 @@ namespace Cognitivo.Sales
                 detail.item = await dbContext.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
             }
 
+            cbxContactRelation.ItemsSource = dbContext.contacts.Where(x => x.parent.id_contact == sales_order.id_contact).ToList();
+
             CollectionViewSource sales_ordersales_order_detailViewSource = ((CollectionViewSource)(FindResource("sales_ordersales_order_detailViewSource")));
             sales_orderViewSource.View.Refresh();
             sales_ordersales_order_detailViewSource.View.Refresh();

@@ -34,7 +34,6 @@ namespace entity.Brillo.Logic
                         Title = "Report",
                         Content = MainWindow
                     };
-
                     window.ShowDialog();
                 }
             }

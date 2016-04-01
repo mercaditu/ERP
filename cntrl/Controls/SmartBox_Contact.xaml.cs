@@ -49,7 +49,7 @@ namespace cntrl.Controls
 
         public entity.contact Contact { get; set; }
 
-        int company_ID = entity.Properties.Settings.Default.company_ID;
+        //int company_ID = entity.Properties.Settings.Default.company_ID;
 
         Task taskSearch;
         CancellationTokenSource tokenSource;
@@ -78,7 +78,6 @@ namespace cntrl.Controls
             {
                 Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
-
         }
 
         private void StartSearch(object sender, KeyEventArgs e)

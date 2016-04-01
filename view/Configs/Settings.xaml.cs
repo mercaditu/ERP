@@ -19,7 +19,7 @@ namespace Cognitivo.Configs
             InitializeComponent();
 
             app_companyViewSource = ((CollectionViewSource)(this.FindResource("app_companyViewSource")));
-            db.app_company.Include(v => v.app_branch).Load();
+            db.app_company.Include(v => v.app_branch).LoadAsync();
 
             app_companyViewSource.Source = db.app_company.Local;
         }
@@ -43,7 +43,7 @@ namespace Cognitivo.Configs
                 {
                     entity.CurrentSession.Id_Company = entity.Properties.Settings.Default.company_ID;
                     entity.CurrentSession.Id_Branch = entity.Properties.Settings.Default.branch_ID;
-                    entity.CurrentSession.Id_terminal = entity.Properties.Settings.Default.terminal_ID;
+                    entity.CurrentSession.Id_Terminal = entity.Properties.Settings.Default.terminal_ID;
 
                     //GoBack with changed data.
                     mainWindow.mainFrame.NavigationService.GoBack();

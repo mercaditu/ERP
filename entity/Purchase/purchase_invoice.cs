@@ -22,7 +22,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
-            if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
+            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
 
             purchase_invoice_detail = new List<purchase_invoice_detail>();
             purchase_return = new List<purchase_return>();

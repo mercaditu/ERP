@@ -38,19 +38,19 @@ namespace entity
         }
         static int _Id_Branch;
 
-        public static int Id_terminal
+        public static int Id_Terminal
         {
             get
             {
-                if (_Id_terminal == 0)
+                if (_Id_Terminal == 0)
                 {
-                    _Id_terminal = Properties.Settings.Default.terminal_ID;
+                    _Id_Terminal = Properties.Settings.Default.terminal_ID;
                 };
-                return _Id_terminal;
+                return _Id_Terminal;
             }
-            set { _Id_terminal = value; }
+            set { _Id_Terminal = value; }
         }
-        static int _Id_terminal;
+        static int _Id_Terminal;
 
         public static List<security_curd> Security_CurdList
         {
@@ -106,7 +106,7 @@ namespace entity
                                 .FirstOrDefault() != null)
                 {
                     //Set Terminal
-                    Id_terminal = db.app_terminal.Where(terminal =>
+                    Id_Terminal = db.app_terminal.Where(terminal =>
                                     terminal.id_branch == Id_Branch &&
                                     terminal.id_terminal == Properties.Settings.Default.terminal_ID)
                                     .FirstOrDefault().id_terminal;

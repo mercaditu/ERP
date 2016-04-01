@@ -104,7 +104,7 @@ namespace Cognitivo.Product
             transfercostViewSource = this.FindResource("transfercostViewSource") as CollectionViewSource;
             transfercostViewSource.Source = clsTotalGrid;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.Transfer, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.Transfer, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
 
         private void SmartBox_Item_Select(object sender, RoutedEventArgs e)

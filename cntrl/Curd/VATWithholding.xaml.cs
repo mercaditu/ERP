@@ -33,7 +33,7 @@ namespace cntrl
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PaymentWithHolding, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PaymentWithHolding, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {

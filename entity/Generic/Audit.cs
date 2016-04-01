@@ -18,7 +18,29 @@ namespace entity
         public int id_company { get; set; }
         public int id_user { get; set; }
         public bool is_head { get; set; }
-        public DateTime timestamp { get; set; }
+        
+        public DateTime timestamp 
+        {
+            get
+            {
+                if (_timestamp == null)
+                {
+                    return DateTime.Now;
+                }
+                else
+                {
+                    return _timestamp;
+                }
+            }
+            set
+            {
+                if (_timestamp != value)
+                {
+                    _timestamp = value;
+                }
+            }
+        }
+        public DateTime _timestamp;
 
         //Data
         [NotMapped]

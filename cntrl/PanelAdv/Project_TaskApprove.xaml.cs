@@ -38,7 +38,7 @@ namespace cntrl.PanelAdv
         public string number { get; set; }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ActivityPlan, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ActivityPlan, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             using(db db= new db())
             {
                 project_task project_task=db.project_task.FirstOrDefault();

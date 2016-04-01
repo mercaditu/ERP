@@ -73,7 +73,7 @@ namespace Cognitivo.Sales
                 }));
 
                 CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, entity.CurrentSession.Id_Branch, entity.CurrentSession.Id_terminal);
+                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, entity.CurrentSession.Id_Branch, entity.CurrentSession.Id_Terminal);
 
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
                 app_vat_groupViewSource.Source = await SalesBudgetDB.app_vat_group

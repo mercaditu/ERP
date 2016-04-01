@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System;
@@ -15,7 +14,6 @@ namespace entity
         {
             is_head = true;
             is_issued = false;
-            //is_accounted = false;
             status = Status.Documents_General.Pending;
             
             sales_invoice_detail = new List<sales_invoice_detail>();
@@ -24,8 +22,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
-            if (CurrentSession.Id_terminal > 0) { id_terminal = CurrentSession.Id_terminal; }
-            timestamp = DateTime.Now;
+            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
         }
 
         [NotMapped]
@@ -77,14 +74,15 @@ namespace entity
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_currencyfx
         {
-            get {
-                return _id_currencyfx; }
+            get 
+            {
+                return _id_currencyfx; 
+            }
             set
             {
                 _id_currencyfx = value;
                 RaisePropertyChanged("id_currencyfx");
 
-            
                 if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                 {
                     foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
@@ -155,8 +153,6 @@ namespace entity
                     _DiscountPercentage = value;
                     RaisePropertyChanged("DiscountPercentage");
 
-
-
                     decimal DiscountValue = GrandTotal * DiscountPercentage;
                     if (DiscountValue != 0)
                     {
@@ -168,11 +164,8 @@ namespace entity
                             item.RaisePropertyChanged("DiscountVat");
                             RaisePropertyChanged("GrandTotal");
                         }
-
-
                     }   
                 }
-              
             }
         }
         private decimal _DiscountPercentage;

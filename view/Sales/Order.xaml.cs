@@ -88,7 +88,7 @@ namespace Cognitivo.Sales
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
             dbContext.app_branch.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();

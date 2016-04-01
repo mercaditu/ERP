@@ -82,9 +82,9 @@ namespace entity.Brillo.Document
                         currency = g.sales_budget != null ? g.sales_budget.app_currencyfx.app_currency.name : "",
                         currencyfx_rate = g.sales_budget != null ? g.sales_budget.app_currencyfx.sell_value : 0,
                         item_code = g.item != null ? g.item.code : "",
-                        item_description = g.item.name,
-                        item_long_description = g.item.description,
-                        item_brand = g.item.item_brand != null ? g.item.item_brand.name : "",
+                        item_description = g.item != null ? g.item.name : "",
+                        item_long_description = g.item != null ? g.item.description : "",
+                        item_brand = g.item != null ? (g.item.item_brand != null ? g.item.item_brand.name : "") : "",
                         quantity = g.quantity,
                         sub_Total = g.SubTotal,
                         sub_Total_vat = g.SubTotal_Vat,
@@ -105,6 +105,7 @@ namespace entity.Brillo.Document
                         security_user_name = g.sales_budget != null ? g.sales_budget.security_user.name : "",
                         AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
 
+                        // Text -> Words
                         NumToWords.IntToText(Convert.ToInt32(g.sales_budget != null ? g.sales_budget.GrandTotal : 0)) 
                         :
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "",

@@ -160,7 +160,7 @@ namespace Cognitivo.Setup.Migration
 
                         //Sales Invoice Detail
                         string sqlDetail = "SELECT"
-                        + " dbo.PRODUCTOS.DESPRODUCTO," //0
+                        + " dbo.PRODUCTOS.DESPRODUCTO as ITEM_DESPRODUCTO," //0
                         + " dbo.COMPRASDETALLE.DESPRODUCTO," //1
                         + " dbo.COMPRASDETALLE.CANTIDADCOMPRA, " //2
                         + " dbo.COMPRASDETALLE.COSTOUNITARIO, " //3
@@ -181,10 +181,11 @@ namespace Cognitivo.Setup.Migration
 
                             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
 
-                            string _prod_Name = row["DESPRODUCTO"].ToString();
+                            string _prod_Name = row["ITEM_DESPRODUCTO"].ToString();
                             item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
                             purchase_invoice_detail.id_item = item.id_item;
-                            purchase_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADVENTA"]);
+                            purchase_invoice_detail.item_description = row["DESPRODUCTO"].ToString();
+                            purchase_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADCOMPRA"]);
 
                             purchase_invoice_detail.id_location = id_location;
 
@@ -207,7 +208,7 @@ namespace Cognitivo.Setup.Migration
 
                             decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
                             // purchase_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / purchase_invoice_detail.quantity) / cotiz1;
-                            purchase_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]);
+                            purchase_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOUNITARIO"]);
 
                             //Commit Sales Invoice Detail
                             purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);

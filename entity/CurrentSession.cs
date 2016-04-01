@@ -61,7 +61,7 @@ namespace entity
             }
             set { _Security_CurdList = value; }
         }
-        static List<security_curd> _Security_CurdList;
+        static List<security_curd> _Security_CurdList = new List<security_curd>();
 
         public static security_user User { get; set; }
 
@@ -118,13 +118,9 @@ namespace entity
 
         public static void Refresh_Security()
         {
-            using (db db = new db())
-            {
-                Security_CurdList.Clear();
-                Security_CurdList = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault()
-                                       .security_role
-                                       .security_curd.ToList();
-            }
+            _Security_CurdList.Clear();
+            security_user security_user = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault();
+            _Security_CurdList = db.security_curd.Where(x => x.id_role == security_user.id_role).ToList();
         }
     }
 }

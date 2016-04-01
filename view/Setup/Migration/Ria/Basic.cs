@@ -76,8 +76,17 @@ namespace Cognitivo.Setup.Migration
 
             Dispatcher.BeginInvoke((Action)(() => progBasic.IsIndeterminate = false));
         }
+
         public app_contract GenerateDefaultContrat(app_condition app_condition, int interval)
         {
+            using(db db = new db())
+            {
+                if (true)
+	            {
+
+	            }
+            }
+
             app_contract app_contract = new app_contract();
             app_contract.app_condition = app_condition;
             app_contract.name = interval.ToString() + " Días";
@@ -87,6 +96,7 @@ namespace Cognitivo.Setup.Migration
             _app_contract_detail.interval = (short)interval;
             return app_contract;
         }
+
         private void sync_Company()
         {
             DataTable dt = exeDT("SELECT * FROM EMPRESA");

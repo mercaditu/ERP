@@ -152,7 +152,13 @@ namespace Cognitivo.Setup.Migration
                         {
                             DateTime _due_date = Convert.ToDateTime(reader[30]);
                             int interval = (_due_date - sales_invoice.trans_date).Days;
-                            app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == sales_invoice.id_condition && x.app_contract.id_company == id_company && x.interval == interval).FirstOrDefault();
+                            app_contract_detail app_contract_detail = 
+                                db.app_contract_detail.Where(x => 
+                                    x.app_contract.id_condition == sales_invoice.id_condition && 
+                                    x.app_contract.id_company == id_company && 
+                                    x.interval == interval)
+                                     .FirstOrDefault();
+                            
                             if (app_contract_detail != null)
                             {
                                 sales_invoice.app_contract = app_contract_detail.app_contract;

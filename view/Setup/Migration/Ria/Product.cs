@@ -72,7 +72,7 @@ namespace Cognitivo.Setup.Migration
                     item.description = (reader[14] is DBNull) ? string.Empty : reader[14].ToString();
 
                     string name = (reader[16] is DBNull) ? string.Empty : reader[16].ToString();
-                    if (db.app_measurement.Where(x => x.name == name).FirstOrDefault() != null)
+                    if (db.app_measurement.Where(x => x.name == name && x.id_company == id_company).FirstOrDefault() != null)
                     {
                         item.id_measurement = db.app_measurement.Where(x => x.name == name && x.id_company == id_company).FirstOrDefault().id_measurement;
                     }

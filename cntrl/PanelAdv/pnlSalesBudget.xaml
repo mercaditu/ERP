@@ -5,15 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cntrl.PanelAdv"
 
-              xmlns:cntrl="clr-namespace:cntrl"
-          xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
-          lex:ResxLocalizationProvider.DefaultDictionary="local"
-          lex:LocalizeDictionary.DesignCulture="en-US"
+             xmlns:cntrl="clr-namespace:cntrl"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+             lex:ResxLocalizationProvider.DefaultDictionary="local"
+             lex:LocalizeDictionary.DesignCulture="en-US"
 
              xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="cntrl.PanelAdv.pnlSalesBudget"
              mc:Ignorable="d" Background="White"
-             Height="256" Width="512" Loaded="UserControl_Loaded">
+             Height="512" Width="512" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="sales_budgetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget}, CreateList=True}"/>
         <CollectionViewSource x:Key="sales_budgetBalanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_budget}, CreateList=True}"/>
@@ -22,9 +22,9 @@
         <DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
     </UserControl.Effect>
     <Grid DataContext="{StaticResource sales_budgetViewSource}" Background="{StaticResource appConfig}">
-        <Grid VerticalAlignment="Top" Margin="0" HorizontalAlignment="Stretch" Height="32">
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Stretch">
             <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Introvert}">
-                <Image Source="/cntrl;component/Images/Outline_White/import-26.png" Margin="4"/>
+                <Label Content="" FontSize="23" HorizontalContentAlignment="Center" Opacity="0.8" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
                 <Label Foreground="White" Content="{lex:Loc SalesBudget}" Style="{StaticResource H3}"/>
             </StackPanel>
             <Label Content="c" FontSize="22" VerticalAlignment="Center" Margin="0"
@@ -34,12 +34,10 @@
         <Grid Margin="8,40,8,0" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
                 <cntrl:SearchableTextbox x:Name="contactComboBox" VerticalAlignment="Center" Width="256"
-                                         IsDisplayed="True"  KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref" CollectionViewSource="{StaticResource sales_budgetViewSource}"
-                                     >
+                                         IsDisplayed="True"  KeyDown="set_ContactPrefKeyStroke" MouseDoubleClick="set_ContactPref" CollectionViewSource="{StaticResource sales_budgetViewSource}">
                     <cntrl:SearchableTextbox.Columns>
                         <cntrl:SmartBoxColumn Header="Number" ForProperty="number" Binding="{Binding number, Mode=Default}" EnableSearch="True"/>
                         <cntrl:SmartBoxColumn Header="Contact" ForProperty="contact.name" Binding="{Binding contact.name, Mode=Default}" EnableSearch="True"/>
-
                     </cntrl:SearchableTextbox.Columns>
                 </cntrl:SearchableTextbox>
             </StackPanel>
@@ -64,7 +62,6 @@
                             <DataGridTextColumn Binding="{Binding item}" Header="{lex:Loc Cognitivo:local:Item}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding balance,StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:balance}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding unitprice,StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto"/>
-                            <!--<DataGridTextColumn Binding="{Binding Total}" Header="{lex:Loc Cognitivo:local:Balance}" Width="Auto"/>-->
                         </DataGrid.Columns>
                     </DataGrid>
                 </DataTemplate>

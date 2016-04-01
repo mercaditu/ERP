@@ -21,7 +21,7 @@
     <StackPanel DataContext="{StaticResource sales_invoiceViewSource}" Background="WhiteSmoke">
         <Grid>
             <StackPanel Orientation="Horizontal" Background="{StaticResource AccentColor_Introvert}">
-                <Image Source="/cntrl;component/Images/Outline_White/import-26.png" Margin="4"/>
+                <Label Content="" FontSize="23" HorizontalContentAlignment="Center" Opacity="0.8" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="White"/>
                 <Label Foreground="White" Content="{lex:Loc SalesInvoice}" Style="{StaticResource H3}"/>
             </StackPanel>
             <Label Content="c" FontSize="22" VerticalAlignment="Center" Margin="0"
@@ -30,12 +30,12 @@
         </Grid>
         <Grid Margin="8">
             <StackPanel Orientation="Horizontal" >
-                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="300"/>
+                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Width="256"/>
             </StackPanel>
             <Button Content="{lex:Loc Link}" Style="{StaticResource btn_green}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4" Click="btnSave_MouseUp"/>
         </Grid>
         <DataGrid x:Name="sales_invocieDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_invocieDatagrid_LoadingRowDetails"
-                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False"  >
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" Height="402"  >
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="SizeToHeader" />
                 <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True"/>

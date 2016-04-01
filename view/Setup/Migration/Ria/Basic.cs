@@ -67,6 +67,8 @@ namespace Cognitivo.Setup.Migration
             sync_Contracts();
             sync_SalesRep();
 
+            sync_MeasureList();
+
             sync_country();
             sync_state();
             sync_city();
@@ -117,7 +119,7 @@ namespace Cognitivo.Setup.Migration
                 }
 
 
-                id_company = dbContext.app_company.Where(i => i.name == _app_company.name).FirstOrDefault().id_company;
+                id_company = _app_company.id_company;
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     entity.Properties.Settings.Default.company_ID = id_company;
@@ -176,8 +178,8 @@ namespace Cognitivo.Setup.Migration
                       
                     }
                 }
-                id_branch=dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
-                id_terminal=dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
+                id_branch = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;
+                id_terminal = dbContext.app_terminal.Where(i => i.id_company == id_company).FirstOrDefault().id_terminal;
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     entity.Properties.Settings.Default.branch_ID = id_branch;
@@ -399,22 +401,29 @@ namespace Cognitivo.Setup.Migration
 
         private void sync_MeasureList()
         {
-            DataTable dt = exeDT("SELECT * FROM UNIDADMEDIDA");
-            foreach (DataRow row in dt.Rows)
-            {
-                app_measurement app_measurement = new app_measurement();
-                //measure.id_measurement = (int)row["CODMEDIDA"];
-                app_measurement.name = (string)row["DESMEDIDA"];
-                app_measurement.id_company = id_company;
-                app_measurement.code_iso = (row["SIMBOLO"] == null) ? string.Empty : row["SIMBOLO"].ToString();
+            //DataTable dt = exeDT("SELECT * FROM UNIDADMEDIDA");
 
-                app_measurement_type measure_type = new app_measurement_type();
-                measure_type.name = "Unit";
-                measure_type.app_measurement.Add(app_measurement);
-                dbContext.app_measurement_type.Add(measure_type);
-            }
-            dt.Clear();
-            dbContext.SaveChanges();
+            //app_measurement_type measure_type = new app_measurement_type();
+            //measure_type.id_company = id_company;
+            //measure_type.id_user = id_user;
+            //measure_type.name = "Unit";
+
+            //foreach (DataRow row in dt.Rows)
+            //{
+            //    app_measurement app_measurement = new app_measurement();
+            //    app_measurement.name = (string)row["DESMEDIDA"];
+            //    app_measurement.id_company = id_company;
+            //    app_measurement.id_user = id_user;
+            //    app_measurement.code_iso = (row["SIMBOLO"] == null) ? " " : row["SIMBOLO"].ToString();
+            //    //app_measurement.app_measurement_type = measure_type;
+
+            //    measure_type.app_measurement.Add(app_measurement);
+            //}
+
+            //dbContext.app_measurement_type.Add(measure_type);
+
+            //dt.Clear();
+            //dbContext.SaveChanges();
         }
 
         private void sync_TagsList()

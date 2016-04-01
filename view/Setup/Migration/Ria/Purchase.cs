@@ -182,8 +182,19 @@ namespace Cognitivo.Setup.Migration
                             purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
 
                             string _prod_Name = row["ITEM_DESPRODUCTO"].ToString();
-                            item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
-                            purchase_invoice_detail.id_item = item.id_item;
+                            if (db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault() != null)
+                            {
+                                //Only if Item Exists
+                                item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
+                                purchase_invoice_detail.id_item = item.id_item;
+                            }
+
+                            if (row["DESPRODUCTO"] is DBNull)
+                            {
+                                //If not Item Description, then just continue out of this loop.
+                                continue;
+                            }
+
                             purchase_invoice_detail.item_description = row["DESPRODUCTO"].ToString();
                             purchase_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADCOMPRA"]);
 

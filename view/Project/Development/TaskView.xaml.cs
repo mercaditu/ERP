@@ -135,27 +135,8 @@ namespace Cognitivo.Project.Development
 
             filter_task();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.PanelAdv.Project_TaskApprove Project_TaskApprove = new cntrl.PanelAdv.Project_TaskApprove();
-            Project_TaskApprove.Save_Click += toolBar_btnApprove_Click;
-            crud_modal.Children.Add(Project_TaskApprove);
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            toolBar_btnAnull_Click(sender);
-        }
-
         private void toolBar_btnApprove_Click(object sender)
         {
-            if (project_taskViewSource == null)
-            {
-                toolBar.msgWarning("Select Item");
-                return;
-            }
 
             if (project_taskViewSource.View != null)
             {
@@ -165,17 +146,12 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-                    //Check if Project Task Approve exist, some times it causes an error.
-                    if (Project_TaskApprove != null)
-                    {   
-                        if (Project_TaskApprove.id_range != null)
-                        {
-                            project_task.id_range = Project_TaskApprove.id_range;
-                        }
-
-                        project_task.number = Project_TaskApprove.number;
+                    if (Project_TaskApprove.id_range!=null)
+                    {
+                        project_task.id_range = Project_TaskApprove.id_range;
+                       
                     }
-
+                    project_task.number = Project_TaskApprove.number;
                     if (project_task.status == Status.Project.Management_Approved)
                     {
                         if (project_task.status == Status.Project.Management_Approved || project_task.status == null)
@@ -455,6 +431,20 @@ namespace Cognitivo.Project.Development
                     toolBar.msgError(ex);
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            crud_modal.Visibility = Visibility.Visible;
+            Project_TaskApprove = new cntrl.PanelAdv.Project_TaskApprove();
+            Project_TaskApprove.Save_Click += toolBar_btnApprove_Click;
+            crud_modal.Children.Add(Project_TaskApprove);
+         
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            toolBar_btnAnull_Click(sender);
         }
 
         private void project_task_dimensionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

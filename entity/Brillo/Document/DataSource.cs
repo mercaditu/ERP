@@ -65,7 +65,7 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<sales_budget_detail> sales_budget_detail = db.sales_budget_detail.Where(x => x.id_sales_budget == sales_budget.id_sales_budget).ToList();
+                List<sales_budget_detail> sales_budget_detail = sales_budget.sales_budget_detail.ToList();
 
                 reportDataSource.Value = sales_budget_detail
                     .Select(g => new
@@ -120,7 +120,7 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<sales_order_detail> sales_order_detail = db.sales_order_detail.Where(x => x.id_sales_order == sales_order.id_sales_order).ToList();
+                List<sales_order_detail> sales_order_detail = sales_order.sales_order_detail.ToList();
 
                 reportDataSource.Value = sales_order_detail
                     .Select(g => new
@@ -176,7 +176,7 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1";
-                List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
+                List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
                 if (sales_invoice_detail.Count < sales_invoice.app_document_range.app_document.line_limit)
                 {
                     for (int i = sales_invoice_detail.Count; i < sales_invoice.app_document_range.app_document.line_limit; i++)
@@ -253,7 +253,7 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1";
-                List<sales_packing_detail> sales_packing_detail = db.sales_packing_detail.Where(x => x.id_sales_packing == sales_packing.id_sales_packing).ToList();
+                List<sales_packing_detail> sales_packing_detail = sales_packing.sales_packing_detail.ToList();
                 reportDataSource.Value = sales_packing_detail
                               .Select(g => new
                               {
@@ -297,7 +297,7 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<sales_return_detail> sales_return_detail = db.sales_return_detail.Where(x => x.id_sales_return == sales_return.id_sales_return).ToList();
+                List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
 
                 reportDataSource.Value = sales_return_detail
                               .Select(g => new
@@ -392,7 +392,7 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<purchase_order_detail> purchase_order_detail = db.purchase_order_detail.Where(x => x.id_purchase_order == purchase_order.id_purchase_order).ToList();
+                List<purchase_order_detail> purchase_order_detail = purchase_order.purchase_order_detail.ToList();
 
                 reportDataSource.Value = purchase_order_detail
                     .Select(g => new
@@ -483,7 +483,7 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<item_transfer_detail> item_transfer_detail = db.item_transfer_detail.Where(x => x.id_transfer == item_transfer.id_transfer).ToList();
+                List<item_transfer_detail> item_transfer_detail = item_transfer.item_transfer_detail.ToList();
 
                 reportDataSource.Value = item_transfer_detail
                     .Select(g => new

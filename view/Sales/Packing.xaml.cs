@@ -114,8 +114,8 @@ namespace Cognitivo.Sales
         private void InvocieComboBox_KeyUp(object sender, KeyEventArgs e)
         {
             DateTime CurrentDate = DateTime.Now.Date;
-            payment_schedualViewSource.Source = dbcontext.payment_schedual.Where(x => x.id_company == _setting.company_ID
-                                                                               && x.sales_invoice.status == Status.Documents_General.Approved && x.debit>0).ToList().Distinct();
+            payment_schedualViewSource.Source = dbcontext.payment_schedual.Where(x => x.id_company == _setting.company_ID && x.sales_invoice.number.Contains(InvocieComboBox.Text)
+                                                                               && x.sales_invoice.status == Status.Documents_General.Approved && x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)==0).ToList().Distinct();
         }
 
         private void dgvItem_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)

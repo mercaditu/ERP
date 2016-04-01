@@ -424,7 +424,7 @@ namespace entity.Brillo.Logic
                 //Adding into List if Movement List for this Location is empty.
                 item_movement.comment = Comment;
                 item_movement.id_item_product = item_product.id_item_product;
-                item_movement.debit = Quantity;
+                item_movement.debit = qty_SalesDetail;
                 item_movement.credit = 0;
                 item_movement.status = Status;
                 item_movement.id_location = app_location.id_location;

@@ -78,6 +78,7 @@ namespace Cognitivo.Setup.Migration
                     purchase_invoice.number = purchaserow["NUMCOMPRA"] is DBNull ? null : purchaserow["NUMCOMPRA"].ToString();
                     purchase_invoice.trans_date =Convert.ToDateTime(purchaserow["FECHACOMPRA"]);
 
+                    
                     //Supplier
                     if (!(purchaserow["NOMBRE"] is DBNull))
                     {
@@ -159,10 +160,10 @@ namespace Cognitivo.Setup.Migration
                     + " dbo.COMPRASDETALLE.COSTOUNITARIO, " //3
                     + " dbo.COMPRASDETALLE.IVA, " //4
                     + " dbo.COMPRAS.COTIZACION1, " //5
-                    + " dbo.MONEDA.DESMONEDA, " //6
+                    + " dbo.MONEDA.DESMONEDA " //6
                     + " FROM dbo.COMPRAS LEFT OUTER JOIN"
                     + " dbo.MONEDA ON dbo.COMPRAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
-                    + " dbo.COMPRASDETALLE ON dbo.COMPRAS.CODVENTA = dbo.COMPRASDETALLE.CODVENTA LEFT OUTER JOIN"
+                    + " dbo.COMPRASDETALLE ON dbo.COMPRAS.CODCOMPRA = dbo.COMPRASDETALLE.CODCOMPRA LEFT OUTER JOIN"
                     + " dbo.PRODUCTOS ON dbo.COMPRASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO"
                     + " WHERE (dbo.COMPRASDETALLE.CODCOMPRA = " + purchaserow["CODCOMPRA"].ToString() + ")";
 
@@ -212,8 +213,15 @@ namespace Cognitivo.Setup.Migration
 
                         decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
                         // purchase_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / purchase_invoice_detail.quantity) / cotiz1;
-                        purchase_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOUNITARIO"]);
-
+                       
+                        if (row["COSTOUNITARIO"] is DBNull)
+                        {
+                            purchase_invoice_detail.unit_cost = 0;
+                        }
+                        else
+                        {
+                            purchase_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOUNITARIO"]);
+                        }
                         //Commit Sales Invoice Detail
                         purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                     }
@@ -254,8 +262,8 @@ namespace Cognitivo.Setup.Migration
                         //}
 
                         value += 1;
-                        Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
-                        Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
+                        Dispatcher.BeginInvoke((Action)(() => progPurchase.Value = value));
+                        Dispatcher.BeginInvoke((Action)(() =>purchaseValue.Text = value.ToString()));
                     }
                     else
                     {

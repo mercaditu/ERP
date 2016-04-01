@@ -36,9 +36,13 @@ namespace Cognitivo.Setup.Migration
             " COMPRAS.TOTALCOMPRA, " +      //19
             " PROVEEDOR.NOMBRE, " +         //20
             " PROVEEDOR.RUC_CIN, " +        //21
-            " COMPRAS.COTIZACION1 " +       //22
+            " dbo.SUCURSAL.DESSUCURSAL, " +//28
+            " COMPRAS.COTIZACION1, " +
+            " dbo.FACTURAPAGAR.FECHAVCTO" +
             " FROM  COMPRAS RIGHT OUTER JOIN " +
-            " PROVEEDOR ON COMPRAS.CODPROVEEDOR = PROVEEDOR.CODPROVEEDOR";
+            " PROVEEDOR ON COMPRAS.CODPROVEEDOR = PROVEEDOR.CODPROVEEDOR" +
+            " LEFT OUTER JOIN FACTURAPAGAR ON COMPRAS.CODCOMPRA = FACTURAPAGAR.CODCOMPRA" +
+             " RIGHT OUTER JOIN SUCURSAL ON COMPRAS.CODSUCURSAL = SUCURSAL.CODSUCURSAL";
 
             SqlConnection conn = new SqlConnection(_connString);
 
@@ -60,9 +64,10 @@ namespace Cognitivo.Setup.Migration
             cmd = new SqlCommand(sql, conn);
             conn.Open();
             cmd.CommandType = CommandType.Text;
-            SqlDataReader reader = cmd.ExecuteReader();
+            DataTable dt_purchase = exeDT(sql);
+            //SqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
+            foreach (DataRow purchaserow in dt_purchase.Rows)
             {
                 using (PurchaseInvoiceDB db = new PurchaseInvoiceDB())
                 {
@@ -70,19 +75,19 @@ namespace Cognitivo.Setup.Migration
 
                     purchase_invoice purchase_invoice = db.New();
 
-                    purchase_invoice.number = (reader.IsDBNull(1)) ? null : reader.GetString(1);
-                    purchase_invoice.trans_date = reader.GetDateTime(2);
+                    purchase_invoice.number = purchaserow["NUMCOMPRA"] is DBNull ? null : purchaserow["NUMCOMPRA"].ToString();
+                    purchase_invoice.trans_date =Convert.ToDateTime(purchaserow["FECHACOMPRA"]);
 
                     //Supplier
-                    if (!reader.IsDBNull(20))
+                    if (!(purchaserow["NOMBRE"] is DBNull))
                     {
-                        string _customer = reader.GetString(26);
+                        string _customer = purchaserow["NOMBRE"].ToString();
                         contact contact = db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
                         purchase_invoice.id_contact = contact.id_contact;
                     }
 
                     //Condition (Cash or Credit)
-                    if (!reader.IsDBNull(13) && reader.GetByte(13) == 0)
+                    if (!(purchaserow["MODALIDADPAGO"] is DBNull) && Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 0)
                     {
                         app_condition app_condition = db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
                         purchase_invoice.id_condition = app_condition.id_condition;
@@ -95,26 +100,21 @@ namespace Cognitivo.Setup.Migration
                         }
                         else
                         {
-                            app_contract app_contract = new app_contract();
-                            app_contract.app_condition = app_condition;
-                            app_contract.name = "0 Días";
-                            app_contract_detail _app_contract_detail = new app_contract_detail();
-                            _app_contract_detail.coefficient = 1;
-                            _app_contract_detail.app_contract = app_contract;
-                            _app_contract_detail.interval = 0;
-                            db.app_contract_detail.Add(_app_contract_detail);
+                            app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
+                            db.app_contract.Add(app_contract);
+                         
                             purchase_invoice.app_contract = app_contract;
                             purchase_invoice.id_contract = app_contract.id_contract;
                         }
                     }
-                    else if (!reader.IsDBNull(13) && reader.GetByte(13) == 1)
+                    else if (!(purchaserow["MODALIDADPAGO"] is DBNull) && Convert.ToInt32(purchaserow["MODALIDADPAGO"]) == 1)
                     {
                         app_condition app_condition = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
                         purchase_invoice.id_condition = app_condition.id_condition;
                         //Contract...
-                        if (!reader.IsDBNull(30))
+                        if (!(purchaserow["FECHAVCTO"] is DBNull))
                         {
-                            DateTime _due_date = reader.GetDateTime(30);
+                            DateTime _due_date = Convert.ToDateTime(purchaserow["FECHAVCTO"]);
                             int interval = (_due_date - purchase_invoice.trans_date).Days;
                             app_contract_detail app_contract_detail = db.app_contract_detail.Where(x => x.app_contract.id_condition == purchase_invoice.id_condition && x.app_contract.id_company == id_company && x.interval == interval).FirstOrDefault();
                             if (app_contract_detail != null)
@@ -123,14 +123,9 @@ namespace Cognitivo.Setup.Migration
                             }
                             else
                             {
-                                app_contract app_contract = new app_contract();
-                                app_contract.app_condition = app_condition;
-                                app_contract.name = interval.ToString() + " Días";
-                                app_contract_detail _app_contract_detail = new app_contract_detail();
-                                _app_contract_detail.coefficient = 1;
-                                _app_contract_detail.app_contract = app_contract;
-                                _app_contract_detail.interval = (short)interval;
-                                db.app_contract_detail.Add(_app_contract_detail);
+                                app_contract app_contract = GenerateDefaultContrat(app_condition, interval);
+                                db.app_contract.Add(app_contract);
+                         
                                 purchase_invoice.app_contract = app_contract;
                                 purchase_invoice.id_contract = app_contract.id_contract;
                             }
@@ -139,10 +134,10 @@ namespace Cognitivo.Setup.Migration
 
                     int id_location = 0;
                     //Branch
-                    if (!reader.IsDBNull(28))
+                    if (!(purchaserow["DESSUCURSAL"] is DBNull))
                     {
                         //Branch
-                        string _branch = reader.GetString(28);
+                        string _branch = purchaserow["DESSUCURSAL"].ToString();
                         app_branch app_branch = db.app_branch.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
                         purchase_invoice.id_branch = app_branch.id_branch;
 
@@ -169,7 +164,7 @@ namespace Cognitivo.Setup.Migration
                     + " dbo.MONEDA ON dbo.COMPRAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
                     + " dbo.COMPRASDETALLE ON dbo.COMPRAS.CODVENTA = dbo.COMPRASDETALLE.CODVENTA LEFT OUTER JOIN"
                     + " dbo.PRODUCTOS ON dbo.COMPRASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO"
-                    + " WHERE (dbo.COMPRASDETALLE.CODCOMPRA = " + reader.GetInt32(0).ToString() + ")";
+                    + " WHERE (dbo.COMPRASDETALLE.CODCOMPRA = " + purchaserow["CODCOMPRA"].ToString() + ")";
 
                     DataTable dt = exeDT(sqlDetail);
                     foreach (DataRow row in dt.Rows)
@@ -269,7 +264,7 @@ namespace Cognitivo.Setup.Migration
                     }
                 }
             }
-            reader.Close();
+           // reader.Close();
             cmd.Dispose();
             conn.Close();
 

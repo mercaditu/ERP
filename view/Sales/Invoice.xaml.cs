@@ -393,13 +393,21 @@ namespace Cognitivo.Sales
                     sales_invoiceViewSource.View.Filter = i =>
                     {
                         sales_invoice sales_invoice = i as sales_invoice;
-                        if (sales_invoice.contact!=null)
+                        
+                        if (sales_invoice != null)
                         {
-                            if (sales_invoice.contact.name.ToLower().Contains(query.ToLower())
-                          || sales_invoice.number.ToLower().Contains(query.ToLower())
-                          || sales_invoice.trans_date.ToString() == query)
+                            if (sales_invoice.contact != null)
                             {
-                                return true;
+                                if (sales_invoice.contact.name.ToLower().Contains(query.ToLower())
+                              || sales_invoice.number.ToLower().Contains(query.ToLower())
+                              || sales_invoice.trans_date.ToString() == query)
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
@@ -410,7 +418,6 @@ namespace Cognitivo.Sales
                         {
                             return false;
                         }
-                      
                     };
                 }
                 catch { }

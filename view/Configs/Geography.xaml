@@ -25,7 +25,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Background="{StaticResource appConfig}">
             <Image Width="83" Height="83" Margin="0,50,0,0" VerticalAlignment="Center" 
-                   Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png"/>
+                   Source="/Cognitivo;component/Images/Application/128/Location.png"/>
 
             <Label Content="{lex:Loc Geography}" HorizontalAlignment="Center" 
                    Style="{StaticResource H1}"/>

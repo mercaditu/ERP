@@ -84,7 +84,7 @@ namespace Cognitivo.Commercial
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
             payment_schedualViewSource.Source = await _entity.db.payment_schedual
-                    .Where(x => x.id_payment_detail == null
+                    .Where(x => x.id_payment_detail == null && x.id_company== CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
                     .ToListAsync();

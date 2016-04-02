@@ -15,7 +15,7 @@ namespace Cognitivo.Commercial
     {
         dbContext dbContext = new dbContext();
 
-        int id_comapny = entity.Properties.Settings.Default.company_ID;
+        int id_comapny = CurrentSession.Id_Company;
 
         CollectionViewSource contactViewSource;
         CollectionViewSource payment_schedualViewSource;

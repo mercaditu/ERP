@@ -32,7 +32,7 @@ namespace Cognitivo.Configs
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             locationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_locationViewSource")));
-            entity.db.app_location.Include("app_branch").OrderByDescending(a => a.is_active).Load();
+            entity.db.app_location.Where(x => x.id_company == CurrentSession.Id_Company).Include("app_branch").OrderByDescending(a => a.is_active).Load();
             locationViewSource.Source = entity.db.app_location.Local;
         }
 

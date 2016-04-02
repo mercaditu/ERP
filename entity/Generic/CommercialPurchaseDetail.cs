@@ -351,7 +351,8 @@ namespace entity
         /// <param name="discountvat"></param>
         public void Calculate_UnitDiscount(decimal discountvat)
         {
-            discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
+            _discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
+            Calculate_SubTotalDiscount(_discount);
             RaisePropertyChanged("discount");
         }
 
@@ -362,6 +363,7 @@ namespace entity
         public void Calculate_UnitVatDiscount(decimal discount)
         {
             DiscountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
+            Calculate_SubTotalVatDiscount(_DiscountVat);
             RaisePropertyChanged("DiscountVat");
         }
 
@@ -371,7 +373,7 @@ namespace entity
         /// <param name="discount"></param>
         public void Calculate_SubTotalDiscount(decimal discount)
         {
-            Discount_SubTotal = discount * _quantity;
+            _Discount_SubTotal = _discount * _quantity;
             RaisePropertyChanged("Discount_SubTotal");
         }
 
@@ -381,7 +383,7 @@ namespace entity
         /// <param name="DiscountVat"></param>
         public void Calculate_SubTotalVatDiscount(decimal DiscountVat)
         {
-            Discount_SubTotal_Vat = DiscountVat * _quantity;
+            _Discount_SubTotal_Vat = _DiscountVat * _quantity;
             RaisePropertyChanged("Discount_SubTotal_Vat");
         }
 

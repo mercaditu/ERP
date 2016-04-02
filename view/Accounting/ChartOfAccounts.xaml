@@ -162,7 +162,7 @@
                     <StackPanel Orientation="Horizontal" Margin="23,0" 
 						                Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnVATasset}">
                         <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"
-                                          IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVAT, Converter={StaticResource TrueFalse}}"
+                                          IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVATasset, Converter={StaticResource TrueFalse}}"
                                           ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
                                           SelectedValuePath="id_vat" DisplayMemberPath="name"
                                           SelectedValue="{Binding id_vat,Source={StaticResource accounting_chartViewSource}, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>

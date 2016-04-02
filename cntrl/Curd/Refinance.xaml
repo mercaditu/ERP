@@ -55,7 +55,9 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn  Binding="{Binding debit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                        Header="{lex:Loc Cognitivo:local:Recievable}" Width="auto" />
+                                        Header="{lex:Loc Cognitivo:local:receivable}" Width="auto" />
+                        <DataGridTextColumn  Binding="{Binding credit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" />
                     </DataGrid.Columns>
                 </DataGrid>
                 <Label Content="{lex:Loc Origintal}" Style="{StaticResource input_label}"/>

@@ -47,6 +47,10 @@
         <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>
 
         <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_template}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_templateitem_template_detaildetailViewSource" Source="{Binding item_template_detail, Source={StaticResource item_templateViewSource}}"/>
+
+       
         <CollectionViewSource x:Key="itemitem_dimentionViewSource" Source="{Binding item_dimension, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="item_productViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_product}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_brandViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_brand}, CreateList=True}"/>
@@ -94,7 +98,33 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                    <Label Content="A" Style="{StaticResource btn_Label}" MouseUp="Label_MouseUp"/>
+                </StackPanel>
+                <Popup x:Name="popupName" IsOpen="False" Closed="popupName_Closed"
+                                       PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
+                    <Border BorderThickness="1" BorderBrush="Gray">
+                        <StackPanel Background="WhiteSmoke" Width="180">
+                            <Label Content="{lex:Loc Template}"  Style="{StaticResource input_label}"/>
+                            <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource item_templateViewSource}}"
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                              metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
+                              Name="cmbitemtemplate" SelectionChanged="cmbitem_SelectionChanged"
+                              DisplayMemberPath="name" SelectedValuePath="id_item_template"
+                            />
+                            <DataGrid x:Name="dgvSalesDetail" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"
+                                 
+                                  ItemsSource="{Binding Source={StaticResource item_templateitem_template_detaildetailViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                  >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="name" Binding="{Binding question,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Value" Binding="{Binding value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </Border>
+                </Popup>
                 <AdornerDecorator>
                     <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"       
                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

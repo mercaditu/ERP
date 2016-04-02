@@ -292,6 +292,7 @@ namespace Cognitivo.Commercial
         {
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
 
+            Refinance.WindowsMode = cntrl.Curd.Refinance.Mode.AccountReceivable;
 
             Refinance.objEntity = _entity;
             Refinance.payment_schedualViewSource = payment_schedualViewSource;

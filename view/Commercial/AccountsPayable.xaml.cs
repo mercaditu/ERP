@@ -275,7 +275,7 @@ namespace Cognitivo.Commercial
         private void Refince_Click(object sender, RoutedEventArgs e)
         {
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
-
+            Refinance.WindowsMode = cntrl.Curd.Refinance.Mode.AccountPayable;
 
             Refinance.objEntity = dbContext;
             Refinance.payment_schedualViewSource = payment_schedualViewSource;

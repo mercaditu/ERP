@@ -74,8 +74,8 @@ namespace entity
                                 {
                                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                                     app_location app_location = base.app_location.Where(x => x.id_branch == origin && x.is_default).FirstOrDefault();
-
-                                    List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
+                                    int id_location = app_location.id_location;
+                                    List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == id_location
                                                                           && x.id_item_product == item_transfer_detail.id_item_product
                                                                           && x.status == entity.Status.Stock.InStock
                                                                           && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();

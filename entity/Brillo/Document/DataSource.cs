@@ -75,7 +75,7 @@ namespace entity.Brillo.Document
                         id_sales_budget_detail = g.id_sales_budget_detail,
                         sales_budget = g.id_sales_budget_detail,
                         id_company = g.id_company,
-                        add1 = g.sales_budget != null ? g.sales_budget.contact.address : "",
+                        add1 = g.sales_budget != null ? g.sales_budget.contact.address!=null?g.sales_budget.contact.address:"" : "",
                         telephone = g.sales_budget != null ? g.sales_budget.contact.telephone : "",
                         email = g.sales_budget != null ? g.sales_budget.contact.email : "",
                         company_name = g.sales_budget != null ? g.sales_budget.contact.name : "",

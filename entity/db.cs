@@ -98,6 +98,8 @@
         public virtual DbSet<item_inventory_detail> item_inventory_detail { get; set; }
         public virtual DbSet<item_transfer> item_transfer { get; set; }
         public virtual DbSet<item_transfer_detail> item_transfer_detail { get; set; }
+        public virtual DbSet<item_template> item_template { get; set; }
+        public virtual DbSet<item_template_detail> item_template_detail { get; set; }
         public virtual DbSet<payment> payments { get; set; }
         public virtual DbSet<payment_detail> payment_detail { get; set; }
         public virtual DbSet<payment_type> payment_type { get; set; }

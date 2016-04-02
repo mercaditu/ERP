@@ -218,6 +218,8 @@
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="Execustionstrategy.cs" />
     <Compile Include="Generic\CommercialVAT.cs" />
+    <Compile Include="Item\item_template.cs" />
+    <Compile Include="Item\item_template_detail.cs" />
     <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.cs" />
     <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.Designer.cs">
       <DependentUpon>201603251402215_updateprojectitemtransfer.cs</DependentUpon>
@@ -229,6 +231,10 @@
     <Compile Include="Migrations\201603291822067_CommericalType_ProjectCurrency.cs" />
     <Compile Include="Migrations\201603291822067_CommericalType_ProjectCurrency.Designer.cs">
       <DependentUpon>201603291822067_CommericalType_ProjectCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604021031449_AddItemTemplate.cs" />
+    <Compile Include="Migrations\201604021031449_AddItemTemplate.Designer.cs">
+      <DependentUpon>201604021031449_AddItemTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
@@ -870,6 +876,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603291822067_CommericalType_ProjectCurrency.resx">
       <DependentUpon>201603291822067_CommericalType_ProjectCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604021031449_AddItemTemplate.resx">
+      <DependentUpon>201604021031449_AddItemTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

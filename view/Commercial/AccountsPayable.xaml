@@ -105,7 +105,7 @@
                 <Button Content="{lex:Loc VATWithholding}" Style="{StaticResource btn_green}" Background="White" Margin="0,4" Click="btnWithholding_Click"/>
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
-                <Button Content="{lex:Loc Refinance}" Style="{StaticResource btn_green}" Background="{StaticResource AccentColor_Introvert}" Margin="0,4"/>
+                <Button Content="{lex:Loc Refinance}" Style="{StaticResource btn_green}" Background="{StaticResource AccentColor_Introvert}" Margin="0,4" Click="Refince_Click"/>
             </StackPanel>
         </StackPanel>
 

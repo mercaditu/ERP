@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V346\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>345</ApplicationRevision>
+    <ApplicationRevision>347</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -335,6 +335,9 @@
     </Compile>
     <Compile Include="Configs\ItemBrand.xaml.cs">
       <DependentUpon>ItemBrand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configs\ItemTemplate.xaml.cs">
+      <DependentUpon>ItemTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configs\ProjectTag.xaml.cs">
       <DependentUpon>ProjectTag.xaml</DependentUpon>
@@ -1295,6 +1298,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Configs\ItemBrand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\ItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

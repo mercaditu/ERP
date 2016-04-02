@@ -32,7 +32,9 @@ namespace Cognitivo.Product
             app_dimentionViewSource,
             itemitem_tagdetailViewSource,
             hr_talentViewSource,
-            itemitem_serviceViewSource;
+            itemitem_serviceViewSource,
+            item_templateViewSource,
+            item_templateitem_template_detaildetailViewSource;
             //app_propertyViewSource;
 
         public Item()
@@ -53,6 +55,8 @@ namespace Cognitivo.Product
             app_dimentionViewSource = (CollectionViewSource)FindResource("app_dimentionViewSource");
             hr_talentViewSource = (CollectionViewSource)FindResource("hr_talentViewSource");
             itemitem_serviceViewSource = (CollectionViewSource)FindResource("itemitem_serviceViewSource");
+            item_templateViewSource = (CollectionViewSource)FindResource("item_templateViewSource");
+            item_templateitem_template_detaildetailViewSource = (CollectionViewSource)FindResource("item_templateitem_template_detaildetailViewSource");
         }
 
         private void load_PrimaryData()
@@ -141,6 +145,15 @@ namespace Cognitivo.Product
             {
                 CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
                 item_tagViewSource.Source = dbContext.item_tag.Local;
+            }));
+
+            await dbContext.item_template
+             .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
+             .OrderBy(x => x.name).LoadAsync();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                item_templateViewSource = ((CollectionViewSource)(FindResource("item_templateViewSource")));
+                item_templateViewSource.Source = dbContext.item_template.Local;
             }));
 
             await dbContext.app_currency
@@ -732,6 +745,23 @@ namespace Cognitivo.Product
 
             item_brandViewSource.Source = dbContext.item_brand.Local;
 
+        }
+
+        private void Label_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popupName.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
+            popupName.StaysOpen = false;
+            popupName.IsOpen = true;
+        }
+
+        private void popupName_Closed(object sender, EventArgs e)
+        {
+            item_template item_template = item_templateViewSource.View.CurrentItem as item_template;
+            item item = itemViewSource.View.CurrentItem as item;
+            foreach (item_template_detail item_template_detail in item_template.item_template_detail)
+            {
+                item.name = item.name + item_template_detail.value;
+            }
         }
     }
 }

@@ -259,6 +259,7 @@ namespace Cognitivo.Project.Development
                 project_taskViewSource.View.MoveCurrentTo(n_project_task);
                 filter_task();
             }
+           
         }
 
         private void btnAddParentTask_Click(object sender)

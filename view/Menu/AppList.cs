@@ -74,9 +74,9 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.Recipe", entity.App.Names.Receipe, "Recipe");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.Stock", entity.App.Names.Stock, "ProductStock");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Inventory", entity.App.Names.Inventory, "ProductStockAdjust");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Movement", entity.App.Names.Movement, "");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Transfer", entity.App.Names.Transfer, "");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Request", entity.App.Names.RequestResource, "");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Movement", entity.App.Names.Movement, "BranchLocation");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Transfer", entity.App.Names.Transfer, "ProductSend");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Request", entity.App.Names.RequestResource, "ProjectPlan");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Maintainance", "Maintainance", "");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.ItemTag", entity.App.Names.ItemTag, "ProductTag");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.PriceList", entity.App.Names.PriceList, "ProductPriceList");
@@ -113,8 +113,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Form, "Project.Development.Project", entity.App.Names.Project, "Project");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "");
-            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "Plan");
+            dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Transactions, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder");
 
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Form, "Production.Line", entity.App.Names.Line, "");

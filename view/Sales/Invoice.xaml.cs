@@ -595,9 +595,14 @@ namespace Cognitivo.Sales
                 _sales_invoice.id_currencyfx = sales_order.id_currencyfx;
                 _sales_invoice.app_currencyfx = sales_order.app_currencyfx;
                 _sales_invoice.id_sales_order = sales_order.id_sales_order;
+
                 foreach (sales_order_detail _sales_order_detail in sales_order.sales_order_detail)
                 {
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+
+                        //There is an issue that the detail does not know of the currency previously selected. Maybe this can help.
+                        sales_invoice_detail.CurrencyFX_ID = sales_order.app_currencyfx.id_currencyfx;
+
                         sales_invoice_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
                         sales_invoice_detail.sales_order_detail = _sales_order_detail;
                         sales_invoice_detail.Contact = _sales_invoice.contact;
@@ -609,9 +614,11 @@ namespace Cognitivo.Sales
                                                                                      .GroupBy(x => x.id_sales_order_detail)
                                                                                      .Select(x => x.Sum(y => y.quantity))
                                                                                      .FirstOrDefault();
+
                         sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
                         _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                 }
+
                 SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = Visibility.Collapsed;

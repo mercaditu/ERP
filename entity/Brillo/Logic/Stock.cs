@@ -382,6 +382,7 @@ namespace entity.Brillo.Logic
                 {
                     item_movement item_movement = new item_movement();
 
+                    //THIS BLOCK OF CODE IS WRONG.
                     decimal movement_debit_quantity = qty_SalesDetail;
 
                     //If Parent Movement is lesser than Quantity, then only take total value of Parent.

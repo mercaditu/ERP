@@ -51,7 +51,7 @@ namespace entity
                     {
                         sales_order.timestamp = DateTime.Now;
                         sales_order.State = EntityState.Unchanged;
-                        Entry(sales_order).State = EntityState.Unchanged;
+                        Entry(sales_order).State = EntityState.Modified;
                     }
                     else if (sales_order.State == EntityState.Deleted)
                     {

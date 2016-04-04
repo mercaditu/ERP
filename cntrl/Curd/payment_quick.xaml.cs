@@ -47,15 +47,15 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.Source = payment_detailList;
 
             CollectionViewSource purchase_returnViewSource = (CollectionViewSource)this.FindResource("purchase_returnViewSource");
-            dbContext.db.purchase_return.Where(x=>x.id_contact==payment_detail.payment.id_contact).Load();
+            dbContext.db.purchase_return.Where(x => x.id_contact == payment_detail.payment.id_contact).Load();
             purchase_returnViewSource.Source = dbContext.db.purchase_return.Local;
             CollectionViewSource sales_returnViewSource = (CollectionViewSource)this.FindResource("sales_returnViewSource");
-            dbContext.db.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice==null).Load();
+            dbContext.db.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice == null).Load();
             sales_returnViewSource.Source = dbContext.db.sales_return.Local;
 
             cbxDocument.ItemsSource = dbContext.db.app_document_range.Where(d => d.is_active == true
                                            && d.app_document.id_application == entity.App.Names.PaymentUtility
-                                           && d.id_company == _Settings.company_ID).Include(i => i.app_document).ToList(); 
+                                           && d.id_company == _Settings.company_ID).Include(i => i.app_document).ToList();
 
             // entity.db.payment_detail.Add(payment_detail);
             paymentpayment_detailViewSource.View.Refresh();
@@ -94,7 +94,7 @@ namespace cntrl.Curd
                     stpcreditsales.Visibility = Visibility.Collapsed;
 
                 }
-                else if(payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
+                else if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
                 {
                     stpaccount.Visibility = Visibility.Collapsed;
                     if (mode == modes.purchase)
@@ -106,7 +106,7 @@ namespace cntrl.Curd
                         stpcreditsales.Visibility = Visibility.Visible;
                     }
                     stpcreditpurchase.Visibility = Visibility.Visible;
-                   
+
                 }
                 else
                 {
@@ -129,7 +129,7 @@ namespace cntrl.Curd
 
         private void purchasereturnComboBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key==Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 try
                 {
@@ -146,7 +146,7 @@ namespace cntrl.Curd
                 }
             }
         }
-        
+
         private void purchasereturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
@@ -176,8 +176,20 @@ namespace cntrl.Curd
                         payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                         sales_return sales_return = (sales_return)salesreturnComboBox.Data;
                         salesreturnComboBox.Text = sales_return.number;
-                        //payment_detail.value = (Convert.ToDecimal(txtAmount.Text) - sales_return.GrandTotal);
-                        //payment_detail.RaisePropertyChanged("value");
+                        decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
+                        payment_detail.id_sales_return = sales_return.id_sales_return;
+                        if (payment_detail.value > return_value)
+                        {
+                          
+                            payment_detail.value = return_value;
+                            payment_detail.RaisePropertyChanged("value");
+                        }
+                        else
+                        {
+                            payment_detail.value = payment_detail.value;
+                            payment_detail.RaisePropertyChanged("value");
+                        }
+
                     }
                 }
                 catch (Exception ex)
@@ -192,15 +204,27 @@ namespace cntrl.Curd
         {
             try
             {
-         
+
                 if (salesreturnComboBox.Data != null)
                 {
                     CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
                     payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
                     sales_return sales_return = (sales_return)salesreturnComboBox.Data;
                     salesreturnComboBox.Text = sales_return.number;
-                    //payment_detail.value = (payment_detail.value - sales_return.GrandTotal);
-                    //payment_detail.RaisePropertyChanged("value");
+                    decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
+                    payment_detail.id_sales_return = sales_return.id_sales_return;
+                  
+                    if (payment_detail.value > return_value)
+                    {
+
+                        payment_detail.value = return_value;
+                        payment_detail.RaisePropertyChanged("value");
+                    }
+                    else
+                    {
+                        payment_detail.value = payment_detail.value;
+                        payment_detail.RaisePropertyChanged("value");
+                    }
                 }
             }
             catch (Exception ex)

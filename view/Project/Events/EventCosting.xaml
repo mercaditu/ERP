@@ -185,6 +185,9 @@
                             <TabItem Header="{lex:Loc ServicesperPerson}">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <StackPanel>
+                                        <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
+                                        <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
+                                              />
                                         <DataGrid x:Name="dgvServicePerperson" Style="{StaticResource detail_Datagrid}" CanUserAddRows="False"
                                      ItemsSource="{Binding Source={StaticResource project_costingproject_event_template_variable_detailsViewSource}}"  IsEnabled = "{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CellEditEnding="dgvServicePerperson_CellEditEnding"                               >
                                             <DataGrid.Columns>
@@ -238,6 +241,9 @@
                             <TabItem Header="{lex:Loc ServicesperEvent}">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="1">
                                     <StackPanel>
+                                        <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
+                                        <Controls:SmartBox_Item x:Name="sbxItemevent" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxItemevent_Select"
+                                              />
                                         <DataGrid x:Name="dgvServicePerEvent" Style="{StaticResource detail_Datagrid}" CanUserAddRows="False"
                                      ItemsSource="{Binding Source={StaticResource project_costingservices_per_event_detailsViewSource}}"  IsEnabled = "{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CellEditEnding="dgvServicePerEvent_CellEditEnding"                               >
                                             <DataGrid.Columns>

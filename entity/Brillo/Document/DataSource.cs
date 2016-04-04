@@ -130,15 +130,15 @@ namespace entity.Brillo.Document
                         geo_name = g.sales_order != null ? g.sales_order.contact != null ? g.sales_order.contact.app_geography != null ? g.sales_order.contact.app_geography.name : "" : "" : "",
                         sales_budget_number = g.sales_budget_detail != null ? g.sales_budget_detail.sales_budget.number : "",
                         contact_name = g.sales_order != null ? g.sales_order.contact.name : "",
-                        customer_address = g.sales_order != null ? g.sales_order.contact.address : "",
+                        customer_address = g.sales_order != null ? g.sales_order.contact.address!=null?g.sales_order.contact.address:"" : "",
                         customer_telephone = g.sales_order != null ? g.sales_order.contact.telephone : "",
-                        customer_email = g.sales_order != null ? g.sales_order.contact.email : "",
-                        company_Name = g.sales_order != null ? g.sales_order.app_company.name : "",
+                        customer_email = g.sales_order != null ? g.sales_order.contact.email != null ? g.sales_order.contact.email : "" : "",
+                        company_Name = g.sales_order != null ?g.sales_order.app_company!=null? g.sales_order.app_company.name:"" : "",
                         customer_govid = g.sales_order != null ? g.sales_order.contact.gov_code : "",
                         sales_order_terminal = g.sales_order != null ? g.sales_order.app_terminal != null ? g.sales_order.app_terminal.name : "" : "",
                         branch_Name = g.sales_order != null ? g.sales_order.app_branch != null ? g.sales_order.app_branch.name : "" : "",
-                        order_Code = g.sales_order != null ? g.sales_order.code : "",
-                        delivery_Date = g.sales_order != null ? g.sales_order.delivery_date : DateTime.Now,
+                        order_Code = g.sales_order != null ? g.sales_order.code!=null ? g.sales_order.code : "" : "",
+                        delivery_Date = g.sales_order != null ? g.sales_order.delivery_date!=null ?g.sales_order.delivery_date:DateTime.Now : DateTime.Now,
                         sales_number = g.sales_order != null ? g.sales_order.number : "",
                         order_Total = g.sales_order != null ? g.sales_order.GrandTotal : 0M,
                         currency = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.name : "" : "" : "",
@@ -150,9 +150,9 @@ namespace entity.Brillo.Document
                         sales_order_contract = g.sales_order != null ? g.sales_order.app_contract != null ? g.sales_order.app_contract.name : "" : "",
                         sales_order_condition = g.sales_order != null ? g.sales_order.app_condition != null ? g.sales_order.app_condition.name : "" : "",
                         DeliveryDate = g.sales_order != null ? g.sales_order.delivery_date : DateTime.Now,
-                        sales_order_Comment = g.sales_order != null ? g.sales_order.comment : "",
+                        sales_order_Comment = g.sales_order != null ? g.sales_order.comment!= null ?g.sales_order.comment:"" : "",
                         vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
-                        
+
                         item_code = g.item != null ? g.item.code : "",
                         item_description = g.item != null ? g.item.name : "",
                         item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
@@ -163,11 +163,11 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_price,
                         unit_price_vat = g.UnitPrice_Vat,
-                        AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?                        
+                        AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
                         NumToWords.IntToText(Convert.ToInt32(g.sales_order != null ? g.sales_order.GrandTotal : 0))
                         :
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "",
-                        
+
                         HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false
                     }).ToList();
 
@@ -212,7 +212,7 @@ namespace entity.Brillo.Document
                     unit_price = g.unit_price,
                     unit_price_vat = g.UnitPrice_Vat,
                     terminal_name = g.sales_invoice != null ? g.sales_invoice.app_terminal.name : "",
-                    code = g.sales_invoice != null ? g.sales_invoice.code : "",
+                    code = g.sales_invoice != null ? g.sales_invoice.code!= null ?g.sales_invoice.code:"" : "",
                     customer_contact_name =g.sales_invoice != null ? g.sales_invoice.contact.name:"",
                     customer_code = g.sales_invoice != null ? g.sales_invoice.contact.code:"",
                     customer_alias = g.sales_invoice != null ? g.sales_invoice.contact.alias:"",

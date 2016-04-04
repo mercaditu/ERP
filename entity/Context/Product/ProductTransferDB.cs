@@ -175,7 +175,7 @@ namespace entity
                                     ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
                                     item_movement_LIST =
                                         stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer_detail,
-                                        app_currencyfx, item_transfer_detail.item_product, item_transfer.app_location_destination, item_transfer_detail.quantity_destination,
+                                        app_currencyfx, item_transfer_detail.item_product, app_location, item_transfer_detail.quantity_destination,
                                         item_transfer_detail.timestamp, "");
 
                                     base.item_movement.AddRange(item_movement_LIST);
@@ -201,28 +201,29 @@ namespace entity
 
                                     base.item_movement.Add(item_movement_origin);
                                 }
+                                else
+                                {
+                                    item_movement item_movement_dest;
+                                    app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+                                    app_location app_location = base.app_location.Where(x => x.id_branch == dest && x.is_default).FirstOrDefault();
+                                    item_movement_dest =
+                                                stock.CreditOnly_Movement(
+                                                    Status.Stock.InStock,
+                                                    App.Names.Transfer,
+                                                    item_transfer_detail.id_transfer_detail,
+                                                    app_currencyfx,
+                                                    item_transfer_detail.item_product,
+                                                    app_location,
+                                                    item_transfer_detail.quantity_destination,
+                                                    item_transfer_detail.item_transfer.trans_date,
+                                                    0,
+                                                    stock.comment_Generator(App.Names.Transfer, item_transfer_detail.id_transfer_detail.ToString(), "")
+                                                    );
+                                    base.item_movement.Add(item_movement_dest);
+                                }
+                                item_transfer.status = Status.Documents_General.Approved;
                             }
-                            else
-                            {
-                                item_movement item_movement_dest;
-                                app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
-                                app_location app_location = base.app_location.Where(x => x.id_branch == dest && x.is_default).FirstOrDefault();
-                                item_movement_dest =
-                                            stock.CreditOnly_Movement(
-                                                Status.Stock.InStock,
-                                                App.Names.Transfer,
-                                                item_transfer_detail.id_transfer_detail,
-                                                app_currencyfx,
-                                                item_transfer_detail.item_product,
-                                                app_location,
-                                                item_transfer_detail.quantity_destination,
-                                                item_transfer_detail.item_transfer.trans_date,
-                                                0,
-                                                stock.comment_Generator(App.Names.Transfer, item_transfer_detail.id_transfer_detail.ToString(), "")
-                                                );
-                                base.item_movement.Add(item_movement_dest);
-                            }
-                            item_transfer.status = Status.Documents_General.Approved;
+                           
                         }
 
                         if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)

@@ -133,7 +133,7 @@ namespace Cognitivo.Commercial
                 if (total > 0)
                 {
                     payment payment = new payment();
-                    if (payment_schedual.id_sales_return > 0)
+                    if (payment_quick.payment_detail.id_sales_return > 0)
                     {
 
                         payment.id_contact = payment_quick.payment_detail.payment.contact.id_contact;
@@ -160,9 +160,9 @@ namespace Cognitivo.Commercial
                         _payment_schedualreturn.id_purchase_invoice = payment_schedual.id_purchase_invoice;
                         _payment_schedualreturn.id_purchase_order = payment_schedual.id_purchase_order;
                         _payment_schedualreturn.id_purchase_return = payment_schedual.id_purchase_return;
-                        _payment_schedualreturn.id_sales_invoice = 0;
+                        _payment_schedualreturn.id_sales_invoice = payment_schedual.id_sales_invoice;
                         _payment_schedualreturn.id_sales_order = payment_schedual.id_sales_order;
-                        _payment_schedualreturn.id_sales_return = payment_schedual.id_sales_return;
+                        _payment_schedualreturn.id_sales_return = payment_quick.payment_detail.id_sales_return;
                         _payment_schedualreturn.trans_date = payment_quick.payment_detail.trans_date;
                         total = total - payment_quick.payment_detail.value;
                         _payment_schedualreturn.AccountReceivableBalance = total;

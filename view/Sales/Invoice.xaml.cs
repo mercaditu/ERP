@@ -20,9 +20,9 @@ namespace Cognitivo.Sales
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource;
-        
+
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
-        
+
         cntrl.PanelAdv.pnlPacking pnlPacking;
         cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
@@ -75,7 +75,7 @@ namespace Cognitivo.Sales
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company
                                                && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
-                
+
             }
             else
             {
@@ -83,7 +83,7 @@ namespace Cognitivo.Sales
                                               && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
-            
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
@@ -142,7 +142,7 @@ namespace Cognitivo.Sales
             toolBar.appName = entity.App.Names.SalesInvoice;
             sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = (CollectionViewSource)FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource");
             sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-          
+
             load_PrimaryData();
 
             filter_sales();
@@ -237,34 +237,38 @@ namespace Cognitivo.Sales
 
         private async void set_ContactPref_Thread(contact objContact)
         {
-            if (objContact != null)
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+            if (sales_invoice.sales_order == null)
             {
-                await Dispatcher.InvokeAsync(new Action(() =>
+                if (objContact != null)
                 {
-                    cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+                    await Dispatcher.InvokeAsync(new Action(() =>
+                    {
+                        cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
-                    if (objContact.id_sales_rep != null)
-                        cbxSalesRep.SelectedValue = Convert.ToInt32(objContact.id_sales_rep);
-                    //Condition
-                    if (objContact.app_contract != null)
-                        cbxCondition.SelectedValue = objContact.app_contract.id_condition;
-                    //Contract
-                    if (objContact.id_contract != null)
-                        cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
-                    //Currency
-                   
-                    cbxCurrency.get_ActiveRateXContact(ref objContact);
-                }));
+                        if (objContact.id_sales_rep != null)
+                            cbxSalesRep.SelectedValue = Convert.ToInt32(objContact.id_sales_rep);
+                        //Condition
+                        if (objContact.app_contract != null)
+                            cbxCondition.SelectedValue = objContact.app_contract.id_condition;
+                        //Contract
+                        if (objContact.id_contract != null)
+                            cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
+                        //Currency
 
-                await SalesInvoiceDB.projects.Where(a => a.is_active == true
-                                                 && a.id_company == CurrentSession.Id_Company 
-                                                 && a.id_contact == objContact.id_contact)
-                                            .OrderBy(a => a.name)
-                                            .ToListAsync();
-                await Dispatcher.InvokeAsync(new Action(() =>
-                {
-                    cbxProject.ItemsSource = SalesInvoiceDB.projects.Local;
-                }));
+                        cbxCurrency.get_ActiveRateXContact(ref objContact);
+                    }));
+
+                    await SalesInvoiceDB.projects.Where(a => a.is_active == true
+                                                     && a.id_company == CurrentSession.Id_Company
+                                                     && a.id_contact == objContact.id_contact)
+                                                .OrderBy(a => a.name)
+                                                .ToListAsync();
+                    await Dispatcher.InvokeAsync(new Action(() =>
+                    {
+                        cbxProject.ItemsSource = SalesInvoiceDB.projects.Local;
+                    }));
+                }
             }
         }
 
@@ -375,7 +379,7 @@ namespace Cognitivo.Sales
 
             Dispatcher.BeginInvoke((Action)(() =>
             {
-               
+
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 calculate_vat(null, null);
@@ -393,7 +397,7 @@ namespace Cognitivo.Sales
                     sales_invoiceViewSource.View.Filter = i =>
                     {
                         sales_invoice sales_invoice = i as sales_invoice;
-                        
+
                         if (sales_invoice != null)
                         {
                             if (sales_invoice.contact != null)
@@ -488,8 +492,8 @@ namespace Cognitivo.Sales
         private void sales_invoice_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             calculate_vat(sender, e);
-          
-           
+
+
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -524,11 +528,11 @@ namespace Cognitivo.Sales
             sales_invoice _sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem;
             foreach (sales_packing item in pnlPacking.selected_sales_packing)
             {
-                sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault(); 
+                sales_packing sales_packing = SalesInvoiceDB.sales_packing.Where(x => x.id_sales_packing == item.id_sales_packing).FirstOrDefault();
 
                 foreach (sales_packing_detail _sales_packing_detail in sales_packing.sales_packing_detail)
                 {
-                   
+
                     if (_sales_invoice.sales_invoice_detail.Where(x => x.id_item == _sales_packing_detail.id_item).Count() == 0)
                     {
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
@@ -552,9 +556,9 @@ namespace Cognitivo.Sales
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
                 CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
-                if (sales_invoicesales_invoice_detailViewSource.View.CurrentItem!=null)
+                if (sales_invoicesales_invoice_detailViewSource.View.CurrentItem != null)
                 {
-                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;      
+                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
                 }
                 else
                 {
@@ -598,25 +602,25 @@ namespace Cognitivo.Sales
 
                 foreach (sales_order_detail _sales_order_detail in sales_order.sales_order_detail)
                 {
-                        sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
-                        //There is an issue that the detail does not know of the currency previously selected. Maybe this can help.
-                        sales_invoice_detail.CurrencyFX_ID = sales_order.app_currencyfx.id_currencyfx;
+                    //There is an issue that the detail does not know of the currency previously selected. Maybe this can help.
+                    sales_invoice_detail.CurrencyFX_ID = sales_order.app_currencyfx.id_currencyfx;
 
-                        sales_invoice_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
-                        sales_invoice_detail.sales_order_detail = _sales_order_detail;
-                        sales_invoice_detail.Contact = _sales_invoice.contact;
-                        sales_invoice_detail.sales_invoice = _sales_invoice;
-                        sales_invoice_detail.item = _sales_order_detail.item;
-                        sales_invoice_detail.id_item = _sales_order_detail.id_item;
-                        sales_invoice_detail.quantity = _sales_order_detail.quantity - SalesInvoiceDB.sales_invoice_detail
-                                                                                     .Where(x => x.id_sales_order_detail == _sales_order_detail.id_sales_order_detail)
-                                                                                     .GroupBy(x => x.id_sales_order_detail)
-                                                                                     .Select(x => x.Sum(y => y.quantity))
-                                                                                     .FirstOrDefault();
+                    sales_invoice_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
+                    sales_invoice_detail.sales_order_detail = _sales_order_detail;
+                    sales_invoice_detail.Contact = _sales_invoice.contact;
+                    sales_invoice_detail.sales_invoice = _sales_invoice;
+                    sales_invoice_detail.item = _sales_order_detail.item;
+                    sales_invoice_detail.id_item = _sales_order_detail.id_item;
+                    sales_invoice_detail.quantity = _sales_order_detail.quantity - SalesInvoiceDB.sales_invoice_detail
+                                                                                 .Where(x => x.id_sales_order_detail == _sales_order_detail.id_sales_order_detail)
+                                                                                 .GroupBy(x => x.id_sales_order_detail)
+                                                                                 .Select(x => x.Sum(y => y.quantity))
+                                                                                 .FirstOrDefault();
 
-                        sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
-                        _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    sales_invoice_detail.unit_price = _sales_order_detail.unit_price;
+                    _sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                 }
 
                 SalesInvoiceDB.Entry(_sales_invoice).Entity.State = EntityState.Added;
@@ -666,7 +670,7 @@ namespace Cognitivo.Sales
             {
                 entity.Brillo.Document.Start.Automatic(sales_packing, sales_packing.app_document_range);
             }
-           
+
         }
 
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
@@ -686,7 +690,7 @@ namespace Cognitivo.Sales
         {
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
-            
+
             if (sales_invoicesales_invoice_detailViewSource.View != null)
             {
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
@@ -696,26 +700,28 @@ namespace Cognitivo.Sales
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
             }
-          
+
         }
 
-         private void btnRecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-         {
-             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
-             if (sales_invoice != null)
-             {
-                 crud_modal.Visibility = System.Windows.Visibility.Visible;
-                 cntrl.Curd.receive_payment recive_payment = new cntrl.Curd.receive_payment();
-                 recive_payment.sales_invoice = sales_invoice;
-                 crud_modal.Children.Add(recive_payment);
-             }
-         }
+        private void btnRecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
+            if (sales_invoice != null)
+            {
+                crud_modal.Visibility = System.Windows.Visibility.Visible;
+                cntrl.Curd.receive_payment recive_payment = new cntrl.Curd.receive_payment();
+                recive_payment.sales_invoice = sales_invoice;
+                crud_modal.Children.Add(recive_payment);
+            }
+        }
 
-         
-   
-        
-       
 
-      
+
+
+
+
+
+
+
     }
 }

@@ -164,7 +164,7 @@ namespace Cognitivo.Project
 
         private void GetServices(object sender, RoutedEventArgs e)
         {
-            EventDB.SaveChanges();
+            toolBar_btnSave_Click(sender);
           toolBar_btnEdit_Click(sender);
 
             if (project_costingViewSource != null)
@@ -806,6 +806,78 @@ namespace Cognitivo.Project
             if (e.Column.DisplayIndex == 0 || e.Column.DisplayIndex == 3 || e.Column.DisplayIndex == 4)
             {
                 EstimateCost();
+            }
+        }
+
+        private void item_Select(object sender, RoutedEventArgs e)
+        {
+            if (sbxItem.ItemID > 0)
+            {
+                if (project_costingViewSource != null)
+                {
+                    project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
+
+                    item item = EventDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+                    project_event_variable project_event_variable = new project_event_variable();
+                    project_event_variable.is_included = true;
+                    project_event_variable.item = item;
+                    project_event_variable.id_item = item.id_item;
+                    if (item.item_tag_detail.Count()>0)
+                    {
+                        if (item.item_tag_detail.FirstOrDefault().item_tag != null)
+                        {
+                            project_event_variable.item_tag = item.item_tag_detail.FirstOrDefault().item_tag;
+                            project_event_variable.id_tag = item.item_tag_detail.FirstOrDefault().item_tag.id_tag;
+                        }
+
+                    }
+                    project_event_variable.adult_consumption = 1;
+                    project_event_variable.child_consumption = 1;
+                    project_event_variable.is_included = false;
+                    project_event.project_event_variable.Add(project_event_variable);
+                }
+                project_costingproject_event_template_variable_detailsViewSource.View.Refresh();
+                toolBar_btnSave_Click(sender);
+                toolBar_btnEdit_Click(sender);
+                EstimateCost();
+
+            }
+        }
+
+        private void sbxItemevent_Select(object sender, RoutedEventArgs e)
+        {
+            if (sbxItemevent.ItemID > 0)
+            {
+                if (project_costingViewSource != null)
+                {
+                    project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
+
+                    item item = EventDB.items.Where(x => x.id_item == sbxItemevent.ItemID).FirstOrDefault();
+
+
+                    project_event_fixed services_per_event_details = new project_event_fixed();
+                    services_per_event_details.is_included = true;
+                    services_per_event_details.item = item;
+                    services_per_event_details.id_item = item.id_item;
+                    if (item.item_tag_detail.Count() > 0)
+                    {
+                        if (item.item_tag_detail.FirstOrDefault().item_tag != null)
+                        {
+                            services_per_event_details.item_tag = item.item_tag_detail.FirstOrDefault().item_tag;
+                            services_per_event_details.id_tag = item.item_tag_detail.FirstOrDefault().item_tag.id_tag;
+                        }
+
+                    }
+                    services_per_event_details.consumption = 1;
+               
+                    services_per_event_details.is_included = false;
+                    project_event.project_event_fixed.Add(services_per_event_details);
+                }
+
+                toolBar_btnSave_Click(sender);
+                toolBar_btnEdit_Click(sender);
+                EstimateCost();
+
             }
         }
 

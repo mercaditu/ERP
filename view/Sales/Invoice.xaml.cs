@@ -230,45 +230,45 @@ namespace Cognitivo.Sales
                 sales_invoice.id_contact = contact.id_contact;
                 sales_invoice.contact = contact;
 
-                ///Start Thread to get Data.
-                Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                if (sales_invoice.sales_order == null)
+                {
+                    ///Start Thread to get Data.
+                    Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                }
             }
         }
 
         private async void set_ContactPref_Thread(contact objContact)
         {
-            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-            if (sales_invoice.sales_order == null)
+
+            if (objContact != null)
             {
-                if (objContact != null)
+                await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    await Dispatcher.InvokeAsync(new Action(() =>
-                    {
-                        cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+                    cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
 
-                        if (objContact.id_sales_rep != null)
-                            cbxSalesRep.SelectedValue = Convert.ToInt32(objContact.id_sales_rep);
-                        //Condition
-                        if (objContact.app_contract != null)
-                            cbxCondition.SelectedValue = objContact.app_contract.id_condition;
-                        //Contract
-                        if (objContact.id_contract != null)
-                            cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
-                        //Currency
+                    if (objContact.id_sales_rep != null)
+                        cbxSalesRep.SelectedValue = Convert.ToInt32(objContact.id_sales_rep);
+                    //Condition
+                    if (objContact.app_contract != null)
+                        cbxCondition.SelectedValue = objContact.app_contract.id_condition;
+                    //Contract
+                    if (objContact.id_contract != null)
+                        cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
+                    //Currency
 
-                        cbxCurrency.get_ActiveRateXContact(ref objContact);
-                    }));
+                    cbxCurrency.get_ActiveRateXContact(ref objContact);
+                }));
 
-                    await SalesInvoiceDB.projects.Where(a => a.is_active == true
-                                                     && a.id_company == CurrentSession.Id_Company
-                                                     && a.id_contact == objContact.id_contact)
-                                                .OrderBy(a => a.name)
-                                                .ToListAsync();
-                    await Dispatcher.InvokeAsync(new Action(() =>
-                    {
-                        cbxProject.ItemsSource = SalesInvoiceDB.projects.Local;
-                    }));
-                }
+                await SalesInvoiceDB.projects.Where(a => a.is_active == true
+                                                    && a.id_company == CurrentSession.Id_Company
+                                                    && a.id_contact == objContact.id_contact)
+                                            .OrderBy(a => a.name)
+                                            .ToListAsync();
+                await Dispatcher.InvokeAsync(new Action(() =>
+                {
+                    cbxProject.ItemsSource = SalesInvoiceDB.projects.Local;
+                }));
             }
         }
 

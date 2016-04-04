@@ -29,7 +29,7 @@
                     <Image Source="/cntrl;component/Images/Outline_White/filled_box-25.png" 
                            Height="32" Opacity="0.64"/>
                 </Border>
-                <Label Content="{lex:Loc Project Template}" FontSize="25" Margin="50,0,0,0"/>
+                <Label Content="{lex:Loc Template}" FontSize="25" Margin="50,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"

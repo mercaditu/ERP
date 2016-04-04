@@ -67,7 +67,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Form, "HumanResource.Employee", entity.App.Names.Employee, "EmployeeID");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "HumanResource.CurrentAccount", "CurrentAccount", "");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "HumanResource.Payroll", "Payroll", "Money");
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "");
+            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "EntryExit");
 
             //Stock
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.Item", entity.App.Names.Item, "Product");
@@ -126,7 +126,7 @@ namespace Cognitivo.Menu
             //Accounting
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.Cycle", entity.App.Names.FiscalPeriod, "AccountingPeriod");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.ChartOfAccounts", entity.App.Names.ChartofAccount, "AccountingChart");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.Journal", entity.App.Names.AccountingJournal, "");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.Journal", entity.App.Names.AccountingJournal, "AccountingTransaction");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.ExpenseJournal", entity.App.Names.BookofExpenses, "ExpenseBook");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transactions, "Accounting.IncomeJournal", entity.App.Names.BookofIncomes, "IncomeBook");
 

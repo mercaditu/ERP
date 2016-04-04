@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <local:InitialsConverter x:Key="InitialsConverter"/>
-       
+
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
@@ -50,14 +50,14 @@
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
             <TextBlock Text="Detail For Template." Style="{StaticResource text_Instructions}"/>
             <StackPanel x:Name="stackSub">
-            <DataGrid x:Name="Template_detailDataGrid" Height="50"
+                <DataGrid x:Name="Template_detailDataGrid" MinHeight="64"
                       AutoGenerateColumns="False" MaxHeight="256"
-                       Margin="4" Width="256" ItemsSource="{Binding}"
+                       Margin="52,4" Width="256" ItemsSource="{Binding}"
                       RowDetailsVisibilityMode="VisibleWhenSelected">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Question" Binding="{Binding question,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Question" Binding="{Binding question,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

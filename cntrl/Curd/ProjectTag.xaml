@@ -50,8 +50,8 @@
             <Rectangle Height="1" Margin="3" Fill="Silver"/>
             <TextBlock Text="Projects associated with tag. Add Tags to Project from the Project Window." Style="{StaticResource text_Instructions}"/>
             <DataGrid x:Name="Project_tag_detailDataGrid" IsReadOnly="True"
-                      AutoGenerateColumns="False" EnableRowVirtualization="True" MaxHeight="256"
-                      ItemsSource="{Binding project_tag_detail}" Margin="4" Width="256"
+                      AutoGenerateColumns="False" EnableRowVirtualization="True"
+                      ItemsSource="{Binding project_tag_detail}" Margin="52,4" Width="256"
                       RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
                     <DataGridComboBoxColumn x:Name="id_projectcolumn" Header="Project" Width="*"

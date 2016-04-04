@@ -153,9 +153,9 @@ namespace entity.Brillo.Document
                         sales_order_Comment = g.sales_order != null ? g.sales_order.comment : "",
                         vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
                         
-                        item_code = g.item.code,
-                        item_description = g.item.name,
-                        item_brand = g.item.item_brand != null ? g.item.item_brand.name : "",
+                        item_code = g.item != null ? g.item.code : "",
+                        item_description = g.item != null ? g.item.name : "",
+                        item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
 
                         quantity = g.quantity,
                         sub_Total = g.SubTotal,

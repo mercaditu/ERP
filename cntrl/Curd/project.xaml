@@ -56,7 +56,7 @@
                 <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_textbox}"/>
                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                 <DatePicker SelectedDate="{Binding est_start_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-                            Style="{StaticResource input_datepicker}"/>
+                      IsEnabled="False"      Style="{StaticResource input_datepicker}"/>
 
                 <Label Content="{lex:Loc Template}" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="cbxTemplate" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource project_templateViewSource}}"

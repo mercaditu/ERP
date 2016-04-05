@@ -715,13 +715,6 @@ namespace Cognitivo.Sales
             }
         }
 
-
-
-
-
-
-
-
-
+      
     }
 }

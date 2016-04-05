@@ -166,31 +166,31 @@ namespace Cognitivo.Project.Development
                 purchase_tender.name = project.name;
                 purchase_tender.code = 000;
                 purchase_tender.trans_date = DateTime.Now;
-       
+
 
                 foreach (project_task project_task in productlist)
                 {
-                   
-                        if (project.id_branch != null)
-                        {
 
-                            purchase_tender.app_branch = ProjectTaskDB.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault();
-                        }
-                        else
-                        {
-                            purchase_tender.app_branch = ProjectTaskDB.app_branch.Where(x => x.can_invoice == true && x.can_stock == true).FirstOrDefault();
-                        }
+                    if (project.id_branch != null)
+                    {
 
-                   
-                   
-                  
+                        purchase_tender.app_branch = ProjectTaskDB.app_branch.Where(x => x.id_branch == project.id_branch).FirstOrDefault();
+                    }
+                    else
+                    {
+                        purchase_tender.app_branch = ProjectTaskDB.app_branch.Where(x => x.can_invoice == true && x.can_stock == true).FirstOrDefault();
+                    }
+
+
+
+
 
 
                     purchase_tender.id_project = project_task.id_project;
                     purchase_tender_item purchase_tender_item = new purchase_tender_item();
                     purchase_tender_item.id_item = project_task.id_item;
                     purchase_tender_item.item_description = project_task.item_description;
-                    purchase_tender_item.quantity =(decimal) project_task.quantity_est;
+                    purchase_tender_item.quantity = (decimal)project_task.quantity_est;
 
 
                     foreach (project_task_dimension project_task_dimension in project_task.project_task_dimension)
@@ -207,7 +207,7 @@ namespace Cognitivo.Project.Development
                 }
                 ProjectTaskDB.purchase_tender.Add(purchase_tender);
                 ProjectTaskDB.SaveChanges();
-               
+
                 toolBar.msgSaved();
             }
         }
@@ -237,6 +237,12 @@ namespace Cognitivo.Project.Development
                 item_request_detail.urgency = ItemRequest.Urgencies;
                 item_request_detail.comment = ItemRequest.comment;
                 int idItem = (int)project_task.id_item;
+                item item = ProjectTaskDB.items.Where(x => x.id_item == idItem).FirstOrDefault();
+                if (item != null)
+                {
+                    item_request_detail.item = item;
+                }
+
                 item_request_detail.id_item = idItem;
                 item_request_detail.quantity = (int)project_task.quantity_est;
 
@@ -247,7 +253,7 @@ namespace Cognitivo.Project.Development
                     item_request_dimension.id_dimension = project_task_dimension.id_dimension;
                     item_request_dimension.id_measurement = project_task_dimension.id_measurement;
                     item_request_dimension.value = project_task_dimension.value;
-                    string comment = "";
+                    string comment = item_request_detail.item.name;
 
                     comment += project_task_dimension.value.ToString();
                     comment += "X";
@@ -422,6 +428,8 @@ namespace Cognitivo.Project.Development
                 itemDataGrid.ItemsSource = null;
             }
         }
+
+
 
 
     }

@@ -137,7 +137,7 @@ namespace Cognitivo.Production
                     production_orderproduction_order_detailViewSource.View.Filter = i =>
                     {
                         production_order_detail objproduction_order_detail = (production_order_detail)i;
-                        if (objproduction_order_detail.parent == null)
+                        if (objproduction_order_detail.parent == null && objproduction_order_detail.status!=Status.Project.Rejected)
                             return true;
                         else
                             return false;
@@ -381,6 +381,13 @@ namespace Cognitivo.Production
                     item_request_detail.date_needed_by = ItemRequest.neededDate;
                     item_request_detail.id_order_detail = data.id_order_detail;
                     item_request_detail.urgency = ItemRequest.Urgencies;
+                    int idItem = data.item.id_item;
+                    item_request_detail.id_item = idItem;
+                    item item = OrderDB.items.Where(x => x.id_item == idItem).FirstOrDefault();
+                    if (item != null)
+                    {
+                        item_request_detail.item = item;
+                    }
 
                     if (data.project_task != null)
                     {
@@ -393,7 +400,7 @@ namespace Cognitivo.Production
                             item_request_dimension.id_dimension = project_task_dimension.id_dimension;
                             item_request_dimension.id_measurement = project_task_dimension.id_measurement;
                             item_request_dimension.value = project_task_dimension.value;
-                            string comment = "";
+                            string comment = item_request_detail.item.name;
 
                             comment += project_task_dimension.value.ToString();
                             comment += "X";
@@ -403,8 +410,7 @@ namespace Cognitivo.Production
                         }
                     }
 
-                    int idItem = data.item.id_item;
-                    item_request_detail.id_item = idItem;
+                
                     item_request_detail.quantity = data.quantity;
 
                     item_request.item_request_detail.Add(item_request_detail);
@@ -601,7 +607,7 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in production_order_detailLIST)
             {
-                production_order_detail.production_order.status = Status.Production.Pending;
+                production_order_detail.status = Status.Project.Rejected;
                 production_order_detail.IsSelected = false;
             }
 

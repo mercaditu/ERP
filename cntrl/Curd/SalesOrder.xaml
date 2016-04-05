@@ -19,7 +19,7 @@
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
-    <StackPanel x:Name="stackMain" Background="White" Height="430">
+    <StackPanel x:Name="stackMain" Background="White" Height="500">
         <Grid>
             <Border Background="WhiteSmoke" />
             <Border Width="45" HorizontalAlignment="Left" Background="#990099">

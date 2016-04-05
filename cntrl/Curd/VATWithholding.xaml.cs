@@ -42,7 +42,7 @@ namespace cntrl
                     CollectionViewSource invoiceViewSource = new CollectionViewSource();
                     invoiceViewSource.Source = _invoiceList;
                     stackMain.DataContext = invoiceViewSource;
-
+                    DtpTransdate.SelectedDate = DateTime.Now;
 
                   
                    

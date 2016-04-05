@@ -157,7 +157,7 @@ namespace Cognitivo.Project.Development
                 //Adding a Child Item.
                 project_template_detail n_project_template = new project_template_detail();
                 n_project_template.id_project_template = project_template.id_project_template;
-                n_project_template.status = Status.Project.Approved;
+                n_project_template.status = Status.Project.Pending;
                 project_template_detail.child.Add(n_project_template);
 
                 dbContext.project_template_detail.Add(n_project_template);
@@ -171,7 +171,7 @@ namespace Cognitivo.Project.Development
                 //Adding First Parent.
                 project_template_detail n_project_template = new project_template_detail();
                 n_project_template.id_project_template = project_template.id_project_template;
-                n_project_template.status = Status.Project.Approved;
+                n_project_template.status = Status.Project.Pending;
                 dbContext.project_template_detail.Add(n_project_template);
 
                 projectproject_template_detailViewSource.View.Filter = null;
@@ -195,7 +195,7 @@ namespace Cognitivo.Project.Development
 
             project_template_detail n_project_template = new project_template_detail();
             n_project_template.id_project_template = project_template.id_project_template;
-            n_project_template.status = Status.Project.Approved;
+            n_project_template.status = Status.Project.Pending;
             dbContext.project_template_detail.Add(n_project_template);
 
             projectproject_template_detailViewSource.View.Filter = null;

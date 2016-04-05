@@ -19,9 +19,9 @@ namespace cntrl.Curd
             set { _project_crud = value; }
         }
 
-        CollectionViewSource projectViewSource;
+        CollectionViewSource projectViewSource, project_tagViewSource;
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
+       // entity.Properties.Settings _settings = new entity.Properties.Settings();
 
         db db = new db();
         
@@ -36,17 +36,21 @@ namespace cntrl.Curd
             {
 
                 CollectionViewSource branchViewSource = (CollectionViewSource)FindResource("branchViewSource");
-                branchViewSource.Source = await db.app_branch.Where(b => b.is_active == true && b.id_company == _settings.company_ID).OrderBy(b => b.name).AsNoTracking().ToListAsync();
+                branchViewSource.Source = await db.app_branch.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).AsNoTracking().ToListAsync();
 
                 //CollectionViewSource contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
                 //contactViewSource.Source = await db.contacts.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_customer == true).OrderBy(b => b.name).ToListAsync();
 
                 CollectionViewSource templateViewSource = (CollectionViewSource)FindResource("project_templateViewSource");
-                templateViewSource.Source = await db.project_template.Where(x => x.is_active == true && x.id_company == _settings.company_ID).OrderBy(b => b.name).AsNoTracking().ToListAsync();
+                templateViewSource.Source = await db.project_template.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).AsNoTracking().ToListAsync();
 
                 projectViewSource = (CollectionViewSource)FindResource("projectViewSource");
-                 await db.projects.Where(x => x.is_active == true && x.id_company == _settings.company_ID).OrderBy(b => b.name).ToListAsync();
+                await db.projects.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
                  projectViewSource.Source = db.projects.Local;
+
+                 project_tagViewSource = (CollectionViewSource)FindResource("project_tagViewSource");
+                 await db.project_tag.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToListAsync();
+                 project_tagViewSource.Source = db.project_tag.Local;
 
                 if (project_crud != null)
                 {
@@ -123,7 +127,7 @@ namespace cntrl.Curd
             {
                 db.projects.Remove(_project);
                 db.SaveChanges();
-                projectViewSource.Source = db.projects.Where(x => x.is_active == true && x.id_company == _settings.company_ID).ToList();
+                projectViewSource.Source = db.projects.Where(x => x.is_active == true && x.id_company == CurrentSession.Id_Company).ToList();
                 projectViewSource.View.MoveCurrentToLast();
             }
 

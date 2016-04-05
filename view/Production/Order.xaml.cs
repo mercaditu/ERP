@@ -216,7 +216,7 @@ namespace Cognitivo.Production
 
                     item_ProductDataGrid.ItemsSource = item_List_group.Where(x => x.item.id_item_type == item.item_type.Product);
                     item_RawDataGrid.ItemsSource = item_List_group.Where(x => x.item.id_item_type == item.item_type.RawMaterial);
-
+                    item_SupplierDataGrid.ItemsSource = item_List_group.Where(x => x.item.id_item_type == item.item_type.Supplies);
                     var item_List = await (from IT in OrderDB.production_order_detail
                                            where IT.item.id_item_type != item.item_type.Service &&
                                            IT.item.id_item_type != item.item_type.Task &&
@@ -234,7 +234,7 @@ namespace Cognitivo.Production
                                            }).ToListAsync();
 
                     item_CapitalDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.FixedAssets);
-                    item_SupplierDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.Supplies);
+                    //item_SupplierDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.Supplies);
                     item_ServiceContractDataGrid.ItemsSource = item_List.Where(x => x.item.id_item_type == item.item_type.ServiceContract);
                 }
                 else

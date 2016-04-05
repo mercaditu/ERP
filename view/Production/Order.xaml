@@ -272,7 +272,7 @@
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Supplies}" Width="*" />
                                         <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Required}" Width="auto" />
-                                        <DataGridTextColumn Binding="{Binding _avlqtyColumn, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Available}" Width="auto" />
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>

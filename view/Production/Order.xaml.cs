@@ -121,7 +121,7 @@ namespace Cognitivo.Production
             {
                 production_orderproduction_order_detailViewSource.View.Filter = null;
                 filter_task();
-                production_orderproduction_order_detailViewSource.View.Refresh();
+               // production_orderproduction_order_detailViewSource.View.Refresh();
             }
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().Where(x => !x.Equals(item.item_type.RawMaterial));
@@ -137,7 +137,7 @@ namespace Cognitivo.Production
                     production_orderproduction_order_detailViewSource.View.Filter = i =>
                     {
                         production_order_detail objproduction_order_detail = (production_order_detail)i;
-                        if (objproduction_order_detail.parent == null && objproduction_order_detail.status!=Status.Project.Rejected)
+                        if (objproduction_order_detail.parent == null)
                             return true;
                         else
                             return false;
@@ -392,7 +392,7 @@ namespace Cognitivo.Production
                     if (data.project_task != null)
                     {
                         item_request_detail.id_project_task = data.project_task.id_project_task;
-
+                        string comment = item_request_detail.item.name;
                         List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == data.project_task.id_project_task).ToList();
                         foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
                         {
@@ -400,7 +400,7 @@ namespace Cognitivo.Production
                             item_request_dimension.id_dimension = project_task_dimension.id_dimension;
                             item_request_dimension.id_measurement = project_task_dimension.id_measurement;
                             item_request_dimension.value = project_task_dimension.value;
-                            string comment = item_request_detail.item.name;
+                           
 
                             comment += project_task_dimension.value.ToString();
                             comment += "X";

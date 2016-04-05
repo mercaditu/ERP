@@ -245,7 +245,7 @@ namespace Cognitivo.Project.Development
 
                 item_request_detail.id_item = idItem;
                 item_request_detail.quantity = (int)project_task.quantity_est;
-
+                string comment = item_request_detail.item.name;
                 List<project_task_dimension> project_task_dimensionList = ProjectTaskDB.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList();
                 foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
                 {
@@ -253,10 +253,11 @@ namespace Cognitivo.Project.Development
                     item_request_dimension.id_dimension = project_task_dimension.id_dimension;
                     item_request_dimension.id_measurement = project_task_dimension.id_measurement;
                     item_request_dimension.value = project_task_dimension.value;
-                    string comment = item_request_detail.item.name;
+
 
                     comment += project_task_dimension.value.ToString();
                     comment += "X";
+
 
 
                     item_request_detail.comment = comment.Substring(0, comment.Length - 1);

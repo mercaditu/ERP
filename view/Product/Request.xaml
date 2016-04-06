@@ -73,7 +73,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel HorizontalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
 
                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                 <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"
@@ -94,8 +94,8 @@
                             metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                             metro:ControlsHelper.MouseOverBorderBrush="Silver" Text="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-            </StackPanel>
-            <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+            </StackPanel >
+            <StackPanel Grid.Column="1" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{lex:Loc User}" Style="{StaticResource input_label}"/>
                     <Label Content="{Binding security_user.name}" Style="{StaticResource generic_Label}"/>
@@ -127,15 +127,15 @@
                           ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"/>
 
             </StackPanel>
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                 <Label Content="{lex:Loc RequestResource}" Style="{StaticResource H2}"/>
                 <DataGrid x:Name="item_request_detailMovementDataGrid" SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged" 
-                          AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="6,0"
+                          AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="6,0" CanUserAddRows="False"
                           ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" 
                           RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                    		Header="Item" Width="*"/>
+                        <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+                    		Header="Item" Width="*" />
                         <DataGridTemplateColumn Header="date needed by" Width="SizeToHeader">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -143,12 +143,12 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="SizeToHeader"/>
+                        <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="SizeToHeader" IsReadOnly="True"/>
                         <DataGridComboBoxColumn  x:Name="cmburgency"
                     		Header="{lex:Loc Cognitivo:local:urgency}" Width="*" SelectedValueBinding="{Binding urgency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <!--<DataGridTextColumn Binding="{Binding urgency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="urgency" Width="SizeToHeader"/>-->
                         <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="comment" Width="SizeToHeader"/>
-                        <DataGridTextColumn Binding="{Binding balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="balance" Width="SizeToHeader"/>
+                        <DataGridTextColumn Binding="{Binding balance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="balance" Width="SizeToHeader" IsReadOnly="True"/>
                     </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
@@ -171,7 +171,7 @@
                 </DataGrid>
             </StackPanel>
 
-            <TabControl Grid.Column="1" Grid.Row="1">
+            <TabControl Grid.Column="1" Grid.Row="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                 <TabItem>
                     <TabItem.Header>
                         <Grid>
@@ -237,7 +237,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
-            </TabControl>
+            </TabControl >
             
         </Grid>
 

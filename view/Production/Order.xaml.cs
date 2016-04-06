@@ -387,12 +387,13 @@ namespace Cognitivo.Production
                     if (item != null)
                     {
                         item_request_detail.item = item;
+                        item_request_detail.comment = item_request_detail.item.name;
                     }
 
                     if (data.project_task != null)
                     {
                         item_request_detail.id_project_task = data.project_task.id_project_task;
-                        string comment = item_request_detail.item.name;
+                       
                         List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == data.project_task.id_project_task).ToList();
                         foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
                         {
@@ -400,7 +401,7 @@ namespace Cognitivo.Production
                             item_request_dimension.id_dimension = project_task_dimension.id_dimension;
                             item_request_dimension.id_measurement = project_task_dimension.id_measurement;
                             item_request_dimension.value = project_task_dimension.value;
-                           
+                            string comment = item_request_detail.item.name;
 
                             comment += project_task_dimension.value.ToString();
                             comment += "X";

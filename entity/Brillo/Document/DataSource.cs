@@ -163,12 +163,14 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_price,
                         unit_price_vat = g.UnitPrice_Vat,
-                        AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
+                        AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
+
+                        // Text -> Words
                         NumToWords.IntToText(Convert.ToInt32(g.sales_order != null ? g.sales_order.GrandTotal : 0))
                         :
-                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "",
+                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "" : "" : "",
 
-                        HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false
+                        HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false : false : false : false
                     }).ToList();
 
                 return reportDataSource;
@@ -227,11 +229,14 @@ namespace entity.Brillo.Document
                     sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment : "",
                     packingList = g.sales_invoice != null ? g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()) : "" : "",
                     sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
-                    AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
-                        NumToWords.IntToText(Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
-                        :
-                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "",
-                    HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false
+                    AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
+
+                    // Text -> Words
+                    NumToWords.IntToText(Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
+                    :
+                    NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "" : "" : "",
+
+                    HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false
                 }).ToList();
 
                 return reportDataSource;
@@ -330,12 +335,14 @@ namespace entity.Brillo.Document
                                   trans_date = g.sales_return.trans_date,
                                   id_vat_group = g.id_vat_group,
                                   gov_id = g.sales_return.contact.gov_code,
-                                  Number = g.sales_return.number,
-                                  AmountWords = g.sales_return != null ? g.sales_return.app_currencyfx.app_currency.has_rounding ?
-                        NumToWords.IntToText(Convert.ToInt32(g.sales_return != null ? g.sales_return.GrandTotal : 0))
-                        :
-                        NumToWords.DecimalToText((Convert.ToDecimal(g.sales_return != null ? g.sales_return.GrandTotal : 0))) : "",
-                                  HasRounding = g.sales_return != null ? g.sales_return.app_currencyfx.app_currency.has_rounding : false
+                                  AmountWords = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding ?
+
+                     // Text -> Words
+                     NumToWords.IntToText(Convert.ToInt32(g.sales_return != null ? g.sales_return.GrandTotal : 0))
+                     :
+                     NumToWords.DecimalToText((Convert.ToDecimal(g.sales_return != null ? g.sales_return.GrandTotal : 0))) : "" : "" : "",
+
+                                  HasRounding = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding != null ? g.sales_return.app_currencyfx.app_currency.has_rounding : false : false : false : false
                               }).ToList();
 
                 return reportDataSource;
@@ -425,11 +432,14 @@ namespace entity.Brillo.Document
                         id_vat_group = g.id_vat_group,
                         gov_id = g.purchase_order.contact.gov_code,
                         Number = g.purchase_order.number,
-                        AmountWords = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding ?
-                        NumToWords.IntToText(Convert.ToInt32(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))
-                        :
-                        NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))) : "",
-                        HasRounding = g.purchase_order != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding : false
+                        AmountWords = g.purchase_order != null ? g.purchase_order.app_currencyfx != null ? g.purchase_order.app_currencyfx.app_currency != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding ?
+
+                     // Text -> Words
+                     NumToWords.IntToText(Convert.ToInt32(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))
+                     :
+                     NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_order != null ? g.purchase_order.GrandTotal : 0))) : "" : "" : "",
+
+                        HasRounding = g.purchase_order != null ? g.purchase_order.app_currencyfx != null ? g.purchase_order.app_currencyfx.app_currency != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding : false : false : false : false
                     }).ToList();
 
                 return reportDataSource;

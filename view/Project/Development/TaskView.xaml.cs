@@ -227,7 +227,7 @@ namespace Cognitivo.Project.Development
             stpcode.IsEnabled = true;
 
             project project = projectViewSource.View.CurrentItem as project;
-            project_task project_task = treeProject.SelectedItem as project_task;
+            project_task project_task = treeProject.SelectedItem_ as project_task;
 
             if (project_task != null && project_task.items.item_recepie.Count()==0)
             {
@@ -245,6 +245,8 @@ namespace Cognitivo.Project.Development
                         ProjectTaskDB.project_task.Add(n_project_task);
                         project_taskViewSource.View.Refresh();
                         project_taskViewSource.View.MoveCurrentTo(n_project_task);
+
+                        treeProject.SelectedItem_ = n_project_task;
                     }
                 }
             }
@@ -257,6 +259,7 @@ namespace Cognitivo.Project.Development
 
                 project_taskViewSource.View.Filter = null;
                 project_taskViewSource.View.MoveCurrentTo(n_project_task);
+                treeProject.SelectedItem_ = n_project_task;
                 filter_task();
             }
            
@@ -274,13 +277,14 @@ namespace Cognitivo.Project.Development
 
             project_taskViewSource.View.Filter = null;
             project_taskViewSource.View.MoveCurrentTo(n_project_task);
+            treeProject.SelectedItem_ = n_project_task;
             filter_task();
         }
 
         private void btnEditTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
-            project_task project_task = treeProject.SelectedItem as project_task;
+            project_task project_task = treeProject.SelectedItem_ as project_task;
             project_task.State = EntityState.Modified;
         }
 
@@ -405,9 +409,9 @@ namespace Cognitivo.Project.Development
 
         private void treeProject_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (treeProject.SelectedItem != null)
+            if (treeProject.SelectedItem_ != null)
             {
-                project_task project_task = (project_task)treeProject.SelectedItem;
+                project_task project_task = (project_task)treeProject.SelectedItem_;
                 project_taskViewSource.View.MoveCurrentTo(project_task);
                 try
                 {
@@ -450,7 +454,7 @@ namespace Cognitivo.Project.Development
 
         private void project_task_dimensionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            project_task project_task = (project_task)treeProject.SelectedItem;
+            project_task project_task = (project_task)treeProject.SelectedItem_;
             project_task_dimension project_task_dimension = e.Row.Item as project_task_dimension;
 
             project_task.project_task_dimension.Add(project_task_dimension);
@@ -463,7 +467,7 @@ namespace Cognitivo.Project.Development
                 item item = ProjectTaskDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
               
-                project_task project_task_output = treeProject.SelectedItem as project_task;
+                project_task project_task_output = treeProject.SelectedItem_ as project_task;
                 if (project_task_output.parent!=null)
                 {
                     if (project_task_output.parent.items.is_autorecepie)

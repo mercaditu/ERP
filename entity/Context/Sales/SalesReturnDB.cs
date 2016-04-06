@@ -154,7 +154,11 @@ namespace entity
                             payment_detail payment_detailreturn = new payment_detail();
                             // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
                             payment_detailreturn.id_currencyfx = sales_return.id_currencyfx;
-                            payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
+                            if ( base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault()!=null)
+                            {
+                                payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
+                            }
+                         
 
                             payment_detailreturn.id_sales_return = sales_return.id_sales_return;
 

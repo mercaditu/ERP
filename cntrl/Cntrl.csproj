@@ -282,6 +282,7 @@
       <DependentUpon>vat_group.xaml</DependentUpon>
     </Compile>
     <Compile Include="DelayedExecutionService.cs" />
+    <Compile Include="ExtendedTreeView.cs" />
     <Compile Include="moduleIcon.xaml.cs">
       <DependentUpon>moduleIcon.xaml</DependentUpon>
     </Compile>

@@ -87,26 +87,28 @@
                                              TaskName="{Binding item_description}" Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
-                <TreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}" 
+                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}" 
                           VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
                           ScrollViewer.CanContentScroll="True" SelectedItemChanged="treeProject_SelectedItemChanged"  >
                     <TreeView.ItemContainerStyle>
-                        <Style TargetType="{x:Type TreeViewItem}">
-                            <Setter Property="IsExpanded" Value="{Binding  ElementName=_TaskView, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            </Setter>
-                          
+                        <Style TargetType="{x:Type TreeViewItem}" >
+                            <Setter Property="IsExpanded" Value="{Binding  ElementName=_TaskView, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            
+
+
                         </Style>
+                      
                     </TreeView.ItemContainerStyle>
-                 
+                   
                     <TreeView.ItemsPanel>
                         <ItemsPanelTemplate >
                             <VirtualizingStackPanel />
                         </ItemsPanelTemplate>
                     </TreeView.ItemsPanel>
-                </TreeView>
+                </cntrl:ExtendedTreeView>
             </Grid>
 
-            <StackPanel Background="WhiteSmoke" Grid.Column="2" DataContext="{Binding SelectedItem, ElementName=treeProject}">
+            <StackPanel Background="WhiteSmoke" Grid.Column="2" DataContext="{Binding SelectedItem_, ElementName=treeProject}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{lex:Loc Date}"/>

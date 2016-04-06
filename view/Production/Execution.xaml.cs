@@ -161,7 +161,7 @@ namespace Cognitivo.Production
         }
         public void filer_productionservice_execution()
         {
-            production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem_;
 
             if (production_execution_detailServiceViewSource != null)
             {
@@ -399,9 +399,9 @@ namespace Cognitivo.Production
             }
         }
 
-        public void adddatacontact(contact Data, TreeView treeview)
+        public void adddatacontact(contact Data, cntrl.ExtendedTreeView treeview)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeview.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeview.SelectedItem_;
             if (production_order_detail != null)
             {
                 if (Data != null)
@@ -527,7 +527,7 @@ namespace Cognitivo.Production
 
         private void treeraw_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeRaw.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeRaw.SelectedItem_;
             if (production_order_detail != null)
             {
                 production_execution_detailRawViewSource.View.Filter = i =>
@@ -556,7 +556,7 @@ namespace Cognitivo.Production
 
         private void treeservice_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem_;
             if (production_order_detail != null)
             {
                 production_execution_detailServiceViewSource.View.Filter = i =>
@@ -585,7 +585,7 @@ namespace Cognitivo.Production
 
         private void treecapital_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem_;
             if (production_order_detail != null)
             {
                 production_execution_detailAssetViewSource.View.Filter = i =>
@@ -741,7 +741,7 @@ namespace Cognitivo.Production
 
         private void treeSupply_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeSupply.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeSupply.SelectedItem_;
             if (production_order_detail != null)
             {
                 production_execution_detailSupplyViewSource.View.Filter = i =>
@@ -770,7 +770,7 @@ namespace Cognitivo.Production
 
         private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem;
+            production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem_;
             if (production_order_detail != null)
             {
                 production_execution_detailProductViewSource.View.Filter = i =>
@@ -889,22 +889,22 @@ namespace Cognitivo.Production
             if (btn.Name.Contains("Prod"))
             {
                 Quantity = Convert.ToDecimal(txtProduct.Text);
-                production_order_detail = treeProduct.SelectedItem as production_order_detail;
+                production_order_detail = treeProduct.SelectedItem_ as production_order_detail;
             }
             else if (btn.Name.Contains("Raw"))
             {
                 Quantity = Convert.ToDecimal(txtRaw.Text);
-                production_order_detail = treeRaw.SelectedItem as production_order_detail;
+                production_order_detail = treeRaw.SelectedItem_ as production_order_detail;
             }
             else if (btn.Name.Contains("Asset"))
             {
                 Quantity = Convert.ToDecimal(txtAsset.Text);
-                production_order_detail = treeAsset.SelectedItem as production_order_detail;
+                production_order_detail = treeAsset.SelectedItem_ as production_order_detail;
             }
             else if (btn.Name.Contains("Supp"))
             {
                 Quantity = Convert.ToDecimal(txtSupply.Text);
-                production_order_detail = treeSupply.SelectedItem as production_order_detail;
+                production_order_detail = treeSupply.SelectedItem_ as production_order_detail;
             }
 
             try

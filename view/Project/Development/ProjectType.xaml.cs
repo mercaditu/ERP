@@ -150,7 +150,7 @@ namespace Cognitivo.Project.Development
 
 
             project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
-            project_template_detail project_template_detail = treeProject.SelectedItem as project_template_detail;
+            project_template_detail project_template_detail = treeProject.SelectedItem_ as project_template_detail;
 
             if (project_template_detail != null)
             {
@@ -353,7 +353,7 @@ namespace Cognitivo.Project.Development
             if (sbxItem.ItemID > 0)
             {
                 item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-                project_template_detail project_template_detail = (project_template_detail)treeProject.SelectedItem;
+                project_template_detail project_template_detail = (project_template_detail)treeProject.SelectedItem_;
                 project_template_detail.id_item = item.id_item;
                 project_template_detail.item = item;
 

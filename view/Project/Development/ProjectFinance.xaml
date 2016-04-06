@@ -118,7 +118,7 @@
                               Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
                               Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
 
-                <TreeView x:Name="treeProject" Margin="0,95,0,0" ItemsSource="{Binding}" 
+                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,95,0,0" ItemsSource="{Binding}" 
                           VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
                           ScrollViewer.CanContentScroll="True"   >
                     <TreeView.ItemContainerStyle>
@@ -134,7 +134,7 @@
                             <VirtualizingStackPanel />
                         </ItemsPanelTemplate>
                     </TreeView.ItemsPanel>
-                </TreeView>
+                </cntrl:ExtendedTreeView>
             </Grid>
 
             <StackPanel Background="WhiteSmoke" Grid.Column="2">
@@ -164,7 +164,7 @@
 
 
 
-                <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem, ElementName=treeProject}">
+                <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem_, ElementName=treeProject}">
                     <StackPanel x:Name="stpcode" >
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
 

@@ -142,18 +142,25 @@ namespace cntrl.Controls
             using (db db = new db())
             {
                 int company_ID = entity.Properties.Settings.Default.company_ID;
-                if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority && x.id_company == company_ID) != null)
+                if (SelectedValue == 0)
                 {
-                    app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.is_active 
-                                                                         && x.app_currency.is_priority 
-                                                                         && x.id_company == company_ID)
-                                                                     .FirstOrDefault();
-                    if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
-                    { SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
-                    else
+
+
+                    if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority && x.id_company == company_ID) != null)
                     {
-                        SelectedValue = 1;
-                       // cbCurrency.SelectedValue = -1;
+                        app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.is_active
+                                                                             && x.app_currency.is_priority
+                                                                             && x.id_company == company_ID)
+                                                                         .FirstOrDefault();
+                        if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
+                        {
+                            SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
+                        }
+                        else
+                        {
+                            SelectedValue = 1;
+                            // cbCurrency.SelectedValue = -1;
+                        }
                     }
                 }
             }

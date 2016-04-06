@@ -20,6 +20,7 @@ namespace Cognitivo.Project
     public partial class ProjectFinance : Page, INotifyPropertyChanged
     {
         SalesOrderDB SalesOrderDB = new entity.SalesOrderDB();
+      
 
         CollectionViewSource project_taskViewSource;
         CollectionViewSource projectViewSource;
@@ -130,6 +131,19 @@ namespace Cognitivo.Project
                             }
                         }
                     }
+                    else if (project_task.sales_invoice_detail != null)
+                    {
+                        foreach (sales_invoice_detail sales_invoice_detail in project_task.sales_invoice_detail)
+                        {
+                            sales_invoice sales_invoice = sales_invoice_detail.sales_invoice;
+                            if (sales_invoice.payment_schedual.Sum(x => x.AccountReceivableBalance) == 0)
+                            {
+                                project.total_paid = Convert.ToDecimal(project.total_paid + project_task.unit_price_vat);
+                            }
+                            
+                        }
+                        
+                    }
 
                 }
                 project.RaisePropertyChanged("total_paid");
@@ -141,12 +155,17 @@ namespace Cognitivo.Project
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            project project = projectViewSource.View.CurrentItem as project;
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
-            cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
-            objSalesOrder.project = project;
-            objSalesOrder.db = SalesOrderDB;
-            crud_modal.Children.Add(objSalesOrder);
+          
+                project project = projectViewSource.View.CurrentItem as project;
+                crud_modal.Visibility = System.Windows.Visibility.Visible;
+                cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
+                objSalesOrder.project = project;
+                objSalesOrder.db = SalesOrderDB;
+                crud_modal.Children.Add(objSalesOrder);
+          
+
+            
+            
         }
 
        

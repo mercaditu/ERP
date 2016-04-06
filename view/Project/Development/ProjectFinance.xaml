@@ -200,7 +200,11 @@
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
-                        <Button Content="{lex:Loc SalesOrder}" Style="{StaticResource btn_green}" Click="Button_Click"/>
+                        <CheckBox x:Name="chkinvoice" >
+                            <Label Content="Genrate invoice"/>
+                        </CheckBox>
+
+                        <Button Content="{lex:Loc Generate}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

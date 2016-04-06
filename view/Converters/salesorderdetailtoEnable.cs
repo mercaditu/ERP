@@ -24,6 +24,11 @@ namespace Cognitivo.Converters
                     return false;
                 }
             }
+            //else if (sales_order_detail.project_task.sales_invoice_detail.Count() >0)
+            //{
+            //    return false;
+               
+            //}
             else
             {
                 return true;

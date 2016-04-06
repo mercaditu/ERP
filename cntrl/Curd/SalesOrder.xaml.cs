@@ -22,8 +22,8 @@ namespace cntrl
     /// </summary>
     public partial class SalesOrder : UserControl
     {
-       
-        public project project 
+
+        public project project
         {
             get { return _project; }
             set
@@ -34,7 +34,7 @@ namespace cntrl
 
                     if (_project != null)
                     {
-                        if (_project.contact != null) 
+                        if (_project.contact != null)
                         {
                             contact contact = _project.contact;
 
@@ -50,9 +50,10 @@ namespace cntrl
                 }
             }
         }
-        
+
         private project _project;
-        public db db { get; set; }
+        public SalesOrderDB db { get; set; }
+        public Boolean Generate_Invoice { get; set; }
 
         public SalesOrder()
         {
@@ -106,6 +107,54 @@ namespace cntrl
                 sales_order.IsSelected = true;
                 db.sales_order.Add(sales_order);
                 db.SaveChanges();
+                db.Approve();
+                if (Generate_Invoice)
+                {
+                    sales_invoice sales_invoice = new entity.sales_invoice();
+                    sales_invoice.id_contact = (int)project.id_contact;
+                    sales_invoice.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+                    sales_invoice.sales_order = sales_order;
+                    sales_invoice.id_project = project.id_project;
+                    sales_invoice.id_condition = (int)cbxCondition.SelectedValue;
+                    sales_invoice.id_contract = (int)cbxContract.SelectedValue;
+                    sales_invoice.id_currencyfx = (int)cbxCurrency.SelectedValue;
+                    sales_invoice.comment = "Project -> " + project.name;
+
+                    sales_invoice_detail sales_invoice_detail = null;
+
+                    foreach (project_task _project_task in project_task)
+                    {
+                        if (_project_task.items.id_item_type == item.item_type.Task)
+                        {
+                            sales_invoice_detail = new sales_invoice_detail();
+                            sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
+                            sales_invoice_detail.sales_invoice = sales_invoice;
+                            sales_invoice_detail.id_item = (int)_project_task.id_item;
+                            sales_invoice_detail.item_description = _project_task.item_description;
+                            sales_invoice_detail.quantity = (decimal)(_project_task.quantity_est == null ? 0M : _project_task.quantity_est);
+                            sales_invoice_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0M : _project_task.unit_price_vat);
+                            sales_invoice_detail.id_project_task = _project_task.id_project_task;
+                            _project_task.IsSelected = false;
+                        }
+                        else
+                        {
+                            if (sales_invoice_detail != null)
+                            {
+                                sales_invoice_detail.id_project_task = _project_task.id_project_task;
+                                _project_task.IsSelected = false;
+                            }
+                        }
+                        sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
+                    }
+
+                    sales_invoice.State = EntityState.Added;
+                    sales_invoice.IsSelected = true;
+                    crm_opportunity crm_opportunity = sales_order.crm_opportunity;
+                    crm_opportunity.sales_invoice.Add(sales_invoice);
+                    db.crm_opportunity.Attach(crm_opportunity);
+                    db.sales_invoice.Add(sales_invoice);
+                }
+                db.SaveChanges();
                 btnCancel_Click(null, null);
             }
         }
@@ -113,7 +162,7 @@ namespace cntrl
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             try
-            {  
+            {
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -137,7 +186,7 @@ namespace cntrl
         {
             if (cbxCondition.SelectedItem != null)
             {
-                
+
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 cbxContract.ItemsSource = db.app_contract.Where(a => a.is_active == true
                                                                         && a.id_company == entity.Properties.Settings.Default.company_ID

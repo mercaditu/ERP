@@ -23,6 +23,11 @@ namespace Cognitivo.Converters
                     return Brushes.PaleGreen;
                 }
             }
+            //else if (sales_order_detail.project_task.sales_invoice_detail.Count() > 0)
+            //{
+            //    return Brushes.PaleGreen;
+
+            //}
             else
             {
                 return Brushes.White;

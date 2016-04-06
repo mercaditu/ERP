@@ -261,7 +261,7 @@ namespace entity
         public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
         public virtual sales_order_detail sales_detail { get; set; }
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
-
+    
         public virtual ICollection<project_task> child
         {
             get { return _child; }

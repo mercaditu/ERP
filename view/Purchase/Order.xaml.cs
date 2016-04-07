@@ -194,11 +194,19 @@ namespace Cognitivo.Purchase
         private void toolBar_btnApprove_Click(object sender)
         {
             dbContext.Approve();
+            foreach (purchase_order purchase_order in purchase_orderViewSource.View.Cast<purchase_order>().ToList())
+            {
+                purchase_order.IsSelected = false;
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
             dbContext.Anull();
+            foreach (purchase_order purchase_order in purchase_orderViewSource.View.Cast<purchase_order>().ToList())
+            {
+                purchase_order.IsSelected = false;
+            }
         }
 
         #region Filter Data

@@ -210,12 +210,20 @@ namespace Cognitivo.Sales
         {
             InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
             SalesInvoiceDB.Approve(_pref_SalesInvoice.DiscountStock);
+            foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
+            {
+                sales_invoice.IsSelected = false;
+            }
             filter_sales();
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
             SalesInvoiceDB.Anull();
+            foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
+            {
+                sales_invoice.IsSelected = false;
+            }
         }
         #endregion
 

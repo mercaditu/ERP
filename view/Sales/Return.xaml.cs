@@ -427,11 +427,19 @@ namespace Cognitivo.Sales
         private void toolBar_btnApprove_Click(object sender)
         {
             SalesReturnDB.Approve();
+            foreach (sales_return sales_return in salesReturnViewSource.View.Cast<sales_return>().ToList())
+            {
+                sales_return.IsSelected = false;
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
             SalesReturnDB.Anull();
+            foreach (sales_return sales_return in salesReturnViewSource.View.Cast<sales_return>().ToList())
+            {
+                sales_return.IsSelected = false;
+            }
         }
 
         private void sales_return_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)

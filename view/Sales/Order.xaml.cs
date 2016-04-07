@@ -186,11 +186,19 @@ namespace Cognitivo.Sales
         private void btnApprove_Click(object sender)
         {
             dbContext.Approve();
+            foreach (sales_order sales_order in sales_orderViewSource.View.Cast<sales_order>().ToList())
+            {
+                sales_order.IsSelected = false;
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
             dbContext.Annull();
+            foreach (sales_order sales_order in sales_orderViewSource.View.Cast<sales_order>().ToList())
+            {
+                sales_order.IsSelected = false;
+            }
         }
         #endregion
 

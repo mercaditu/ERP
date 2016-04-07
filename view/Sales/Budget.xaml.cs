@@ -232,11 +232,19 @@ namespace Cognitivo.Sales
         private void toolBar_btnApprove_Click(object sender)
         {
             SalesBudgetDB.Approve();
+            foreach (sales_budget sales_budget in sales_budgetViewSource.View.Cast<sales_budget>().ToList())
+            {
+                sales_budget.IsSelected = false;
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
             SalesBudgetDB.Anull();
+            foreach (sales_budget sales_budget in sales_budgetViewSource.View.Cast<sales_budget>().ToList())
+            {
+                sales_budget.IsSelected = false;
+            }
         }
 
         private void item_Select(object sender, EventArgs e)

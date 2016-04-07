@@ -442,11 +442,19 @@ namespace Cognitivo.Purchase
         private void toolBar_btnApprove_Click(object sender)
         {
             dbContext.Approve();
+            foreach (purchase_return purchase_return in purchaseReturnViewSource.View.Cast<purchase_return>().ToList())
+            {
+                purchase_return.IsSelected = false;
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
             dbContext.Anull();
+            foreach (purchase_return purchase_return in purchaseReturnViewSource.View.Cast<purchase_return>().ToList())
+            {
+                purchase_return.IsSelected = false;
+            }
         }
 
         private void cbxCurrency_MouseEnter(object sender, MouseEventArgs e)

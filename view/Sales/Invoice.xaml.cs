@@ -576,6 +576,7 @@ namespace Cognitivo.Sales
             crud_modal.Visibility = Visibility.Visible;
             pnlSalesOrder = new cntrl.PanelAdv.pnlSalesOrder();
             pnlSalesOrder._entity = SalesInvoiceDB;
+            pnlSalesOrder._contact = sbxContact.Contact;
             pnlSalesOrder.mode = cntrl.PanelAdv.pnlSalesOrder.module.sales_invoice;
             pnlSalesOrder.SalesOrder_Click += SalesOrder_Click;
             crud_modal.Children.Add(pnlSalesOrder);

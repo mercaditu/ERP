@@ -105,7 +105,7 @@ namespace entity
                 _GrandTotal = 0;
                 foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
                 {
-                    _GrandTotal += _sales_invoice_detail.SubTotal_Vat-_sales_invoice_detail.Discount_SubTotal_Vat;
+                    _GrandTotal += _sales_invoice_detail.SubTotal_Vat;
                 }
 
                 calc_credit(_GrandTotal);
@@ -165,6 +165,16 @@ namespace entity
                             RaisePropertyChanged("GrandTotal");
                         }
                     }   
+                    else
+                    {
+                        foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
+                        {
+
+                            item.DiscountVat = 0;
+                            item.RaisePropertyChanged("DiscountVat");
+                            RaisePropertyChanged("GrandTotal");
+                        }
+                    }
                 }
             }
         }

@@ -78,6 +78,7 @@ namespace entity
                 crm_opportunity crm_opportunity = new crm_opportunity();
                 crm_opportunity.id_contact = order.id_contact;
                 crm_opportunity.id_currency = order.id_currencyfx;
+               
                 crm_opportunity.value = order.sales_order_detail.Sum(x => x.SubTotal_Vat); 
 
                 crm_opportunity.sales_order.Add(order);

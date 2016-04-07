@@ -57,7 +57,7 @@ namespace cntrl.PanelAdv
              
                 if (_contact != null)
                 {
-
+                    sbxContact.Text = _contact.name;
                  
                     sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
                     sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();

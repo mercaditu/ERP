@@ -119,8 +119,8 @@
                         </ComboBox>
                         <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                         <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus"/>
-                        <Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <!--<Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="1">
                         <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
@@ -323,6 +323,10 @@
                 <TabItem Header="{lex:Loc Transaction}">
                     <Grid>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                            <Label Content="Discount" Style="{StaticResource input_label}"/>
+                            <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,0,0">
                             <Label Content="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0, Source={StaticResource sales_orderViewSource}, StringFormat={}{0:N}}"
                                Style="{StaticResource H2}" ContentStringFormat="{}{0:N}" FontWeight="Normal"/>
                             <Label Content="{Binding app_currencyfx.app_currency.name}" Style="{StaticResource H3}" ContentStringFormat="{}{0:N}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />
@@ -340,8 +344,8 @@
                                 </DataGrid>
                             </Popup>
                         </StackPanel>
-                        <StackPanel>
-                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
+                        <StackPanel >
+                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Margin="0,0,436,0"/>
                             <Grid>
                                 <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" 
                                                         Width="256" Height="26" Select="item_Select"

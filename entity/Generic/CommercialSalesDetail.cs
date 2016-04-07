@@ -498,7 +498,10 @@ namespace entity
         /// <param name="discountvat"></param>
         public void Calculate_UnitDiscount(decimal discountvat)
         {
-            _discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
+            decimal calc_discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat); ;
+            
+            ApplyDiscount_UnitPrice(_discount, calc_discount, unit_price);
+            _discount = calc_discount;
             Calculate_SubTotalDiscount(_discount);
             RaisePropertyChanged("discount");
         }

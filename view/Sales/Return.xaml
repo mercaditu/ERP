@@ -126,8 +126,8 @@
                         <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                         <Controls:CurrencyBox x:Name="cbxCurrency" Width="256" HorizontalAlignment="Left" 
                                               SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus"/>
-                        <Label Content="{lex:Loc Discount}" Style="{StaticResource input_label}"/>
-                        <TextBox Style="{StaticResource input_textbox}" Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <!--<Label Content="{lex:Loc Discount}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}" Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
                         <!--<Controls:CurrencyBox x:Name="cbxCurrencyfx"  ItemsSource="{StaticResource app_currencyfxViewSource}"  SelectedItem="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
                         <!--<ComboBox Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
                               DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
@@ -277,6 +277,10 @@
                 
                 
                 <Grid Grid.ColumnSpan="2" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <Label Content="Discount" Style="{StaticResource input_label}"/>
+                        <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
                         <TextBlock x:Name="lblTotal" Text="{Binding GrandTotal, Source={StaticResource sales_returnViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource TextAreaH2}"/>
                         <Label Content="{Binding app_currencyfx.app_currency.name}" Style="{StaticResource H3}" ContentStringFormat="{}{0:N}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />

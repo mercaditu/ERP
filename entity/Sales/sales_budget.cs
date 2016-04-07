@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+    using System.Linq;
 
     public partial class sales_budget : CommercialHead, IDataErrorInfo
     {
@@ -85,23 +86,33 @@ namespace entity
             get { return _DiscountPercentage; }
             set
             {
-                _DiscountPercentage = value;
-                RaisePropertyChanged("DiscountPercentage");
-
-
-
-                decimal OriginalValue = GrandTotal * DiscountPercentage;
-                if (OriginalValue != 0)
+                if (value <= 1)
                 {
-                    decimal DifferenceValue = OriginalValue / sales_budget_detail.Count;
-                    foreach (var item in sales_budget_detail)
+                    _DiscountPercentage = value;
+                    RaisePropertyChanged("DiscountPercentage");
+
+                    decimal DiscountValue = GrandTotal * DiscountPercentage;
+                    if (DiscountValue != 0)
                     {
-                        DifferenceValue = DifferenceValue / item.quantity;
-                        item.discount = DifferenceValue;
-                        item.RaisePropertyChanged("discount");
+                        decimal PerRawDiscount = DiscountValue / sales_budget_detail.Where(x => x.quantity > 0).Count();
+                        foreach (var item in sales_budget_detail.Where(x => x.quantity > 0))
+                        {
+
+                            item.DiscountVat = PerRawDiscount / item.quantity;
+                            item.RaisePropertyChanged("DiscountVat");
+                            RaisePropertyChanged("GrandTotal");
+                        }
                     }
+                    else
+                    {
+                        foreach (var item in sales_budget_detail.Where(x => x.quantity > 0))
+                        {
 
-
+                            item.DiscountVat = 0;
+                            item.RaisePropertyChanged("DiscountVat");
+                            RaisePropertyChanged("GrandTotal");
+                        }
+                    }
                 }
             }
         }

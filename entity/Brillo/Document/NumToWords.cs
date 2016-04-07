@@ -70,7 +70,7 @@ namespace entity.Brillo.Document
         {
             string Num2Text = "";
             Num2Text = IntToText(Convert.ToInt32(Math.Truncate(value)));
-            Num2Text = Num2Text + " y " + IntToText(Convert.ToInt32((value - Convert.ToInt32(Math.Truncate(value))) * 100));
+            Num2Text = Num2Text + " con " + IntToText(Convert.ToInt32((value - Convert.ToInt32(Math.Truncate(value))) * 100));
             return Num2Text;
         }
     }

@@ -28,7 +28,7 @@ namespace entity.Brillo.Logic
                     item_product item_product = FindNFix_ItemProduct(detail.item);
                     detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
                     detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
-
+                    sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
                     List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
                                                                       && x.id_item_product == item_product.id_item_product
                                                                       && x.status == entity.Status.Stock.InStock

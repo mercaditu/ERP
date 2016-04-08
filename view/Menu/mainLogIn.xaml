@@ -23,30 +23,7 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="LogoFade">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Frequency)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="40"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(ee:RippleEffect.Frequency)" Storyboard.TargetName="ellipseAvatar">
-                <EasingDoubleKeyFrame KeyTime="0" Value="40"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipseAvatar">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
     </Page.Resources>
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard x:Name="LogoFade_BeginStoryboard" Storyboard="{StaticResource LogoFade}"/>
-        </EventTrigger>
-    </Page.Triggers>
     <Grid>
         <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Panel.ZIndex="1"/>
         <Grid x:Name="LayoutRoot">
@@ -71,18 +48,7 @@
                             <DropShadowEffect ShadowDepth="0" Opacity="100" Color="Gainsboro" BlurRadius="4"/>
                         </Ellipse.Effect>
                     </Ellipse>
-                    <Ellipse x:Name="ellipseAvatar" HorizontalAlignment="Center" VerticalAlignment="Top" Height="168" Width="168" Margin="0,-50,0,0">
-                        <Ellipse.Effect>
-                            <ee:RippleEffect />
-                        </Ellipse.Effect>
-                        <Ellipse.Fill>
-                            <ImageBrush x:Name="imgAvatar" Stretch="UniformToFill" ImageSource="avatar_unkown-512.png"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
                     <Ellipse x:Name="ellipse" HorizontalAlignment="Center" VerticalAlignment="Top" Height="168" Width="168" Margin="0,-50,0,0">
-                        <Ellipse.Effect>
-                            <ee:RippleEffect />
-                        </Ellipse.Effect>
                         <Ellipse.Fill>
                             <ImageBrush Stretch="UniformToFill" ImageSource="CognitivoLogo.png"/>
                         </Ellipse.Fill>

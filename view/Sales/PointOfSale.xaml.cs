@@ -24,5 +24,30 @@ namespace Cognitivo.Sales
         {
             InitializeComponent();
         }
+
+        private void btnClient_Click(object sender, EventArgs e)
+        {
+            tabContact.IsSelected = true;
+        }
+
+        private void btnSales_Click(object sender, EventArgs e)
+        {
+            tabSales.IsSelected = true;
+        }
+
+        private void btnPayment_Click(object sender, EventArgs e)
+        {
+            tabPayment.IsSelected = true;
+        }
+
+        private void sbxContact_Select(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void sbxItem_Select(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -10,7 +10,7 @@
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
-	  Title="PointOfSale">
+	  Title="{lex:Loc PointOfSale}">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -25,18 +25,20 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,64,0,0">
             
             <Border CornerRadius="32" Background="PaleGreen" Width="64" Height="64" 
-                    Cursor="Hand"
+                    Cursor="Hand" MouseDown="btnClient_Click" TouchDown="btnClient_Click"
                     BorderBrush="White" BorderThickness="4">
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />
                 </Border.Effect>
-                <Label Content="U" FontFamily="Cognitivo" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black"/>
+                <Label Content="U" FontFamily="Cognitivo" FontSize="32" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Foreground="Black"/>
             </Border>
             
             <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32"/>
             
             <Border CornerRadius="32" Background="PaleGreen" Width="64" Height="64" 
-                    Cursor="Hand"
+                    Cursor="Hand" MouseDown="btnSales_Click" TouchDown="btnSales_Click"
                     BorderBrush="White" BorderThickness="4">
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />
@@ -48,7 +50,8 @@
             <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32"/>
 
             <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64" 
-                    Cursor="Hand" BorderBrush="White" BorderThickness="4">
+                    Cursor="Hand" MouseDown="btnPayment_Click" TouchDown="btnPayment_Click"
+                    BorderBrush="White" BorderThickness="4">
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />
                 </Border.Effect>
@@ -60,15 +63,16 @@
 
         <TabControl Margin="0,150,0,0">
             <!-- CONTACT -->
-            <TabItem x:Name="stackContact">
+            <TabItem x:Name="tabContact">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
                         <Label Content="U" FontFamily="Cognitivo" FontSize="32" 
                                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                         <Label Content="{lex:Loc Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
                     </StackPanel>
-
-                    <cntrl:SmartBox_Contact HorizontalAlignment="Center" Height="32" Width="256" Text="Abhishek" Get_Customers="True"/>
+                    <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512">
+                        <cntrl:SmartBox_Contact x:Name="sbxContact" HorizontalAlignment="Center" Get_Customers="True" Select="sbxContact_Select"/>
+                    </Viewbox>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <StackPanel Margin="14,8">
                             <Label Style="{StaticResource input_label}" Content="Name"/>
@@ -87,18 +91,34 @@
             </TabItem>
             
             <!-- VENTAS -->
-            <TabItem x:Name="stackSales">
+            <TabItem x:Name="tabSales">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
                         <Label Content="" FontFamily="Cognitivo" FontSize="32" 
                                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                         <Label Content="{lex:Loc Sales}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
                     </StackPanel>
+                    <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60">
+                        <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Width="512" Select="sbxItem_Select"/>
+                    </Viewbox>
+                    
+                    <DataGrid HorizontalAlignment="Center" Margin="16" Background="Transparent" Foreground="White">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:VAT}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PriceWithVAT}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotal}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:SubTotalWithVAT}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
             </TabItem>
             
             <!-- PAYMENT -->
-            <TabItem x:Name="stackPayment">
+            <TabItem x:Name="tabPayment">
                 <Grid>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">

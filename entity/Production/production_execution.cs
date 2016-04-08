@@ -18,6 +18,7 @@ namespace entity
             trans_date = DateTime.Now;
             production_execution_detail = new List<production_execution_detail>();
             status = Status.Documents_General.Pending;
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -38,7 +39,7 @@ namespace entity
         public virtual production_line production_line { get; set; }
         public virtual production_order production_order { get; set; }
         public virtual ICollection<production_execution_detail> production_execution_detail { get; set; }
-
+        public virtual ICollection<item_movement> item_movement { get; set; }
         public string Error
         {
             get

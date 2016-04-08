@@ -25,6 +25,7 @@ namespace entity
 
             sales_return_detail = new List<sales_return_detail>();
             payment_schedual = new List<payment_schedual>();
+            item_movement = new List<item_movement>();
             status = Status.Documents_General.Pending;
         }
 
@@ -127,6 +128,42 @@ namespace entity
             }
         }
         private decimal _DiscountPercentage;
+        [NotMapped]
+        public decimal DiscountWithoutPercentage
+        {
+            get { return _DiscountWithoutPercentage; }
+            set
+            {
+
+                _DiscountWithoutPercentage = value;
+                RaisePropertyChanged("DiscountWithoutPercentage");
+
+                decimal DiscountValue = value;
+                if (DiscountValue != 0)
+                {
+                    decimal PerRawDiscount = DiscountValue / sales_return_detail.Where(x => x.quantity > 0).Count();
+                    foreach (var item in sales_return_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = PerRawDiscount / item.quantity;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+                else
+                {
+                    foreach (var item in sales_return_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = 0;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+
+            }
+        }
+        private decimal _DiscountWithoutPercentage;
 
         //TimeCapsule
         public ICollection<sales_return> older { get; set; }
@@ -137,7 +174,7 @@ namespace entity
         public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual sales_invoice sales_invoice { get; set; }
         public virtual crm_opportunity crm_opportunity { get; set; }
-
+        public virtual ICollection<item_movement> item_movement { get; set; }
         public string Error
         {
             get

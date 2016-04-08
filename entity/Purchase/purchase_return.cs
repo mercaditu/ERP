@@ -23,7 +23,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
             if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
-
+            item_movement = new List<item_movement>();
             //Get Status.
             status = Status.Documents_General.Pending;
          
@@ -135,6 +135,7 @@ namespace entity
         public virtual ICollection<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
         public virtual purchase_invoice purchase_invoice { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         
         public string Error
         {

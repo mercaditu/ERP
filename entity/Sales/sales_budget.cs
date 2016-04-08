@@ -117,6 +117,42 @@ namespace entity
             }
         }
         private decimal _DiscountPercentage;
+        [NotMapped]
+        public decimal DiscountWithoutPercentage
+        {
+            get { return _DiscountWithoutPercentage; }
+            set
+            {
+
+                _DiscountWithoutPercentage = value;
+                RaisePropertyChanged("DiscountWithoutPercentage");
+
+                decimal DiscountValue = value;
+                if (DiscountValue != 0)
+                {
+                    decimal PerRawDiscount = DiscountValue / sales_budget_detail.Where(x => x.quantity > 0).Count();
+                    foreach (var item in sales_budget_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = PerRawDiscount / item.quantity;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+                else
+                {
+                    foreach (var item in sales_budget_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = 0;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+
+            }
+        }
+        private decimal _DiscountWithoutPercentage;
 
         //TimeCapsule
         public ICollection<sales_budget> older { get; set; }

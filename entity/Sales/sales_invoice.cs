@@ -15,7 +15,7 @@ namespace entity
             is_head = true;
             is_issued = false;
             status = Status.Documents_General.Pending;
-            
+
             sales_invoice_detail = new List<sales_invoice_detail>();
             sales_return = new List<sales_return>();
             payment_withholding_details = new List<payment_withholding_details>();
@@ -38,10 +38,10 @@ namespace entity
                     base.State = value;
                     RaisePropertyChanged("State");
 
-                    foreach(sales_invoice_detail detail in sales_invoice_detail)
+                    foreach (sales_invoice_detail detail in sales_invoice_detail)
                     {
                         detail.State = value;
-                   
+
                     }
                 }
             }
@@ -74,9 +74,9 @@ namespace entity
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_currencyfx
         {
-            get 
+            get
             {
-                return _id_currencyfx; 
+                return _id_currencyfx;
             }
             set
             {
@@ -148,7 +148,7 @@ namespace entity
             get { return _DiscountPercentage; }
             set
             {
-                if (value<=1)
+                if (value <= 1)
                 {
                     _DiscountPercentage = value;
                     RaisePropertyChanged("DiscountPercentage");
@@ -164,7 +164,7 @@ namespace entity
                             item.RaisePropertyChanged("DiscountVat");
                             RaisePropertyChanged("GrandTotal");
                         }
-                    }   
+                    }
                     else
                     {
                         foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
@@ -179,6 +179,42 @@ namespace entity
             }
         }
         private decimal _DiscountPercentage;
+        [NotMapped]
+        public decimal DiscountWithoutPercentage
+        {
+            get { return _DiscountWithoutPercentage; }
+            set
+            {
+
+                _DiscountWithoutPercentage = value;
+                RaisePropertyChanged("DiscountWithoutPercentage");
+
+                decimal DiscountValue = value;
+                if (DiscountValue != 0)
+                {
+                    decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x => x.quantity > 0).Count();
+                    foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = PerRawDiscount / item.quantity;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+                else
+                {
+                    foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = 0;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+
+            }
+        }
+        private decimal _DiscountWithoutPercentage;
         [NotMapped]
         public decimal vatwithholdingpercentage { get; set; }
         //TimeCapsule
@@ -203,7 +239,7 @@ namespace entity
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
         public virtual ICollection<sales_return> sales_return { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
-      
+
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
         public virtual ICollection<payment_withholding_details> payment_withholding_details { get; set; }
         #endregion
@@ -234,32 +270,32 @@ namespace entity
                 // apply property level validation rules
                 if (columnName == "id_contact")
                 {
-                    if (id_contact == 0 )
+                    if (id_contact == 0)
                         return "Contact needs to be selected";
                 }
-                if (columnName == "id_branch" && app_branch==null)
+                if (columnName == "id_branch" && app_branch == null)
                 {
                     if (id_branch == 0)
                         return "Branch needs to be selected";
                 }
-                if (columnName == "id_condition" && app_condition==null)
+                if (columnName == "id_condition" && app_condition == null)
                 {
                     if (id_condition == 0)
                         return "Condition needs to be selected";
                 }
-                if (columnName == "id_contract" && app_contract==null)
+                if (columnName == "id_contract" && app_contract == null)
                 {
                     if (id_contract == 0)
                         return "Contract needs to be selected";
                 }
-                if (columnName == "id_currencyfx" )
+                if (columnName == "id_currencyfx")
                 {
                     if (id_currencyfx == 0)
                         return "Currency needs to be selected";
                 }
                 if (columnName == "DiscountPercentage")
                 {
-                    if (DiscountPercentage >1)
+                    if (DiscountPercentage > 1)
                         return "Discount percentage not excedd 100%";
                 }
                 return "";

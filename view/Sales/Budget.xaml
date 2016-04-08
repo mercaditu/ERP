@@ -287,8 +287,10 @@
             <Rectangle Grid.Row="1" Fill="Silver" Height="1" Margin="32,0" VerticalAlignment="Top"/>
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <Label Content="Discount" Style="{StaticResource input_label}"/>
+                    <Label Content="Discount(%)" Style="{StaticResource input_label}"/>
                     <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
+                    <Label Content="Discount" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="4">
                     <Label Content="{lex:Loc Total}" FontWeight="Medium" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>

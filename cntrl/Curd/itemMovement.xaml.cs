@@ -67,7 +67,7 @@ namespace cntrl.Curd
                     item_movement_origin.credit = item.quantity_origin;
                     item_movement_origin.id_application = App.Names.SalesInvoice;
                     item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
-                    item_movement_origin.transaction_id = 0;
+                  //  item_movement_origin.transaction_id = 0;
                     item_movement_origin.status = Status.Stock.InStock;
                     item_movement_origin.trans_date = item.item_transfer.trans_date;
                     if (item.item_product.id_item_product != 0)
@@ -83,7 +83,7 @@ namespace cntrl.Curd
                     item_movement_dest.credit = 0;
                     item_movement_dest.id_application = App.Names.PurchaseInvoice;
                     item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
-                    item_movement_dest.transaction_id = 0;
+                    //item_movement_dest.transaction_id = 0;
                     item_movement_dest.status = Status.Stock.InStock;
                     item_movement_dest.trans_date = item.item_transfer.trans_date;
                     if (item.item_product.id_item_product != 0)

@@ -169,7 +169,7 @@ namespace Cognitivo.Product
                 item_movement_origin.credit = 0;
                 item_movement_origin.id_application = global::entity.App.Names.Movement;
                 item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
-                item_movement_origin.transaction_id = 0;
+               // item_movement_origin.transaction_id = 0;
                 item_movement_origin.status = Status.Stock.InStock;
                 item_movement_origin.trans_date = item.item_transfer.trans_date;
                 
@@ -184,7 +184,7 @@ namespace Cognitivo.Product
                 item_movement_dest.credit = item.quantity_destination;
                 item_movement_dest.id_application = global::entity.App.Names.Movement;
                 item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
-                item_movement_dest.transaction_id = 0;
+               // item_movement_dest.transaction_id = 0;
                 item_movement_dest.status = Status.Stock.InStock;
                 item_movement_dest.trans_date = item.item_transfer.trans_date;
 

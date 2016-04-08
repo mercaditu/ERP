@@ -27,6 +27,7 @@ namespace entity
             trans_date = DateTime.Now;
             timestamp = DateTime.Now;
             status = Status.Documents_General.Pending;
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -111,6 +112,7 @@ namespace entity
         #endregion
 
         public virtual ICollection<item_transfer_detail> item_transfer_detail { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
 
         public virtual app_document_range app_document_range { get; set; }
         public virtual app_weather app_weather { get; set; }

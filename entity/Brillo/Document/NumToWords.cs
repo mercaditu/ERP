@@ -4,7 +4,7 @@ namespace entity.Brillo.Document
 {
     public static class NumToWords
     {
-        public static string IntToText(this int value)
+        public static string IntToText(this Int64 value)
         {
             string Num2Text = "";
             if (value < 0) return "menos " + Math.Abs(value).IntToText();
@@ -69,8 +69,8 @@ namespace entity.Brillo.Document
         public static string DecimalToText(this decimal value)
         {
             string Num2Text = "";
-            Num2Text = IntToText(Convert.ToInt32(Math.Truncate(value)));
-            Num2Text = Num2Text + " con " + IntToText(Convert.ToInt32((value - Convert.ToInt32(Math.Truncate(value))) * 100));
+            Num2Text = IntToText(Convert.ToInt64(Math.Truncate(value)));
+            Num2Text = Num2Text + " con " + IntToText(Convert.ToInt64((value - Convert.ToInt64(Math.Truncate(value))) * 100));
             return Num2Text;
         }
     }

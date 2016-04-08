@@ -60,7 +60,7 @@ namespace entity.Brillo
                 }
             }
 
-            return Math.Round(ValueWithoutVAT + VAT_Value);
+            return ValueWithoutVAT + VAT_Value;
         }
 
         public static decimal return_ValueWithoutVAT(int id_vat_group, decimal ValueWithVAT)

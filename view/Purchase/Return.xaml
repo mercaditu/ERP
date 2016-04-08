@@ -81,8 +81,8 @@
                     <DatePicker x:Name="trans_dateDatePicker" Style="{StaticResource input_datepicker}"
                                 SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}" />
-                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"
-                                                   Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref" HorizontalAlignment="Left"
+                                                   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="{lex:Loc ReturnNumber}" Style="{StaticResource input_label}" />
                     <TextBox x:Name="numberTextBox" Style="{StaticResource input_textbox}"
                              Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

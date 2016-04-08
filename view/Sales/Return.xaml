@@ -108,7 +108,7 @@
                                 Style="{StaticResource input_datepicker}"/>
                         <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}"/>
                         <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
-                                                   Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <!--<ComboBox x:Name="contact_nameComboBox"  DisplayMemberPath="name"
                               SelectedValuePath="id_contact"
                               ItemsSource="{Binding Source={StaticResource contactViewSource}}"  Style="{StaticResource input_combobox}"

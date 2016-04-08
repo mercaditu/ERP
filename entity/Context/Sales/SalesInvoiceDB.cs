@@ -142,8 +142,6 @@ namespace entity
                     }
                     if (IsDiscountStock)
                     {
-
-
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
                         item_movementList = _Stock.insert_Stock(this, invoice);
@@ -152,11 +150,6 @@ namespace entity
                             item_movement.AddRange(item_movementList);
                         }
                     }
-
-                  
-
-               
-
 
                     if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range > 0)
                     {

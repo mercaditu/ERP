@@ -95,7 +95,7 @@
                             </StackPanel>-->
                         </Grid>
                         <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" Select="set_ContactPref"
-                                                   Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 

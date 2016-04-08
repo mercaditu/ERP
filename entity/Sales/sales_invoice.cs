@@ -19,6 +19,7 @@ namespace entity
             sales_invoice_detail = new List<sales_invoice_detail>();
             sales_return = new List<sales_return>();
             payment_withholding_details = new List<payment_withholding_details>();
+
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
@@ -31,7 +32,6 @@ namespace entity
             get { return _State; }
             set
             {
-
                 if (value != _State)
                 {
                     _State = value;
@@ -41,7 +41,6 @@ namespace entity
                     foreach (sales_invoice_detail detail in sales_invoice_detail)
                     {
                         detail.State = value;
-
                     }
                 }
             }
@@ -185,7 +184,6 @@ namespace entity
             get { return _DiscountWithoutPercentage; }
             set
             {
-
                 _DiscountWithoutPercentage = value;
                 RaisePropertyChanged("DiscountWithoutPercentage");
 

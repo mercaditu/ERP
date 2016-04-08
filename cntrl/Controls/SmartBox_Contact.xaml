@@ -17,10 +17,11 @@
         <Converter:sbxContact_CheckType x:Key="sbxContact_CheckType"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
     </UserControl.Resources>
-    <Grid HorizontalAlignment="Right" Width="256">
+    <Grid Width="256">
         <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
             <crud:contact x:Name="crudContact" btnSave_Click="crudContact_btnSave_Click"/>
         </Popup>
+        
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,0,0"
                  Text="{Binding Path=Text, ElementName=_SmartBox_Contact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

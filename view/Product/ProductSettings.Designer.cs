@@ -118,5 +118,17 @@ namespace Cognitivo.Product {
                 this["Supplies"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ServiceContrct {
+            get {
+                return ((bool)(this["ServiceContrct"]));
+            }
+            set {
+                this["ServiceContrct"] = value;
+            }
+        }
     }
 }

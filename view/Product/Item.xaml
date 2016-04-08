@@ -525,6 +525,10 @@
                                 IsChecked="{Binding Source={x:Static prop:ProductSettings.Default}, Path=Supplies, Mode=TwoWay}">
                                     <Label Content="{lex:Loc Supplies}" Style="{StaticResource generic_Label}"/>
                                 </CheckBox>
+                                <CheckBox Margin="6,0,0,0"
+                                IsChecked="{Binding Source={x:Static prop:ProductSettings.Default}, Path=Supplies, Mode=TwoWay}">
+                                    <Label Content="{lex:Loc ServiceContract}" Style="{StaticResource generic_Label}"/>
+                                </CheckBox>
                                 <Label Content="{lex:Loc PriceList}" FontWeight="Medium" Foreground="MediumVioletRed"/>
                                 <CheckBox Margin="6,0,0,0" x:Name="chkPriceWithVAT"
                                           IsChecked="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Included, Mode=TwoWay}">

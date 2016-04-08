@@ -542,7 +542,7 @@
                                             Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Included, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Width="Auto" IsReadOnly="True" CellStyle="{StaticResource Number_CellStyle}"/>
                         <DataGridTextColumn Binding="{Binding Discount_SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" CellStyle="{StaticResource Number_CellStyle}"
+                                            Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"
                                             Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Included, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         <DataGridTemplateColumn Width="Auto" Header="">
                             <DataGridTemplateColumn.CellTemplate>

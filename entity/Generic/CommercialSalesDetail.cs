@@ -451,7 +451,7 @@ namespace entity
             {
                 if (_Discount_SubTotal != value)
                 {
-                    Calculate_UnitDiscount(_Discount_SubTotal);
+                  //  Calculate_UnitDiscount(_Discount_SubTotal);
 
                     _Discount_SubTotal = value;
                     RaisePropertyChanged("Discount_SubTotal");
@@ -471,7 +471,7 @@ namespace entity
             {
                 if (_Discount_SubTotal_Vat != value)
                 {
-                    Calculate_UnitVatDiscount(_Discount_SubTotal_Vat);
+                   // Calculate_UnitVatDiscount(value);
 
                     _Discount_SubTotal_Vat = value;
                     RaisePropertyChanged("Discount_SubTotal_Vat");

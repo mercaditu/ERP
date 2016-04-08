@@ -258,6 +258,11 @@ namespace Cognitivo.Product
             {
                 dbContext.Entry(item).State = EntityState.Detached;
             }
+            else
+            {
+                item.State = EntityState.Unchanged;
+                dbContext.Entry(item).State = EntityState.Unchanged;
+            }
             itemViewSource.View.Refresh();
             //SetIsEnable = false;
         }

@@ -89,14 +89,14 @@ namespace cntrl
                         sales_order_detail.item_description = _project_task.item_description;
                         sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 0M : _project_task.quantity_est);
                         sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0M : _project_task.unit_price_vat);
-                        _project_task.sales_detail = sales_order_detail;
+                        sales_order_detail.id_project_task = _project_task.id_project_task;
                         _project_task.IsSelected = false;
                     }
                     else
                     {
                         if (sales_order_detail != null)
                         {
-                            _project_task.sales_detail = sales_order_detail;
+                            sales_order_detail.id_project_task = _project_task.id_project_task; ;
                             _project_task.IsSelected = false;
                         }
                     }
@@ -107,9 +107,10 @@ namespace cntrl
                 sales_order.IsSelected = true;
                 db.sales_order.Add(sales_order);
                 db.SaveChanges();
-                db.Approve();
+               
                 if (Generate_Invoice)
                 {
+                    db.Approve();
                     sales_invoice sales_invoice = new entity.sales_invoice();
                     sales_invoice.id_contact = (int)project.id_contact;
                     sales_invoice.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();

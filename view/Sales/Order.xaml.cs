@@ -110,6 +110,12 @@ namespace Cognitivo.Sales
                 cbxSalesRep.ItemsSource = dbContext.sales_rep.Local;
             }));
 
+            dbContext.projects.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                cbxProject.ItemsSource = dbContext.projects.Local;
+            }));
+
         }
 
         #endregion

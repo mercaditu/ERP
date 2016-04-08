@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace entity.Brillo
@@ -59,7 +60,7 @@ namespace entity.Brillo
                 }
             }
 
-            return ValueWithoutVAT + VAT_Value;
+            return Math.Round(ValueWithoutVAT + VAT_Value);
         }
 
         public static decimal return_ValueWithoutVAT(int id_vat_group, decimal ValueWithVAT)

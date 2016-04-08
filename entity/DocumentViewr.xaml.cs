@@ -695,7 +695,7 @@ namespace entity
                                   receipt_number = g.payment_type_number,
                                   gov_id=g.payment.contact.gov_code,
                                   subtotal=g.value,
-                         
+                                 
                               }).ToList();
 
                 //copy report to the template folder

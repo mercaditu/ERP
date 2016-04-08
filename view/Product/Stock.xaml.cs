@@ -81,7 +81,8 @@ namespace Cognitivo.Product
                             quantity = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
                             id_item_product = last.Key.item_product.id_item_product,
                             measurement = last.Key.item_product.item.id_measurement,
-                            id_location=last.Key.app_location.id_location
+                            id_location=last.Key.app_location.id_location,
+                        
                         }).ToList();
 
                 item_movementDataGrid.ItemsSource = movement;

@@ -57,6 +57,11 @@ namespace entity.Brillo.Document
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
+             else if (Document.GetType().BaseType == typeof(payment))
+            {
+                payment payment = (payment)Document;
+                return Payment(payment);
+            }
             return null;
         }
 
@@ -110,7 +115,9 @@ namespace entity.Brillo.Document
                         :
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
-                        HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                        HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                        unit_price_discount=g.discount!=null?g.discount:0,
+
                     }).ToList();
 
                 return reportDataSource;
@@ -170,7 +177,9 @@ namespace entity.Brillo.Document
                         :
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "" : "" : "",
 
-                        HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                        HasRounding = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding != null ? g.sales_order.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                        unit_price_discount = g.discount != null ? g.discount : 0,
+
                     }).ToList();
 
                 return reportDataSource;
@@ -236,7 +245,8 @@ namespace entity.Brillo.Document
                     :
                     NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "" : "" : "",
 
-                    HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                    HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                    unit_price_discount = g.discount != null ? g.discount : 0,
                 }).ToList();
 
                 return reportDataSource;
@@ -342,7 +352,8 @@ namespace entity.Brillo.Document
                      :
                      NumToWords.DecimalToText((Convert.ToDecimal(g.sales_return != null ? g.sales_return.GrandTotal : 0))) : "" : "" : "",
 
-                                  HasRounding = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding != null ? g.sales_return.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                                  HasRounding = g.sales_return != null ? g.sales_return.app_currencyfx != null ? g.sales_return.app_currencyfx.app_currency != null ? g.sales_return.app_currencyfx.app_currency.has_rounding != null ? g.sales_return.app_currencyfx.app_currency.has_rounding : false : false : false : false,
+                                  unit_price_discount = g.discount != null ? g.discount : 0,
                               }).ToList();
 
                 return reportDataSource;
@@ -515,5 +526,34 @@ namespace entity.Brillo.Document
                 return reportDataSource;
             }
         }
+
+            public ReportDataSource Payment(payment payment)
+        {
+            using (db db = new db())
+            {
+                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+               List<payment_detail> payment_detail =payment.payment_detail.ToList();
+                reportDataSource.Value = payment_detail
+                              .Select(g => new
+                              {
+                                  id_company = g.id_company,
+                                  company_name = g.app_company.name,
+                                  amount = g.value,
+                                  contact_name = g.payment.contact.name,
+                                  payment_name = g.payment_type.name,
+                                  trans_date = g.trans_date,
+                                  currency_name=g.app_currencyfx.app_currency.name,
+                                  receipt_number = g.payment_type_number,
+                                  gov_id=g.payment.contact.gov_code,
+                                  subtotal=g.value,
+                                 
+                                 
+                              }).ToList();
+
+                return reportDataSource;
+            }
+        }
+            
+
     }
 }

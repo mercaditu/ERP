@@ -15,15 +15,16 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Sales
 {
-    /// <summary>
-    /// Interaction logic for PointOfSale.xaml
-    /// </summary>
     public partial class PointOfSale : Page
     {
+        entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
+
         public PointOfSale()
         {
             InitializeComponent();
         }
+
+        #region Buttons
 
         private void btnClient_Click(object sender, EventArgs e)
         {
@@ -40,6 +41,15 @@ namespace Cognitivo.Sales
             tabPayment.IsSelected = true;
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            //Run approve code here.
+        }
+
+        #endregion
+
+        #region SmartBox Selection
+
         private void sbxContact_Select(object sender, RoutedEventArgs e)
         {
 
@@ -49,5 +59,7 @@ namespace Cognitivo.Sales
         {
 
         }
+
+        #endregion
     }
 }

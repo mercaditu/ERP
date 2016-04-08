@@ -77,7 +77,7 @@
             <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32"/>
 
             <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64" 
-                    Cursor="Hand" MouseDown="btnPayment_Click" TouchDown="btnPayment_Click"
+                    Cursor="Hand" MouseDown="btnSave_Click" TouchDown="btnSave_Click"
                     BorderBrush="White" BorderThickness="4" ToolTip="F4">
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />

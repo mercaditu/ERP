@@ -39,7 +39,6 @@ namespace Cognitivo.Project
             SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Include(x => x.project_task).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
 
-            //Filter to remove all items that are not top level.
             filter_task();
 
             set_price();
@@ -47,16 +46,19 @@ namespace Cognitivo.Project
 
         public void set_price()
         {
-
-            foreach (project_task project_task in project_taskViewSource.View.OfType<project_task>())
+            if (project_taskViewSource != null)
             {
-                if (project_task.sales_detail != null)
+                foreach (project_task project_task in project_taskViewSource.View.OfType<project_task>())
                 {
-                    project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
-                    project_task.RaisePropertyChanged("unit_price_vat");
+                    if (project_task.sales_detail != null)
+                    {
+                        project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
+                        project_task.RaisePropertyChanged("unit_price_vat");
+                    }
                 }
             }
         }
+
         public void filter_task()
         {
             try

@@ -794,6 +794,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Menu\avatar_unkown-512.png" />
+    <Resource Include="Menu\CognitivoLogo.png" />
     <Resource Include="Images\space_invaders.png" />
     <Resource Include="bin\Debug\Data.xml" />
     <EmbeddedResource Include="bin\Debug\Accounting\DiarioGlobal.rdlc">
@@ -1429,8 +1431,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Sales\PointOfSale.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Security\UserRole.xaml">
       <SubType>Designer</SubType>

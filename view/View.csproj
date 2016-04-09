@@ -472,11 +472,6 @@
       <DependentUpon>Budget.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Sales\BudgetSetting1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>BudgetSetting.settings</DependentUpon>
-    </Compile>
     <Compile Include="Sales\Packing.xaml.cs">
       <DependentUpon>Packing.xaml</DependentUpon>
     </Compile>
@@ -487,6 +482,11 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>ReturnSetting.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\SalesSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>SalesSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Security\UserRole.xaml.cs">
       <DependentUpon>UserRole.xaml</DependentUpon>
@@ -735,19 +735,8 @@
       <DependentUpon>Invoice.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sales\InvoiceSetting.cs" />
-    <Compile Include="Sales\InvoiceSetting.Designer.cs">
-      <DependentUpon>InvoiceSetting.settings</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Sales\Order.xaml.cs">
       <DependentUpon>Order.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sales\OrderSetting.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>OrderSetting.settings</DependentUpon>
     </Compile>
     <Compile Include="Sales\PackingList.xaml.cs">
       <DependentUpon>PackingList.xaml</DependentUpon>
@@ -1130,19 +1119,6 @@
     </None>
     <Resource Include="Resources\cognitivo.ttf" />
     <Resource Include="Resources\Entypo.ttf" />
-    <None Include="Sales\BudgetSetting.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>BudgetSetting1.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Sales\InvoiceSetting.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>InvoiceSetting.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Sales\OrderSetting.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>OrderSetting.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Sales\PackingListSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>PackingListSetting.Designer.cs</LastGenOutput>
@@ -1155,6 +1131,10 @@
     <None Include="Sales\ReturnSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>ReturnSetting.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Sales\SalesSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>SalesSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="View_TemporaryKey.pfx" />
   </ItemGroup>

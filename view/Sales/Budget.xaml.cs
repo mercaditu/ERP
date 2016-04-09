@@ -16,8 +16,6 @@ namespace Cognitivo.Sales
 {
     public partial class Budget : Page
     {
-        public string budget_number { get; set; }
-     
         SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
         CollectionViewSource sales_budgetViewSource,
@@ -33,9 +31,9 @@ namespace Cognitivo.Sales
         {
             try
             {
-                BudgetSetting _pref_SalesBudget = new BudgetSetting();
+                SalesSetting SalesSetting = new SalesSetting();
 
-                if (_pref_SalesBudget.filterbyBranch)
+                if (SalesSetting.filter_Branch)
                 {
                     SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company && a.id_branch == entity.CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).Load();
                 }
@@ -189,11 +187,11 @@ namespace Cognitivo.Sales
         }
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            BudgetSetting _pref_SalesBudget = new BudgetSetting();
+            SalesSetting _pref_SalesBudget = new SalesSetting();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            BudgetSetting.Default.Save();
-            _pref_SalesBudget = BudgetSetting.Default;
+            SalesSetting.Default.Save();
+            _pref_SalesBudget = SalesSetting.Default;
             popupCustomize.IsOpen = false;
         }
 
@@ -264,9 +262,9 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_budget sales_budget, item item)
         {
-            BudgetSetting _pref_SalesBudget = new BudgetSetting();
+            SalesSetting _pref_SalesBudget = new SalesSetting();
 
-            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || _pref_SalesBudget.AllowDuplicateItems)
+            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || _pref_SalesBudget.duplicate_Items)
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();
                 _sales_budget_detail.sales_budget = sales_budget;

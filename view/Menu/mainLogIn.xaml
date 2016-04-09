@@ -123,7 +123,7 @@
                              Height="168" Width="168"
                              Margin="{Binding Margin, ElementName=ellipse}">
                         <Ellipse.Fill>
-                            <ImageBrush Stretch="UniformToFill" ImageSource="avatar_unkown-512.png"/>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="/Cognitivo;component/Images/Avatars/avatar_unkown-512.png"/>
                         </Ellipse.Fill>
                     </Ellipse>
                     <Ellipse x:Name="ellipse" HorizontalAlignment="Center" VerticalAlignment="Top" Height="168" Width="168" Margin="0,-50,0,0">

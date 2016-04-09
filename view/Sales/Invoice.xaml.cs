@@ -70,8 +70,8 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-            SalesSetting SalesSetting = new SalesSetting();
-            if (SalesSetting.filter_Branch)
+            SalesSettings SalesSettings = new SalesSettings();
+            if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company
                                                && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
@@ -152,8 +152,8 @@ namespace Cognitivo.Sales
 
         private void btnNew_Click(object sender)
         {
-            SalesSetting SalesSetting = new SalesSetting();
-            sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSetting.TransDate_OffSet);
+            SalesSettings SalesSettings = new SalesSettings();
+            sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
@@ -208,8 +208,8 @@ namespace Cognitivo.Sales
 
         private void btnApprove_Click(object sender)
         {
-            SalesSetting SalesSetting = new SalesSetting();
-            SalesInvoiceDB.Approve(SalesSetting.DiscountStock);
+            SalesSettings SalesSettings = new SalesSettings();
+            SalesInvoiceDB.Approve(SalesSettings.DiscountStock);
             foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
             {
                 sales_invoice.IsSelected = false;
@@ -333,11 +333,11 @@ namespace Cognitivo.Sales
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            SalesSetting SalesSetting = new SalesSetting();
+            SalesSettings SalesSettings = new SalesSettings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            SalesSetting.Default.Save();
-            SalesSetting = SalesSetting.Default;
+            SalesSettings.Default.Save();
+            SalesSettings = SalesSettings.Default;
             popupCustomize.IsOpen = false;
         }
         #endregion
@@ -366,8 +366,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_invoice sales_invoice, item item)
         {
-            SalesSetting SalesSetting = new SalesSetting();
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSetting.duplicate_Items)
+            SalesSettings SalesSettings = new SalesSettings();
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                 _sales_invoice_detail.sales_invoice = sales_invoice;

@@ -44,8 +44,8 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-            SalesSetting SalesSetting = new SalesSetting();
-            if (SalesSetting.filter_Branch)
+            SalesSettings SalesSettings = new SalesSettings();
+            if (SalesSettings.FilterByBranch)
             {
                 await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
                                             && (
@@ -128,10 +128,10 @@ namespace Cognitivo.Sales
         #region toolbar Events
         private void New_Click(object sender)
         {
-            SalesSetting SalesSetting = new SalesSetting();
+            SalesSettings SalesSettings = new SalesSettings();
 
             sales_order sales_order = dbContext.New();
-            sales_order.trans_date = DateTime.Now.AddDays(SalesSetting.TransDate_OffSet);
+            sales_order.trans_date = DateTime.Now.AddDays(SalesSettings.TransDate_Offset);
 
             cbxCurrency.get_DefaultCurrencyActiveRate();
             dbContext.sales_order.Add(sales_order);
@@ -326,11 +326,11 @@ namespace Cognitivo.Sales
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            SalesSetting SalesSetting = new SalesSetting();
+            SalesSettings SalesSettings = new SalesSettings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            SalesSetting.Default.Save();
-            SalesSetting = SalesSetting.Default;
+            SalesSettings.Default.Save();
+            SalesSettings = SalesSettings.Default;
             popupCustomize.IsOpen = false;
         }
 
@@ -358,8 +358,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_order sales_order, item item)
         {
-            SalesSetting SalesSetting = new SalesSetting();
-            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSetting.duplicate_Items)
+            SalesSettings SalesSettings = new SalesSettings();
+            if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();
                 _sales_order_detail.sales_order = sales_order;

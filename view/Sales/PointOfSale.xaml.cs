@@ -72,8 +72,8 @@ namespace Cognitivo.Sales
             SalesInvoiceDB.SaveChanges();
             SalesInvoiceDB.Approve(true);
 
-            InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
-            sales_invoice Newsales_invoice = SalesInvoiceDB.New(_pref_SalesInvoice.TransDate_OffSet);
+            SalesSettings SalesSettings = new SalesSettings();
+            sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
 
 
             SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
@@ -118,8 +118,8 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_invoice sales_invoice, item item)
         {
-            InvoiceSetting InvoiceSetting = new InvoiceSetting();
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || InvoiceSetting.duplicate_Items)
+            SalesSettings SalesSettings = new SalesSettings();
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                 _sales_invoice_detail.sales_invoice = sales_invoice;
@@ -152,8 +152,8 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            InvoiceSetting InvoiceSetting = new InvoiceSetting();
-            if (InvoiceSetting.filter_Branch)
+            SalesSettings SalesSettings = new SalesSettings();
+            if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company
                                                && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
@@ -170,10 +170,7 @@ namespace Cognitivo.Sales
             {
                 sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
                 sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
-                InvoiceSetting _pref_SalesInvoice = new InvoiceSetting();
-                sales_invoice sales_invoice = SalesInvoiceDB.New(_pref_SalesInvoice.TransDate_OffSet);
-
-
+                sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
                 SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
                 sales_invoiceViewSource.View.MoveCurrentToLast();

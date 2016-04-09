@@ -276,9 +276,6 @@
       <DependentUpon>AccountsRecievable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commercial\PaymentSetting.cs" />
-    <Compile Include="Configs\ItemAssetGroup.xaml.cs">
-      <DependentUpon>ItemAssetGroup.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Configs\Account.xaml.cs">
       <DependentUpon>Account.xaml</DependentUpon>
     </Compile>
@@ -1133,7 +1130,7 @@
       <LastGenOutput>ReturnSetting.Designer.cs</LastGenOutput>
     </None>
     <None Include="Sales\SalesSettings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>SalesSettings.Designer.cs</LastGenOutput>
     </None>
     <None Include="View_TemporaryKey.pfx" />
@@ -1208,10 +1205,6 @@
     <Page Include="Commercial\PaymentType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Configs\ItemAssetGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\Account.xaml">
       <Generator>MSBuild:Compile</Generator>

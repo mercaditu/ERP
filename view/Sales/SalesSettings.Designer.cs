@@ -13,7 +13,7 @@ namespace Cognitivo.Sales {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    internal sealed partial class SalesSettings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class SalesSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static SalesSettings defaultInstance = ((SalesSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new SalesSettings())));
         
@@ -122,18 +122,6 @@ namespace Cognitivo.Sales {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Branch {
-            get {
-                return ((bool)(this["Branch"]));
-            }
-            set {
-                this["Branch"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool DeveloperMode {
             get {
                 return ((bool)(this["DeveloperMode"]));
@@ -176,6 +164,18 @@ namespace Cognitivo.Sales {
             }
             set {
                 this["DiscountStock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TransDate_Offset {
+            get {
+                return ((int)(this["TransDate_Offset"]));
+            }
+            set {
+                this["TransDate_Offset"] = value;
             }
         }
     }

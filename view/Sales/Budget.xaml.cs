@@ -31,9 +31,9 @@ namespace Cognitivo.Sales
         {
             try
             {
-                SalesSetting SalesSetting = new SalesSetting();
+                SalesSettings SalesSettings = new SalesSettings();
 
-                if (SalesSetting.filter_Branch)
+                if (SalesSettings.FilterByBranch)
                 {
                     SalesBudgetDB.sales_budget.Where(a => a.id_company == entity.CurrentSession.Id_Company && a.id_branch == entity.CurrentSession.Id_Branch).OrderByDescending(x => x.trans_date).Load();
                 }
@@ -187,11 +187,11 @@ namespace Cognitivo.Sales
         }
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            SalesSetting _pref_SalesBudget = new SalesSetting();
+            SalesSettings SalesSettings = new SalesSettings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            SalesSetting.Default.Save();
-            _pref_SalesBudget = SalesSetting.Default;
+            SalesSettings.Default.Save();
+            SalesSettings = SalesSettings.Default;
             popupCustomize.IsOpen = false;
         }
 
@@ -262,9 +262,9 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_budget sales_budget, item item)
         {
-            SalesSetting _pref_SalesBudget = new SalesSetting();
+            SalesSettings SalesSettings = new SalesSettings();
 
-            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || _pref_SalesBudget.duplicate_Items)
+            if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();
                 _sales_budget_detail.sales_budget = sales_budget;

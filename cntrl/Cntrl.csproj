@@ -203,9 +203,6 @@
     <Compile Include="Converters\Bool2Collapsed.cs" />
     <Compile Include="Converters\LevelToMarginConverter.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
-    <Compile Include="Curd\Item_Asset_Group.xaml.cs">
-      <DependentUpon>Item_Asset_Group.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Curd\AccountingJournal.xaml.cs">
       <DependentUpon>AccountingJournal.xaml</DependentUpon>
     </Compile>
@@ -615,10 +612,6 @@
     <Page Include="Controls\Totals.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Curd\Item_Asset_Group.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Curd\AccountingJournal.xaml">
       <SubType>Designer</SubType>

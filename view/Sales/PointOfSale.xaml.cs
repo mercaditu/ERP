@@ -41,6 +41,7 @@ namespace Cognitivo.Sales
             tabPayment.IsSelected = true;
         }
 
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             //Run approve code here.

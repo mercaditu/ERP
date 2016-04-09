@@ -173,8 +173,8 @@
                                   RowDetailsVisibilityMode="VisibleWhenSelected"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding item.name}" Header="{lex:Loc Cognitivo:local:Name}" Width="*"/>
-                                <DataGridTextColumn Binding="{Binding item_description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Description}" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding item.name, Mode=OneWay}" Header="{lex:Loc Cognitivo:local:Name}" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Description}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" 
                                                     CellStyle="{StaticResource Number_CellStyle}"/>
                             </DataGrid.Columns>

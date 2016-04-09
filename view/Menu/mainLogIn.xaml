@@ -131,7 +131,7 @@
                             <ee:RippleEffect/>
                         </Ellipse.Effect>
                         <Ellipse.Fill>
-                            <ImageBrush Stretch="UniformToFill" ImageSource="CognitivoLogo.png"/>
+                            <ImageBrush Stretch="UniformToFill" ImageSource="/Cognitivo;component/Images/CognitivoLogo.png"/>
                         </Ellipse.Fill>
                     </Ellipse>
 

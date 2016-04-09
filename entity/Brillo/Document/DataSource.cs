@@ -57,7 +57,7 @@ namespace entity.Brillo.Document
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
-             else if (Document.GetType().BaseType == typeof(payment))
+             else if (Document.GetType()== typeof(payment))
             {
                 payment payment = (payment)Document;
                 return Payment(payment);
@@ -537,16 +537,22 @@ namespace entity.Brillo.Document
                               .Select(g => new
                               {
                                   id_company = g.id_company,
-                                  company_name = g.app_company.name,
+                                  company_name = g.app_company!=null?g.app_company.name:"",
                                   amount = g.value,
                                   contact_name = g.payment.contact.name,
                                   payment_name = g.payment_type.name,
                                   trans_date = g.trans_date,
                                   currency_name=g.app_currencyfx.app_currency.name,
-                                  receipt_number = g.payment_type_number,
+                                  receipt_number = g.payment.number,
                                   gov_id=g.payment.contact.gov_code,
-                                  subtotal=g.value,
-                                 
+                                   AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+
+                      // Text -> Words
+                      NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
+                      :
+                      NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
+
+                                  HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false : false
                                  
                               }).ToList();
 

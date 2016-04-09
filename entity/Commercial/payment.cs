@@ -78,7 +78,9 @@ namespace entity
                             Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
                             Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
                             NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, true);
+                            number = Brillo.Logic.Range.calc_Range(_app_range, true);
                             RaisePropertyChanged("NumberWatermark");
+                            RaisePropertyChanged("number");
                         }
                     }
                 }

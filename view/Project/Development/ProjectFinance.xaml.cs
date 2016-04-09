@@ -163,6 +163,7 @@ namespace Cognitivo.Project
                 cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
                 objSalesOrder.project = project;
                 objSalesOrder.db = SalesOrderDB;
+                objSalesOrder.Generate_Invoice =(bool)chkinvoice.IsChecked;
                 crud_modal.Children.Add(objSalesOrder);
           
 

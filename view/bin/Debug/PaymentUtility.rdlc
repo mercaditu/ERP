@@ -2,7 +2,7 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox6">
+      <Textbox Name="Textbox7">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -17,40 +17,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.38681cm</Top>
-        <Left>0.25867cm</Left>
+        <Top>0.2643cm</Top>
         <Height>0.6cm</Height>
         <Width>2.43509cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox7">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=First(Fields!contact_name.Value, "DataSet1")</Value>
-                <Style />
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.38681cm</Top>
-        <Left>2.76431cm</Left>
-        <Height>0.6cm</Height>
-        <Width>12.4628cm</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -68,7 +37,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>the Amount of </Value>
+                <Value>=First(Fields!contact_name.Value, "DataSet1")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -76,11 +45,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.38681cm</Top>
-        <Left>15.33295cm</Left>
+        <Top>0.2643cm</Top>
+        <Left>2.42046cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.43509cm</Width>
-        <ZIndex>2</ZIndex>
+        <Width>12.4628cm</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -98,7 +67,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!currency_name.Value, "DataSet1")</Value>
+                <Value>the Amount of </Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -106,11 +75,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.38681cm</Top>
-        <Left>20.48745cm</Left>
+        <Top>0.2643cm</Top>
+        <Left>14.9891cm</Left>
         <Height>0.6cm</Height>
-        <Width>1.21801cm</Width>
-        <ZIndex>3</ZIndex>
+        <Width>2.43509cm</Width>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -128,7 +97,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Type For</Value>
+                <Value>=First(Fields!currency_name.Value, "DataSet1") + Sum(Fields!amount.Value, "DataSet1")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -136,11 +105,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>1.7982cm</Top>
-        <Left>0.25867cm</Left>
+        <Top>0.2643cm</Top>
+        <Left>17.53003cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.43509cm</Width>
-        <ZIndex>4</ZIndex>
+        <Width>2.64676cm</Width>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -166,11 +135,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>1.7982cm</Top>
-        <Left>2.87015cm</Left>
+        <Top>1.6757cm</Top>
+        <Left>2.52631cm</Left>
         <Height>0.6cm</Height>
         <Width>6.85363cm</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -188,7 +157,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Sum(Fields!amount.Value, "DataSet1")</Value>
+                <Value>Type For</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -196,11 +165,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>0.38681cm</Top>
-        <Left>17.76804cm</Left>
+        <Top>1.6757cm</Top>
         <Height>0.6cm</Height>
-        <Width>2.54302cm</Width>
-        <ZIndex>6</ZIndex>
+        <Width>2.43509cm</Width>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -212,10 +180,10 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>2.785cm</Height>
+    <Height>2in</Height>
     <Style />
   </Body>
-  <Width>22.0493cm</Width>
+  <Width>8.41008in</Width>
   <Page>
     <PageHeader>
       <Height>2.54cm</Height>
@@ -382,6 +350,10 @@
           <DataField>currency_name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="company_name">
+          <DataField>company_name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="amount">
           <DataField>amount</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -393,6 +365,22 @@
         <Field Name="payment_name">
           <DataField>payment_name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="receipt_number">
+          <DataField>receipt_number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="gov_id">
+          <DataField>gov_id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AmountWords">
+          <DataField>AmountWords</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="trans_date">
+          <DataField>trans_date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

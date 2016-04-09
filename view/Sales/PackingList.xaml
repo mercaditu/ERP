@@ -137,6 +137,15 @@
                               ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"
                               SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" >
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
+                            <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
+                              Name="cbxPackingType"
+                              SelectedValue="{Binding packing_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                      ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                      ValidatesOnDataErrors=True}"/>
+                        </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
                             <Label Content="" Style="{StaticResource ico_Label}"/>
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">

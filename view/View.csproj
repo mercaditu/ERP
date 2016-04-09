@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V363\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V364\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>365</ApplicationRevision>
+    <ApplicationRevision>366</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -276,6 +276,9 @@
       <DependentUpon>AccountsRecievable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commercial\PaymentSetting.cs" />
+    <Compile Include="Configs\ItemAssetGroup.xaml.cs">
+      <DependentUpon>ItemAssetGroup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\Account.xaml.cs">
       <DependentUpon>Account.xaml</DependentUpon>
     </Compile>
@@ -840,7 +843,9 @@
     <EmbeddedResource Include="bin\Debug\payment.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\PaymentUtility.rdlc" />
+    <EmbeddedResource Include="bin\Debug\PaymentUtility.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="bin\Debug\PurchaseOrder.rdlc" />
     <Content Include="bin\Debug\PackingList.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1223,6 +1228,10 @@
     <Page Include="Commercial\PaymentType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\ItemAssetGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\Account.xaml">
       <Generator>MSBuild:Compile</Generator>

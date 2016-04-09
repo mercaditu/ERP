@@ -56,10 +56,14 @@ namespace cntrl.Curd
             cbxDocument.ItemsSource = dbContext.db.app_document_range.Where(d => d.is_active == true
                                            && d.app_document.id_application == entity.App.Names.PaymentUtility
                                            && d.id_company == _Settings.company_ID).Include(i => i.app_document).ToList();
-
+            cbxDocument.SelectedIndex = 0;
+          
             // entity.db.payment_detail.Add(payment_detail);
             paymentpayment_detailViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.MoveCurrentToLast();
+
+            
+            payment_detail.payment.id_range = (int)cbxDocument.SelectedValue;
 
         }
 

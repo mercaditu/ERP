@@ -138,6 +138,17 @@ namespace Cognitivo.Commercial
 
                         payment.id_contact = payment_quick.payment_detail.payment.contact.id_contact;
                         payment.id_payment = payment_quick.payment_detail.payment.id_payment;
+                        if (payment_quick.payment_detail.payment.id_range != null)
+                        {
+                            payment.id_range = payment_quick.payment_detail.payment.id_range;
+                            if (_entity.db.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
+                            {
+                                payment.app_document_range = _entity.db.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
+                            }
+
+                        }
+
+                        payment.id_payment = payment_quick.payment_detail.payment.id_payment;
                         payment.number = payment_quick.payment_detail.payment.number;
                         payment_detail payment_detailreturn = new payment_detail();
                        // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
@@ -177,6 +188,16 @@ namespace Cognitivo.Commercial
                     {
                         
                         payment.id_contact = payment_quick.payment_detail.payment.contact.id_contact;
+                        if (payment_quick.payment_detail.payment.id_range!=null)
+                        {
+                            payment.id_range = payment_quick.payment_detail.payment.id_range;
+                            if (_entity.db.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault()!=null)
+                            {
+                                payment.app_document_range = _entity.db.app_document_range.Where(x => x.id_range ==payment. id_range).FirstOrDefault();
+                            }
+                           
+                        }
+                       
                         payment.id_payment = payment_quick.payment_detail.payment.id_payment;
                         payment.number = payment_quick.payment_detail.payment.number;
                         payment_detail payment_detail = new payment_detail();
@@ -240,8 +261,7 @@ namespace Cognitivo.Commercial
                         _entity.db.SaveChanges();
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-                        entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-                        Document.Document_PrintPaymentReceipt(payment);
+                        entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
                     }
 
                     load_Schedual();

@@ -41,7 +41,7 @@
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                 <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding order_Total}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding GrandTotal}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True"/>
             </DataGrid.Columns>
             <!--<DataGrid.RowDetailsTemplate>

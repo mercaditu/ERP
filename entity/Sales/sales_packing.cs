@@ -78,7 +78,7 @@ namespace entity
 
         public string comment { get; set; }
         public DateTime trans_date { get; set; }
-
+        public Status.PackingTypes packing_type { get; set; }
         public Status.Documents_General status
         {
             get { return _status; }

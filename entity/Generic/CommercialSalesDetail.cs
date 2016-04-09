@@ -304,7 +304,7 @@ namespace entity
         /// </summary>
         private void update_UnitPriceVAT()
         {
-            UnitPrice_Vat = Math.Round(Vat.return_ValueWithVAT((int)id_vat_group, unit_price));
+            UnitPrice_Vat =Vat.return_ValueWithVAT((int)id_vat_group, unit_price);
             RaisePropertyChanged("UnitPrice_Vat");
         }
 
@@ -404,7 +404,7 @@ namespace entity
             get { return _discount; }
             set
             {
-                if (_discount != value && State >= 0)
+                if (_discount != value && State > 0)
                 {
                     ApplyDiscount_UnitPrice(_discount, value, unit_price);
 

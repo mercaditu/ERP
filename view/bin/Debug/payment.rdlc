@@ -289,7 +289,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value />
+                  <Value>=Fields!receipt_number.Value</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -435,70 +435,17 @@
           <DataField>payment_name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-     
-        <Field Name="app_company">
-          <DataField>app_company</DataField>
-          <rd:TypeName>entity.app_company</rd:TypeName>
-        </Field>
-        <Field Name="contact">
-          <DataField>contact</DataField>
-          <rd:TypeName>entity.contact</rd:TypeName>
-        </Field>
-        <Field Name="Error">
-          <DataField>Error</DataField>
+        <Field Name="receipt_number">
+          <DataField>receipt_number</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="HasErrors">
-          <DataField>HasErrors</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="id_company">
-          <DataField>id_company</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="id_contact">
-          <DataField>id_contact</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="id_payment">
-          <DataField>id_payment</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="id_user">
-          <DataField>id_user</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="id_weather">
-          <DataField>id_weather</DataField>
-          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
-        </Field>
-        <Field Name="is_head">
-          <DataField>is_head</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="IsSelected">
-          <DataField>IsSelected</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="payment_number">
-          <DataField>payment_number</DataField>
+        <Field Name="gov_id">
+          <DataField>gov_id</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="security_user">
-          <DataField>security_user</DataField>
-          <rd:TypeName>entity.security_user</rd:TypeName>
-        </Field>
-        <Field Name="State">
-          <DataField>State</DataField>
-          <rd:TypeName>System.Data.Entity.EntityState</rd:TypeName>
-        </Field>
-        <Field Name="status">
-          <DataField>status</DataField>
-          <rd:TypeName>entity.Status+Documents_General</rd:TypeName>
-        </Field>
-        <Field Name="timestamp">
-          <DataField>timestamp</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+        <Field Name="AmountWords">
+          <DataField>AmountWords</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="trans_date">
           <DataField>trans_date</DataField>

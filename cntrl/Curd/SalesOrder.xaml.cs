@@ -120,7 +120,7 @@ namespace cntrl
                     sales_invoice.id_contract = (int)cbxContract.SelectedValue;
                     sales_invoice.id_currencyfx = (int)cbxCurrency.SelectedValue;
                     sales_invoice.comment = "Project -> " + project.name;
-
+                    sales_invoice.trans_date = DateTime.Now;
                     sales_invoice_detail sales_invoice_detail = null;
 
                     foreach (project_task _project_task in project_task)

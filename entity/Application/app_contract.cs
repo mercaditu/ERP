@@ -19,6 +19,8 @@ namespace entity
         public string name { get; set; }
         [Required]
         public bool is_active { get; set; }
+        [Required]
+        public bool is_default { get; set; }
         
 
         public app_contract()

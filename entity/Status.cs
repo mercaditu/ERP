@@ -20,6 +20,17 @@ namespace entity
             [LocalizedDescription("Freight")]
             Freight = 6
         }
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        public enum PackingTypes
+        {
+            [LocalizedDescription("Sample")]
+            Sample = 1,
+            [LocalizedDescription("Sale")]
+            Sale = 2,
+            [LocalizedDescription("Repair")]
+            Repair = 3,
+           
+        }
 
         //[TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum TransactionTypes

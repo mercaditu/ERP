@@ -408,11 +408,10 @@ namespace Cognitivo.Sales
 
                         if (sales_invoice != null)
                         {
-                            if (sales_invoice.contact != null)
-                            {
-                                if (sales_invoice.contact.name.ToLower().Contains(query.ToLower())
-                              || sales_invoice.number.ToLower().Contains(query.ToLower())
-                              || sales_invoice.trans_date.ToString() == query)
+                            
+                            if (sales_invoice.contact!=null?sales_invoice.contact.name.ToLower().Contains(query.ToLower()):false
+                                || sales_invoice.number!=null?sales_invoice.number.ToLower().Contains(query.ToLower()):false
+                                || sales_invoice.trans_date!=null?sales_invoice.trans_date.ToString() == query:false)
                                 {
                                     return true;
                                 }
@@ -420,11 +419,7 @@ namespace Cognitivo.Sales
                                 {
                                     return false;
                                 }
-                            }
-                            else
-                            {
-                                return false;
-                            }
+                           
                         }
                         else
                         {
@@ -432,7 +427,9 @@ namespace Cognitivo.Sales
                         }
                     };
                 }
-                catch { }
+                catch(Exception ex){ 
+                    throw ex; 
+                }
             }
             else
             {
@@ -723,6 +720,8 @@ namespace Cognitivo.Sales
                 crud_modal.Children.Add(recive_payment);
             }
         }
+
+        
 
       
     }

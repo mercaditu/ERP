@@ -31,7 +31,7 @@ namespace Cognitivo.Sales
         {
             try
             {
-                SalesSettings SalesSettings = new SalesSettings();
+                Settings SalesSettings = new Settings();
 
                 if (SalesSettings.FilterByBranch)
                 {
@@ -187,11 +187,11 @@ namespace Cognitivo.Sales
         }
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            SalesSettings.Default.Save();
-            SalesSettings = SalesSettings.Default;
+            Settings.Default.Save();
+            SalesSettings = Settings.Default;
             popupCustomize.IsOpen = false;
         }
 
@@ -262,7 +262,7 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_budget sales_budget, item item)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
 
             if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {

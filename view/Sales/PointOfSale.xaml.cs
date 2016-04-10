@@ -72,7 +72,7 @@ namespace Cognitivo.Sales
             SalesInvoiceDB.SaveChanges();
             SalesInvoiceDB.Approve(true);
 
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
 
 
@@ -118,7 +118,7 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_invoice sales_invoice, item item)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
@@ -152,7 +152,7 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company

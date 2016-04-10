@@ -44,7 +44,7 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             if (SalesSettings.FilterByBranch)
             {
                 await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Branch
@@ -128,7 +128,7 @@ namespace Cognitivo.Sales
         #region toolbar Events
         private void New_Click(object sender)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
 
             sales_order sales_order = dbContext.New();
             sales_order.trans_date = DateTime.Now.AddDays(SalesSettings.TransDate_Offset);
@@ -326,11 +326,11 @@ namespace Cognitivo.Sales
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            SalesSettings.Default.Save();
-            SalesSettings = SalesSettings.Default;
+            Settings.Default.Save();
+            SalesSettings = Settings.Default;
             popupCustomize.IsOpen = false;
         }
 
@@ -358,7 +358,7 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_order sales_order, item item)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();

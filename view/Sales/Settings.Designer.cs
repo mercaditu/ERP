@@ -13,11 +13,11 @@ namespace Cognitivo.Sales {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    public sealed partial class SalesSettings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
-        private static SalesSettings defaultInstance = ((SalesSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new SalesSettings())));
+        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
-        public static SalesSettings Default {
+        public static Settings Default {
             get {
                 return defaultInstance;
             }
@@ -176,6 +176,18 @@ namespace Cognitivo.Sales {
             }
             set {
                 this["TransDate_Offset"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Branch {
+            get {
+                return ((bool)(this["Branch"]));
+            }
+            set {
+                this["Branch"] = value;
             }
         }
     }

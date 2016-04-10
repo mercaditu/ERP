@@ -469,21 +469,23 @@
       <DependentUpon>Budget.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Sales\Invoice.xaml.cs">
+      <DependentUpon>Invoice.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Sales\Packing.xaml.cs">
       <DependentUpon>Packing.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sales\PointOfSale.xaml.cs">
-      <DependentUpon>PointOfSale.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sales\ReturnSetting.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>ReturnSetting.settings</DependentUpon>
     </Compile>
-    <Compile Include="Sales\SalesSettings.Designer.cs">
+    <Compile Include="Sales\Settings.cs" />
+    <Compile Include="Sales\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>SalesSettings.settings</DependentUpon>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Security\UserRole.xaml.cs">
       <DependentUpon>UserRole.xaml</DependentUpon>
@@ -728,13 +730,7 @@
     <Compile Include="Sales\Export.xaml.cs">
       <DependentUpon>Export.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sales\Invoice.xaml.cs">
-      <DependentUpon>Invoice.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sales\InvoiceSetting.cs" />
-    <Compile Include="Sales\Order.xaml.cs">
-      <DependentUpon>Order.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sales\PackingList.xaml.cs">
       <DependentUpon>PackingList.xaml</DependentUpon>
     </Compile>
@@ -743,16 +739,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Sales\POS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>POS.settings</DependentUpon>
-    </Compile>
     <Compile Include="Sales\Salesman.xaml.cs">
       <DependentUpon>Salesman.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sales\Return.xaml.cs">
-      <DependentUpon>Return.xaml</DependentUpon>
     </Compile>
     <Compile Include="Security\User.xaml.cs">
       <DependentUpon>User.xaml</DependentUpon>
@@ -1121,17 +1109,13 @@
       <LastGenOutput>PackingListSetting.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Sales\POS.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>POS.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Sales\ReturnSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>ReturnSetting.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Sales\SalesSettings.settings">
+    <None Include="Sales\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>SalesSettings.Designer.cs</LastGenOutput>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="View_TemporaryKey.pfx" />
   </ItemGroup>
@@ -1406,11 +1390,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Sales\Packing.xaml">
+    <Page Include="Sales\Invoice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Sales\PointOfSale.xaml">
+    <Page Include="Sales\Packing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1606,14 +1590,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Sales\Invoice.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sales\Order.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Sales\PackingList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1621,10 +1597,6 @@
     <Page Include="Sales\Salesman.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Sales\Return.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Security\User.xaml">
       <SubType>Designer</SubType>

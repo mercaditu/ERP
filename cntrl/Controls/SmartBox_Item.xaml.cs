@@ -23,23 +23,26 @@ namespace cntrl.Controls
         public event RoutedEventHandler Select;
         private void ItemGrid_MouseDoubleClick(object sender, EventArgs e)
         {
-            if (itemViewSource.View != null)
+            if (itemViewSource != null)
             {
-                Item = itemViewSource.View.CurrentItem as entity.item;
-
-                if (Item != null)
+                if (itemViewSource.View != null)
                 {
-                    ItemID = Item.id_item;
-                    ContactPopUp.IsOpen = false;
-                    Text = Item.name;
-                }
-                else
-                {
-                    ItemID = 0;
-                    Text = tbxSearch.Text;
-                }
+                    Item = itemViewSource.View.CurrentItem as entity.item;
 
-                tbxSearch.SelectAll();
+                    if (Item != null)
+                    {
+                        ItemID = Item.id_item;
+                        ContactPopUp.IsOpen = false;
+                        Text = Item.name;
+                    }
+                    else
+                    {
+                        ItemID = 0;
+                        Text = tbxSearch.Text;
+                    }
+
+                    tbxSearch.SelectAll();
+                }
             }
 
             if (Select != null)
@@ -49,7 +52,6 @@ namespace cntrl.Controls
         public int ItemID { get; set; }
         public entity.item Item { get; set; }
         public entity.item.item_type? item_types { get; set; }
-        int company_ID = entity.Properties.Settings.Default.company_ID;
 
         Task taskSearch;
         CancellationTokenSource tokenSource;
@@ -124,7 +126,7 @@ namespace cntrl.Controls
                 {
                     results = db.items
                                .Where(x =>
-                                         x.id_company == company_ID &&
+                                         x.id_company == entity.CurrentSession.Id_Company &&
                                          (
                                              x.code.Contains(SearchText) ||
                                              x.name.Contains(SearchText) ||
@@ -139,7 +141,7 @@ namespace cntrl.Controls
                 {
                     results = db.items
                                   .Where(x =>
-                                            x.id_company == company_ID && x.id_item_type == item_types &&
+                                            x.id_company == entity.CurrentSession.Id_Company && x.id_item_type == item_types &&
                                             (
                                                 x.code.Contains(SearchText) ||
                                                 x.name.Contains(SearchText) ||

@@ -70,7 +70,7 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company
@@ -152,7 +152,7 @@ namespace Cognitivo.Sales
 
         private void btnNew_Click(object sender)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
@@ -208,7 +208,7 @@ namespace Cognitivo.Sales
 
         private void btnApprove_Click(object sender)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             SalesInvoiceDB.Approve(SalesSettings.DiscountStock);
             foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
             {
@@ -333,11 +333,11 @@ namespace Cognitivo.Sales
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            SalesSettings.Default.Save();
-            SalesSettings = SalesSettings.Default;
+            Settings.Default.Save();
+            SalesSettings = Settings.Default;
             popupCustomize.IsOpen = false;
         }
         #endregion
@@ -366,7 +366,7 @@ namespace Cognitivo.Sales
 
         private void select_Item(sales_invoice sales_invoice, item item)
         {
-            SalesSettings SalesSettings = new SalesSettings();
+            Settings SalesSettings = new Settings();
             if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();

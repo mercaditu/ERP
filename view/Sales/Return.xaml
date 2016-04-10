@@ -243,7 +243,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=quicklook_SalesRep, Converter={StaticResource BoolToVisibility}, 
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRep, Converter={StaticResource BoolToVisibility}, 
                                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                         <Label Content="" Style="{StaticResource ico_Label}"/>
                         <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>

@@ -25,8 +25,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image}" 
                             Stretch="UniformToFill"/>
-        </Grid.Background>
-
+        </Grid.Background>        
         <Grid >
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.64">
@@ -35,11 +34,32 @@
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
-        
-        <Label Content="A" FontFamily="Cognitivo" HorizontalAlignment="Right" Margin="4" 
-               FontSize="16" Cursor="Hand" Foreground="AliceBlue" VerticalAlignment="Top"/>
 
-        
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+            <StackPanel.Background>
+                <SolidColorBrush Color="Black" Opacity=".64"/>
+            </StackPanel.Background>
+            
+            <StackPanel Orientation="Horizontal" Margin="4,0">
+                <TextBlock Text="" FontSize="8" VerticalAlignment="Center" Foreground="PaleGreen" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                <Label Content="{lex:Loc Branch}" FontSize="8" Foreground="White"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,0">
+                <TextBlock Text="" FontSize="8" VerticalAlignment="Center" Foreground="PaleGreen" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                <Label Content="{lex:Loc Terminal}" FontSize="8" Foreground="White"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="4,0">
+                <TextBlock Text="" FontSize="8" VerticalAlignment="Center" Foreground="PaleGreen" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                <Label Content="{lex:Loc Account}" FontSize="8" Foreground="White"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Label Content="A" FontFamily="Cognitivo" HorizontalAlignment="Right"
+                   Cursor="Hand" Foreground="AliceBlue" VerticalAlignment="Top"/>
+        </StackPanel>
+
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,64,0,0">
             
                 <Border CornerRadius="32" Background="PaleGreen" Width="64" Height="64" 
@@ -48,7 +68,7 @@
                     <Border.Effect>
                         <DropShadowEffect Color="Black" ShadowDepth="0" />
                     </Border.Effect>
-                    <Label Content="U" FontFamily="Cognitivo" FontSize="32" 
+                <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
                        VerticalAlignment="Center" HorizontalAlignment="Center" 
                        Foreground="Black"/>
                 </Border>
@@ -62,7 +82,7 @@
                     <Border.Effect>
                         <DropShadowEffect Color="Black" ShadowDepth="0" />
                     </Border.Effect>
-                    <Label Content="" FontFamily="Cognitivo" FontSize="32" 
+                <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
                        VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black"/>
                 </Border>
 
@@ -74,7 +94,7 @@
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />
                 </Border.Effect>
-                <Label Content="$" FontFamily="Cognitivo" FontSize="32" Foreground="Black"
+                <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" Foreground="Black"
                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
 
@@ -86,18 +106,20 @@
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />
                 </Border.Effect>
-                <Label Content="" FontFamily="Cognitivo" FontSize="32" Foreground="Black"
+                <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" Foreground="Black"
                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
 
         </StackPanel>
-
-        <TabControl Margin="0,150,0,0">
+        <TabControl Margin="0,150,0,26">
             <!-- CONTACT -->
-            <TabItem x:Name="tabContact">
+            <TabItem x:Name="tabContact" >
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
-                        <Label Content="U" FontFamily="Cognitivo" FontSize="32" 
+                        <StackPanel.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="White"/>
+                        </StackPanel.Effect>
+                        <Label Content="U" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
                                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                         <Label Content="{lex:Loc Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
                     </StackPanel>
@@ -119,7 +141,10 @@
             <TabItem x:Name="tabSales">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
-                        <Label Content="" FontFamily="Cognitivo" FontSize="32" 
+                        <StackPanel.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="White"/>
+                        </StackPanel.Effect>
+                        <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
                                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                         <Label Content="{lex:Loc Sales}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
                     </StackPanel>
@@ -128,8 +153,7 @@
                     </Viewbox>
 
                     <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" Margin="5,58,5,0"
-                                          ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" 
-                                >
+                                          ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                             Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
@@ -178,15 +202,18 @@
             
             <!-- PAYMENT -->
             <TabItem x:Name="tabPayment">
-                <Grid>
+                <StackPanel>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
-                            <Label Content="$" FontFamily="Cognitivo" FontSize="32" 
+                            <StackPanel.Effect>
+                                <DropShadowEffect ShadowDepth="0" Color="White"/>
+                            </StackPanel.Effect>
+                            <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
                                    VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             <Label Content="{lex:Loc Payment}" Style="{StaticResource H1}" Foreground="White"/>
                         </StackPanel>
                     </StackPanel>
-                </Grid>
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>

@@ -18,7 +18,7 @@ namespace Cognitivo.Sales
     {
         entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
         CollectionViewSource sales_invoiceViewSource;
-        //  CollectionViewSource sales_invoicesales_invoice_detailViewSource;
+        
         public PointOfSale()
         {
             InitializeComponent();
@@ -42,32 +42,19 @@ namespace Cognitivo.Sales
         }
 
 
+        public entity.app_contract app_contract { get; set; }
+        public entity.app_condition app_condition { get; set; }
+        public entity.app_currencyfx app_currencyfx { get; set; }
+        public entity.app_document_range app_document_range { get; set; }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
-            if (SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
-            {
-                if (SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
-                {
-                    sales_invoice.id_condition = SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition.id_condition;
-                    sales_invoice.id_contract = SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().id_contract;
-                }
-            }
-
-            if (SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault() != null)
-            {
-                if (SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y=>y.is_active).FirstOrDefault() != null)
-                {
-                    sales_invoice.id_currencyfx = SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault().id_currencyfx;
-                    
-                }
-            }
-            if (SalesInvoiceDB.app_document_range.Where(x=>x.is_active && x.id_company==CurrentSession.Id_Company && x.app_document.id_application==entity.App.Names.SalesInvoice).FirstOrDefault()!=null)
-            {
-                sales_invoice.id_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault().id_range;
-            }
-
+            sales_invoice.id_range = app_document_range.id_range;
+            sales_invoice.id_contract = app_contract.id_contract;
+            sales_invoice.id_condition = app_condition.id_condition;
+            sales_invoice.id_currencyfx = app_currencyfx.id_currencyfx;
 
             SalesInvoiceDB.SaveChanges();
             SalesInvoiceDB.Approve(true);
@@ -96,11 +83,8 @@ namespace Cognitivo.Sales
                 sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 sales_invoice.id_contact = contact.id_contact;
                 sales_invoice.contact = contact;
-
-
             }
         }
-
 
         private void sbxItem_Select(object sender, RoutedEventArgs e)
         {
@@ -152,38 +136,48 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Settings SalesSettings = new Settings();
-            if (SalesSettings.FilterByBranch)
+            //We do not need to load previous Sales Data. This defeats the purpose of Point of Sale
+            if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
             {
-                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company
-                                               && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
-
-            }
-            else
-            {
-                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company
-                                              && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
+                app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();
             }
 
+            if (SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
+            {
+                if (SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
+                {
+                    app_condition = SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition;
+                    app_contract = SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
+                }
+            }
+
+            //No need to run this every time, we can do this on Load and Save values.
+            if (SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault() != null)
+            {
+                if (SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault() != null)
+                {
+                    app_currencyfx = SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault();
+                }
+            }
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
                 sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
-                sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
+                sales_invoice sales_invoice = SalesInvoiceDB.New(0);
                 SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
                 sales_invoiceViewSource.View.MoveCurrentToLast();
             }));
-            SalesInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = SalesInvoiceDB.app_vat_group.Local;
-            }));
 
+            //Not necesary. We will not give option to change VAT.
+            //SalesInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
+            //    CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
+            //    app_vat_groupViewSource.Source = SalesInvoiceDB.app_vat_group.Local;
+            //}));
         }
-
-
     }
 }

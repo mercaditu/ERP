@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-               xmlns:crud="clr-namespace:cntrl.Curd"
+             xmlns:crud="clr-namespace:cntrl.Curd"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
-                xmlns:entity="clr-namespace:entity;assembly=entity"
-                xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-                lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
-                lex:ResxLocalizationProvider.DefaultDictionary="local"
-                lex:LocalizeDictionary.DesignCulture="en-US" 
+             xmlns:entity="clr-namespace:entity;assembly=entity"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+             lex:ResxLocalizationProvider.DefaultDictionary="local"
+             lex:LocalizeDictionary.DesignCulture="en-US" 
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" >
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid Width="256">
@@ -27,9 +28,10 @@
                  metro:TextBoxHelper.SelectAllOnFocus="True"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
                  KeyUp="StartSearch"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0">
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
                    HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   Visibility="{Binding can_New, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
                    PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
         </StackPanel>
         <!-- Progress Ring -->

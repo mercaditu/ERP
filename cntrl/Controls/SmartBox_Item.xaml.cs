@@ -13,6 +13,9 @@ namespace cntrl.Controls
 {
     public partial class SmartBox_Item : UserControl
     {
+        public bool can_New { get; set; }
+        public bool can_Edit { get; set; }
+        
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Item));
         public string Text
         {

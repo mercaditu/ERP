@@ -14,7 +14,7 @@
     xmlns:lex="http://wpflocalizeextension.codeplex.com" 
     lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
     lex:ResxLocalizationProvider.DefaultDictionary="local"
-         xmlns:pref="clr-namespace:Cognitivo.Sales"
+    xmlns:pref="clr-namespace:Cognitivo.Sales"
     lex:LocalizeDictionary.DesignCulture="en-US" 
     d:DesignHeight="450" d:DesignWidth="750" Loaded="Page_Loaded"
 	Title="Sales Return">
@@ -29,11 +29,8 @@
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_returnViewSource}}"/>
-        <!--<CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="sales_returnsales_return_detailViewSource" Source="{Binding sales_return_detail, Source={StaticResource sales_returnViewSource}}"/>
-  
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}"/>
-    
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource sales_returnViewSource}">
@@ -61,17 +58,6 @@
                        Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Stretch" 
                        VerticalAlignment="Top"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
-          <!--  <DataGrid x:Name="sales_returnDataGrid" Style="{StaticResource main_Datagrid}"
-                      ItemsSource="{Binding}" Grid.Row="1" Grid.Column="0" 
-                      Loaded="sales_returnDataGrid_Loaded" IsReadOnly="True"
-                      SelectionChanged="sales_returnDataGrid_SelectionChanged">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding id_sales_return, UpdateSourceTrigger=PropertyChanged}" Header="Id" IsReadOnly="True" Width="100" Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="Date" Binding="{Binding trans_date}" Width="*"/>
-                    <DataGridTextColumn Header="Customer" Binding="{Binding contact.name}" Width="*"/>
-                    <DataGridTextColumn Header="Number" Binding="{Binding number}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>-->
             <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="sales_returnDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -98,7 +84,7 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="340"></RowDefinition>
+                    <RowDefinition Height="280"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -109,10 +95,6 @@
                         <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}"/>
                         <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
                                                    Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <!--<ComboBox x:Name="contact_nameComboBox"  DisplayMemberPath="name"
-                              SelectedValuePath="id_contact"
-                              ItemsSource="{Binding Source={StaticResource contactViewSource}}"  Style="{StaticResource input_combobox}"
-                            SelectedValue="{Binding id_contact, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectionChanged="contact_nameComboBox_SelectionChanged"/>-->
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -197,7 +179,7 @@
                                     <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <WrapPanel>
                                         <TextBox Width="30" HorizontalAlignment="Left"   Margin="6,2,2,2"
-                                             Text="{Binding Source={x:Static pref:ReturnSetting.Default}, Path=TransDate_OffSet, Mode=TwoWay}">
+                                             Text="{Binding Source={x:Static pref:Settings.Default}, Path=TransDate_OffSet, Mode=TwoWay}">
                                         </TextBox>
                                         <Label Content="Offset Date" Style="{StaticResource generic_Label}"/>
                                     </WrapPanel>
@@ -254,7 +236,7 @@
                                                       ValidatesOnDataErrors=True}"/>
                     </StackPanel>
 
-                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=quicklook_SalesRep, Converter={StaticResource BoolToVisibility}, 
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRepresentative, Converter={StaticResource BoolToVisibility}, 
                                     UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                         <Label Content="" Style="{StaticResource ico_Label}"/>
                         <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
@@ -277,12 +259,6 @@
                 
                 
                 <Grid Grid.ColumnSpan="2" Grid.Row="1">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right">
-                        <Label Content="Discount(%)" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
-                        <Label Content="Discount" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
-                    </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
                         <TextBlock x:Name="lblTotal" Text="{Binding GrandTotal, Source={StaticResource sales_returnViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource TextAreaH2}"/>
                         <Label Content="{Binding app_currencyfx.app_currency.name}" Style="{StaticResource H3}" ContentStringFormat="{}{0:N}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />

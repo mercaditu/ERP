@@ -473,8 +473,17 @@
       <DependentUpon>Invoice.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Sales\Order.xaml.cs">
+      <DependentUpon>Order.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sales\Packing.xaml.cs">
       <DependentUpon>Packing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\PointOfSale.xaml.cs">
+      <DependentUpon>PointOfSale.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sales\Return.xaml.cs">
+      <DependentUpon>Return.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sales\ReturnSetting.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1394,9 +1403,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Sales\Order.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Sales\Packing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sales\PointOfSale.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Sales\Return.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Security\UserRole.xaml">
       <SubType>Designer</SubType>

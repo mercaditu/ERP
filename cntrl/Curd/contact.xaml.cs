@@ -26,8 +26,6 @@ namespace cntrl.Curd
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-
-
                 if (entity != null)
                 {
                     contactList = new List<global::entity.contact>();
@@ -37,7 +35,7 @@ namespace cntrl.Curd
 
                     cbxRole.ItemsSource = entity.db.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
 
-                    if (contactobject.id_contact == 0)
+                    if (contactobject != null)
                     {
                         entity.db.contacts.Add(contactobject);
                     }
@@ -48,9 +46,7 @@ namespace cntrl.Curd
                     contactViewSource.Source = entity.db.contacts.Local;
               
                     contactViewSource.View.MoveCurrentTo(contactobject);
-
                 }
-
             }
         }
 

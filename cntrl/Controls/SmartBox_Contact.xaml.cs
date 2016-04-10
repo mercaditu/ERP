@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +19,21 @@ namespace cntrl.Controls
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-        
+
+        public static readonly DependencyProperty can_NewProperty = DependencyProperty.Register("can_New", typeof(bool), typeof(SmartBox_Contact));
+        public bool can_New
+        {
+            get { return (bool)GetValue(can_NewProperty); }
+            set { SetValue(can_NewProperty, value); }
+        }
+
+        public static readonly DependencyProperty can_EditProperty = DependencyProperty.Register("can_Edit", typeof(bool), typeof(SmartBox_Contact));
+        public bool can_Edit
+        {
+            get { return (bool)GetValue(can_EditProperty); }
+            set { SetValue(can_EditProperty, value); }
+        }
+
         entity.dbContext db = new entity.dbContext();
 
         public event RoutedEventHandler Select;
@@ -60,23 +75,27 @@ namespace cntrl.Controls
         public SmartBox_Contact()
         {
             InitializeComponent();
-            contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
 
-            if (rbtnCode.IsChecked == true)
+            if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
-            }
-            if (rbtnName.IsChecked == true)
-            {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
-            }
-            if (rbtnGov_ID.IsChecked == true)
-            {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
-            }
-            if (rbtnTel.IsChecked == true)
-            {
-                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
+                contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
+
+                if (rbtnCode.IsChecked == true)
+                {
+                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
+                }
+                if (rbtnName.IsChecked == true)
+                {
+                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
+                }
+                if (rbtnGov_ID.IsChecked == true)
+                {
+                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
+                }
+                if (rbtnTel.IsChecked == true)
+                {
+                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
+                }
             }
         }
 
@@ -282,6 +301,11 @@ namespace cntrl.Controls
         private void _SmartBox_Contact_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ContactID = 0;
+        }
+
+        private void crudContact_btnCancel_Click(object sender)
+        {
+            popCrud.IsOpen = false;
         }
     }
 }

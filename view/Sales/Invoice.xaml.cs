@@ -637,27 +637,6 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void navPagination_btnSearch_Click(object sender)
-        {
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Day)
-            {
-                List<sales_invoice> sales_invoiceList = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
-                sales_invoiceViewSource.Source = sales_invoiceList;
-            }
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Month)
-            {
-                List<sales_invoice> sales_invoice = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
-                sales_invoiceViewSource.Source = sales_invoice;
-            }
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Year)
-            {
-                List<sales_invoice> sales_invoice = SalesInvoiceDB.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
-                sales_invoiceViewSource.Source = sales_invoice;
-            }
-        }
-
-
-
         private void salesorder_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             Hyperlink Hyperlink = (Hyperlink)sender;

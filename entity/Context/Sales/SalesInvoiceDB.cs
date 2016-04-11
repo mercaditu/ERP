@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace entity
 {
@@ -184,6 +185,46 @@ namespace entity
                 }
 
             }
+        }
+
+        public sales_invoice_detail Select_Item()
+        {
+
+            if (item != null && item.id_item > 0 && sales_invoice != null)
+            {
+                Task Thread = Task.Factory.StartNew(() => select_Item(sales_invoice, item));
+            }
+        }
+
+        private void select_Item(sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
+        {
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
+            {
+                sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
+                _sales_invoice_detail.sales_invoice = sales_invoice;
+                _sales_invoice_detail.Contact = sales_invoice.contact;
+                _sales_invoice_detail.item_description = item.description;
+                _sales_invoice_detail.item = item;
+                _sales_invoice_detail.id_item = item.id_item;
+                _sales_invoice_detail.quantity += 1;
+
+                sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
+            }
+            else
+            {
+                sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                sales_invoice_detail.quantity += 1;
+            }
+
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+
+                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                calculate_vat(null, null);
+
+                sbxItem.Focus();
+            }));
         }
 
         /// <summary>

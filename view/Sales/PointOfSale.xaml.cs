@@ -300,7 +300,7 @@ namespace Cognitivo.Sales
                 payment paymentnew = new entity.payment();
                 paymentnew.status = Status.Documents_General.Pending;
                 payment_detail payment_detailnew = new entity.payment_detail();
-               
+
                 payment_detailnew.id_currency = sales_invoice.app_currencyfx.id_currency;
                 paymentnew.payment_detail.Add(payment_detailnew);
                 // SalesInvoiceDB.payments.Add(paymentnew);
@@ -332,10 +332,10 @@ namespace Cognitivo.Sales
             payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
             payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
             List<payment_detail> payment_detaillist = payment.payment_detail.GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList();
-            decimal totalpaid=0;
+            decimal totalpaid = 0;
             foreach (app_currency app_currency in app_currencyViewSource.View.Cast<app_currency>().ToList())
             {
-              decimal amount=payment_detaillist.Where(x=>x.id_currency==app_currency.id_currency).Sum(x=>x.value);
+                decimal amount = payment_detaillist.Where(x => x.id_currency == app_currency.id_currency).Sum(x => x.value);
                 if (sales_invoice.app_currencyfx.id_currency == app_currency.id_currency)
                 {
                     totalpaid += amount;
@@ -346,7 +346,7 @@ namespace Cognitivo.Sales
                     {
                         totalpaid += Currency.convert_Value(_payment_detail.value, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
                     }
-                    
+
                 }
 
             }
@@ -354,6 +354,26 @@ namespace Cognitivo.Sales
 
         }
 
-       
+        private void Page_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F1)
+            {
+                tabContact.IsSelected = true;
+            }
+            else if (e.Key == Key.F2)
+            {
+                tabSales.IsSelected = true;
+            }
+            else if (e.Key == Key.F3)
+            {
+                tabPayment.IsSelected = true;
+            }
+            else if (e.Key == Key.F4)
+            {
+                btnSave_Click(sender, e);
+            }
+        }
+
+
     }
 }

@@ -345,6 +345,10 @@ namespace entity
                         PriceList_ID = (int)Contact.id_price_list;
                     }
                 }
+                else
+                {
+                    PriceList_ID = 0;
+                }
                
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
                 if (PriceList_ID == 0)
@@ -392,6 +396,7 @@ namespace entity
                             return Currency.convert_Value(Item_PriceValue, CurrencyFX_ID, App.Modules.Sales);
                         }
                     }
+                 
                 }
             }
 

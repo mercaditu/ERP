@@ -90,6 +90,28 @@ namespace entity
         #region Document Range => Navigation
         public virtual app_document_range app_document_range { get; set; }
         #endregion
+
+        [NotMapped]
+        public decimal GrandTotal
+        {
+            get
+            {
+                _GrandTotal = 0;
+                foreach (payment_detail _payment_detail in payment_detail)
+                {
+                    _GrandTotal += _payment_detail.value;
+                }
+
+               
+                return Math.Round(_GrandTotal, 2);
+            }
+            set
+            {
+                _GrandTotal = value;
+                RaisePropertyChanged("GrandTotal");
+            }
+        }
+        private decimal _GrandTotal;
         
         /// <summary>
         /// 

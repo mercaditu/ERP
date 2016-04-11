@@ -354,10 +354,14 @@ namespace Cognitivo.Sales
         {
             if (sbxItem.ItemID > 0)
             {
+                Settings SalesSettings = new Settings();
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                SalesInvoiceDB.Select_Item(sales_invoice, item);
+                SalesInvoiceDB.Select_Item(ref sales_invoice, item,SalesSettings.AllowDuplicateItem);
+
+
+                sales_invoicesales_invoice_detailViewSource.View.Refresh();
             }
         }
 

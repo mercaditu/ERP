@@ -191,13 +191,15 @@ namespace entity
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-                Task Thread = Task.Factory.StartNew(() => select_Item(ref sales_invoice, item, AllowDuplicateItem));
+               // Task Thread = Task.Factory.StartNew(() => select_Item(sales_invoice, item, AllowDuplicateItem));
+               return  select_Item(ref sales_invoice, item, AllowDuplicateItem);
             }
+            return null;
         }
 
-        private void select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
+        private sales_invoice_detail select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
         {
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                 _sales_invoice_detail.sales_invoice = sales_invoice;
@@ -208,13 +210,16 @@ namespace entity
                 _sales_invoice_detail.quantity += 1;
 
                 sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
+                return _sales_invoice_detail;
             }
             else
             {
                 sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
                 sales_invoice_detail.quantity += 1;
+                return sales_invoice_detail;
             }
 
+       
             //Dispatcher.BeginInvoke((Action)(() =>
             //{
 

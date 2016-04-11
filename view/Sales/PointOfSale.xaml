@@ -7,6 +7,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cntrl="clr-namespace:cntrl.Controls;assembly=cntrl"
+       xmlns:curd="clr-namespace:cntrl.Curd;assembly=cntrl"
          xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -20,6 +21,9 @@
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
+        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
+        <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource sales_invoiceViewSource}">
         <Grid.Background>
@@ -214,6 +218,22 @@
                                    VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             <Label Content="{lex:Loc Payment}" Style="{StaticResource H1}" Foreground="White"/>
                         </StackPanel>
+                        <Grid>
+                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="64,58,64,0" CanUserAddRows="False"
+                                          ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}">
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Account}" Width="50"
+					                            ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"  
+                                                DisplayMemberPath="name" SelectedValuePath="id_account" 
+					                            SelectedValueBinding="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
+                                                UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                    <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                            Header="{lex:Loc Cognitivo:local:Amount}" IsReadOnly="False" Width="*"/>
+                                 
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    
                     </StackPanel>
                 </StackPanel>
             </TabItem>

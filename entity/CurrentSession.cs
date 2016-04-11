@@ -52,6 +52,20 @@ namespace entity
         }
         static int _Id_Terminal;
 
+        public static int Id_Account
+        {
+            get
+            {
+                if (_Id_Account == 0)
+                {
+                    _Id_Account = Properties.Settings.Default.account_ID;
+                };
+                return _Id_Account;
+            }
+            set { _Id_Account = value; }
+        }
+        static int _Id_Account;
+
         public static List<security_curd> Security_CurdList
         {
             get

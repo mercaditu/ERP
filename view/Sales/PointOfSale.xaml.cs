@@ -11,14 +11,16 @@ using System.Data;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Data.Entity.Validation;
+using entity.Brillo;
 
 namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
         entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
-        
-        CollectionViewSource sales_invoiceViewSource, paymentViewSource;
+
+        CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
         List<sales_invoice> salesinvoiceList = new List<sales_invoice>();
         List<payment> paymentList = new List<payment>();
         public PointOfSale()
@@ -58,7 +60,7 @@ namespace Cognitivo.Sales
             {
                 sales_invoice.id_range = app_document_range.id_range;
             }
-          
+
             if (app_condition != null)
             {
                 sales_invoice.id_condition = app_condition.id_condition;
@@ -75,10 +77,18 @@ namespace Cognitivo.Sales
                 sales_invoice.app_currencyfx = app_currencyfx;
             }
 
-            SalesInvoiceDB.SaveChanges();
+            IEnumerable<DbEntityValidationResult> validationresult = SalesInvoiceDB.GetValidationErrors();
+            if (validationresult.Count() == 0)
+            {
+                SalesInvoiceDB.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("Some Value is missing..");
+            }
             SalesInvoiceDB.Approve(true);
 
-         
+
 
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
             SalesInvoiceDB.payments.Add(payment);
@@ -87,31 +97,41 @@ namespace Cognitivo.Sales
                 app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
                 payment.id_range = app_document_range.id_range;
             }
-            
-          
-                payment.payment_detail.FirstOrDefault().id_currencyfx = app_currencyfx.id_currencyfx;
-                if ( SalesInvoiceDB.payment_type.Where(x=>x.payment_behavior==payment_type.payment_behaviours.Normal && x.is_default).FirstOrDefault()!=null)
-                {
-                    payment.payment_detail.FirstOrDefault().id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.is_default).FirstOrDefault().id_payment_type;
-                    payment.payment_detail.FirstOrDefault().payment_type = SalesInvoiceDB.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal && x.is_default).FirstOrDefault();     
-                }
-               
-                
-          
-            payment_schedual _payment_schedual = new payment_schedual();
 
-            _payment_schedual.credit = Convert.ToDecimal(payment.payment_detail.FirstOrDefault().value);
-            _payment_schedual.parent = SalesInvoiceDB.payment_schedual.Where(x=>x.id_sales_invoice==sales_invoice.id_sales_invoice && x.debit>0).FirstOrDefault();
-            _payment_schedual.expire_date =DateTime.Now;
-            _payment_schedual.status = Status.Documents_General.Approved;
-            _payment_schedual.id_contact =sales_invoice.id_contact;
-            _payment_schedual.id_currencyfx = sales_invoice.id_currencyfx;
-            _payment_schedual.id_sales_invoice = sales_invoice.id_sales_invoice;
-            _payment_schedual.trans_date = sales_invoice.trans_date;
 
-            payment.payment_detail.FirstOrDefault().payment_schedual.Add(_payment_schedual);
+            foreach (payment_detail payment_detail in payment.payment_detail)
+            {
 
-            SalesInvoiceDB.SaveChanges();
+                payment_detail.id_account = CurrentSession.Id_Account;
+                payment_detail.app_currencyfx = SalesInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == payment_detail.id_currencyfx).FirstOrDefault();
+                payment_schedual _payment_schedual = new payment_schedual();
+
+                _payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
+                _payment_schedual.parent = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
+                _payment_schedual.expire_date = DateTime.Now;
+                _payment_schedual.status = Status.Documents_General.Approved;
+                _payment_schedual.id_contact = sales_invoice.id_contact;
+                _payment_schedual.id_currencyfx = payment_detail.id_currencyfx;
+                _payment_schedual.id_sales_invoice = sales_invoice.id_sales_invoice;
+                _payment_schedual.trans_date = sales_invoice.trans_date;
+
+                payment_detail.payment_schedual.Add(_payment_schedual);
+            }
+
+
+
+
+
+
+            IEnumerable<DbEntityValidationResult> validationresultpaymnet = SalesInvoiceDB.GetValidationErrors();
+            if (validationresultpaymnet.Count() == 0)
+            {
+                SalesInvoiceDB.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("Some Value is missing..");
+            }
             entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
 
             Settings SalesSettings = new Settings();
@@ -124,18 +144,18 @@ namespace Cognitivo.Sales
             salesinvoiceList.Add(Newsales_invoice);
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoiceViewSource.Source = salesinvoiceList;
-
-
+            sales_invoiceViewSource.View.Refresh();
+            sales_invoiceViewSource.View.MoveCurrentToLast();
             payment paymentnew = new entity.payment();
             paymentnew.status = Status.Documents_General.Pending;
             payment_detail payment_detailnew = new entity.payment_detail();
             paymentnew.payment_detail.Add(payment_detailnew);
-           // SalesInvoiceDB.payments.Add(paymentnew);
+            // SalesInvoiceDB.payments.Add(paymentnew);
             paymentList.Add(paymentnew);
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
             paymentViewSource.Source = paymentList;
-
-
+            paymentViewSource.View.Refresh();
+            paymentViewSource.View.MoveCurrentToLast();
             tabContact.IsSelected = true;
             sbxContact.Text = "";
             //Run approve code here.
@@ -239,9 +259,9 @@ namespace Cognitivo.Sales
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-            
+
                 sales_invoice sales_invoice = SalesInvoiceDB.New(0);
-                if (app_condition!=null)
+                if (app_condition != null)
                 {
                     sales_invoice.id_condition = app_condition.id_condition;
                     sales_invoice.app_condition = app_condition;
@@ -251,16 +271,16 @@ namespace Cognitivo.Sales
                     sales_invoice.id_contract = app_contract.id_contract;
                     sales_invoice.app_contract = app_contract;
                 }
-                if (app_currencyfx!=null)
+                if (app_currencyfx != null)
                 {
                     sales_invoice.id_currencyfx = app_currencyfx.id_currencyfx;
                     sales_invoice.app_currencyfx = app_currencyfx;
                 }
-               
-             
-             
-               
-              
+
+
+
+
+
                 SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
                 salesinvoiceList.Add(sales_invoice);
@@ -268,20 +288,29 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.Source = salesinvoiceList;
                 sales_invoiceViewSource.View.MoveCurrentToLast();
 
-                CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-                SalesInvoiceDB.app_account.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
-                app_accountViewSource.Source = SalesInvoiceDB.app_account.Local;
+                CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
+                SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
+                payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
+
+                app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
+                SalesInvoiceDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+                app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
+
+
+                payment paymentnew = new entity.payment();
+                paymentnew.status = Status.Documents_General.Pending;
+                payment_detail payment_detailnew = new entity.payment_detail();
+               
+                payment_detailnew.id_currency = sales_invoice.app_currencyfx.id_currency;
+                paymentnew.payment_detail.Add(payment_detailnew);
+                // SalesInvoiceDB.payments.Add(paymentnew);
+                paymentList.Add(paymentnew);
+                paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+                paymentViewSource.Source = paymentList;
             }));
 
 
-            payment paymentnew = new entity.payment();
-            paymentnew.status = Status.Documents_General.Pending;
-            payment_detail payment_detailnew = new entity.payment_detail();
-            paymentnew.payment_detail.Add(payment_detailnew);
-           // SalesInvoiceDB.payments.Add(paymentnew);
-            paymentList.Add(paymentnew);
-            paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-            paymentViewSource.Source = paymentList;
+
 
             //Not necesary. We will not give option to change VAT.
             //SalesInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
@@ -292,5 +321,39 @@ namespace Cognitivo.Sales
             //    app_vat_groupViewSource.Source = SalesInvoiceDB.app_vat_group.Local;
             //}));
         }
+
+
+
+        private void dgvPaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        {
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+            payment_detail payment_detail = e.NewItem as payment_detail;
+            payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
+            payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
+            List<payment_detail> payment_detaillist = payment.payment_detail.GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList();
+            decimal totalpaid=0;
+            foreach (app_currency app_currency in app_currencyViewSource.View.Cast<app_currency>().ToList())
+            {
+              decimal amount=payment_detaillist.Where(x=>x.id_currency==app_currency.id_currency).Sum(x=>x.value);
+                if (sales_invoice.app_currencyfx.id_currency == app_currency.id_currency)
+                {
+                    totalpaid += amount;
+                }
+                else
+                {
+                    foreach (payment_detail _payment_detail in payment_detaillist.Where(x => x.id_currency == app_currency.id_currency).ToList())
+                    {
+                        totalpaid += Currency.convert_Value(_payment_detail.value, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
+                    }
+                    
+                }
+
+            }
+            payment_detail.value = sales_invoice.GrandTotal - totalpaid;
+
+        }
+
+       
     }
 }

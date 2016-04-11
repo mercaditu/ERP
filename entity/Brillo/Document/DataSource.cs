@@ -543,6 +543,7 @@ namespace entity.Brillo.Document
                                   payment_name = g.payment_type.name,
                                   trans_date = g.trans_date,
                                   currency_name=g.app_currencyfx.app_currency.name,
+                                  currency_rate = g.app_currencyfx.sell_value,
                                   receipt_number = g.payment.number,
                                   gov_id=g.payment.contact.gov_code,
                                    AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?

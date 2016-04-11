@@ -14,9 +14,9 @@ namespace entity
     {
         public payment_detail()
         {
-           
+
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
             payment_schedual = new List<payment_schedual>();
@@ -28,10 +28,38 @@ namespace entity
         public int id_payment { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_purchase_return { get; set; }
-         
+
         public int? id_account { get; set; }
         [Required]
-      
+
+        [NotMapped]
+        public int id_currency
+        {
+            get
+            {
+                return _id_currency;
+            }
+            set
+            {
+                _id_currency = value;
+                using (db db = new db())
+                {
+                    if ( db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault()!=null)
+                    {
+                        id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
+                        RaisePropertyChanged("id_currencyfx"); 
+                    }
+                    else
+                    {
+                        id_currencyfx = db.app_currencyfx.Where(x=>x.is_active).FirstOrDefault().id_currencyfx;
+                        RaisePropertyChanged("id_currencyfx"); 
+                    }
+                }
+                RaisePropertyChanged("id_currency");
+            }
+        }
+        int _id_currency;
+
         public int id_currencyfx
         {
             get
@@ -58,7 +86,7 @@ namespace entity
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_payment_type { get; set; }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -163,8 +191,8 @@ namespace entity
                     if (value == 0)
                         return "Amount needs to be filled";
                 }
-          
-               
+
+
                 if (columnName == "id_payment_type")
                 {
                     if (id_payment_type == 0)

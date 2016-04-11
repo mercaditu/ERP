@@ -116,8 +116,20 @@ namespace Cognitivo.Sales
                 _payment_schedual.trans_date = sales_invoice.trans_date;
 
                 payment_detail.payment_schedual.Add(_payment_schedual);
-            }
 
+                if (SalesInvoiceDB.payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
+                {
+                    app_account_detail app_account_detail = new app_account_detail();
+                    app_account_detail.id_account = (int)payment_detail.id_account;
+                    app_account_detail.id_currencyfx = _payment_schedual.id_currencyfx;
+                    app_account_detail.id_payment_type = payment_detail.id_payment_type;
+                    app_account_detail.trans_date = payment_detail.trans_date;
+                    app_account_detail.debit = 0;
+                    app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
+                    SalesInvoiceDB.app_account_detail.Add(app_account_detail);
+                }
+            }
+          
 
 
 
@@ -195,6 +207,8 @@ namespace Cognitivo.Sales
                 payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
                 payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
 
+                sales_invoiceViewSource.View.Refresh();
+                paymentViewSource.View.Refresh();
                 sbxItem.Focus();
             }
         }

@@ -106,7 +106,7 @@ namespace Cognitivo.Configs
                 {
                     cur = s.Key.cur_name,
                     payType = s.Key.paymentType,
-                    amount = s.Sum(ad => ad.debit) - s.Sum(ad => ad.credit)
+                    amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                 }).ToList();
         }
         #endregion

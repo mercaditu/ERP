@@ -222,14 +222,19 @@
                             <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="64,58,64,0" CanUserAddRows="False"
                                           ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}">
                                 <DataGrid.Columns>
-                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Account}" Width="50"
+                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="50"
 					                            ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"  
                                                 DisplayMemberPath="name" SelectedValuePath="id_account" 
 					                            SelectedValueBinding="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
                                                 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                     <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                             Header="{lex:Loc Cognitivo:local:Amount}" IsReadOnly="False" Width="*"/>
-                                 
+                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="50"
+					                            ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"  
+                                                DisplayMemberPath="name" SelectedValuePath="id_account" 
+					                            SelectedValueBinding="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
+                                                UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

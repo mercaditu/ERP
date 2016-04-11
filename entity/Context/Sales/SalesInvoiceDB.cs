@@ -187,16 +187,15 @@ namespace entity
             }
         }
 
-        public sales_invoice_detail Select_Item()
+        public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
         {
-
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-                Task Thread = Task.Factory.StartNew(() => select_Item(sales_invoice, item));
+                Task Thread = Task.Factory.StartNew(() => select_Item(ref sales_invoice, item, AllowDuplicateItem));
             }
         }
 
-        private void select_Item(sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
+        private void select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
         {
             if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
@@ -216,15 +215,13 @@ namespace entity
                 sales_invoice_detail.quantity += 1;
             }
 
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
+            //Dispatcher.BeginInvoke((Action)(() =>
+            //{
 
-                CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                calculate_vat(null, null);
-
-                sbxItem.Focus();
-            }));
+            //    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+            //    sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            //    calculate_vat(null, null);
+            //}));
         }
 
         /// <summary>

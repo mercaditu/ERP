@@ -29,6 +29,10 @@
           <DataField>AmountWords</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="currency">
+          <DataField>currency</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="company_name">
           <DataField>company_name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1360,6 +1364,16 @@
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value xml:space="preserve">   </Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Fields!currency.Value</Value>
+                    <Style />
                   </TextRun>
                 </TextRuns>
                 <Style />

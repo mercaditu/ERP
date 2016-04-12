@@ -78,8 +78,8 @@
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="number">
-          <DataField>number</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <DataField>sales_number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="order_Total">
           <DataField>order_Total</DataField>
@@ -110,15 +110,15 @@
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="add1">
-          <DataField>add1</DataField>
+          <DataField>customer_address</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="telephone">
-          <DataField>telephone</DataField>
+          <DataField>customer_telephone</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="email">
-          <DataField>email</DataField>
+          <DataField>customer_email</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="id_sales_order">
@@ -139,6 +139,10 @@
         </Field>
         <Field Name="condition">
           <DataField>condition</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="currency">
+          <DataField>currency</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -1150,6 +1154,16 @@
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value xml:space="preserve">      </Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Fields!currency.Value</Value>
+                    <Style />
                   </TextRun>
                 </TextRuns>
                 <Style />

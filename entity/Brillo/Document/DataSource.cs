@@ -57,7 +57,7 @@ namespace entity.Brillo.Document
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
-             else if (Document.GetType()== typeof(payment))
+            else if (Document.GetType() == typeof(payment))
             {
                 payment payment = (payment)Document;
                 return Payment(payment);
@@ -116,7 +116,7 @@ namespace entity.Brillo.Document
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
                         HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false : false,
-                        unit_price_discount=g.discount!=null?g.discount:0,
+                        unit_price_discount = g.discount != null ? g.discount : 0,
 
                     }).ToList();
 
@@ -134,6 +134,7 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = sales_order_detail
                     .Select(g => new
                     {
+
                         geo_name = g.sales_order != null ? g.sales_order.contact != null ? g.sales_order.contact.app_geography != null ? g.sales_order.contact.app_geography.name : "" : "" : "",
                         sales_budget_number = g.sales_budget_detail != null ? g.sales_budget_detail.sales_budget.number : "",
                         contact_name = g.sales_order != null ? g.sales_order.contact.name : "",
@@ -159,7 +160,8 @@ namespace entity.Brillo.Document
                         DeliveryDate = g.sales_order != null ? g.sales_order.delivery_date : DateTime.Now,
                         sales_order_Comment = g.sales_order != null ? g.sales_order.comment != null ? g.sales_order.comment : "" : "",
                         vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
-
+                        contract = g.sales_order != null ? g.sales_order.app_contract != null ? g.sales_order.app_contract.name != null ? g.sales_order.app_contract.name : "" : "" : "",
+                        condition = g.sales_order != null ? g.sales_order.app_condition != null ? g.sales_order.app_condition.name != null ? g.sales_order.app_condition.name : "" : "" : "",
                         item_code = g.item != null ? g.item.code : "",
                         item_description = g.item != null ? g.item.name : "",
                         item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
@@ -527,40 +529,40 @@ namespace entity.Brillo.Document
             }
         }
 
-            public ReportDataSource Payment(payment payment)
+        public ReportDataSource Payment(payment payment)
         {
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-               List<payment_detail> payment_detail =payment.payment_detail.ToList();
+                List<payment_detail> payment_detail = payment.payment_detail.ToList();
                 reportDataSource.Value = payment_detail
                               .Select(g => new
                               {
                                   id_company = g.id_company,
-                                  company_name = g.app_company!=null?g.app_company.name:"",
+                                  company_name = g.app_company != null ? g.app_company.name : "",
                                   amount = g.value,
-                                  contact_name = g.payment.contact.name,
-                                  payment_name = g.payment_type.name,
+                                  contact_name = g.payment.contact != null ? g.payment.contact.name : "",
+                                  payment_name = g.payment_type != null ? g.payment_type.name : "",
                                   trans_date = g.trans_date,
-                                  currency_name=g.app_currencyfx.app_currency.name,
-                                  currency_rate = g.app_currencyfx.sell_value,
+                                  currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
+                                  currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value:0,
                                   receipt_number = g.payment.number,
-                                  gov_id=g.payment.contact.gov_code,
-                                   AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                                  gov_id = g.payment.contact!= null ?g.payment.contact.gov_code:"",
+                                  AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
-                      // Text -> Words
-                      NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
-                      :
-                      NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
+                     // Text -> Words
+                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
+                     :
+                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
 
                                   HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false : false
-                                 
+
                               }).ToList();
 
                 return reportDataSource;
             }
         }
-            
+
 
     }
 }

@@ -764,7 +764,7 @@ namespace entity
                            gove_code = g.gov_code,
                            trans_date = g.timestamp,
                            contacts_code = g.code,
-                           Product_code = g.contact_subscription.FirstOrDefault().item.name,
+                           Product_code = g.contact_subscription.FirstOrDefault()!=null?g.contact_subscription.FirstOrDefault().item!=null?g.contact_subscription.FirstOrDefault().item.name:"":"",
                            name = ""
                        }).ToList();
                 }

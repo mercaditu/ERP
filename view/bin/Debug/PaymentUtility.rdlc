@@ -97,7 +97,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!currency_name.Value, "DataSet1") + Sum(Fields!amount.Value, "DataSet1")</Value>
+                <Value>=Sum(Fields!amount.Value, "DataSet1")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -106,9 +106,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
         <Top>0.2643cm</Top>
-        <Left>17.53003cm</Left>
+        <Left>19.99065cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.64676cm</Width>
+        <Width>1.11218cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -179,6 +179,36 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox14">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Fields!currency_name.Value</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>0.2643cm</Top>
+        <Left>17.59649cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.25306cm</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>2in</Height>
     <Style />
@@ -207,8 +237,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Top>0.37041cm</Top>
-          <Left>0.34385cm</Left>
+          <Top>0.67013cm</Top>
           <Height>0.47625cm</Height>
           <Width>3.09562cm</Width>
           <Style>
@@ -221,25 +250,27 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="Textbox2">
+        <Textbox Name="Textbox12">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Receipt Number</Value>
-                  <Style />
+                  <Value>=First(Fields!company_name.Value, "DataSet1")</Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.3175cm</Top>
-          <Left>15.00741cm</Left>
-          <Height>0.55562cm</Height>
-          <Width>2.72521cm</Width>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.67013cm</Top>
+          <Left>3.40024cm</Left>
+          <Height>0.76729cm</Height>
+          <Width>11.00666cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -258,18 +289,18 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value />
+                  <Value>Receipt Number</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
               <Style />
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>Textbox3</rd:DefaultName>
-          <Top>0.3175cm</Top>
-          <Left>17.909cm</Left>
-          <Height>0.6cm</Height>
-          <Width>3.79646cm</Width>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>0.61722cm</Top>
+          <Left>14.66356cm</Left>
+          <Height>0.55562cm</Height>
+          <Width>2.72521cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -288,18 +319,18 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Date</Value>
+                  <Value>=Fields!receipt_number.Value</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
               <Style />
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.98777cm</Top>
-          <Left>15.00741cm</Left>
-          <Height>0.55562cm</Height>
-          <Width>2.72521cm</Width>
+          <rd:DefaultName>Textbox3</rd:DefaultName>
+          <Top>0.61722cm</Top>
+          <Left>17.56515cm</Left>
+          <Height>0.6cm</Height>
+          <Width>3.79646cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -311,8 +342,66 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-       
-      
+        <Textbox Name="Textbox5">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Date</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>1.2875cm</Top>
+          <Left>14.66356cm</Left>
+          <Height>0.55562cm</Height>
+          <Width>2.72521cm</Width>
+          <ZIndex>4</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox6">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=First(Fields!trans_date.Value, "DataSet1")</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox3</rd:DefaultName>
+          <Top>1.32277cm</Top>
+          <Left>17.56515cm</Left>
+          <Height>0.6cm</Height>
+          <Width>3.79646cm</Width>
+          <ZIndex>5</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
@@ -320,6 +409,16 @@
         </Border>
       </Style>
     </PageHeader>
+    <PageFooter>
+      <Height>2.54cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <PageHeight>18.5cm</PageHeight>
     <PageWidth>20.5cm</PageWidth>
     <LeftMargin>0cm</LeftMargin>
@@ -336,7 +435,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>7a61e961-ba7f-4f69-af5d-c56f4f2e0779</rd:DataSourceID>
+      <rd:DataSourceID>7eef3286-c6d7-4bc1-81e0-4afff5cd2e6c</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -385,12 +484,11 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>entity</rd:DataSetName>
-        <rd:TableName>db</rd:TableName>
-        <rd:ObjectDataSourceSelectMethod>payments</rd:ObjectDataSourceSelectMethod>
-        <rd:ObjectDataSourceType>entity.db, entity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>payment</rd:TableName>
+        <rd:ObjectDataSourceType>entity.payment, entity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>c4f90a98-120f-4f47-8f1a-59d8e37a2439</rd:ReportID>
+  <rd:ReportID>108f1acb-fed7-4545-949c-9d0d0a2e37b6</rd:ReportID>
 </Report>

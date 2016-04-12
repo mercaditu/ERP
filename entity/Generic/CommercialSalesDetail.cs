@@ -338,26 +338,19 @@ namespace entity
             
             if (id_item > 0)
             {
-                if (Contact!=null)
+                if (Contact != null)
                 {
-                    if (Contact.id_price_list > 0)
-                    {
-                        PriceList_ID = (int)Contact.id_price_list;
-                    }
-                }
-                else
-                {
-                    PriceList_ID = 0;
+                    PriceList_ID = (int)Contact.id_price_list;
                 }
                
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
-                if (PriceList_ID == 0)
+                if (PriceList_ID == 0 && PriceList_ID != null)
                 {
                     using (db db = new db())
                     {
                         if (db.item_price_list.Where(x => x.is_active == true && x.id_company == Properties.Settings.Default.company_ID) != null)
                         {
-                            PriceList_ID = db.item_price_list.Where(x => x.is_active == true && x.id_company == Properties.Settings.Default.company_ID).FirstOrDefault().id_price_list;
+                            PriceList_ID = db.item_price_list.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_price_list;
                         }
                     }
                 }
@@ -373,8 +366,6 @@ namespace entity
                     {
                         app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == CurrencyFX_ID).FirstOrDefault();
 
-
-
                         //Check if we have available Price for this Product, Currency, and List.
                         item_price item_price = db.item_price.Where(x => x.id_item == id_item
                                                                  && x.id_currency == app_currencyfx.id_currency
@@ -386,14 +377,15 @@ namespace entity
                             return item_price.value;
                         }
                         else
-                        {   //If Perfect Value not found, get one pased on Product and List. (Ignore Currency and Convert Later basd on Current Rate.)
-                            decimal Item_PriceValue = 0;
+                        {   
+                            //If Perfect Value not found, get one pased on Product and List. (Ignore Currency and Convert Later basd on Current Rate.)
                             if (db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault() != null)
                             {
-                                Item_PriceValue = db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault().value;
+                                item_price = db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault();
+                                app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
                             }
 
-                            return Currency.convert_Value(Item_PriceValue, CurrencyFX_ID, App.Modules.Sales);
+                            return Currency.convert_BackValue(item_price.value, app_currencyfx.id_currencyfx, App.Modules.Sales);
                         }
                     }
                  

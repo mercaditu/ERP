@@ -166,7 +166,7 @@
                             <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                             Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="False" Width="*"/>
                             <DataGridTextColumn Binding="{Binding vat_group.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                            Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="False" Width="*"/>
+                                            Header="{lex:Loc Cognitivo:local:VAT}" IsReadOnly="False" Width="*" Visibility="Hidden"/>
                             <!--<DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="50"
 					                            ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
                                                 DisplayMemberPath="name" SelectedValuePath="id_vat_group" 

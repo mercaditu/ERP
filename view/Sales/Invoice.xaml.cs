@@ -336,7 +336,7 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            Settings.Default.Save();
+            SalesSettings.Save();
             SalesSettings = Settings.Default;
             popupCustomize.IsOpen = false;
         }

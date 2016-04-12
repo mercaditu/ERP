@@ -13,7 +13,6 @@ namespace entity
         {
             sales_packing_relation = new List<sales_packing_relation>();
 
-
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
@@ -27,8 +26,6 @@ namespace entity
         public int id_sales_invoice { get; set; }
         public int? id_sales_order_detail { get; set; }
 
-    
-
         #region "Nav Properties"
         public virtual sales_invoice sales_invoice
         {
@@ -37,8 +34,6 @@ namespace entity
             {
                 if (value != null)
                 {
-
-
                     if (_sales_invoice != value)
                     {
                         _sales_invoice = value;
@@ -52,8 +47,9 @@ namespace entity
                 }
             }
         }
+
         private sales_invoice _sales_invoice;
-       // public virtual sales_invoice sales_invoice { get; set; }
+        // public virtual sales_invoice sales_invoice { get; set; }
         public virtual sales_order_detail sales_order_detail { get; set; }
         public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }
         public virtual IEnumerable<sales_return_detail> sales_return_detail { get; set; }

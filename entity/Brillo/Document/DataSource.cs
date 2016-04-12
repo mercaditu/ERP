@@ -258,14 +258,19 @@ namespace entity.Brillo.Document
         private string GetPacking(List<sales_packing_relation> sales_packing_relation)
         {
             string PackingList = "";
-            foreach (sales_packing_relation _sales_packing_relation in sales_packing_relation)
+            if (sales_packing_relation.Count > 0)
             {
-                if (!PackingList.Contains(_sales_packing_relation.sales_packing_detail.sales_packing.number))
+                foreach (sales_packing_relation _sales_packing_relation in sales_packing_relation)
                 {
-                    PackingList = PackingList + ", " + _sales_packing_relation.sales_packing_detail.sales_packing.number;
+                    if (!PackingList.Contains(_sales_packing_relation.sales_packing_detail.sales_packing.number))
+                    {
+                        PackingList = PackingList + ", " + _sales_packing_relation.sales_packing_detail.sales_packing.number;
+                    }
                 }
+                return PackingList.Remove(0, 1);
             }
-            return PackingList.Remove(0,1);
+
+            return PackingList;
         }
 
 

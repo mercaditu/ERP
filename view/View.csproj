@@ -830,10 +830,7 @@
     <Content Include="bin\Debug\PackingList.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\SalesBudget - Copy.rdlc">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
     <EmbeddedResource Include="Project\PrintingPress\Reports\PrintingPress.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

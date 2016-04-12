@@ -69,6 +69,7 @@ namespace Cognitivo.Sales
                 sales_orderViewSource = ((CollectionViewSource)(FindResource("sales_orderViewSource")));
                 sales_orderViewSource.Source = dbContext.sales_order.Local;
             }));
+           
         }
 
         private async void load_SecondaryDataThread()

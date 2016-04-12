@@ -42,6 +42,7 @@ namespace Cognitivo.Project
             filter_task();
 
             set_price();
+
         }
 
         public void set_price()

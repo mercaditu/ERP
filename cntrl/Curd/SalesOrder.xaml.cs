@@ -69,7 +69,7 @@ namespace cntrl
                 sales_order sales_order = new entity.sales_order();
                 sales_order.id_contact = (int)project.id_contact;
                 sales_order.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
-
+                sales_order.id_range = (int)cbxDocument.SelectedValue;
                 sales_order.id_project = project.id_project;
                 sales_order.id_condition = (int)cbxCondition.SelectedValue;
                 sales_order.id_contract = (int)cbxContract.SelectedValue;
@@ -180,7 +180,10 @@ namespace cntrl
             db.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
             cbxCondition.ItemsSource = db.app_condition.Local;
 
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+
             stackMain.DataContext = project;
+            cbxDocument.SelectedIndex = 0;
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -193,6 +196,31 @@ namespace cntrl
                                                                         && a.id_company == entity.Properties.Settings.Default.company_ID
                                                                         && a.id_condition == app_condition.id_condition).ToList();
                 cbxContract.SelectedIndex = 0;
+            }
+        }
+
+        private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxDocument.SelectedItem != null)
+            {
+
+                app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
+                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == app_document_range.id_range).FirstOrDefault();
+
+                if (db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
+                {
+                    entity.Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
+                }
+                if (db.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault() != null)
+                {
+                    entity.Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
+                }
+                if (db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault() != null)
+                {
+                    entity.Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault().code;
+                }
+
+                txtnumber.Text = entity.Brillo.Logic.Range.calc_Range(_app_range, false);
             }
         }
     }

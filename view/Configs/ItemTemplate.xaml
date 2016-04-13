@@ -30,12 +30,12 @@
                 <SolidColorBrush Color="Black" Opacity="0.05"/>
             </StackPanel.Background>
             <Image Style="{StaticResource img_Config}"
-                   Source="/Cognitivo;component/Images/Application/128/ProductTag.png"/>
-            <Label Content="{lex:Loc Tempalte}" HorizontalAlignment="Center" 
+                   Source="/Cognitivo;component/Images/Application/128/Product.png"/>
+            <Label Content="{lex:Loc Template}" HorizontalAlignment="Center" 
                    Style="{StaticResource H1}"/>
             <Button Content="{lex:Loc Create}" Margin="15"
                         Style="{StaticResource btn_green}" Click="btnNew_Click"/>
-            <TextBlock Text="{lex:Loc desc_Tags}" 
+            <TextBlock Text="{lex:Loc desc_ItemTemplate}" 
                             HorizontalAlignment="Center" 
                             Style="{StaticResource text_Instructions}"/>
         </StackPanel>

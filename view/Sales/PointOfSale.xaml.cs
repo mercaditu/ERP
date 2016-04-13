@@ -19,7 +19,7 @@ namespace Cognitivo.Sales
     public partial class PointOfSale : Page
     {
         entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
-
+        Settings SalesSettings = new Settings();
         CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
         List<sales_invoice> salesinvoiceList = new List<sales_invoice>();
         List<payment> paymentList = new List<payment>();
@@ -91,43 +91,22 @@ namespace Cognitivo.Sales
 
 
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-            SalesInvoiceDB.payments.Add(payment);
-            if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
-            {
-                app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
-                payment.id_range = app_document_range.id_range;
-            }
-
+           
 
             foreach (payment_detail payment_detail in payment.payment_detail)
             {
-
-                payment_detail.id_account = CurrentSession.Id_Account;
-                payment_detail.app_currencyfx = SalesInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == payment_detail.id_currencyfx).FirstOrDefault();
-                payment_schedual _payment_schedual = new payment_schedual();
-
-                _payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
-                _payment_schedual.parent = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
-                _payment_schedual.expire_date = DateTime.Now;
-                _payment_schedual.status = Status.Documents_General.Approved;
-                _payment_schedual.id_contact = sales_invoice.id_contact;
-                _payment_schedual.id_currencyfx = payment_detail.id_currencyfx;
-                _payment_schedual.id_sales_invoice = sales_invoice.id_sales_invoice;
-                _payment_schedual.trans_date = sales_invoice.trans_date;
-
-                payment_detail.payment_schedual.Add(_payment_schedual);
-
-                if (SalesInvoiceDB.payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
+                payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
+                if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
                 {
-                    app_account_detail app_account_detail = new app_account_detail();
-                    app_account_detail.id_account = (int)payment_detail.id_account;
-                    app_account_detail.id_currencyfx = _payment_schedual.id_currencyfx;
-                    app_account_detail.id_payment_type = payment_detail.id_payment_type;
-                    app_account_detail.trans_date = payment_detail.trans_date;
-                    app_account_detail.debit = 0;
-                    app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
-                    SalesInvoiceDB.app_account_detail.Add(app_account_detail);
+                    app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
+
                 }
+                entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
+                dbContext dbContext = new entity.dbContext();
+                payment_schedual _payment_schedual = dbContext.db.payment_schedual.Where(x => x.id_payment_schedual == payment_schedual.id_payment_schedual).FirstOrDefault();
+                AccountReceivable.ReceivePayment(ref dbContext, _payment_schedual, app_document_range.id_range, sales_invoice.id_currencyfx, dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type,
+                                                        0, 0, sales_invoice.GrandTotal, "", (int)CurrentSession.Id_Account, sales_invoice.trans_date);
+               
             }
           
 
@@ -135,20 +114,24 @@ namespace Cognitivo.Sales
 
 
 
-            IEnumerable<DbEntityValidationResult> validationresultpaymnet = SalesInvoiceDB.GetValidationErrors();
-            if (validationresultpaymnet.Count() == 0)
-            {
-                SalesInvoiceDB.SaveChanges();
-            }
-            else
-            {
-                MessageBox.Show("Some Value is missing..");
-            }
-            entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
-
-            Settings SalesSettings = new Settings();
+        
+        
             sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
-
+            if (app_condition != null)
+            {
+                Newsales_invoice.id_condition = app_condition.id_condition;
+                Newsales_invoice.app_condition = app_condition;
+            }
+            if (app_contract != null)
+            {
+                Newsales_invoice.id_contract = app_contract.id_contract;
+                Newsales_invoice.app_contract = app_contract;
+            }
+            if (app_currencyfx != null)
+            {
+                Newsales_invoice.id_currencyfx = app_currencyfx.id_currencyfx;
+                Newsales_invoice.app_currencyfx = app_currencyfx;
+            }
 
             SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
 
@@ -196,7 +179,7 @@ namespace Cognitivo.Sales
         {
             if (sbxItem.ItemID > 0)
             {
-                Settings SalesSettings = new Settings();
+             
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
@@ -275,7 +258,7 @@ namespace Cognitivo.Sales
             await Dispatcher.InvokeAsync(new Action(() =>
             {
 
-                sales_invoice sales_invoice = SalesInvoiceDB.New(0);
+                sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
                 if (app_condition != null)
                 {
                     sales_invoice.id_condition = app_condition.id_condition;

@@ -333,6 +333,9 @@
     <Compile Include="Configs\IncotermCondition.xaml.cs">
       <DependentUpon>IncotermCondition.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\ItemAssetGroup.xaml.cs">
+      <DependentUpon>ItemAssetGroup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\ItemBrand.xaml.cs">
       <DependentUpon>ItemBrand.xaml</DependentUpon>
     </Compile>
@@ -1269,6 +1272,10 @@
     <Page Include="Configs\IncotermCondition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\ItemAssetGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\ItemBrand.xaml">
       <SubType>Designer</SubType>

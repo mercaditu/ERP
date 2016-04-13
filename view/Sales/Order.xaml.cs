@@ -525,7 +525,7 @@ namespace Cognitivo.Sales
 
             sales_order _sales_order = (sales_order)sales_orderViewSource.View.CurrentItem;
             pnlSalesBudget.sales_order = _sales_order;
-
+            pnlSalesBudget.db = dbContext;
             crud_modal.Children.Add(pnlSalesBudget);
         }
 

@@ -84,6 +84,10 @@ namespace Cognitivo.Security
             else
             {
                 dbContext.SaveChanges();
+                if (CurrentSession.Id_User == 0)
+                {
+                    CurrentSession.Id_User = security_user.id_user;
+                }
                 security_user_view_source.View.Refresh();
                 toolBar.msgSaved();
             }

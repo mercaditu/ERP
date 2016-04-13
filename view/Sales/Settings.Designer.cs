@@ -85,7 +85,7 @@ namespace Cognitivo.Sales {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool SalesLink {
             get {
                 return ((bool)(this["SalesLink"]));
@@ -157,7 +157,7 @@ namespace Cognitivo.Sales {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool DiscountStock {
             get {
                 return ((bool)(this["DiscountStock"]));

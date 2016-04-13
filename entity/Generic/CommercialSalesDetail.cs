@@ -383,9 +383,10 @@ namespace entity
                             {
                                 item_price = db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault();
                                 app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
+                                return Currency.convert_BackValue(item_price.value, app_currencyfx.id_currencyfx, App.Modules.Sales);
                             }
 
-                            return Currency.convert_BackValue(item_price.value, app_currencyfx.id_currencyfx, App.Modules.Sales);
+                         
                         }
                     }
                  
@@ -406,15 +407,27 @@ namespace entity
             get { return _discount; }
             set
             {
-                if (_discount != value && State > 0)
+                if (_discount != value )
                 {
-                    ApplyDiscount_UnitPrice(_discount, value, unit_price);
+                    if (State > 0)
+                    {
+                        ApplyDiscount_UnitPrice(_discount, value, unit_price);
 
-                    _discount = value;
-                    RaisePropertyChanged("discount");
+                        _discount = value;
+                        RaisePropertyChanged("discount");
 
-                    Calculate_UnitVatDiscount(_discount);
-                    Calculate_SubTotalDiscount(_discount);
+                        Calculate_UnitVatDiscount(_discount);
+                        Calculate_SubTotalDiscount(_discount);
+                        
+                    }
+                    else
+                    {
+                        _discount = value;
+                        RaisePropertyChanged("discount");
+
+                        Calculate_UnitVatDiscount(_discount);
+                        Calculate_SubTotalDiscount(_discount);
+                    }
                 }
             }
         }

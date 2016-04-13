@@ -16,7 +16,7 @@ namespace cntrl.PanelAdv
         public contact _contact { get; set; }
 
         public sales_order sales_order { get; set; }
-        db db = new db();
+        public db db { get; set; }
         public pnlSalesBudget()
         {
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace cntrl.PanelAdv
                 {
 
 
-                   
+
                     load_SalesBudget(_contact.id_contact);
                 }
 
@@ -90,7 +90,7 @@ namespace cntrl.PanelAdv
 
 
                         sales_order_detail sales_order_detail = new sales_order_detail();
-                      //  sales_order_detail.sales_budget_detail = sales_budget_detail;
+                        sales_order_detail.sales_budget_detail = sales_budget_detail;
                         sales_order_detail.id_sales_budget_detail = sales_budget_detail.id_sales_budget_detail;
                         sales_order_detail.id_item = sales_budget_detail.id_item;
                         sales_order_detail.unit_price = sales_budget_detail.unit_price;

@@ -15,6 +15,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
+           
             //project_task = new List<project_task>();
         }
 

@@ -37,10 +37,12 @@
         <DataGrid x:Name="sales_invocieDatagrid" AutoGenerateColumns="False" Margin="8,0" LoadingRowDetails="sales_invocieDatagrid_LoadingRowDetails"
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" Height="402"  >
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="SizeToHeader" />
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                 <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding order_Total}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="SizeToHeader" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding GrandTotal}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True"/>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
@@ -49,7 +51,7 @@
                         <Label Content="{lex:Loc Details}" Style="{StaticResource H3}" Foreground="White"/>-->
                     <DataGrid AutoGenerateColumns="False" Margin="16">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding name}" Header="{lex:Loc Cognitivo:local:name}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding item}" Header="{lex:Loc Cognitivo:local:name}" Width="SizeToHeader" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding balance}" Header="{lex:Loc Cognitivo:local:Balance}" Width="SizeToHeader" IsReadOnly="True"/>
                         </DataGrid.Columns>

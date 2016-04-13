@@ -83,6 +83,10 @@ namespace cntrl
                 if (validationresult.Count() == 0)
                 {
                     entity.db.SaveChanges();
+                    if (CurrentSession.Id_Account == 0)
+                    {
+                        CurrentSession.Id_Account = entity.db.app_account.FirstOrDefault().id_account;
+                    }
                     btnCancel_Click(sender, e);
                 }
             }

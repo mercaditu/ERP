@@ -11,7 +11,7 @@ namespace entity
     {
         public security_user()
         {
-            //id_company = CurrentSession.Id_Company;
+            id_company = CurrentSession.Id_Company;
             is_active = true;
             trans_date = DateTime.Now;
         }

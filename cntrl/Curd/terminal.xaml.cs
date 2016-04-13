@@ -43,6 +43,10 @@ namespace cntrl
                 if (validationresult.Count() == 0)
                 {
                     entity.db.SaveChanges();
+                    if (CurrentSession.Id_Terminal == 0)
+                    {
+                        CurrentSession.Id_Terminal = entity.db.app_terminal.FirstOrDefault().id_terminal;
+                    }
                     btnCancel_Click(sender, e);
                 }
             }

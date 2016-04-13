@@ -404,8 +404,7 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = (sales_invoice)Hyperlink.Tag;
             if (sales_invoice != null)
             {
-                entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-                Document.Document_PrintInvoice(null, sales_invoice);
+                entity.Brillo.Document.Start.Automatic(sales_invoice, sales_invoice.app_document_range);
             }
 
 
@@ -607,6 +606,8 @@ namespace Cognitivo.Sales
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
+
+      
 
         
       

@@ -22,27 +22,28 @@ namespace entity
 
             sales_invoice.IsSelected = true;
 
+            sales_invoice.app_branch = app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
 
-            if (base.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
+            if (app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
             {
-                sales_invoice.app_document_range = base.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();
+                sales_invoice.app_document_range = app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();
             }
 
-            if (base.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
+            if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
             {
-                if (base.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
+                if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
                 {
-                    sales_invoice.app_condition = base.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition;
-                    sales_invoice.app_contract = base.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
+                    sales_invoice.app_condition = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition;
+                    sales_invoice.app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
                 }
             }
 
             //No need to run this every time, we can do this on Load and Save values.
-            if (base.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault() != null)
+            if (app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault() != null)
             {
-                if (base.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault() != null)
+                if (app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault() != null)
                 {
-                    sales_invoice.app_currencyfx = base.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault();
+                    sales_invoice.app_currencyfx = app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault();
                 }
             }
 
@@ -54,7 +55,7 @@ namespace entity
             validate_Invoice();
             try
             {
-                return base.SaveChanges();
+                return SaveChanges();
             }
            catch(Exception ex)
             {
@@ -65,12 +66,12 @@ namespace entity
         public override Task<int> SaveChangesAsync()
         {
             validate_Invoice();
-            return base.SaveChangesAsync();
+            return SaveChangesAsync();
         }
 
         private void validate_Invoice()
         {
-            IList<sales_invoice> sales_invoiceLIST = base.sales_invoice.Local.ToList();
+            IList<sales_invoice> sales_invoiceLIST = sales_invoice.Local.ToList();
 
             foreach (sales_invoice invoice in sales_invoiceLIST)
             {
@@ -87,7 +88,7 @@ namespace entity
                     {
                         invoice.timestamp = DateTime.Now;
                         //invoice.is_head = false;
-                        //base.sales_invoice.Local.Add(new_Version(invoice));
+                        //sales_invoice.Local.Add(new_Version(invoice));
                         invoice.State = EntityState.Unchanged;
                         Entry(invoice).State = EntityState.Modified;
                     }
@@ -126,7 +127,7 @@ namespace entity
                 crm_opportunity.value = invoice.GrandTotal;
 
                 crm_opportunity.sales_invoice.Add(invoice);
-                base.crm_opportunity.Add(crm_opportunity);
+                crm_opportunity.Add(crm_opportunity);
             }
             else
             {
@@ -138,14 +139,14 @@ namespace entity
 
         public void Approve(bool IsDiscountStock)
         {
-            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x =>
+            foreach (sales_invoice invoice in sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null))
             {
                 SpiltInvoice(invoice);
             }
 
-            foreach (sales_invoice invoice in base.sales_invoice.Local.Where(x =>
+            foreach (sales_invoice invoice in sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null))
             {
@@ -181,11 +182,11 @@ namespace entity
                         invoice.is_issued = true;
                         if (invoice.id_branch > 0)
                         {
-                            Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
+                            Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
                         }
                         if (invoice.id_terminal > 0)
                         {
-                            Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
+                            Brillo.Logic.Range.terminal_Code = app_terminal.Where(x => x.id_terminal == invoice.id_terminal).FirstOrDefault().code;
                         }
 
                         app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
@@ -328,7 +329,7 @@ namespace entity
                             _invoice.sales_invoice_detail.Add(sales_invoice_detail);
                             position += 1;
                         }
-                        base.sales_invoice.Add(_invoice);
+                        sales_invoice.Add(_invoice);
                     }
 
                     invoice.is_head = false;
@@ -362,11 +363,11 @@ namespace entity
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
-                            base.payment_schedual.RemoveRange(payment_schedualList);
+                            payment_schedual.RemoveRange(payment_schedualList);
                         }
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
-                            base.item_movement.RemoveRange(item_movementList);
+                            item_movement.RemoveRange(item_movementList);
                         }
 
                         sales_invoice.status = Status.Documents_General.Annulled;

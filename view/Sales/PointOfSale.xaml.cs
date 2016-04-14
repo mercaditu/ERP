@@ -19,10 +19,13 @@ namespace Cognitivo.Sales
     public partial class PointOfSale : Page
     {
         entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
+
         Settings SalesSettings = new Settings();
+        
         CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
-        List<sales_invoice> salesinvoiceList = new List<sales_invoice>();
+
         List<payment> paymentList = new List<payment>();
+
         public PointOfSale()
         {
             InitializeComponent();
@@ -49,7 +52,6 @@ namespace Cognitivo.Sales
         private void btnSave_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            sales_invoice.app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
 
             if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
 	        {
@@ -65,23 +67,26 @@ namespace Cognitivo.Sales
 
                 SalesInvoiceDB.Approve(true);
 
-
+               
                 payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
+
+                //Sales
 
                 foreach (payment_detail payment_detail in payment.payment_detail)
                 {
                     payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
                     
+                    //This code is for Payment Approval
                     if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
                     {
-                        app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
+                        app_document_range app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
                     }
 
                     entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
                     dbContext dbContext = new entity.dbContext();
                     payment_schedual _payment_schedual = dbContext.db.payment_schedual.Where(x => x.id_payment_schedual == payment_schedual.id_payment_schedual).FirstOrDefault();
                     AccountReceivable.ReceivePayment(ref dbContext, _payment_schedual, app_document_range.id_range, sales_invoice.id_currencyfx, dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type,
-                                                            0, 0, sales_invoice.GrandTotal, "", (int)CurrentSession.Id_Account, sales_invoice.trans_date);
+                                                         0, 0, sales_invoice.GrandTotal, "", (int)CurrentSession.Id_Account, sales_invoice.trans_date);
 
                 }
 
@@ -89,10 +94,6 @@ namespace Cognitivo.Sales
 
                 SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
 
-
-                salesinvoiceList.Add(Newsales_invoice);
-                sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-                sales_invoiceViewSource.Source = salesinvoiceList;
                 sales_invoiceViewSource.View.Refresh();
                 sales_invoiceViewSource.View.MoveCurrentToLast();
                 payment paymentnew = new entity.payment();
@@ -237,9 +238,7 @@ namespace Cognitivo.Sales
                     {
                         totalpaid += Currency.convert_Value(_payment_detail.value, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
                     }
-
                 }
-
             }
             payment_detail.value = sales_invoice.GrandTotal - totalpaid;
 

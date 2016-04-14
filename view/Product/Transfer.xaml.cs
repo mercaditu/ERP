@@ -158,7 +158,7 @@ namespace Cognitivo.Product
         {
             TransferSetting TransferSetting = new Product.TransferSetting();
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-            ProductTransferDB.ApproveDestination(clsTotalGrid.Sum(x => x.cost), (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
+            ProductTransferDB.ApproveDestination( (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
             toolBar.msgSaved();
         }
 

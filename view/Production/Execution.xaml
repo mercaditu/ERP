@@ -26,6 +26,7 @@
     <Page.Resources>
         <converter:TreeViewchildFilter x:Key="tree"/>
         <converter:Type2Enable x:Key="Type2Enable"/>
+        <converter:Bool2Collapsed x:Key="Bool2Collapsed"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <sys:Int32 x:Key="IntOne">1</sys:Int32>
         <sys:Int32 x:Key="IntTwo">2</sys:Int32>
@@ -33,6 +34,7 @@
         <sys:Int32 x:Key="IntFour">4</sys:Int32>
         <sys:Int32 x:Key="IntFive">5</sys:Int32>
         <sys:Int32 x:Key="IntSix">6</sys:Int32>
+        <sys:Int32 x:Key="IntSeven">7</sys:Int32>
         <CollectionViewSource x:Key="production_executionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
@@ -41,12 +43,14 @@
         <CollectionViewSource x:Key="production_order_detaillServiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_order_detaillAssetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_order_detaillSupplyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_order_detaillServiceContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="employeeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_execution_detailProductViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_execution_detailRawViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_execution_detailAssetViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_execution_detailServiceViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
+        <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="hr_time_coefficientViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_time_coefficient}, CreateList=True}"/>
@@ -347,6 +351,147 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                <TabItem Header="{lex:Loc ServiceContract}">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Background="WhiteSmoke">
+
+                            <Grid Grid.Row="1" Grid.Column="0" Background="White" DataContext="{StaticResource production_order_detaillServiceContractViewSource}">
+                                <Grid.Resources >
+                                    <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
+                                              ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntSeven}}">
+                                        <Panels:pnl_TreeView  StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
+                                              HorizontalAlignment="Stretch"
+                                             TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
+                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
+                                    </HierarchicalDataTemplate>
+                                </Grid.Resources>
+                                <cntrl:ExtendedTreeView x:Name="treeServicecontract" ItemsSource="{Binding}" SelectedItemChanged="treeServicecontract_SelectedItemChanged">
+                                    <TreeView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type TreeViewItem}">
+                                            <Setter Property="IsExpanded" Value="True" />
+                                        </Style>
+                                    </TreeView.ItemContainerStyle>
+                                </cntrl:ExtendedTreeView>
+                            </Grid>
+                            <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
+                        </Grid>
+                        <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
+                                    DataContext="{StaticResource production_execution_detailServiceContractViewSource}" 
+                                    IsEnabled="{Binding SelectedItem.item, ElementName=treeServicecontract, Converter={StaticResource Type2Enable}}">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton Content="Hours" IsChecked="True" x:Name="rbtnHours"/>
+                                <RadioButton Content="Quantity" x:Name="rbtnQuantity"/>
+                            </StackPanel>
+                            <StackPanel x:Name="stpquantity" Visibility="{Binding IsChecked,ElementName=rbtnHours,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}">
+                                <StackPanel Orientation="Horizontal" Margin="8">
+                                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
+                                    <TextBox x:Name="txtServicecontract" Width="64" VerticalAlignment="Top" />
+                                    <Button x:Name="btnInsert_ServiceContract" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
+                                </StackPanel>
+                                <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgServicecontract" AutoGenerateColumns="False" 
+                                      ItemsSource="{Binding Source={StaticResource production_execution_detailServiceContractViewSource}}" 
+                                      SelectionChanged="dgServicecontract_SelectionChanged">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" 
+                                                        Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
+                                                        Width="100"/>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" 
+                                                        Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                                        Width="100"/>
+                                        <DataGridTemplateColumn Width="Auto" Header="">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" 
+                                                        Style="{StaticResource btnDeleteChildStyle}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StackPanel>
+                                    <Label x:Name="lblProjectedServicecontractqty" 
+                                       Grid.Column="1" Content="Total"/>
+                                    <Label x:Name="lblTotalServicecontract" 
+                                       Grid.Column="1" Content="Total"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stphour" Visibility="{Binding IsChecked,ElementName=rbtnQuantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}" >
+                                <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem.item,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
+                                 DataContext="{StaticResource production_execution_detailServiceViewSource}">
+
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Factor}" />
+                                        <ComboBox x:Name="cmbsccoefficient" Width="235" 
+                                          DisplayMemberPath="name" SelectedValuePath="id_time_coefficient" 
+                                          ItemsSource="{Binding Source={StaticResource hr_time_coefficientViewSource}}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
+                                        <DatePicker x:Name="dtpscstartdate"  Width="150" Height="27"/>
+                                        <toolkit:TimePicker x:Name="dtpscstarttime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
+                                        <DatePicker x:Name="dtpscenddate"  Width="150" Height="27" />
+                                        <toolkit:TimePicker x:Name="dtpscendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
+                                        <controls:SmartBox_Contact x:Name="CmbServicecontract" Get_Employees="True" Width="226" Select="CmbServicecontract_Select"/>
+                                        <!--<cntrl:SearchableTextbox x:Name="itemserviceComboBox" Margin="4,0" focusGrid="True" Height="27" Width="235" HorizontalAlignment="Left"
+                                             CollectionViewSource="{StaticResource employeeViewSource}" 
+                                             KeyDown="itemserviceComboBox_KeyDown" MouseDoubleClick="itemserviceComboBox_MouseDoubleClick">
+                                    <cntrl:SearchableTextbox.Columns>
+                                        <cntrl:SmartBoxColumn Header="code" ForProperty="code" Binding="{Binding code, Mode=Default}"/>
+                                        <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}"/>
+                                        <cntrl:SmartBoxColumn Header="id_contact" ForProperty="id_contact" Binding="{Binding id_item, Mode=Default}"/>
+                                    </cntrl:SearchableTextbox.Columns>
+                                </cntrl:SearchableTextbox>-->
+                                    </StackPanel>
+                                </WrapPanel>
+                                <DataGrid x:Name="dgServiceContracthour" Grid.Column="1" 
+                                      ItemsSource="{Binding Source={StaticResource production_execution_detailServiceContractViewSource}}" 
+                                      Margin="0,0,0,50" AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
+                                                    Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Width="Auto"/>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:StartDate}" 
+                                                    Binding="{Binding start_date, Mode=TwoWay, 
+                                                                      UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:g}}" 
+                                                                      Width="Auto"/>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}" 
+                                                    Binding="{Binding end_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                                                      StringFormat={}{0:g}}" Width="Auto"/>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantiity}" IsReadOnly="True"
+                                                    Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto"/>
+                                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Hour}" IsReadOnly="True"
+                                                    Binding="{Binding hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto"/>
+                                        <DataGridTemplateColumn Width="Auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
+                                    <Label x:Name="lblProjectedservicecontrcthourqty" Grid.Column="1"  Content="Total"/>
+                                    <Label x:Name="lblTotalservicecontracthour" Grid.Column="1"  Content="Total"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="{lex:Loc FixedAssets}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -466,6 +611,7 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                
             </TabControl>
         </Grid>
 

@@ -122,10 +122,10 @@ namespace entity
         public virtual app_location app_location_origin { get; set; }
         public virtual app_location app_location_destination { get; set; }
 
-        [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
+       // [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
         public virtual app_branch app_branch_origin { get; set; }
         
-        [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
+       // [CustomValidation(typeof(Class.EntityValidation), "Checkbranch")]
         public virtual app_branch app_branch_destination { get; set; }
         
         public virtual contact employee { get; set; }

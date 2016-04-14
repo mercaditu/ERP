@@ -163,6 +163,7 @@ namespace Cognitivo.Project.Development
                     project_task.IsSelected = false;
                 }
                 ProjectTaskDB.SaveChanges();
+                entity.Brillo.Document.Start.Automatic(_project_task.FirstOrDefault().project, _project_task.FirstOrDefault().app_document_range);
                 filter_task();
             }
         }

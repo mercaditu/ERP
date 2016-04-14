@@ -34,7 +34,8 @@ namespace Cognitivo.Product
             hr_talentViewSource,
             itemitem_serviceViewSource,
             item_templateViewSource,
-            item_templateitem_template_detaildetailViewSource;
+            item_templateitem_template_detaildetailViewSource,
+            item_asset_groupViewSource;
             //app_propertyViewSource;
 
         public Item()
@@ -57,6 +58,7 @@ namespace Cognitivo.Product
             itemitem_serviceViewSource = (CollectionViewSource)FindResource("itemitem_serviceViewSource");
             item_templateViewSource = (CollectionViewSource)FindResource("item_templateViewSource");
             item_templateitem_template_detaildetailViewSource = (CollectionViewSource)FindResource("item_templateitem_template_detaildetailViewSource");
+            item_asset_groupViewSource = (CollectionViewSource)FindResource("item_asset_groupViewSource");
         }
 
         private void load_PrimaryData()
@@ -192,6 +194,15 @@ namespace Cognitivo.Product
             {
                 item_brandViewSource.Source = dbContext.item_brand.Local;
             }));
+             await dbContext.item_asset_group
+                .Where(a => a.id_company == CurrentSession.Id_Company)
+                .OrderBy(a => a.name).LoadAsync();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                item_asset_groupViewSource.Source = dbContext.item_asset_group.Local;
+            }));
+
+           
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {

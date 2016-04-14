@@ -208,8 +208,8 @@
                         SelectedValueBinding="{Binding id_item_product,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                         DisplayMemberPath="item.name"  SelectedValuePath="id_item_product" 
                         Header="Product" Width="200"/>-->
-                        <DataGridTextColumn Binding="{Binding item_product.item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="SizeToHeader"/>
-                        <DataGridTextColumn Binding="{Binding quantity_origin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="SizeToHeader"/>
+                        <DataGridTextColumn Binding="{Binding item_product.item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="Auto"/>
+                        <DataGridTextColumn Binding="{Binding quantity_origin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

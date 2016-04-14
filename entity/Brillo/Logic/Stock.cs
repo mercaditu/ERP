@@ -34,7 +34,7 @@ namespace entity.Brillo.Logic
                                                                       && x.status == entity.Status.Stock.InStock
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                     
-                    item_movementList = DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
+                    item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.SalesInvoice,
                                              detail.id_sales_invoice,
                                              sales_invoice.app_currencyfx,
@@ -43,7 +43,7 @@ namespace entity.Brillo.Logic
                                              detail.quantity,
                                              sales_invoice.trans_date,
                                              comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
-                                             );
+                                             ));
                 }
                 //Return List so we can save into context.
                 return item_movementList;
@@ -93,7 +93,7 @@ namespace entity.Brillo.Logic
                                                                      && x.id_item_product == item_product.id_item_product
                                                                      && x.status == entity.Status.Stock.InStock
                                                                      && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-                    item_movementList = DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
+                    item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.PurchaseReturn,
                                              purchase_return_detail.id_purchase_return,
                                              purchase_return.app_currencyfx,
@@ -102,7 +102,7 @@ namespace entity.Brillo.Logic
                                              purchase_return_detail.quantity,
                                              purchase_return.trans_date,
                                              comment_Generator(App.Names.PurchaseReturn, purchase_return.number, purchase_return.contact.name)
-                                             );
+                                             ));
                 }
                 //Return List so we can save into context.
                 return item_movementList;

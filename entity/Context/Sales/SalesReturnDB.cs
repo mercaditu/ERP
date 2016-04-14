@@ -158,6 +158,11 @@ namespace entity
                             {
                                 payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
                             }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("Please add crditnote payment type...");
+                                return;
+                            }
                          
 
                             payment_detailreturn.id_sales_return = sales_return.id_sales_return;

@@ -54,7 +54,7 @@
                             <Panels:pnl_Curd Margin="5" DisplayName="{Binding name}"
                                             Status="{Binding is_active, Converter={StaticResource Converter}}"
                                             linkEdit_click="pnl_Account_Click"
-                                            Id="{Binding id_account}" />
+                                            Id="{Binding id_item_asset_group}" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

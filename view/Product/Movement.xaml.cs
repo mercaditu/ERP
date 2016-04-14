@@ -263,9 +263,9 @@ namespace Cognitivo.Product
             if (item_transfer != null)
             {
                 CollectionViewSource location_destViewSource = ((CollectionViewSource)(FindResource("location_destViewSource")));
-                location_destViewSource.Source =  dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch && a.is_default).OrderBy(a => a.name).ToList();
+                location_destViewSource.Source =  dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch ).OrderBy(a => a.name).ToList();
                 CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
-                location_originViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch && a.is_default).OrderBy(a => a.name).ToList();
+                location_originViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch).OrderBy(a => a.name).ToList();
             }
         }
     }

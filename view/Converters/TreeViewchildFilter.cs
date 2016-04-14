@@ -79,6 +79,19 @@ namespace Cognitivo.Converters
                     return null;
                 }
             }
+            else if (type == item.item_type.ServiceContract)
+            {
+                List<production_order_detail> production_order_detail = (List<production_order_detail>)value;
+                production_order_detail = production_order_detail.Where(x => x.item.id_item_type == item.item_type.ServiceContract || x.item.id_item_type == item.item_type.Task).ToList();
+                if (production_order_detail.Count() > 0)
+                {
+                    return production_order_detail;
+                }
+                else
+                {
+                    return null;
+                }
+            }
             else { return null; }
         }
 

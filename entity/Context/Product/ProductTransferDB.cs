@@ -147,7 +147,7 @@ namespace entity
             }
         }
 
-        public void ApproveDestination(decimal cost, int origin, int dest, bool MoveByTruck)
+        public void ApproveDestination( int origin, int dest, bool MoveByTruck)
         {
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
             foreach (item_transfer item_transfer in base.item_transfer.Local)

@@ -52,7 +52,7 @@ namespace entity.Brillo.Document
                 purchase_tender purchase_tender = (purchase_tender)Document;
                 return PurchaseTender(purchase_tender);
             }
-            else if (Document.GetType().BaseType == typeof(item_transfer))
+            else if (Document.GetType() == typeof(item_transfer))
             {
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
@@ -61,6 +61,11 @@ namespace entity.Brillo.Document
             {
                 payment payment = (payment)Document;
                 return Payment(payment);
+            }
+            else if (Document.GetType().BaseType == typeof(project))
+            {
+                project project = (project)Document;
+                return Project(project);
             }
             return null;
         }
@@ -208,9 +213,9 @@ namespace entity.Brillo.Document
                     geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",
                     sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
                     id_company = g.id_company,
-                    add1 = g.sales_invoice != null ? g.sales_invoice.contact.address!=null?g.sales_invoice.contact.address:"" : "",
-                    telephone = g.sales_invoice != null ? g.sales_invoice.contact.telephone!=null?g.sales_invoice.contact.telephone:"" : "",
-                    email = g.sales_invoice != null ? g.sales_invoice.contact.email!=null? g.sales_invoice.contact.email:"" : "",
+                    add1 = g.sales_invoice != null ? g.sales_invoice.contact.address != null ? g.sales_invoice.contact.address : "" : "",
+                    telephone = g.sales_invoice != null ? g.sales_invoice.contact.telephone != null ? g.sales_invoice.contact.telephone : "" : "",
+                    email = g.sales_invoice != null ? g.sales_invoice.contact.email != null ? g.sales_invoice.contact.email : "" : "",
                     company_name = g.sales_invoice != null ? g.sales_invoice.app_company != null ? g.sales_invoice.app_company.name : "" : "",
                     item_code = g.item != null ? g.item.code : "",
                     item_name = g.item != null ? g.item.name : "",
@@ -225,7 +230,7 @@ namespace entity.Brillo.Document
                     unit_cost = g.unit_cost,
                     unit_price = g.unit_price,
                     unit_price_vat = g.UnitPrice_Vat,
-                    terminal_name = g.sales_invoice != null ? g.sales_invoice.app_terminal!=null?g.sales_invoice.app_terminal.name:"" : "",
+                    terminal_name = g.sales_invoice != null ? g.sales_invoice.app_terminal != null ? g.sales_invoice.app_terminal.name : "" : "",
                     code = g.sales_invoice != null ? g.sales_invoice.code != null ? g.sales_invoice.code : "" : "",
                     customer_contact_name = g.sales_invoice != null ? g.sales_invoice.contact.name : "",
                     customer_code = g.sales_invoice != null ? g.sales_invoice.contact.code : "",
@@ -334,10 +339,10 @@ namespace entity.Brillo.Document
                                   id_sales_return_detail = g.id_sales_return_detail,
                                   sales_return = g.id_sales_return_detail,
                                   id_company = g.id_company,
-                                  add1 = g.sales_return.contact.address!=null?g.sales_return.contact.address:"",
-                                  telephone = g.sales_return.contact.telephone!=null?g.sales_return.contact.telephone:"",
-                                  email = g.sales_return.contact.email!=null? g.sales_return.contact.email:"",
-                                  company_name = g.app_company!=null?g.app_company.name:"",
+                                  add1 = g.sales_return.contact.address != null ? g.sales_return.contact.address : "",
+                                  telephone = g.sales_return.contact.telephone != null ? g.sales_return.contact.telephone : "",
+                                  email = g.sales_return.contact.email != null ? g.sales_return.contact.email : "",
+                                  company_name = g.app_company != null ? g.app_company.name : "",
                                   item_code = g.item.code,
                                   item_description = g.item.name,
                                   Description = g.item.item_brand != null ? g.item.item_brand.name : "",
@@ -347,7 +352,7 @@ namespace entity.Brillo.Document
                                   unit_cost = g.unit_cost,
                                   unit_price = g.unit_cost,
                                   unit_price_vat = g.UnitPrice_Vat,
-                                  terminale_name = g.sales_return.app_terminal!=null?g.sales_return.app_terminal.name:"",
+                                  terminale_name = g.sales_return.app_terminal != null ? g.sales_return.app_terminal.name : "",
                                   code = g.sales_return.code,
                                   contact_name = g.sales_return.contact.name,
                                   trans_date = g.sales_return.trans_date,
@@ -551,9 +556,9 @@ namespace entity.Brillo.Document
                                   payment_name = g.payment_type != null ? g.payment_type.name : "",
                                   trans_date = g.trans_date,
                                   currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
-                                  currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value:0,
+                                  currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
                                   receipt_number = g.payment.number,
-                                  gov_id = g.payment.contact!= null ?g.payment.contact.gov_code:"",
+                                  gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
                                   AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
                      // Text -> Words
@@ -567,6 +572,46 @@ namespace entity.Brillo.Document
 
                 return reportDataSource;
             }
+        }
+        public ReportDataSource Project(project project)
+        {
+            using (db db = new db())
+            {
+                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+                List<project_task> project_task = project.project_task.ToList();
+                reportDataSource.Value = project_task
+                              .Select(g => new
+                              {
+                                  id_company = g.id_company,
+                                  company_name = g.app_company != null ? g.app_company.name : "",
+                                  contact_name = g.project.contact != null ? g.project.contact.name : "",
+                                  contact_address = g.project.contact != null ? g.project.contact.address != null ? g.project.contact.address : "" : "",
+                                  contact_email = g.project.contact != null ? g.project.contact.email != null ? g.project.contact.email : "" : "",
+                                  contact_phone = g.project.contact != null ? g.project.contact.telephone != null ? g.project.contact.telephone : "" : "",
+                                  gov_id = g.project.contact != null ? g.project.contact.gov_code : "",
+                                  TagList = g.project.project_tag_detail != null ? GetTag(g.project.project_tag_detail.ToList()) : "",
+
+                              }).ToList();
+
+                return reportDataSource;
+            }
+        }
+        private string GetTag(List<project_tag_detail> project_tag_detail)
+        {
+            string TagList = "";
+            if (project_tag_detail.Count > 0)
+            {
+                foreach (project_tag_detail _project_tag_detail in project_tag_detail)
+                {
+                    if (!TagList.Contains(_project_tag_detail.project_tag.name))
+                    {
+                        TagList = TagList + ", " + _project_tag_detail.project_tag.name;
+                    }
+                }
+                return TagList.Remove(0, 1);
+            }
+
+            return TagList;
         }
 
 

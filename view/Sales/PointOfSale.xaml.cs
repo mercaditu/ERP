@@ -46,113 +46,70 @@ namespace Cognitivo.Sales
         }
 
 
-        public entity.app_contract app_contract { get; set; }
-        public entity.app_condition app_condition { get; set; }
-        public entity.app_currencyfx app_currencyfx { get; set; }
-        public entity.app_document_range app_document_range { get; set; }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             sales_invoice.app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
 
+            if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
+	        {
+                IEnumerable<DbEntityValidationResult> validationresult = SalesInvoiceDB.GetValidationErrors();
+                if (validationresult.Count() == 0)
+                {
+                    SalesInvoiceDB.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("Some Value is missing..");
+                }
+
+                SalesInvoiceDB.Approve(true);
 
 
-        if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
-	    {
-        if (app_document_range.id_range != null)
-        {
-            sales_invoice.id_range = app_document_range.id_range;
-        }
+                payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
 
-        if (app_condition != null)
-        {
-            sales_invoice.id_condition = app_condition.id_condition;
-            sales_invoice.app_condition = app_condition;
-        }
-        if (app_contract != null)
-        {
-            sales_invoice.id_contract = app_contract.id_contract;
-            sales_invoice.app_contract = app_contract;
-        }
-        if (app_currencyfx != null)
-        {
-            sales_invoice.id_currencyfx = app_currencyfx.id_currencyfx;
-            sales_invoice.app_currencyfx = app_currencyfx;
-        }
+                foreach (payment_detail payment_detail in payment.payment_detail)
+                {
+                    payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
+                    
+                    if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
+                    {
+                        app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
+                    }
 
-        IEnumerable<DbEntityValidationResult> validationresult = SalesInvoiceDB.GetValidationErrors();
-        if (validationresult.Count() == 0)
-        {
-            SalesInvoiceDB.SaveChanges();
-        }
-        else
-        {
-            MessageBox.Show("Some Value is missing..");
-        }
-        SalesInvoiceDB.Approve(true);
+                    entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
+                    dbContext dbContext = new entity.dbContext();
+                    payment_schedual _payment_schedual = dbContext.db.payment_schedual.Where(x => x.id_payment_schedual == payment_schedual.id_payment_schedual).FirstOrDefault();
+                    AccountReceivable.ReceivePayment(ref dbContext, _payment_schedual, app_document_range.id_range, sales_invoice.id_currencyfx, dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type,
+                                                            0, 0, sales_invoice.GrandTotal, "", (int)CurrentSession.Id_Account, sales_invoice.trans_date);
+
+                }
+
+                sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
+
+                SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
 
 
-
-        payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-
-
-        foreach (payment_detail payment_detail in payment.payment_detail)
-        {
-            payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
-            if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
-            {
-                app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
-
-            }
-            entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-            dbContext dbContext = new entity.dbContext();
-            payment_schedual _payment_schedual = dbContext.db.payment_schedual.Where(x => x.id_payment_schedual == payment_schedual.id_payment_schedual).FirstOrDefault();
-            AccountReceivable.ReceivePayment(ref dbContext, _payment_schedual, app_document_range.id_range, sales_invoice.id_currencyfx, dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type,
-                                                    0, 0, sales_invoice.GrandTotal, "", (int)CurrentSession.Id_Account, sales_invoice.trans_date);
-
-        }
-
-        sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
-        if (app_condition != null)
-        {
-            Newsales_invoice.id_condition = app_condition.id_condition;
-            Newsales_invoice.app_condition = app_condition;
-        }
-        if (app_contract != null)
-        {
-            Newsales_invoice.id_contract = app_contract.id_contract;
-            Newsales_invoice.app_contract = app_contract;
-        }
-        if (app_currencyfx != null)
-        {
-            Newsales_invoice.id_currencyfx = app_currencyfx.id_currencyfx;
-            Newsales_invoice.app_currencyfx = app_currencyfx;
-        }
-
-        SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
-
-
-        salesinvoiceList.Add(Newsales_invoice);
-        sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-        sales_invoiceViewSource.Source = salesinvoiceList;
-        sales_invoiceViewSource.View.Refresh();
-        sales_invoiceViewSource.View.MoveCurrentToLast();
-        payment paymentnew = new entity.payment();
-        paymentnew.status = Status.Documents_General.Pending;
-        payment_detail payment_detailnew = new entity.payment_detail();
-        payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-        paymentnew.payment_detail.Add(payment_detailnew);
-        // SalesInvoiceDB.payments.Add(paymentnew);
-        paymentList.Add(paymentnew);
-        paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-        paymentViewSource.Source = paymentList;
-        paymentViewSource.View.Refresh();
-        paymentViewSource.View.MoveCurrentToLast();
-        tabContact.IsSelected = true;
-        sbxContact.Text = "";
-        //Run approve code here.	 
-	} 
+                salesinvoiceList.Add(Newsales_invoice);
+                sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
+                sales_invoiceViewSource.Source = salesinvoiceList;
+                sales_invoiceViewSource.View.Refresh();
+                sales_invoiceViewSource.View.MoveCurrentToLast();
+                payment paymentnew = new entity.payment();
+                paymentnew.status = Status.Documents_General.Pending;
+                payment_detail payment_detailnew = new entity.payment_detail();
+                payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                paymentnew.payment_detail.Add(payment_detailnew);
+                // SalesInvoiceDB.payments.Add(paymentnew);
+                paymentList.Add(paymentnew);
+                paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+                paymentViewSource.Source = paymentList;
+                paymentViewSource.View.Refresh();
+                paymentViewSource.View.MoveCurrentToLast();
+                tabContact.IsSelected = true;
+                sbxContact.Text = "";
+                //Run approve code here.	 
+	        } 
         }
 
         #endregion
@@ -229,61 +186,15 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //We do not need to load previous Sales Data. This defeats the purpose of Point of Sale
-            if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
-            {
-                app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();
-            }
+            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
+            sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
+            SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
-            if (SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
-            {
-                if (SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
-                {
-                    app_condition = SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition;
-                    app_contract = SalesInvoiceDB.app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
-                }
-            }
-
-            //No need to run this every time, we can do this on Load and Save values.
-            if (SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault() != null)
-            {
-                if (SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault() != null)
-                {
-                    app_currencyfx = SalesInvoiceDB.app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault();
-                }
-            }
+            sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
+            sales_invoiceViewSource.View.MoveCurrentToLast();
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-
-                sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
-                if (app_condition != null)
-                {
-                    sales_invoice.id_condition = app_condition.id_condition;
-                    sales_invoice.app_condition = app_condition;
-                }
-                if (app_contract != null)
-                {
-                    sales_invoice.id_contract = app_contract.id_contract;
-                    sales_invoice.app_contract = app_contract;
-                }
-                if (app_currencyfx != null)
-                {
-                    sales_invoice.id_currencyfx = app_currencyfx.id_currencyfx;
-                    sales_invoice.app_currencyfx = app_currencyfx;
-                }
-
-
-
-
-
-                SalesInvoiceDB.sales_invoice.Add(sales_invoice);
-
-                salesinvoiceList.Add(sales_invoice);
-                sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-                sales_invoiceViewSource.Source = salesinvoiceList;
-                sales_invoiceViewSource.View.MoveCurrentToLast();
-
                 CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
                 SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
                 payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
@@ -292,33 +203,17 @@ namespace Cognitivo.Sales
                 SalesInvoiceDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
                 app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
 
-
-                payment paymentnew = new entity.payment();
-                paymentnew.status = Status.Documents_General.Pending;
+                payment payment = new entity.payment();
+                payment.status = Status.Documents_General.Pending;
                 payment_detail payment_detailnew = new entity.payment_detail();
                 payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
                 payment_detailnew.id_currency = sales_invoice.app_currencyfx.id_currency;
-                paymentnew.payment_detail.Add(payment_detailnew);
-                // SalesInvoiceDB.payments.Add(paymentnew);
-                paymentList.Add(paymentnew);
+                payment.payment_detail.Add(payment_detailnew);
+                paymentList.Add(payment);
                 paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
                 paymentViewSource.Source = paymentList;
             }));
-
-
-
-
-            //Not necesary. We will not give option to change VAT.
-            //SalesInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            //    CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            //    app_vat_groupViewSource.Source = SalesInvoiceDB.app_vat_group.Local;
-            //}));
         }
-
-
 
         private void dgvPaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {

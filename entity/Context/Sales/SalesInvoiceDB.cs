@@ -55,7 +55,7 @@ namespace entity
             validate_Invoice();
             try
             {
-                return SaveChanges();
+                return base.SaveChanges();
             }
            catch(Exception ex)
             {
@@ -127,7 +127,7 @@ namespace entity
                 crm_opportunity.value = invoice.GrandTotal;
 
                 crm_opportunity.sales_invoice.Add(invoice);
-                crm_opportunity.Add(crm_opportunity);
+                base.crm_opportunity.Add(crm_opportunity);
             }
             else
             {

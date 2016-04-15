@@ -19,7 +19,7 @@ namespace Cognitivo.Sales
     public partial class PointOfSale : Page
     {
         entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
-
+        PaymentDB PaymentDB = new entity.PaymentDB();
         Settings SalesSettings = new Settings();
         
         CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
@@ -75,18 +75,13 @@ namespace Cognitivo.Sales
                 foreach (payment_detail payment_detail in payment.payment_detail)
                 {
                     payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
-                    
-                    //This code is for Payment Approval
-                    if (SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
-                    {
-                        app_document_range app_document_range = SalesInvoiceDB.app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
-                    }
 
-                    entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-                    dbContext dbContext = new entity.dbContext();
-                    payment_schedual _payment_schedual = dbContext.db.payment_schedual.Where(x => x.id_payment_schedual == payment_schedual.id_payment_schedual).FirstOrDefault();
-                    AccountReceivable.ReceivePayment(ref dbContext, _payment_schedual, app_document_range.id_range, sales_invoice.id_currencyfx, dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type,
-                                                         0, 0, sales_invoice.GrandTotal, "", (int)CurrentSession.Id_Account, sales_invoice.trans_date);
+                    payment.IsSelected = true;
+                    payment.status = Status.Documents_General.Pending;
+            
+                    PaymentDB.payments.Add(payment);
+                   
+                    PaymentDB.Approve(payment_schedual.id_payment_schedual);
 
                 }
 
@@ -127,7 +122,7 @@ namespace Cognitivo.Sales
                 sales_invoice.id_contact = contact.id_contact;
                 sales_invoice.contact = contact;
                 payment.id_contact = contact.id_contact;
-                payment.contact = contact;
+                //payment.contact = contact;
             }
         }
 

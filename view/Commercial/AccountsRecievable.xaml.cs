@@ -16,7 +16,7 @@ namespace Cognitivo.Commercial
         entity.Properties.Settings _Settings = new entity.Properties.Settings();
         //CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource, contactViewSource;
-
+        PaymentDB PaymentDB = new entity.PaymentDB();
         //List<contact> ContactList;
         cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick();
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance();
@@ -92,6 +92,7 @@ namespace Cognitivo.Commercial
 
         private void Payment_Click(object sender, RoutedEventArgs e)
         {
+         
             List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
             decimal total = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
 
@@ -99,15 +100,18 @@ namespace Cognitivo.Commercial
             payment_quick.payment_detail.id_purchase_return = 0;
             payment_quick.payment_detail.id_sales_return = 0;
             payment_quick.payment_detail.value = total;
-            payment_quick.payment_detail.payment = new payment();
+            payment_quick.payment_detail.payment = PaymentDB.New();
+
+            payment_quick.payment_detail.payment.IsSelected = true;
+            payment_quick.payment_detail.payment.status = Status.Documents_General.Pending;
             if (PaymentSchedualList.Count == 1)
             {
                 payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
-                payment_quick.payment_detail.payment.contact = PaymentSchedualList.FirstOrDefault().contact;
+                payment_quick.payment_detail.payment.contact = PaymentDB.contacts.Where(x => x.id_contact == payment_quick.payment_detail.payment.id_contact).FirstOrDefault();
                 payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
-                if (_entity.db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+                if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
                 {
-                    payment_quick.payment_detail.id_payment_type = _entity.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                    payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
                 }
                 else
                 {
@@ -117,6 +121,7 @@ namespace Cognitivo.Commercial
 
             }
             payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
+
             payment_quick.contacts = contactViewSource.View.OfType<contact>().ToList();
             payment_quick.mode = cntrl.Curd.payment_quick.modes.sales;
             payment_quick.btnSave_Click += Save_Click;
@@ -133,8 +138,13 @@ namespace Cognitivo.Commercial
             {
                 if (total > 0)
                 {
-                    AccountReceivable.ReceivePayment(ref _entity, payment_schedual, (int)payment_quick.payment_detail.payment.id_range, payment_quick.payment_detail.id_currencyfx, payment_quick.payment_detail.id_payment_type,
-                                                    (int)payment_quick.payment_detail.id_purchase_return, (int)payment_quick.payment_detail.id_sales_return, payment_quick.payment_detail.value, payment_quick.payment_detail.comment, (int)payment_quick.payment_detail.id_account, payment_quick.payment_detail.trans_date);
+
+
+                    payment_quick.payment_detail.payment.payment_detail.Add(payment_quick.payment_detail);
+                    PaymentDB.payments.Add(payment_quick.payment_detail.payment);
+                    PaymentDB.Approve(payment_schedual.id_payment_schedual);
+                    //AccountReceivable.ReceivePayment(ref _entity, payment_schedual, (int)payment_quick.payment_detail.payment.id_range, payment_quick.payment_detail.id_currencyfx, payment_quick.payment_detail.id_payment_type,
+                    //                                (int)payment_quick.payment_detail.id_purchase_return, (int)payment_quick.payment_detail.id_sales_return, payment_quick.payment_detail.value, payment_quick.payment_detail.comment, (int)payment_quick.payment_detail.id_account, payment_quick.payment_detail.trans_date);
 
                     total = total - payment_quick.payment_detail.value;
                   

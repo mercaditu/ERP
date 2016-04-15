@@ -93,36 +93,36 @@ namespace Cognitivo.Production
 
             cmbcoefficient.SelectedIndex = -1;
 
-            filter_Product();
-            filter_Service();
-            filter_Supply();
-            filter_Raw();
-            filter_Asset();
-            filter_ServiceContract();
-            filer_productionitem_execution();
-            filer_productionraw_execution();
-            filer_productionsupply_execution();
-            filer_productionservice_execution();
-            filer_productioncapital_execution();
-            filer_productionserviceContract_execution();
+            filter_order(production_execution_detailProductViewSource, item.item_type.Product);
+            filter_order(production_execution_detailRawViewSource, item.item_type.RawMaterial);
+            filter_order(production_execution_detailSupplyViewSource, item.item_type.Supplies);
+            filter_order(production_execution_detailServiceViewSource, item.item_type.Service);
+            filter_order(production_execution_detailAssetViewSource, item.item_type.FixedAssets);
+            filter_order(production_execution_detailServiceContractViewSource, item.item_type.ServiceContract);
+           
 
+            filter_execution(production_execution_detailProductViewSource, item.item_type.Product);
+            filter_execution(production_execution_detailRawViewSource, item.item_type.RawMaterial);
+            filter_execution(production_execution_detailSupplyViewSource, item.item_type.Supplies);
+            filter_execution(production_execution_detailServiceViewSource, item.item_type.Service);
+            filter_execution(production_execution_detailAssetViewSource, item.item_type.FixedAssets);
+            filter_execution(production_execution_detailServiceContractViewSource, item.item_type.ServiceContract);
             dtpenddate.Text = DateTime.Now.ToString();
             dtpstartdate.Text = DateTime.Now.ToString();
         }
 
-        public void filer_productionserviceContract_execution()
+        public void filter_execution(CollectionViewSource CollectionViewSource, item.item_type item_type)
         {
-
-            if (production_execution_detailServiceContractViewSource != null)
+            if (CollectionViewSource != null)
             {
-                if (production_execution_detailServiceContractViewSource.View != null)
+                if (CollectionViewSource.View != null)
                 {
-                    production_execution_detailServiceContractViewSource.View.Filter = i =>
+                    CollectionViewSource.View.Filter = i =>
                     {
                         production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
                         if (objproduction_execution_detail.item != null)
                         {
-                            if (objproduction_execution_detail.item.id_item_type == item.item_type.ServiceContract)
+                            if (objproduction_execution_detail.item.id_item_type == item_type)
                             {
                                 return true;
                             }
@@ -134,172 +134,39 @@ namespace Cognitivo.Production
 
                 }
             }
+
         }
-        public void filer_productioncapital_execution()
-        {
-
-            if (production_execution_detailAssetViewSource != null)
-            {
-                if (production_execution_detailAssetViewSource.View != null)
-                {
-                    production_execution_detailAssetViewSource.View.Filter = i =>
-                    {
-                        production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
-                        if (objproduction_execution_detail.item != null)
-                        {
-                            if (objproduction_execution_detail.item.id_item_type == item.item_type.FixedAssets)
-                            {
-                                return true;
-                            }
-                            else { return false; }
-                        }
-                        else { return false; }
-                    };
-
-
-                }
-            }
-        }
-        public void filer_productionitem_execution()
-        {
-
-            if (production_execution_detailProductViewSource != null)
-            {
-                if (production_execution_detailProductViewSource.View != null)
-                {
-
-
-                    production_execution_detailProductViewSource.View.Filter = i =>
-                    {
-
-                        production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
-                        if (objproduction_execution_detail != null && objproduction_execution_detail.item != null)
-                        {
-                            if (objproduction_execution_detail.item.id_item_type == item.item_type.Product)
-                            {
-                                return true;
-                            }
-                            else { return false; }
-                        }
-                        else { return false; }
-
-                    };
-
-
-
-                }
-            }
-        }
-        public void filer_productionservice_execution()
-        {
-            production_order_detail production_order_detail = (production_order_detail)treeService.SelectedItem_;
-
-            if (production_execution_detailServiceViewSource != null)
-            {
-                if (production_execution_detailServiceViewSource.View != null)
-                {
-                    production_execution_detailServiceViewSource.View.Filter = i =>
-                    {
-                        production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
-
-                        if (objproduction_execution_detail.contact != null && production_order_detail != null)
-                        {
-                            return true;
-                        }
-                        else { return false; }
-                    };
-
-
-
-
-                }
-            }
-        }
-        public void filer_productionsupply_execution()
-        {
-
-            if (production_execution_detailSupplyViewSource != null)
-            {
-                if (production_execution_detailSupplyViewSource.View != null)
-                {
-                    production_execution_detailSupplyViewSource.View.Filter = i =>
-                    {
-                        production_execution_detail objproduction_execution_detail = i as production_execution_detail;
-                        if (objproduction_execution_detail != null && objproduction_execution_detail.item != null)
-                        {
-                            if (objproduction_execution_detail.item.id_item_type == item.item_type.Supplies)
-                            {
-                                return true;
-                            }
-                            else { return false; }
-                        }
-                        else { return false; }
-
-                    };
-
-
-
-
-                }
-            }
-        }
-        public void filer_productionraw_execution()
-        {
-
-            if (production_execution_detailRawViewSource != null)
-            {
-                if (production_execution_detailRawViewSource.View != null)
-                {
-                    production_execution_detailRawViewSource.View.Filter = i =>
-                    {
-
-                        production_execution_detail objproduction_execution_detail = (production_execution_detail)i;
-                        if (objproduction_execution_detail.item != null)
-                        {
-                            if (objproduction_execution_detail.item.id_item_type == item.item_type.RawMaterial)
-                            {
-                                return true;
-                            }
-                            else { return false; }
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
-        }
-
-        public void filter_ServiceContract()
+        public void filter_order(CollectionViewSource CollectionViewSource, item.item_type item_type)
         {
             int id_production_order = 0;
             if (production_executionViewSource.View.CurrentItem != null)
             {
                 id_production_order = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
             }
-            if (production_order_detaillServiceContractViewSource != null)
+            if (CollectionViewSource != null)
             {
 
                 List<production_order_detail> _production_order_detail =
                     ExecutionDB.production_order_detail.Where(a =>
                           a.status == Status.Project.Approved
-                         && (a.item.id_item_type == item.item_type.ServiceContract
+                         && (a.item.id_item_type == item_type
                          || a.item.id_item_type == item.item_type.Task)
                          && a.id_production_order == id_production_order)
                          .ToList();
                 if (_production_order_detail.Count() > 0)
                 {
-                    production_order_detaillServiceContractViewSource.Source = _production_order_detail;
+                    CollectionViewSource.Source = _production_order_detail;
                 }
                 else
                 {
-                    production_order_detaillServiceContractViewSource.Source = null;
+                    CollectionViewSource.Source = null;
                 }
             }
-            if (production_order_detaillServiceContractViewSource != null)
+            if (CollectionViewSource != null)
             {
-                if (production_order_detaillServiceContractViewSource.View != null)
+                if (CollectionViewSource.View != null)
                 {
-                    production_order_detaillServiceContractViewSource.View.Filter = i =>
+                    CollectionViewSource.View.Filter = i =>
                     {
 
                         production_order_detail production_order_detail = (production_order_detail)i;
@@ -316,226 +183,7 @@ namespace Cognitivo.Production
             }
 
         }
-        public void filter_Product()
-        {
-            int id_production_order = 0;
-            if (production_executionViewSource.View.CurrentItem != null)
-            {
-                id_production_order = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
-            }
-            if (production_order_detaillProductViewSource != null)
-            {
-
-                List<production_order_detail> _production_order_detail =
-                    ExecutionDB.production_order_detail.Where(a =>
-                          a.status == Status.Project.Approved
-                         && (a.item.id_item_type == item.item_type.Product
-                         || a.item.id_item_type == item.item_type.Task)
-                         && a.id_production_order == id_production_order)
-                         .ToList();
-                if (_production_order_detail.Count() > 0)
-                {
-                    production_order_detaillProductViewSource.Source = _production_order_detail;
-                }
-                else
-                {
-                    production_order_detaillProductViewSource.Source = null;
-                }
-            }
-            if (production_order_detaillProductViewSource != null)
-            {
-                if (production_order_detaillProductViewSource.View != null)
-                {
-                    production_order_detaillProductViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
-
-        }
-        public void filter_Service()
-        {
-            int id_production = 0;
-            if (production_executionViewSource.View.CurrentItem != null)
-            {
-                id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
-            }
-
-            if (production_order_detaillServiceViewSource != null)
-            {
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a =>
-                         a.status == Status.Project.Approved &&
-                        (a.item.id_item_type == item.item_type.Service || a.item.id_item_type == item.item_type.ServiceContract || a.item.id_item_type == item.item_type.Task) &&
-                         a.id_production_order == id_production)
-                          .ToList();
-                if (_production_order_detail.Count() > 0)
-                {
-                    production_order_detaillServiceViewSource.Source = _production_order_detail;
-                }
-                else
-                {
-                    production_order_detaillServiceViewSource.Source = null;
-                }
-            }
-            if (production_order_detaillServiceViewSource != null)
-            {
-                if (production_order_detaillServiceViewSource.View != null)
-                {
-                    production_order_detaillServiceViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
-        }
-
-        public void filter_Supply()
-        {
-            int id_production = 0;
-            if (production_executionViewSource.View.CurrentItem != null)
-            {
-                id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
-            }
-            if (production_execution_detailSupplyViewSource != null)
-            {
-
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.status == Status.Project.Approved
-                           && (a.item.id_item_type == item.item_type.Supplies || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
-                if (_production_order_detail.Count() > 0)
-                {
-                    production_order_detaillSupplyViewSource.Source = _production_order_detail;
-                }
-
-                else
-                {
-                    production_order_detaillSupplyViewSource.Source = null;
-
-                }
-            }
-            if (production_order_detaillSupplyViewSource != null)
-            {
-                if (production_order_detaillSupplyViewSource.View != null)
-                {
-                    production_order_detaillSupplyViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
-        }
-
-        public void filter_Raw()
-        {
-            int id_production = 0;
-            if (production_executionViewSource.View.CurrentItem != null)
-            {
-                id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
-            }
-            if (production_order_detaillRawViewSource != null)
-            {
-
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.status == Status.Project.Approved
-                            && (a.item.id_item_type == item.item_type.RawMaterial || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
-                if (_production_order_detail.Count() > 0)
-                {
-                    production_order_detaillRawViewSource.Source = _production_order_detail;
-                }
-                else
-                {
-                    production_order_detaillRawViewSource.Source = null;
-
-                }
-            }
-            if (production_order_detaillRawViewSource != null)
-            {
-                if (production_order_detaillRawViewSource.View != null)
-                {
-                    production_order_detaillRawViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
-        }
-        public void filter_Asset()
-        {
-            int id_production = 0;
-            if (production_executionViewSource.View.CurrentItem != null)
-            {
-                id_production = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
-            }
-            if (production_order_detaillAssetViewSource != null)
-            {
-
-                List<production_order_detail> _production_order_detail = ExecutionDB.production_order_detail.Where(a => a.status == Status.Project.Approved
-                         && (a.item.id_item_type == item.item_type.FixedAssets || a.item.id_item_type == item.item_type.Task) && a.id_production_order == id_production).ToList();
-                if (_production_order_detail.Count() > 0)
-                {
-                    production_order_detaillAssetViewSource.Source = _production_order_detail;
-                }
-                else
-                {
-                    production_order_detaillAssetViewSource.Source = null;
-
-                }
-            }
-            if (production_order_detaillAssetViewSource != null)
-            {
-                if (production_order_detaillAssetViewSource.View != null)
-                {
-                    production_order_detaillAssetViewSource.View.Filter = i =>
-                    {
-
-                        production_order_detail production_order_detail = (production_order_detail)i;
-                        if (production_order_detail.parent == null)
-                        {
-
-                            return true;
-
-                        }
-                        else { return false; }
-
-                    };
-                }
-            }
-        }
+     
 
         private void toolBar_btnSave_Click(object sender)
         {
@@ -599,14 +247,7 @@ namespace Cognitivo.Production
                             production_execution_detailServiceViewSource.View.Refresh();
                             production_execution_detailServiceViewSource.View.MoveCurrentToLast();
 
-                            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Service && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                            decimal projectedqty = production_order_detail.quantity;
-                            lblProjectedempqty.Content = "Total:-" + projectedqty.ToString();
-                            lblTotalemp.Content = "Total:-" + actuallqty.ToString();
-                            if (actuallqty > projectedqty)
-                            {
-                                lblTotalemp.Foreground = Brushes.Red;
-                            }
+                            loadServiceTotal(production_order_detail);
                         }
                         else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                         {
@@ -625,22 +266,12 @@ namespace Cognitivo.Production
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
 
-                            ExecutionDB.production_execution_detail.Add(_production_execution_detail);  
+                            ExecutionDB.production_execution_detail.Add(_production_execution_detail);
 
                             production_execution_detailServiceContractViewSource.View.Refresh();
                             production_execution_detailServiceContractViewSource.View.MoveCurrentToLast();
 
-                            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.ServiceContract && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                            decimal projectedqty = production_order_detail.quantity;
-                            lblProjectedservicecontrcthourqty.Content = "Total : " + projectedqty.ToString();
-                            lblProjectedServicecontractqty.Content = "Total : " + projectedqty.ToString();
-                            lblTotalServicecontract.Content = "Total : " + actuallqty.ToString();
-                            lblTotalservicecontracthour.Content = "Total : " + actuallqty.ToString();
-                            if (actuallqty > projectedqty)
-                            {
-                                lblTotalServicecontract.Foreground = Brushes.Red;
-                                lblTotalservicecontracthour.Foreground = Brushes.Red;
-                            }
+                            loadServiceContractTotal(production_order_detail);
                         }
 
                     }
@@ -706,18 +337,21 @@ namespace Cognitivo.Production
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            filter_Product();
-            filter_Service();
-            filter_Supply();
-            filter_Raw();
-            filter_Asset();
-            filter_ServiceContract();
-            filer_productionitem_execution();
-            filer_productionraw_execution();
-            filer_productionservice_execution();
-            filer_productionsupply_execution();
-            filer_productioncapital_execution();
-            filer_productionserviceContract_execution();
+
+            filter_order(production_execution_detailProductViewSource, item.item_type.Product);
+            filter_order(production_execution_detailRawViewSource, item.item_type.RawMaterial);
+            filter_order(production_execution_detailSupplyViewSource, item.item_type.Supplies);
+            filter_order(production_execution_detailServiceViewSource, item.item_type.Service);
+            filter_order(production_execution_detailAssetViewSource, item.item_type.FixedAssets);
+            filter_order(production_execution_detailServiceContractViewSource, item.item_type.ServiceContract);
+
+
+            filter_execution(production_execution_detailProductViewSource, item.item_type.Product);
+            filter_execution(production_execution_detailRawViewSource, item.item_type.RawMaterial);
+            filter_execution(production_execution_detailSupplyViewSource, item.item_type.Supplies);
+            filter_execution(production_execution_detailServiceViewSource, item.item_type.Service);
+            filter_execution(production_execution_detailAssetViewSource, item.item_type.FixedAssets);
+            filter_execution(production_execution_detailServiceContractViewSource, item.item_type.ServiceContract);
         }
 
         private void treeraw_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -736,15 +370,7 @@ namespace Cognitivo.Production
                 };
 
 
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.RawMaterial && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                decimal projectedqty = production_order_detail.quantity;
-                lblProjectedRawQty.Content = "Total:-" + projectedqty.ToString();
-                lblTotalRaw.Content = "Total:-" + actuallqty.ToString();
-                if (actuallqty > projectedqty)
-                {
-                    lblTotalRaw.Foreground = Brushes.Red;
-                }
+                loadRawTotal(production_order_detail);
 
             }
         }
@@ -765,15 +391,7 @@ namespace Cognitivo.Production
                     else { return false; }
                 };
 
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Service && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                decimal projectedqty = production_order_detail.quantity;
-                lblProjectedempqty.Content = "Total Projectado: " + projectedqty.ToString();
-                lblTotalemp.Content = "Total Real: " + actuallqty.ToString();
-                if (actuallqty > projectedqty)
-                {
-                    lblTotalemp.Foreground = Brushes.Red;
-                }
+                loadServiceTotal(production_order_detail);
 
             }
         }
@@ -794,15 +412,7 @@ namespace Cognitivo.Production
                 };
 
 
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.FixedAssets && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                decimal projectedqty = production_order_detail.quantity;
-                lblProjectedassetqty.Content = "Total:-" + projectedqty.ToString();
-                lblTotalasset.Content = "Total:-" + actuallqty.ToString();
-                if (actuallqty > projectedqty)
-                {
-                    lblTotalasset.Foreground = Brushes.Red;
-                }
+                loadAssetTotal(production_order_detail);
 
                 production_execution_detailProductViewSource.View.Filter = null;
             }
@@ -950,15 +560,7 @@ namespace Cognitivo.Production
                 };
 
 
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                decimal projectedqty = production_order_detail.quantity;
-                lblProjectedSuppliesqty.Content = "Total:-" + projectedqty.ToString();
-                lblTotalsupplies.Content = "Total:-" + actuallqty.ToString();
-                if (actuallqty > projectedqty)
-                {
-                    lblTotalsupplies.Foreground = Brushes.Red;
-                }
+                loadSupplierTotal(production_order_detail);
 
             }
         }
@@ -982,15 +584,7 @@ namespace Cognitivo.Production
                     else { return false; }
                 };
 
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                decimal projectedqty = production_order_detail.quantity;
-                lblProjectedProductQty.Content = "Total:-" + projectedqty.ToString();
-                lblTotalProduct.Content = "Total:-" + actuallqty.ToString();
-                if (actuallqty > projectedqty)
-                {
-                    lblTotalProduct.Foreground = Brushes.Red;
-                }
+                loadProductTotal(production_order_detail);
 
             }
         }
@@ -1131,70 +725,27 @@ namespace Cognitivo.Production
 
                     if (btn.Name.Contains("Prod"))
                     {
-                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                        decimal projectedqty = production_order_detail.quantity;
-                        lblProjectedProductQty.Content = "Total:-" + projectedqty.ToString();
-                        lblTotalProduct.Content = "Total:-" + actuallqty.ToString();
-                        if (actuallqty > projectedqty)
-                        {
-                            lblTotalProduct.Foreground = Brushes.Red;
-                        }
+                        loadProductTotal(production_order_detail);
                     }
                     else if (btn.Name.Contains("Raw"))
                     {
-                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.RawMaterial && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                        decimal projectedqty = production_order_detail.quantity;
-                        lblProjectedRawQty.Content = "Total:-" + projectedqty.ToString();
-                        lblTotalRaw.Content = "Total:-" + actuallqty.ToString();
-                        if (actuallqty > projectedqty)
-                        {
-                            lblTotalRaw.Foreground = Brushes.Red;
-                        }
+                        loadRawTotal(production_order_detail);
 
                     }
                     else if (btn.Name.Contains("Asset"))
                     {
-                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.FixedAssets && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                        decimal projectedqty = production_order_detail.quantity;
-                        lblProjectedassetqty.Content = "Total:-" + projectedqty.ToString();
-                        lblTotalasset.Content = "Total:-" + actuallqty.ToString();
-                        if (actuallqty > projectedqty)
-                        {
-                            lblTotalasset.Foreground = Brushes.Red;
-                        }
+                        loadAssetTotal(production_order_detail);
 
                     }
                     else if (btn.Name.Contains("Supp"))
                     {
-                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                        decimal projectedqty = production_order_detail.quantity;
-                        lblProjectedSuppliesqty.Content = "Total:-" + projectedqty.ToString();
-                        lblTotalsupplies.Content = "Total:-" + actuallqty.ToString();
-                        if (actuallqty > projectedqty)
-                        {
-                            lblTotalsupplies.Foreground = Brushes.Red;
-                        }
+                        loadSupplierTotal(production_order_detail);
 
                     }
                     else if (btn.Name.Contains("ServiceContract"))
                     {
-                        production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                        decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.ServiceContract && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                        decimal projectedqty = production_order_detail.quantity;
-                        lblProjectedservicecontrcthourqty.Content = "Total : " + projectedqty.ToString();
-                        lblProjectedServicecontractqty.Content = "Total : " + projectedqty.ToString();
-                        lblTotalServicecontract.Content = "Total : " + actuallqty.ToString();
-                        lblTotalservicecontracthour.Content = "Total : " + actuallqty.ToString();
-                        if (actuallqty > projectedqty)
-                        {
-                            lblTotalServicecontract.Foreground = Brushes.Red;
-                            lblTotalservicecontracthour.Foreground = Brushes.Red;
-                        }
 
+                        loadServiceContractTotal(production_order_detail);
                     }
 
                 }
@@ -1204,7 +755,82 @@ namespace Cognitivo.Production
                 toolBar.msgError(ex);
             }
         }
+        public void loadProductTotal(production_order_detail production_order_detail)
+        {
+            production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Product && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
+            decimal projectedqty = production_order_detail.quantity;
+            lblProjectedProductQty.Content = "Total:-" + projectedqty.ToString();
+            lblTotalProduct.Content = "Total:-" + actuallqty.ToString();
+            if (actuallqty > projectedqty)
+            {
+                lblTotalProduct.Foreground = Brushes.Red;
+            }
+        }
+        public void loadRawTotal(production_order_detail production_order_detail)
+        {
+            production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.RawMaterial && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
+            decimal projectedqty = production_order_detail.quantity;
+            lblProjectedRawQty.Content = "Total:-" + projectedqty.ToString();
+            lblTotalRaw.Content = "Total:-" + actuallqty.ToString();
+            if (actuallqty > projectedqty)
+            {
+                lblTotalRaw.Foreground = Brushes.Red;
+            }
+        }
+        public void loadAssetTotal(production_order_detail production_order_detail)
+        {
+            production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.FixedAssets && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
+            decimal projectedqty = production_order_detail.quantity;
+            lblProjectedassetqty.Content = "Total:-" + projectedqty.ToString();
+            lblTotalasset.Content = "Total:-" + actuallqty.ToString();
+            if (actuallqty > projectedqty)
+            {
+                lblTotalasset.Foreground = Brushes.Red;
+            }
+        }
+        public void loadSupplierTotal(production_order_detail production_order_detail)
+        {
+            production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Supplies && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
+            decimal projectedqty = production_order_detail.quantity;
+            lblProjectedSuppliesqty.Content = "Total:-" + projectedqty.ToString();
+            lblTotalsupplies.Content = "Total:-" + actuallqty.ToString();
+            if (actuallqty > projectedqty)
+            {
+                lblTotalsupplies.Foreground = Brushes.Red;
+            }
+        }
+        public void loadServiceContractTotal(production_order_detail production_order_detail)
+        {
+            production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.ServiceContract && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
+            decimal projectedqty = production_order_detail.quantity;
+            lblProjectedservicecontrcthourqty.Content = "Total : " + projectedqty.ToString();
+            lblProjectedServicecontractqty.Content = "Total : " + projectedqty.ToString();
+            lblTotalServicecontract.Content = "Total : " + actuallqty.ToString();
+            lblTotalservicecontracthour.Content = "Total : " + actuallqty.ToString();
+            if (actuallqty > projectedqty)
+            {
+                lblTotalServicecontract.Foreground = Brushes.Red;
+                lblTotalservicecontracthour.Foreground = Brushes.Red;
+            }
+        }
 
+        public void loadServiceTotal(production_order_detail production_order_detail)
+        {
+            production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
+            decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.Service && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
+            decimal projectedqty = production_order_detail.quantity;
+            lblProjectedempqty.Content = "Total:-" + projectedqty.ToString();
+            lblTotalemp.Content = "Total:-" + actuallqty.ToString();
+            if (actuallqty > projectedqty)
+            {
+                lblTotalemp.Foreground = Brushes.Red;
+            }
+        }
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
             production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
@@ -1243,18 +869,7 @@ namespace Cognitivo.Production
                     else { return false; }
                 };
 
-                production_execution _production_execution = (production_execution)projectDataGrid.SelectedItem;
-                decimal actuallqty = _production_execution.production_execution_detail.Where(x => x.item.id_item_type == item.item_type.ServiceContract && x.id_order_detail == production_order_detail.id_order_detail).Sum(x => x.quantity);
-                decimal projectedqty = production_order_detail.quantity;
-                lblProjectedservicecontrcthourqty.Content = "Total Projectado: " + projectedqty.ToString();
-                lblProjectedServicecontractqty.Content = "Total Projectado: " + projectedqty.ToString();
-                lblTotalServicecontract.Content = "Total Real: " + actuallqty.ToString();
-                lblTotalservicecontracthour.Content = "Total Real: " + actuallqty.ToString();
-                if (actuallqty > projectedqty)
-                {
-                    lblTotalServicecontract.Foreground = Brushes.Red;
-                    lblTotalservicecontracthour.Foreground = Brushes.Red;
-                }
+                loadServiceContractTotal(production_order_detail);
             }
 
         }

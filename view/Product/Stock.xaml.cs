@@ -13,8 +13,8 @@ namespace Cognitivo.Product
     public partial class Stock : Page, INotifyPropertyChanged
     {
         StockDB StockDB = new StockDB();
-        
-        CollectionViewSource item_movementViewSource;
+
+        CollectionViewSource item_movementViewSource, inventoryViewSource;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DateTime InventoryDate
@@ -85,7 +85,8 @@ namespace Cognitivo.Product
                         
                         }).ToList();
 
-                item_movementDataGrid.ItemsSource = movement;
+                inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
+                inventoryViewSource.Source = movement;
 
             }
         }
@@ -154,5 +155,27 @@ namespace Cognitivo.Product
                 }
             }
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (inventoryViewSource != null)
+            {
+                if (inventoryViewSource.View != null)
+                {
+                    
+                        inventoryViewSource.View.Filter = i =>
+                        {
+                            dynamic TmpInventory = (dynamic)i;
+                            if (TmpInventory.code.ToUpper().Contains(txtsearch.Text.ToUpper()) || TmpInventory.name.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                                return true;
+                            else
+                                return false;
+                        };
+                    
+                }
+            }
+
+        }
     }
+   
 }

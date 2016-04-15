@@ -177,6 +177,7 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_price,
                         unit_price_vat = g.UnitPrice_Vat,
+                        sub_total_vat_discount=g.Discount_SubTotal_Vat,
                         AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
 
                         // Text -> Words

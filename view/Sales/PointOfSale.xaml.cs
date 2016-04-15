@@ -259,6 +259,16 @@ namespace Cognitivo.Sales
             }
         }
 
+        private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            sales_invoiceViewSource.View.Refresh();
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
+            payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
+
+
+        }
+
 
     }
 }

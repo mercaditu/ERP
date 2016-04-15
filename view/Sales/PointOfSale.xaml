@@ -170,7 +170,7 @@
 
                     <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" 
                               Margin="64,58,64,0" CanUserAddRows="False" FontSize="16"
-                              ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}">
+                              ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" RowEditEnding="dgvSalesDetail_RowEditEnding">
                         <DataGrid.RowBackground>
                             <SolidColorBrush Color="White" Opacity="0.32"/>
                         </DataGrid.RowBackground>

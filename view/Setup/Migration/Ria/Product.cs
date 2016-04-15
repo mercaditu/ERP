@@ -53,7 +53,8 @@ namespace Cognitivo.Setup.Migration
             DataTable dt_product = exeDT(sql);
             foreach (DataRow reader in dt_product.Rows)
             {
-           
+
+
                 using (db db = new db())
                 {
                     db.Configuration.AutoDetectChangesEnabled = false;
@@ -80,7 +81,7 @@ namespace Cognitivo.Setup.Migration
                     //string FAMILIA;
                     if (!(reader[0] is DBNull))
                     {
-                        string tagname = reader[0].ToString(); 
+                        string tagname = reader[0].ToString();
                         item_tag item_tagFam = db.item_tag.Where(x => x.name == tagname && x.id_company == id_company).FirstOrDefault();
                         item_tag_detail tag_detailFam = new item_tag_detail();
                         tag_detailFam.id_tag = item_tagFam.id_tag;
@@ -90,7 +91,7 @@ namespace Cognitivo.Setup.Migration
                     //string LINEA;
                     if (!(reader[1] is DBNull))
                     {
-                        string tagLinname = reader[1].ToString(); 
+                        string tagLinname = reader[1].ToString();
                         item_tag item_tagLin = db.item_tag.Where(x => x.name == tagLinname && x.id_company == id_company).FirstOrDefault();
                         item_tag_detail tag_detailLin = new item_tag_detail();
                         tag_detailLin.id_tag = item_tagLin.id_tag;
@@ -151,7 +152,7 @@ namespace Cognitivo.Setup.Migration
                     }
 
                     string _DESPRODUCTO = reader["DESPRODUCTO"].ToString();
-
+                    _DESPRODUCTO=_DESPRODUCTO.Replace("'", "");
                     try
                     {
                         foreach (DataRow price_row in dt_Price.Select("DESPRODUCTO = '" + _DESPRODUCTO + "'"))
@@ -168,7 +169,14 @@ namespace Cognitivo.Setup.Migration
                                 {
                                     item_price item_price = new item_price();
                                     item_price.item = item;
-                                    item_price.value = ((decimal)price_row["PRECIOVENTA"] / (1 + coefficient));
+                                    if (price_row["PRECIOVENTA"] is DBNull)
+                                    {
+                                        item_price.value = 0;
+                                    }
+                                    else
+                                    {
+                                        item_price.value = ((decimal)price_row["PRECIOVENTA"] / (1 + coefficient));
+                                    }
                                     item_price.min_quantity = (price_row.IsNull("CANTIDAD")) ? 0 : Convert.ToDecimal(price_row["CANTIDAD"]);
                                     item_price.id_currency = app_currency.id_currency;
                                     item_price.id_price_list = item_price_list.id_price_list;
@@ -177,7 +185,7 @@ namespace Cognitivo.Setup.Migration
                             }
                         }
                     }
-                    catch(Exception ex) 
+                    catch (Exception ex)
                     {
                         throw ex;
                     }
@@ -197,7 +205,7 @@ namespace Cognitivo.Setup.Migration
                 }
             }
 
-           
+
             //cmd.Dispose();
             conn.Close();
 

@@ -17,7 +17,7 @@
     </UserControl.Resources>
     <Grid Width="256">
         <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
-            <crud:item x:Name="crudItem" btnSave_Click="crudItem_btnSave_Click"/>
+            <crud:item x:Name="crudItem" btnSave_Click="crudItem_btnSave_Click" btnCancel_Click="crudItem_btnCancel_Click"/>
         </Popup>
         
         <!-- TextBox for Searching -->
@@ -28,11 +28,21 @@
                  metro:TextBoxHelper.SelectAllOnFocus="True"
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
                  KeyUp="StartSearch"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
+          
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
                    HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
-                   Visibility="{Binding can_New, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
-                   PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
+                   PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"
+                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
+
+            <Label Content="|" Foreground="Silver" VerticalAlignment="Center" 
+                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
+                   Margin="0" FontSize="9"/>
+
+            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
+                   Visibility="{Binding can_Edit, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"                    
+                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                 Padding="4" FontWeight="Bold"/>
         </StackPanel>
         <!-- Progress Ring -->
         <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Left"

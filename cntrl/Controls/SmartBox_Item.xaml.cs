@@ -11,11 +11,55 @@ using System.Windows.Input;
 
 namespace cntrl.Controls
 {
-    public partial class SmartBox_Item : UserControl
+    public partial class SmartBox_Item : UserControl,INotifyPropertyChanged
     {
-        public bool can_New { get; set; }
-        public bool can_Edit { get; set; }
-        
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+        public bool can_New
+        {
+            get { return _can_new; }
+            set
+            {
+                 entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                 if (Sec.create)
+                 {
+                     _can_new = value;
+                     RaisePropertyChanged("can_New");
+                 }
+                 else
+                 {
+                     _can_new = false;
+                     RaisePropertyChanged("can_New");
+                 }
+            }
+        }
+        bool _can_new;
+        public bool can_Edit
+        {
+            get { return _can_new; }
+            set
+            {
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                if (Sec.edit)
+                {
+                    _can_edit = value;
+                    RaisePropertyChanged("can_Edit");
+                }
+                else
+                {
+                    _can_edit = false;
+                    RaisePropertyChanged("can_Edit");
+                }
+            }
+        }
+bool _can_edit;
+
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Item));
         public string Text
         {
@@ -55,7 +99,7 @@ namespace cntrl.Controls
         public int ItemID { get; set; }
         public entity.item Item { get; set; }
         public entity.item.item_type? item_types { get; set; }
-
+        entity.dbContext db = new entity.dbContext();
         Task taskSearch;
         CancellationTokenSource tokenSource;
         CancellationToken token;
@@ -172,9 +216,10 @@ namespace cntrl.Controls
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
-            if (Sec.edit)
+            if (Sec.create)
             {
                 crudItem.itemobject = new entity.item();
+                crudItem.entity = db;
                 popCrud.IsOpen = true;
                 popCrud.Visibility = System.Windows.Visibility.Visible;
             }
@@ -182,20 +227,22 @@ namespace cntrl.Controls
 
         private void crudItem_btnSave_Click(object sender)
         {
-            using (entity.db db = new entity.db())
-            {
-                if (crudItem.itemList.Count() > 0)
-                {
-                    foreach (entity.item item in crudItem.itemList)
-                    {
-                        if (item.id_item == 0)
-                        {
-                            db.items.Add(item);
-                        }
-                    }
-                    db.SaveChanges();
-                }
-            }
+            //using (entity.db db = new entity.db())
+            //{
+            //    if (crudItem.itemList.Count() > 0)
+            //    {
+            //        foreach (entity.item item in crudItem.itemList)
+            //        {
+            //            if (item.id_item == 0)
+            //            {
+            //                db.items.Add(item);
+            //            }
+            //        }
+            //        db.SaveChanges();
+            //    }
+            //}
+            db.db.items.Add(crudItem.itemobject);
+            db.SaveChanges();
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
         }
@@ -210,5 +257,12 @@ namespace cntrl.Controls
                 popCrud.Visibility = System.Windows.Visibility.Visible;
             }
         }
+
+        private void crudItem_btnCancel_Click(object sender)
+        {
+            popCrud.IsOpen = false;
+        }
+
+     
     }
 }

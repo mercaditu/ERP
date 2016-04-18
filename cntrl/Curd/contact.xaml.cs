@@ -41,7 +41,7 @@ namespace cntrl.Curd
                     }
 
                     contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
-                    entity.db.contacts.Load();
+                   // entity.db.contacts.Load();
 
                     contactViewSource.Source = entity.db.contacts.Local;
               

@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace cntrl.Controls
 {
-    public partial class SmartBox_Contact : UserControl
+    public partial class SmartBox_Contact : UserControl,INotifyPropertyChanged
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Contact));
         public string Text
@@ -20,19 +20,52 @@ namespace cntrl.Controls
             set { SetValue(TextProperty, value); }
         }
 
-        public static readonly DependencyProperty can_NewProperty = DependencyProperty.Register("can_New", typeof(bool), typeof(SmartBox_Contact));
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
         public bool can_New
         {
-            get { return (bool)GetValue(can_NewProperty); }
-            set { SetValue(can_NewProperty, value); }
+            get { return _can_new; }
+            set
+            {
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                if (Sec.create)
+                {
+                    _can_new = value;
+                    RaisePropertyChanged("can_New");
+                }
+                else
+                {
+                    _can_new = false;
+                    RaisePropertyChanged("can_New");
+                }
+            }
         }
-
-        public static readonly DependencyProperty can_EditProperty = DependencyProperty.Register("can_Edit", typeof(bool), typeof(SmartBox_Contact));
+        bool _can_new;
         public bool can_Edit
         {
-            get { return (bool)GetValue(can_EditProperty); }
-            set { SetValue(can_EditProperty, value); }
+            get { return _can_new; }
+            set
+            {
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                if (Sec.edit)
+                {
+                    _can_edit = value;
+                    RaisePropertyChanged("can_Edit");
+                }
+                else
+                {
+                    _can_edit = false;
+                    RaisePropertyChanged("can_Edit");
+                }
+            }
         }
+        bool _can_edit;
 
         entity.dbContext db = new entity.dbContext();
 
@@ -231,17 +264,19 @@ namespace cntrl.Controls
 
         private void crudContact_btnSave_Click(object sender)
         {
-            if (crudContact.contactList.Count() > 0)
-            {
-                foreach (entity.contact contact in crudContact.contactList)
-                {
-                    if (contact.id_contact == 0)
-                    {
-                        db.db.contacts.Add(contact);
-                    }
-                }
-                db.SaveChanges();
-            }
+            //if (crudContact.contactList.Count() > 0)
+            //{
+            //    foreach (entity.contact contact in crudContact.contactList)
+            //    {
+            //        if (contact.id_contact == 0)
+            //        {
+            //            db.db.contacts.Add(contact);
+            //        }
+            //    }
+            //    db.SaveChanges();
+            //}
+            db.db.contacts.Add(crudContact.contactobject);
+            db.SaveChanges();
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
         }

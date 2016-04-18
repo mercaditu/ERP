@@ -144,6 +144,12 @@ namespace Cognitivo.Product
         {
             try
             {
+                item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+                item_transfer.app_branch_destination = (id_branch_destinComboBox.SelectedItem as app_branch);
+                item_transfer.app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
+                item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
+                item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
+                ProductTransferDB.SaveChanges();
                 TransferSetting TransferSetting = new Product.TransferSetting();
                 ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
                 toolBar.msgSaved();
@@ -156,6 +162,8 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApproveDestination_Click(object sender)
         {
+          
+
             TransferSetting TransferSetting = new Product.TransferSetting();
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
             ProductTransferDB.ApproveDestination( (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);

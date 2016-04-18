@@ -29,54 +29,59 @@ namespace cntrl.Curd
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                using (db db = new db())
+                if (entity != null)
                 {
-                    if (db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company) != null)
+                    if (entity.db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company) != null)
                     {
                         CollectionViewSource item_brandViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_brandViewSource")));
-                        item_brandViewSource.Source = db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                        item_brandViewSource.Source = entity.db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                     }
 
-                    if (db.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
+                    if (entity.db.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
                     {
                         CollectionViewSource app_vat_groupViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vat_groupViewSource")));
-                        app_vat_groupViewSource.Source = db.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                        app_vat_groupViewSource.Source = entity.db.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                     }
 
-                    if (db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
+                    if (entity.db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
                     {
                         CollectionViewSource app_currencyViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_currencyViewSource")));
-                        app_currencyViewSource.Source = db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                        app_currencyViewSource.Source = entity.db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                     }
 
-                    if (db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
+                    if (entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
                     {
                         CollectionViewSource item_price_listViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_price_listViewSource")));
-                        item_price_listViewSource.Source = db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                        item_price_listViewSource.Source = entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                     }
+
+
+                    cmbitem.ItemsSource = Enum.GetValues(typeof(entity.item.item_type));
+
+
+
+                    if (itemobject != null)
+                    {
+                        entity.db.items.Add(itemobject);
+                    }
+
+                    itemViewSource = (CollectionViewSource)this.FindResource("itemViewSource");
+                    itemViewSource.Source = entity.db.items.Local;
+                    //  itemViewSource.View.Refresh();
+                    itemViewSource.View.MoveCurrentTo(itemobject);
                 }
-
-                cmbitem.ItemsSource = Enum.GetValues(typeof(entity.item.item_type));
-
-                itemList = new List<global::entity.item>();
-
-                if (itemobject != null)
-                {
-                    itemList.Add(itemobject);
-                }
-
-                itemViewSource = (CollectionViewSource)this.FindResource("itemViewSource");
-                itemViewSource.Source = itemList;
-                itemViewSource.View.Refresh();
-                itemViewSource.View.MoveCurrentToFirst();
             }
+
         }
 
-        private void btnCancel_MouseDown(object sender, MouseButtonEventArgs e)
+        public event btnCancel_ClickedEventHandler btnCancel_Click;
+        public delegate void btnCancel_ClickedEventHandler(object sender);
+        private void btnCancel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            System.Windows.Controls.Primitives.Popup popup = this.Parent as System.Windows.Controls.Primitives.Popup;
-            popup.IsOpen = false;
-            popup.Visibility = System.Windows.Visibility.Collapsed;
+            if (btnCancel_Click != null)
+            {
+                btnCancel_Click(sender);
+            }
         }
 
         public event btnSave_ClickedEventHandler btnSave_Click;

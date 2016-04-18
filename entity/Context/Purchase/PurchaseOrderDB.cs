@@ -16,7 +16,7 @@ namespace entity
             purchase_order.status = Status.Documents_General.Pending;
             purchase_order.trans_date = DateTime.Now;
 
-            purchase_order.State = EntityState.Added;
+          
             purchase_order.IsSelected = true;
             
             return purchase_order;

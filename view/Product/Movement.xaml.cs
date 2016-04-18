@@ -145,6 +145,7 @@ namespace Cognitivo.Product
         }
         private void toolBar_btnApprove_Click(object sender)
         {
+            entity.Brillo.Logic.Stock stock = new entity.Brillo.Logic.Stock();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.app_document_range != null)
             {
@@ -172,7 +173,8 @@ namespace Cognitivo.Product
                // item_movement_origin.transaction_id = 0;
                 item_movement_origin.status = Status.Stock.InStock;
                 item_movement_origin.trans_date = item.item_transfer.trans_date;
-                
+              
+                item_movement_origin.comment = stock.comment_Generator(entity.App.Names.Transfer, item.item_transfer.number.ToString(), "");
                 if (item.item_product.id_item_product != 0)
                 {
                     item_movement_origin.id_item_product = item.item_product.id_item_product;
@@ -187,7 +189,8 @@ namespace Cognitivo.Product
                // item_movement_dest.transaction_id = 0;
                 item_movement_dest.status = Status.Stock.InStock;
                 item_movement_dest.trans_date = item.item_transfer.trans_date;
-
+               
+                item_movement_dest.comment = stock.comment_Generator(entity.App.Names.Transfer, item.item_transfer.number.ToString(), "");
                 if (item.item_product.id_item_product != 0)
                 {
                     item_movement_dest.id_item_product = item.item_product.id_item_product;

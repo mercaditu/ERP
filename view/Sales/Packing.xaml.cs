@@ -46,7 +46,8 @@ namespace Cognitivo.Sales
                 sales_packing.sales_packing_detail.Add(sales_packing_detail);
             }
             PackingListDB.SaveChanges();
-            PackingListDB.Approve();
+            Settings SalesSettings = new Settings();
+            PackingListDB.Approve(SalesSettings.DiscountStock);
 
            
 

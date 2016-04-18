@@ -512,11 +512,11 @@ namespace Cognitivo.Sales
                     {
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
                         sales_invoice_detail.sales_invoice = _sales_invoice;
-
+                        sales_invoice_detail.Contact = sbxContact.Contact;
                         sales_invoice_detail.item = _sales_packing_detail.item;
                         sales_invoice_detail.id_item = _sales_packing_detail.id_item;
                         sales_invoice_detail.quantity = _sales_packing_detail.quantity;
-                        sales_invoice_detail.unit_price = 0;
+                       // sales_invoice_detail.unit_price = 0;
 
                         sales_packing_relation sales_packing_relation = new sales_packing_relation();
                         sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
@@ -669,5 +669,7 @@ namespace Cognitivo.Sales
                 crud_modal.Children.Add(recive_payment);
             }
         }
+
+       
     }
 }

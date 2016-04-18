@@ -61,7 +61,7 @@ namespace Cognitivo.Purchase
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 purchase_orderViewSource = ((CollectionViewSource)(FindResource("purchase_orderViewSource")));
-                purchase_orderViewSource.Source = dbContext.purchase_order.Local.OrderByDescending(x => x.trans_date);
+                purchase_orderViewSource.Source = dbContext.purchase_order.Local;
             }));
         }
 

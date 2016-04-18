@@ -52,7 +52,7 @@ namespace entity.Brillo.Document
                 purchase_tender purchase_tender = (purchase_tender)Document;
                 return PurchaseTender(purchase_tender);
             }
-            else if (Document.GetType() == typeof(item_transfer))
+            else if (Document.GetType() == typeof(item_transfer) || Document.GetType().BaseType == typeof(item_transfer))
             {
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
@@ -307,7 +307,8 @@ namespace entity.Brillo.Document
                                   item_description = g.item != null ? g.item.name != null ? g.item.name : "" : "",
                                   item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name != null ? g.item.item_brand.name : "" : "" : "",
                                   quantity = g.quantity != null ? g.quantity : 0,
-                                  sales_invoice_number = g.sales_packing != null ? g.sales_packing_relation != null ? GetInvoice(g.sales_packing_relation.ToList()) : "" : ""
+                                  sales_invoice_number = g.sales_packing != null ? g.sales_packing_relation != null ? GetInvoice(g.sales_packing_relation.ToList()) : "" : "",
+                                  packing_type = g.sales_packing != null ? g.sales_packing.packing_type.ToString() : ""
                               }).ToList();
 
                 return reportDataSource;

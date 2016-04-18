@@ -246,6 +246,10 @@ namespace Cognitivo.Project.Development
                     db.SaveChanges();
                 }
                 toolBar.msgDone();
+                dbContext = new ProjectTemplateDB();
+                project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
+                dbContext.project_template.Where(a => a.id_company == _Setting.company_ID).Load();
+                project_templateViewSource.Source = dbContext.project_template.Local;
                 filter_task();
             }
 

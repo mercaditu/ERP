@@ -328,7 +328,7 @@ namespace Cognitivo.Product
             dbContext.items.Add(_item);
 
             itemViewSource.View.Refresh();
-            itemViewSource.View.MoveCurrentToLast();
+            itemViewSource.View.MoveCurrentToFirst();
         }
 
         private void cmbitem_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -440,7 +440,7 @@ namespace Cognitivo.Product
                     item item = i as item;
                     if (item.Error == null)
                     {
-                        if (item.name.ToLower().Contains(query.ToLower()) || item.code.ToLower().Contains(query.ToLower()))
+                        if (item.name.ToLower().Contains(query.ToLower()) || item.code.ToLower().Contains(query.ToLower()) || item.item_tag_detail.Where(x => x.item_tag.name.ToLower().Contains(query.ToLower())).Any())
                         {
                             return true;
                         }

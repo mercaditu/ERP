@@ -9,6 +9,7 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:cls ="clr-namespace:Cognitivo.Class"
+         xmlns:customcmd="clr-namespace:Cognitivo.Class"
       mc:Ignorable="d" 
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -16,7 +17,11 @@
         lex:LocalizeDictionary.DesignCulture="en-US" 
       
       d:DesignHeight="400" d:DesignWidth="800" Loaded="Page_Loaded">
-
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
+    </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferitem_transfer_detailViewSource" Source="{Binding item_transfer_detail, Source={StaticResource item_transferViewSource}}"/>
@@ -102,6 +107,14 @@
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
+                    <StackPanel Orientation="Horizontal" >
+                        <Label Content="" Style="{StaticResource btn_Label}"/>
+                        <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                    <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+                                        <Run Text="{lex:Loc Document}"/>
+                                    </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
                         <Label Content="A" Style="{StaticResource btn_Label}"/>
                         <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
@@ -150,6 +163,15 @@
                                                         Header="{lex:Loc Cognitivo:local:Item}" Width="Auto" IsReadOnly="True"/>
                                     <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
+                                    <DataGridTemplateColumn Width="Auto" Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -177,6 +199,15 @@
                                                             Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                                         <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Width="SizeToHeader"/>
+                                        <DataGridTemplateColumn Width="Auto" Header="">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>

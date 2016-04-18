@@ -87,7 +87,7 @@ namespace entity
             }
         }
 
-        public void Approve()
+        public void Approve(bool IsDiscountStock)
         {
             foreach (sales_packing sales_packing in base.sales_packing.Local)
             {
@@ -100,14 +100,18 @@ namespace entity
 
                     if (sales_packing.status != Status.Documents_General.Approved)
                     {
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(this, sales_packing);
-
-                        if (item_movementList != null && item_movementList.Count > 0)
+                        if (IsDiscountStock)
                         {
-                            item_movement.AddRange(item_movementList);
+                            Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                            List<item_movement> item_movementList = new List<item_movement>();
+                            item_movementList = _Stock.insert_Stock(this, sales_packing);
+
+                            if (item_movementList != null && item_movementList.Count > 0)
+                            {
+                                item_movement.AddRange(item_movementList);
+                            }
                         }
+                       
 
                         if (sales_packing.number == null && sales_packing.id_range > 0)
                         {

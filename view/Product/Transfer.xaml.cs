@@ -178,5 +178,51 @@ namespace Cognitivo.Product
             TransferSetting = TransferSetting.Default;
             popupCustomize.IsOpen = false;
         }
+
+        private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
+        {
+            item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+            if (item_transfer != null)
+            {
+                if (item_transfer.app_document_range!=null)
+                {
+                    entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
+                    
+                }
+                
+            }
+            else
+            {
+                toolBar.msgWarning("Please select");
+            }
+        }
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as item_transfer_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+                    //DeleteDetailGridRow
+                    item_transfer_detailDataGrid.CancelEdit();
+                    ProductTransferDB.item_transfer_detail.Remove(e.Parameter as item_transfer_detail);
+                    item_transferitem_transfer_detailViewSource.View.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
     }
 }

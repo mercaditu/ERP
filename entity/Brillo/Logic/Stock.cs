@@ -137,8 +137,38 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
+            else if (obj_entity.GetType().BaseType == typeof(sales_packing) || obj_entity.GetType() == typeof(sales_packing))
+            {
+                sales_packing sales_packing = (sales_packing)obj_entity;
+
+                foreach (sales_packing_detail detail in sales_packing.sales_packing_detail
+                    .Where(x => x.item.item_product.Count() > 0))
+                {
+                    item_product item_product = FindNFix_ItemProduct(detail.item);
+                    detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_packing.app_branch);
+                    detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+                    
+                    List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
+                                                                      && x.id_item_product == item_product.id_item_product
+                                                                      && x.status == entity.Status.Stock.InStock
+                                                                      && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                    
+                    item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
+                                             App.Names.SalesInvoice,
+                                             detail.id_sales_packing,
+                                             null,
+                                             item_product,
+                                             detail.app_location,
+                                             detail.quantity,
+                                             sales_packing.trans_date,
+                                             comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
+                                             ));
+                }
+                //Return List so we can save into context.
+                return item_movementList;
+            }
             //PRODUCTION EXECUTION
-            if (obj_entity.GetType().BaseType == typeof(production_execution) || obj_entity.GetType() == typeof(production_execution))
+            else if (obj_entity.GetType().BaseType == typeof(production_execution) || obj_entity.GetType() == typeof(production_execution))
             {
                 List<item_movement> item_movementinput = new List<item_movement>();
                 List<item_movement> item_movementoutput = new List<item_movement>();
@@ -471,12 +501,17 @@ namespace entity.Brillo.Logic
                     item_movement._parent = parent_Movement;
 
                     //Logic for Value
-                    item_movement_value item_movement_value = new item_movement_value();
+                    if (app_currencyfx!=null)
+                    {
+                        item_movement_value item_movement_value = new item_movement_value();
 
-                    item_movement_value.unit_value = parent_Movement.GetValue_ByCurrency(app_currencyfx.app_currency);
-                    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
-                    item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
-                    item_movement.item_movement_value.Add(item_movement_value);
+                        item_movement_value.unit_value = parent_Movement.GetValue_ByCurrency(app_currencyfx.app_currency);
+                        item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                        item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
+                        item_movement.item_movement_value.Add(item_movement_value);
+                        
+                    }
+                 
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);

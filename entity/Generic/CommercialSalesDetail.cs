@@ -340,7 +340,15 @@ namespace entity
             {
                 if (Contact != null)
                 {
-                    PriceList_ID = (int)Contact.id_price_list;
+                    if (Contact.id_price_list!=null)
+                    {
+                        PriceList_ID = (int)Contact.id_price_list;    
+                    }
+                    else
+                    {
+                        PriceList_ID = 0;
+                    }
+                    
                 }
                
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.

@@ -25,6 +25,7 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
             entity.Properties.Settings _entity = new entity.Properties.Settings();
 
             //Contact
@@ -34,9 +35,9 @@ namespace Cognitivo.Commercial
             contactViewSource.Source = ContactDB.contacts.Local;
             CollectionViewSource contactParentViewSource = (CollectionViewSource)FindResource("contactParentViewSource");
             contactParentViewSource.Source = ContactDB.contacts.Local;
-            contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
+    
 
-            contactChildListViewSource.Source = ContactDB.contacts.Local;
+          //  contactChildListViewSource.Source = ContactDB.contacts.Local;
 
 
             contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
@@ -298,31 +299,34 @@ namespace Cognitivo.Commercial
 
         private void LoadRelatedContactOnThread(contact _contact)
         {
-
             if (contactChildListViewSource != null)
             {
-               
-                    if (contactChildListViewSource.View != null)
-                    {
-                        
-                        contactChildListViewSource.View.Filter = i =>
-                        {
-                            contact contact = (contact)i;
-                            if (_contact != null)
-                            {
-                                if (contact.parent == _contact || contact.id_contact == _contact.id_contact)
-                                    return true;
-                                else
-                                    return false;
-                            }
-                            else
-                                return false;
-                        };
-
-                    }
-               
-
+                contactChildListViewSource.Source = ContactDB.contacts.Where(x => x.parent.id_contact == _contact.id_contact || x.id_contact == _contact.id_contact).ToList();
             }
+            //if (contactChildListViewSource != null)
+            //{
+               
+            //        if (contactChildListViewSource.View != null)
+            //        {
+                        
+            //            contactChildListViewSource.View.Filter = i =>
+            //            {
+            //                contact contact = (contact)i;
+            //                if (_contact != null)
+            //                {
+            //                    if (contact.parent == _contact || contact.id_contact == _contact.id_contact)
+            //                        return true;
+            //                    else
+            //                        return false;
+            //                }
+            //                else
+            //                    return false;
+            //            };
+
+            //        }
+               
+
+            //}
         }
 
         private void FilterSubscription()
@@ -417,13 +421,13 @@ namespace Cognitivo.Commercial
             contact contact = contactViewSource.View.CurrentItem as contact;
             contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
             
-            if (contact_role != null)
-            {
-                if (contact_role.is_principal == true)
-                {
+            //if (contact_role != null)
+            //{
+            //    if (contact_role.is_principal == true)
+            //    {
                    LoadRelatedContactOnThread(contact);
-                }
-            }
+                //}
+           // }
 
             if (contact_subscriptionViewSource != null)
             {
@@ -474,9 +478,13 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void contactcontact_subscriptionDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void contactcontact_subscriptionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            //FilterSubscription();
+           // FilterSubscription();
         }
+
+       
+
+       
     }
 }

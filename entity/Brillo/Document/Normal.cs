@@ -73,8 +73,12 @@ namespace entity.Brillo.Document
             if (!File.Exists(path + SubFolder + "\\" + app_range.app_document.name + ".rdlc"))
             {
                 //Add Logic
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory  + app_range.app_document.id_application.ToString() + ".rdlc",
-                            path + SubFolder + "\\" + app_range.app_document.name + ".rdlc");
+                if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory  + app_range.app_document.id_application.ToString() + ".rdlc"))
+                {
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory + app_range.app_document.id_application.ToString() + ".rdlc",
+                           path + SubFolder + "\\" + app_range.app_document.name + ".rdlc");
+                }
+               
             }
         }
     

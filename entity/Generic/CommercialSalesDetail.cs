@@ -142,13 +142,18 @@ namespace entity
             }
             set
             {
-                _CurrencyFX_ID = value;
 
-                if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                if (_CurrencyFX_ID != value)
                 {
-                    unit_price = Currency.convert_Value(unit_price, CurrencyFX_ID, App.Modules.Sales);
-                    RaisePropertyChanged("unit_price");
+                    _CurrencyFX_ID = value;
+
+                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                    {
+                        unit_price = Currency.convert_Value(unit_price, value, App.Modules.Sales);
+                        RaisePropertyChanged("unit_price");
+                    }
                 }
+
             }
         }
         private int _CurrencyFX_ID;
@@ -156,7 +161,7 @@ namespace entity
 
         [NotMapped]
         public contact Contact { get; set; }
-       
+
         /// <summary>
         /// 
         /// </summary>
@@ -253,12 +258,12 @@ namespace entity
 
 
         #region "Foreign Key"
-        
+
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual project_task project_task { get; set; }
         public virtual item item { get; set; }
-        
+
         #endregion
 
 
@@ -309,7 +314,7 @@ namespace entity
         /// </summary>
         private void update_UnitPriceVAT()
         {
-            UnitPrice_Vat =Vat.return_ValueWithVAT((int)id_vat_group, unit_price);
+            UnitPrice_Vat = Vat.return_ValueWithVAT((int)id_vat_group, unit_price);
             RaisePropertyChanged("UnitPrice_Vat");
         }
 
@@ -335,22 +340,22 @@ namespace entity
         /// <returns></returns>
         public decimal get_SalesPrice()
         {
-            
+
             if (id_item > 0)
             {
                 if (Contact != null)
                 {
-                    if (Contact.id_price_list!=null)
+                    if (Contact.id_price_list != null)
                     {
-                        PriceList_ID = (int)Contact.id_price_list;    
+                        PriceList_ID = (int)Contact.id_price_list;
                     }
                     else
                     {
                         PriceList_ID = 0;
                     }
-                    
+
                 }
-               
+
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
                 if (PriceList_ID == 0 && PriceList_ID != null)
                 {
@@ -385,7 +390,7 @@ namespace entity
                             return item_price.value;
                         }
                         else
-                        {   
+                        {
                             //If Perfect Value not found, get one pased on Product and List. (Ignore Currency and Convert Later basd on Current Rate.)
                             if (db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault() != null)
                             {
@@ -394,10 +399,10 @@ namespace entity
                                 return Currency.convert_BackValue(item_price.value, app_currencyfx.id_currencyfx, App.Modules.Sales);
                             }
 
-                         
+
                         }
                     }
-                 
+
                 }
             }
 
@@ -415,7 +420,7 @@ namespace entity
             get { return _discount; }
             set
             {
-                if (_discount != value )
+                if (_discount != value)
                 {
                     if (State > 0)
                     {
@@ -426,7 +431,7 @@ namespace entity
 
                         Calculate_UnitVatDiscount(_discount);
                         Calculate_SubTotalDiscount(_discount);
-                        
+
                     }
                     else
                     {
@@ -474,7 +479,7 @@ namespace entity
             {
                 if (_Discount_SubTotal != value)
                 {
-                  //  Calculate_UnitDiscount(_Discount_SubTotal);
+                    //  Calculate_UnitDiscount(_Discount_SubTotal);
 
                     _Discount_SubTotal = value;
                     RaisePropertyChanged("Discount_SubTotal");
@@ -494,7 +499,7 @@ namespace entity
             {
                 if (_Discount_SubTotal_Vat != value)
                 {
-                   // Calculate_UnitVatDiscount(value);
+                    // Calculate_UnitVatDiscount(value);
 
                     _Discount_SubTotal_Vat = value;
                     RaisePropertyChanged("Discount_SubTotal_Vat");
@@ -511,7 +516,7 @@ namespace entity
         /// <param name="unit_cost"></param>
         public void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
         {
-            this.unit_price= Discount.Calculate_Discount(oldDiscount, value, unit_cost);
+            this.unit_price = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
             RaisePropertyChanged("unit_price");
         }
 
@@ -522,7 +527,7 @@ namespace entity
         public void Calculate_UnitDiscount(decimal discountvat)
         {
             decimal calc_discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat); ;
-            
+
             ApplyDiscount_UnitPrice(_discount, calc_discount, unit_price);
             _discount = calc_discount;
             Calculate_SubTotalDiscount(_discount);
@@ -539,15 +544,15 @@ namespace entity
             Calculate_SubTotalVatDiscount(_DiscountVat);
             RaisePropertyChanged("DiscountVat");
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="discount"></param>
         public void Calculate_SubTotalDiscount(decimal discount)
         {
-           _Discount_SubTotal = _discount * _quantity;
-           RaisePropertyChanged("Discount_SubTotal");
+            _Discount_SubTotal = _discount * _quantity;
+            RaisePropertyChanged("Discount_SubTotal");
         }
 
         /// <summary>

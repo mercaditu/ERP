@@ -146,12 +146,17 @@ namespace entity
             }
             set
             {
-                _CurrencyFX_ID = value;
-
-                if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                if (_CurrencyFX_ID != value)
                 {
-                    unit_cost = Currency.convert_Value(unit_cost, CurrencyFX_ID, App.Modules.Purchase);
-                    RaisePropertyChanged("unit_cost");
+
+                    _CurrencyFX_ID = value;
+
+                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                    {
+
+                        unit_cost = Currency.convert_Value(unit_cost, value, App.Modules.Purchase);
+                        RaisePropertyChanged("unit_cost");
+                    }
                 }
             }
         }
@@ -206,7 +211,7 @@ namespace entity
         }
         private decimal _UnitCost_Vat;
 
-       
+
 
         /// <summary>
         /// 

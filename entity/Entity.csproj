@@ -246,6 +246,14 @@
     <Compile Include="Migrations\201604091308148_updateapp_contractandsales_packing.Designer.cs">
       <DependentUpon>201604091308148_updateapp_contractandsales_packing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604191306596_UpdateSalesPacking.cs" />
+    <Compile Include="Migrations\201604191306596_UpdateSalesPacking.Designer.cs">
+      <DependentUpon>201604191306596_UpdateSalesPacking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604191325564_UpdateItemMovementSalesPacking.cs" />
+    <Compile Include="Migrations\201604191325564_UpdateItemMovementSalesPacking.Designer.cs">
+      <DependentUpon>201604191325564_UpdateItemMovementSalesPacking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
     <Compile Include="Context\Purchase\ImpexDB.cs" />
@@ -895,6 +903,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604091308148_updateapp_contractandsales_packing.resx">
       <DependentUpon>201604091308148_updateapp_contractandsales_packing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604191306596_UpdateSalesPacking.resx">
+      <DependentUpon>201604191306596_UpdateSalesPacking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604191325564_UpdateItemMovementSalesPacking.resx">
+      <DependentUpon>201604191325564_UpdateItemMovementSalesPacking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -145,7 +145,18 @@ namespace entity
                 {
                     _GrandTotal += _contact_subscription.SubTotal_Vat;
                 }
-
+                foreach (contact contact in child)
+                {
+                    if (contact!=null)
+                    {
+                        foreach (contact_subscription _contact_subscription in contact.contact_subscription)
+                        {
+                            _GrandTotal += _contact_subscription.SubTotal_Vat;
+                        }
+                    }
+                  
+                }
+               
                
                 return Math.Round(_GrandTotal, 2);
             }

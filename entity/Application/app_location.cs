@@ -49,7 +49,7 @@ namespace entity
         public virtual IEnumerable<sales_order_detail> sales_order_detail { get; set; }
         public virtual IEnumerable<sales_invoice_detail> sales_invoice_detail { get; set; }
         public virtual IEnumerable<sales_return_detail> sales_return_detail { get; set; }
-        public virtual IEnumerable<sales_packing_detail> sales_return_detail { get; set; }
+        public virtual IEnumerable<sales_packing_detail> sales_packing_detail { get; set; }
 
         public virtual IEnumerable<production_line> production_line { get; set; }
 

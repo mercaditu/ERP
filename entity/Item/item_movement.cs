@@ -34,6 +34,7 @@ namespace entity
         public int? id_sales_invoice { get; set; }
         public int? id_sales_return { get; set; }
         public int? id_inventory { get; set; }
+        public int? id_sales_packing { get; set; }
         public int transaction_id { get; set; }
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
@@ -53,6 +54,7 @@ namespace entity
 
         public virtual app_location app_location { get; set; }
         public virtual item_product item_product { get; set; }
+        public virtual sales_packing sales_packing { get; set; }
         public virtual item_transfer item_transfer { get; set; }
         public virtual production_execution production_execution { get; set; }
         public virtual purchase_invoice purchase_invoice { get; set; }

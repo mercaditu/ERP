@@ -154,7 +154,7 @@ namespace entity.Brillo.Logic
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                     
                     item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
-                                             App.Names.SalesInvoice,
+                                             App.Names.PackingList,
                                              detail.id_sales_packing,
                                              null,
                                              item_product,
@@ -494,6 +494,10 @@ namespace entity.Brillo.Logic
                     {
                         item_movement.id_sales_return= TransactionID;
                     }
+                    else if (ApplicationID == App.Names.PackingList)
+                    {
+                        item_movement.id_sales_packing = TransactionID;
+                    }
                   
                    // item_movement.transaction_id = TransactionID;
                     item_movement.trans_date = TransDate;
@@ -562,13 +566,18 @@ namespace entity.Brillo.Logic
 
                 item_movement._parent = null;
 
-                //Logic for Value in case Parent does not Exist, we will take from 
-                item_movement_value item_movement_value = new item_movement_value();
-                item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
-                item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
-                item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
-                item_movement.item_movement_value.Add(item_movement_value);
-                //Adding into List
+                if (app_currencyfx!=null)
+                {
+                    //Logic for Value in case Parent does not Exist, we will take from 
+              
+                    item_movement_value item_movement_value = new item_movement_value();
+                    item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                    item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
+                    item_movement.item_movement_value.Add(item_movement_value);
+                    //Adding into List
+                
+                }
                 Final_ItemMovementLIST.Add(item_movement);
             }
             //}

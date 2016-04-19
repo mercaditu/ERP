@@ -100,7 +100,11 @@ namespace cntrl
                             _project_task.IsSelected = false;
                         }
                     }
-                    sales_order.sales_order_detail.Add(sales_order_detail);
+                    if (sales_order_detail!=null)
+                    {
+                        sales_order.sales_order_detail.Add(sales_order_detail);
+                    }
+                  
                 }
 
                 sales_order.State = EntityState.Added;

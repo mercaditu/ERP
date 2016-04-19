@@ -109,6 +109,10 @@ namespace cntrl
 
                 sales_order.State = EntityState.Added;
                 sales_order.IsSelected = true;
+                if (sales_order.sales_order_detail.Count()==0)
+                {
+                    return;
+                }
                 db.sales_order.Add(sales_order);
                 db.SaveChanges();
                

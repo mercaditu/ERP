@@ -295,9 +295,7 @@
                             <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:InvoiceInterval}" Width="SizeToHeader"
                                                     x:Name="cbxbillcycle"
                                                     SelectedValueBinding="{Binding bill_cycle,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                            <DataGridTextColumn Binding="{Binding bill_cycle}" 
-                                                Header="{lex:Loc Cognitivo:local:InvoiceInterval}" FontWeight="Bold"
-                                                IsReadOnly="True" Width="*" SortDirection="Descending"/>
+                          
 
                             <DataGridTextColumn Binding="{Binding bill_on, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:InvoiceDay}" Width="SizeToHeader"/>

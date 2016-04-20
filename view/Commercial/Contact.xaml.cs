@@ -76,6 +76,7 @@ namespace Cognitivo.Commercial
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
+            cbxbillcycle.ItemsSource = Enum.GetValues(typeof(contact_subscription.Billng_Cycles));
 
 
             ContactDB.contact_tag

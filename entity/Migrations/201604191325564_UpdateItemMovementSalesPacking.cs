@@ -9,6 +9,7 @@ namespace entity.Migrations
         {
             AddColumn("item_movement", "id_sales_packing", c => c.Int());
             CreateIndex("item_movement", "id_sales_packing");
+           
             AddForeignKey("item_movement", "id_sales_packing", "sales_packing", "id_sales_packing");
         }
         

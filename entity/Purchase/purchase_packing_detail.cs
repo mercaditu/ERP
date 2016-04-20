@@ -21,7 +21,7 @@ namespace entity
         public int id_purchase_packing_detail { get; set; }
         public int id_purchase_packing { get; set; }
         public int? id_purchase_order_detail { get; set; }
-        public int id_location { get; set; }
+        public int? id_location { get; set; }
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_item

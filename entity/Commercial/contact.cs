@@ -98,7 +98,7 @@ namespace entity
         public bool is_employee { get; set; }
         public bool is_sales_rep { get; set; }
         public bool is_active { get; set; }
-
+        public string comment { get; set; }
         public bool is_person { get; set; }
         public DateTime? date_birth { get; set; }
         public Genders? gender { get; set; }

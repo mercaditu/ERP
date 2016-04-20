@@ -902,6 +902,46 @@ namespace Cognitivo.Project
             }
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (project_costingproject_event_template_variable_detailsViewSource != null)
+            {
+                if (project_costingproject_event_template_variable_detailsViewSource.View != null)
+                {
+
+                    project_costingproject_event_template_variable_detailsViewSource.View.Filter = i =>
+                    {
+                        project_event_variable project_event_variable = (project_event_variable)i;
+                        if (project_event_variable.item.name.ToUpper().Contains(txtsearch.Text.ToUpper()) || project_event_variable.item_tag.name.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                            return true;
+                        else
+                            return false;
+                    };
+
+                }
+            }
+        }
+
+        private void txtsearchevent_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (project_costingservices_per_event_detailsViewSource != null)
+            {
+                if (project_costingservices_per_event_detailsViewSource.View != null)
+                {
+
+                    project_costingservices_per_event_detailsViewSource.View.Filter = i =>
+                    {
+                        project_event_fixed project_event_fixed = (project_event_fixed)i;
+                        if (project_event_fixed.item.name.ToUpper().Contains(txtsearchevent.Text.ToUpper()) || project_event_fixed.item_tag.name.ToUpper().Contains(txtsearchevent.Text.ToUpper()))
+                            return true;
+                        else
+                            return false;
+                    };
+
+                }
+            }
+        }
+
 
 
     }

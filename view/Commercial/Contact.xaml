@@ -113,6 +113,8 @@
                     		     Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
                         <CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
                     		      IsChecked="{Binding is_person, FallbackValue=False}"/>
+                        <CheckBox x:Name="chbxIsActive" Content="Is Active?" Style="{StaticResource input_checkbox}"
+                    		      IsChecked="{Binding is_active, FallbackValue=False}"/>
                         <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxIsPerson}">
                             <Label Content="{lex:Loc Gender}" 
                     			Style="{StaticResource input_label}"/>
@@ -171,6 +173,10 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtComment"
+                                 Style="{StaticResource input_textbox}"
+                                 Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                    
                 </WrapPanel>
@@ -286,7 +292,9 @@
                                                     ItemsSource="{Binding Source={StaticResource appContractViewSource}}"
                                                     DisplayMemberPath="name" SelectedValuePath="id_contract" 
                                                     SelectedValueBinding="{Binding id_contract,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-
+                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:InvoiceInterval}" Width="SizeToHeader"
+                                                    x:Name="cbxbillcycle"
+                                                    SelectedValueBinding="{Binding bill_cycle,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                             <DataGridTextColumn Binding="{Binding bill_cycle}" 
                                                 Header="{lex:Loc Cognitivo:local:InvoiceInterval}" FontWeight="Bold"
                                                 IsReadOnly="True" Width="*" SortDirection="Descending"/>

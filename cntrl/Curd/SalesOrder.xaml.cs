@@ -111,6 +111,8 @@ namespace cntrl
                 sales_order.IsSelected = true;
                 if (sales_order.sales_order_detail.Count()==0)
                 {
+                    MessageBox.Show("Please Select a Task For Generating Sales Order...");
+                    btnCancel_Click(null, null);
                     return;
                 }
                 db.sales_order.Add(sales_order);

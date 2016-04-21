@@ -67,9 +67,10 @@ namespace cntrl
                 List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
 
                 sales_order sales_order = new entity.sales_order();
+                //dont assume. show in panel the contact and take it from there. sometimes projects don't have contacts. it si not a requirement.
                 sales_order.id_contact = (int)project.id_contact;
                 sales_order.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
-                sales_order.id_range = (int)cbxDocument.SelectedValue;
+                //sales_order.id_range = (int)cbxDocument.SelectedValue;
                 sales_order.id_project = project.id_project;
                 sales_order.id_condition = (int)cbxCondition.SelectedValue;
                 sales_order.id_contract = (int)cbxContract.SelectedValue;

@@ -124,7 +124,7 @@ namespace Cognitivo.Production
                // production_orderproduction_order_detailViewSource.View.Refresh();
             }
 
-            cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().Where(x => !x.Equals(item.item_type.RawMaterial));
+            cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().ToList();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
 

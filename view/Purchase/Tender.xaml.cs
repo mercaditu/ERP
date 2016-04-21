@@ -169,6 +169,7 @@ namespace Cognitivo.Purchase
                 purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
                 purchase_tender_contact.contact = contact;
                 purchase_tender_contact.id_contact = contact.id_contact;
+                purchase_tender_contact.id_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                 if (contact.lead_time != null)
                 {
                     purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
@@ -199,6 +200,7 @@ namespace Cognitivo.Purchase
                                 purchase_tender_detail.purchase_tender_item = purchase_tender_item;
                                 purchase_tender_detail.quantity = purchase_tender_item.quantity;
                                 purchase_tender_detail.unit_cost = 0;
+                                purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x=>x.is_default).FirstOrDefault().id_vat_group;
                                 purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                             }
                             else
@@ -218,6 +220,8 @@ namespace Cognitivo.Purchase
                                 purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
                                 purchase_tender_detail.purchase_tender_item = purchase_tender_item;
                                 purchase_tender_detail.quantity = 1;
+                                purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+
                                 purchase_tender_detail.unit_cost = 0;
                                 purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                             }
@@ -316,12 +320,7 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void purchase_tender_item_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            List<purchase_tender_detail> purchase_tender_detailList = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().ToList();
-            LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.unit_cost);
-        }
-
+      
         private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)purchase_tender_contact_detailDataGrid.SelectedItem;
@@ -356,6 +355,12 @@ namespace Cognitivo.Purchase
                     }
                 }
             }
+        }
+
+        private void purchase_tender_item_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            List<purchase_tender_detail> purchase_tender_detailList = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().ToList();
+            LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.unit_cost);
         }
 
 

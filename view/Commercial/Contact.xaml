@@ -131,8 +131,24 @@
                     <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="{lex:Loc Contact}" Style="{StaticResource H2}"/>
                         <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtTelephone" Style="{StaticResource input_textbox}"
+                        <TextBox Style="{StaticResource input_textbox}"
                                  Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
+                        <ItemsControl ItemsSource="{Binding}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Label Content="{lex:Loc field_type}" Style="{StaticResource input_label}"/>
+                                        <TextBox Style="{StaticResource input_textbox}"
+                                                Text="{Binding value, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                         <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
                                  Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />

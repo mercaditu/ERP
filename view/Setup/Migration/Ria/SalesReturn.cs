@@ -48,7 +48,7 @@ namespace Cognitivo.Setup.Migration
                        + " MONEDA ON DEVOLUCION.CODMONEDA = MONEDA.CODMONEDA INNER JOIN"
                        + " SUCURSAL ON DEVOLUCION.CODSUCURSAL = SUCURSAL.CODSUCURSAL LEFT OUTER JOIN"
                        + " VENDEDOR ON DEVOLUCION.CODVENDEDOR = VENDEDOR.CODVENDEDOR LEFT OUTER JOIN"
-                       + " VENTAS ON CLIENTES.CODCLIENTE = VENTAS.CODCLIENTE AND DEVOLUCION.CODVENTA = VENTAS.CODVENTA where FECHADEVOLUCION>'1/1/2016'";
+                       + " VENTAS ON CLIENTES.CODCLIENTE = VENTAS.CODCLIENTE AND DEVOLUCION.CODVENTA = VENTAS.CODVENTA ";
 
 
             SqlConnection conn = new SqlConnection(_connString);
@@ -56,7 +56,7 @@ namespace Cognitivo.Setup.Migration
             //Counts Total number of Rows we have to process
             SqlCommand cmd = new SqlCommand(sql, conn);
             conn.Open();
-            cmd.CommandText = "SELECT COUNT(*) FROM DEVOLUCION where FECHADEVOLUCION>'1/1/2016'";
+            cmd.CommandText = "SELECT COUNT(*) FROM DEVOLUCION ";
             cmd.CommandType = CommandType.Text;
             int count = (int)cmd.ExecuteScalar();
             conn.Close();
@@ -78,6 +78,10 @@ namespace Cognitivo.Setup.Migration
                 using (SalesReturnDB db = new SalesReturnDB())
                 {
 
+                    if (value==334)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Test");
+                    }
                     db.Configuration.AutoDetectChangesEnabled = false;
 
                     sales_return sales_return = db.New();
@@ -155,9 +159,9 @@ namespace Cognitivo.Setup.Migration
                     if (!(reader["NUMVENTA"] is DBNull))
                     {
                         string _salesNumber = reader["NUMVENTA"].ToString();
-                        sales_invoice sales_invoice = db.sales_invoice.Where(x => x.number == _salesNumber && x.id_company == id_company).FirstOrDefault();
+                        sales_invoice sales_invoice = db.sales_invoice.Where(x => x.number == _salesNumber ).FirstOrDefault();
                         sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
-                        sales_return.sales_invoice = sales_invoice;
+                     //   sales_return.sales_invoice = sales_invoice;
                     }
 
                     string _desMoneda = string.Empty;
@@ -187,6 +191,20 @@ namespace Cognitivo.Setup.Migration
 
                         string _prod_Name = row["DESPRODUCTO"].ToString();
                         item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
+                        if (item!=null)
+                        {
+                                 sales_return_detail.id_item = item.id_item;
+                            
+                               
+
+                        }
+                        else
+                        {
+                            value += 1;
+                            Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
+                            Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
+                            continue;
+                        }
                         sales_return_detail.id_item = item.id_item;
                         sales_return_detail.quantity = Convert.ToDecimal(row["CANTIDADDEVUELTA"]);
 
@@ -230,8 +248,14 @@ namespace Cognitivo.Setup.Migration
                         sales_return.State = System.Data.Entity.EntityState.Added;
                         sales_return.IsSelected = true;
                         db.sales_return.Add(sales_return);
-
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                     catch  (Exception ex)
+                        {
+                            throw ex;
+                        }
                         if (!(reader["ESTADO"] is DBNull))
                         {
                             int status = Convert.ToInt32(reader["ESTADO"]);

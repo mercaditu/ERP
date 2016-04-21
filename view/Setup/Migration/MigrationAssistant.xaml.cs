@@ -40,6 +40,16 @@ namespace Cognitivo.Setup.Migration
         {
             InitializeComponent();
             dbContext = new db();
+            id_company = CurrentSession.Id_Company;
+            if (CurrentSession.Id_User==0)
+            {
+                id_user = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
+
+                CurrentSession.Id_User = id_user;
+            }
+               
+                   
+                
             //dbContext.Configuration.AutoDetectChangesEnabled = false;
             _cogent_State = false;
         }

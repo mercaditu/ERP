@@ -31,6 +31,8 @@ namespace Cognitivo.Setup.Migration
         public int _product_Max { get; set; }
         public int _sales_Current { get; set; }
         public int _sales_Max { get; set; }
+        public int _salesReturn_Current { get; set; }
+        public int _salesReturn_Max { get; set; }
         public int _purchase_Current { get; set; }
         public int _purchase_Max { get; set; }
 

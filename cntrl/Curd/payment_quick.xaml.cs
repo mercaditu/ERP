@@ -63,7 +63,6 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.MoveCurrentToLast();
 
             
-            payment_detail.payment.id_range = (int)cbxDocument.SelectedValue;
 
         }
 

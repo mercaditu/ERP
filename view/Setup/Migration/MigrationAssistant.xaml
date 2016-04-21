@@ -163,6 +163,26 @@
                                  Value="0" x:Name="progSales"
                                  Maximum="1"/>
                 </StackPanel>
+                
+            </Border>
+            <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                    Background="White"
+                    Width="256" MinHeight="64" Margin="16">
+
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="8,4">
+                        <Image Source="/Cognitivo;component/Images/Menu/modSales.png" Height="32"/>
+                        <Label Content="{lex:Loc SalesReturn}" Style="{StaticResource H3}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}">
+                        <Run x:Name="salesReturnValue" Text="{Binding ElementName=_migration, Path=_salesReturn_Current, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Run Text="/"/>
+                        <Run x:Name="salesReturnMaximum" Text="{Binding ElementName=_migration, Path=_salesReturn_Max, UpdateSourceTrigger=PropertyChanged}"/>
+                    </TextBlock>
+                    <ProgressBar VerticalAlignment="Bottom" Margin="4"
+                                 Value="0" x:Name="progSalesReturn"
+                                 Maximum="1"/>
+                </StackPanel>
             </Border>
 
             <Border CornerRadius="5" BorderBrush="Black" BorderThickness="1"

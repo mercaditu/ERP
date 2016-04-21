@@ -511,6 +511,7 @@
       <DependentUpon>MigrationGUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Setup\Migration\Ria\Accounting.cs" />
+    <Compile Include="Setup\Migration\Ria\SalesReturn.cs" />
     <Compile Include="Setup\Migration\Ria\Sales.cs" />
     <Compile Include="Setup\Migration\Ria\Customer.cs" />
     <Compile Include="Setup\Migration\MigrationAssistant.xaml.cs">

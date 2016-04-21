@@ -74,6 +74,71 @@ namespace entity.Brillo
             return 0;
         }
 
+        public static decimal convert_Values(decimal originalValue, int old_app_currencyfx,int id_app_currencyfx, App.Modules? Modules)
+        {
+            decimal rate = 0;
+            app_currencyfx app_currencyfx = null;
+            app_currencyfx app_currencyfxold = null;
+
+            using (db db = new db())
+            {
+                app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
+                app_currencyfxold = db.app_currencyfx.Where(x => x.id_currencyfx == old_app_currencyfx).FirstOrDefault();
+
+                if (app_currencyfx != null)
+                {
+                    if (Modules == App.Modules.Sales)
+                    {
+                        rate = app_currencyfx.buy_value;
+                    }
+                    else //Purchase Rates
+                    {
+                        rate = app_currencyfx.sell_value;
+                    }
+
+                    if (app_currencyfx.app_currency == null)
+                    {
+                        Rate_Previous = rate;
+                        return originalValue * rate;
+                    }
+                    else
+                    {
+                        if (app_currencyfx.app_currency.is_priority == false && app_currencyfxold.app_currency.is_priority == false)
+                        {
+                            app_currencyfx app_currencyfxprior=db.app_currencyfx.Where(x=>x.app_currency.is_priority).FirstOrDefault();
+                        }
+                        else if (app_currencyfx.app_currency.is_priority == true) //Towards Default
+                        {
+                           
+
+
+                            if (app_currencyfxold != null)
+                            {
+                                if (Modules == App.Modules.Sales)
+                                {
+                                    rate = app_currencyfxold.buy_value;
+                                }
+                                else //Purchase Rates
+                                {
+                                    rate = app_currencyfxold.sell_value;
+                                }
+                            }
+
+                            return originalValue * rate;
+                        }
+                        else //Away from Default
+                        {
+                            Rate_Previous = rate;
+                            return originalValue * rate;
+                        }
+                    }
+
+                  
+                }
+            }
+            return 0;
+        }
+
         /// <summary>
         /// 
         /// </summary>

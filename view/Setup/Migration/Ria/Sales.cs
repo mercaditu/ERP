@@ -367,7 +367,7 @@ namespace Cognitivo.Setup.Migration
                     else
                     {
                         //Add code to include error contacts into
-                        SalesInvoice_ErrorList.Add(sales_invoice);
+                        sales_return_ErrorList.Add(sales_invoice);
                     }
                 }
             }

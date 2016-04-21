@@ -61,12 +61,7 @@ namespace cntrl.Curd
             // entity.db.payment_detail.Add(payment_detail);
             paymentpayment_detailViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.MoveCurrentToLast();
-
-            
-
         }
-
-
 
         public event btnSave_ClickedEventHandler btnSave_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);

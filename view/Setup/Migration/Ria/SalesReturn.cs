@@ -165,14 +165,14 @@ namespace Cognitivo.Setup.Migration
                     //Sales Invoice Detail
                     string sqlDetail = "SELECT"
                     + " dbo.PRODUCTOS.DESPRODUCTO," //0
-                    + " dbo.DEVOLUCIONDETALLE.CANTIDADVENTA," //1
-                    + " dbo.DEVOLUCIONDETALLE.PRECIOVENTANETO, " //2
-                    + " dbo.DEVOLUCIONDETALLE.PRECIOVENTALISTA, " //3
+                    + " dbo.DEVOLUCIONDETALLE.CANTIDADDEVUELTA," //1
+                    + " dbo.DEVOLUCIONDETALLE.PRECIONETO, " //2
                     + " dbo.DEVOLUCIONDETALLE.COSTOPROMEDIO, " //4
                     + " dbo.DEVOLUCIONDETALLE.COSTOULTIMO, " //5
                     + " dbo.DEVOLUCIONDETALLE.IVA, " //6
+                    + " dbo.DEVOLUCION.COTIZACION1 " //6
                     + " FROM dbo.DEVOLUCION LEFT OUTER JOIN"
-                    + " dbo.DEVOLUCIONDETALLE ON dbo.DEVOLUCION.CODDEVOLUCION = dbo.DEVOLUCIONDETALLE.CODDEVOLUCIONLEFT OUTER JOIN"
+                    + " dbo.DEVOLUCIONDETALLE ON dbo.DEVOLUCION.CODDEVOLUCION = dbo.DEVOLUCIONDETALLE.CODDEVOLUCION LEFT OUTER JOIN"
                     + " dbo.PRODUCTOS ON dbo.DEVOLUCIONDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO"
                     + " WHERE (dbo.DEVOLUCIONDETALLE.CODDEVOLUCION = " + reader["CODDEVOLUCION"].ToString() + ")";
 
@@ -183,59 +183,46 @@ namespace Cognitivo.Setup.Migration
                         sales_return.id_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
                         sales_return.app_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
 
-                        sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                        sales_return_detail sales_return_detail = new sales_return_detail();
 
                         string _prod_Name = row["DESPRODUCTO"].ToString();
                         item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
-                        sales_invoice_detail.id_item = item.id_item;
-                        sales_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADVENTA"]);
+                        sales_return_detail.id_item = item.id_item;
+                        sales_return_detail.quantity = Convert.ToDecimal(row["CANTIDADDEVUELTA"]);
 
-                        sales_invoice_detail.id_location = id_location;
-                        sales_invoice_detail.app_location = app_location;
+                        sales_return_detail.id_location = id_location;
+                        sales_return_detail.app_location = app_location;
 
                         string _iva = row["IVA"].ToString();
                         if (_iva == "10.00")
                         {
-                            sales_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
+                            sales_return_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault().id_vat_group;
                         }
                         else if (_iva == "5.00")
                         {
-                            sales_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault().id_vat_group;
+                            sales_return_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault().id_vat_group;
                         }
                         else
                         {
                             if (db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
                             {
-                                sales_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
+                                sales_return_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
                             }
 
                         }
 
                         decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
-                        sales_invoice_detail.unit_price = (Convert.ToDecimal(row["PRECIOVENTANETO"]) / sales_invoice_detail.quantity) / cotiz1;
-                        sales_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]);
+                        sales_return_detail.unit_price = (Convert.ToDecimal(row["PRECIONETO"]) / sales_return_detail.quantity) / cotiz1;
+                        if (!(row["COSTOPROMEDIO"] is DBNull))
+                        { sales_return_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]); }
+                      
 
                         //Commit Sales Invoice Detail
-                        sales_return.sales_invoice_detail.Add(sales_invoice_detail);
+                        sales_return.sales_return_detail.Add(sales_return_detail);
 
-                        _desMoneda = row["DESMONEDA"].ToString();
-
-                        //if (_iva == "10.00")
-                        //{
-                        //    sales_invoice_vat sales_invoice_vat = new sales_invoice_vat();
-                        //    sales_invoice_vat.unit_value = sales_invoice_detail.unit_price * (decimal)0.1;
-                        //    sales_invoice_vat.id_vat = db.app_vat.Where(x => x.coefficient == 0.10M).FirstOrDefault().id_vat;
-                        //    sales_invoice_detail.sales_invoice_detail_vat.Add(sales_invoice_vat);
-                        //}
-                        //else if (_iva == "5.00")
-                        //{
-                        //    sales_invoice_vat sales_invoice_vat = new sales_invoice_vat();
-                        //    sales_invoice_vat.unit_value = sales_invoice_detail.unit_price * (decimal)0.05;
-                        //    sales_invoice_vat.id_vat = db.app_vat.Where(x => x.coefficient == (decimal)0.05).FirstOrDefault().id_vat;
-                        //    sales_invoice_detail.sales_invoice_detail_vat.Add(sales_invoice_vat);
-                        //}
+                      
                     }
-
+                    sales_return.return_type = Status.ReturnTypes.Bonus;
 
                     if (sales_return.Error == null)
                     {
@@ -249,8 +236,8 @@ namespace Cognitivo.Setup.Migration
 
 
                         value += 1;
-                        Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
-                        Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
+                        Dispatcher.BeginInvoke((Action)(() => progSalesReturn.Value = value));
+                        Dispatcher.BeginInvoke((Action)(() => salesReturnValue.Text = value.ToString()));
                     }
                     else
                     {

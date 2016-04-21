@@ -232,7 +232,39 @@ namespace Cognitivo.Setup.Migration
                         db.sales_return.Add(sales_return);
 
                         db.SaveChanges();
-                       
+                        if (!(reader["ESTADO"] is DBNull))
+                        {
+                            int status = Convert.ToInt32(reader["ESTADO"]);
+                            if (status == 0)
+                            {
+                                sales_return.status = Status.Documents_General.Pending;
+                                if (!(reader[11] is DBNull))
+                                {
+                                    sales_return.comment = reader[11].ToString();
+                                }
+
+                            }
+                            else if (status == 1)
+                            {
+                                sales_return.status = Status.Documents_General.Approved;
+                                if (!(reader[11] is DBNull))
+                                {
+                                    sales_return.comment = reader[11].ToString();
+                                }
+                                db.Approve();
+                            }
+                            else if (status == 2)
+                            {
+                                sales_return.status = Status.Documents_General.Annulled;
+                                if (!(reader[11] is DBNull))
+                                {
+                                    sales_return.comment = reader[11].ToString();
+                                }
+                                db.Approve();
+                                db.Anull();
+                            }
+
+                        }
 
 
                         value += 1;

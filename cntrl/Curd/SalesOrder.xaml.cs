@@ -80,8 +80,8 @@ namespace cntrl
 
                 foreach (project_task _project_task in project_task)
                 {
-                    if (_project_task.items.id_item_type == item.item_type.Task)
-                    {
+                    //if (_project_task.items.id_item_type == item.item_type.Task)
+                    //{
                         sales_order_detail = new sales_order_detail();
                         sales_order_detail.id_sales_order = sales_order.id_sales_order;
                         sales_order_detail.sales_order = sales_order;
@@ -91,15 +91,15 @@ namespace cntrl
                         sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0M : _project_task.unit_price_vat);
                         sales_order_detail.id_project_task = _project_task.id_project_task;
                         _project_task.IsSelected = false;
-                    }
-                    else
-                    {
-                        if (sales_order_detail != null)
-                        {
-                            sales_order_detail.id_project_task = _project_task.id_project_task; ;
-                            _project_task.IsSelected = false;
-                        }
-                    }
+                    //}
+                    //else
+                    //{
+                    //    if (sales_order_detail != null)
+                    //    {
+                    //        sales_order_detail.id_project_task = _project_task.id_project_task; ;
+                    //        _project_task.IsSelected = false;
+                    //    }
+                    //}
                     if (sales_order_detail!=null)
                     {
                         sales_order.sales_order_detail.Add(sales_order_detail);
@@ -109,12 +109,7 @@ namespace cntrl
 
                 sales_order.State = EntityState.Added;
                 sales_order.IsSelected = true;
-                if (sales_order.sales_order_detail.Count()==0)
-                {
-                    MessageBox.Show("Please Select a Task For Generating Sales Order...");
-                    btnCancel_Click(null, null);
-                    return;
-                }
+               
                 db.sales_order.Add(sales_order);
                 db.SaveChanges();
                

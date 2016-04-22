@@ -19,7 +19,7 @@ namespace entity
         public short id_contact_field { get; set; }
         public int id_contact { get; set; }
         [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
+       
         public short id_field { get; set; }
         public string value { get; set; }
     

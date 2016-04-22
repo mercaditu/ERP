@@ -191,8 +191,7 @@ namespace Cognitivo.Project.Development
                     purchase_tender_item.id_item = project_task.id_item;
                     purchase_tender_item.item_description = project_task.item_description;
                     purchase_tender_item.quantity = (decimal)project_task.quantity_est;
-
-
+                
                     foreach (project_task_dimension project_task_dimension in project_task.project_task_dimension)
                     {
                         purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();

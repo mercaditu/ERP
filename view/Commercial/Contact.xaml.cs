@@ -16,7 +16,7 @@ namespace Cognitivo.Commercial
         ContactDB ContactDB = new ContactDB();
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
-        CollectionViewSource contact_subscriptionViewSource;
+        CollectionViewSource contact_subscriptionViewSource, contactcontact_field_valueViewSource;
         #region Initilize and load
         public Contact()
         {
@@ -26,6 +26,7 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
+            contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
             entity.Properties.Settings _entity = new entity.Properties.Settings();
 
             //Contact
@@ -69,6 +70,8 @@ namespace Cognitivo.Commercial
             //AppCurrency
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            CollectionViewSource app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
+            app_fieldViewSource.Source = ContactDB.app_field.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppBank
             CollectionViewSource bankViewSource = (CollectionViewSource)FindResource("bankViewSource");
@@ -484,6 +487,39 @@ namespace Cognitivo.Commercial
            // FilterSubscription();
         }
 
+        private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Add_field();
+        
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Add_field();
+        }
+        private void Add_field()
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                using (db db= new db())
+                {
+                    if (db.app_field.Where(x=>x.field_type==app_field.field_types.Account).Count()==0)
+                    {
+                        app_field app_field = new app_field();
+                        app_field.field_type = entity.app_field.field_types.Account;
+                        app_field.name = "Account";
+                        db.app_field.Add(app_field);
+                        db.SaveChanges();
+                    }
+                  
+                }
+                contact_field_value contact_field_value = new contact_field_value();
+                contact.contact_field_value.Add(contact_field_value);
+                contactViewSource.View.Refresh();
+                contactcontact_field_valueViewSource.View.Refresh();
+            }
+        }
        
 
        

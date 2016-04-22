@@ -20,6 +20,7 @@ namespace entity
         public int id_purchase_tender_detail { get; set; }
         public int id_purchase_tender_contact { get; set; }
         public int id_purchase_tender_item { get; set; }
+      
         public string item_description { get; set; }
         public decimal quantity
         {
@@ -129,6 +130,7 @@ namespace entity
         private decimal _SubTotal_Vat;
         public virtual purchase_tender_contact purchase_tender_contact { get; set; }
         public virtual purchase_tender_item purchase_tender_item { get; set; }
+    
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
 
 

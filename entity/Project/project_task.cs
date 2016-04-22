@@ -13,7 +13,7 @@ namespace entity
         public project_task()
         {
             project_task_dimension = new List<project_task_dimension>();
-
+            sales_order_detail = new List<sales_order_detail>();
             trans_date = DateTime.Now;
             child = new List<project_task>();
             is_active = true;

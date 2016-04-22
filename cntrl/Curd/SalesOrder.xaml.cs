@@ -146,7 +146,7 @@ namespace cntrl
                         sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0M : _project_task.unit_price_vat);
                         sales_order_detail.id_project_task = _project_task.id_project_task;
                         _project_task.IsSelected = false;
-                        _project_task.sales_detail = sales_order_detail;
+                       // _project_task.sales_detail = sales_order_detail;
                     //}
                     //else
                     //{

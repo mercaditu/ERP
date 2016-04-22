@@ -16,7 +16,7 @@ namespace entity
             is_head = true;
             quantity = 1;
            
-            //project_task = new List<project_task>();
+           // project_task = new List<project_task>();
         }
 
         [Key]

@@ -42,6 +42,7 @@
         <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="bankViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_bank}, CreateList=True}"/>
+        
     </Page.Resources>
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
@@ -130,10 +131,30 @@
 
                     <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="{lex:Loc Contact}" Style="{StaticResource H2}"/>
-                        <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
+                            <!--<Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
+                                   Style="{StaticResource btn_Label}"/>-->
+                        </StackPanel>
+               
                         <TextBox Style="{StaticResource input_textbox}"
                                  Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-                        <!--<ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">
+                     
+                        <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
+                                 Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
+                        <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="txtAddress"
+                                 Style="{StaticResource input_textbox}"
+                                 Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
+                        <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
+                            <Label Content="+" HorizontalAlignment="Left" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
+                                   Style="{StaticResource btn_Label}"/>
+                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}" Height="150">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel/>
@@ -143,10 +164,10 @@
                                 <DataTemplate>
                                     <StackPanel>
                                         <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
-                                         
+                                         ItemsSource="{Binding Source={StaticResource app_fieldViewSource}}"
 						                  DisplayMemberPath="name" Width="Auto"
-						                  SelectedValuePath="id_sales_rep" 
-						                  SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
+						                  SelectedValuePath="id_field" 
+						                  SelectedValue="{Binding id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel/>
@@ -158,16 +179,7 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                        </ItemsControl>-->
-                        <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
-                                 Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-                        <Label Content="{lex:Loc Address}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtAddress"
-                                 Style="{StaticResource input_textbox}"
-                                 Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
-                        <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
+                        </ItemsControl>
                     </StackPanel>
                     
                     <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 

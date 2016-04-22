@@ -52,7 +52,7 @@ namespace cntrl
         }
 
         private project _project;
-        public SalesOrderDB db { get; set; }
+        public SalesOrderDB SalesOrderDB { get; set; }
         public Boolean Generate_Invoice { get; set; }
 
         public SalesOrder()
@@ -70,10 +70,10 @@ namespace cntrl
                 sales_order sales_order = new entity.sales_order();
 
              
-                if ( db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault()!=null)
+                if ( SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault()!=null)
                 {
                 sales_order.id_contact = (int)project.id_contact;
-                sales_order.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+                sales_order.contact = SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
                 }
                 else
                 {
@@ -82,7 +82,9 @@ namespace cntrl
                 }
                 
                 sales_order.id_range = (int)cbxDocument.SelectedValue;
+
                 sales_order.id_project = project.id_project;
+
                 if (Convert.ToInt16(cbxCondition.SelectedValue)>0)
                 {
                 sales_order.id_condition = (int)cbxCondition.SelectedValue;
@@ -154,15 +156,15 @@ namespace cntrl
                 sales_order.State = EntityState.Added;
                 sales_order.IsSelected = true;
                
-                db.sales_order.Add(sales_order);
-                db.SaveChanges();
+                SalesOrderDB.sales_order.Add(sales_order);
+                SalesOrderDB.SaveChanges();
                
                 if (Generate_Invoice)
                 {
-                    db.Approve();
+                    SalesOrderDB.Approve();
                     sales_invoice sales_invoice = new entity.sales_invoice();
                     sales_invoice.id_contact = (int)project.id_contact;
-                    sales_invoice.contact = db.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+                    sales_invoice.contact = SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
                     sales_invoice.sales_order = sales_order;
                     sales_invoice.id_project = project.id_project;
                     sales_invoice.id_condition = (int)cbxCondition.SelectedValue;
@@ -202,10 +204,10 @@ namespace cntrl
                     sales_invoice.IsSelected = true;
                     crm_opportunity crm_opportunity = sales_order.crm_opportunity;
                     crm_opportunity.sales_invoice.Add(sales_invoice);
-                    db.crm_opportunity.Attach(crm_opportunity);
-                    db.sales_invoice.Add(sales_invoice);
+                    SalesOrderDB.crm_opportunity.Attach(crm_opportunity);
+                    SalesOrderDB.sales_invoice.Add(sales_invoice);
                 }
-                db.SaveChanges();
+                SalesOrderDB.SaveChanges();
                 btnCancel_Click(null, null);
             }
         }
@@ -224,11 +226,11 @@ namespace cntrl
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            db.app_contract.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).ToList();
-            cbxContract.ItemsSource = db.app_contract.Local;
+            SalesOrderDB.app_contract.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).ToList();
+            cbxContract.ItemsSource = SalesOrderDB.app_contract.Local;
 
-            db.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
-            cbxCondition.ItemsSource = db.app_condition.Local;
+            SalesOrderDB.app_condition.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
+            cbxCondition.ItemsSource = SalesOrderDB.app_condition.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
@@ -242,7 +244,7 @@ namespace cntrl
             {
 
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = db.app_contract.Where(a => a.is_active == true
+                cbxContract.ItemsSource = SalesOrderDB.app_contract.Where(a => a.is_active == true
                                                                         && a.id_company == entity.Properties.Settings.Default.company_ID
                                                                         && a.id_condition == app_condition.id_condition).ToList();
                 cbxContract.SelectedIndex = 0;
@@ -255,19 +257,19 @@ namespace cntrl
             {
 
                 app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
-                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == app_document_range.id_range).FirstOrDefault();
+                app_document_range _app_range = SalesOrderDB.app_document_range.Where(x => x.id_range == app_document_range.id_range).FirstOrDefault();
 
-                if (db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
+                if (SalesOrderDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
                 {
-                    entity.Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
+                    entity.Brillo.Logic.Range.branch_Code = SalesOrderDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
                 }
-                if (db.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault() != null)
+                if (SalesOrderDB.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault() != null)
                 {
-                    entity.Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
+                    entity.Brillo.Logic.Range.terminal_Code = SalesOrderDB.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
                 }
-                if (db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault() != null)
+                if (SalesOrderDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault() != null)
                 {
-                    entity.Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault().code;
+                    entity.Brillo.Logic.Range.user_Code = SalesOrderDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault().code;
                 }
 
                 txtnumber.Text = entity.Brillo.Logic.Range.calc_Range(_app_range, false);

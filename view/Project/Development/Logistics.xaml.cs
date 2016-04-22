@@ -73,7 +73,7 @@ namespace Cognitivo.Project.Development
                                                         _name = last.Key.items != null ? last.Key.items.name : "",
                                                         _id_task = last.Max(x => x.id_project_task),
                                                         _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
-                                                        avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
+                                                        avlqtyColumn = last.Key.IM.credit - last.Key.IM.debit,
                                                         buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0),
                                                         item = last.Key.items
                                                     }).ToList();
@@ -156,7 +156,7 @@ namespace Cognitivo.Project.Development
                 int id_project = ((project)projectViewSource.View.CurrentItem).id_project;
 
                 List<project_task> productlist = ProjectTaskDB.project_task.ToList();
-                productlist = productlist.Where(x => x.IsSelected == true).ToList();
+                productlist = productlist.Where(x => x.IsSelected == true ).ToList();
 
                 purchase_tender purchase_tender = new purchase_tender();
                 purchase_tender.status = Status.Documents_General.Pending;
@@ -430,6 +430,8 @@ namespace Cognitivo.Project.Development
                 itemDataGrid.ItemsSource = null;
             }
         }
+
+
 
 
 

@@ -313,6 +313,35 @@ namespace Cognitivo.Accounting
             crud_modal.Children.Add(AccountingJournal);
         }
 
+        private void DeleteCommandBinding_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as accounting_journal != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    accounting_journal accounting_journal = accounting_journalViewSource.View.CurrentItem as accounting_journal;
+                    entity.db.accounting_journal.Remove(e.Parameter as accounting_journal);
+                    accounting_journalViewSource.View.Refresh();
+                    entity.db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            { 
+
+                toolbar.msgError(ex);
+            }
+        }
+
        
 
        

@@ -116,7 +116,7 @@ namespace entity.Brillo.Document
                         AmountWords = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding ?
 
                         // Text -> Words
-                        NumToWords.IntToText(Convert.ToInt32(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))
+                        NumToWords.IntToText(Convert.ToInt64(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))
                         :
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
@@ -181,7 +181,7 @@ namespace entity.Brillo.Document
                         AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
 
                         // Text -> Words
-                        NumToWords.IntToText(Convert.ToInt32(g.sales_order != null ? g.sales_order.GrandTotal : 0))
+                        NumToWords.IntToText(Convert.ToInt64(g.sales_order != null ? g.sales_order.GrandTotal : 0))
                         :
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_order != null ? g.sales_order.GrandTotal : 0))) : "" : "" : "",
 
@@ -250,7 +250,7 @@ namespace entity.Brillo.Document
                     AmountWords = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding ?
 
                     // Text -> Words
-                    NumToWords.IntToText(Convert.ToInt32(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
+                    NumToWords.IntToText(Convert.ToInt64(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))
                     :
                     NumToWords.DecimalToText((Convert.ToDecimal(g.sales_invoice != null ? g.sales_invoice.GrandTotal : 0))) : "" : "" : "",
 

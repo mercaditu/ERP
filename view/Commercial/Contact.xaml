@@ -133,7 +133,7 @@
                         <Label Content="{lex:Loc Telephone}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}"
                                  Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-                        <ItemsControl ItemsSource="{Binding}">
+                        <!--<ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel/>
@@ -142,13 +142,23 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Label Content="{lex:Loc field_type}" Style="{StaticResource input_label}"/>
+                                        <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
+                                         
+						                  DisplayMemberPath="name" Width="Auto"
+						                  SelectedValuePath="id_sales_rep" 
+						                  SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
+                                            <ComboBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <VirtualizingStackPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ComboBox.ItemsPanel>
+                                        </ComboBox>
                                         <TextBox Style="{StaticResource input_textbox}"
                                                 Text="{Binding value, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        </ItemsControl>-->
                         <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
                                  Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />

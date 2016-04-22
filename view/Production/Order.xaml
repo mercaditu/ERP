@@ -227,6 +227,8 @@
                                         <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*" />
                                         <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Required}" CellStyle="{StaticResource Number_CellStyle}" Width="auto" />
+                                        <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N}}" Header="Qty Available" CellStyle="{StaticResource Number_CellStyle}" Width="SizeToHeader" />
+                                        <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N}}" Header="Qty Available" CellStyle="{StaticResource Number_CellStyle}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" Header="Qty Available" CellStyle="{StaticResource Number_CellStyle}" Width="SizeToHeader" />
                                         <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" Header="buy qty" CellStyle="{StaticResource Number_CellStyle}" Width="SizeToHeader" />
                                     </DataGrid.Columns>

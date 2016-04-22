@@ -54,7 +54,7 @@
 						                            SelectedValueBinding="{Binding id_chart,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                            DisplayMemberPath="name" 
 						                            SelectedValuePath="id_chart" Header="Chart" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding coefficeint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:P}}" 
+                            <DataGridTextColumn Binding="{Binding coefficeint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                 Header="{lex:Loc Cognitivo:local:Coeficient}" Width="SizeToHeader"/>
                             <DataGridCheckBoxColumn Binding="{Binding is_debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Debit}" Width="SizeToHeader"/>

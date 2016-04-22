@@ -152,8 +152,14 @@ namespace entity
                             ProductTransferDB.item_transfer.Add(_item_transfer);
 
                             ProductTransferDB.SaveChanges();
-                            ProductTransferDB.ApproveOrigin(_item_transfer.app_branch_origin.id_branch, _item_transfer.app_branch_destination.id_branch, false);
-                            ProductTransferDB.ApproveDestination(_item_transfer.app_branch_origin.id_branch, _item_transfer.app_branch_destination.id_branch, false);
+                            //ProductTransferDB.ApproveOrigin(_item_transfer.app_branch_origin.id_branch, _item_transfer.app_branch_destination.id_branch, false);
+                            //ProductTransferDB.ApproveDestination(_item_transfer.app_branch_origin.id_branch, _item_transfer.app_branch_destination.id_branch, false);
+                           
+                            
+                            
+                            
+                            
+                            
                             //int id_location = (int)item.id_location;
                             //item_movement item_movement_origin = new item_movement();
                             //item_movement_origin.debit = item.quantity;

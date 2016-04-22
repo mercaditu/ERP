@@ -195,7 +195,7 @@ namespace Cognitivo.Production
                                                          _id_task = last.Max(x => x.id_project_task),
                                                          _ordered_quantity = last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0,
                                                          item = last.Key.item,
-                                                         avlqtyColumn = last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0,
+                                                         avlqtyColumn = last.Key.IM.credit - last.Key.IM.debit,
                                                          buyqty = (last.Sum(x => x.quantity) != 0 ? last.Sum(x => x.quantity) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0)
                                                      }).ToList();
 

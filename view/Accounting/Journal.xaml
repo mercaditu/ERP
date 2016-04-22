@@ -15,6 +15,9 @@
         <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
                         CanExecute="EditCommand_CanExecute" 
                         Executed="EditCommand_Executed"/>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="accounting_cycleViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:accounting_cycle}, CreateList=True}"/>
@@ -72,6 +75,15 @@
                         <DataTemplate>
                             <Button Command="customcmd:CustomCommands.EditAll"
                                                     Style="{StaticResource btnEditChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="Auto" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
                                                     CommandParameter="{Binding}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

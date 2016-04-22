@@ -164,10 +164,10 @@
                     </StackPanel>
                 </ScrollViewer>
                
-                <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1">
+                <StackPanel  Grid.Column="1">
                     <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
 
-                    <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal">
+                    <StackPanel x:Name="stackpnlCustomize" Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="A" Style="{StaticResource btn_Label}"/>
                         <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
                             <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
@@ -195,8 +195,8 @@
                                         </Hyperlink>
                         </TextBlock>
                     </StackPanel>
-                    
-                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="" Style="{StaticResource ico_Label}" 
                                 FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                         <TextBlock Style="{StaticResource text_Data}">
@@ -226,7 +226,7 @@
                     </ItemsControl>
 
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRep, Converter={StaticResource BoolToVisibility}, 
-                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="" Style="{StaticResource ico_Label}"/>
                         <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
                         <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
@@ -237,7 +237,7 @@
                     </StackPanel>
 
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRepresentative, Converter={StaticResource BoolToVisibility}, 
-                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="" Style="{StaticResource ico_Label}"/>
                         <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
                         <ComboBox  Style="{StaticResource ComboToLabelStyle}" DisplayMemberPath="name"
@@ -249,12 +249,13 @@
                           ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"/>
                     </StackPanel>
 
-
+                    <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="commentTextBox" Style="{StaticResource input_textbox}" Width="140"
                              Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}" Margin="4,0,0,4" Height="64"/>
                     <TextBox x:Name="TextBox" Style="{StaticResource input_textbox}" Width="140"
                     	Text="{Binding comment}" Visibility="Hidden" Margin="4,0,0,4" Height="50"/>
+                    </StackPanel>
                 </StackPanel>
                 
                 

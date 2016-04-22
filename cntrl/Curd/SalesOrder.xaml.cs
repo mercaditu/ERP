@@ -134,6 +134,7 @@ namespace cntrl
                         sales_order_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0M : _project_task.unit_price_vat);
                         sales_order_detail.id_project_task = _project_task.id_project_task;
                         _project_task.IsSelected = false;
+                        _project_task.sales_detail = sales_order_detail;
                     //}
                     //else
                     //{
@@ -173,8 +174,8 @@ namespace cntrl
 
                     foreach (project_task _project_task in project_task)
                     {
-                        if (_project_task.items.id_item_type == item.item_type.Task)
-                        {
+                        //if (_project_task.items.id_item_type == item.item_type.Task)
+                        //{
                             sales_invoice_detail = new sales_invoice_detail();
                             sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
                             sales_invoice_detail.sales_invoice = sales_invoice;
@@ -184,15 +185,16 @@ namespace cntrl
                             sales_invoice_detail.UnitPrice_Vat = (decimal)(_project_task.unit_price_vat == null ? 0M : _project_task.unit_price_vat);
                             sales_invoice_detail.id_project_task = _project_task.id_project_task;
                             _project_task.IsSelected = false;
-                        }
-                        else
-                        {
-                            if (sales_invoice_detail != null)
-                            {
-                                sales_invoice_detail.id_project_task = _project_task.id_project_task;
-                                _project_task.IsSelected = false;
-                            }
-                        }
+                           
+                        //}
+                        //else
+                        //{
+                        //    if (sales_invoice_detail != null)
+                        //    {
+                        //        sales_invoice_detail.id_project_task = _project_task.id_project_task;
+                        //        _project_task.IsSelected = false;
+                        //    }
+                        //}
                         sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                     }
 

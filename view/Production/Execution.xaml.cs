@@ -96,7 +96,7 @@ namespace Cognitivo.Production
             filter_order(production_order_detaillProductViewSource, item.item_type.Product);
             filter_order(production_order_detaillRawViewSource, item.item_type.RawMaterial);
             filter_order(production_order_detaillSupplyViewSource, item.item_type.Supplies);
-            filter_order(production_order_detaillServiceContractViewSource, item.item_type.Service);
+            filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
             filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
             filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
            

@@ -80,9 +80,19 @@ namespace cntrl
                     toolBar.msgWarning("Contact Not Found...");
                     return;
                 }
-                
-                sales_order.id_range = (int)cbxDocument.SelectedValue;
 
+                if (Generate_Invoice)
+                {
+                    if (cbxDocument.SelectedValue != null)
+                    {
+                        sales_order.id_range = (int)cbxDocument.SelectedValue;
+                    }
+                    else
+                    {
+                        toolBar.msgWarning("Document Range Needed for Approval");
+                        return;
+                    }
+                }
                 sales_order.id_project = project.id_project;
 
                 if (Convert.ToInt16(cbxCondition.SelectedValue)>0)

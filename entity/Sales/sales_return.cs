@@ -125,6 +125,11 @@ namespace entity
                         }
                     }
                 }
+                else
+                {
+                    _DiscountPercentage = value;
+                    RaisePropertyChanged("DiscountPercentage");
+                }
             }
         }
         private decimal _DiscountPercentage;

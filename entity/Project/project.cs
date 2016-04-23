@@ -29,7 +29,26 @@ namespace entity
         public int? id_branch { get; set; }
         public int? id_contact { get; set; }
 
-        public int? id_currency { get; set; }
+        public int? id_currency
+        {
+            get { return _id_currency;}
+            set
+            {
+                _id_currency=value;
+                using (db db = new db())
+                {
+                    if (db.app_currencyfx.Where(x => x.id_currency ==value && x.is_active).FirstOrDefault() != null)
+                    {
+                        CurrecyFx_ID = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
+                    }
+
+                }
+            }
+        }
+        int? _id_currency;
+
+        [NotMapped]
+        public int? CurrecyFx_ID { get; set; }
 
         [Required]
         public string name { get; set; }

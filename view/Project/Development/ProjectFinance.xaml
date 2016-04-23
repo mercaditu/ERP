@@ -11,6 +11,7 @@
             xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
       xmlns:loc="clr-namespace:cntrl.Converters;assembly=cntrl"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
+      
       xmlns:data="clr-namespace:entity;assembly=entity"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl" 
@@ -23,6 +24,7 @@
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
+        <converter:Status2ColorConverter x:Key="Status2ColorConverter"/>
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
         <converter:salesorderdetailtostatus x:Key="salesorderdetailtostatus"/>
         <converter:salesorderdetailtoEnable x:Key="salesorderdetailtoEnable"/>
@@ -98,9 +100,9 @@
 
                     <HierarchicalDataTemplate DataType="{x:Type data:project_task}" 
                                               ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay}">
-                        <Panels:pnl_TreeView StatusColor="{Binding sales_detail, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
-                                                                   Converter={StaticResource salesorderdetailtostatus}}" 
-                                             IsEnabled="{Binding sales_detail, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                        <Panels:pnl_TreeView StatusColor="{Binding sales_detail.sales_order.status, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
+                                                                   Converter={StaticResource Status2ColorConverter}}" 
+                                             IsEnabled="{Binding Path=., Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged,
                                                                    Converter={StaticResource salesorderdetailtoEnable}}" 
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
@@ -147,6 +149,18 @@
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Pending Payment"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding pending_payment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
+                <!--<Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Order"/>
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
+                       Content="{Binding total_order,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Rejected Order"/>
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
+                       Content="{Binding total_rejected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Invoice"/>
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
+                       Content="{Binding total_invoice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Rejected Invoice"/>
+                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
+                       Content="{Binding total_rejected_invoice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>-->
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding parent.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, FallbackValue=---}"/>
                 <TextBlock Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
@@ -164,9 +178,9 @@
 
 
 
-                <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem_, ElementName=treeProject}">
+                <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem, ElementName=treeProject}">
                     <StackPanel x:Name="stpcode" >
-                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" DataContext="{Binding}">
 
                             <Label Content="" Style="{StaticResource ico_Label}"/>
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
@@ -188,15 +202,17 @@
                                     <StackPanel>
                                         <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
                                     <Hyperlink PreviewMouseUp="salesorder_PreviewMouseUp" Tag="{Binding sales_detail.sales_order}">
-                                        <Run  Text="{Binding sales_detail.sales_order.number}" />
+                                        <Run  Text="{Binding sales_detail.id_sales_order}" />
                                     </Hyperlink>
                                         </TextBlock>
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <metro:ToggleSwitch x:Name="ToggleQuantity" OnLabel="BasedOnEstimate" OffLabel="BasedOnProduction" />
+                      
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtDesc" Text="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
@@ -208,6 +224,7 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
+            
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                        appName="ProjectFinance" />

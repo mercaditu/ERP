@@ -163,6 +163,15 @@ namespace Cognitivo.Project
                 crud_modal.Visibility = System.Windows.Visibility.Visible;
                 cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
                 objSalesOrder.project = project;
+              
+                if (ToggleQuantity.IsChecked==true)
+                {
+                    objSalesOrder.quantitymode = cntrl.SalesOrder.quantitymodes.BasedOnEstimate;
+                }
+                else
+                {
+                    objSalesOrder.quantitymode = cntrl.SalesOrder.quantitymodes.BasedOnExecustion;
+                }
                 objSalesOrder.SalesOrderDB = SalesOrderDB;
                 objSalesOrder.Generate_Invoice =(bool)chkinvoice.IsChecked;
                 crud_modal.Children.Add(objSalesOrder);

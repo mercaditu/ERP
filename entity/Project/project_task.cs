@@ -1,5 +1,6 @@
 namespace entity
 {
+    using entity.Brillo;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -30,6 +31,7 @@ namespace entity
 
         public Status.Project? status { get; set; }
 
+
         public int? id_item
         {
             get { return _id_item; }
@@ -39,7 +41,16 @@ namespace entity
                 {
                     _id_item = value;
 
+                    if (project != null)
+                    {
 
+                        if (project.CurrecyFx_ID!=null)
+                        {
+                            _unit_price_vat = get_SalesPrice((int)id_item, project.contact, (int)project.CurrecyFx_ID);
+                            RaisePropertyChanged("unit_price_vat");   
+                        }
+                        
+                    }
 
                 }
             }
@@ -110,11 +121,11 @@ namespace entity
                 _unit_price_vat = value;
                 RaisePropertyChanged("unit_cost_est");
 
-                if (parent != null)
-                {
-                    parent.unit_cost_est = objclsproject.getsumunitcost(parent.id_project_task, parent.child);
-                    parent.RaisePropertyChanged("unit_cost_est");
-                }
+                //if (parent != null)
+                //{
+                //    parent.unit_cost_est = objclsproject.getsumunitcost(parent.id_project_task, parent.child);
+                //    parent.RaisePropertyChanged("unit_cost_est");
+                //}
 
             }
         }
@@ -126,10 +137,11 @@ namespace entity
             get { return _unit_price_vat; }
             set
             {
+
                 _unit_price_vat = value;
                 RaisePropertyChanged("unit_price_vat");
 
-              
+
 
             }
         }
@@ -155,11 +167,11 @@ namespace entity
                         if (task.status != Status.Project.Rejected)
                             task.IsSelected = value;
                     }
-                    if (project!=null)
+                    if (project != null)
                     {
-                        project.Update_SelectedCount();  
+                        project.Update_SelectedCount();
                     }
-               
+
                 }
             }
         }
@@ -261,7 +273,76 @@ namespace entity
         public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
         public virtual sales_order_detail sales_detail { get; set; }
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
-    
+        public decimal get_SalesPrice(int id_item, contact Contact, int CurrencyFX_ID)
+        {
+            int PriceList_ID = 0;
+            if (id_item > 0)
+            {
+                if (Contact != null)
+                {
+                    if (Contact.id_price_list != null)
+                    {
+                        PriceList_ID = (int)Contact.id_price_list;
+                    }
+                    else
+                    {
+                        PriceList_ID = 0;
+                    }
+
+                }
+
+                //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
+                if (PriceList_ID == 0 && PriceList_ID != null)
+                {
+                    using (db db = new db())
+                    {
+                        if (db.item_price_list.Where(x => x.is_active == true && x.id_company == Properties.Settings.Default.company_ID) != null)
+                        {
+                            PriceList_ID = db.item_price_list.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_price_list;
+                        }
+                    }
+                }
+
+                //Step 1 1/2. Check if Quantity gets us a better Price List.
+
+
+                //Step 2. Get Price in Currency.
+                using (db db = new db())
+                {
+                    app_currencyfx app_currencyfx = null;
+                    if (db.app_currencyfx.Where(x => x.id_currencyfx == CurrencyFX_ID).FirstOrDefault() != null)
+                    {
+                        app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == CurrencyFX_ID).FirstOrDefault();
+
+                        //Check if we have available Price for this Product, Currency, and List.
+                        item_price item_price = db.item_price.Where(x => x.id_item == id_item
+                                                                 && x.id_currency == app_currencyfx.id_currency
+                                                                 && x.id_price_list == PriceList_ID)
+                                                                 .FirstOrDefault();
+
+                        if (item_price != null)
+                        {   //Return Perfect Value
+                            return item_price.value;
+                        }
+                        else
+                        {
+                            //If Perfect Value not found, get one pased on Product and List. (Ignore Currency and Convert Later basd on Current Rate.)
+                            if (db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault() != null)
+                            {
+                                item_price = db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault();
+                                app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
+                                return Currency.convert_BackValue(item_price.value, app_currencyfx.id_currencyfx, App.Modules.Sales);
+                            }
+
+
+                        }
+                    }
+
+                }
+            }
+
+            return 0;
+        }
         public virtual ICollection<project_task> child
         {
             get { return _child; }
@@ -271,7 +352,7 @@ namespace entity
             }
         }
         private ICollection<project_task> _child;
-        
+
         //TreeView Heirarchy Fields
         public virtual project_task parent
         {

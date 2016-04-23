@@ -12,16 +12,32 @@ namespace Cognitivo.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
 
-            entity.sales_order_detail sales_order_detail = (entity.sales_order_detail)value;
-            if (sales_order_detail!=null)
+            entity.project_task project_task = (entity.project_task)value;
+            if (project_task!=null)
             {
-                if (sales_order_detail.id_sales_order_detail.ToString() == 0.ToString())
+                if (project_task.sales_detail==null )
                 {
                     return true;
                 }
                 else
                 {
-                    return false;
+                    if (project_task.items!=null)
+                    {
+                        if (project_task.items.id_item_type != entity.item.item_type.Task)
+                        {
+                            return false;
+
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                   
                 }
             }
             //else if (sales_order_detail.project_task.sales_invoice_detail.Count() >0)

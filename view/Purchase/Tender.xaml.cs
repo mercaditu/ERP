@@ -323,16 +323,15 @@ namespace Cognitivo.Purchase
       
         private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)purchase_tender_contact_detailDataGrid.SelectedItem;
-            if (purchase_tender_contact != null)
+            if (purchase_tenderpurchase_tender_item_detailViewSource!=null)
             {
-                decimal total = 0M;
-                foreach (var item in purchase_tender_contact.purchase_tender_detail)
+                if (purchase_tenderpurchase_tender_item_detailViewSource.View!=null)
                 {
-                    total = item.unit_cost * item.quantity;
+                    List<purchase_tender_detail> purchase_tender_detailList = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().ToList();
+                    LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.UnitCost_Vat);
                 }
-                LblTotal.Content = total.ToString();
             }
+          
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -360,7 +359,7 @@ namespace Cognitivo.Purchase
         private void purchase_tender_item_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             List<purchase_tender_detail> purchase_tender_detailList = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().ToList();
-            LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.unit_cost);
+            LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.UnitCost_Vat);
         }
 
 

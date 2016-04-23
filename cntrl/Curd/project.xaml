@@ -28,6 +28,7 @@
         <CollectionViewSource x:Key="project_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_tag}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
+        <CollectionViewSource x:Key="currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
     </UserControl.Resources>
     
     <UserControl.Effect>
@@ -66,6 +67,10 @@
                 <ComboBox Style="{StaticResource input_combobox}"  ItemsSource="{Binding Source={StaticResource branchViewSource}}"
                           DisplayMemberPath="name" SelectedValuePath="id_branch" 
                           SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                <ComboBox Style="{StaticResource input_combobox}"  ItemsSource="{Binding Source={StaticResource currencyViewSource}}"
+                          DisplayMemberPath="name" SelectedValuePath="id_currency" 
+                          SelectedValue="{Binding id_currency, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}"/>
                 <control:SmartBox_Contact x:Name="contactComboBox" Text="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Get_Customers="True" Select="contactComboBox_Select"/>
                 <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>

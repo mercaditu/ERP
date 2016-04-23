@@ -59,7 +59,7 @@ namespace Cognitivo.Project.Development
 
             //Filter to remove all items that are not top level.
             filter_task();
-            
+
             entity.Brillo.Security security = new entity.Brillo.Security(entity.App.Names.ActivityPlan);
             if (security.approve)
             {
@@ -100,7 +100,7 @@ namespace Cognitivo.Project.Development
 
                 }
             }
-            catch  { }
+            catch { }
         }
 
         #region Toolbar Events
@@ -146,10 +146,10 @@ namespace Cognitivo.Project.Development
 
                 foreach (project_task project_task in _project_task)
                 {
-                    if (Project_TaskApprove.id_range!=null)
+                    if (Project_TaskApprove.id_range != null)
                     {
                         project_task.id_range = Project_TaskApprove.id_range;
-                       
+
                     }
                     project_task.number = Project_TaskApprove.number;
                     if (project_task.status == Status.Project.Management_Approved)
@@ -230,7 +230,7 @@ namespace Cognitivo.Project.Development
             project project = projectViewSource.View.CurrentItem as project;
             project_task project_task = treeProject.SelectedItem_ as project_task;
 
-            if (project_task != null && project_task.items.item_recepie.Count()==0)
+            if (project_task != null && project_task.items.item_recepie.Count() == 0)
             {
                 //Adding a Child Item.
                 if (project_task.items != null)
@@ -263,7 +263,7 @@ namespace Cognitivo.Project.Development
                 treeProject.SelectedItem_ = n_project_task;
                 filter_task();
             }
-           
+
         }
 
         private void btnAddParentTask_Click(object sender)
@@ -361,7 +361,7 @@ namespace Cognitivo.Project.Development
 
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
                 sbxItem.item_types = Item_Type;
-               // itemSearchViewSource.Source = _entity.items.Where(x =>x.id_company==_Setting.company_ID && x.id_item_type == Item_Type).ToList();
+                // itemSearchViewSource.Source = _entity.items.Where(x =>x.id_company==_Setting.company_ID && x.id_item_type == Item_Type).ToList();
 
 
                 if (Item_Type == item.item_type.Task)
@@ -395,7 +395,7 @@ namespace Cognitivo.Project.Development
         {
             filter_task();
         }
-        
+
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (crud_modal.Visibility == System.Windows.Visibility.Hidden)
@@ -445,7 +445,7 @@ namespace Cognitivo.Project.Development
             Project_TaskApprove = new cntrl.PanelAdv.Project_TaskApprove();
             Project_TaskApprove.Save_Click += toolBar_btnApprove_Click;
             crud_modal.Children.Add(Project_TaskApprove);
-         
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -467,17 +467,17 @@ namespace Cognitivo.Project.Development
             {
                 item item = ProjectTaskDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-              
+
                 project_task project_task_output = treeProject.SelectedItem_ as project_task;
-                if (project_task_output.parent!=null)
+                if (project_task_output.parent != null)
                 {
                     if (project_task_output.parent.items.is_autorecepie)
                     {
                         MessageBox.Show("can't add becuse item is auto receipe");
                     }
                 }
-               
-                if (item != null && item.id_item > 0 && item.is_autorecepie )
+
+                if (item != null && item.id_item > 0 && item.is_autorecepie)
                 {
                     project_task_output.id_item = item.id_item;
                     project_task_output.items = item;
@@ -504,6 +504,10 @@ namespace Cognitivo.Project.Development
                 }
                 else
                 {
+                    if (project_task_output.code == "")
+                    {
+                        project_task_output.code = item.code;
+                    }
                     project_task_output.id_item = item.id_item;
                     project_task_output.items = item;
                     project_task_output.RaisePropertyChanged("item");

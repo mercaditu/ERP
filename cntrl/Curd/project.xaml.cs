@@ -38,6 +38,8 @@ namespace cntrl.Curd
                 CollectionViewSource branchViewSource = (CollectionViewSource)FindResource("branchViewSource");
                 branchViewSource.Source = await db.app_branch.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).AsNoTracking().ToListAsync();
 
+                CollectionViewSource currencyViewSource = (CollectionViewSource)FindResource("currencyViewSource");
+                currencyViewSource.Source = await db.app_currency.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).AsNoTracking().ToListAsync();
                 //CollectionViewSource contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
                 //contactViewSource.Source = await db.contacts.Where(a => a.is_active == true && a.id_company == _settings.company_ID && a.is_customer == true).OrderBy(b => b.name).ToListAsync();
 

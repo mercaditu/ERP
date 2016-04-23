@@ -372,6 +372,7 @@
     <Compile Include="Converters\AccountChartGroupLiabillity.cs" />
     <Compile Include="Converters\AccountingChartGroupExpense.cs" />
     <Compile Include="Converters\AccountingChartGroupIncome.cs" />
+    <Compile Include="Converters\Status2ColorConverter.cs" />
     <Compile Include="Converters\StockLevel2ColorConverter.cs" />
     <Compile Include="Converters\salesorderdetailtoEnable.cs" />
     <Compile Include="Converters\salesorderdetailtostatus.cs" />

@@ -62,7 +62,7 @@ namespace Cognitivo.Project.Development
                                                 where (IT.status == Status.Project.Approved)
                                                 && IT.status != null && IT.id_project == _id_project
                                                 join IK in ProjectTaskDB.item_product on IT.id_item equals IK.id_item
-                                                join IO in ProjectTaskDB.item_movement on IK.id_item_product equals IO.id_item_product into a
+                                                join PTD in ProjectTaskDB.purchase_tender_detail on IT.id_project_task equals PTD.purchase_tender_item.id_project_task into a
                                                 from IM in a.DefaultIfEmpty()
                                                 group IT by new { IM, IT.items }
                                                     into last
@@ -73,8 +73,8 @@ namespace Cognitivo.Project.Development
                                                         _name = last.Key.items != null ? last.Key.items.name : "",
                                                         _id_task = last.Max(x => x.id_project_task),
                                                         _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
-                                                        avlqtyColumn = last.Key.IM.credit - last.Key.IM.debit,
-                                                        buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0),
+                                                        avlqtyColumn = last.Key.IM.quantity,
+                                                        buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.quantity != 0 ? last.Key.IM.id_purchase_tender_detail : 0 ),
                                                         item = last.Key.items
                                                     }).ToList();
 
@@ -189,9 +189,10 @@ namespace Cognitivo.Project.Development
                     purchase_tender.id_project = project_task.id_project;
                     purchase_tender_item purchase_tender_item = new purchase_tender_item();
                     purchase_tender_item.id_item = project_task.id_item;
+                    purchase_tender_item.id_project_task = project_task.id_project_task;
                     purchase_tender_item.item_description = project_task.item_description;
                     purchase_tender_item.quantity = (decimal)project_task.quantity_est;
-                
+                   
                     foreach (project_task_dimension project_task_dimension in project_task.project_task_dimension)
                     {
                         purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();

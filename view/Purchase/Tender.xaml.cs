@@ -200,7 +200,7 @@ namespace Cognitivo.Purchase
                                 purchase_tender_detail.purchase_tender_item = purchase_tender_item;
                                 purchase_tender_detail.quantity = purchase_tender_item.quantity;
                                 purchase_tender_detail.unit_cost = 0;
-                                purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x=>x.is_default).FirstOrDefault().id_vat_group;
+                                purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
                                 purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                             }
                             else
@@ -320,18 +320,18 @@ namespace Cognitivo.Purchase
             }
         }
 
-      
+
         private void purchase_tender_contact_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (purchase_tenderpurchase_tender_item_detailViewSource!=null)
+            if (purchase_tenderpurchase_tender_item_detailViewSource != null)
             {
-                if (purchase_tenderpurchase_tender_item_detailViewSource.View!=null)
+                if (purchase_tenderpurchase_tender_item_detailViewSource.View != null)
                 {
                     List<purchase_tender_detail> purchase_tender_detailList = purchase_tenderpurchase_tender_item_detailViewSource.View.OfType<purchase_tender_detail>().ToList();
                     LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.UnitCost_Vat);
                 }
             }
-          
+
         }
 
         private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -13,6 +13,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            status = Status.Documents_General.Pending;
         }
 
         [Key]
@@ -20,7 +21,12 @@ namespace entity
         public int id_purchase_tender_detail { get; set; }
         public int id_purchase_tender_contact { get; set; }
         public int id_purchase_tender_item { get; set; }
-      
+        public Status.Documents_General status
+        {
+            get { return _status; }
+            set { _status = value; RaisePropertyChanged("status"); }
+        }
+        Status.Documents_General _status;
         public string item_description { get; set; }
         public decimal quantity
         {
@@ -132,6 +138,7 @@ namespace entity
         public virtual purchase_tender_item purchase_tender_item { get; set; }
     
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
+
 
 
         #region Methods

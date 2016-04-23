@@ -271,6 +271,7 @@ namespace entity
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail { get; set; }
         public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
+        public virtual ICollection<purchase_tender_item> purchase_tender_item { get; set; }
         public virtual sales_order_detail sales_detail { get; set; }
         public virtual ICollection<sales_invoice_detail> sales_invoice_detail { get; set; }
         public decimal get_SalesPrice(int id_item, contact Contact, int CurrencyFX_ID)

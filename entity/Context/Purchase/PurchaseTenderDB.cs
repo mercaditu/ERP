@@ -89,7 +89,7 @@ namespace entity
                         purchase_order.id_condition = purchase_tender_contact.id_condition;
                         purchase_order.id_project = purchase_tender.id_project;
                         purchase_order.project = purchase_tender.project;
-                        foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail)
+                        foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x=>x.IsSelected))
                         {
                             purchase_order_detail purchase_order_detail = new purchase_order_detail();
                             purchase_order_detail.purchase_tender_detail = purchase_tender_detail;
@@ -117,6 +117,7 @@ namespace entity
                             purchase_order_detail.id_cost_center = base.app_cost_center.Where(x => x.is_active == true).FirstOrDefault().id_cost_center;
 
                             purchase_order.purchase_order_detail.Add(purchase_order_detail);
+                            purchase_tender_detail.status = Status.Documents_General.Approved;
                         }
                         base.purchase_order.Add(purchase_order);
                     }

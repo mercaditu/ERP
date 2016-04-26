@@ -18,7 +18,8 @@
         <converter:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
-        
+        <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_movementitem_movement_valueViewSource" Source="{Binding item_movement_value, Source={StaticResource item_movementViewSource}}"/>
         <CollectionViewSource x:Key="item_movementitem_movement_dimensionViewSource" Source="{Binding item_movement_dimension, Source={StaticResource item_movementViewSource}}"/>
     </UserControl.Resources>
 
@@ -38,7 +39,9 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
-            <StackPanel x:Name="stpDisplay" HorizontalAlignment="Center" Margin="8">
+            <StackPanel Margin="8" Orientation="Horizontal">
+                <StackPanel x:Name="stpDisplay" HorizontalAlignment="Left" >
+          
 
                 <DataGrid Height="Auto" x:Name="item_transfer_detailDataGrid" 
                       AutoGenerateColumns="False" Grid.ColumnSpan="2" 
@@ -65,9 +68,26 @@
                             </DataGrid>
                         </DataTemplate>
                     </DataGrid.RowDetailsTemplate>
-                </DataGrid>
+                    </DataGrid>
+                </StackPanel>
+                <StackPanel x:Name="stpDisplayRight" HorizontalAlignment="Right" >
+
+                    <DataGrid Height="Auto" x:Name="item_movement_valueDataGrid" 
+                      AutoGenerateColumns="False" Grid.ColumnSpan="2" 
+                      EnableRowVirtualization="True" 
+                      ItemsSource="{Binding Source={StaticResource item_movementitem_movement_valueViewSource}}" InitializingNewItem="item_movement_valueDataGrid_InitializingNewItem"
+                      Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding unit_value,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Header="{lex:Loc Cognitivo:local:Value}" Width="auto"/>
+                            <!--<DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="auto"
+									                        ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currencyfx"
+									                        SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
+                        </DataGrid.Columns>
+                      
+                    </DataGrid>
+                </StackPanel>
             </StackPanel>
-      
+       
             <Grid Background="WhiteSmoke">
                 <Button x:Name="btnSave" Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>

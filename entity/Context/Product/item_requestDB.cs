@@ -102,8 +102,8 @@ namespace entity
                             item_transfer _item_transfer = new entity.item_transfer();
                             _item_transfer.status = Status.Documents_General.Pending;
                             _item_transfer.IsSelected = true;
-                           
 
+                            _item_transfer.State = EntityState.Added;
                             _item_transfer.user_requested = ProductTransferDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                             _item_transfer.id_item_request = item_request.id_item_request;
                             _item_transfer.id_department = ProductTransferDB.app_department.FirstOrDefault().id_department;

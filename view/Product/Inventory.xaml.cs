@@ -15,6 +15,7 @@ namespace Cognitivo.Product
         InventoryDB InventoryDB = new InventoryDB();
         CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, app_branchapp_locationViewSource, app_branchViewSource;
         List<item_inventory_detail> item_inventory_detailList;
+        cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
         int company_ID = entity.Properties.Settings.Default.company_ID;
         
         public Inventory()
@@ -212,9 +213,19 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
-            InventoryDB.item_inventory.Where(a => a.id_company == company_ID).Load();
-            item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
+              item_inventory_detail item_inventory_detail = dgvdetail.SelectedItem as item_inventory_detail;
+              if (item_inventory_detail!=null)
+              {
+                  if (objpnl_ItemMovement != null)
+                  {
+                      item_inventory_detail.value_counted = objpnl_ItemMovement.quantity;
+                      item_inventory_detail.RaisePropertyChanged("value_counted");
+                  }
+              }
+             
+            //item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
+            //InventoryDB.item_inventory.Where(a => a.id_company == company_ID).Load();
+            //item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
         }
 
         private void EditCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
@@ -234,11 +245,12 @@ namespace Cognitivo.Product
             if (item_inventory_detail != null)
             {
                 crud_modal.Visibility = System.Windows.Visibility.Visible;
-                cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
+                objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                 objpnl_ItemMovement.id_item_product = item_inventory_detail.item_product.id_item_product;
                 objpnl_ItemMovement.id_location = item_inventory_detail.id_location;
                 crud_modal.Children.Add(objpnl_ItemMovement);
             }
+          
         }
 
     

@@ -186,6 +186,7 @@ namespace entity
                
             }
 
+            payment.status = Status.Documents_General.Approved;
             base.SaveChanges();
 
 

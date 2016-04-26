@@ -97,7 +97,7 @@ namespace cntrl
                     else
                     {
                         toolBar.msgWarning("Document Range Needed for Approval");
-                        return;
+                       // return;
                     }
                 }
                 sales_order.id_project = project.id_project;
@@ -155,10 +155,10 @@ namespace cntrl
                         }
                         else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
                         {
-                            if (SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault() != null)
+                            if (_project_task.production_execution_detail != null)
                             {
-                                production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                                sales_order_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
+                                //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
+                                sales_order_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
                             }
                         }
 
@@ -222,14 +222,14 @@ namespace cntrl
                             sales_invoice_detail.item_description = _project_task.item_description;
                             if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
                             {
-                                sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
+                                sales_invoice_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
                             }
                             else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
                             {
                                 if (SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault() != null)
                                 {
                                     production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                                    sales_order_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
+                                    sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
                                 }
                             }
                             if (_project_task.unit_price_vat!=null)

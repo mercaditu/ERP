@@ -42,6 +42,8 @@
             <Label Content="{Binding TaskName, ElementName=pnl_Treeview}" Style="{StaticResource input_label}"/>
             <Label Content="{Binding Quantity, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
                    Style="{StaticResource generic_Label}" Margin="4,0" Foreground="Silver"/>
+            <Label Content="{Binding QuantityExec, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                   Style="{StaticResource generic_Label}" Margin="4,0" Foreground="Blue" />
         </StackPanel>
     </Grid>
 </UserControl>

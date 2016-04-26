@@ -38,10 +38,10 @@ namespace Cognitivo.Project
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
             SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Include(x => x.project_task).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
-
+            set_price();
             filter_task();
 
-            set_price();
+            
 
         }
 
@@ -49,12 +49,26 @@ namespace Cognitivo.Project
         {
             if (project_taskViewSource != null)
             {
-                foreach (project_task project_task in project_taskViewSource.View.OfType<project_task>())
+                if (project_taskViewSource.View != null)
                 {
-                    if (project_task.sales_detail != null)
+                    foreach (project_task project_task in project_taskViewSource.View.OfType<project_task>())
                     {
-                        project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
-                        project_task.RaisePropertyChanged("unit_price_vat");
+                        if (project_task.sales_detail != null)
+                        {
+                            project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
+                            project_task.RaisePropertyChanged("unit_price_vat");
+                           
+
+                        }
+                        if (project_task.production_execution_detail != null)
+                        {
+                            if (project_task.production_execution_detail.Count() > 0)
+                            {
+                                project_task.quantity_exec = (decimal)(project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : project_task.production_execution_detail.Sum(x => x.quantity));
+                                project_task.RaisePropertyChanged("quantity_exec");
+                            }
+
+                        }
                     }
                 }
             }
@@ -104,7 +118,9 @@ namespace Cognitivo.Project
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            set_price();
             filter_task();
+          
            calculate_total();
             
 

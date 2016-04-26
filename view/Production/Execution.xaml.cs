@@ -238,6 +238,7 @@ namespace Cognitivo.Production
 
                             _production_execution_detail.id_production_execution = _production_execution.id_production_execution;
                             _production_execution_detail.production_execution = _production_execution;
+                            _production_execution_detail.id_project_task = production_order_detail.id_project_task;
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
 
@@ -263,6 +264,7 @@ namespace Cognitivo.Production
 
                             _production_execution_detail.id_production_execution = _production_execution.id_production_execution;
                             _production_execution_detail.production_execution = _production_execution;
+                            _production_execution_detail.id_project_task = production_order_detail.id_project_task;
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
 
@@ -839,6 +841,7 @@ namespace Cognitivo.Production
             _production_execution_detail.id_item = production_order_detail.id_item;
             _production_execution_detail.item = production_order_detail.item;
             _production_execution_detail.quantity = Quantity;
+            _production_execution_detail.id_project_task = production_order_detail.id_project_task;
             _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
             _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
@@ -925,6 +928,7 @@ namespace Cognitivo.Production
 
         }
 
+      
 
 
 

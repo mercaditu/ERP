@@ -208,6 +208,39 @@ namespace Cognitivo.Product
             }
         }
 
+   
+
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
+            InventoryDB.item_inventory.Where(a => a.id_company == company_ID).Load();
+            item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
+        }
+
+        private void EditCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as item_inventory_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+
+            crud_modal.Children.Clear();
+            crud_modal.Visibility = Visibility.Hidden;
+            item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
+            if (item_inventory_detail != null)
+            {
+                crud_modal.Visibility = System.Windows.Visibility.Visible;
+                cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
+                objpnl_ItemMovement.id_item_product = item_inventory_detail.item_product.id_item_product;
+                objpnl_ItemMovement.id_location = item_inventory_detail.id_location;
+                crud_modal.Children.Add(objpnl_ItemMovement);
+            }
+        }
+
     
 
        

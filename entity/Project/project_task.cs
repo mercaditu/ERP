@@ -15,6 +15,9 @@ namespace entity
         {
             project_task_dimension = new List<project_task_dimension>();
             sales_order_detail = new List<sales_order_detail>();
+            production_execution_detail = new List<production_execution_detail>();
+            production_order_detail = new List<production_order_detail>();
+            sales_order_detail = new List<sales_order_detail>();
             trans_date = DateTime.Now;
             child = new List<project_task>();
             is_active = true;
@@ -44,12 +47,12 @@ namespace entity
                     if (project != null)
                     {
 
-                        if (project.CurrecyFx_ID!=null)
+                        if (project.CurrecyFx_ID != null)
                         {
                             _unit_price_vat = get_SalesPrice((int)id_item, project.contact, (int)project.CurrecyFx_ID);
-                            RaisePropertyChanged("unit_price_vat");   
+                            RaisePropertyChanged("unit_price_vat");
                         }
-                        
+
                     }
 
                 }
@@ -74,6 +77,8 @@ namespace entity
             {
                 _quantity_est = value;
                 RaisePropertyChanged("quantity_est");
+
+               
 
                 if (parent != null && parent.items != null)
                 {
@@ -113,6 +118,10 @@ namespace entity
             }
         }
         private decimal? _quantity_est;
+
+        [NotMapped]
+        public decimal? quantity_exec{get;set;}
+      
         public decimal? unit_cost_est
         {
             get { return _unit_price_vat; }
@@ -266,6 +275,23 @@ namespace entity
 
 
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
+        public virtual ICollection<production_order_detail> production_order_detail { get; set; }
+        public virtual ICollection<production_execution_detail> production_execution_detail
+        {
+            get
+            {
+               
+               
+                return _production_execustion_detail; 
+            }
+            set
+            {
+                _production_execustion_detail = value;
+                
+              
+            }
+        }
+        ICollection<production_execution_detail> _production_execustion_detail;
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
         public virtual ICollection<sales_budget_detail> sales_budget_detail { get; set; }
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }

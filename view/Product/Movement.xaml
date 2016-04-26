@@ -179,6 +179,11 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
                 </StackPanel>
+                <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                    <Label Content="Y" Style="{StaticResource ico_Label}"/>
+                    <TextBlock Text="{lex:Loc Line}" Style="{StaticResource text_Label}"/>
+                    <Label Content="{project}" Style="{StaticResource input_label}"/>
+                </StackPanel>-->
             </StackPanel>
             <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
                 <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>

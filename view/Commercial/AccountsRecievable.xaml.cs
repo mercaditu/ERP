@@ -153,6 +153,7 @@ namespace Cognitivo.Commercial
             }
             crud_modal.Children.Clear();
             crud_modal.Visibility = System.Windows.Visibility.Collapsed;
+            _entity = new dbContext();
             load_Schedual();
         }
 

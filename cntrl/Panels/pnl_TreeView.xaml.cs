@@ -81,6 +81,15 @@ namespace cntrl.Panels
             set { SetValue(QuantityProperty, value); }
         }
 
+        public static readonly DependencyProperty QuantityExecProperty =
+        DependencyProperty.Register("QuantityExec", typeof(decimal), typeof(pnl_TreeView),
+        new FrameworkPropertyMetadata(null));
+        public decimal QuantityExec
+        {
+            get { return Convert.ToDecimal(GetValue(QuantityExecProperty)); }
+            set { SetValue(QuantityExecProperty, value); }
+        }
+
         public static readonly DependencyProperty project_taskProperty =
             DependencyProperty.Register("Project_task", typeof(List<project_task>), typeof(pnl_TreeView),
             new FrameworkPropertyMetadata(null));

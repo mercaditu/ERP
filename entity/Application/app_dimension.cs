@@ -16,6 +16,7 @@
             is_head = true;
             item_dimension =new List<item_dimension>();
             project_task_dimension = new List<project_task_dimension>();
+            item_movement_dimension = new List<item_movement_dimension>();
         }
 
         [Key]
@@ -26,6 +27,7 @@
 
         public virtual ICollection<item_dimension> item_dimension { get; set; }
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
+        public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
 
         public string Error
         {

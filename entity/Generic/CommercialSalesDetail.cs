@@ -305,7 +305,7 @@ namespace entity
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
-            unit_price = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitPrice_Vat);
+            unit_price =Vat.return_ValueWithoutVAT((int)id_vat_group, UnitPrice_Vat);
             RaisePropertyChanged("unit_price");
         }
 
@@ -314,7 +314,7 @@ namespace entity
         /// </summary>
         private void update_UnitPriceVAT()
         {
-            UnitPrice_Vat = Vat.return_ValueWithVAT((int)id_vat_group, unit_price);
+            UnitPrice_Vat = Math.Round(Vat.return_ValueWithVAT((int)id_vat_group, unit_price));
             RaisePropertyChanged("UnitPrice_Vat");
         }
 

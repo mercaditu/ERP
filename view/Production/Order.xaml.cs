@@ -176,6 +176,12 @@ namespace Cognitivo.Production
                 if (_id_production_order > 0)
                 {
                     filter_task();
+                    item_RawDataGrid.ItemsSource = null;
+                    item_ProductDataGrid.ItemsSource = null;
+                    item_SupplierDataGrid.ItemsSource = null;
+                    item_CapitalDataGrid.ItemsSource = null;
+                    item_ServiceContractDataGrid.ItemsSource = null;
+
 
                     var item_List_group_basic = (from IT in OrderDB.production_order_detail
                                                  where IT.item.id_item_type != item.item_type.Service &&
@@ -710,6 +716,11 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource.View.Refresh();
             production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
             filter_task();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_request();
         }
 
     }

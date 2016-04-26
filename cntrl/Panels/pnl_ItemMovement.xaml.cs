@@ -18,7 +18,7 @@ namespace cntrl.Panels
     public partial class pnl_ItemMovement : UserControl
     {
         CollectionViewSource item_movementViewSource;
-        ProductMovementDB ProductMovementDB = new ProductMovementDB();
+        ProductMovementDB ProductMovementDB { get; set; }
         public int id_item_product { get; set; }
         public int id_location { get; set; }
         public decimal quantity { get; set; }
@@ -69,8 +69,8 @@ namespace cntrl.Panels
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             List<item_movement> item_movementList = item_movementViewSource.View.OfType<item_movement>().ToList();
-            quantity = item_movementList.Sum(y => y.credit - y.debit); ;
-            ProductMovementDB.SaveChanges();
+            quantity = item_movementList.Sum(y => y.credit - y.debit); 
+       //     ProductMovementDB.SaveChanges();
             btnCancel_Click(sender, null);
         }
 

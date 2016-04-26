@@ -216,7 +216,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        <TabControl metro:TabControlHelper.IsUnderlined="True"  Grid.Column="0">
+                        <TabControl metro:TabControlHelper.IsUnderlined="True"  Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
                             <TabItem Header="{lex:Loc Product}">
                                 <DataGrid x:Name="item_ProductDataGrid" 
             				                  VerticalScrollBarVisibility="Auto"

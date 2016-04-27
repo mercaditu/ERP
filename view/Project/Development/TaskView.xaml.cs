@@ -243,7 +243,7 @@ namespace Cognitivo.Project.Development
                         n_project_task.id_project = project.id_project;
                         n_project_task.status = entity.Status.Project.Pending;
                         n_project_task.quantity_est = 0;
-
+                        n_project_task.State = EntityState.Added;
                         project_task.child.Add(n_project_task);
                         ProjectTaskDB.project_task.Add(n_project_task);
                         project_taskViewSource.View.Refresh();
@@ -258,6 +258,7 @@ namespace Cognitivo.Project.Development
                 project_task n_project_task = new project_task();
                 n_project_task.id_project = project.id_project;
                 n_project_task.status = entity.Status.Project.Pending;
+                n_project_task.State = EntityState.Added;
                 ProjectTaskDB.project_task.Add(n_project_task);
 
                 project_taskViewSource.View.Filter = null;
@@ -276,6 +277,7 @@ namespace Cognitivo.Project.Development
             project_task n_project_task = new project_task();
             n_project_task.id_project = project.id_project;
             n_project_task.status = entity.Status.Project.Pending;
+            n_project_task.State = EntityState.Added;
             ProjectTaskDB.project_task.Add(n_project_task);
 
             project_taskViewSource.View.Filter = null;

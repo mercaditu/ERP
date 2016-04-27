@@ -37,6 +37,28 @@ namespace cntrl.Panels
             item_movement.State = EntityState.Added;
             //item_movement_dest.transaction_id = 0;
             item_movement.status = Status.Stock.InStock;
+
+            if (id_item_product > 0)
+            {
+                if (ProductMovementDB.item_product.Where(x => x.id_item_product == id_item_product).FirstOrDefault() != null)
+                {
+                    item_product item_product = ProductMovementDB.item_product.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
+                    if (ProductMovementDB.item_dimension.Where(x => x.id_item == item_product.id_item).ToList() != null)
+                    {
+                        List<item_dimension> item_dimensionList = ProductMovementDB.item_dimension.Where(x => x.id_item == item_product.id_item).ToList();
+                        foreach (item_dimension item_dimension in item_dimensionList)
+                        {
+                            item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                            item_movement_dimension.id_dimension = item_dimension.id_app_dimension;
+                            item_movement_dimension.value = item_dimension.value;
+                            item_movement.item_movement_dimension.Add(item_movement_dimension);
+                        }
+
+
+                    }
+                }
+
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -69,7 +91,7 @@ namespace cntrl.Panels
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             List<item_movement> item_movementList = item_movementViewSource.View.OfType<item_movement>().ToList();
-            quantity = item_movementList.Sum(y => y.credit - y.debit); 
+            quantity = item_movementList.Sum(y => y.credit - y.debit);
             ProductMovementDB.SaveChanges();
             btnCancel_Click(sender, null);
         }

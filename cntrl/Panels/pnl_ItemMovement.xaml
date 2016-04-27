@@ -54,14 +54,14 @@
                     </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
-                            <DataGrid x:Name="item_movement_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
+                            <DataGrid x:Name="item_movement_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" CanUserAddRows="False"
                         		EnableRowVirtualization="True" Height="Auto" 
                         		ItemsSource="{Binding Source={StaticResource item_movementitem_movement_dimensionViewSource}}"
                         		RowDetailsVisibilityMode="VisibleWhenSelected" >
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
-									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True"/>
                                     <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
                                   
                                 </DataGrid.Columns>

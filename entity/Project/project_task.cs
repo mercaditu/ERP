@@ -222,7 +222,7 @@ namespace entity
                 {
                     _id_range = value;
 
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         using (db db = new db())
                         {

@@ -49,6 +49,7 @@ namespace entity
             item_asset = new List<item_asset>();
             item_property = new List<item_property>();
             item_dimension = new List<item_dimension>();
+            project_task = new List<project_task>();
         }
 
         [Key]
@@ -117,7 +118,7 @@ namespace entity
         public virtual IEnumerable<sales_packing_detail> sales_packing_detail { get; set; }
         public virtual IEnumerable<sales_budget_detail> sales_budget_detail { get; set; }
 
-        public virtual IEnumerable<project_task> project_task { get; set; }
+        public virtual ICollection<project_task> project_task { get; set; }
         public virtual IEnumerable<project_template_detail> project_template_detail { get; set; }
         public virtual IEnumerable<production_order_detail> production_order_detail { get; set; }
         public virtual IEnumerable<production_execution_detail> production_execution_detail { get; set; }

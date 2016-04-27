@@ -307,17 +307,24 @@ namespace Cognitivo.Purchase
 
         }
 
-        private void purchase_tender_itemDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
+        private void purchase_tender_itemDataGrid_LoadingRowDetails(object sender, EventArgs e)
         {
-            purchase_tender_item purchase_tender_item = (purchase_tender_item)purchase_tenderpurchase_tender_itemViewSource.View.CurrentItem;
-            CollectionViewSource purchase_tender_dimensionViewSource = ((CollectionViewSource)(FindResource("purchase_tender_dimensionViewSource")));
-            if (purchase_tender_item != null)
+            if (purchase_tenderpurchase_tender_itemViewSource!=null)
             {
-                if (purchase_tender_item.id_item > 0)
+                if (purchase_tenderpurchase_tender_itemViewSource.View != null)
                 {
-                    purchase_tender_dimensionViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).ToList();
-                }
+                    purchase_tender_item purchase_tender_item = (purchase_tender_item)purchase_tenderpurchase_tender_itemViewSource.View.CurrentItem;
+                    CollectionViewSource purchase_tender_dimensionViewSource = ((CollectionViewSource)(FindResource("purchase_tender_dimensionViewSource")));
+                    if (purchase_tender_item != null)
+                    {
+                        if (purchase_tender_item.id_item > 0)
+                        {
+                            purchase_tender_dimensionViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).ToList();
+                        }
+                    }
+                }   
             }
+      
         }
 
 

@@ -141,13 +141,29 @@ namespace cntrl.Controls
 
             else if (e.Key == Key.Up)
             {
-                contactViewSource.View.MoveCurrentToPrevious();
-                contactViewSource.View.Refresh();
+                if (contactViewSource!=null)
+                {
+                    if (contactViewSource.View!=null)
+                    {
+                        contactViewSource.View.MoveCurrentToPrevious();
+                        contactViewSource.View.Refresh();
+                    }
+                    
+                }
+          
             }
             else if (e.Key == Key.Down)
             {
-                contactViewSource.View.MoveCurrentToNext();
-                contactViewSource.View.Refresh();
+                if (contactViewSource != null)
+                {
+                    if (contactViewSource.View != null)
+                    {
+                        contactViewSource.View.MoveCurrentToNext();
+                        contactViewSource.View.Refresh();
+                    }
+
+                }
+              
             }
             else
             {

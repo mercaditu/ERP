@@ -10,7 +10,16 @@ namespace entity
     {
         public override int SaveChanges()
         {
-            return base.SaveChanges();
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+          
         }
 
         public override Task<int> SaveChangesAsync()

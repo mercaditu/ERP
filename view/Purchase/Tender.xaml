@@ -169,7 +169,7 @@
 
                         <DataGrid x:Name="purchase_tender_itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"  
-                                  LoadingRowDetails="purchase_tender_itemDataGrid_LoadingRowDetails"
+                                  SelectionChanged="purchase_tender_itemDataGrid_LoadingRowDetails"
                                   RowDetailsVisibilityMode="VisibleWhenSelected"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>

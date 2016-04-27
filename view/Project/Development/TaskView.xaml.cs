@@ -40,6 +40,8 @@ namespace Cognitivo.Project.Development
             ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).Include(x => x.project_task).Load();
             projectViewSource.Source = ProjectTaskDB.projects.Local;
 
+          
+
             ProjectTaskDB.project_task_dimension.Where(a => a.id_company == entity.CurrentSession.Id_Company).Load();
             project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Local;
 

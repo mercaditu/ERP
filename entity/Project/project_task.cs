@@ -17,7 +17,7 @@ namespace entity
             sales_order_detail = new List<sales_order_detail>();
             production_execution_detail = new List<production_execution_detail>();
             production_order_detail = new List<production_order_detail>();
-            sales_order_detail = new List<sales_order_detail>();
+
             trans_date = DateTime.Now;
             child = new List<project_task>();
             is_active = true;
@@ -61,7 +61,7 @@ namespace entity
         public string item_description
         {
             get { return _item_description; }
-            set { _item_description = value; RaisePropertyChanged("item_description"); }
+            set { _item_description = value; }
         }
         private string _item_description;
 
@@ -76,7 +76,7 @@ namespace entity
                 _quantity_est = value;
                 RaisePropertyChanged("quantity_est");
 
-               
+
 
                 if (parent != null && parent.items != null)
                 {
@@ -116,8 +116,8 @@ namespace entity
         private decimal? _quantity_est;
 
         [NotMapped]
-        public decimal? quantity_exec{get;set;}
-      
+        public decimal? quantity_exec { get; set; }
+
         public decimal? unit_cost_est
         {
             get { return _unit_price_vat; }
@@ -181,12 +181,16 @@ namespace entity
             }
         }
         private bool _is_selected;
-        //[NotMapped]
-        //public bool IsChecked;
+        [NotMapped]
+        public string name { get; set; }
         public virtual project project { get; set; }
         public virtual item items
         {
-            get { return _items; }
+            get
+            {
+              
+                return _items;
+            }
             set
             {
                 if (value != null)
@@ -194,7 +198,7 @@ namespace entity
                     _items = value;
                     RaisePropertyChanged("items");
                     _item_description = items.name;
-                    RaisePropertyChanged("item_description");
+                   RaisePropertyChanged("item_description");
                 }
 
             }
@@ -275,15 +279,15 @@ namespace entity
         {
             get
             {
-               
-               
-                return _production_execustion_detail; 
+
+
+                return _production_execustion_detail;
             }
             set
             {
                 _production_execustion_detail = value;
-                
-              
+
+
             }
         }
         ICollection<production_execution_detail> _production_execustion_detail;

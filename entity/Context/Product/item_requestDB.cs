@@ -116,82 +116,49 @@ namespace entity
                             _item_transfer.app_location_origin = ProductTransferDB.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
                             _item_transfer.app_branch_origin = ProductTransferDB.app_location.Where(x => x.id_location == id_location).FirstOrDefault().app_branch;
                             _item_transfer.comment = "Transfer item Request from " + item.decision.ToString();
+
+
+                            //Create Transfer Detail in DB.
+                            item_transfer_detail item_transfer_detail = new item_transfer_detail();
+                            item_transfer_detail.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
+                            item_transfer_detail.item_product = ProductTransferDB.item_product.Where(x => x.id_item_product == item_transfer_detail.id_item_product).FirstOrDefault();
+                            item_transfer_detail.quantity_origin = item.quantity;
+                            item_transfer_detail.quantity_destination = item.quantity;
+
+
                             if (item_request_detail.id_project_task != null)
                             {
+                                //Transfer related to Project because there is a Project.
+                                item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
+
                                 int id_branch = (int)ProductTransferDB.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).FirstOrDefault().id_branch;
                                 _item_transfer.app_location_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
                                 _item_transfer.app_branch_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
                                 _item_transfer.id_project = item_request_detail.project_task.id_project;
                             }
+                            
                             if (item_request_detail.id_sales_order_detail != null)
                             {
                                 _item_transfer.app_location_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
                                 _item_transfer.app_branch_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault();
                             }
+
                             if (item_request_detail.id_order_detail != null)
                             {
-                                int id_project = ProductTransferDB.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task.id_project;
-                                int id_branch = (int)ProductTransferDB.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
-                                _item_transfer.app_location_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
-                                _item_transfer.app_branch_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                //Get Production Line
+                                int id_production_line = ProductTransferDB.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().production_order.id_production_line;
+                                //Get Location based on Line
+                                app_location app_location = ProductTransferDB.production_line.Where(x => x.id_production_line == id_production_line).FirstOrDefault().app_location;
+                                _item_transfer.app_location_destination = app_location;
+                                //Get Branch based on Location
+                                _item_transfer.app_branch_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == app_location.id_branch).FirstOrDefault();
                             }
 
-
-
-
-                            item_transfer_detail item_transfer_detail = new item_transfer_detail();
-                            item_transfer_detail.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
-                            item_transfer_detail.item_product = ProductTransferDB.item_product.Where(x => x.id_item_product == item_transfer_detail.id_item_product).FirstOrDefault();
-                            item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
-                            item_transfer_detail.quantity_origin = item.quantity;
-                            item_transfer_detail.quantity_destination = item.quantity;
                             _item_transfer.item_transfer_detail.Add(item_transfer_detail);
-
                             _item_transfer.transfer_type = entity.item_transfer.Transfer_type.movemnent;
 
                             ProductTransferDB.item_transfer.Add(_item_transfer);
-
                             ProductTransferDB.SaveChanges();
-                            //ProductTransferDB.ApproveOrigin(_item_transfer.app_branch_origin.id_branch, _item_transfer.app_branch_destination.id_branch, false);
-                            //ProductTransferDB.ApproveDestination(_item_transfer.app_branch_origin.id_branch, _item_transfer.app_branch_destination.id_branch, false);
-                           
-                            
-                            
-                            
-                            
-                            
-                            //int id_location = (int)item.id_location;
-                            //item_movement item_movement_origin = new item_movement();
-                            //item_movement_origin.debit = item.quantity;
-                            //item_movement_origin.credit = 0;
-                            //item_movement_origin.id_application = global::entity.App.Names.Movement;
-                            //item_movement_origin.id_location = (int)item.id_location;
-                            //// item_movement_origin.transaction_id = 0;
-                            //item_movement_origin.status = Status.Stock.InStock;
-                            //item_movement_origin.trans_date = DateTime.Now;
-
-                            //if (item_request_detail.item.item_product.FirstOrDefault().id_item_product != 0)
-                            //{
-                            //    item_movement_origin.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
-                            //}
-
-                            //base.item_movement.Add(item_movement_origin);
-                            //item_movement item_movement_dest = new item_movement();
-                            //item_movement_dest.debit = 0;
-                            //item_movement_dest.credit = item.quantity;
-                            //item_movement_dest.id_application = global::entity.App.Names.Movement;
-                            //item_movement_dest.id_location = (int)item.id_location;
-                            //// item_movement_dest.transaction_id = 0;
-                            //item_movement_dest.status = Status.Stock.InStock;
-                            //item_movement_dest.trans_date = DateTime.Now;
-
-                            //if (item_request_detail.item.item_product.FirstOrDefault().id_item_product != 0)
-                            //{
-                            //    item_movement_dest.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
-                            //}
-
-                            //base.item_movement.Add(item_movement_dest);
-
                         }
 
                         else if (item.decision == entity.item_request_decision.Decisions.Transfer)

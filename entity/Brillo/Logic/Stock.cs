@@ -107,6 +107,7 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
+
             //PURCHASE INVOICE
             else if (obj_entity.GetType().BaseType == typeof(purchase_invoice) || obj_entity.GetType() == typeof(purchase_invoice))
             {

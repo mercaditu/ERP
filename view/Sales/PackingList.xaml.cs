@@ -21,6 +21,7 @@ namespace Cognitivo.Sales
         PackingListSetting _pref_SalesPackingList = new PackingListSetting();
         Properties.Settings _pref_Cognitivo = new Properties.Settings();
         cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
+
         public PackingList()
         {
             InitializeComponent();
@@ -284,6 +285,8 @@ namespace Cognitivo.Sales
                         sales_packing_detail sales_packing_detail = new sales_packing_detail();
                         sales_packing_detail.id_sales_order_detail = _sales_order_detail.id_sales_order_detail;
                         sales_packing_detail.id_item = _sales_order_detail.id_item;
+                        sales_packing_detail.item = _sales_order_detail.item;
+
                         sales_packing_detail.quantity = _sales_order_detail.quantity;
                         sales_packing.sales_packing_detail.Add(sales_packing_detail);
                     }

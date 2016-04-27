@@ -111,7 +111,6 @@ namespace entity
                                 item_movement.AddRange(item_movementList);
                             }
                         }
-                       
 
                         if (sales_packing.number == null && sales_packing.id_range > 0)
                         {

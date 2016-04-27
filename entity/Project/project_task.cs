@@ -10,7 +10,7 @@ namespace entity
     public partial class project_task : Audit
     {
         Project.clsproject objclsproject = new Project.clsproject();
-        db db = new db();
+
         public project_task()
         {
             project_task_dimension = new List<project_task_dimension>();
@@ -31,9 +31,7 @@ namespace entity
         public int id_project_task { get; set; }
         public int id_project { get; set; }
 
-
         public Status.Project? status { get; set; }
-
 
         public int? id_item
         {
@@ -87,8 +85,6 @@ namespace entity
                         parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
                         parent.RaisePropertyChanged("quantity_est");
                     }
-
-
                 }
 
                 if (this.items != null)
@@ -273,7 +269,6 @@ namespace entity
         public virtual app_document_range app_document_range { get; set; }
         #endregion
 
-
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
         public virtual ICollection<production_execution_detail> production_execution_detail
@@ -315,7 +310,6 @@ namespace entity
                     {
                         PriceList_ID = 0;
                     }
-
                 }
 
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.

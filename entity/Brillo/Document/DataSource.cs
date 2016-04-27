@@ -101,6 +101,8 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_cost,
                         unit_price_vat = g.UnitPrice_Vat,
+                        unit_price_discount = g.discount,
+
                         terminale_name = g.sales_budget != null ? (g.sales_budget.app_terminal != null ? g.sales_budget.app_terminal.name != null ? g.sales_budget.app_terminal.name : "" : "") : "",
                         code = g.sales_budget != null ? g.sales_budget.code != null ? g.sales_budget.code : "" : "",
                         contact_name = g.sales_budget != null ? g.sales_budget.contact != null ? g.sales_budget.contact.name != null ? g.sales_budget.contact.name : "" : "" : "",
@@ -121,7 +123,7 @@ namespace entity.Brillo.Document
                         NumToWords.DecimalToText((Convert.ToDecimal(g.sales_budget != null ? g.sales_budget.GrandTotal : 0))) : "" : "" : "",
 
                         HasRounding = g.sales_budget != null ? g.sales_budget.app_currencyfx != null ? g.sales_budget.app_currencyfx.app_currency != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding != null ? g.sales_budget.app_currencyfx.app_currency.has_rounding : false : false : false : false,
-                        unit_price_discount = g.discount != null ? g.discount : 0,
+                        //unit_price_discount = g.discount != null ? g.discount : 0,
 
                     }).ToList();
 
@@ -307,6 +309,7 @@ namespace entity.Brillo.Document
                                   item_description = g.item != null ? g.item.name != null ? g.item.name : "" : "",
                                   item_brand = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name != null ? g.item.item_brand.name : "" : "" : "",
                                   quantity = g.quantity != null ? g.quantity : 0,
+                                  number = g.sales_packing != null ? g.sales_packing.number : "",
                                   sales_invoice_number = g.sales_packing != null ? g.sales_packing_relation != null ? GetInvoice(g.sales_packing_relation.ToList()) : "" : "",
                                   packing_type = g.sales_packing != null ? g.sales_packing.packing_type.ToString() : ""
                               }).ToList();

@@ -164,29 +164,28 @@
                             <Button Content="Open Drawer" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         </Grid>
                         <DataGrid x:Name="app_account_detailAdjustDataGrid" Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
-                                    AutoGenerateColumns="False"
-                                    ItemsSource="{Binding Source={StaticResource app_account_detail_adjustViewSource}}"
+                                    AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource app_account_detail_adjustViewSource}}"
                                     EnableRowVirtualization="True" Margin="10" Height="Auto"
                                     RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
-                                <DataGridComboBoxColumn x:Name="appAccountColumn" Header="Account" Width="*"
+                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Account}" Width="*"
                                                         ItemsSource="{Binding Source={StaticResource app_account_listViewSource}}"
                                                         DisplayMemberPath="name" SelectedValuePath="id_account"
                                                         SelectedValueBinding="{Binding id_account, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                <DataGridComboBoxColumn x:Name="pay_typeColumn" Header="Payment Type" Width="*"
+                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*"
                                                         ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}" 
                                                         DisplayMemberPath="name" SelectedValuePath="id_payment_type"
                                                         SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                <DataGridTextColumn x:Name="debitAdjustColumn" Binding="{Binding debit, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="*"/>
-                                <DataGridTextColumn x:Name="creditAdjustColumn" Binding="{Binding credit, UpdateSourceTrigger=PropertyChanged}" Header="credit" Width="*"/>
-                                <DataGridComboBoxColumn x:Name="appCurrencyColumn" Header="Currency" Width="*"
+                                <DataGridTextColumn Binding="{Binding debit, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding credit, UpdateSourceTrigger=PropertyChanged}" Header="credit" Width="*"/>
+                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="*"
                                                         ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
                                                         DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
                                                         SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Margin="5">
-                            <TextBox Margin="0,0,105,0" Text="write your comment here..."/>
+                            <TextBox x:Name="tbxCommentAdjust" Margin="0,0,105,0" Text=""/>
                             <Button x:Name="btnAdjust" Content="{lex:Loc Adjust}" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Click="btnAdjust_Click"/>
                         </Grid>
                     </StackPanel>
@@ -195,7 +194,7 @@
                     <StackPanel Background="WhiteSmoke">
                         <Label Content="transfer from one account to another. will reduce in one and increase in another." Margin="5"/>
                         <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
-                        <Label Content="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource app_accountViewSource}}" Style="{DynamicResource input_label}"/>
+                        <Label Content="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource app_accountViewSource}}" Style="{DynamicResource input_label}"/>
                         <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
                         <ComboBox x:Name="cbxAccountDestination" Grid.Column="1" Style="{DynamicResource input_combobox}" 
                                   DisplayMemberPath="name" SelectedValuePath="id_account"
@@ -217,8 +216,9 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Margin="5">
-                            <TextBox Margin="0,0,105,0" Text="comment reason for transfer here..."/>
-                            <Button x:Name="btnTransfer" Content="{lex:Loc Transfer}" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Click="btnTransfer_Click"/>
+                            <TextBox x:Name="tbxCommentTransfer" Margin="0,0,105,0" Text=""/>
+                            <Button x:Name="btnTransfer" Content="{lex:Loc Transfer}" FontSize="12" VerticalAlignment="Center" 
+                                    HorizontalAlignment="Right" Width="100" Click="btnTransfer_Click"/>
                         </Grid>
                     </StackPanel>
                 </TabItem>

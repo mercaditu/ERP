@@ -22,10 +22,12 @@ namespace Cognitivo.Configs
         List<Class.clsTransferAmount> listTransferAmt = null;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
         List<Class.clsTransferAmount> listOpenAmt = null;
+        
         public AccountUtility()
         {
             InitializeComponent();
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             //Main Account DataGrid.
@@ -39,13 +41,10 @@ namespace Cognitivo.Configs
             app_account_listViewSource.Source =
                 entity.db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal && a.id_company == _entity.company_ID).ToList();
 
-            //For Active Tab.
-            //  txtInitialAmount.Text = getInitialAmount().ToString();
             getInitialAmount();
-            //Terminal
 
-           CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
-           app_accountDestViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
+            CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
+            app_accountDestViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
             //Payment Type 
             CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = entity.db.payment_type.Where(a => a.is_active == true).ToList();
@@ -73,25 +72,9 @@ namespace Cognitivo.Configs
             amount_transferViewSource = this.FindResource("amount_transferViewSource") as CollectionViewSource;
             amount_transferViewSource.Source = listTransferAmt;
         }
+
         private void getInitialAmount()
         {
-            //decimal debit = 0;
-            //decimal credit = 0;
-            //decimal initial_amount = 0;
-            //if (app_accountDataGrid.SelectedItem != null)
-            //{
-            //    app_account app_account = app_accountDataGrid.SelectedItem as app_account;
-            //    if (app_account != null)
-            //    {
-            //        initial_amount = Convert.ToDecimal(app_account.initial_amount);
-            //        if (app_account.app_account_detail != null)
-            //        {
-            //            debit = Convert.ToDecimal(app_account.app_account_detail.Sum(a => a.debit));
-            //            credit = Convert.ToDecimal(app_account.app_account_detail.Sum(a => a.credit));
-            //        }
-            //    }
-            //}
-            //return ((initial_amount + credit) - debit);
             app_account objAccount = (app_account)app_accountDataGrid.SelectedItem;
             var app_account_detailList = objAccount.app_account_detail
          .GroupBy(ad => new { ad.id_currencyfx })
@@ -150,12 +133,10 @@ namespace Cognitivo.Configs
                 {
                     app_account_detail app_account_detail = new global::entity.app_account_detail();
                   
-
                     if (app_account.is_active == true)
                     {
                         //Make Inactive
                         app_account_detail.debit = list.amountCounted;
-
                     }
                     else
                     {
@@ -175,7 +156,6 @@ namespace Cognitivo.Configs
                 {
                     //Make Inactive
                     entity.db.Entry(app_account).Entity.is_active = false;
-
                 }
                 else
                 {
@@ -184,8 +164,6 @@ namespace Cognitivo.Configs
                 }
                 // entity.db.Entry(app_account).Entity.initial_amount = Convert.ToDecimal(txtInitialAmount.Text.Trim());
                 entity.db.Entry(app_account).State = EntityState.Modified;
-               
-
 
                 entity.SaveChanges();
 
@@ -201,12 +179,10 @@ namespace Cognitivo.Configs
         {
             entity.SaveChanges();
 
-            //Reload Data
             app_accountViewSource.View.Refresh();
             app_accountapp_account_detailViewSource.View.Refresh();
-            //app_account_detailViewSource.View.Refresh();
             app_account_detail_adjustViewSource.View.Refresh();
-            MessageBox.Show("Adjustment Completed Successfully!", "Adjustment", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Adjustment Completed Successfully!", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void btnTransfer_Click(object sender, RoutedEventArgs e)
@@ -215,32 +191,25 @@ namespace Cognitivo.Configs
             {
                 if (listTransferAmt.Count >= 1)
                 {
-                    //short originTerminalId = Convert.ToInt16(cbxTerminalOrigin.SelectedValue);
-                    //short destinationTerminalId = Convert.ToInt16(cbxTerminalDestination.SelectedValue);
-                    //string strOriginTerminal = Convert.ToString(cbxTerminalOrigin.Text);
-                    //string strDestinationTerminal = Convert.ToString(cbxTerminalDestination.Text);
-
                     app_account idOriginAccount = ((app_accountViewSource.View.CurrentItem) as app_account); //Credit Account
                     app_account idDestiAccount = (app_account)cbxAccountDestination.SelectedItem; //Debit Account
                     if (idOriginAccount != null && idDestiAccount != null)
                     {
                         app_account_detail objOriginAcDetail = new app_account_detail();
-                        //objOriginAcDetail.id_company = 1;
                         objOriginAcDetail.id_account = idOriginAccount.id_account;
                         objOriginAcDetail.id_currencyfx = listTransferAmt[0].id_currencyfx;
                         objOriginAcDetail.id_payment_type = listTransferAmt[0].id_payment_type;
-                        objOriginAcDetail.debit = 0;
-                        objOriginAcDetail.credit = listTransferAmt[0].amount;
+                        objOriginAcDetail.credit = 0;
+                        objOriginAcDetail.debit = listTransferAmt[0].amount;
                         objOriginAcDetail.comment = "Amount Transfer from " + idOriginAccount.name + " to " + idDestiAccount.name + ".";
                         objOriginAcDetail.trans_date = DateTime.Now;
 
                         app_account_detail objDestinationAcDetail = new app_account_detail();
-                        //objDestinationAcDetail.id_company = 1;
                         objDestinationAcDetail.id_account = idDestiAccount.id_account;
                         objDestinationAcDetail.id_currencyfx = listTransferAmt[0].id_currencyfx;
                         objDestinationAcDetail.id_payment_type = listTransferAmt[0].id_payment_type;
-                        objDestinationAcDetail.debit = listTransferAmt[0].amount;
-                        objDestinationAcDetail.credit = 0;
+                        objDestinationAcDetail.credit = listTransferAmt[0].amount;
+                        objDestinationAcDetail.debit = 0;
                         objDestinationAcDetail.comment = "Amount Transfer from " + idOriginAccount.name + " to " + idDestiAccount.name + ".";
                         objDestinationAcDetail.trans_date = DateTime.Now;
 
@@ -257,7 +226,7 @@ namespace Cognitivo.Configs
                         app_accountapp_account_detailViewSource.View.Refresh();
                         //app_account_detailViewSource.View.Refresh();
                         app_account_detail_adjustViewSource.View.Refresh();
-                        MessageBox.Show("Transfer Completed Successfully!", "Transfer", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Transfer Completed Successfully!", "Cognitivo ERP", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
             }
@@ -286,6 +255,7 @@ namespace Cognitivo.Configs
             }
         }
     }
+
     public class ClsActiveAccount
     {
         public string AccountName { get; set; }

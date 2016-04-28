@@ -154,7 +154,7 @@ namespace Cognitivo.Product
                                                         && x.app_location.id_location == id_location
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
-                                                        ).AsNoTracking().ToListAsync();
+                                                        ).Take(25).AsNoTracking().ToListAsync();
                 }
             }
         }

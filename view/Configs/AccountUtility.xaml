@@ -162,7 +162,7 @@
                 <TabItem Header="{lex:Loc Adjust}" Height="39" VerticalAlignment="Top">
                     <StackPanel Background="WhiteSmoke">
                         <Grid Margin="5">
-                            <Label Content="{lex:Loc add all items to adjust}"/>
+                            <Label Content="{lex:Loc Adjust}"/>
                             <Button Content="Open Drawer" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         </Grid>
                         <DataGrid x:Name="app_account_detailAdjustDataGrid" Grid.Row="2" BorderThickness="1" BorderBrush="Gray"

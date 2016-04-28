@@ -161,12 +161,9 @@ namespace entity.Brillo.Logic
                         security_user security_user = db.security_user.Where(x => x.id_user == sales_invoice.id_user).FirstOrDefault();
                         UserGiven = security_user.name;
                     }
-
-
-
                 }
-
             }
+
             string TransNumber = sales_invoice.number;
             DateTime TransDate = sales_invoice.trans_date;
             string BranchName = sales_invoice.app_branch.name;
@@ -234,8 +231,6 @@ namespace entity.Brillo.Logic
                             Footer += item.vatname + "   : " + item.value + "\n";
                         }
                     }
-
-
                 }
             }
             Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + sales_invoice.GrandTotal + "\n";

@@ -298,6 +298,7 @@ namespace entity
             {
                 unit_price = get_SalesPrice();
                 RaisePropertyChanged("unit_price");
+                
             }
         }
 

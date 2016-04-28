@@ -380,6 +380,7 @@ namespace Cognitivo.Sales
 
 
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                sales_invoice.RaisePropertyChanged("GrandTotal");
             }
         }
 
@@ -485,7 +486,7 @@ namespace Cognitivo.Sales
         private void sales_invoice_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             calculate_vat(sender, e);
-
+           
 
         }
 

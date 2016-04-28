@@ -369,6 +369,7 @@ namespace Cognitivo.Sales
                 {
                     Task Thread = Task.Factory.StartNew(() => select_Item(sales_return, item));
                 }
+                sales_return.RaisePropertyChanged("GrandTotal");
             }
         }
 

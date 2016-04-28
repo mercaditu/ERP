@@ -69,6 +69,7 @@ namespace entity.Brillo.Logic
             string Text = Header + Detail + Footer;
             return Text;
         }
+        
         public string SalesReturn(sales_return i)
         {
             string Header = string.Empty;
@@ -119,58 +120,59 @@ namespace entity.Brillo.Logic
             string Text = Header + Detail + Footer;
             return Text;
         }
-        public string SalesInvoice(sales_invoice i)
+
+        public string SalesInvoice(sales_invoice sales_invoice)
         {
             string Header = string.Empty;
             string Detail = string.Empty;
             string Footer = string.Empty;
 
-            string CompanyName = i.app_company.name;
-            string TransNumber = i.number;
-            DateTime TransDate = i.trans_date;
-            string BranchName = i.app_branch.name;
-
-            string UserGiven = i.security_user.name_full;
-
+            string CompanyName = sales_invoice.app_company.name;
+            DateTime TransDate = sales_invoice.trans_date;
+            string BranchName = sales_invoice.app_branch.name;
+            string UserGiven = sales_invoice.security_user.name_full;
 
             Header =
                 CompanyName + "\n"
-                + "Registro de PND. Transaccion: " + TransNumber + "\n"
-                + "Fecha y Hora: " + TransDate.ToString() + "\n"
-                + "Local Expendido: " + BranchName + "\n"
+                + "RUC:" + sales_invoice.app_company.gov_code + "\n"
+                + sales_invoice.app_company.address
+                + "***" + sales_invoice.app_company.alias + "***"
+                + "Timbrado: " + sales_invoice.app_document_range.code + " Vto: " + sales_invoice.app_document_range.expire_date
                 + "\n"
-                + "-------------------------------"
+                + "--------------------------------"
+                + "Descripcion, Cantiad, Precio" + "\n"
+                + "--------------------------------" + "\n"
                 + "\n";
 
-            foreach (sales_invoice_detail d in i.sales_invoice_detail)
+            foreach (sales_invoice_detail d in sales_invoice.sales_invoice_detail)
             {
-
-                //foreach (project_task project_task in d.project_task.child)
-                //{
                 string ItemName = d.item.name;
                 string ItemCode = d.item.code;
                 decimal? Qty = d.quantity;
                 string TaskName = d.item_description;
                 decimal? UnitPrice_Vat = d.UnitPrice_Vat;
 
-                Detail = Detail +
-                    ""
-                    + "Descripcion, Cantiad, Importe" + "\n"
-                    + "-------------------------------" + "\n"
+                Detail = Detail
                     + ItemName + "\n"
                     + Qty.ToString() + "\t" + ItemCode + "\t" + UnitPrice_Vat + "\n";
-                //}
-
             }
 
-            Footer = "-------------------------------";
-            Footer += "Total: " + i.app_currencyfx.app_currency.name + "\t" + i.GrandTotal + "\n";
+            Footer = "--------------------------------";
+            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
+            Footer += "Fecha & Hora: " + sales_invoice.trans_date + "\n";
+            Footer += "Numero de Factura: " + sales_invoice.number + "\n";
             Footer += "-------------------------------";
-            Footer += "Cliente: " + i.contact.name + "\n";
-            Footer += "RUC/ID/PASSPORT: " + i.contact.gov_code + "\n";
-            Footer += "TIPO FACTURA: " + i.app_condition.name + "\n";
-            Footer += "IVA: " + i.app_condition.name + "\n";
-            Footer += "Total: " + i.app_currencyfx.app_currency.name + "\n";
+            Footer += "Exenta   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
+            Footer += "IVA 5%   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
+            Footer += "IVA 10%  : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
+            Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + sales_invoice.GrandTotal + "\n";
+            Footer += "-------------------------------";
+            Footer += "Cliente   : " + sales_invoice.contact.name + "\n";
+            Footer += "Documento : " + sales_invoice.contact.gov_code + "\n";
+            Footer += "Condicion : " + sales_invoice.app_condition.name + "\n";
+            Footer += "-------------------------------";
+            Footer += "Sucursal    : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name;
+            Footer += "Cajero/a    : " + sales_invoice.security_user.name;
 
             string Text = Header + Detail + Footer;
             return Text;

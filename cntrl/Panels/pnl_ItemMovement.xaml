@@ -79,9 +79,9 @@
                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding unit_value,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Header="{lex:Loc Cognitivo:local:Value}" Width="auto"/>
-                            <!--<DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="auto"
+                            <DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="auto" IsReadOnly="True"
 									                        ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currencyfx"
-									                        SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
+									                        SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         </DataGrid.Columns>
                       
                     </DataGrid>

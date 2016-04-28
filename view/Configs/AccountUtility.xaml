@@ -5,6 +5,7 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:local="clr-namespace:Cognitivo.Converters"
     xmlns:cls="clr-namespace:Cognitivo.Class"
+      xmlns:Config="clr-namespace:Cognitivo.Configs"
     xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
       lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -71,7 +72,7 @@
                 </StackPanel>
             </Grid>
             <TabControl Margin="0,128,0,0">
-                <TabItem Header="{lex:Loc General}">
+                <TabItem Header="{lex:Loc General}" HorizontalAlignment="Left" Width="103">
                     <Grid Background="WhiteSmoke">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="157*"/>
@@ -113,7 +114,8 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{Binding is_active, Converter={StaticResource BoolToActiveReverse}}">
-                    <StackPanel Background="WhiteSmoke">
+                    <Frame x:Name="frmActive" Source="AccountActive.xaml" Background="WhiteSmoke"/>
+                    <!--<StackPanel Background="WhiteSmoke">
                         <Grid Margin="5">
                             <Label Content="{lex:Loc add all items in cash drawer before activating.}"/>
                             <Button Content="{lex:Loc Open Drawer}" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
@@ -133,7 +135,7 @@
                                                         Binding="{Binding Currencyfxname}" Header="Currency" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <!--<StackPanel Margin="5">
+                        --><!--<StackPanel Margin="5">
                             <Label Content="{lex:Loc InitialAmount}" Style="{StaticResource input_label}"/>
                             <TextBox x:Name="txtInitialAmount" Style="{StaticResource input_textbox}"/>
                         </StackPanel>-->
@@ -150,12 +152,12 @@
                                 <DataGridTextColumn x:Name="id_currencyfxColumn2" Binding="{Binding cur,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="currency" Width="*"/>
                                 <DataGridTextColumn x:Name="is_activeColumn" Binding="{Binding active,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource BoolToStringConverter}}" Header="Active" Width="SizeToHeader"/>
                             </DataGrid.Columns>
-                        </DataGrid>-->
+                        </DataGrid>--><!--
                         <Grid Margin="5">
                             <Label Content="once activated, you can use this account to transact normally "/>
                             <Button x:Name="btnActivateAccount" Content="{Binding is_active, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
                         </Grid>
-                    </StackPanel>
+                    </StackPanel>-->
                 </TabItem>
                 <TabItem Header="{lex:Loc Adjust}" Height="39" VerticalAlignment="Top">
                     <StackPanel Background="WhiteSmoke">
@@ -223,7 +225,7 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="{lex:Loc Create}">
-                    <Frame x:Name="frmAccount" Source="Account.xaml" Background="WhiteSmoke"/>
+                    <Frame x:Name="frmAccount" Source="Account.xaml" Background="WhiteSmoke"  />
                 </TabItem>
             </TabControl>
         </Grid>

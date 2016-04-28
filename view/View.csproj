@@ -279,6 +279,9 @@
     <Compile Include="Configs\Account.xaml.cs">
       <DependentUpon>Account.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\AccountActive.xaml.cs">
+      <DependentUpon>AccountActive.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\Accounting_Template.xaml.cs">
       <DependentUpon>Accounting_Template.xaml</DependentUpon>
     </Compile>
@@ -1209,6 +1212,10 @@
     <Page Include="Configs\Account.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configs\AccountActive.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Configs\Accounting_Template.xaml">
       <SubType>Designer</SubType>

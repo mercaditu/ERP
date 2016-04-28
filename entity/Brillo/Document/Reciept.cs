@@ -202,6 +202,7 @@ namespace entity.Brillo.Logic
             Footer += "Fecha & Hora: " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura: " + sales_invoice.number + "\n";
             Footer += "-------------------------------";
+
             if (sales_invoice != null)
             {
                 List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
@@ -237,9 +238,6 @@ namespace entity.Brillo.Logic
 
                 }
             }
-
-            //Footer += "IVA 5%   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
-            //Footer += "IVA 10%  : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
             Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + sales_invoice.GrandTotal + "\n";
             Footer += "-------------------------------";
             Footer += "Cliente   : " + sales_invoice.contact.name + "\n";

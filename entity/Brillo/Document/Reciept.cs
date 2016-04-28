@@ -3,16 +3,17 @@
 namespace entity.Brillo.Logic
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Printing;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Media;
-    
+
     public class Reciept
     {
-        
+
         public string ItemMovement(item_transfer i)
         {
             string Header = string.Empty;
@@ -46,17 +47,17 @@ namespace entity.Brillo.Logic
                 Detail = "ACTIV. : " + d.project_task.parent.item_description + "\n";
                 //foreach (project_task project_task in d.project_task.child)
                 //{
-                    string ItemName = d.project_task.items.name;
-                    string ItemCode = d.project_task.code;
-                    decimal? Qty = d.project_task.quantity_est;
-                    string TaskName = d.project_task.item_description;
+                string ItemName = d.project_task.items.name;
+                string ItemCode = d.project_task.code;
+                decimal? Qty = d.project_task.quantity_est;
+                string TaskName = d.project_task.item_description;
 
-                    Detail = Detail +
-                        ""
-                        + "Descripcion, Cantiad, Codigo" + "\n"
-                        + "-------------------------------" + "\n"
-                        + ItemName + "\n"
-                        + Qty.ToString() + "\t" + ItemCode + "\t" + TaskName + "\n";
+                Detail = Detail +
+                    ""
+                    + "Descripcion, Cantiad, Codigo" + "\n"
+                    + "-------------------------------" + "\n"
+                    + ItemName + "\n"
+                    + Qty.ToString() + "\t" + ItemCode + "\t" + TaskName + "\n";
                 //}
 
             }
@@ -69,7 +70,7 @@ namespace entity.Brillo.Logic
             string Text = Header + Detail + Footer;
             return Text;
         }
-        
+
         public string SalesReturn(sales_return i)
         {
             string Header = string.Empty;
@@ -82,7 +83,7 @@ namespace entity.Brillo.Logic
             string BranchName = i.app_branch.name;
 
             string UserGiven = i.security_user.name_full;
-            
+
 
             Header =
                 CompanyName + "\n"
@@ -95,7 +96,7 @@ namespace entity.Brillo.Logic
 
             foreach (sales_return_detail d in i.sales_return_detail)
             {
-                
+
                 //foreach (project_task project_task in d.project_task.child)
                 //{
                 string ItemName = d.item.name;
@@ -114,7 +115,7 @@ namespace entity.Brillo.Logic
             }
 
             Footer = "-------------------------------";
-     
+
             Footer += "-------------------------------";
 
             string Text = Header + Detail + Footer;
@@ -126,7 +127,7 @@ namespace entity.Brillo.Logic
             string Header = string.Empty;
             string Detail = string.Empty;
             string Footer = string.Empty;
-             string CompanyName = string.Empty;
+            string CompanyName = string.Empty;
             if (sales_invoice.app_company != null)
             {
                 CompanyName = sales_invoice.app_company.name;
@@ -138,7 +139,7 @@ namespace entity.Brillo.Logic
                     if (db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault() != null)
                     {
                         app_company app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
-                         CompanyName = app_company.name;
+                        CompanyName = app_company.name;
                     }
 
 
@@ -194,13 +195,49 @@ namespace entity.Brillo.Logic
                     + ItemName + "\n"
                     + Qty.ToString() + "\t" + ItemCode + "\t" + UnitPrice_Vat + "\n";
             }
-            
+
+
             Footer = "--------------------------------";
             Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
             Footer += "Fecha & Hora: " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura: " + sales_invoice.number + "\n";
             Footer += "-------------------------------";
-            //Footer += "Exenta   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
+            if (sales_invoice != null)
+            {
+                List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
+                if (sales_invoice_detail.Count > 0)
+                {
+
+                    using (db db = new db())
+                    {
+                        var listvat = sales_invoice_detail
+                          .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                              , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
+                              .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                      .Select(g => new
+                      {
+                          vatname = g.Key.ad.app_vat_group.name,
+                          id_vat = g.Key.id_vat,
+                          name = g.Key.name,
+                          value = g.Sum(a => a.value * a.ad.quantity)
+                      }).ToList();
+                        var VAtList = listvat.GroupBy(x => x.id_vat).Select(g => new
+                        {
+                            vatname = g.Max(y => y.vatname),
+                            id_vat = g.Max(y => y.id_vat),
+                            name = g.Max(y => y.name),
+                            value = g.Sum(a => a.value)
+                        }).ToList();
+                        foreach (dynamic item in VAtList)
+                        {
+                            Footer += item.vatname + "   : " + item.value + "\n";
+                        }
+                    }
+
+
+                }
+            }
+
             //Footer += "IVA 5%   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
             //Footer += "IVA 10%  : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
             Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + sales_invoice.GrandTotal + "\n";
@@ -222,7 +259,7 @@ namespace entity.Brillo.Logic
             app_document app_document;
             string PrinterName;
             string Content = "";
-          
+
 
             using (db db = new db())
             {

@@ -304,16 +304,33 @@ namespace Cognitivo.Sales
                 List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
                 if (sales_invoice_detail.Count > 0)
                 {
-                    dgvVAT.ItemsSource = sales_invoice_detail
-                        .Join(SalesInvoiceDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                            , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
-                            .GroupBy(a => new { a.name, a.id_vat, a.ad })
-                    .Select(g => new
-                    {
-                        id_vat = g.Key.id_vat,
-                        name = g.Key.name,
-                        value = g.Sum(a => a.value * a.ad.quantity)
-                    }).ToList();
+                    //dgvVAT.ItemsSource = sales_invoice_detail
+                    //    .Join(SalesInvoiceDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                    //        , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
+                    //        .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                    //.Select(g => new
+                    //{
+                    //    id_vat = g.Key.id_vat,
+                    //    name = g.Key.name,
+                    //    value = g.Sum(a => a.value * a.ad.quantity)
+                    //}).ToList();
+
+                    var listvat = sales_invoice_detail
+                           .Join(SalesInvoiceDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                               , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
+                               .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                       .Select(g => new
+                       {
+                           id_vat = g.Key.id_vat,
+                           name = g.Key.name,
+                           value = g.Sum(a => a.value * a.ad.quantity)
+                       }).ToList();
+                    dgvVAT.ItemsSource = listvat.GroupBy(x => x.id_vat).Select(g => new
+                       {
+                           id_vat = g.Max(y => y.id_vat),
+                           name = g.Max(y => y.name),
+                           value = g.Sum(a => a.value)
+                       }).ToList();
                 }
             }
         }
@@ -336,7 +353,7 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
 
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-          
+
             Settings.Default.Save();
             SalesSettings = Settings.Default;
             popupCustomize.IsOpen = false;
@@ -359,7 +376,7 @@ namespace Cognitivo.Sales
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                SalesInvoiceDB.Select_Item(ref sales_invoice, item,SalesSettings.AllowDuplicateItem);
+                SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
 
 
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
@@ -378,18 +395,18 @@ namespace Cognitivo.Sales
 
                         if (sales_invoice != null)
                         {
-                            
-                            if (sales_invoice.contact!=null?sales_invoice.contact.name.ToLower().Contains(query.ToLower()):false
-                                || sales_invoice.number!=null?sales_invoice.number.ToLower().Contains(query.ToLower()):false
-                                || sales_invoice.trans_date!=null?sales_invoice.trans_date.ToString() == query:false)
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
-                           
+
+                            if (sales_invoice.contact != null ? sales_invoice.contact.name.ToLower().Contains(query.ToLower()) : false
+                                || sales_invoice.number != null ? sales_invoice.number.ToLower().Contains(query.ToLower()) : false
+                                || sales_invoice.trans_date != null ? sales_invoice.trans_date.ToString() == query : false)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+
                         }
                         else
                         {
@@ -397,8 +414,9 @@ namespace Cognitivo.Sales
                         }
                     };
                 }
-                catch(Exception ex){ 
-                    throw ex; 
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
             }
             else
@@ -516,7 +534,7 @@ namespace Cognitivo.Sales
                         sales_invoice_detail.item = _sales_packing_detail.item;
                         sales_invoice_detail.id_item = _sales_packing_detail.id_item;
                         sales_invoice_detail.quantity = _sales_packing_detail.quantity;
-                       // sales_invoice_detail.unit_price = 0;
+                        // sales_invoice_detail.unit_price = 0;
 
                         sales_packing_relation sales_packing_relation = new sales_packing_relation();
                         sales_packing_relation.id_sales_packing_detail = _sales_packing_detail.id_sales_packing_detail;
@@ -670,6 +688,6 @@ namespace Cognitivo.Sales
             }
         }
 
-       
+
     }
 }

@@ -22,9 +22,8 @@
         <CollectionViewSource x:Key="app_account_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_account_detail_adjustViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_accountapp_account_detailViewSource" Source="{Binding app_account_detail, Source={StaticResource app_accountViewSource}}"/>
-        <CollectionViewSource x:Key="app_terminalViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_terminal}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_terminalViewSource2" d:DesignSource="{d:DesignInstance {x:Type entity:app_terminal}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_accountDestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
+         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
         <CollectionViewSource x:Key="amount_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type cls:clsTransferAmount}, CreateList=True}"/>
     </Page.Resources>
@@ -128,6 +127,8 @@
                                                         Binding="{Binding PaymentTypeName}" Header="Payment Type" Width="*"/>
                                 <DataGridTextColumn
                                                         Binding="{Binding amount}" Header="Amount" Width="*"/>
+                                <DataGridTextColumn
+                                                        Binding="{Binding amountCounted}" Header="Counted Amount" Width="*"/>
                                 <DataGridTextColumn IsReadOnly="True"
                                                         Binding="{Binding Currencyfxname}" Header="Currency" Width="*"/>
                             </DataGrid.Columns>
@@ -194,13 +195,11 @@
                     <StackPanel Background="WhiteSmoke">
                         <Label Content="transfer from one account to another. will reduce in one and increase in another." Margin="5"/>
                         <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
-                        <ComboBox x:Name="cbxTerminalOrigin" Grid.Column="1" Style="{DynamicResource input_combobox}" 
-                                  DisplayMemberPath="name" SelectedValuePath="id_terminal"
-                                  ItemsSource="{Binding Source={StaticResource app_terminalViewSource}}"/>
+                        <Label Content="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource app_accountViewSource}}" Style="{DynamicResource input_label}"/>
                         <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
-                        <ComboBox x:Name="cbxTerminalDestination" Grid.Column="1" Style="{DynamicResource input_combobox}" 
-                                  DisplayMemberPath="name" SelectedValuePath="id_terminal"
-                                  ItemsSource="{Binding Source={StaticResource app_terminalViewSource2}}" Grid.ColumnSpan="2" Margin="4,0,0,0"/>
+                        <ComboBox x:Name="cbxAccountDestination" Grid.Column="1" Style="{DynamicResource input_combobox}" 
+                                  DisplayMemberPath="name" SelectedValuePath="id_account"
+                                  ItemsSource="{Binding Source={StaticResource app_accountDestViewSource}}" Grid.ColumnSpan="2" Margin="4,0,0,0"/>
                         <Button Margin="8" Content="Open Drawer" Grid.Column="2" FontSize="8" 
 							    VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         <DataGrid x:Name="dgTransfer" BorderThickness="1" BorderBrush="Gray"

@@ -43,12 +43,9 @@ namespace Cognitivo.Configs
             //  txtInitialAmount.Text = getInitialAmount().ToString();
             getInitialAmount();
             //Terminal
-            List<app_terminal> listAppTerminal = entity.db.app_terminal.Where(a => a.is_active == true).ToList();
-            CollectionViewSource app_terminalViewSource = (CollectionViewSource)this.FindResource("app_terminalViewSource");
-            app_terminalViewSource.Source = listAppTerminal;
-            CollectionViewSource app_terminalViewSource2 = (CollectionViewSource)this.FindResource("app_terminalViewSource2");
-            app_terminalViewSource2.Source = listAppTerminal;
 
+           CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
+           app_accountDestViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
             //Payment Type 
             CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
             payment_typeViewSource.Source = entity.db.payment_type.Where(a => a.is_active == true).ToList();
@@ -157,13 +154,13 @@ namespace Cognitivo.Configs
                     if (app_account.is_active == true)
                     {
                         //Make Inactive
-                        app_account_detail.debit = list.amount;
+                        app_account_detail.debit = list.amountCounted;
 
                     }
                     else
                     {
                         //Make Active
-                        app_account_detail.credit = list.amount;
+                        app_account_detail.credit = list.amountCounted;
                     }
 
                     app_account_detail.id_account = app_account.id_account;
@@ -214,37 +211,37 @@ namespace Cognitivo.Configs
 
         private void btnTransfer_Click(object sender, RoutedEventArgs e)
         {
-            if (cbxTerminalOrigin.SelectedItem != null && cbxTerminalDestination.SelectedItem != null)
+            if (cbxAccountDestination.SelectedItem != null)
             {
                 if (listTransferAmt.Count >= 1)
                 {
-                    short originTerminalId = Convert.ToInt16(cbxTerminalOrigin.SelectedValue);
-                    short destinationTerminalId = Convert.ToInt16(cbxTerminalDestination.SelectedValue);
-                    string strOriginTerminal = Convert.ToString(cbxTerminalOrigin.Text);
-                    string strDestinationTerminal = Convert.ToString(cbxTerminalDestination.Text);
+                    //short originTerminalId = Convert.ToInt16(cbxTerminalOrigin.SelectedValue);
+                    //short destinationTerminalId = Convert.ToInt16(cbxTerminalDestination.SelectedValue);
+                    //string strOriginTerminal = Convert.ToString(cbxTerminalOrigin.Text);
+                    //string strDestinationTerminal = Convert.ToString(cbxTerminalDestination.Text);
 
-                    int idOriginAccount = entity.db.app_account.Where(a => a.id_terminal == originTerminalId).FirstOrDefault().id_account; //Credit Account
-                    int idDestiAccount = entity.db.app_account.Where(a => a.id_terminal == destinationTerminalId).FirstOrDefault().id_account; //Debit Account
-                    if (idOriginAccount > 0 && idDestiAccount > 0)
+                    app_account idOriginAccount = ((app_accountViewSource.View.CurrentItem) as app_account); //Credit Account
+                    app_account idDestiAccount = (app_account)cbxAccountDestination.SelectedItem; //Debit Account
+                    if (idOriginAccount != null && idDestiAccount != null)
                     {
                         app_account_detail objOriginAcDetail = new app_account_detail();
                         //objOriginAcDetail.id_company = 1;
-                        objOriginAcDetail.id_account = idOriginAccount;
+                        objOriginAcDetail.id_account = idOriginAccount.id_account;
                         objOriginAcDetail.id_currencyfx = listTransferAmt[0].id_currencyfx;
                         objOriginAcDetail.id_payment_type = listTransferAmt[0].id_payment_type;
                         objOriginAcDetail.debit = 0;
                         objOriginAcDetail.credit = listTransferAmt[0].amount;
-                        objOriginAcDetail.comment = "Amount Transfer from " + strOriginTerminal + " to " + strDestinationTerminal + ".";
+                        objOriginAcDetail.comment = "Amount Transfer from " + idOriginAccount.name + " to " + idDestiAccount.name + ".";
                         objOriginAcDetail.trans_date = DateTime.Now;
 
                         app_account_detail objDestinationAcDetail = new app_account_detail();
                         //objDestinationAcDetail.id_company = 1;
-                        objDestinationAcDetail.id_account = idDestiAccount;
+                        objDestinationAcDetail.id_account = idDestiAccount.id_account;
                         objDestinationAcDetail.id_currencyfx = listTransferAmt[0].id_currencyfx;
                         objDestinationAcDetail.id_payment_type = listTransferAmt[0].id_payment_type;
                         objDestinationAcDetail.debit = listTransferAmt[0].amount;
                         objDestinationAcDetail.credit = 0;
-                        objDestinationAcDetail.comment = "Amount Transfer from " + strOriginTerminal + " to " + strDestinationTerminal + ".";
+                        objDestinationAcDetail.comment = "Amount Transfer from " + idOriginAccount.name + " to " + idDestiAccount.name + ".";
                         objDestinationAcDetail.trans_date = DateTime.Now;
 
                         entity.db.Entry(objOriginAcDetail).State = EntityState.Added;
@@ -252,8 +249,8 @@ namespace Cognitivo.Configs
                         entity.SaveChanges();
 
                         //Reload Data.
-                        cbxTerminalDestination.SelectedIndex = 0;
-                        cbxTerminalOrigin.SelectedIndex = 0;
+                        cbxAccountDestination.SelectedIndex = 0;
+                       
                         listTransferAmt.Clear();
                         amount_transferViewSource.View.Refresh();
                         app_accountViewSource.View.Refresh();

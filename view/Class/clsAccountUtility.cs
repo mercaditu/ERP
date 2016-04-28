@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Cognitivo.Class
+
 {
     class clsTransferAmount
     {
@@ -12,5 +13,6 @@ namespace Cognitivo.Class
         public int id_currencyfx { get; set; }
         public String Currencyfxname { get; set; }
         public String PaymentTypeName { get; set; }
+        public decimal amountCounted { get; set; }
     }
 }

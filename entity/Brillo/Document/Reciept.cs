@@ -126,11 +126,49 @@ namespace entity.Brillo.Logic
             string Header = string.Empty;
             string Detail = string.Empty;
             string Footer = string.Empty;
+             string CompanyName = string.Empty;
+            if (sales_invoice.app_company != null)
+            {
+                CompanyName = sales_invoice.app_company.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault() != null)
+                    {
+                        app_company app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
+                         CompanyName = app_company.name;
+                    }
 
-            string CompanyName = sales_invoice.app_company.name;
+
+
+                }
+
+            }
+            string UserGiven = "";
+            if (sales_invoice.security_user != null)
+            {
+                UserGiven = sales_invoice.security_user.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.security_user.Where(x => x.id_user == sales_invoice.id_user).FirstOrDefault() != null)
+                    {
+                        security_user security_user = db.security_user.Where(x => x.id_user == sales_invoice.id_user).FirstOrDefault();
+                        UserGiven = security_user.name;
+                    }
+
+
+
+                }
+
+            }
+            string TransNumber = sales_invoice.number;
             DateTime TransDate = sales_invoice.trans_date;
             string BranchName = sales_invoice.app_branch.name;
-            string UserGiven = sales_invoice.security_user.name_full;
 
             Header =
                 CompanyName + "\n"
@@ -156,15 +194,15 @@ namespace entity.Brillo.Logic
                     + ItemName + "\n"
                     + Qty.ToString() + "\t" + ItemCode + "\t" + UnitPrice_Vat + "\n";
             }
-
+            
             Footer = "--------------------------------";
             Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
             Footer += "Fecha & Hora: " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura: " + sales_invoice.number + "\n";
             Footer += "-------------------------------";
-            Footer += "Exenta   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
-            Footer += "IVA 5%   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
-            Footer += "IVA 10%  : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
+            //Footer += "Exenta   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
+            //Footer += "IVA 5%   : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
+            //Footer += "IVA 10%  : " + sales_invoice.sales_invoice_detail.Where(x=> x.app_vat_group.app_vat_group_details.Where(y => x.)) + "\n";
             Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + sales_invoice.GrandTotal + "\n";
             Footer += "-------------------------------";
             Footer += "Cliente   : " + sales_invoice.contact.name + "\n";
@@ -183,31 +221,31 @@ namespace entity.Brillo.Logic
         {
             app_document app_document;
             string PrinterName;
-            string Content="";
+            string Content = "";
           
 
             using (db db = new db())
             {
                 app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
                 PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
-                if (app_document.id_application==App.Names.Movement)
+                if (app_document.id_application == App.Names.Movement)
                 {
                     item_transfer item_transfer = (item_transfer)obj;
-                    Content=ItemMovement(item_transfer);
+                    Content = ItemMovement(item_transfer);
                 }
                 else if (app_document.id_application == App.Names.SalesReturn)
                 {
                     sales_return sales_return = (sales_return)obj;
-                   Content= SalesReturn(sales_return);
+                    Content = SalesReturn(sales_return);
                 }
                 else if (app_document.id_application == App.Names.SalesInvoice)
                 {
                     sales_invoice sales_invoice = (sales_invoice)obj;
-                   Content= SalesInvoice(sales_invoice);
+                    Content = SalesInvoice(sales_invoice);
                 }
             }
 
-            if (Content!="")
+            if (Content != "")
             {
 
 

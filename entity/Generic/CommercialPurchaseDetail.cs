@@ -149,14 +149,16 @@ namespace entity
                 if (_CurrencyFX_ID != value)
                 {
 
-                    _CurrencyFX_ID = value;
+                 
 
                     if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
 
-                        unit_cost = Currency.convert_Value(unit_cost, value, App.Modules.Purchase);
+                       unit_cost = Currency.convert_Values(unit_cost,_CurrencyFX_ID, value, App.Modules.Purchase);
+                       // unit_cost = Currency.convert_Value(unit_cost,  value, App.Modules.Purchase);
                         RaisePropertyChanged("unit_cost");
                     }
+                    _CurrencyFX_ID = value;
                 }
             }
         }

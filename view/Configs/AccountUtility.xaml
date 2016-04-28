@@ -119,10 +119,23 @@
                             <Label Content="{lex:Loc add all items in cash drawer before activating.}"/>
                             <Button Content="{lex:Loc Open Drawer}" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         </Grid>
-                        <StackPanel Margin="5">
+                        <DataGrid x:Name="CashDataGrid" AutoGenerateColumns="False" BorderThickness="1" BorderBrush="Gray"
+                                      EnableRowVirtualization="True"  Grid.Row="0"
+                                      Margin="10,26,10,10" Height="Auto" MaxHeight="180" 
+                                      RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn IsReadOnly="True"
+                                                        Binding="{Binding PaymentTypeName}" Header="Payment Type" Width="*"/>
+                                <DataGridTextColumn
+                                                        Binding="{Binding amount}" Header="Amount" Width="*"/>
+                                <DataGridTextColumn IsReadOnly="True"
+                                                        Binding="{Binding Currencyfxname}" Header="Currency" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <!--<StackPanel Margin="5">
                             <Label Content="{lex:Loc InitialAmount}" Style="{StaticResource input_label}"/>
                             <TextBox x:Name="txtInitialAmount" Style="{StaticResource input_textbox}"/>
-                        </StackPanel>
+                        </StackPanel>-->
                         <!--<DataGrid x:Name="app_account_Activate_detailDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
                                   EnableRowVirtualization="True" Height="Auto" BorderThickness="1" BorderBrush="Gray"
                                   ItemsSource="{Binding Source={StaticResource app_account_detailViewSource}}" 

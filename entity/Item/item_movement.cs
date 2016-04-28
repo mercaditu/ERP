@@ -6,13 +6,13 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
-
+    using System.Linq;
     public partial class item_movement : Audit
     {
         public item_movement()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_movement_value = new List<item_movement_value>();
             item_movement_dimension = new List<item_movement_dimension>();
@@ -45,7 +45,7 @@ namespace entity
         public DateTime? expire_date { get; set; }
         public DateTime trans_date { get; set; }
 
-   
+
 
 
         //Heirarchy For Movement
@@ -70,7 +70,7 @@ namespace entity
 
             foreach (item_movement_value item_movement_valueLIST in item_movement_value)
             {
-                if(item_movement_valueLIST.app_currencyfx.app_currency == app_currency)
+                if (item_movement_valueLIST.app_currencyfx.app_currency == app_currency)
                 {
                     Value = Value + item_movement_valueLIST.unit_value;
                 }
@@ -80,7 +80,12 @@ namespace entity
                     app_currencyfx app_currencyfx = item_movement_valueLIST.app_currencyfx;
 
                     //convert into current currency.
-                    Value = Value + Brillo.Currency.convert_Value(item_movement_valueLIST.unit_value, app_currencyfx.id_currencyfx, App.Modules.Purchase);
+                    if (app_currency.app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
+                    {
+                       // Value = Value + Brillo.Currency.convert_Values(item_movement_valueLIST.unit_value, app_currency.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Purchase);
+                        Value = Value + Brillo.Currency.convert_Value(item_movement_valueLIST.unit_value, app_currencyfx.id_currencyfx, App.Modules.Purchase);
+                    }
+
                 }
             }
 

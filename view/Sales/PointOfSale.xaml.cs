@@ -231,6 +231,7 @@ namespace Cognitivo.Sales
                 {
                     foreach (payment_detail _payment_detail in payment_detaillist.Where(x => x.id_currency == app_currency.id_currency).ToList())
                     {
+                       // totalpaid += Currency.convert_Values(_payment_detail.value, sales_invoice.id_currencyfx, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
                         totalpaid += Currency.convert_Value(_payment_detail.value, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
                     }
                 }

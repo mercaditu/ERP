@@ -544,9 +544,24 @@ namespace Cognitivo.Project
                     //decimal currencyfx = Currency.get_specificRate(id_currencyfx, application);
                     if (item.item_price.Where(x => x.id_price_list == id_priceList) != null && item.item_price.Where(x => x.id_price_list == id_priceList).Count() > 0)
                     {
-                        item_price_value = item.item_price.Where(x => x.id_price_list == id_priceList).FirstOrDefault().valuewithVAT;
+                        item_price =item.item_price.Where(y => y.id_price_list == id_priceList).FirstOrDefault();
+                        item_price_value = item_price.valuewithVAT;
+                        //using (db db = new db())
+                        //{
+
+                        //    if (db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault() != null)
+                        //    {
+                        //        if (db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x=>x.is_active).FirstOrDefault()!=null)
+                        //        {
+                        //            //return Currency.convert_Values(item_price_value, db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, id_currencyfx, Module);            
+                        
+                        //        }
+                        //    }
+                        //}
+                        
                     }
-                    return Currency.convert_Value(item_price_value, id_currencyfx, Module);
+                    return Currency.convert_Value(item_price_value, id_currencyfx, Module);            
+                 
                 }
             }
             return 0;

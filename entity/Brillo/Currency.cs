@@ -74,7 +74,7 @@ namespace entity.Brillo
             return 0;
         }
 
-        public static decimal convert_Values(decimal originalValue, int old_app_currencyfx,int id_app_currencyfx, App.Modules? Modules)
+        public static decimal convert_Values(decimal originalValue, int old_app_currencyfx, int id_app_currencyfx, App.Modules? Modules)
         {
             decimal rate = 0;
             app_currencyfx app_currencyfx = null;
@@ -105,11 +105,11 @@ namespace entity.Brillo
                     {
                         if (app_currencyfx.app_currency.is_priority == false && app_currencyfxold.app_currency.is_priority == false)
                         {
-                            app_currencyfx app_currencyfxprior=db.app_currencyfx.Where(x=>x.app_currency.is_priority).FirstOrDefault();
+                            app_currencyfx app_currencyfxprior = db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault();
                         }
                         else if (app_currencyfx.app_currency.is_priority == true) //Towards Default
                         {
-                           
+
 
 
                             if (app_currencyfxold != null)
@@ -124,7 +124,7 @@ namespace entity.Brillo
                                 }
                             }
 
-                            return originalValue * rate;
+                            return originalValue * (1 / rate);
                         }
                         else //Away from Default
                         {
@@ -133,7 +133,7 @@ namespace entity.Brillo
                         }
                     }
 
-                  
+
                 }
             }
             return 0;

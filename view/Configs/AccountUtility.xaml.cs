@@ -9,6 +9,7 @@ using entity;
 
 namespace Cognitivo.Configs
 {
+
     public partial class AccountUtility
     {
         #region Load and Initilize
@@ -20,7 +21,7 @@ namespace Cognitivo.Configs
             , amount_transferViewSource = null;
         List<Class.clsTransferAmount> listTransferAmt = null;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
-
+        List<Class.clsTransferAmount> listOpenAmt = null;
         public AccountUtility()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace Cognitivo.Configs
             //Main Account DataGrid.
             app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
             entity.db.app_account.Include("app_account_detail")
-                .Where(a =>a.id_company == _entity.company_ID).Load();
+                .Where(a => a.id_company == _entity.company_ID).Load();
             app_accountViewSource.Source = entity.db.app_account.Local;
             app_accountapp_account_detailViewSource = this.FindResource("app_accountapp_account_detailViewSource") as CollectionViewSource;
 
@@ -39,8 +40,8 @@ namespace Cognitivo.Configs
                 entity.db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal && a.id_company == _entity.company_ID).ToList();
 
             //For Active Tab.
-            txtInitialAmount.Text = getInitialAmount().ToString();
-
+            //  txtInitialAmount.Text = getInitialAmount().ToString();
+            getInitialAmount();
             //Terminal
             List<app_terminal> listAppTerminal = entity.db.app_terminal.Where(a => a.is_active == true).ToList();
             CollectionViewSource app_terminalViewSource = (CollectionViewSource)this.FindResource("app_terminalViewSource");
@@ -75,25 +76,57 @@ namespace Cognitivo.Configs
             amount_transferViewSource = this.FindResource("amount_transferViewSource") as CollectionViewSource;
             amount_transferViewSource.Source = listTransferAmt;
         }
-        private decimal getInitialAmount()
+        private void getInitialAmount()
         {
-            decimal debit = 0;
-            decimal credit = 0;
-            decimal initial_amount = 0;
-            if (app_accountDataGrid.SelectedItem != null)
+            //decimal debit = 0;
+            //decimal credit = 0;
+            //decimal initial_amount = 0;
+            //if (app_accountDataGrid.SelectedItem != null)
+            //{
+            //    app_account app_account = app_accountDataGrid.SelectedItem as app_account;
+            //    if (app_account != null)
+            //    {
+            //        initial_amount = Convert.ToDecimal(app_account.initial_amount);
+            //        if (app_account.app_account_detail != null)
+            //        {
+            //            debit = Convert.ToDecimal(app_account.app_account_detail.Sum(a => a.debit));
+            //            credit = Convert.ToDecimal(app_account.app_account_detail.Sum(a => a.credit));
+            //        }
+            //    }
+            //}
+            //return ((initial_amount + credit) - debit);
+            app_account objAccount = (app_account)app_accountDataGrid.SelectedItem;
+            var app_account_detailList = objAccount.app_account_detail
+         .GroupBy(ad => new { ad.id_currencyfx })
+         .Select(s => new
+         {
+             id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
+             id_paymenttype = s.Max(ad => ad.id_payment_type),
+             cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+             payType = s.Max(ad => ad.payment_type.name),
+             amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
+         }).ToList();
+
+            var app_account_detailFinalList = app_account_detailList.GroupBy(x => x.cur).Select(s => new
             {
-                app_account app_account = app_accountDataGrid.SelectedItem as app_account;
-                if (app_account != null)
-                {
-                    initial_amount = Convert.ToDecimal(app_account.initial_amount);
-                    if (app_account.app_account_detail != null)
-                    {
-                        debit = Convert.ToDecimal(app_account.app_account_detail.Sum(a => a.debit));
-                        credit = Convert.ToDecimal(app_account.app_account_detail.Sum(a => a.credit));
-                    }
-                }
+                id_currencyfx=s.Max(x=>x.id_currencyfx),
+                id_paymenttype = s.Max(x => x.id_paymenttype),
+                cur = s.Max(ad => ad.cur),
+                payType = s.Max(ad => ad.payType),
+                amount = s.Sum(ad => ad.amount)
+            }).ToList();
+            listOpenAmt = new List<Class.clsTransferAmount>();
+            foreach (dynamic item in app_account_detailFinalList)
+            {
+                Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
+                clsTransferAmount.PaymentTypeName = item.payType;
+                clsTransferAmount.amount = item.amount;
+                clsTransferAmount.Currencyfxname = item.cur;
+                clsTransferAmount.id_payment_type = item.id_paymenttype;
+                clsTransferAmount.id_currencyfx = item.id_currencyfx;
+                listOpenAmt.Add(clsTransferAmount);
             }
-            return ((initial_amount + credit) - debit);
+            CashDataGrid.ItemsSource = listOpenAmt;
         }
 
         private void app_accountDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -101,11 +134,11 @@ namespace Cognitivo.Configs
             //Account detail.
             app_account objAccount = (app_account)app_accountDataGrid.SelectedItem;
             app_account_detailDataGrid.ItemsSource = objAccount.app_account_detail
-                .GroupBy(ad => new { ad.id_currencyfx, cur_name = ad.app_currencyfx.app_currency.name, paymentType = ad.payment_type.name })
+                .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
                 .Select(s => new
                 {
-                    cur = s.Key.cur_name,
-                    payType = s.Key.paymentType,
+                    cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+                    payType = s.Max(ad => ad.payment_type.name),
                     amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                 }).ToList();
         }
@@ -116,18 +149,47 @@ namespace Cognitivo.Configs
             if (app_accountDataGrid.SelectedItem != null)
             {
                 app_account app_account = app_accountDataGrid.SelectedItem as app_account;
+                foreach (Class.clsTransferAmount list in listOpenAmt)
+                {
+                    app_account_detail app_account_detail = new global::entity.app_account_detail();
+                  
+
+                    if (app_account.is_active == true)
+                    {
+                        //Make Inactive
+                        app_account_detail.debit = list.amount;
+
+                    }
+                    else
+                    {
+                        //Make Active
+                        app_account_detail.credit = list.amount;
+                    }
+
+                    app_account_detail.id_account = app_account.id_account;
+                    app_account_detail.id_currencyfx = list.id_currencyfx;
+                    app_account_detail.id_payment_type = list.id_payment_type;
+                    app_account_detail.comment = "For Opening or closing Cash.";
+                    app_account_detail.trans_date = DateTime.Now;
+                    entity.db.app_account_detail.Add(app_account_detail);
+                }
+
                 if (app_account.is_active == true)
                 {
                     //Make Inactive
                     entity.db.Entry(app_account).Entity.is_active = false;
+
                 }
                 else
                 {
                     //Make Active
                     entity.db.Entry(app_account).Entity.is_active = true;
                 }
-                entity.db.Entry(app_account).Entity.initial_amount = Convert.ToDecimal(txtInitialAmount.Text.Trim());
+                // entity.db.Entry(app_account).Entity.initial_amount = Convert.ToDecimal(txtInitialAmount.Text.Trim());
                 entity.db.Entry(app_account).State = EntityState.Modified;
+               
+
+
                 entity.SaveChanges();
 
                 //Reload Data
@@ -226,5 +288,11 @@ namespace Cognitivo.Configs
                 app_accountViewSource.View.Filter = null;
             }
         }
+    }
+    public class ClsActiveAccount
+    {
+        public string AccountName { get; set; }
+        public Decimal Amount { get; set; }
+        public string Currency { get; set; }
     }
 }

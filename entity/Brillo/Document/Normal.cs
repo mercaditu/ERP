@@ -7,6 +7,7 @@ namespace entity.Brillo.Document
 {
     public class Normal
     {
+        Logic.Reciept TicketPrint = new Logic.Reciept();
         public enum PrintStyles
         {
             Automatic,
@@ -15,39 +16,46 @@ namespace entity.Brillo.Document
 
         public Normal(object Document, app_document_range app_range, PrintStyles PrintStyle)
         {
-            string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\" + app_range.app_document.name + ".rdlc";
-            
-            if (Directory.Exists(PathFull) == false)
+            if (app_range.app_document!=null?app_range.app_document.style_reciept:false)
             {
-                CreateFile(app_range);
-            }
-
-            DataSource DataSource = new DataSource();
-
-            ///
-            if (PrintStyle == PrintStyles.Automatic && !app_range.use_default_printer && app_range.printer_name != null)
-            {
-                LocalReport LocalReport = new LocalReport();
-                PrintInvoice PrintInvoice = new PrintInvoice();
-                LocalReport.ReportPath = PathFull; // Path of the rdlc file
-                LocalReport.DataSources.Add(DataSource.Create(Document));
-                PrintInvoice.Export(LocalReport);
-                PrintInvoice.Print(app_range.printer_name);
+                TicketPrint.Document_Print(app_range.app_document.id_document, Document);
             }
             else
             {
-                DocumentViewr DocumentViewr = new DocumentViewr();
-                DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
-                DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Create(Document));
-                DocumentViewr.reportViewer.RefreshReport();
+                string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\" + app_range.app_document.name + ".rdlc";
 
-                Window window = new Window
+                if (Directory.Exists(PathFull) == false)
                 {
-                    Title = "Report",
-                    Content = DocumentViewr
-                };
+                    CreateFile(app_range);
+                }
 
-                window.ShowDialog();
+                DataSource DataSource = new DataSource();
+
+                ///
+                if (PrintStyle == PrintStyles.Automatic && !app_range.use_default_printer && app_range.printer_name != null)
+                {
+                    LocalReport LocalReport = new LocalReport();
+                    PrintInvoice PrintInvoice = new PrintInvoice();
+                    LocalReport.ReportPath = PathFull; // Path of the rdlc file
+                    LocalReport.DataSources.Add(DataSource.Create(Document));
+                    PrintInvoice.Export(LocalReport);
+                    PrintInvoice.Print(app_range.printer_name);
+                }
+                else
+                {
+                    DocumentViewr DocumentViewr = new DocumentViewr();
+                    DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
+                    DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Create(Document));
+                    DocumentViewr.reportViewer.RefreshReport();
+
+                    Window window = new Window
+                    {
+                        Title = "Report",
+                        Content = DocumentViewr
+                    };
+
+                    window.ShowDialog();
+                }
             }
         }
 

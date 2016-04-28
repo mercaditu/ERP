@@ -145,13 +145,14 @@ namespace entity
 
                 if (_CurrencyFX_ID != value)
                 {
-                    _CurrencyFX_ID = value;
+                   
 
                     if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
-                        unit_price = Currency.convert_Value(unit_price, value, App.Modules.Sales);
+                        unit_price = Currency.convert_Values(unit_price,_CurrencyFX_ID, value, App.Modules.Sales);
                         RaisePropertyChanged("unit_price");
                     }
+                    _CurrencyFX_ID = value;
                 }
 
             }

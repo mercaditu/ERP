@@ -21,7 +21,7 @@ namespace Cognitivo.Sales
         entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
         PaymentDB PaymentDB = new entity.PaymentDB();
         Settings SalesSettings = new Settings();
-        
+
         CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
 
         List<payment> paymentList = new List<payment>();
@@ -36,6 +36,16 @@ namespace Cognitivo.Sales
         private void btnClient_Click(object sender, EventArgs e)
         {
             tabContact.IsSelected = true;
+        }
+        private void btnAccount_Click(object sender, EventArgs e)
+        {
+            tabAccount.IsSelected = true;
+            if (frmActive.Children.Count > 0)
+            {
+                frmActive.Children.RemoveAt(0);
+            }
+            Configs.AccountActive AccountActive = new Configs.AccountActive();
+            frmActive.Children.Add(AccountActive);
         }
 
         private void btnSales_Click(object sender, EventArgs e)
@@ -182,6 +192,7 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+          
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
@@ -269,7 +280,42 @@ namespace Cognitivo.Sales
 
 
         }
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as sales_invoice_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
 
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                    //DeleteDetailGridRow
+                    dgvSalesDetail.CancelEdit();
+                    sales_invoice.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
+                   
+                    sales_invoiceViewSource.View.Refresh();
+                    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void dgvPaymentDetail_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+
+        }
 
     }
 }

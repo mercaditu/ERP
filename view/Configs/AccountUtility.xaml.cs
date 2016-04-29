@@ -121,7 +121,15 @@ namespace Cognitivo.Configs
                     payType = s.Max(ad => ad.payment_type.name),
                     amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
                 }).ToList();
-            frmActive.Refresh();
+            CurrentSession.Id_Account = objAccount.id_account;
+            if (frmActive.Children.Count>0)
+            {
+                frmActive.Children.RemoveAt(0);
+            }
+            Configs.AccountActive AccountActive = new AccountActive();
+            AccountActive.db = entity.db;
+            AccountActive.app_accountViewSource = app_accountViewSource;
+            frmActive.Children.Add(AccountActive);
         }
         #endregion
 
@@ -254,6 +262,21 @@ namespace Cognitivo.Configs
             {
                 app_accountViewSource.View.Filter = null;
             }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tabAccount.SelectedIndex==2)
+            {
+                app_account_listViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal).ToList();
+                app_account_listViewSource.View.Refresh();
+            }
+            //if (tabAccount.SelectedIndex==1)
+            //{
+            //    Configs.AccountActive AccountActive = new AccountActive();
+            //    AccountActive.app_accountViewSource = app_accountViewSource;
+            //    frmActive.Children.Add(AccountActive);
+            //}
         }
     }
 

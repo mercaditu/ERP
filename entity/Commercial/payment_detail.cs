@@ -44,6 +44,7 @@ namespace entity
                 _id_currency = value;
                 using (db db = new db())
                 {
+                    int old_currencyfx=id_currencyfx;
                     if ( db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault()!=null)
                     {
                         id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
@@ -54,6 +55,8 @@ namespace entity
                         id_currencyfx = db.app_currencyfx.Where(x=>x.is_active).FirstOrDefault().id_currencyfx;
                         RaisePropertyChanged("id_currencyfx"); 
                     }
+                    this.value = Currency.convert_Values(this.value, old_currencyfx, id_currencyfx, App.Modules.Sales);
+                    RaisePropertyChanged("value");
                 }
                 RaisePropertyChanged("id_currency");
             }

@@ -71,7 +71,7 @@
                     <Label Content="Today" FontSize="16"/>
                 </StackPanel>
             </Grid>
-            <TabControl Margin="0,128,0,0">
+            <TabControl x:Name="tabAccount" Margin="0,128,0,0" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="{lex:Loc General}" HorizontalAlignment="Left" Width="103">
                     <Grid Background="WhiteSmoke">
                         <Grid.ColumnDefinitions>
@@ -114,7 +114,9 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{Binding is_active, Converter={StaticResource BoolToActiveReverse}}">
-                    <Frame x:Name="frmActive" Source="AccountActive.xaml" Background="WhiteSmoke"/>
+                    <Grid x:Name="frmActive" Background="WhiteSmoke">
+                        
+                    </Grid>
                     <!--<StackPanel Background="WhiteSmoke">
                         <Grid Margin="5">
                             <Label Content="{lex:Loc add all items in cash drawer before activating.}"/>

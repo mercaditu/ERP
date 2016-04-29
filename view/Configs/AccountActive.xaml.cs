@@ -19,10 +19,12 @@ namespace Cognitivo.Configs
     /// <summary>
     /// Interaction logic for AccountActive.xaml
     /// </summary>
-    public partial class AccountActive : Page
+    public partial class AccountActive : UserControl
     {
         List<Class.clsTransferAmount> listOpenAmt = null;
-        db db = new entity.db();
+        public db db { get; set; }
+        public CollectionViewSource  app_accountViewSource { get; set; }
+    
         public AccountActive()
         {
             InitializeComponent();
@@ -34,43 +36,48 @@ namespace Cognitivo.Configs
         }
         private void getInitialAmount()
         {
-
-            if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+            if (db == null)
             {
-                app_account objAccount = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+                db = new db();
+            }
 
-
-                var app_account_detailList = objAccount.app_account_detail
-             .GroupBy(ad => new { ad.id_currencyfx })
-             .Select(s => new
-             {
-                 id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
-                 id_paymenttype = s.Max(ad => ad.id_payment_type),
-                 cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
-                 payType = s.Max(ad => ad.payment_type.name),
-                 amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
-             }).ToList();
-
-                var app_account_detailFinalList = app_account_detailList.GroupBy(x => x.cur).Select(s => new
+                if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
                 {
-                    id_currencyfx = s.Max(x => x.id_currencyfx),
-                    id_paymenttype = s.Max(x => x.id_paymenttype),
-                    cur = s.Max(ad => ad.cur),
-                    payType = s.Max(ad => ad.payType),
-                    amount = s.Sum(ad => ad.amount)
-                }).ToList();
-                listOpenAmt = new List<Class.clsTransferAmount>();
-                foreach (dynamic item in app_account_detailFinalList)
-                {
-                    Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
-                    clsTransferAmount.PaymentTypeName = item.payType;
-                    clsTransferAmount.amount = item.amount;
-                    clsTransferAmount.Currencyfxname = item.cur;
-                    clsTransferAmount.id_payment_type = item.id_paymenttype;
-                    clsTransferAmount.id_currencyfx = item.id_currencyfx;
-                    listOpenAmt.Add(clsTransferAmount);
-                }
-                CashDataGrid.ItemsSource = listOpenAmt;
+                    app_account objAccount = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+
+
+                    var app_account_detailList = objAccount.app_account_detail
+                 .GroupBy(ad => new { ad.id_currencyfx })
+                 .Select(s => new
+                 {
+                     id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
+                     id_paymenttype = s.Max(ad => ad.id_payment_type),
+                     cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+                     payType = s.Max(ad => ad.payment_type.name),
+                     amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
+                 }).ToList();
+
+                    var app_account_detailFinalList = app_account_detailList.GroupBy(x => x.cur).Select(s => new
+                    {
+                        id_currencyfx = s.Max(x => x.id_currencyfx),
+                        id_paymenttype = s.Max(x => x.id_paymenttype),
+                        cur = s.Max(ad => ad.cur),
+                        payType = s.Max(ad => ad.payType),
+                        amount = s.Sum(ad => ad.amount)
+                    }).ToList();
+                    listOpenAmt = new List<Class.clsTransferAmount>();
+                    foreach (dynamic item in app_account_detailFinalList)
+                    {
+                        Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
+                        clsTransferAmount.PaymentTypeName = item.payType;
+                        clsTransferAmount.amount = item.amount;
+                        clsTransferAmount.Currencyfxname = item.cur;
+                        clsTransferAmount.id_payment_type = item.id_paymenttype;
+                        clsTransferAmount.id_currencyfx = item.id_currencyfx;
+                        listOpenAmt.Add(clsTransferAmount);
+                    }
+                    CashDataGrid.ItemsSource = listOpenAmt;
+                
             }
         }
 
@@ -120,7 +127,17 @@ namespace Cognitivo.Configs
 
                 //Reload Data
                 db.Entry(app_account).Reload();
-             
+
+                if (app_accountViewSource!=null)
+                {
+                    if (app_accountViewSource.View!=null)
+                    {
+                        app_accountViewSource.View.Refresh();
+                    }
+                 
+                     
+                }
+               
             }
         }
     }

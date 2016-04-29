@@ -82,8 +82,8 @@ namespace Cognitivo.Sales
 
                 //Sales
 
-                foreach (payment_detail payment_detail in payment.payment_detail)
-                {
+                //foreach (payment_detail payment_detail in payment.payment_detail)
+                //{
                     payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
 
                     payment.IsSelected = true;
@@ -93,7 +93,7 @@ namespace Cognitivo.Sales
                    
                     PaymentDB.Approve(payment_schedual.id_payment_schedual);
 
-                }
+                //}
 
                 sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
 
@@ -312,10 +312,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void dgvPaymentDetail_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-
-        }
+    
 
     }
 }

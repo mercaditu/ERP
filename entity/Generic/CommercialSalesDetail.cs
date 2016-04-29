@@ -398,7 +398,7 @@ namespace entity
                             {
                                 item_price = db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault();
                                 app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
-                                return Currency.convert_BackValue(item_price.value, app_currencyfx.id_currencyfx, App.Modules.Sales);
+                                return Currency.convert_Values(item_price.value, app_currencyfx.id_currencyfx,CurrencyFX_ID, App.Modules.Sales);
                             }
 
 

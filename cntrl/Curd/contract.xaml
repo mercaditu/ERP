@@ -49,7 +49,8 @@
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
                      Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <CheckBox x:Name="chbxCustomer" Content="{lex:Loc Default}" IsChecked="{Binding is_default, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+                <CheckBox Content="{lex:Loc Default}" IsChecked="{Binding is_default, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+                <CheckBox Content="{lex:Loc PromissoryNote}" IsChecked="{Binding promissorynote, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
             </StackPanel>
             <Rectangle Style="{StaticResource line_Bar}"/>
             <TextBlock Text="Controls payment intervals based on following credentials"
@@ -58,8 +59,8 @@
                       ItemsSource="{Binding app_contract_detail}" AutoGenerateColumns="False" InitializingNewItem="dgvContractDetail_InitializingNewItem">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Header="{lex:Loc Cognitivo:local:Order}" Width="SizeToHeader" Binding="{Binding is_order, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coeficient}" Width="*" Binding="{Binding coefficient, StringFormat=P, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Days}" Width="SizeToHeader" Binding="{Binding interval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Coeficient}" Width="SizeToHeader" Binding="{Binding coefficient, StringFormat=P, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"/>
+                    <DataGridTextColumn Header="OffSet" Width="SizeToHeader" Binding="{Binding interval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Background="WhiteSmoke">

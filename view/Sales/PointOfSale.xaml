@@ -77,8 +77,8 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,64,0,0">
-            
-                <Border CornerRadius="32" Background="PaleGreen" Width="64" Height="64" 
+
+            <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64" 
                     Cursor="Hand" MouseDown="btnClient_Click" TouchDown="btnClient_Click"
                     BorderBrush="White" BorderThickness="4" ToolTip="F1">
                     <Border.Effect>
@@ -92,7 +92,7 @@
             
             <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32"/>
 
-                <Border CornerRadius="32" Background="PaleGreen" Width="64" Height="64" 
+                <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64" 
                     Cursor="Hand" MouseDown="btnSales_Click" TouchDown="btnSales_Click"
                     BorderBrush="White" BorderThickness="4" ToolTip="F2">
                     <Border.Effect>
@@ -140,16 +140,9 @@
                         <Label Content="{lex:Loc Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
                     </StackPanel>
                     <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512">
-                        <cntrl:SmartBox_Contact x:Name="sbxContact" HorizontalAlignment="Center" Get_Customers="True" Select="sbxContact_Select"/>
+                        <cntrl:SmartBox_Contact x:Name="sbxContact" HorizontalAlignment="Center" Get_Customers="True" 
+                                                Select="sbxContact_Select" can_New="True"/>
                     </Viewbox>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <StackPanel Margin="14,8">
-                            <Label Style="{StaticResource input_label}" Content="Name"/>
-                            <TextBox Text="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" IsReadOnly="True"/>
-                            <Label Style="{StaticResource input_label}" Content="Government ID"/>
-                            <TextBox Text="{Binding contact.gov_code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" IsReadOnly="True"/>
-                        </StackPanel>
-                    </StackPanel>
                 </StackPanel>
             </TabItem>
             

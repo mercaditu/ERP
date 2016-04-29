@@ -73,6 +73,7 @@ namespace Cognitivo.Sales
                 else
                 {
                     MessageBox.Show("Some Value is missing..");
+                    return;
                 }
 
                 SalesInvoiceDB.Approve(true);

@@ -16,7 +16,7 @@ namespace entity.Brillo.Document
 
         public Normal(object Document, app_document_range app_range, PrintStyles PrintStyle)
         {
-            if (app_range.app_document!=null?app_range.app_document.style_reciept:false)
+            if (app_range.app_document != null ? app_range.app_document.style_reciept : false || app_range.app_document != null ? app_range.app_document.id_application==App.Names.PointOfSale:false)
             {
                 TicketPrint.Document_Print(app_range.app_document.id_document, Document);
             }

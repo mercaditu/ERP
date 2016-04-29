@@ -82,8 +82,8 @@ namespace entity
                     //convert into current currency.
                     if (app_currency.app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
                     {
-                       // Value = Value + Brillo.Currency.convert_Values(item_movement_valueLIST.unit_value, app_currency.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Purchase);
-                        Value = Value + Brillo.Currency.convert_Value(item_movement_valueLIST.unit_value, app_currencyfx.id_currencyfx, App.Modules.Purchase);
+                        Value = Value + Brillo.Currency.convert_Values(item_movement_valueLIST.unit_value, app_currency.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Purchase);
+                       // Value = Value + Brillo.Currency.convert_Value(item_movement_valueLIST.unit_value, app_currencyfx.id_currencyfx, App.Modules.Purchase);
                     }
 
                 }

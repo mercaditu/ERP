@@ -416,7 +416,13 @@ namespace entity.Brillo.Logic
                                                                      .ToList(); 
                
             }
-
+            else if (Application_ID == App.Names.PackingList)
+            {
+                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+                                                                && x.id_sales_packing == Transaction_ID)
+                                                                    .ToList(); 
+               
+            }
           
             if (item_movementList != null)
             {

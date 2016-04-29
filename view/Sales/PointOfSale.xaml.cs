@@ -213,7 +213,16 @@ namespace Cognitivo.Sales
                 payment payment = new entity.payment();
                 payment.status = Status.Documents_General.Pending;
                 payment_detail payment_detailnew = new entity.payment_detail();
-                payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                if (SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault()!=null)
+                {
+                    payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Please Select Defult Payment Type");
+                }
+               
                 payment_detailnew.id_currency = sales_invoice.app_currencyfx.id_currency;
                 payment.payment_detail.Add(payment_detailnew);
                 paymentList.Add(payment);
@@ -242,8 +251,8 @@ namespace Cognitivo.Sales
                 {
                     foreach (payment_detail _payment_detail in payment_detaillist.Where(x => x.id_currency == app_currency.id_currency).ToList())
                     {
-                       // totalpaid += Currency.convert_Values(_payment_detail.value, sales_invoice.id_currencyfx, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
-                        totalpaid += Currency.convert_Value(_payment_detail.value, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
+                        totalpaid += Currency.convert_Values(_payment_detail.value, sales_invoice.id_currencyfx, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
+                       // totalpaid += Currency.convert_Value(_payment_detail.value, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
                     }
                 }
             }

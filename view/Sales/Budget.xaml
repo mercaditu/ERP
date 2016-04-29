@@ -82,7 +82,7 @@
                             SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"/>
                             <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
                             <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="set_ContactPref"
-                                                   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                can_Edit="True" can_New="True"    Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                             <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range"
@@ -179,6 +179,10 @@
                                           IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=FilterByBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                                     <Label Content="{lex:Loc FilterByBranch}" Foreground="MediumVioletRed"/>
                                                 </CheckBox>
+                                                <CheckBox Margin="6,0,0,0" x:Name="chkSalesRep"
+                                              IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=SalesRepresentative, Mode=TwoWay}">
+                                                    <Label Content="{lex:Loc SalesRepresentative}" Style="{StaticResource generic_Label}"/>
+                                                </CheckBox>
                                             </StackPanel>
                                         </Border>
                                     </Popup>
@@ -266,6 +270,7 @@
                                         <TextBlock Margin="5,0" Text="{lex:Loc Exports}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
                                         <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </StackPanel>
+                                    
                                     <StackPanel Margin="2" VerticalAlignment="Center">
                                         <TextBlock Text="Comment" Style="{StaticResource text_Label}"/>
                                         <TextBox Width="Auto" TextWrapping="WrapWithOverflow" Margin="4,0" Height="64" HorizontalAlignment="Stretch" Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -310,7 +315,7 @@
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Width="250" HorizontalAlignment="Left"/>
                     <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
-                                            IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+                                      can_New="True"       IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
 
                 </StackPanel>
                 <DataGrid x:Name="sales_budget_detailDataGrid" AutoGenerateColumns="False" Margin="0,58,0,0" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"

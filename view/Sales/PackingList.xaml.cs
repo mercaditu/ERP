@@ -226,7 +226,7 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnAnull_Click(object sender)
         {
-
+            dbContext.Annull();
         }
 
    

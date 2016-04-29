@@ -220,6 +220,7 @@
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="Execustionstrategy.cs" />
     <Compile Include="Generic\CommercialVAT.cs" />
+    <Compile Include="Item\item_inventory_dimension.cs" />
     <Compile Include="Item\item_template.cs" />
     <Compile Include="Item\item_template_detail.cs" />
     <Compile Include="Migrations\201603251402215_updateprojectitemtransfer.cs" />
@@ -261,6 +262,10 @@
     <Compile Include="Migrations\201604231249598_UpdateProject_TaskwithPurchaseTender.cs" />
     <Compile Include="Migrations\201604231249598_UpdateProject_TaskwithPurchaseTender.Designer.cs">
       <DependentUpon>201604231249598_UpdateProject_TaskwithPurchaseTender.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604291159283_AddItem_inventory_dimension.cs" />
+    <Compile Include="Migrations\201604291159283_AddItem_inventory_dimension.Designer.cs">
+      <DependentUpon>201604291159283_AddItem_inventory_dimension.cs</DependentUpon>
     </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
@@ -923,6 +928,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604231249598_UpdateProject_TaskwithPurchaseTender.resx">
       <DependentUpon>201604231249598_UpdateProject_TaskwithPurchaseTender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604291159283_AddItem_inventory_dimension.resx">
+      <DependentUpon>201604291159283_AddItem_inventory_dimension.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

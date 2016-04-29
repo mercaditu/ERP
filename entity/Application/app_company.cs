@@ -40,7 +40,8 @@ namespace entity
         public virtual IEnumerable<accounting_cycle> accounting_cycle { get; set; }
         public virtual IEnumerable<accounting_journal> accounting_journal { get; set; }
         public virtual IEnumerable<accounting_template> accounting_template { get; set; }
-        
+        public virtual IEnumerable<item_inventory_dimension> item_inventory_dimension { get; set; }
+       
         public virtual IEnumerable<app_account> app_account { get; set; }
         public virtual IEnumerable<app_account_detail> app_account_detail { get; set; }
         public virtual IEnumerable<app_condition> app_condition { get; set; }

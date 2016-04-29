@@ -562,7 +562,7 @@ namespace Cognitivo.Sales
                                                                                      .Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
                                                                                      .GroupBy(x => x.id_sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
                         sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
-                                   
+                        sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
                         _sales_return.sales_return_detail.Add(sales_return_detail);
                     }
                     SalesReturnDB.Entry(_sales_return).Entity.State = EntityState.Added;

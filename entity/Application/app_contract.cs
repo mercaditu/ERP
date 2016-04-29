@@ -21,7 +21,8 @@ namespace entity
         public bool is_active { get; set; }
         [Required]
         public bool is_default { get; set; }
-        
+        [Required]
+        public bool is_promissory { get; set; }
 
         public app_contract()
         {

@@ -71,52 +71,127 @@ namespace entity.Brillo.Logic
             return Text;
         }
 
-        public string SalesReturn(sales_return i)
+        public string SalesReturn(sales_return sales_return)
         {
             string Header = string.Empty;
             string Detail = string.Empty;
             string Footer = string.Empty;
+            string CompanyName = string.Empty;
+            app_company app_company = null;
+            if (sales_return.app_company != null)
+            {
+                CompanyName = sales_return.app_company.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.app_company.Where(x => x.id_company == sales_return.id_company).FirstOrDefault() != null)
+                    {
+                        app_company = db.app_company.Where(x => x.id_company == sales_return.id_company).FirstOrDefault();
+                        CompanyName = app_company.name;
+                    }
 
-            string CompanyName = i.app_company.name;
-            string TransNumber = i.number;
-            DateTime TransDate = i.trans_date;
-            string BranchName = i.app_branch.name;
 
-            string UserGiven = i.security_user.name_full;
 
+                }
+
+            }
+            string UserGiven = "";
+            if (sales_return.security_user != null)
+            {
+                UserGiven = sales_return.security_user.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.security_user.Where(x => x.id_user == sales_return.id_user).FirstOrDefault() != null)
+                    {
+                        security_user security_user = db.security_user.Where(x => x.id_user == sales_return.id_user).FirstOrDefault();
+                        UserGiven = security_user.name;
+                    }
+                }
+            }
+
+            string TransNumber = sales_return.number;
+            DateTime TransDate = sales_return.trans_date;
+            string BranchName = sales_return.app_branch.name;
 
             Header =
                 CompanyName + "\n"
-                + "Registro de PND. Transaccion: " + TransNumber + "\n"
-                + "Fecha y Hora: " + TransDate.ToString() + "\n"
-                + "Local Expendido: " + BranchName + "\n"
+                + "RUC:" + app_company.gov_code + "\n"
+                + app_company.address + "\n"
+                + "***" + app_company.alias + "***" + "\n"
+                + "Timbrado: " + sales_return.app_document_range.code + " Vto: " + sales_return.app_document_range.expire_date
                 + "\n"
-                + "-------------------------------"
+                + "--------------------------------"
+                + "Descripcion, Cantiad, Precio" + "\n"
+                + "--------------------------------" + "\n"
                 + "\n";
 
-            foreach (sales_return_detail d in i.sales_return_detail)
+            foreach (sales_return_detail d in sales_return.sales_return_detail)
             {
-
-                //foreach (project_task project_task in d.project_task.child)
-                //{
                 string ItemName = d.item.name;
                 string ItemCode = d.item.code;
                 decimal? Qty = d.quantity;
                 string TaskName = d.item_description;
+                decimal? UnitPrice_Vat = Math.Round(d.UnitPrice_Vat, 2);
 
-                Detail = Detail +
-                    ""
-                    + "Descripcion, Cantiad, Codigo" + "\n"
-                    + "-------------------------------" + "\n"
+                Detail = Detail
                     + ItemName + "\n"
-                    + Qty.ToString() + "\t" + ItemCode + "\n";
-                //}
-
+                    + Qty.ToString() + "\t" + ItemCode + "\t" + UnitPrice_Vat + "\n";
             }
 
-            Footer = "-------------------------------";
+
+            Footer = "--------------------------------" + "\n";
+            Footer += "Total " + sales_return.app_currencyfx.app_currency.name + ": " + sales_return.GrandTotal + "\n";
+            Footer += "Fecha & Hora: " + sales_return.trans_date + "\n";
+            Footer += "Numero de Factura: " + sales_return.number + "\n";
+            Footer += "-------------------------------" + "\n";
+
+            if (sales_return != null)
+            {
+                List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
+                if (sales_return_detail.Count > 0)
+                {
+
+                    using (db db = new db())
+                    {
+                        var listvat = sales_return_detail
+                          .Join(db.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+                              , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
+                              .GroupBy(a => new { a.name, a.id_vat, a.ad })
+                      .Select(g => new
+                      {
+                          vatname = g.Key.ad.app_vat_group.name,
+                          id_vat = g.Key.id_vat,
+                          name = g.Key.name,
+                          value = g.Sum(a => a.value * a.ad.quantity)
+                      }).ToList();
+                        var VAtList = listvat.GroupBy(x => x.id_vat).Select(g => new
+                        {
+                            vatname = g.Max(y => y.vatname),
+                            id_vat = g.Max(y => y.id_vat),
+                            name = g.Max(y => y.name),
+                            value = g.Sum(a => a.value)
+                        }).ToList();
+                        foreach (dynamic item in VAtList)
+                        {
+                            Footer += item.vatname + "   : " + Math.Round(item.value, 2) + "\n";
+                        }
+                        Footer += "Total IVA: " + sales_return.app_currencyfx.app_currency.name + " " + Math.Round(VAtList.Sum(x => x.value), 2) + "\n";
+                    }
+                }
+            }
 
             Footer += "-------------------------------";
+            Footer += "Cliente   : " + sales_return.contact.name + "\n";
+            Footer += "Documento : " + sales_return.contact.gov_code + "\n";
+            Footer += "Condicion : " + sales_return.app_condition.name + "\n";
+            Footer += "-------------------------------";
+            Footer += "Sucursal    : " + sales_return.app_branch.name + " Terminal: " + sales_return.app_terminal.name + "\n";
+            Footer += "Cajero/a    : " + UserGiven;
 
             string Text = Header + Detail + Footer;
             return Text;
@@ -128,6 +203,7 @@ namespace entity.Brillo.Logic
             string Detail = string.Empty;
             string Footer = string.Empty;
             string CompanyName = string.Empty;
+            app_company app_company=null;
             if (sales_invoice.app_company != null)
             {
                 CompanyName = sales_invoice.app_company.name;
@@ -138,7 +214,7 @@ namespace entity.Brillo.Logic
                 {
                     if (db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault() != null)
                     {
-                        app_company app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
+                         app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
                         CompanyName = app_company.name;
                     }
 
@@ -170,9 +246,9 @@ namespace entity.Brillo.Logic
 
             Header =
                 CompanyName + "\n"
-                + "RUC:" + sales_invoice.app_company.gov_code + "\n"
-                + sales_invoice.app_company.address
-                + "***" + sales_invoice.app_company.alias + "***"
+                + "RUC:" + app_company.gov_code + "\n"
+                + app_company.address + "\n"
+                + "***" + app_company.alias + "***" + "\n"
                 + "Timbrado: " + sales_invoice.app_document_range.code + " Vto: " + sales_invoice.app_document_range.expire_date
                 + "\n"
                 + "--------------------------------"
@@ -186,7 +262,7 @@ namespace entity.Brillo.Logic
                 string ItemCode = d.item.code;
                 decimal? Qty = d.quantity;
                 string TaskName = d.item_description;
-                decimal? UnitPrice_Vat = d.UnitPrice_Vat;
+                decimal? UnitPrice_Vat = Math.Round(d.UnitPrice_Vat,2);
 
                 Detail = Detail
                     + ItemName + "\n"
@@ -194,11 +270,11 @@ namespace entity.Brillo.Logic
             }
 
 
-            Footer = "--------------------------------";
+            Footer = "--------------------------------" + "\n"; 
             Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
             Footer += "Fecha & Hora: " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura: " + sales_invoice.number + "\n";
-            Footer += "-------------------------------";
+            Footer += "-------------------------------" + "\n";
 
             if (sales_invoice != null)
             {
@@ -228,19 +304,20 @@ namespace entity.Brillo.Logic
                         }).ToList();
                         foreach (dynamic item in VAtList)
                         {
-                            Footer += item.vatname + "   : " + item.value + "\n";
+                            Footer += item.vatname + "   : " + Math.Round(item.value,2) + "\n";
                         }
+                        Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + Math.Round(VAtList.Sum(x=>x.value),2) + "\n";
                     }
                 }
             }
-            Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + sales_invoice.GrandTotal + "\n";
+           
             Footer += "-------------------------------";
             Footer += "Cliente   : " + sales_invoice.contact.name + "\n";
             Footer += "Documento : " + sales_invoice.contact.gov_code + "\n";
             Footer += "Condicion : " + sales_invoice.app_condition.name + "\n";
             Footer += "-------------------------------";
-            Footer += "Sucursal    : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name;
-            Footer += "Cajero/a    : " + sales_invoice.security_user.name;
+            Footer += "Sucursal    : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name + "\n";
+            Footer += "Cajero/a    : " + UserGiven;
 
             string Text = Header + Detail + Footer;
             return Text;

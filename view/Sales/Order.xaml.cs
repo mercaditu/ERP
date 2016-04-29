@@ -535,6 +535,7 @@ namespace Cognitivo.Sales
             sales_order sales_order = (sales_order)sales_orderViewSource.View.CurrentItem;
             foreach (sales_order_detail detail in sales_order.sales_order_detail)
             {
+                detail.CurrencyFX_ID = sales_order.id_currencyfx;
                 detail.item = await dbContext.items.Where(x => x.id_item == detail.id_item).FirstOrDefaultAsync();
             }
 

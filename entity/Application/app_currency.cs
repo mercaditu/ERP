@@ -32,6 +32,7 @@ namespace entity
         public bool is_priority { get; set; }
         public bool is_active { get; set; }
         public bool has_rounding { get; set; }
+        public bool is_reverse { get; set; }
 
         public virtual ICollection<app_currency_denomination> app_currency_denomination { get; set; }
         public virtual ICollection<app_currencyfx> app_currencyfx { get; set; }

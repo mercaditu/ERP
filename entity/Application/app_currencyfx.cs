@@ -30,6 +30,7 @@ namespace entity
         public decimal sell_value { get; set; }
         [Required]
         public bool is_active { get; set; }
+        public bool is_reverse { get; set; }
     
         public virtual app_currency app_currency { get; set; }
         public virtual IEnumerable<app_account_detail> app_account_detail { get; set; }

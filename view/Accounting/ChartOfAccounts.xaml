@@ -279,14 +279,19 @@
 
             </TabItem>
             <TabItem Header="{lex:Loc Import}">
-                <WrapPanel>
-                    <Border BorderThickness="2" BorderBrush="Gainsboro" Background="WhiteSmoke" Margin="5">
-                        <StackPanel MouseUp="btnParaguayChart_MouseUp">
-                            <Image Source="/Cognitivo;component/Images/Flags/PY.png" Height="42"/>
-                            <Label Content="Paraguay" Style="{StaticResource H3}"/>
-                        </StackPanel>
-                    </Border>
-                </WrapPanel>
+                <StackPanel>
+                    <TextBlock Style="{StaticResource text_Instructions}" 
+                               Text="Checking this option will irreversably delete data from your system. Cognitivo is not responsible for any Data Loss."/>
+                    <CheckBox x:Name="chbxDelete" Style="{StaticResource input_checkbox}" Content="{lex:Loc Delete}"/>
+                    <WrapPanel>
+                        <ToggleButton Click="btnParaguayChart_Click">
+                            <StackPanel>
+                                <Image Source="/Cognitivo;component/Images/Flags/PY.png" Height="42"/>
+                                <Label Content="Paraguay" Style="{StaticResource H3}"/>
+                            </StackPanel>
+                        </ToggleButton>
+                    </WrapPanel>
+                </StackPanel>
             </TabItem>
         </TabControl>
         

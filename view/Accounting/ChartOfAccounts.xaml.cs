@@ -16,7 +16,6 @@ namespace Cognitivo.Accounting
         AccountingChartDB AccountingChartDB = new AccountingChartDB();
         CollectionViewSource accounting_chartViewSource = null;
         CollectionViewSource accounting_chartParentViewSource;
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
         
         public ChartOfAccounts()
         {
@@ -29,9 +28,9 @@ namespace Cognitivo.Accounting
             app_accountBankViewSource.Source =
                 await AccountingChartDB.app_account.Where(a => a.id_account_type == app_account.app_account_type.Bank
                                                      && a.is_active == true
-                                                     && a.id_company == _settings.company_ID).ToListAsync();
+                                                     && a.id_company == CurrentSession.Id_Company).ToListAsync();
 
-            AccountingChartDB.contacts.Where(t => t.is_active == true && t.id_company == _settings.company_ID).Load();
+            AccountingChartDB.contacts.Where(t => t.is_active == true && t.id_company == CurrentSession.Id_Company).Load();
 
             CollectionViewSource contactSupViewSource = FindResource("contactSupViewSource") as CollectionViewSource;
             contactSupViewSource.Source = AccountingChartDB.contacts.Local;
@@ -62,18 +61,17 @@ namespace Cognitivo.Accounting
                 };
             }
 
-
             CollectionViewSource app_vatViewSource = FindResource("app_vatViewSource") as CollectionViewSource;
-            app_vatViewSource.Source = AccountingChartDB.app_vat.Where(t => t.id_company == _settings.company_ID && t.is_active == true).ToList();
+            app_vatViewSource.Source = AccountingChartDB.app_vat.Where(t => t.id_company == CurrentSession.Id_Company && t.is_active == true).ToList();
 
             CollectionViewSource app_cost_centerViewSource = FindResource("app_cost_centerViewSource") as CollectionViewSource;
-            app_cost_centerViewSource.Source = AccountingChartDB.app_cost_center.Where(t => t.id_company == _settings.company_ID && t.is_active == true && t.is_administrative == true).ToList();
+            app_cost_centerViewSource.Source = AccountingChartDB.app_cost_center.Where(t => t.id_company == CurrentSession.Id_Company && t.is_active == true && t.is_administrative == true).ToList();
 
             CollectionViewSource itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
-            itemViewSource.Source = AccountingChartDB.items.Where(t => t.is_active == true && t.id_company == _settings.company_ID).ToList();
+            itemViewSource.Source = AccountingChartDB.items.Where(t => t.is_active == true && t.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource item_tagViewSource = FindResource("item_tagViewSource") as CollectionViewSource;
-            item_tagViewSource.Source = AccountingChartDB.item_tag.Where(t => t.is_active == true && t.id_company == _settings.company_ID).ToList();
+            item_tagViewSource.Source = AccountingChartDB.item_tag.Where(t => t.is_active == true && t.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource item_asset_groupViewSource = FindResource("item_asset_groupViewSource") as CollectionViewSource;
             item_asset_groupViewSource.Source = AccountingChartDB.item_asset_group.ToList();
@@ -83,7 +81,7 @@ namespace Cognitivo.Accounting
             accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
             accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
 
-            AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == _settings.company_ID).Load();
+            AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
             accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
 
@@ -191,12 +189,17 @@ namespace Cognitivo.Accounting
         {
             accounting_chart accounting_chart = accounting_chartViewSource.View.CurrentItem as accounting_chart;
             accounting_chart.State = System.Data.Entity.EntityState.Unchanged;
+
             if (accounting_chart != null)
-            { accounting_chart.chart_type = (accounting_chart.ChartType)cbxChartType.SelectedItem; }
+            { 
+                accounting_chart.chart_type = (accounting_chart.ChartType)cbxChartType.SelectedItem; 
+            }
 
 
             if (cbxParent.SelectedItem != null)
-            { accounting_chart.parent = (accounting_chart)cbxParent.SelectedItem; }
+            { 
+                accounting_chart.parent = (accounting_chart)cbxParent.SelectedItem; 
+            }
 
             try
             {
@@ -206,7 +209,6 @@ namespace Cognitivo.Accounting
                     AccountingChartDB.SaveChanges();
                     toolBar.msgSaved();
                     accounting_chartViewSource.View.MoveCurrentTo(accounting_chart);
-                  
                 }
             }
             catch (Exception ex)
@@ -315,10 +317,19 @@ namespace Cognitivo.Accounting
            
         }
 
-        private void btnParaguayChart_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnParaguayChart_Click(object sender, RoutedEventArgs e)
         {
             entity.Brillo.Seed_Data.ChartOfAccounts Charts = new entity.Brillo.Seed_Data.ChartOfAccounts();
-            Charts.Paraguay();
+            Charts.Paraguay((bool)chbxDelete.IsChecked);
+
+            accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
+            accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
+
+            AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+            accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
+            accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
+
+            accounting_chartViewSource.View.Refresh();
         }
     }
 }

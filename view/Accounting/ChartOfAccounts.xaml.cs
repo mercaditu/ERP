@@ -314,5 +314,11 @@ namespace Cognitivo.Accounting
          
            
         }
+
+        private void btnParaguayChart_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            entity.Brillo.Seed_Data.ChartOfAccounts Charts = new entity.Brillo.Seed_Data.ChartOfAccounts();
+            Charts.Paraguay();
+        }
     }
 }

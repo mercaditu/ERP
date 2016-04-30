@@ -58,8 +58,8 @@
                 <CheckBox Name="chbxActive" Content="{lex:Loc Active}" IsEnabled="False" Margin="20"
                           IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <TextBlock Text="You can create multiple periods, but only one of them can be active at a time." TextWrapping="Wrap" Style="{StaticResource text_Instructions}"/>
-                <Button Content="{lex:Loc Start}" Margin="8" Click="btnStart_Click"/>
-                <Button Content="{lex:Loc End}" Margin="8" Click="btnEnd_Click"/>
+                <Button Content="{lex:Loc Starting}" Margin="8" Click="btnStart_Click"/>
+                <Button Content="{lex:Loc Ending}" Margin="8" Click="btnEnd_Click"/>
                 <Rectangle Height="1" Margin="5" Fill="Silver"/>
             </StackPanel>
 

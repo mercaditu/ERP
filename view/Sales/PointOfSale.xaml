@@ -45,6 +45,17 @@
             </Grid.Background>
         </Grid>
 
+        <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
+                    Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click" Margin="8"
+                    BorderBrush="White" BorderThickness="2" ToolTip="{lex:Loc AccountUtility}">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" ShadowDepth="0" />
+            </Border.Effect>
+            <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       Foreground="White"/>
+        </Border>
+
         <Grid VerticalAlignment="Bottom" Height="40">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".64"/>
@@ -83,17 +94,6 @@
         </Grid>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,64,0,0">
-            <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64" 
-                    Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
-                    BorderBrush="White" BorderThickness="4" ToolTip="F1">
-                <Border.Effect>
-                    <DropShadowEffect Color="Black" ShadowDepth="0" />
-                </Border.Effect>
-                <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
-                       VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Foreground="Black"/>
-            </Border>
-            <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32"/>
             <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64" 
                     Cursor="Hand" MouseDown="btnClient_Click" TouchDown="btnClient_Click"
                     BorderBrush="White" BorderThickness="4" ToolTip="F1">
@@ -147,7 +147,7 @@
             <!-- Account-->
             <TabItem x:Name="tabAccount" >
                 <Grid x:Name="frmActive" >
-
+                    <Frame />
                 </Grid>
             </TabItem>
             <!-- CONTACT -->

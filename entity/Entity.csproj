@@ -186,6 +186,7 @@
     </Compile>
     <Compile Include="Brillo\Logic\Range.cs" />
     <Compile Include="Brillo\Document\Reciept.cs" />
+    <Compile Include="Brillo\Seed Data\ChartOfAccounts.cs" />
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Class\EnumExtension.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />

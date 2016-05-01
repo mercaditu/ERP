@@ -33,7 +33,7 @@ namespace entity.Brillo.Seed_Data
             {
                 if (ClearData)
                 {
-                    db.accounting_chart.RemoveRange(db.accounting_chart.Local.Where(x => x.id_company == CurrentSession.Id_Company).ToList());
+                    db.accounting_chart.RemoveRange(db.accounting_chart.Where(x => x.id_company == CurrentSession.Id_Company).ToList());
                     db.SaveChanges();
                 }
 
@@ -214,6 +214,49 @@ namespace entity.Brillo.Seed_Data
                 db.accounting_chart.Add(CreateChart("3.03", "RESULTADOS", db.accounting_chart.Local.Where(x => x.code == "3").FirstOrDefault()));
                 db.accounting_chart.Add(CreateChart("3.03.01", "RESULTADOS ACUMULADOS", db.accounting_chart.Local.Where(x => x.code == "3.03").FirstOrDefault()));
                 db.accounting_chart.Add(CreateChart("3.03.02", "RESULTADO DEL EJERCICIO", db.accounting_chart.Local.Where(x => x.code == "3.03").FirstOrDefault()));
+
+                db.accounting_chart.Add(CreateChart("4", "INGRESOS OPERATIVOS", null));
+                db.accounting_chart.Add(CreateChart("4.01", "VENTAS DE MERCADERÍAS", db.accounting_chart.Local.Where(x => x.code == "4").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.01.01", "VENTAS DE MERCADERÍAS GRAVADAS POR EL IVA", db.accounting_chart.Local.Where(x => x.code == "4.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.01.02", "VENTAS DE MERCADERÍAS EXENTAS DEL IVA", db.accounting_chart.Local.Where(x => x.code == "4.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.02", "VENTAS DE PRODUCTOS AGRÍCOLAS", db.accounting_chart.Local.Where(x => x.code == "4").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.07", "EXPORTACIONES DE BIENES INDUSTRIALIZADOS", db.accounting_chart.Local.Where(x => x.code == "4").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.07.01", "EXPORTACIONES DE PRODUCTOS FARMACÉUTICOS", db.accounting_chart.Local.Where(x => x.code == "4.07").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.07.02", "EXPORTACIONES DE MAQUINARIAS Y EQUIPOS", db.accounting_chart.Local.Where(x => x.code == "4.07").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.07.03", "EXPORTACIONES DE OTROS PRODUCTOS INDUSTRIALIZADOS", db.accounting_chart.Local.Where(x => x.code == "4.07").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.08", "EXPORTACIONES DE OTROS PRODUCTOS", db.accounting_chart.Local.Where(x => x.code == "4").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.09", "VENTAS DE SERVICIOS GRAVADOS", db.accounting_chart.Local.Where(x => x.code == "4").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10", "VENTAS DE BIENES - REGÍMENES ESPECIALES", db.accounting_chart.Local.Where(x => x.code == "4").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10.01", "VENTAS DE MERCADERIAS - REGIMEN DE TURISMO", db.accounting_chart.Local.Where(x => x.code == "4.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10.01.01", "VENTAS A EXTRANJEROS", db.accounting_chart.Local.Where(x => x.code == "4.10.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10.01.01", "VENTAS A DISTRIBUIDORES LOCALES", db.accounting_chart.Local.Where(x => x.code == "4.10.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10.01.01", "VENTAS A CLIENTES LOCALES", db.accounting_chart.Local.Where(x => x.code == "4.10.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10.02", "VENTAS DE MERCADERÍAS - ZONA FRANCA", db.accounting_chart.Local.Where(x => x.code == "4.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10.03", "VENTAS POR RÉGIMEN DE MAQUILA", db.accounting_chart.Local.Where(x => x.code == "4.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.10.04", "VENTAS BAJO OTROS REGÍMENES ESPECIALES", db.accounting_chart.Local.Where(x => x.code == "4.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("4.11", "OTRAS VENTAS EXENTAS DEL IVA", db.accounting_chart.Local.Where(x => x.code == "4").FirstOrDefault()));
+
+                db.accounting_chart.Add(CreateChart("5", "COSTOS OPERATIVOS", null));
+                db.accounting_chart.Add(CreateChart("5.01", "COSTO DE MERCADERÍAS", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.01.01", "COSTO DE MERCADERÍAS GRAVADAS POR EL IVA", db.accounting_chart.Local.Where(x => x.code == "5.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.01.02", "COSTO DE MERCADERÍAS EXENTAS DEL IVA", db.accounting_chart.Local.Where(x => x.code == "5.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.02", "COSTO DE PRODUCTOS AGRÍCOLAS", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.07", "COSTO DE BIENES INDUSTRIALIZADOS EXPORTADOS", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.07.01", "COSTO DE PRODUCTOS FARMACEÚTICOS EXPORTADO", db.accounting_chart.Local.Where(x => x.code == "5.07").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.07.02", "COSTO DE MAQUINARIAS Y EQUIPOS EXPORTADOS", db.accounting_chart.Local.Where(x => x.code == "5.07").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.07.03", "COSTO DE OTROS PRODUCTOS INDUSTRIALIZADOS EXPORTADOS", db.accounting_chart.Local.Where(x => x.code == "5.07").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.08", "COSTO DE OTROS PRODUCTOS EXPORTADOS", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.09", "COSTO DE SERVICIOS GRAVADOS", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10", "COSTO DE VENTAS DE BIENES - REGÍMENES ESPECIALES", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10.01", "COSTO DE VENTAS DE MERCADERÍAS - RÉGIMEN DE TURISMO", db.accounting_chart.Local.Where(x => x.code == "5.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10.01.01", "COSTO DE VENTAS A EXTRANJEROS", db.accounting_chart.Local.Where(x => x.code == "5.10.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10.01.02", "COSTO DE VENTAS A DISTRIBUIDORES LOCALES", db.accounting_chart.Local.Where(x => x.code == "5.10.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10.01.03", "COSTO DE VENTAS A CLIENTES LOCALES", db.accounting_chart.Local.Where(x => x.code == "5.10.01").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10.02", "COSTO DE VENTAS DE MERCADERÍAS - ZONA FRANCA", db.accounting_chart.Local.Where(x => x.code == "5.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10.03", "COSTO DE VENTAS POR RÉGIMEN DE MAQUILA", db.accounting_chart.Local.Where(x => x.code == "5.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.10.04", "COSTO DE VENTAS BAJO OTROS REGÍMENES ESPECIALES", db.accounting_chart.Local.Where(x => x.code == "5.10").FirstOrDefault()));
+                db.accounting_chart.Add(CreateChart("5.11", "COSTO DE VENTAS EXENTAS DEL IVA", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
+
                 db.SaveChangesAsync();
             }											
         }

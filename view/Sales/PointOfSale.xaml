@@ -254,15 +254,15 @@
                             <Label Content="{lex:Loc Payment}" Style="{StaticResource H1}" Foreground="White"/>
                         </StackPanel>
                         <Grid>
-                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,58,0,0" HorizontalAlignment="Center"
-                                          ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="dgvPaymentDetail_InitializingNewItem" >
+                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,58,0,0" HorizontalAlignment="Center" FontSize="16"
+                                      ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="dgvPaymentDetail_InitializingNewItem" >
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"
 					                            ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"  
                                                 DisplayMemberPath="name" SelectedValuePath="id_payment_type" 
 					                            SelectedValueBinding="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True,  
                                                 UpdateSourceTrigger=PropertyChanged}" />
-                                    <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                                         CellStyle="{StaticResource Number_CellStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="128"

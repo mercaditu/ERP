@@ -165,6 +165,15 @@ namespace Cognitivo.Configs
                 //Reload Data
                 db.Entry(app_account).Reload();
 
+                if (app_account.is_active)
+                {
+                    MessageBox.Show("Account is Activated:");
+                }
+                else
+                {
+                    MessageBox.Show("Account is DeActivated:");
+                }
+
                 if (app_accountViewSource!=null)
                 {
                     if (app_accountViewSource.View!=null)

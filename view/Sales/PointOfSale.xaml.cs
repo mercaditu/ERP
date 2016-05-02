@@ -56,6 +56,16 @@ namespace Cognitivo.Sales
         private void btnPayment_Click(object sender, EventArgs e)
         {
             tabPayment.IsSelected = true;
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
+            if (payment.payment_detail.FirstOrDefault() != null)
+            {
+                payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
+                payment.payment_detail.FirstOrDefault().RaisePropertyChanged("value");
+            }
+        
+            sales_invoiceViewSource.View.Refresh();
+            paymentViewSource.View.Refresh();
         }
 
 
@@ -141,8 +151,8 @@ namespace Cognitivo.Sales
         {
             if (sbxItem.ItemID > 0)
             {
+                sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
              
-                sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
                 SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
@@ -151,7 +161,11 @@ namespace Cognitivo.Sales
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
 
                 payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-                payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
+                if (  payment.payment_detail.FirstOrDefault()!=null)
+                {
+                    payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
+                }
+          
 
                 sales_invoiceViewSource.View.Refresh();
                 paymentViewSource.View.Refresh();
@@ -229,6 +243,15 @@ namespace Cognitivo.Sales
                 paymentList.Add(payment);
                 paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
                 paymentViewSource.Source = paymentList;
+
+                if (SalesInvoiceDB.app_account.Where(x => x.id_account==CurrentSession.Id_Account).FirstOrDefault() != null)
+                {
+                    if (SalesInvoiceDB.app_account.Where(x => x.id_account==CurrentSession.Id_Account).FirstOrDefault().is_active==false)
+                    {
+                        tabAccount.IsSelected = true;
+                    }
+
+                }
             }));
         }
 
@@ -290,8 +313,12 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource.View.Refresh();
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-            payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
+            if (   payment.payment_detail.FirstOrDefault()!=null)
+            {
+                payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
 
+            }
+    
 
         }
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -299,6 +326,10 @@ namespace Cognitivo.Sales
             if (e.Parameter as sales_invoice_detail != null)
             {
                 e.CanExecute = true;
+            }
+            else if (e.Parameter as payment_detail != null)
+            {
+                 e.CanExecute = true;
             }
         }
 
@@ -310,14 +341,30 @@ namespace Cognitivo.Sales
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                    //DeleteDetailGridRow
-                    dgvSalesDetail.CancelEdit();
-                    sales_invoice.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
+                    if (e.Parameter as sales_invoice_detail != null)
+                    {
+                        sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                        //DeleteDetailGridRow
+                        dgvSalesDetail.CancelEdit();
+                        sales_invoice.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
+
+                        sales_invoiceViewSource.View.Refresh();
+                        CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+                        sales_invoicesales_invoice_detailViewSource.View.Refresh();
+                        
+                    }
+                    else if (e.Parameter as payment_detail != null)
+                    {
+                        payment payment = paymentViewSource.View.CurrentItem as payment;
+                        //DeleteDetailGridRow
+                        dgvPaymentDetail.CancelEdit();
+                        payment.payment_detail.Remove(e.Parameter as payment_detail);
+
+                        paymentViewSource.View.Refresh();
+                        CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
+                        paymentpayment_detailViewSource.View.Refresh();
+                    }
                    
-                    sales_invoiceViewSource.View.Refresh();
-                    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-                    sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 }
             }
             catch (Exception ex)
@@ -340,6 +387,30 @@ namespace Cognitivo.Sales
         {
             popupDiscount.IsOpen = false;
         }
+
+        private void dgvPaymentDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
+            payment_detail _payment_detail = (payment_detail)dgvPaymentDetail.SelectedItem;
+            decimal amount = sales_invoice.GrandTotal - _payment_detail.value;
+            if (payment.payment_detail.Count()>1)
+            {
+                decimal value = (amount / (payment.payment_detail.Count() - 1));
+
+                foreach (payment_detail payment_detail in payment.payment_detail)
+                {
+                    if (payment_detail != _payment_detail)
+                    {
+                        payment_detail.value=value;
+                    }
+                }
+            }
+          
+        }
+
+      
 
      
 

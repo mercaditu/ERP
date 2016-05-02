@@ -333,7 +333,7 @@
                         </StackPanel>
                         <Grid>
                             <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,58,0,0" HorizontalAlignment="Center" FontSize="16"
-                                      ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="dgvPaymentDetail_InitializingNewItem" >
+                                      ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="dgvPaymentDetail_InitializingNewItem" RowEditEnding="dgvPaymentDetail_RowEditEnding" >
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"
 					                            ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"  
@@ -348,6 +348,15 @@
                                                 DisplayMemberPath="name" SelectedValuePath="id_currency" 
 					                            SelectedValueBinding="{Binding id_currency, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
                                                 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                                    <DataGridTemplateColumn Width="Auto" Header="">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="customcmd:CustomCommands.Delete"
+                                                    Style="{StaticResource btnDeleteChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

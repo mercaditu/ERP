@@ -404,6 +404,7 @@ namespace Cognitivo.Sales
                     if (payment_detail != _payment_detail)
                     {
                         payment_detail.value=value;
+                        payment_detail.RaisePropertyChanged("value");
                     }
                 }
             }

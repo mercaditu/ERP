@@ -279,6 +279,10 @@ namespace Cognitivo.Sales
             {
                 btnSave_Click(sender, e);
             }
+            else if (e.Key == Key.F5)
+            {
+                boderdiscount_MouseDown(sender, e);
+            }
         }
 
         private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

@@ -86,26 +86,32 @@ namespace Cognitivo.Configs
                         int id_paymentType = 0;
                         string curname = "";
                         int id_currencyfx = 0;
-                        Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
-                        if (db.payment_type.Where(x=>x.is_default).FirstOrDefault()!=null)
+                        List<app_currency> app_currencyList = new List<app_currency>();
+                        app_currencyList = db.app_currency.ToList();
+                        foreach (app_currency app_currency in app_currencyList)
                         {
-                            payment_type payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
-                            paymenttypename = payment_type.name;
-                            id_paymentType = payment_type.id_payment_type;
-                        }
+                            Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
+                            if (db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+                            {
+                                payment_type payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
+                                paymenttypename = payment_type.name;
+                                id_paymentType = payment_type.id_payment_type;
+                            }
 
-                        clsTransferAmount.PaymentTypeName = paymenttypename;
-                        clsTransferAmount.amount = 0;
-                        if (db.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault() != null)
-                        {
-                            app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                            curname = app_currencyfx.app_currency.name;
-                            id_currencyfx = app_currencyfx.id_currencyfx;
+                            clsTransferAmount.PaymentTypeName = paymenttypename;
+                            clsTransferAmount.amount = 0;
+                            if (db.app_currencyfx.Where(x =>x.id_currency==app_currency.id_currency && x.is_active).FirstOrDefault() != null)
+                            {
+                                app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault();
+                                curname = app_currencyfx.app_currency.name;
+                                id_currencyfx = app_currencyfx.id_currencyfx;
+                            }
+                            clsTransferAmount.Currencyfxname = curname;
+                            clsTransferAmount.id_payment_type = id_paymentType;
+                            clsTransferAmount.id_currencyfx = id_currencyfx;
+                            listOpenAmt.Add(clsTransferAmount); 
                         }
-                        clsTransferAmount.Currencyfxname = curname;
-                        clsTransferAmount.id_payment_type = id_paymentType;
-                        clsTransferAmount.id_currencyfx = id_currencyfx;
-                        listOpenAmt.Add(clsTransferAmount); 
+                      
                     }
 
                     CashDataGrid.ItemsSource = listOpenAmt;

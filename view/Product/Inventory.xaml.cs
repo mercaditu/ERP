@@ -183,7 +183,7 @@ namespace Cognitivo.Product
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException.ToString());
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -283,22 +283,23 @@ namespace Cognitivo.Product
 
         private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Hidden;
             item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
+
             if (item_inventory_detail != null)
             {
                 crud_modal.Visibility = System.Windows.Visibility.Visible;
                 objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                 objpnl_ItemMovement.Trans_date = item_inventory_detail.item_inventory.trans_date;
+                objpnl_ItemMovement.item_inventoryList = InventoryDB.item_inventory_detail
+                    .Where(x => x.item_product.id_item_product == item_inventory_detail.item_product.id_item_product && x.id_inventory == item_inventory_detail.item_inventory.id_inventory).ToList();
                 objpnl_ItemMovement.id_item_product = item_inventory_detail.item_product.id_item_product;
                 objpnl_ItemMovement.id_location = item_inventory_detail.id_location;
                 objpnl_ItemMovement.id_inventory = item_inventory_detail.id_inventory_detail;
                 objpnl_ItemMovement.InventoryDB = InventoryDB;
                 crud_modal.Children.Add(objpnl_ItemMovement);
             }
-
         }
 
 

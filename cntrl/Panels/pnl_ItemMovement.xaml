@@ -13,7 +13,7 @@
              xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
              mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded"
-             BorderBrush="#344C6B" BorderThickness="2" Background="White" >
+             BorderBrush="#344C6B" BorderThickness="2" Background="White">
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="item_inventory_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory_detail}, CreateList=True}"/>
@@ -45,8 +45,8 @@
 
                 <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" 
                       AutoGenerateColumns="False" Grid.ColumnSpan="2" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
-                      EnableRowVirtualization="True" 
-                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem" >
+                      EnableRowVirtualization="True"
+                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
                        <DataGridTextColumn Binding="{Binding value_counted,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
@@ -64,9 +64,8 @@
                                     <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True"/>
-                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
-                                  
-                                </DataGrid.Columns>
+                                        <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
+                                    </DataGrid.Columns>
                             </DataGrid>
                         </DataTemplate>
                     </DataGrid.RowDetailsTemplate>

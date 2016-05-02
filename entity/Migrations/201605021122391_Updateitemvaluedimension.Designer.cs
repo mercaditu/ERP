@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Additem_inventory_value : IMigrationMetadata
+    public sealed partial class Updateitemvaluedimension : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Additem_inventory_value));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Updateitemvaluedimension));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605020558249_Additem_inventory_value"; }
+            get { return "201605021122391_Updateitemvaluedimension"; }
         }
         
         string IMigrationMetadata.Source

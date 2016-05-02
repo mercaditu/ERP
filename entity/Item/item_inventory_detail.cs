@@ -12,7 +12,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             item_inventory_dimension = new List<item_inventory_dimension>();
-            item_movement_value = new List<item_movement_value>();
+            
         }
 
         [Key]
@@ -25,11 +25,13 @@ namespace entity
         public decimal value_system { get; set; }
         public decimal value_counted { get; set; }
         public string comment { get; set; }
+        public int id_currencyfx { get; set; }
+        public decimal unit_value { get; set; }
 
         public virtual item_inventory item_inventory { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual item_product item_product { get; set; }
         public virtual ICollection<item_inventory_dimension> item_inventory_dimension { get; set; }
-        public virtual ICollection<item_movement_value> item_movement_value { get; set; }
+        
     }
 }

@@ -50,7 +50,11 @@
                     <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
                        <DataGridTextColumn Binding="{Binding value_counted,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
-                    </DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding unit_value,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Header="{lex:Loc Cognitivo:local:Value}" Width="auto"/>
+                            <DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="auto" IsReadOnly="True"
+									                        ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currencyfx"
+									                        SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
                             <DataGrid x:Name="item_inventory_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" CanUserAddRows="False"
@@ -70,19 +74,7 @@
                 </StackPanel>
                 <StackPanel x:Name="stpDisplayRight" HorizontalAlignment="Right" >
 
-                    <DataGrid Height="Auto" x:Name="item_inventory_valueDataGrid" 
-                      AutoGenerateColumns="False" Grid.ColumnSpan="2" 
-                      EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource item_inventoryitem_inventory_valueViewSource}}"
-                       InitializingNewItem="item_movement_valueDataGrid_InitializingNewItem"
-                      Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding unit_value,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Header="{lex:Loc Cognitivo:local:Value}" Width="auto"/>
-                            <DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="auto" IsReadOnly="True"
-									                        ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currencyfx"
-									                        SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        </DataGrid.Columns>
-                      
-                    </DataGrid>
+                   
                 </StackPanel>
             </StackPanel>
        

@@ -269,9 +269,9 @@
     <Compile Include="Migrations\201604291159283_AddItem_inventory_dimension.Designer.cs">
       <DependentUpon>201604291159283_AddItem_inventory_dimension.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605020558249_Additem_inventory_value.cs" />
-    <Compile Include="Migrations\201605020558249_Additem_inventory_value.Designer.cs">
-      <DependentUpon>201605020558249_Additem_inventory_value.cs</DependentUpon>
+    <Compile Include="Migrations\201605021122391_Updateitemvaluedimension.cs" />
+    <Compile Include="Migrations\201605021122391_Updateitemvaluedimension.Designer.cs">
+      <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
     </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
@@ -569,7 +569,6 @@
     <Compile Include="Item\item_inventory_detail.cs" />
     <Compile Include="Item\item_movement.cs" />
     <Compile Include="Item\item_movement_dimension.cs" />
-    <Compile Include="Item\item_inventory_value.cs" />
     <Compile Include="Item\item_price.cs" />
     <Compile Include="Item\item_price_list.cs" />
     <Compile Include="Item\item_product.cs" />
@@ -938,8 +937,8 @@
     <EmbeddedResource Include="Migrations\201604291159283_AddItem_inventory_dimension.resx">
       <DependentUpon>201604291159283_AddItem_inventory_dimension.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605020558249_Additem_inventory_value.resx">
-      <DependentUpon>201605020558249_Additem_inventory_value.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605021122391_Updateitemvaluedimension.resx">
+      <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -43,7 +43,10 @@ namespace cntrl.Panels
             item_inventory_detail.IsSelected = true;
             item_inventory_detail.State = EntityState.Added;
             item_inventory_detail.timestamp = Trans_date;
-
+            if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+            {
+                item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+            }
 
             if (id_item_product > 0)
             {
@@ -134,15 +137,7 @@ namespace cntrl.Panels
             btnCancel_Click(sender, null);
         }
 
-        private void item_movement_valueDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
-        {
-            item_inventory_value item_inventory_value = e.NewItem as item_inventory_value;
-            if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
-            {
-                item_inventory_value.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
-            }
-
-        }
+       
 
 
 

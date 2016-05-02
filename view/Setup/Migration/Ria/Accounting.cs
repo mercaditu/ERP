@@ -98,93 +98,98 @@ namespace Cognitivo.Setup.Migration
                     // Linking
                     if (chart_reader[4].ToString() == "Si")
                     {
-                        if (Convert.ToInt16(chart_reader["REGLA"]) == 1)
+                        if (!(chart_reader["REGLA"] is DBNull))
                         {
 
-                        }
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 2)
-                        {
-                            //Fix issue.
-                        }
-                        //ACCOUNTS RECEIVABLE
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 3)
-                        {
-                            accounting_chart.chartsub_type = accounting_chart.ChartSubType.AccountsReceivable;
-                            string _supplier = Convert.ToString(chart_reader["SUPPLIER"]);
-                            if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _supplier != null)
-                            {
-                                accounting_chart.contact = db.contacts.Where(c => c.name == _supplier).FirstOrDefault();
-                                accounting_chart.is_generic = false;
-                            }
-                        }
-                        //ACCOUNTS PAYABLE
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 4)
-                        {
-                            accounting_chart.chartsub_type = accounting_chart.ChartSubType.AccountsPayable;
-                            string _customer = Convert.ToString(chart_reader["CUSTOMER"]);
-                            if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _customer != null)
-                            {
-                                accounting_chart.contact = db.contacts.Where(c => c.name == _customer).FirstOrDefault();
-                                accounting_chart.is_generic = false;
-                            }
-                        }
-                        //VALUE ADDED TAX
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 5)
-                        {
-                            accounting_chart.chartsub_type = accounting_chart.ChartSubType.VAT;
-                            string _iva = Convert.ToString(chart_reader["DESIVA"]);
-                            if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _iva != null)
-                            {
-                                accounting_chart.app_vat = db.app_vat.Where(c => c.name == _iva).FirstOrDefault();
-                                accounting_chart.is_generic = false;
-                            }
-                        }
-                        //VALUE ADDED TAX
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 6)
-                        {
-                            accounting_chart.chartsub_type = accounting_chart.ChartSubType.Revenue;
-                        }
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 7)
-                        {
 
-                        }
-                        //CASH ACCOUNTS
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 8)
-                        {
-                            accounting_chart.chartsub_type = accounting_chart.ChartSubType.Cash;
-                            string _account_name = Convert.ToString(chart_reader["NUMEROCAJA"]);
-                            if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _account_name != null)
+                            if (Convert.ToInt16(chart_reader["REGLA"]) == 1)
                             {
-                                accounting_chart.app_account = db.app_account.Where(c => c.name == _account_name).FirstOrDefault();
-                                accounting_chart.is_generic = false;
-                            }
-                        }
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 9)
-                        {
 
-                        }
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 10)
-                        {
-
-                        }
-                        //COST CENTER
-                        else if (Convert.ToInt16(chart_reader["REGLA"]) == 11)
-                        {
-                            if (Convert.ToString(chart_reader["ENLAZADO"]) != null)
-                            {
-                                //INVENTORY COST CENTER
-                                accounting_chart.chartsub_type = accounting_chart.ChartSubType.Inventory;
                             }
-                            else
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 2)
                             {
-                                //EXPENSE COST CENTER
-                                accounting_chart.chartsub_type = accounting_chart.ChartSubType.AdministrationExpense;
-                                //add small logic to seperate stockable from expense. 
-                                string _cost_center = Convert.ToString(chart_reader["DESCENTRO"]);
-                                if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _cost_center != null)
+                                //Fix issue.
+                            }
+                            //ACCOUNTS RECEIVABLE
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 3)
+                            {
+                                accounting_chart.chartsub_type = accounting_chart.ChartSubType.AccountsReceivable;
+                                string _supplier = Convert.ToString(chart_reader["SUPPLIER"]);
+                                if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _supplier != null)
                                 {
-                                    accounting_chart.app_cost_center = db.app_cost_center.Where(c => c.name == _cost_center).FirstOrDefault();
+                                    accounting_chart.contact = db.contacts.Where(c => c.name == _supplier).FirstOrDefault();
                                     accounting_chart.is_generic = false;
+                                }
+                            }
+                            //ACCOUNTS PAYABLE
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 4)
+                            {
+                                accounting_chart.chartsub_type = accounting_chart.ChartSubType.AccountsPayable;
+                                string _customer = Convert.ToString(chart_reader["CUSTOMER"]);
+                                if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _customer != null)
+                                {
+                                    accounting_chart.contact = db.contacts.Where(c => c.name == _customer).FirstOrDefault();
+                                    accounting_chart.is_generic = false;
+                                }
+                            }
+                            //VALUE ADDED TAX
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 5)
+                            {
+                                accounting_chart.chartsub_type = accounting_chart.ChartSubType.VAT;
+                                string _iva = Convert.ToString(chart_reader["DESIVA"]);
+                                if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _iva != null)
+                                {
+                                    accounting_chart.app_vat = db.app_vat.Where(c => c.name == _iva).FirstOrDefault();
+                                    accounting_chart.is_generic = false;
+                                }
+                            }
+                            //VALUE ADDED TAX
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 6)
+                            {
+                                accounting_chart.chartsub_type = accounting_chart.ChartSubType.Revenue;
+                            }
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 7)
+                            {
+
+                            }
+                            //CASH ACCOUNTS
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 8)
+                            {
+                                accounting_chart.chartsub_type = accounting_chart.ChartSubType.Cash;
+                                string _account_name = Convert.ToString(chart_reader["NUMEROCAJA"]);
+                                if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _account_name != null)
+                                {
+                                    accounting_chart.app_account = db.app_account.Where(c => c.name == _account_name).FirstOrDefault();
+                                    accounting_chart.is_generic = false;
+                                }
+                            }
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 9)
+                            {
+
+                            }
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 10)
+                            {
+
+                            }
+                            //COST CENTER
+                            else if (Convert.ToInt16(chart_reader["REGLA"]) == 11)
+                            {
+                                if (Convert.ToString(chart_reader["ENLAZADO"]) != null)
+                                {
+                                    //INVENTORY COST CENTER
+                                    accounting_chart.chartsub_type = accounting_chart.ChartSubType.Inventory;
+                                }
+                                else
+                                {
+                                    //EXPENSE COST CENTER
+                                    accounting_chart.chartsub_type = accounting_chart.ChartSubType.AdministrationExpense;
+                                    //add small logic to seperate stockable from expense. 
+                                    string _cost_center = Convert.ToString(chart_reader["DESCENTRO"]);
+                                    if (Convert.ToInt16(chart_reader["REGLAFK"]) != 0 && _cost_center != null)
+                                    {
+                                        accounting_chart.app_cost_center = db.app_cost_center.Where(c => c.name == _cost_center).FirstOrDefault();
+                                        accounting_chart.is_generic = false;
+                                    }
                                 }
                             }
                         }

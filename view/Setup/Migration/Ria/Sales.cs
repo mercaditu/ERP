@@ -230,10 +230,14 @@ namespace Cognitivo.Setup.Migration
                         app_branch app_branch = db.app_branch.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
                         sales_invoice.id_branch = app_branch.id_branch;
 
+                        if ( db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault()!=null)
+                        {
+                            id_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
+                            app_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault();
+                            //Terminal
+                        }
                         //Location
-                        id_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
-                        app_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault();
-                        //Terminal
+                      
                         sales_invoice.id_terminal = db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
                     }
 

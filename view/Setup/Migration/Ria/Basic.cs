@@ -279,33 +279,38 @@ namespace Cognitivo.Setup.Migration
             foreach (DataRow row in dt.Rows)
             {
                 app_currency app_currency = new app_currency();
-                app_currency.name = (string)row["DESMONEDA"];
-                app_currency.id_company = id_company;
-                app_currency.is_priority = Convert.ToBoolean(row["PRIORIDAD"]);
-                DataTable dtfx = exeDT("SELECT * FROM COTIZACION where CODMONEDA=" + Convert.ToInt32(row["CODMONEDA"]));
-                if (dtfx.Rows.Count >0)
+                if (!(row["DESMONEDA"] is DBNull))
                 {
 
-                    app_currencyfx app_currencyfx = new app_currencyfx();
-                    app_currencyfx.buy_value = Convert.ToInt32(dtfx.Rows[0]["FACTORVENTA"]);
-                    app_currencyfx.sell_value = Convert.ToInt32(dtfx.Rows[0]["FACTORCOBRO"]) ;
-                    app_currencyfx.is_active = true;
-                    app_currency.app_currencyfx.Add(app_currencyfx);
-                }
-                else
-                {
-                    app_currencyfx app_currencyfx = new app_currencyfx();
-                    app_currencyfx.buy_value = 0;
-                    app_currencyfx.sell_value =0 ;
-                    app_currencyfx.is_active = true;
-                    app_currency.app_currencyfx.Add(app_currencyfx);
-                }
-                
-                app_currency.is_active = true;
-                //app_currency.id_country = id_country;
-                if (app_currency.Error == null)
-                {
-                    dbContext.app_currency.Add(app_currency);
+
+                    app_currency.name = (string)row["DESMONEDA"];
+                    app_currency.id_company = id_company;
+                    app_currency.is_priority = Convert.ToBoolean(row["PRIORIDAD"]);
+                    DataTable dtfx = exeDT("SELECT * FROM COTIZACION where CODMONEDA=" + Convert.ToInt32(row["CODMONEDA"]));
+                    if (dtfx.Rows.Count > 0)
+                    {
+
+                        app_currencyfx app_currencyfx = new app_currencyfx();
+                        app_currencyfx.buy_value = Convert.ToInt32(dtfx.Rows[0]["FACTORVENTA"]);
+                        app_currencyfx.sell_value = Convert.ToInt32(dtfx.Rows[0]["FACTORCOBRO"]);
+                        app_currencyfx.is_active = true;
+                        app_currency.app_currencyfx.Add(app_currencyfx);
+                    }
+                    else
+                    {
+                        app_currencyfx app_currencyfx = new app_currencyfx();
+                        app_currencyfx.buy_value = 0;
+                        app_currencyfx.sell_value = 0;
+                        app_currencyfx.is_active = true;
+                        app_currency.app_currencyfx.Add(app_currencyfx);
+                    }
+
+                    app_currency.is_active = true;
+                    //app_currency.id_country = id_country;
+                    if (app_currency.Error == null)
+                    {
+                        dbContext.app_currency.Add(app_currency);
+                    }
                 }
             }
             dt.Clear();

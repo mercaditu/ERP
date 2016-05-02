@@ -54,6 +54,7 @@ namespace Cognitivo.Setup.Migration
             foreach (DataRow reader in dt_product.Rows)
             {
 
+              
 
                 using (db db = new db())
                 {
@@ -175,7 +176,11 @@ namespace Cognitivo.Setup.Migration
                                     }
                                     else
                                     {
-                                        item_price.value = ((decimal)price_row["PRECIOVENTA"] / (1 + coefficient));
+                                        if (coefficient!=-1)
+                                        {
+                                            item_price.value = ((decimal)price_row["PRECIOVENTA"] / (1 + coefficient));
+                                        }
+                                    
                                     }
                                     item_price.min_quantity = (price_row.IsNull("CANTIDAD")) ? 0 : Convert.ToDecimal(price_row["CANTIDAD"]);
                                     item_price.id_currency = app_currency.id_currency;

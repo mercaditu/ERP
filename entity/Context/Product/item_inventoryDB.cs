@@ -55,7 +55,7 @@ namespace entity
                         item_inventory.State = EntityState.Unchanged;
                         base.item_inventory.Remove(item_inventory);
                     }
-                
+
                 }
                 else if (item_inventory.State > 0)
                 {
@@ -69,29 +69,29 @@ namespace entity
 
         private void validate_item_inventory_detail(item_inventory_detail item_inventory_detail)
         {
-                if (item_inventory_detail.State == EntityState.Added)
-                {
-                    item_inventory_detail.timestamp = DateTime.Now;
-                    item_inventory_detail.State = EntityState.Unchanged;
-                    Entry(item_inventory_detail).State = EntityState.Added;
-                }
-                else if (item_inventory_detail.State == EntityState.Modified)
-                {
-                    item_inventory_detail.timestamp = DateTime.Now;
-                    item_inventory_detail.State = EntityState.Unchanged;
-                    Entry(item_inventory_detail).State = EntityState.Modified;
-                }
-                else if (item_inventory_detail.State == EntityState.Deleted)
-                {
-                    item_inventory_detail.timestamp = DateTime.Now;
-                    item_inventory_detail.State = EntityState.Unchanged;
-                    base.item_inventory_detail.Remove(item_inventory_detail);
-                }
+            if (item_inventory_detail.State == EntityState.Added)
+            {
+                item_inventory_detail.timestamp = DateTime.Now;
+                item_inventory_detail.State = EntityState.Unchanged;
+                Entry(item_inventory_detail).State = EntityState.Added;
+            }
+            else if (item_inventory_detail.State == EntityState.Modified)
+            {
+                item_inventory_detail.timestamp = DateTime.Now;
+                item_inventory_detail.State = EntityState.Unchanged;
+                Entry(item_inventory_detail).State = EntityState.Modified;
+            }
+            else if (item_inventory_detail.State == EntityState.Deleted)
+            {
+                item_inventory_detail.timestamp = DateTime.Now;
+                item_inventory_detail.State = EntityState.Unchanged;
+                base.item_inventory_detail.Remove(item_inventory_detail);
+            }
 
-                if (item_inventory_detail.State != EntityState.Unchanged)
-                {
-                    Entry(item_inventory_detail).State = EntityState.Unchanged;
-                }
+            if (item_inventory_detail.State != EntityState.Unchanged)
+            {
+                Entry(item_inventory_detail).State = EntityState.Unchanged;
+            }
         }
 
         public void Approve()
@@ -100,7 +100,7 @@ namespace entity
                                                                                       x.status != Status.Documents.Issued
                                                                                    && x.IsSelected))
             {
-                if(item_inventory.id_inventory == 0)
+                if (item_inventory.id_inventory == 0)
                 {
                     SaveChanges();
                 }
@@ -129,6 +129,22 @@ namespace entity
                         item_movement.id_application = App.Names.Inventory;
                         item_movement.id_inventory = item_inventory_detail.id_inventory_detail;
                         item_movement.timestamp = DateTime.Now;
+
+
+                        if (item_inventory_detail.unit_value > 0 && item_inventory_detail.id_currencyfx > 0)
+                        {
+                            item_movement_value item_movement_value = new item_movement_value();
+                            item_movement_value.unit_value = item_inventory_detail.unit_value;
+                            item_movement_value.id_currencyfx = item_inventory_detail.id_currencyfx;
+                            item_movement.item_movement_value.Add(item_movement_value);
+                        }
+                        foreach (item_inventory_dimension item_inventory_dimension in item_inventory_detail.item_inventory_dimension)
+                        {
+                            item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                            item_movement_dimension.value = item_inventory_dimension.value;
+                            item_movement_dimension.id_dimension = item_inventory_dimension.id_dimension;
+                            item_movement.item_movement_dimension.Add(item_movement_dimension);
+                        }
                         item_movementLIST.Add(item_movement);
                     }
                 }

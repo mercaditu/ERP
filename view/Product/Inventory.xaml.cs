@@ -41,9 +41,13 @@ namespace Cognitivo.Product
             app_branchViewSource.Source = InventoryDB.app_branch.Local;
 
             app_branchViewSource.View.MoveCurrentToFirst();
-          
 
-            app_branchapp_locationViewSource.View.MoveCurrentToFirst();
+
+            if (app_branchapp_locationViewSource.View!=null)
+            {
+                app_branchapp_locationViewSource.View.MoveCurrentToFirst();
+            }
+          
           
 
         }

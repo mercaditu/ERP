@@ -96,28 +96,23 @@ namespace cntrl.Panels
 
         public void filter_detail()
         {
-            //if (id_inventory > 0)
-            //{
-
-
-                if (item_inventory_detailViewSource != null)
+            if (item_inventory_detailViewSource != null)
+            {
+                if (item_inventory_detailViewSource.View != null)
                 {
-                    if (item_inventory_detailViewSource.View != null)
+                        
+                    item_inventory_detailViewSource.View.Filter = i =>
                     {
-                        
-                            item_inventory_detailViewSource.View.Filter = i =>
-                            {
-                                item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
-                                if (item_inventory_detail.id_inventory_detail == id_inventory && item_inventory_detail.id_location==id_location)
-                                    return true;
-                                else
-                                    return false;
-                            };
-                        
-                    }
+                        item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
+                        if (item_inventory_detail.id_inventory_detail == id_inventory && item_inventory_detail.id_location==id_location)
+                            return true;
+                        else
+                            return false;
+                    };
                 }
-           // }
+            }
         }
+
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
             item_inventory_detailDataGrid.CancelEdit();
@@ -132,16 +127,5 @@ namespace cntrl.Panels
             quantity = item_inventoryList.Sum(y => y.value_counted);
             btnCancel_Click(sender, null);
         }
-
-        private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-       
-
-
-
-
     }
 }

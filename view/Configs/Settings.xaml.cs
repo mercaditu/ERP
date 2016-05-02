@@ -44,7 +44,7 @@ namespace Cognitivo.Configs
                     entity.CurrentSession.Id_Company = entity.Properties.Settings.Default.company_ID;
                     entity.CurrentSession.Id_Branch = entity.Properties.Settings.Default.branch_ID;
                     entity.CurrentSession.Id_Terminal = entity.Properties.Settings.Default.terminal_ID;
-
+                    entity.CurrentSession.Id_Account = entity.Properties.Settings.Default.account_ID;
                     //GoBack with changed data.
                     mainWindow.mainFrame.NavigationService.GoBack();
                 }

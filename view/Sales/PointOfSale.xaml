@@ -55,6 +55,17 @@
                     <Label Content="{lex:Loc AccountUtility}" Style="{StaticResource input_label}" Foreground="WhiteSmoke"/>
                 </StackPanel>
             </Border>
+            <Border CornerRadius="20,20,20,20 " Background="#FF004867" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Cursor="Hand" Margin="150,5,5,16" MouseDown="Border_MouseDown" TouchDown="Border_MouseDown"
+                ToolTip="{lex:Loc New}">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="0" />
+                </Border.Effect>
+                <StackPanel Orientation="Horizontal" Margin="32,2,0,0">
+                    <Label Content="{lex:Loc New}" Style="{StaticResource input_label}" Foreground="WhiteSmoke"/>
+                </StackPanel>
+            </Border>
+            
             <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
                     Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click" Margin="8"
                     BorderBrush="White" BorderThickness="2" ToolTip="{lex:Loc AccountUtility}">

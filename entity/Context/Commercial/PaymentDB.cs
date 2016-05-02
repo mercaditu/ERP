@@ -112,6 +112,14 @@ namespace entity
                 }
                 payment_schedual _payment_schedual = new payment_schedual();
 
+                if (payment_detail.value<0)
+                {
+                    _payment_schedual.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
+                }
+                else
+                {
+                    _payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
+                }
                 _payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
                 _payment_schedual.parent = payment_schedual;
                 _payment_schedual.expire_date = payment_schedual.expire_date;

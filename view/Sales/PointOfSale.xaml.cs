@@ -410,6 +410,29 @@ namespace Cognitivo.Sales
           
         }
 
+        private void Border_MouseDown(object sender, EventArgs e)
+        {
+            sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
+
+            SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
+
+            sales_invoiceViewSource.View.Refresh();
+            sales_invoiceViewSource.View.MoveCurrentToLast();
+            payment paymentnew = new entity.payment();
+            paymentnew.status = Status.Documents_General.Pending;
+            payment_detail payment_detailnew = new entity.payment_detail();
+            payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+            paymentnew.payment_detail.Add(payment_detailnew);
+            // SalesInvoiceDB.payments.Add(paymentnew);
+            paymentList.Add(paymentnew);
+            paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+            paymentViewSource.Source = paymentList;
+            paymentViewSource.View.Refresh();
+            paymentViewSource.View.MoveCurrentToLast();
+            tabContact.IsSelected = true;
+            sbxContact.Text = "";
+        }
+
       
 
      

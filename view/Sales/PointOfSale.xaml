@@ -46,7 +46,7 @@
         </Grid>
         <Grid>
             <Border CornerRadius="16,5,5,16" Background="#FF004867" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
-                Cursor="Hand" Margin="8" MouseDown="btnSave_Click" TouchDown="btnSave_Click"
+                Cursor="Hand" Margin="8" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
                 ToolTip="{lex:Loc AccountUtility}">
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />

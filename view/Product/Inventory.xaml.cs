@@ -202,6 +202,8 @@ namespace Cognitivo.Product
             item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
             item_inventory.id_branch = (int)cbxBranch.SelectedValue;
             InventoryDB.Approve();
+
+            toolBar.msgDone();
         }
 
         private void CbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)

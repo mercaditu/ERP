@@ -4,24 +4,32 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:local="clr-namespace:Cognitivo.Converters"
-    xmlns:cls="clr-namespace:Cognitivo.Class"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      xmlns:cls="clr-namespace:Cognitivo.Class"
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" 
-      MinHeight="600" MinWidth="800" Loaded="Page_Loaded"
-	>
+      MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
     </UserControl.Resources>
     <Grid>
-        <StackPanel Background="WhiteSmoke">
+        <StackPanel>
             <!--<Grid Margin="5">
                 <Label Content="{lex:Loc add all items in cash drawer before activating.}"/>
                 <Button Content="{lex:Loc Open Drawer}" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             </Grid>-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
+                <StackPanel.Effect>
+                    <DropShadowEffect ShadowDepth="0" Color="White"/>
+                </StackPanel.Effect>
+                <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                <Label Content="{lex:Loc Account}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
+            </StackPanel>
             <DataGrid x:Name="CashDataGrid" AutoGenerateColumns="False" BorderThickness="1" BorderBrush="Gray"
                                       EnableRowVirtualization="True"  Grid.Row="0"
                                       Margin="10,26,10,10" Height="Auto" MaxHeight="180" 
@@ -56,8 +64,8 @@
                             </DataGrid.Columns>
                         </DataGrid>-->
             <Grid Margin="5">
-                <Label Content="once activated, you can use this account to transact normally "/>
-                <Button x:Name="btnActivateAccount" Content="Active/DeActive" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
+                <TextBlock Style="{StaticResource text_Instructions}" Text="once activated, you can use this account to transact normally "/>
+                <Button x:Name="btnActivateAccount" Content="{lex:Loc Active}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
             </Grid>
         </StackPanel>
     </Grid>

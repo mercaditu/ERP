@@ -16,11 +16,11 @@
              BorderBrush="#344C6B" BorderThickness="2" Background="White" >
     <UserControl.Resources>
         <converter:ActiveValueConverter x:Key="ActiveValueConverter"/>
-        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_inventory_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
-        <CollectionViewSource x:Key="item_movementitem_movement_valueViewSource" Source="{Binding item_movement_value, Source={StaticResource item_movementViewSource}}"/>
-        <CollectionViewSource x:Key="item_movementitem_movement_dimensionViewSource" Source="{Binding item_movement_dimension, Source={StaticResource item_movementViewSource}}"/>
+        <CollectionViewSource x:Key="item_inventoryitem_inventory_valueViewSource" Source="{Binding item_inventory_value, Source={StaticResource item_inventory_detailViewSource}}"/>
+        <CollectionViewSource x:Key="item_inventoryitem_inventory_dimensionViewSource" Source="{Binding item_inventory_dimension, Source={StaticResource item_inventory_detailViewSource}}"/>
     </UserControl.Resources>
 
     <UserControl.Effect>
@@ -43,21 +43,19 @@
                 <StackPanel x:Name="stpDisplay" HorizontalAlignment="Left" >
           
 
-                <DataGrid Height="Auto" x:Name="item_transfer_detailDataGrid" 
-                      AutoGenerateColumns="False" Grid.ColumnSpan="2" 
+                <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" 
+                      AutoGenerateColumns="False" Grid.ColumnSpan="2" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
                       EnableRowVirtualization="True" 
-                      ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" 
-                      Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem">
+                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem" >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="auto"/>
-                       <DataGridTextColumn Binding="{Binding credit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
+                            <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
+                       <DataGridTextColumn Binding="{Binding value_counted,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
                     </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
-                            <DataGrid x:Name="item_movement_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" CanUserAddRows="False"
-                        		EnableRowVirtualization="True" Height="Auto" 
-                        		ItemsSource="{Binding Source={StaticResource item_movementitem_movement_dimensionViewSource}}"
-                        		RowDetailsVisibilityMode="VisibleWhenSelected" >
+                            <DataGrid x:Name="item_inventory_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" CanUserAddRows="False"
+                        		EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource item_inventoryitem_inventory_dimensionViewSource}}"
+                        		   		RowDetailsVisibilityMode="VisibleWhenSelected" >
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
@@ -72,10 +70,10 @@
                 </StackPanel>
                 <StackPanel x:Name="stpDisplayRight" HorizontalAlignment="Right" >
 
-                    <DataGrid Height="Auto" x:Name="item_movement_valueDataGrid" 
+                    <DataGrid Height="Auto" x:Name="item_inventory_valueDataGrid" 
                       AutoGenerateColumns="False" Grid.ColumnSpan="2" 
-                      EnableRowVirtualization="True" 
-                      ItemsSource="{Binding Source={StaticResource item_movementitem_movement_valueViewSource}}" InitializingNewItem="item_movement_valueDataGrid_InitializingNewItem"
+                      EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource item_inventoryitem_inventory_valueViewSource}}"
+                       InitializingNewItem="item_movement_valueDataGrid_InitializingNewItem"
                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding unit_value,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Header="{lex:Loc Cognitivo:local:Value}" Width="auto"/>

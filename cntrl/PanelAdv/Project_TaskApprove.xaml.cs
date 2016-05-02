@@ -36,6 +36,8 @@ namespace cntrl.PanelAdv
         }
         public int? id_range { get; set; }
         public string number { get; set; }
+        
+         public string code { get; set; }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ActivityPlan, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
@@ -43,6 +45,7 @@ namespace cntrl.PanelAdv
             {
                 project_task project_task=db.project_task.FirstOrDefault();
                 project_task.id_range=id_range;
+                project_task.State = System.Data.Entity.EntityState.Modified;
                 number = project_task.NumberWatermark;
                 RaisePropertyChanged("number");
             }

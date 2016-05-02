@@ -41,6 +41,14 @@ namespace entity
                 if (_id_item != value)
                 {
                     _id_item = value;
+                    using(db db= new db())
+                    {
+                        if (db.items.Where(x => x.id_item == value).FirstOrDefault()!=null)
+                        {
+                            name = db.items.Where(x => x.id_item == value).FirstOrDefault().name;      
+                        }
+                      
+                    }
 
                     if (project != null)
                     {
@@ -197,8 +205,12 @@ namespace entity
                 {
                     _items = value;
                     RaisePropertyChanged("items");
-                    _item_description = items.name;
-                   RaisePropertyChanged("item_description");
+                    if (_item_description!=null && _item_description=="")
+                    {
+                        _item_description = items.name;
+                        RaisePropertyChanged("item_description");
+                    }
+                  
                 }
 
             }

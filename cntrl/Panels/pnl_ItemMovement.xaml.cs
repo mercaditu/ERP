@@ -17,11 +17,14 @@ namespace cntrl.Panels
     /// </summary>
     public partial class pnl_ItemMovement : UserControl
     {
-        CollectionViewSource item_movementViewSource;
-        ProductMovementDB ProductMovementDB = new ProductMovementDB();
+        CollectionViewSource item_inventory_detailViewSource;
+        public InventoryDB InventoryDB { get; set; }
         public int id_item_product { get; set; }
         public int id_location { get; set; }
+        public int id_inventory { get; set; }
         public decimal quantity { get; set; }
+        public DateTime Trans_date { get; set; }
+        public List<item_inventory_detail> item_inventoryList { get; set; }
         public pnl_ItemMovement()
         {
             InitializeComponent();
@@ -29,29 +32,33 @@ namespace cntrl.Panels
 
         private void item_transfer_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
-            item_movement item_movement = e.NewItem as item_movement;
-            item_movement.id_item_product = id_item_product;
-            item_movement.id_application = App.Names.Inventory;
-            item_movement.id_location = id_location;
-            item_movement.IsSelected = true;
-            item_movement.State = EntityState.Added;
-            //item_movement_dest.transaction_id = 0;
-            item_movement.status = Status.Stock.InStock;
+            item_inventory_detail item_inventory_detail = e.NewItem as item_inventory_detail;
+            add_item(item_inventory_detail);
+        }
+
+        public void add_item(item_inventory_detail item_inventory_detail)
+        {
+            item_inventory_detail.id_item_product = id_item_product;
+            item_inventory_detail.id_location = id_location;
+            item_inventory_detail.IsSelected = true;
+            item_inventory_detail.State = EntityState.Added;
+            item_inventory_detail.timestamp = Trans_date;
+
 
             if (id_item_product > 0)
             {
-                if (ProductMovementDB.item_product.Where(x => x.id_item_product == id_item_product).FirstOrDefault() != null)
+                if (InventoryDB.item_product.Where(x => x.id_item_product == id_item_product).FirstOrDefault() != null)
                 {
-                    item_product item_product = ProductMovementDB.item_product.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
-                    if (ProductMovementDB.item_dimension.Where(x => x.id_item == item_product.id_item).ToList() != null)
+                    item_product item_product = InventoryDB.item_product.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
+                    if (InventoryDB.item_dimension.Where(x => x.id_item == item_product.id_item).ToList() != null)
                     {
-                        List<item_dimension> item_dimensionList = ProductMovementDB.item_dimension.Where(x => x.id_item == item_product.id_item).ToList();
+                        List<item_dimension> item_dimensionList = InventoryDB.item_dimension.Where(x => x.id_item == item_product.id_item).ToList();
                         foreach (item_dimension item_dimension in item_dimensionList)
                         {
-                            item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                            item_movement_dimension.id_dimension = item_dimension.id_app_dimension;
-                            item_movement_dimension.value = item_dimension.value;
-                            item_movement.item_movement_dimension.Add(item_movement_dimension);
+                            item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
+                            item_inventory_dimension.id_dimension = item_dimension.id_app_dimension;
+                            item_inventory_dimension.value = item_dimension.value;
+                            item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                         }
 
 
@@ -60,18 +67,26 @@ namespace cntrl.Panels
 
             }
         }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-            ProductMovementDB.item_movement.Where(a => a.id_company == CurrentSession.Id_Company && a.id_item_product == id_item_product && a.id_location == id_location).Load();
-            item_movementViewSource.Source = ProductMovementDB.item_movement.Local;
 
+            item_inventory_detailViewSource = ((CollectionViewSource)(FindResource("item_inventory_detailViewSource")));
+            InventoryDB.item_inventory_detail.Where(a => a.id_company == CurrentSession.Id_Company ).Load();
+            item_inventory_detailViewSource.Source = InventoryDB.item_inventory_detail.Local;
+
+         
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            ProductMovementDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            app_dimensionViewSource.Source = ProductMovementDB.app_dimension.Local;
+            InventoryDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_dimensionViewSource.Source = InventoryDB.app_dimension.Local;
 
+            filter_detail();
 
+            if (item_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count()==0)
+            {
+                item_inventory_detail item_inventory_detail = new item_inventory_detail();
+                add_item(item_inventory_detail);
+                InventoryDB.item_inventory_detail.Add(item_inventory_detail);
+            }
             //CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
             //ProductMovementDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             //app_currencyfxViewSource.Source = ProductMovementDB.app_currencyfx.Local;
@@ -79,10 +94,33 @@ namespace cntrl.Panels
 
 
         }
+        public void filter_detail()
+        {
+            //if (id_inventory > 0)
+            //{
 
+
+                if (item_inventory_detailViewSource != null)
+                {
+                    if (item_inventory_detailViewSource.View != null)
+                    {
+                        
+                            item_inventory_detailViewSource.View.Filter = i =>
+                            {
+                                item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
+                                if (item_inventory_detail.id_inventory_detail == id_inventory && item_inventory_detail.id_location==id_location)
+                                    return true;
+                                else
+                                    return false;
+                            };
+                        
+                    }
+                }
+           // }
+        }
         private void btnCancel_Click(object sender, MouseButtonEventArgs e)
         {
-            item_transfer_detailDataGrid.CancelEdit();
+            item_inventory_detailDataGrid.CancelEdit();
             Grid parentGrid = (Grid)Parent;
             parentGrid.Children.Clear();
             parentGrid.Visibility = Visibility.Hidden;
@@ -90,20 +128,24 @@ namespace cntrl.Panels
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            List<item_movement> item_movementList = item_movementViewSource.View.OfType<item_movement>().ToList();
-            quantity = item_movementList.Sum(y => y.credit - y.debit);
-            ProductMovementDB.SaveChanges();
+            item_inventoryList = item_inventory_detailViewSource.View.OfType<item_inventory_detail>().ToList();
+            quantity = item_inventoryList.Sum(y => y.value_counted);
+            //ProductMovementDB.SaveChanges();
             btnCancel_Click(sender, null);
         }
 
         private void item_movement_valueDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
-            item_movement_value item_movement_value = e.NewItem as item_movement_value;
-            if (ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+            item_inventory_value item_inventory_value = e.NewItem as item_inventory_value;
+            if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
             {
-                item_movement_value.id_currencyfx = ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                item_inventory_value.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
             }
 
         }
+
+
+
+
     }
 }

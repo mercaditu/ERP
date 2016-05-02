@@ -9,18 +9,28 @@ namespace Cognitivo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value != null && value.ToString() == entity.Status.Documents_General.Approved.ToString())
+            if (value != null)
             {
-                return new SolidColorBrush(Colors.PaleGreen);
-            }
-            else if (value != null && value.ToString() == entity.Status.Documents_General.Annulled.ToString())
-            {
-                return new SolidColorBrush(Colors.Crimson);
+
+
+                if (value.ToString() == entity.Status.Documents_General.Approved.ToString() || value.ToString() == entity.Status.Documents.Issued.ToString())
+                {
+                    return new SolidColorBrush(Colors.PaleGreen);
+                }
+                else if ((value != null && value.ToString() == entity.Status.Documents_General.Annulled.ToString()) || value.ToString() == entity.Status.Documents.Returned.ToString())
+                {
+                    return new SolidColorBrush(Colors.Crimson);
+                }
+                else
+                {
+                    return new SolidColorBrush(Colors.Gainsboro);
+                }
             }
             else
             {
                 return new SolidColorBrush(Colors.Gainsboro);
             }
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, 

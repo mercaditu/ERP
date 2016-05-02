@@ -85,9 +85,9 @@
             
             <StackPanel Background="{StaticResource winBackground}" Grid.ColumnSpan="2">
                 <Label Content="{lex:Loc User}"/>
-                <Label Content="{Binding  security_user.name}"/>
+                <Label Content="{Binding  security_user.name,Source={StaticResource item_inventoryViewSource}}"/>
                 <Label Content="{lex:Loc Date}"/>
-                <DatePicker SelectedDate="{Binding trans_date}" Style="{StaticResource input_datepicker}"/>
+                <DatePicker SelectedDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource item_inventoryViewSource}}"  Style="{StaticResource input_datepicker}"/>
                 <Label Content="{lex:Loc Branch}"/>
                 <ComboBox x:Name="cbxBranch" ItemsSource="{Binding Source={StaticResource app_branchViewSource}}" Style="{StaticResource input_combobox}"
                           DisplayMemberPath="name" SelectedValuePath="id_branch" SelectedValue="{Binding item_inventory.id_branch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="CbxBranch_SelectionChanged"/>

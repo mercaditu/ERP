@@ -1,5 +1,6 @@
 namespace entity
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     
@@ -10,6 +11,8 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            item_inventory_dimension = new List<item_inventory_dimension>();
+            item_movement_value = new List<item_movement_value>();
         }
 
         [Key]
@@ -26,5 +29,7 @@ namespace entity
         public virtual item_inventory item_inventory { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual item_product item_product { get; set; }
+        public virtual ICollection<item_inventory_dimension> item_inventory_dimension { get; set; }
+        public virtual ICollection<item_movement_value> item_movement_value { get; set; }
     }
 }

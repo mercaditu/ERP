@@ -30,6 +30,14 @@
         </Grid>
         <TextBlock Text="Approve Project Task" Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center">
+            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
+            <TextBox
+                                Style="{StaticResource input_textbox}"
+                                metro:TextBoxHelper.SelectAllOnFocus="True"
+               
+                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                             Text="{Binding Path=code,ElementName=TaskApprove, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
             <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"

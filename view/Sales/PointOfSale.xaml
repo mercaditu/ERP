@@ -213,40 +213,41 @@
             <TabItem x:Name="tabSales">
                 <Grid>
                     <StackPanel x:Name="stpdiscount" Margin="8"/>
-                    <Border CornerRadius="5,16,16,5" Background="#FF004867" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                            Cursor="Hand" Margin="8" MouseDown="btnSave_Click" TouchDown="btnSave_Click"
+                    <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <Border CornerRadius="5,16,16,5" Background="#FF004867" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                            Cursor="Hand" Margin="8"
                             ToolTip="{lex:Loc AccountUtility}">
-                        <Border.Effect>
-                            <DropShadowEffect Color="Black" ShadowDepth="0"/>
-                        </Border.Effect>
-                        
-                        <StackPanel Orientation="Horizontal" Margin="0,3,32,0">
-                            <Label Content="{lex:Loc Discount}" Style="{StaticResource input_label}" Foreground="White"/>
-                        </StackPanel>
-                    </Border>
-                 
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <StackPanel Orientation="Horizontal" Margin="0,3,32,0">
+                                <Label Content="{lex:Loc Discount}" Style="{StaticResource input_label}" Foreground="White"/>
+                            </StackPanel>
+                        </Border>
+                        <Popup x:Name="popupDiscount" Placement="Top" IsOpen="False" Closed="popupCustomize_Closed">
+                            <Grid Background="{StaticResource AccentColor_Introvert}">
+                                <Grid.Effect>
+                                    <DropShadowEffect ShadowDepth="0" Opacity="0.75" />
+                                </Grid.Effect>
+                                <StackPanel Margin="8">
+                                    <Label Content="Discount(%)" Style="{StaticResource input_label}"/>
+                                    <TextBox metro:TextBoxHelper.SelectAllOnFocus="True" Text="{Binding DiscountPercentage, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:P}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="128"/>
+                                    <Label Content="Discount" Style="{StaticResource input_label}"/>
+                                    <TextBox metro:TextBoxHelper.SelectAllOnFocus="True" Text="{Binding DiscountWithoutPercentage, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="128"/>
+                                </StackPanel>
+                                <Polygon Margin="0,0,0,-10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Points="0,0 8,10, 16,0" Fill="{StaticResource AccentColor_Introvert}" />
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    
                     <Border x:Name="boderdiscount" CornerRadius="18" Background="#FF004867" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"
                         Cursor="Hand" MouseDown="boderdiscount_MouseDown" TouchDown="boderdiscount_MouseDown"
                         BorderBrush="White" BorderThickness="1" ToolTip="{lex:Loc AccountUtility}">
                         <Label Content="%" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="16" 
-                           VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontWeight="Bold"/>
+                               VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontWeight="Bold"/>
                     </Border>
-                    <Popup x:Name="popupVAT" IsOpen="False" Closed="popupCustomize_Closed"
-                                   PlacementTarget="{Binding ElementName=stackpnlCustomize}" >
-                        <Grid Background="{StaticResource AccentColor_Introvert}">
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Discount(%)" Style="{StaticResource input_label}"/>
-                                    <TextBox Text="{Binding DiscountPercentage,Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="75"/>
-                                   
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Discount" Style="{StaticResource input_label}"/>
-                                    <TextBox Text="{Binding DiscountWithoutPercentage,Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </Popup>
+                    
+                    
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
                             <StackPanel.Effect>

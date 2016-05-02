@@ -329,12 +329,12 @@ namespace Cognitivo.Sales
 
         private void boderdiscount_MouseDown(object sender, EventArgs e)
         {
-            popupVAT.IsOpen = true;
+            popupDiscount.IsOpen = true;
         }
 
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
-            popupVAT.IsOpen = false;
+            popupDiscount.IsOpen = false;
         }
 
      

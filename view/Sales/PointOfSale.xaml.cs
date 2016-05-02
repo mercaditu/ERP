@@ -327,6 +327,18 @@ namespace Cognitivo.Sales
 
         }
 
+        private void boderdiscount_MouseDown(object sender, EventArgs e)
+        {
+            popupVAT.IsOpen = true;
+        }
+
+        private void popupCustomize_Closed(object sender, EventArgs e)
+        {
+            popupVAT.IsOpen = false;
+        }
+
+     
+
     
 
     }

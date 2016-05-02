@@ -165,7 +165,6 @@ namespace Cognitivo.Sales
                 {
                     payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
                 }
-          
 
                 sales_invoiceViewSource.View.Refresh();
                 paymentViewSource.View.Refresh();

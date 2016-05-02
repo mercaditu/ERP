@@ -322,6 +322,11 @@ namespace Cognitivo.Sales
             }
         }
 
+        private void btnNewCustomer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
     
 
     }

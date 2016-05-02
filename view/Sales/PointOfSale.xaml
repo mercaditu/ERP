@@ -56,6 +56,25 @@
                        Foreground="White"/>
         </Border>
 
+        <Grid>
+            <Border CornerRadius="18" Background="#FFBCFFBC" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
+                Cursor="Hand" Margin="8" MouseDown="btnSave_Click" TouchDown="btnSave_Click"
+                BorderBrush="White" BorderThickness="2" ToolTip="{lex:Loc AccountUtility}">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" ShadowDepth="0" />
+                </Border.Effect>
+                <StackPanel Orientation="Horizontal" Margin="0,0,28,0">
+                    <Label Content="{lex:Loc Approve}" Style="{StaticResource input_label}"/>
+                </StackPanel>
+            </Border>
+            <Border CornerRadius="18" Background="PaleGreen" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8"
+                        Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
+                        BorderBrush="White" BorderThickness="2" ToolTip="{lex:Loc AccountUtility}">
+                <Label Content="j" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="16" 
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+        </Grid>
+
         <Grid VerticalAlignment="Bottom" Height="40">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".64"/>
@@ -129,24 +148,11 @@
                 <Label Content="$" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" Foreground="Black"
                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
-
-            <Rectangle Height="1" Width="64" Margin="8" Fill="White" Opacity="0.32"/>
-
-            <Border CornerRadius="32" Background="WhiteSmoke" Width="64" Height="64" 
-                    Cursor="Hand" MouseDown="btnSave_Click" TouchDown="btnSave_Click"
-                    BorderBrush="White" BorderThickness="4" ToolTip="F4">
-                <Border.Effect>
-                    <DropShadowEffect Color="Black" ShadowDepth="0" />
-                </Border.Effect>
-                <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="32" Foreground="Black"
-                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-
         </StackPanel>
-        <TabControl Margin="0,150,0,40">
+        <TabControl Margin="10,150,-10,40">
             <!-- Account-->
-            <TabItem x:Name="tabAccount" >
-                <Grid x:Name="frmActive" >
+            <TabItem x:Name="tabAccount">
+                <Grid x:Name="frmActive">
                     <Frame />
                 </Grid>
             </TabItem>
@@ -162,9 +168,29 @@
                         <Label Content="{lex:Loc Customer}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
                     </StackPanel>
                     <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512">
-                        <cntrl:SmartBox_Contact x:Name="sbxContact" HorizontalAlignment="Center" Get_Customers="True" 
-                                                Select="sbxContact_Select" can_New="True"/>
+                        <cntrl:SmartBox_Contact x:Name="sbxContact" 
+                                                HorizontalAlignment="Center" 
+                                                Get_Customers="True" 
+                                                Select="sbxContact_Select"/>
                     </Viewbox>
+                    <Grid HorizontalAlignment="Center">
+                        <Border CornerRadius="18" Background="#FFBCFFBC" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                Cursor="Hand" Margin="8" MouseDown="btnNewCustomer_MouseDown" TouchDown="btnNewCustomer_MouseDown"
+                                BorderBrush="White" BorderThickness="2" ToolTip="{lex:Loc AccountUtility}">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" ShadowDepth="0" />
+                            </Border.Effect>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,28,0">
+                                <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}"/>
+                            </StackPanel>
+                        </Border>
+                        <Border CornerRadius="18" Background="PaleGreen" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8"
+                        Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
+                        BorderBrush="White" BorderThickness="2" ToolTip="{lex:Loc AccountUtility}">
+                            <Label Content="+" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="16" 
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </Grid>
                 </StackPanel>
             </TabItem>
             

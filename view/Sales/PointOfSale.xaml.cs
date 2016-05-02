@@ -361,13 +361,15 @@ namespace Cognitivo.Sales
             decimal amount = sales_invoice.GrandTotal - _payment_detail.value;
             if (payment.payment_detail.Count()>1)
             {
+                amount =Currency.convert_Values(amount, _payment_detail.id_currencyfx, sales_invoice.id_currencyfx, entity.App.Modules.Sales);
                 decimal value = (amount / (payment.payment_detail.Count() - 1));
-
+               
                 foreach (payment_detail payment_detail in payment.payment_detail)
                 {
                     if (payment_detail != _payment_detail)
                     {
-                        payment_detail.value=value;
+
+                        payment_detail.value = Currency.convert_Values(value, _payment_detail.id_currencyfx, payment_detail.id_currencyfx, entity.App.Modules.Sales); ;
                         payment_detail.RaisePropertyChanged("value");
                     }
                 }

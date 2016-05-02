@@ -173,36 +173,6 @@ namespace Cognitivo.Sales
             }
         }
 
-        //private void select_Item(sales_invoice sales_invoice, item item)
-        //{
-        //    Settings SalesSettings = new Settings();
-        //    if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
-        //    {
-        //        sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
-        //        _sales_invoice_detail.sales_invoice = sales_invoice;
-        //        _sales_invoice_detail.Contact = sales_invoice.contact;
-        //        _sales_invoice_detail.item_description = item.description;
-        //        _sales_invoice_detail.item = item;
-        //        _sales_invoice_detail.id_item = item.id_item;
-        //        _sales_invoice_detail.quantity += 1;
-
-        //        sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
-        //    }
-        //    else
-        //    {
-        //        sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-        //        sales_invoice_detail.quantity += 1;
-        //    }
-
-        //    Dispatcher.BeginInvoke((Action)(() =>
-        //    {
-        //        CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-        //        sales_invoicesales_invoice_detailViewSource.View.Refresh();
-
-        //        sbxItem.Focus();
-        //    }));
-        //}
-
         #endregion
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -250,7 +220,6 @@ namespace Cognitivo.Sales
                     {
                         tabAccount.IsSelected = true;
                     }
-
                 }
             }));
         }
@@ -276,12 +245,10 @@ namespace Cognitivo.Sales
                     foreach (payment_detail _payment_detail in payment_detaillist.Where(x => x.id_currency == app_currency.id_currency).ToList())
                     {
                         totalpaid += Currency.convert_Values(_payment_detail.value, sales_invoice.id_currencyfx, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
-                       // totalpaid += Currency.convert_Value(_payment_detail.value, _payment_detail.id_currencyfx, entity.App.Modules.Sales);
                     }
                 }
             }
             payment_detail.value = sales_invoice.GrandTotal - totalpaid;
-
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -337,7 +304,6 @@ namespace Cognitivo.Sales
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -364,7 +330,6 @@ namespace Cognitivo.Sales
                         CollectionViewSource paymentpayment_detailViewSource = FindResource("paymentpayment_detailViewSource") as CollectionViewSource;
                         paymentpayment_detailViewSource.View.Refresh();
                     }
-                   
                 }
             }
             catch (Exception ex)
@@ -390,7 +355,6 @@ namespace Cognitivo.Sales
 
         private void dgvPaymentDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
             payment_detail _payment_detail = (payment_detail)dgvPaymentDetail.SelectedItem;
@@ -407,8 +371,7 @@ namespace Cognitivo.Sales
                         payment_detail.RaisePropertyChanged("value");
                     }
                 }
-            }
-          
+            } 
         }
 
         private void Border_MouseDown(object sender, EventArgs e)
@@ -416,7 +379,6 @@ namespace Cognitivo.Sales
             sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
 
             SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
-
             sales_invoiceViewSource.View.Refresh();
             sales_invoiceViewSource.View.MoveCurrentToLast();
             payment paymentnew = new entity.payment();
@@ -430,15 +392,14 @@ namespace Cognitivo.Sales
             paymentViewSource.Source = paymentList;
             paymentViewSource.View.Refresh();
             paymentViewSource.View.MoveCurrentToLast();
-            tabContact.IsSelected = true;
+
+            //Clean up Contact Data.
             sbxContact.Text = "";
-        }
+            sbxContact.ContactID = 0;
+            sbxContact.Contact = null;
 
-      
-
-     
-
-    
+            tabContact.IsSelected = true;
+        }    
 
     }
 }

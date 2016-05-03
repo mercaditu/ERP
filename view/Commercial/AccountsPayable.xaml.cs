@@ -209,25 +209,37 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
-            if (!string.IsNullOrEmpty(query) && contactViewSource != null)
+            try
             {
-                try
+                if (!string.IsNullOrEmpty(query))
                 {
                     contactViewSource.View.Filter = i =>
                     {
                         contact contact = i as contact;
-                        if (contact != null)
+                        string name = "";
+                        string code = "";
+                        string gov_code = "";
+
+                        if (contact.name != null)
                         {
-                            if (contact.name.ToLower().Contains(query.ToLower())
-                             || contact.code.ToLower().Contains(query.ToLower())
-                             || contact.gov_code.ToLower().Contains(query.ToLower()))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
+                            name = contact.name.ToLower();
+                        }
+
+                        if (contact.code != null)
+                        {
+                            code = contact.code.ToLower();
+                        }
+
+                        if (contact.gov_code != null)
+                        {
+                            gov_code = contact.gov_code.ToLower();
+                        }
+
+                        if (name.Contains(query.ToLower())
+                            || code.Contains(query.ToLower())
+                            || gov_code.Contains(query.ToLower()))
+                        {
+                            return true;
                         }
                         else
                         {
@@ -235,14 +247,14 @@ namespace Cognitivo.Commercial
                         }
                     };
                 }
-                catch (Exception ex)
+                else
                 {
-                    toolbar.msgError(ex);
+                    contactViewSource.View.Filter = null;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                contactViewSource.View.Filter = null;
+                toolbar.msgError(ex);
             }
         }
 

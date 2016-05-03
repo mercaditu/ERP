@@ -143,7 +143,7 @@
                          metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                          metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                          metro:TextBoxHelper.SelectAllOnFocus="True"
-                         Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                         Text="{Binding code, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" />
                 </AdornerDecorator>
                 <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
                 <AdornerDecorator>

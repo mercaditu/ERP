@@ -174,7 +174,20 @@ namespace entity
                 if (columnName == "code")
                 {
                     if (string.IsNullOrEmpty(code))
+                    {
                         return "Code needs to be filled";
+                    }
+                        
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                    {
+                        using (db db = new db())
+                        {
+                            if (db.items.Any(x => x.code == code))
+                            {
+                               return "Duplicate Code Not Allowed"; 
+                            }
+                        }
+                    }
                 }
                 if (columnName == "id_item_type")
                 {

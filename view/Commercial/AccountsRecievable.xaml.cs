@@ -13,7 +13,7 @@ namespace Cognitivo.Commercial
     public partial class AccountsRecievable : Page
     {
         dbContext _entity = new dbContext();
-        entity.Properties.Settings _Settings = new entity.Properties.Settings();
+        //entity.Properties.Settings _Settings = new entity.Properties.Settings();
         //CollectionViewSource paymentViewSource;
         CollectionViewSource payment_schedualViewSource, contactViewSource;
         PaymentDB PaymentDB = new entity.PaymentDB();
@@ -21,6 +21,7 @@ namespace Cognitivo.Commercial
         cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick();
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance();
         cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
+
         public AccountsRecievable()
         {
             InitializeComponent();
@@ -163,28 +164,47 @@ namespace Cognitivo.Commercial
             {
                 try
                 {
-                    contactViewSource.View.Filter = i =>
-                    {
-                        contact contact = i as contact;
-                        if (contact != null)
+                        contactViewSource.View.Filter = i =>
                         {
-                            if (contact.name.ToLower().Contains(query.ToLower())
-                             || contact.code.ToLower().Contains(query.ToLower())
-                             || contact.gov_code.ToLower().Contains(query.ToLower()))
+                            contact contact = i as contact;
+                            if (contact != null)
                             {
-                                return true;
+                                string name = "";
+                                string code = "";
+                                string gov_code = "";
+
+                                if (contact.name != null)
+                                {
+                                    name = contact.name.ToLower();
+                                }
+
+                                if (contact.code != null)
+                                {
+                                    code = contact.code.ToLower();
+                                }
+
+                                if (contact.gov_code != null)
+                                {
+                                    gov_code = contact.gov_code.ToLower();
+                                }
+
+                                if (name.Contains(query.ToLower())
+                                    || code.Contains(query.ToLower())
+                                    || gov_code.Contains(query.ToLower()))
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
                                 return false;
                             }
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
+                        };   
+                    }
                 catch (Exception ex)
                 {
                     toolbar.msgError(ex);

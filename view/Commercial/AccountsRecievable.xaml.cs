@@ -142,7 +142,7 @@ namespace Cognitivo.Commercial
 
                     payment_quick.payment_detail.payment.payment_detail.Add(payment_quick.payment_detail);
                     PaymentDB.payments.Add(payment_quick.payment_detail.payment);
-                    PaymentDB.Approve(payment_schedual.id_payment_schedual);
+                    PaymentDB.Approve(payment_schedual.id_payment_schedual,true);
                     //AccountReceivable.ReceivePayment(ref _entity, payment_schedual, (int)payment_quick.payment_detail.payment.id_range, payment_quick.payment_detail.id_currencyfx, payment_quick.payment_detail.id_payment_type,
                     //                                (int)payment_quick.payment_detail.id_purchase_return, (int)payment_quick.payment_detail.id_sales_return, payment_quick.payment_detail.value, payment_quick.payment_detail.comment, (int)payment_quick.payment_detail.id_account, payment_quick.payment_detail.trans_date);
 
@@ -163,33 +163,27 @@ namespace Cognitivo.Commercial
             {
                 try
                 {
-                    if (contactViewSource.View != null)
+                    contactViewSource.View.Filter = i =>
                     {
-                        contactViewSource.View.Filter = i =>
+                        contact contact = i as contact;
+                        if (contact != null)
                         {
-                            contact contact = i as contact;
-                            if (contact != null)
+                            if (contact.name.ToLower().Contains(query.ToLower())
+                             || contact.code.ToLower().Contains(query.ToLower())
+                             || contact.gov_code.ToLower().Contains(query.ToLower()))
                             {
-                                string code = "";
-                                   code = contact.code;
-
-                                if (contact.name.Contains(query.ToLower())
-                                 || code.Contains(query.ToLower())
-                                 || contact.gov_code.Contains(query.ToLower()))
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    return false;
-                                }
+                                return true;
                             }
                             else
                             {
                                 return false;
                             }
-                        };   
-                    }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
                 }
                 catch (Exception ex)
                 {

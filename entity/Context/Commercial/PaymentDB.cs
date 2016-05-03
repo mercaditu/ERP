@@ -69,7 +69,7 @@ namespace entity
 
         }
 
-        public void Approve(int id_payment_schedual)
+        public void Approve(int id_payment_schedual, bool PrintRequire)
         {
             foreach (payment payment in payments.Local.Where(x =>
                                                x.status != Status.Documents_General.Approved
@@ -83,15 +83,15 @@ namespace entity
 
                 entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
                 payment_schedual _payment_schedual = payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault();
-              
-                 ReceivePayment(_payment_schedual, payment);
+
+                ReceivePayment(_payment_schedual, payment, PrintRequire);
             }
         }
 
 
 
 
-        public void ReceivePayment(payment_schedual payment_schedual, payment payment)
+        public void ReceivePayment(payment_schedual payment_schedual, payment payment,bool PrintRequire)
         {
 
             foreach (payment_detail payment_detail in payment.payment_detail)
@@ -199,9 +199,13 @@ namespace entity
 
 
 
+            if (PrintRequire)
+            {
+                
+          
             entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
 
-
+            }
 
         }
     }

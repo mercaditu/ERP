@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace cntrl.Controls
 {
@@ -109,12 +110,24 @@ bool _can_edit;
         public SmartBox_Item()
         {
             InitializeComponent();
-
+            this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
             }
         }
+        void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue == true)
+            {
+                Dispatcher.BeginInvoke(
+                DispatcherPriority.ContextIdle,
+                new Action(delegate()
+                {
+                    tbxSearch.Focus();
+                }));
+            }
+        }  
 
         private void StartSearch(object sender, KeyEventArgs e)
         {

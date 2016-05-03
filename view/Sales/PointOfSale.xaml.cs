@@ -189,14 +189,18 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
             sales_invoiceViewSource.View.MoveCurrentToLast();
 
+            //cbxSalesRep
+            SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
+            SalesInvoiceDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
+                cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList();
+
                 CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-                SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
                 payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
                 app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
-                SalesInvoiceDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
                 app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
 
                 payment payment = new entity.payment();
@@ -396,7 +400,7 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void Border_MouseDown(object sender, EventArgs e)
+        private void Cancel_MouseDown(object sender, EventArgs e)
         {
             sales_invoice old_salesinvoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             SalesInvoiceDB.sales_invoice.Remove(old_salesinvoice);

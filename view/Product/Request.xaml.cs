@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Data.Entity;
 using System;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace Cognitivo.Product
 {
@@ -191,6 +192,16 @@ namespace Cognitivo.Product
                 purchasedesion.decisionqty = 0;
                 list_desion_purchase.Add(purchasedesion);
                 item_request_decisionpurchaseDataGrid.ItemsSource = list_desion_purchase;
+
+
+                List<desion> list_desion_production = new List<desion>();
+                desion productiondesion = new desion();
+                productiondesion.name = item_request_detail.item.name;
+                productiondesion.RaisePropertyChanged("name");
+                productiondesion.decisionqty = 0;
+                productiondesion.decisionState = state.added;
+                list_desion_production.Add(productiondesion);
+                item_request_decisionproductionDataGrid.ItemsSource = list_desion_purchase;
             }
         }
 
@@ -345,8 +356,16 @@ namespace Cognitivo.Product
             added, modified
         }
 
-        public class desion
+        public class desion : INotifyPropertyChanged
         {
+            public event PropertyChangedEventHandler PropertyChanged;
+            public void RaisePropertyChanged(string prop)
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                }
+            }
             public int id_item { get; set; }
             public string name { get; set; }
             public int id_location { get; set; }
@@ -369,6 +388,35 @@ namespace Cognitivo.Product
                     project_task_dimensionViewSource.Source = dbContext.project_task_dimension.Where(x => x.id_project_task == item_request_detail.id_project_task).ToList();
                 }
             }
+        }
+
+        private void item_request_decisionproductionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
+            item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+
+            if (item_request_decisionproductionDataGrid.SelectedItem != null)
+            {
+                desion desion = (desion)item_request_decisionproductionDataGrid.SelectedItem;
+
+                if (desion.decisionState == state.added)
+                {
+                    desion.decisionState = state.modified;
+                    item_request_decision item_request_decision = new global::entity.item_request_decision();
+                    item_request_decision.IsSelected = true;
+                    item_request_decision.quantity = desion.decisionqty;
+                    item_request_decision.decision = global::entity.item_request_decision.Decisions.Production;
+                    item_request_detail.item_request_decision.Add(item_request_decision);
+                }
+            }
+
+            item_request_detail.item_request.GetTotalDecision();
+
+            dbContext.SaveChanges();
+            item_requestViewSource.View.MoveCurrentToLast();
+            item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+            item_request_detailitem_request_decisionViewSource.View.Refresh();
+            toolBar_btnEdit_Click(sender);
         }
     }
 }

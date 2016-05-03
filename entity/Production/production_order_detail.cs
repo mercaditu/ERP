@@ -17,6 +17,7 @@ namespace entity
             id_user = CurrentSession.Id_User;
             is_head = true;
             child = new List<production_order_detail>();
+            production_order_dimension = new List<production_order_dimension>();
             trans_date = DateTime.Now;
         }
 
@@ -113,6 +114,7 @@ namespace entity
         //Self Referencing
         public virtual production_order_detail parent { get; set; }
         public virtual ICollection<production_order_detail> child { get; set; }
+        public virtual ICollection<production_order_dimension> production_order_dimension { get; set; }
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
         public virtual production_order production_order { get; set; }
         public virtual project_task project_task { get; set; }

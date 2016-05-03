@@ -237,6 +237,37 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
+                <TabItem Header="{lex:Loc ProductionOrder}" Margin="7,0,-7,0">
+                    <DataGrid x:Name="item_request_decisionproductionDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" RowEditEnding="item_request_decisionproductionDataGrid_RowEditEnding">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Item}" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
+                           
+                            <DataGridTextColumn 
+                                Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+
+                        </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
+                        		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}"
+                        		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                        Header="Dimension" Width="100"/>
+                                        <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                        Header="value" Width="100"/>
+                                        <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                        Header="Measurement" Width="100"/>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
+                    </DataGrid>
+                  
+                </TabItem>
             </TabControl >
             
         </Grid>

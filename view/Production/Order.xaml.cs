@@ -370,7 +370,7 @@ namespace Cognitivo.Production
                 item_request item_request = new item_request();
                 item_request.name = ItemRequest.name;
                 item_request.comment = ItemRequest.comment;
-            
+              
                 item_request.id_department = ItemRequest.id_department;
                 item_request.id_production_order = id_production_order;
                 if (production_order.project!=null)

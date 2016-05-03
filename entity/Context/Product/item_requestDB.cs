@@ -90,6 +90,16 @@ namespace entity
                 purchase_tender.trans_date = item_request.request_date;
                 purchase_tender.comment = item_request.comment;
 
+
+                production_order production_order = new production_order();
+                production_order.status = Status.Production.InProcess;
+                production_order.name = item_request.name;
+                if (production_line.FirstOrDefault() != null)
+                {
+                    production_order.id_production_line = production_line.FirstOrDefault().id_production_line;
+                }
+
+
                 foreach (item_request_detail item_request_detail in item_request.item_request_detail)
                 {
                     foreach (item_request_decision item in item_request_detail.item_request_decision)
@@ -136,7 +146,7 @@ namespace entity
                                 _item_transfer.app_branch_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
                                 _item_transfer.id_project = item_request_detail.project_task.id_project;
                             }
-                            
+
                             if (item_request_detail.id_sales_order_detail != null)
                             {
                                 _item_transfer.app_location_destination = ProductTransferDB.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
@@ -199,6 +209,27 @@ namespace entity
                             item_transfer.item_transfer_detail.Add(item_transfer_detail);
 
                             item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
+
+                        }
+                        else if (item.decision == entity.item_request_decision.Decisions.Production)
+                        {
+                            production_order_detail production_order_detail = new production_order_detail();
+                            production_order_detail.name = item_request_detail.item.name;
+                            production_order_detail.quantity = item.quantity;
+                            production_order_detail.status = Status.Project.InProcess;
+                            production_order_detail.is_input = false;
+
+                            production_order_detail.id_item = item_request_detail.item.id_item;
+                            foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
+                            {
+                                production_order_dimension production_order_dimension = new production_order_dimension();
+                                production_order_dimension.id_dimension = item_request_dimension.id_dimension;
+                                production_order_dimension.id_measurement = item_request_dimension.id_measurement;
+                                production_order_dimension.value = item_request_dimension.value;
+                                production_order_detail.production_order_dimension.Add(production_order_dimension);
+                            }
+                            production_order.production_order_detail.Add(production_order_detail);
+
 
                         }
                         else
@@ -264,7 +295,10 @@ namespace entity
                 {
                     base.item_transfer.Add(item_transfer);
                 }
-
+                if (production_order.production_order_detail.Count() > 0)
+                {
+                    base.production_order.Add(production_order);
+                }
             }
             SaveChanges();
         }

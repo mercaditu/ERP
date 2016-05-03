@@ -24,7 +24,7 @@ namespace cntrl.Curd
         public entity.item_request_detail.Urgencies Urgencies { get; set; }
         public string name { get; set; }
         public string  comment { get; set; }
-        public int id_department { get; set; }
+        public int? id_department { get; set; }
         public List<app_department> listdepartment { get; set; }
         public ItemRequest()
         {

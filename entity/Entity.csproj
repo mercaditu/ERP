@@ -273,10 +273,12 @@
     <Compile Include="Migrations\201605021122391_Updateitemvaluedimension.Designer.cs">
       <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605030437364_UpdateSecurityPrillage.cs" />
-    <Compile Include="Migrations\201605030437364_UpdateSecurityPrillage.Designer.cs">
-      <DependentUpon>201605030437364_UpdateSecurityPrillage.cs</DependentUpon>
+    <Compile Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.cs" />
+    <Compile Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.Designer.cs">
+      <DependentUpon>201605031243272_UpdatesecurityandProductionandproductionorder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Production\production_execution_dimension.cs" />
+    <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
     <Compile Include="Context\Purchase\ImpexDB.cs" />
@@ -944,8 +946,8 @@
     <EmbeddedResource Include="Migrations\201605021122391_Updateitemvaluedimension.resx">
       <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605030437364_UpdateSecurityPrillage.resx">
-      <DependentUpon>201605030437364_UpdateSecurityPrillage.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.resx">
+      <DependentUpon>201605031243272_UpdatesecurityandProductionandproductionorder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

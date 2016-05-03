@@ -16,6 +16,7 @@ namespace entity
             trans_date = DateTime.Now;
             is_input = false;
             child = child = new List<production_execution_detail>();
+            production_execution_dimension = new List<production_execution_dimension>();
             start_date = DateTime.Now;
             end_date = DateTime.Now;
         }
@@ -102,7 +103,7 @@ namespace entity
         //Heirarchy
         public virtual production_execution_detail parent { get; set; }
         public virtual ICollection<production_execution_detail> child { get; set; }
-
+        public virtual ICollection<production_execution_dimension> production_execution_dimension { get; set; }
         public virtual hr_time_coefficient hr_time_coefficient { get; set; }
         public virtual production_execution production_execution { get; set; }
         public virtual production_order_detail production_order_detail { get; set; }

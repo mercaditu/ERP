@@ -10,7 +10,8 @@ namespace entity
         {
             Movement = 0,
             Transfer = 1,
-            Purchase = 2
+            Purchase = 2,
+            Production=3
         }
 
         public item_request_decision()

@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateSecurityPrillage : IMigrationMetadata
+    public sealed partial class UpdatesecurityandProductionandproductionorder : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateSecurityPrillage));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatesecurityandProductionandproductionorder));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605030437364_UpdateSecurityPrillage"; }
+            get { return "201605031243272_UpdatesecurityandProductionandproductionorder"; }
         }
         
         string IMigrationMetadata.Source

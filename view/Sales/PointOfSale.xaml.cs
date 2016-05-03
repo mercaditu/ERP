@@ -121,6 +121,7 @@ namespace Cognitivo.Sales
                 paymentnew.status = Status.Documents_General.Pending;
                 payment_detail payment_detailnew = new entity.payment_detail();
                 payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                payment_detailnew.id_currency = Newsales_invoice.app_currencyfx.id_currency;
                 paymentnew.payment_detail.Add(payment_detailnew);
                 // SalesInvoiceDB.payments.Add(paymentnew);
                 paymentList.Add(paymentnew);

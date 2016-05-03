@@ -101,7 +101,7 @@ namespace Cognitivo.Product
             {
                 dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Supplies).Load();
             }
-            if (_pref_Product.ServiceContrct)
+            if (_pref_Product.ServiceContract)
             {
                 dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.ServiceContract).Load();
             }

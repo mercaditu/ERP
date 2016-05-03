@@ -122,12 +122,12 @@ namespace Cognitivo.Product {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ServiceContrct {
+        public bool ServiceContract {
             get {
-                return ((bool)(this["ServiceContrct"]));
+                return ((bool)(this["ServiceContract"]));
             }
             set {
-                this["ServiceContrct"] = value;
+                this["ServiceContract"] = value;
             }
         }
     }

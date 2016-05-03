@@ -163,27 +163,33 @@ namespace Cognitivo.Commercial
             {
                 try
                 {
-                    contactViewSource.View.Filter = i =>
+                    if (contactViewSource.View != null)
                     {
-                        contact contact = i as contact;
-                        if (contact != null)
+                        contactViewSource.View.Filter = i =>
                         {
-                            if (contact.name.ToLower().Contains(query.ToLower())
-                             || contact.code.ToLower().Contains(query.ToLower())
-                             || contact.gov_code.ToLower().Contains(query.ToLower()))
+                            contact contact = i as contact;
+                            if (contact != null)
                             {
-                                return true;
+                                string code = "";
+                                   code = contact.code;
+
+                                if (contact.name.Contains(query.ToLower())
+                                 || code.Contains(query.ToLower())
+                                 || contact.gov_code.Contains(query.ToLower()))
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
                                 return false;
                             }
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
+                        };   
+                    }
                 }
                 catch (Exception ex)
                 {

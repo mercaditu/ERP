@@ -26,7 +26,7 @@
     <Setting Name="Supplies" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ServiceContrct" Type="System.Boolean" Scope="User">
+    <Setting Name="ServiceContract" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

@@ -273,6 +273,10 @@
     <Compile Include="Migrations\201605021122391_Updateitemvaluedimension.Designer.cs">
       <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605022356063_SecurityPrivilage.cs" />
+    <Compile Include="Migrations\201605022356063_SecurityPrivilage.Designer.cs">
+      <DependentUpon>201605022356063_SecurityPrivilage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project\project_tag.cs" />
     <Compile Include="Context\Project\TaskViewDB.cs" />
     <Compile Include="Context\Purchase\ImpexDB.cs" />
@@ -939,6 +943,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605021122391_Updateitemvaluedimension.resx">
       <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605022356063_SecurityPrivilage.resx">
+      <DependentUpon>201605022356063_SecurityPrivilage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

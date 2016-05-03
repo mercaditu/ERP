@@ -32,6 +32,10 @@ namespace Cognitivo.Product
             InventoryDB.item_inventory.Where(a => a.id_company == company_ID).Load();
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
+            CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
+            InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_currencyfxViewSource.Source = InventoryDB.app_currencyfx.Local;
+
             app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
             InventoryDB.app_branch.Include(b => b.app_location)
                 .Where(a => a.is_active == true
@@ -167,14 +171,13 @@ namespace Cognitivo.Product
 
                 foreach (item_inventory_detail _item_inventory_detail in item_inventory_detailList)
                 {
-                    if (_item_inventory_detail.value_counted != 0)
-                    {
+                  
                         if (_item_inventory_detail.id_inventory_detail == 0)
                         {
                             InventoryDB.item_inventory_detail.Add(_item_inventory_detail);
                         }
 
-                    }
+                   
                 }
                 InventoryDB.SaveChanges();
                 item_inventoryViewSource.View.Refresh();
@@ -263,7 +266,7 @@ namespace Cognitivo.Product
                             //item_inventory_detail.value_counted = objpnl_ItemMovement.quantity;
 
                             //item_inventory_detail.RaisePropertyChanged("value_counted");
-                            item_inventory_detailList = objpnl_ItemMovement.item_inventoryList;
+                          //  item_inventory_detailList = objpnl_ItemMovement.item_inventoryList;
                             toolBar_btnSave_Click(sender);
                             BindItemMovement();
                         }

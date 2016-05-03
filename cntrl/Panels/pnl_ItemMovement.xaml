@@ -18,7 +18,7 @@
         <converter:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="item_inventory_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
+       
         <CollectionViewSource x:Key="item_inventoryitem_inventory_valueViewSource" Source="{Binding item_inventory_value, Source={StaticResource item_inventory_detailViewSource}}"/>
         <CollectionViewSource x:Key="item_inventoryitem_inventory_dimensionViewSource" Source="{Binding item_inventory_dimension, Source={StaticResource item_inventory_detailViewSource}}"/>
     </UserControl.Resources>
@@ -50,10 +50,7 @@
                     <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
                        <DataGridTextColumn Binding="{Binding value_counted,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
-                            <DataGridTextColumn Binding="{Binding unit_value,StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Header="{lex:Loc Cognitivo:local:Value}" Width="auto"/>
-                            <DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="auto" IsReadOnly="True"
-									                        ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currencyfx"
-									                        SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                           
                         </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>

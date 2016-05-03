@@ -94,9 +94,7 @@ namespace cntrl.Panels
                 add_item(item_inventory_detail);
                 InventoryDB.item_inventory_detail.Add(item_inventory_detail);
             }
-            //CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            //ProductMovementDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            //app_currencyfxViewSource.Source = ProductMovementDB.app_currencyfx.Local;
+         
 
 
 

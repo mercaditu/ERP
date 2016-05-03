@@ -378,7 +378,7 @@ namespace entity.Brillo.Logic
                 + "Timbrado: " + payment.app_document_range.code + " Vto: " + payment.app_document_range.expire_date
                 + "\n"
                 + "--------------------------------"
-                + "Descripcion, Cantiad, Precio" + "\n"
+                + "Cuenta, Valor, Moneda" + "\n"
                 + "--------------------------------" + "\n"
                 + "\n";
 
@@ -394,11 +394,7 @@ namespace entity.Brillo.Logic
                     + value.ToString() + "\t" + currency +  "\n";
             }
 
-
             Footer = "--------------------------------" + "\n";
-    
-            Footer += "-------------------------------" + "\n";
-
 
             string Text = Header + Detail + Footer;
             return Text;

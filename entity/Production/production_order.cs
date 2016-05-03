@@ -10,6 +10,13 @@ namespace entity
 
     public partial class production_order : Audit
     {
+        public enum ProductionOrderTypes 
+        {
+            Production,
+            Fraction,
+            Internal
+        }
+
         public production_order()
         {
             id_company = CurrentSession.Id_Company;
@@ -142,7 +149,9 @@ namespace entity
         public DateTime? start_date_est { get; set; }
         
         public DateTime? end_date_est { get; set; }
-        
+
+        public ProductionOrderTypes types { get; set; }
+
         public virtual production_line production_line { get; set; }
         
         public virtual project project { get; set; }

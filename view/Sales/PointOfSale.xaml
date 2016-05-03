@@ -52,18 +52,8 @@
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />
                 </Border.Effect>
-                <StackPanel Orientation="Horizontal" Margin="32,2,0,0">
+                <StackPanel Orientation="Horizontal" Margin="32,2,2,0">
                     <Label Content="{lex:Loc AccountUtility}" Style="{StaticResource input_label}" Foreground="WhiteSmoke"/>
-                </StackPanel>
-            </Border>
-            <Border CornerRadius="20,20,20,20 " Background="#FF004867" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
-                Cursor="Hand" Margin="150,5,5,16" MouseDown="Border_MouseDown" TouchDown="Border_MouseDown"
-                ToolTip="{lex:Loc New}">
-                <Border.Effect>
-                    <DropShadowEffect Color="Black" ShadowDepth="0" />
-                </Border.Effect>
-                <StackPanel Orientation="Horizontal" Margin="32,2,0,0">
-                    <Label Content="{lex:Loc New}" Style="{StaticResource input_label}" Foreground="WhiteSmoke"/>
                 </StackPanel>
             </Border>
             
@@ -84,45 +74,42 @@
                        Foreground="White"/>
         </Border>
 
-        <Grid>
-            <Border CornerRadius="5,16,16,5" Background="#FF004867" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
-                Cursor="Hand" Margin="8" MouseDown="btnSave_Click" TouchDown="btnSave_Click"
-                ToolTip="{lex:Loc AccountUtility}">
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Grid>
+                <Border CornerRadius="5,16,16,5" Background="#FF004867" Height="32"
+                        Cursor="Hand" Margin="8" MouseDown="btnSave_Click" TouchDown="btnSave_Click"
+                        ToolTip="{lex:Loc AccountUtility}">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" ShadowDepth="0" />
+                    </Border.Effect>
+                    <StackPanel Orientation="Horizontal" Margin="0,2,32,0">
+                        <Label Content="{lex:Loc Approve}" Foreground="White" Style="{StaticResource input_label}"/>
+                    </StackPanel>
+                </Border>
+                <Border CornerRadius="18" Background="PaleGreen" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8"
+                        Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
+                        BorderBrush="White" BorderThickness="1" ToolTip="{lex:Loc AccountUtility}">
+                    <Label Content="j" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="16" 
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+
+            <Border CornerRadius="5,16,16,5" Background="#FF004867" Height="32"
+                    Cursor="Hand" Margin="8" MouseDown="Border_MouseDown" TouchDown="Border_MouseDown"
+                    ToolTip="{lex:Loc New}">
                 <Border.Effect>
                     <DropShadowEffect Color="Black" ShadowDepth="0" />
                 </Border.Effect>
                 <StackPanel Orientation="Horizontal" Margin="0,2,32,0">
-                    <Label Content="{lex:Loc Approve}" Foreground="White" Style="{StaticResource input_label}"/>
+                    <Label Content="{lex:Loc Cancel}" Style="{StaticResource input_label}" Foreground="WhiteSmoke"/>
                 </StackPanel>
             </Border>
-            <Border CornerRadius="18" Background="PaleGreen" Height="32" Width="32" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8"
-                        Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
-                        BorderBrush="White" BorderThickness="1" ToolTip="{lex:Loc AccountUtility}">
-                <Label Content="j" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="16" 
-                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-        </Grid>
+        </StackPanel>
 
         <Grid VerticalAlignment="Bottom" Height="40">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".64"/>
             </Grid.Background>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <StackPanel Orientation="Horizontal" Margin="4,0">
-                    <TextBlock Text="" FontSize="8" VerticalAlignment="Center" Foreground="PaleGreen" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                    <Label Content="{lex:Loc Branch}" FontSize="8" Foreground="White"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="4,0">
-                    <TextBlock Text="" FontSize="8" VerticalAlignment="Center" Foreground="PaleGreen" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                    <Label Content="{lex:Loc Terminal}" FontSize="8" Foreground="White" VerticalAlignment="Bottom"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="4,0">
-                    <TextBlock Text="" FontSize="8" VerticalAlignment="Center" Foreground="PaleGreen" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
-                    <Label Content="{lex:Loc Account}" FontSize="8" Foreground="White"/>
-                </StackPanel>
-            </StackPanel>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,0">
                 <TextBlock x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"

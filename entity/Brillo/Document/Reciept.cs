@@ -322,6 +322,86 @@ namespace entity.Brillo.Logic
             string Text = Header + Detail + Footer;
             return Text;
         }
+        public string Payment(payment payment)
+        {
+            string Header = string.Empty;
+            string Detail = string.Empty;
+            string Footer = string.Empty;
+            string CompanyName = string.Empty;
+            app_company app_company = null;
+            if (payment.app_company != null)
+            {
+                CompanyName = payment.app_company.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.app_company.Where(x => x.id_company == payment.id_company).FirstOrDefault() != null)
+                    {
+                        app_company = db.app_company.Where(x => x.id_company == payment.id_company).FirstOrDefault();
+                        CompanyName = app_company.name;
+                    }
+
+
+
+                }
+
+            }
+            string UserGiven = "";
+            if (payment.security_user != null)
+            {
+                UserGiven = payment.security_user.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.security_user.Where(x => x.id_user == payment.id_user).FirstOrDefault() != null)
+                    {
+                        security_user security_user = db.security_user.Where(x => x.id_user == payment.id_user).FirstOrDefault();
+                        UserGiven = security_user.name;
+                    }
+                }
+            }
+
+            string TransNumber = payment.number;
+            DateTime TransDate = payment.trans_date;
+            string BranchName = payment.app_branch.name;
+
+            Header =
+                CompanyName + "\n"
+                + "RUC:" + app_company.gov_code + "\n"
+                + app_company.address + "\n"
+                + "***" + app_company.alias + "***" + "\n"
+                + "Timbrado: " + payment.app_document_range.code + " Vto: " + payment.app_document_range.expire_date
+                + "\n"
+                + "--------------------------------"
+                + "Descripcion, Cantiad, Precio" + "\n"
+                + "--------------------------------" + "\n"
+                + "\n";
+
+            foreach (payment_detail d in payment.payment_detail)
+            {
+                string AccountName = d.app_account.name;
+                
+                decimal? value = d.value;
+                string currency = d.app_currencyfx.app_currency.name;
+
+                Detail = Detail
+                    + AccountName + "\n"
+                    + value.ToString() + "\t" + currency +  "\n";
+            }
+
+
+            Footer = "--------------------------------" + "\n";
+    
+            Footer += "-------------------------------" + "\n";
+
+
+            string Text = Header + Detail + Footer;
+            return Text;
+        }
 
 
         public void Document_Print(int document_id, object obj)
@@ -349,6 +429,11 @@ namespace entity.Brillo.Logic
                 {
                     sales_invoice sales_invoice = (sales_invoice)obj;
                     Content = SalesInvoice(sales_invoice);
+                }
+                else if (app_document.id_application == App.Names.PaymentUtility)
+                {
+                    payment payment = (payment)obj;
+                    Content = Payment(payment);
                 }
             }
 

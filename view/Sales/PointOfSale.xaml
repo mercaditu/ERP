@@ -115,7 +115,7 @@
                         <ImageBrush Stretch="UniformToFill" ImageSource="/Cognitivo;component/Images/Avatars/avatar_unkown-512.png"/>
                     </Ellipse.Fill>
                 </Ellipse>
-                <Label Style="{StaticResource H3}" VerticalAlignment="Center" Content="{Binding sales_rep.name, Mode=TwoWay, FallbackValue=Unkown}" Foreground="White"/>
+                <Label Style="{StaticResource H3}" VerticalAlignment="Center" Content="{Binding Path=Text,ElementName=cbxSalesRep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,FallbackValue=Unkown}" Foreground="White"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,0">
                 <TextBlock x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"

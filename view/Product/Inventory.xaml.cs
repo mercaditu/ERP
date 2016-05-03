@@ -265,6 +265,7 @@ namespace Cognitivo.Product
                             item_inventory_detail.RaisePropertyChanged("value_counted");
                             item_inventory_detailList = objpnl_ItemMovement.item_inventoryList;
                             toolBar_btnSave_Click(sender);
+                            BindItemMovement();
                         }
                        
                     }
@@ -300,7 +301,9 @@ namespace Cognitivo.Product
                 //    .Where(x => x.item_product.id_item_product == item_inventory_detail.item_product.id_item_product && x.id_inventory == item_inventory_detail.item_inventory.id_inventory).ToList();
                 objpnl_ItemMovement.id_item_product = item_inventory_detail.item_product.id_item_product;
                 objpnl_ItemMovement.id_location = item_inventory_detail.id_location;
-                objpnl_ItemMovement.id_inventory = item_inventory_detail.id_inventory_detail;
+                objpnl_ItemMovement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
+                objpnl_ItemMovement.id_inventory = item_inventory_detail.id_inventory;
+                objpnl_ItemMovement.system_quantity = item_inventory_detail.value_system;
                 objpnl_ItemMovement.InventoryDB = InventoryDB;
                 crud_modal.Children.Add(objpnl_ItemMovement);
             }

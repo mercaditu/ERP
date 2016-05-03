@@ -21,8 +21,10 @@ namespace cntrl.Panels
         public InventoryDB InventoryDB { get; set; }
         public int id_item_product { get; set; }
         public int id_location { get; set; }
+        public int id_inventory_detail { get; set; }
         public int id_inventory { get; set; }
         public decimal quantity { get; set; }
+        public decimal system_quantity { get; set; }
         public DateTime Trans_date { get; set; }
         public List<item_inventory_detail> item_inventoryList { get; set; }
         public pnl_ItemMovement()
@@ -38,6 +40,8 @@ namespace cntrl.Panels
 
         public void add_item(item_inventory_detail item_inventory_detail)
         {
+            item_inventory_detail.id_inventory = id_inventory;
+            item_inventory_detail.value_system = system_quantity;
             item_inventory_detail.id_item_product = id_item_product;
             item_inventory_detail.id_location = id_location;
             item_inventory_detail.IsSelected = true;
@@ -113,7 +117,7 @@ namespace cntrl.Panels
                         item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
                         if (item_inventory_detail.id_inventory_detail > 0)
                         {
-                            if (item_inventory_detail.id_inventory_detail == id_inventory && item_inventory_detail.id_location == id_location)
+                            if (item_inventory_detail.id_inventory_detail == id_inventory_detail && item_inventory_detail.id_location == id_location)
                                 return true;
                             else
                                 return false;

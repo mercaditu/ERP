@@ -117,7 +117,7 @@ namespace cntrl.Panels
                         item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
                         if (item_inventory_detail.id_inventory_detail > 0)
                         {
-                            if (item_inventory_detail.id_inventory_detail == id_inventory_detail && item_inventory_detail.id_location == id_location)
+                            if (item_inventory_detail.id_inventory == id_inventory && item_inventory_detail.id_location == id_location)
                                 return true;
                             else
                                 return false;

@@ -260,9 +260,9 @@ namespace Cognitivo.Product
                     {
                         if (objpnl_ItemMovement.item_inventoryList!=null)
                         {
-                            item_inventory_detail.value_counted = objpnl_ItemMovement.quantity;
+                            //item_inventory_detail.value_counted = objpnl_ItemMovement.quantity;
 
-                            item_inventory_detail.RaisePropertyChanged("value_counted");
+                            //item_inventory_detail.RaisePropertyChanged("value_counted");
                             item_inventory_detailList = objpnl_ItemMovement.item_inventoryList;
                             toolBar_btnSave_Click(sender);
                             BindItemMovement();

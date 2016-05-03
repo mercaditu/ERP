@@ -258,11 +258,15 @@ namespace Cognitivo.Product
                 {
                     if (objpnl_ItemMovement != null)
                     {
-                        item_inventory_detail.value_counted = objpnl_ItemMovement.quantity;
+                        if (objpnl_ItemMovement.item_inventoryList!=null)
+                        {
+                            item_inventory_detail.value_counted = objpnl_ItemMovement.quantity;
 
-                        item_inventory_detail.RaisePropertyChanged("value_counted");
-                        item_inventory_detailList = objpnl_ItemMovement.item_inventoryList;
-                        toolBar_btnSave_Click(sender);
+                            item_inventory_detail.RaisePropertyChanged("value_counted");
+                            item_inventory_detailList = objpnl_ItemMovement.item_inventoryList;
+                            toolBar_btnSave_Click(sender);
+                        }
+                       
                     }
                 } 
             }
@@ -292,8 +296,8 @@ namespace Cognitivo.Product
                 crud_modal.Visibility = System.Windows.Visibility.Visible;
                 objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
                 objpnl_ItemMovement.Trans_date = item_inventory_detail.item_inventory.trans_date;
-                objpnl_ItemMovement.item_inventoryList = InventoryDB.item_inventory_detail
-                    .Where(x => x.item_product.id_item_product == item_inventory_detail.item_product.id_item_product && x.id_inventory == item_inventory_detail.item_inventory.id_inventory).ToList();
+                //objpnl_ItemMovement.item_inventoryList = InventoryDB.item_inventory_detail
+                //    .Where(x => x.item_product.id_item_product == item_inventory_detail.item_product.id_item_product && x.id_inventory == item_inventory_detail.item_inventory.id_inventory).ToList();
                 objpnl_ItemMovement.id_item_product = item_inventory_detail.item_product.id_item_product;
                 objpnl_ItemMovement.id_location = item_inventory_detail.id_location;
                 objpnl_ItemMovement.id_inventory = item_inventory_detail.id_inventory_detail;

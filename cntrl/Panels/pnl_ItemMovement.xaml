@@ -45,7 +45,7 @@
 
                 <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" 
                       AutoGenerateColumns="False" Grid.ColumnSpan="2" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
-                      EnableRowVirtualization="True"
+                      EnableRowVirtualization="True" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem"
                        Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>

@@ -421,6 +421,11 @@ namespace Cognitivo.Product
                     toolBar.msgWarning("Product Already Exist..");
                     return;
                 }
+                if (dbContext.items.Any(x => x.code.Contains(item.code) && x.id_item != item.id_item) && item.State == EntityState.Added)
+                {
+                    toolBar.msgWarning("Code Already Exist..");
+                    return;
+                }
 
                 //Save Changes
                 dbContext.SaveChanges();

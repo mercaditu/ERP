@@ -88,13 +88,8 @@ namespace Cognitivo.Sales
 
                 SalesInvoiceDB.Approve(true);
 
-
                 payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
 
-                //Sales
-
-                //foreach (payment_detail payment_detail in payment.payment_detail)
-                //{
                 payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
 
                 payment.IsSelected = true;
@@ -104,8 +99,6 @@ namespace Cognitivo.Sales
 
                 PaymentDB.Approve(payment_schedual.id_payment_schedual,(bool)chkreceipt.IsChecked);
 
-                //}
-
                 sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
 
                 SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
@@ -114,16 +107,17 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.View.MoveCurrentToLast();
                 payment paymentnew = new entity.payment();
                 paymentnew.id_range = entity.Brillo.GetDefault.Range(entity.App.Names.PaymentUtility);
+
                 if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
                 {
                     payment.app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
                 }
+
                 paymentnew.status = Status.Documents_General.Pending;
                 payment_detail payment_detailnew = new entity.payment_detail();
                 payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
                 payment_detailnew.id_currency = Newsales_invoice.app_currencyfx.id_currency;
                 paymentnew.payment_detail.Add(payment_detailnew);
-                // SalesInvoiceDB.payments.Add(paymentnew);
                 paymentList.Add(paymentnew);
                 paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
                 paymentViewSource.Source = paymentList;

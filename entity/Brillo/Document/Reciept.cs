@@ -322,13 +322,16 @@ namespace entity.Brillo.Logic
             string Text = Header + Detail + Footer;
             return Text;
         }
+        
         public string Payment(payment payment)
         {
             string Header = string.Empty;
             string Detail = string.Empty;
             string Footer = string.Empty;
+
             string CompanyName = string.Empty;
             app_company app_company = null;
+
             if (payment.app_company != null)
             {
                 CompanyName = payment.app_company.name;
@@ -342,16 +345,14 @@ namespace entity.Brillo.Logic
                         app_company = db.app_company.Where(x => x.id_company == payment.id_company).FirstOrDefault();
                         CompanyName = app_company.name;
                     }
-
-
-
                 }
-
             }
-            string UserGiven = "";
+
+            string UserName = "";
+
             if (payment.security_user != null)
             {
-                UserGiven = payment.security_user.name;
+                UserName = payment.security_user.name;
             }
             else
             {
@@ -360,7 +361,7 @@ namespace entity.Brillo.Logic
                     if (db.security_user.Where(x => x.id_user == payment.id_user).FirstOrDefault() != null)
                     {
                         security_user security_user = db.security_user.Where(x => x.id_user == payment.id_user).FirstOrDefault();
-                        UserGiven = security_user.name;
+                        UserName = security_user.name;
                     }
                 }
             }

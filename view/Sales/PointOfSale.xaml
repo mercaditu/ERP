@@ -379,7 +379,7 @@
                             Cursor="Hand" MouseDown="btnAccount_Click" TouchDown="btnAccount_Click"
                             ToolTip="{lex:Loc AccountUtility}">
                     <Border.Background>
-                        <SolidColorBrush Color="#FF004867" Opacity="0.32"/>
+                        <SolidColorBrush Color="White" Opacity="0.64"/>
                     </Border.Background>
                     <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
                         <ComboBox x:Name="cbxSalesRep" Style="{StaticResource ComboToLabelStyle}"

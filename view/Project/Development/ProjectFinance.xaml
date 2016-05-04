@@ -109,7 +109,7 @@
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                                                                          QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                         
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
@@ -140,7 +140,7 @@
             </Grid>
 
             <StackPanel Background="WhiteSmoke" Grid.Column="2">
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Cost"/>
+                <!--<Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Cost"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding total_cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Paid"/>
@@ -148,7 +148,7 @@
                        Content="{Binding total_paid,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Pending Payment"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding pending_payment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
+                       Content="{Binding pending_payment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>-->
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding parent.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, FallbackValue=---}"/>
                 <TextBlock Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
@@ -184,14 +184,14 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" HorizontalAlignment="Right"/>
-                      
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}"/>
+                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>
+
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
                         <CheckBox x:Name="chkinvoice" Style="{StaticResource input_checkbox}">
                             <TextBlock Style="{StaticResource text_Label}">

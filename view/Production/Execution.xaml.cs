@@ -732,21 +732,17 @@ namespace Cognitivo.Production
                     else if (btn.Name.Contains("Raw"))
                     {
                         loadRawTotal(production_order_detail);
-
                     }
                     else if (btn.Name.Contains("Asset"))
                     {
                         loadAssetTotal(production_order_detail);
-
                     }
                     else if (btn.Name.Contains("Supp"))
                     {
                         loadSupplierTotal(production_order_detail);
-
                     }
                     else if (btn.Name.Contains("ServiceContract"))
                     {
-
                         loadServiceContractTotal(production_order_detail);
                     }
 

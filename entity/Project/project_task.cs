@@ -131,6 +131,7 @@ namespace entity
                 //Check if Production Execution Exists before doing a Sum. Prevents unecesary trips to DB.
                 if(production_execution_detail.Count > 0)
                 {
+
                     using (db db = new db())
                     {
                         //Sums Total Quantity WHERE Project Task is same as current Task.
@@ -153,7 +154,6 @@ namespace entity
                 RaisePropertyChanged("unit_cost_est");
             }
         }
-        private decimal? _unit_cost_est;
 
         [NotMapped]
         public decimal? unit_price_vat

@@ -52,8 +52,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 
-						recordSecondaryName="{Binding priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+						recordSecondaryName="{Binding est_end_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -66,7 +66,7 @@
             </Grid.ColumnDefinitions>
             <Grid Margin="16,0" DataContext="{StaticResource projectViewSource}">
                 <Label Content="{Binding project_template.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       HorizontalAlignment="Center" VerticalAlignment="Top" />
+                       HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource generic_Label}"/>
                 <TextBlock Style="{StaticResource TextAreaH2}" Margin="36,24,0,0"
                            Text="{Binding name, FallbackValue=Project, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                            HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
@@ -84,7 +84,8 @@
                                                                    Converter={StaticResource ProjectStatus2Color}}"  
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
-                                             TaskName="{Binding name}" Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                             Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             TaskName="{Binding item_description}" Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
                 <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}" 
@@ -132,7 +133,8 @@
                     <StackPanel x:Name="stpcode" IsEnabled="False">
                         <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
                         <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}" 
-                                  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" SelectedValue="{Binding items.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
+                                  SelectedValue="{Binding items.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 							      SelectionChanged="cbxItemType_SelectionChanged"/>
                         <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                         <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -154,11 +156,10 @@
 
                     <StackPanel x:Name="stpitem" Visibility="Collapsed" IsEnabled="False">
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtqty" 
-                                     IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
-                                     Text="{Binding quantity_est,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <TextBox x:Name="txtqty" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
+                                     Text="{Binding quantity_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc ByDimension}" Style="{StaticResource input_label}"/>
-                        <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  
+                        <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Width="256"
                                   ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" 
                                   RowEditEnding="project_task_dimensionDataGrid_RowEditEnding" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}">
                             <DataGrid.Columns>
@@ -167,9 +168,9 @@
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                 <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
                                 <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
+									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="*"/>
+									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
                             </DataGrid.Columns>
                         </DataGrid>
 

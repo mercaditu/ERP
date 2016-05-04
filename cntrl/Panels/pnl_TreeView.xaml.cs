@@ -20,6 +20,16 @@ namespace cntrl.Panels
             set { SetValue(IsCheckedProperty, value); }
         }
 
+        //Type Name
+        public static readonly DependencyProperty Type_NameProperty =
+            DependencyProperty.Register("Type_Name", typeof(string), typeof(pnl_TreeView),
+            new FrameworkPropertyMetadata(null));
+        public string Type_Name
+        {
+            get { return Convert.ToString(GetValue(Type_NameProperty)); }
+            set { SetValue(Type_NameProperty, value); }
+        }
+
         //StatusColor for the Flag
         public static readonly DependencyProperty StatusColorProperty =
             DependencyProperty.Register("StatusColor", typeof(Brush), typeof(pnl_TreeView),
@@ -29,8 +39,6 @@ namespace cntrl.Panels
             get { return (Brush)GetValue(StatusColorProperty); }
             set { SetValue(StatusColorProperty, value); }
         }
-
-     
 
         //Status for the Task
         public static readonly DependencyProperty StatusProperty =

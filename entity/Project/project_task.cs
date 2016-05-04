@@ -189,9 +189,12 @@ namespace entity
             }
         }
         private bool _is_selected;
+
         [NotMapped]
         public string name { get; set; }
+
         public virtual project project { get; set; }
+
         public virtual item items
         {
             get

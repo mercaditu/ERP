@@ -314,8 +314,6 @@ namespace Cognitivo.Purchase
                                         item_movement_detail.id_currencyfx = purchase_invoice.id_currencyfx;
                                         item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
                                         item_movement.item_movement_value.Add(item_movement_detail);
-
-
                                     }
                                 }
                             }

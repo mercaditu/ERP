@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cntrl.Panels"
              xmlns:convert="clr-namespace:cntrl.Converters"
+             xmlns:convertView="clr-namespace:Cognitivo.Converters"
              xmlns:cntrl="clr-namespace:cntrl" 
              mc:Ignorable="d" MinWidth="300"
              d:DesignHeight="26">
     <UserControl.Resources>
         <convert:Bool2Collapsed x:Key="BoolToVisibility"/>
+        <convertView:InitialsConverter x:Key="InitialsConverter"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
@@ -39,6 +41,13 @@
                 </CheckBox>
             </Grid>
             <Label Content="{Binding Code, ElementName=pnl_Treeview}" Style="{StaticResource generic_Label}" />
+            <Border VerticalAlignment="Center" CornerRadius="2" Margin="4,0">
+                <Border.Background>
+                    <SolidColorBrush Color="Red" Opacity="0.32"/>
+                </Border.Background>
+                <TextBlock Text="{Binding Type_Name, Converter={StaticResource InitialsConverter}, ElementName=pnl_Treeview, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                           Margin="4,1" Foreground="Black" VerticalAlignment="Center"/>
+            </Border>
             <Label Content="{Binding TaskName, ElementName=pnl_Treeview}" Style="{StaticResource input_label}"/>
             <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0">
                 <StackPanel Orientation="Horizontal">

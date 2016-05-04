@@ -130,6 +130,7 @@ namespace entity
                             item_movement_value item_movement_value = new item_movement_value();
                             item_movement_value.unit_value = item_inventory_detail.unit_value;
                             item_movement_value.id_currencyfx = item_inventory_detail.id_currencyfx;
+                            item_movement_value.comment = Brillo.Localize.Text<string>("Inventory") + ": " + item_inventory_detail.comment;
                             item_movement.item_movement_value.Add(item_movement_value);
                         }
 

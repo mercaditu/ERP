@@ -66,7 +66,7 @@ namespace entity
                             {
                                 Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
                             }
-                            NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, true);
+                            NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
                             RaisePropertyChanged("NumberWatermark");
                         }
                     }

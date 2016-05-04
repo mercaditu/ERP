@@ -116,8 +116,8 @@ namespace entity
                         item_movement.id_location = item_inventory_detail.app_location.id_location;
                         item_movement.comment = Brillo.Localize.Text<string>("Inventory") + ": " + item_inventory_detail.comment;
                         item_movement.status = Status.Stock.InStock;
-                        item_movement.credit = 0;
-                        item_movement.debit = item_inventory_detail.value_counted;
+                        item_movement.debit = 0;
+                        item_movement.credit = item_inventory_detail.value_counted;
                         item_movement.trans_date = item_inventory.trans_date;
                         item_movement.id_application = App.Names.Inventory;
                         item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;

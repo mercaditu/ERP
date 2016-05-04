@@ -40,10 +40,21 @@
             </Grid>
             <Label Content="{Binding Code, ElementName=pnl_Treeview}" Style="{StaticResource generic_Label}" />
             <Label Content="{Binding TaskName, ElementName=pnl_Treeview}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding Quantity, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
-                   Style="{StaticResource generic_Label}" Margin="4,0" Foreground="Silver"/>
-            <Label Content="{Binding QuantityExec, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
-                   Style="{StaticResource generic_Label}" Margin="4,0" Foreground="Blue" />
+            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="EST" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding Quantity, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                               Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black"/>
+                </StackPanel>
+            </Border>
+            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="EXE" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding QuantityExec, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                               Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black" />
+                </StackPanel>
+                
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>

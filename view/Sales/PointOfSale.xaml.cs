@@ -21,7 +21,7 @@ namespace Cognitivo.Sales
         entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
         PaymentDB PaymentDB = new entity.PaymentDB();
         Settings SalesSettings = new Settings();
-        dbContext db = new dbContext();
+        dbContext dbContext = new dbContext();
         CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
 
         List<payment> paymentList = new List<payment>();
@@ -101,8 +101,10 @@ namespace Cognitivo.Sales
 
                 sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
 
+                //Copy the Sales Rep of previous sale.
+                Newsales_invoice.id_sales_rep = sales_invoice.id_sales_rep;
                 SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
-
+                
                 sales_invoiceViewSource.View.Refresh();
                 sales_invoiceViewSource.View.MoveCurrentToLast();
                 payment paymentnew = new entity.payment();
@@ -354,7 +356,7 @@ namespace Cognitivo.Sales
             {
                 crudContact.contactobject = new entity.contact();
 
-                crudContact.entity = db;
+                crudContact.entity = dbContext;
                 popCrud.IsOpen = true;
 
                 popCrud.Visibility = Visibility.Visible;
@@ -430,22 +432,10 @@ namespace Cognitivo.Sales
 
         private void crudContact_btnSave_Click(object sender)
         {
-            //if (crudContact.contactList.Count() > 0)
-            //{
-            //    foreach (entity.contact contact in crudContact.contactList)
-            //    {
-            //        if (contact.id_contact == 0)
-            //        {
-            //            db.db.contacts.Add(contact);
-            //        }
-            //    }
-            //    db.SaveChanges();
-            //}
-            db.db.contacts.Add(crudContact.contactobject);
-            db.SaveChanges();
+            dbContext.db.contacts.Add(crudContact.contactobject);
+            dbContext.SaveChanges();
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
-            
         }
 
         private void crudContact_btnCancel_Click(object sender)

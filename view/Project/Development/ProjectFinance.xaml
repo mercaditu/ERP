@@ -123,13 +123,11 @@
                               Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
 
                 <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,95,0,0" ItemsSource="{Binding}" 
-                          VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
-                          ScrollViewer.CanContentScroll="True"   >
+                                        VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
+                                        ScrollViewer.CanContentScroll="True"   >
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
-                            <Setter Property="IsExpanded" Value="{Binding  ElementName=_ProjectInvocie, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            </Setter>
-
+                            <Setter Property="IsExpanded" Value="{Binding  ElementName=_ProjectInvocie, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Style>
                     </TreeView.ItemContainerStyle>
 
@@ -151,35 +149,10 @@
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Pending Payment"/>
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding pending_payment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
-                <!--<Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Order"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_order,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Rejected Order"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_rejected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Invoice"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_invoice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Rejected Invoice"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_rejected_invoice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>-->
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding parent.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, FallbackValue=---}"/>
-                <TextBlock Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
+                <TextBlock Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
                            Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
-                <!--<cntrl:toolBar_Mini appName="ActivityPlan"
-                    btnNew_Click="toolBar_Mini_btnNew_Click"
-                    btnEdit_Click="toolBar_Mini_btnEdit_Click"
-                    btnSave_Click="toolBar_Mini_btnSave_Click"
-                    btnDelete_Click="toolBar_Mini_btnDelete_Click"
-                    btnApprove_Click="toolBar_Mini_btnApprove_Click"
-                    btnAnull_Click="toolBar_Mini_btnAnull_Click"
-                    />-->
-
-
-
-
-
                 <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem, ElementName=treeProject}">
                     <StackPanel x:Name="stpcode" >
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" DataContext="{Binding}">

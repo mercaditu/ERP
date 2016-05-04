@@ -272,7 +272,8 @@ namespace entity.Brillo.Logic
 
             Footer = "--------------------------------" + "\n"; 
             Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
-            Footer += "Fecha & Hora: " + sales_invoice.trans_date + "\n";
+            Footer += "Total Descuento  :" + sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
+            Footer += "Fecha & Hora     : " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura: " + sales_invoice.number + "\n";
             Footer += "-------------------------------" + "\n";
 
@@ -317,7 +318,7 @@ namespace entity.Brillo.Logic
             Footer += "Condicion : " + sales_invoice.app_condition.name + "\n";
             Footer += "-------------------------------";
             Footer += "Sucursal    : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name + "\n";
-            Footer += "Cajero/a    : " + UserGiven;
+            Footer += "Vendedor/a    : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : UserGiven;
 
             string Text = Header + Detail + Footer;
             return Text;

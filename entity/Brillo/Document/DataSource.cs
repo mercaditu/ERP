@@ -555,6 +555,7 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = payment_detail
                               .Select(g => new
                               {
+                                  total = g.payment.payment_detail.Sum(x => x.value),
                                   id_company = g.id_company,
                                   company_name = g.app_company != null ? g.app_company.name : "",
                                   amount = g.value,
@@ -585,9 +586,15 @@ namespace entity.Brillo.Document
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
                 List<project_task> project_task = project.project_task.ToList();
-                reportDataSource.Value = project_task
-                              .Select(g => new
+                reportDataSource.Value = project_task.Select(g => new
                               {
+                                  project_code = g.project.code,
+                                  project_est_end_date = g.project.est_end_date,
+                                  project_est_start_date = g.project.est_start_date,
+                                  task_trans_date = g.trans_date,
+                                  task_start_date_est = g.start_date_est,
+                                  task_end_date_est = g.end_date_est,
+                                  number = g.number,
                                   id_company = g.id_company,
                                   company_name = g.app_company != null ? g.app_company.name : "",
                                   contact_name = g.project.contact != null ? g.project.contact.name : "",

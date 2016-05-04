@@ -109,22 +109,15 @@ namespace entity
 
                 foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail)
                 {
-                    decimal delta = 0;
-                    if (item_inventory_detail.value_system != item_inventory_detail.value_counted)
-                    {
-                        //Negative
-                        delta = item_inventory_detail.value_counted - item_inventory_detail.value_system;
-                    }
-
-                    if (delta != 0)
+                    if (item_inventory_detail.item_inventory_dimension.Count() > 0)
                     {
                         item_movement item_movement = new item_movement();
                         item_movement.id_item_product = item_inventory_detail.item_product.id_item_product;
                         item_movement.id_location = item_inventory_detail.app_location.id_location;
                         item_movement.comment = Brillo.Localize.Text<string>("Inventory") + ": " + item_inventory_detail.comment;
                         item_movement.status = Status.Stock.InStock;
-                        item_movement.credit = delta > 0 ? delta : 0;
-                        item_movement.debit = delta < 0 ? Math.Abs(delta) : 0;
+                        item_movement.credit = 0;
+                        item_movement.debit = item_inventory_detail.value_counted;
                         item_movement.trans_date = item_inventory.trans_date;
                         item_movement.id_application = App.Names.Inventory;
                         item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
@@ -139,6 +132,7 @@ namespace entity
                             item_movement_value.id_currencyfx = item_inventory_detail.id_currencyfx;
                             item_movement.item_movement_value.Add(item_movement_value);
                         }
+
                         foreach (item_inventory_dimension item_inventory_dimension in item_inventory_detail.item_inventory_dimension)
                         {
                             item_movement_dimension item_movement_dimension = new item_movement_dimension();
@@ -147,6 +141,48 @@ namespace entity
                             item_movement.item_movement_dimension.Add(item_movement_dimension);
                         }
                         item_movementLIST.Add(item_movement);
+
+                    }
+                    else
+                    {
+                        if (item_inventory_detail.value_counted != 0)
+                        {
+
+
+                            decimal delta = 0;
+                            if (item_inventory_detail.value_system != item_inventory_detail.value_counted)
+                            {
+                                //Negative
+                                delta = item_inventory_detail.value_counted - item_inventory_detail.value_system;
+                            }
+
+                            if (delta != 0)
+                            {
+                                item_movement item_movement = new item_movement();
+                                item_movement.id_item_product = item_inventory_detail.item_product.id_item_product;
+                                item_movement.id_location = item_inventory_detail.app_location.id_location;
+                                item_movement.comment = Brillo.Localize.Text<string>("Inventory") + ": " + item_inventory_detail.comment;
+                                item_movement.status = Status.Stock.InStock;
+                                item_movement.credit = delta > 0 ? delta : 0;
+                                item_movement.debit = delta < 0 ? Math.Abs(delta) : 0;
+                                item_movement.trans_date = item_inventory.trans_date;
+                                item_movement.id_application = App.Names.Inventory;
+                                item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
+                                item_movement.id_inventory = item_inventory_detail.id_inventory;
+                                item_movement.timestamp = DateTime.Now;
+
+
+                                if (item_inventory_detail.unit_value > 0 && item_inventory_detail.id_currencyfx > 0)
+                                {
+                                    item_movement_value item_movement_value = new item_movement_value();
+                                    item_movement_value.unit_value = item_inventory_detail.unit_value;
+                                    item_movement_value.id_currencyfx = item_inventory_detail.id_currencyfx;
+                                    item_movement.item_movement_value.Add(item_movement_value);
+                                }
+
+                                item_movementLIST.Add(item_movement);
+                            }
+                        }
                     }
                 }
 

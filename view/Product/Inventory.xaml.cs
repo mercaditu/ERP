@@ -33,7 +33,7 @@ namespace Cognitivo.Product
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
             CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            InventoryDB.app_currencyfx.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).Load();
             app_currencyfxViewSource.Source = InventoryDB.app_currencyfx.Local;
 
             app_branchViewSource = (CollectionViewSource)(FindResource("app_branchViewSource"));
@@ -113,19 +113,7 @@ namespace Cognitivo.Product
                         }
                         item_inventory_detail.item_inventory = item_inventory;
                         //  }
-                        if (InventoryDB.item_dimension.Where(x => x.id_item == i.id_item).ToList() != null)
-                        {
-                            List<item_dimension> item_dimensionList = InventoryDB.item_dimension.Where(x => x.id_item == i.id_item).ToList();
-                            foreach (item_dimension item_dimension in item_dimensionList)
-                            {
-                                item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
-                                item_inventory_dimension.id_dimension = item_dimension.id_app_dimension;
-                                item_inventory_dimension.value = item_dimension.value;
-                                item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
-                            }
-
-
-                        }
+                     
 
                         item_inventory_detailList.Add(item_inventory_detail);
                       
@@ -326,6 +314,23 @@ namespace Cognitivo.Product
                 //objpnl_ItemMovement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
                 //objpnl_ItemMovement.id_inventory = item_inventory_detail.id_inventory;
                 //objpnl_ItemMovement.system_quantity = item_inventory_detail.value_system;
+                foreach (item_inventory_detail _item_inventory_detail in  item_inventory_detailList.Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList())
+                {
+                    if (InventoryDB.item_dimension.Where(x => x.id_item == _item_inventory_detail.item_product.id_item).ToList() != null)
+                    {
+                        List<item_dimension> item_dimensionList = InventoryDB.item_dimension.Where(x => x.id_item == _item_inventory_detail.item_product.id_item).ToList();
+                        foreach (item_dimension item_dimension in item_dimensionList)
+                        {
+                            item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
+                            item_inventory_dimension.id_dimension = item_dimension.id_app_dimension;
+                            item_inventory_dimension.value = item_dimension.value;
+                            item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
+                        }
+
+
+                    }
+                }
+              
                 objpnl_ItemMovement.item_inventoryList = item_inventory_detailList.Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList();
                 objpnl_ItemMovement.InventoryDB = InventoryDB;
                 crud_modal.Children.Add(objpnl_ItemMovement);

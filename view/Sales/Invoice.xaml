@@ -326,11 +326,11 @@
                                 <Label Content="S" Style="{StaticResource ico_Label}"/>
                                 <TextBlock Text="{lex:Loc Salesman}" Style="{StaticResource text_Label}"/>
                                 <ComboBox x:Name="cbxSalesRep" Style="{StaticResource ComboToLabelStyle}"
-                                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                                      metro:ControlsHelper.MouseOverBorderBrush="Silver"
-						              DisplayMemberPath="name" Width="Auto"
-						              SelectedValuePath="id_sales_rep" 
-						              SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
+                                        metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                        metro:ControlsHelper.MouseOverBorderBrush="Silver"
+						                DisplayMemberPath="name" Width="Auto"
+						                SelectedValuePath="id_sales_rep" 
+						                SelectedValue="{Binding id_sales_rep, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
                                     <ComboBox.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <VirtualizingStackPanel/>

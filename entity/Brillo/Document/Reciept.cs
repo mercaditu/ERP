@@ -91,11 +91,7 @@ namespace entity.Brillo.Logic
                         app_company = db.app_company.Where(x => x.id_company == sales_return.id_company).FirstOrDefault();
                         CompanyName = app_company.name;
                     }
-
-
-
                 }
-
             }
             string UserGiven = "";
             if (sales_return.security_user != null)
@@ -269,12 +265,14 @@ namespace entity.Brillo.Logic
                     + Qty.ToString() + "\t" + ItemCode + "\t" + UnitPrice_Vat + "\n";
             }
 
+            decimal DiscountTotal = sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
 
             Footer = "--------------------------------" + "\n"; 
+            Footer += "Total Bruto       : " + (sales_invoice.GrandTotal + DiscountTotal) + "\n";
+            Footer += "Total Descuento   : -" + sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
             Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
-            Footer += "Total Descuento  :" + sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
-            Footer += "Fecha & Hora     : " + sales_invoice.trans_date + "\n";
-            Footer += "Numero de Factura: " + sales_invoice.number + "\n";
+            Footer += "Fecha & Hora      : " + sales_invoice.trans_date + "\n";
+            Footer += "Numero de Factura : " + sales_invoice.number + "\n";
             Footer += "-------------------------------" + "\n";
 
             if (sales_invoice != null)
@@ -307,18 +305,19 @@ namespace entity.Brillo.Logic
                         {
                             Footer += item.vatname + "   : " + Math.Round(item.value,2) + "\n";
                         }
-                        Footer += "Total IVA: " + sales_invoice.app_currencyfx.app_currency.name + " " + Math.Round(VAtList.Sum(x=>x.value),2) + "\n";
+                        Footer += "Total IVA : " + sales_invoice.app_currencyfx.app_currency.name + " " + Math.Round(VAtList.Sum(x=>x.value),2) + "\n";
                     }
                 }
             }
            
             Footer += "-------------------------------";
-            Footer += "Cliente   : " + sales_invoice.contact.name + "\n";
-            Footer += "Documento : " + sales_invoice.contact.gov_code + "\n";
-            Footer += "Condicion : " + sales_invoice.app_condition.name + "\n";
+            Footer += "Cliente    : " + sales_invoice.contact.name + "\n";
+            Footer += "Documento  : " + sales_invoice.contact.gov_code + "\n";
+            Footer += "Condicion  : " + sales_invoice.app_condition.name + "\n";
             Footer += "-------------------------------";
-            Footer += "Sucursal    : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name + "\n";
-            Footer += "Vendedor/a    : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : UserGiven;
+            Footer += "Sucursal   : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name + "\n";
+            Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";
+            Footer += "Cajero/a   : " + UserGiven;
 
             string Text = Header + Detail + Footer;
             return Text;

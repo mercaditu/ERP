@@ -8,9 +8,6 @@ using System.Windows.Input;
 using System.Data.Entity;
 using entity;
 using System.Data;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Data.Entity.Validation;
 using entity.Brillo;
 
@@ -18,8 +15,8 @@ namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
-        entity.SalesInvoiceDB SalesInvoiceDB = new entity.SalesInvoiceDB();
-        PaymentDB PaymentDB = new entity.PaymentDB();
+        SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
+        PaymentDB PaymentDB = new PaymentDB();
         Settings SalesSettings = new Settings();
         dbContext dbContext = new dbContext();
         CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
@@ -33,10 +30,12 @@ namespace Cognitivo.Sales
 
         #region Buttons
 
+
         private void btnClient_Click(object sender, EventArgs e)
         {
             tabContact.IsSelected = true;
         }
+
         private void btnAccount_Click(object sender, EventArgs e)
         {
             tabAccount.IsSelected = true;
@@ -107,8 +106,8 @@ namespace Cognitivo.Sales
                 
                 sales_invoiceViewSource.View.Refresh();
                 sales_invoiceViewSource.View.MoveCurrentToLast();
-                payment paymentnew = new entity.payment();
-                paymentnew.id_range = entity.Brillo.GetDefault.Range(entity.App.Names.PaymentUtility);
+                payment paymentnew = new payment();
+                paymentnew.id_range = GetDefault.Range(entity.App.Names.PaymentUtility);
 
                 if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
                 {
@@ -145,7 +144,6 @@ namespace Cognitivo.Sales
                 sales_invoice.id_contact = contact.id_contact;
                 sales_invoice.contact = contact;
                 payment.id_contact = contact.id_contact;
-                //payment.contact = contact;
             }
         }
 
@@ -200,14 +198,14 @@ namespace Cognitivo.Sales
                 app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
                 app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
 
-                payment payment = new entity.payment();
-                payment.id_range = entity.Brillo.GetDefault.Range(entity.App.Names.PaymentUtility);
+                payment payment = new payment();
+                payment.id_range = GetDefault.Range(entity.App.Names.PaymentUtility);
                 if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
                 {
                     payment.app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
                 }
                 payment.status = Status.Documents_General.Pending;
-                payment_detail payment_detailnew = new entity.payment_detail();
+                payment_detail payment_detailnew = new payment_detail();
                 if (SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
                 {
                     payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
@@ -288,16 +286,16 @@ namespace Cognitivo.Sales
         private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             sales_invoiceViewSource.View.Refresh();
+
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
             if (payment.payment_detail.FirstOrDefault() != null)
             {
                 payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
-
             }
-
-
         }
+
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (e.Parameter as sales_invoice_detail != null)

@@ -277,6 +277,10 @@
     <Compile Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.Designer.cs">
       <DependentUpon>201605031243272_UpdatesecurityandProductionandproductionorder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605041008086_updateimpex.cs" />
+    <Compile Include="Migrations\201605041008086_updateimpex.Designer.cs">
+      <DependentUpon>201605041008086_updateimpex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -948,6 +952,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.resx">
       <DependentUpon>201605031243272_UpdatesecurityandProductionandproductionorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605041008086_updateimpex.resx">
+      <DependentUpon>201605041008086_updateimpex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

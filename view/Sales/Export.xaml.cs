@@ -83,6 +83,9 @@ namespace Cognitivo.Sales
             impex.etd = DateTime.Now;
             impex.is_active = true;
             //id_sal_invoiceComboBox.SelectedIndex = 0;
+            impex.State = EntityState.Added;
+            impex.status=Status.Documents_General.Pending;
+            impex.IsSelected = true;
             ImpexDB.impex.Add(impex);
             impexViewSource.View.MoveCurrentToLast();
         }
@@ -146,39 +149,46 @@ namespace Cognitivo.Sales
             try
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
-                List<impex_expense> impex_expenses = impex.impex_expense.ToList();
-                List<Class.clsImpexImportDetails> ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_ExportDataGrid.ItemsSource;
-                if (ImpexImportDetails.Count > 0)
+                if (impex.status != Status.Documents_General.Approved)
                 {
-                    //To make sure we have a Purchase Total
-                    decimal SalesTotal = ImpexImportDetails.Sum(i => i.sub_total);
-                    if (SalesTotal != 0)
+
+
+                    List<impex_expense> impex_expenses = impex.impex_expense.ToList();
+                    List<Class.clsImpexImportDetails> ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_ExportDataGrid.ItemsSource;
+                    if (ImpexImportDetails.Count > 0)
                     {
-                        foreach (Class.clsImpexImportDetails detail in ImpexImportDetails)
+                        //To make sure we have a Purchase Total
+                        decimal SalesTotal = ImpexImportDetails.Sum(i => i.sub_total);
+                        if (SalesTotal != 0)
                         {
-                            //Get total value of a Product Row
-                            decimal itemTotal = detail.quantity * detail.unit_cost;
-
-                            sales_invoice sales_invoice = ImpexDB.sales_invoice.Where(x => x.id_sales_invoice == detail.id_invoice).FirstOrDefault();
-                            item_movement item_movement = ImpexDB.item_movement.Where(x => x.id_sales_invoice == detail.id_invoice).FirstOrDefault();
-
-                            foreach (impex_expense _impex_expense in impex_expenses)
+                            foreach (Class.clsImpexImportDetails detail in ImpexImportDetails)
                             {
-                                decimal condition_value = _impex_expense.value;
-                                if (condition_value != 0 && itemTotal != 0)
-                                {
-                                    //Coeficient is used to get prorated cost of one item
-                                    decimal coeficient = condition_value / itemTotal;
-                                    item_movement_value item_movement_detail = new item_movement_value();
-                                    item_movement_detail.unit_value = detail.unit_cost * coeficient;
-                                    //Improve this in future. For now take from Purchase
-                                    item_movement_detail.id_currencyfx = sales_invoice.id_currencyfx;
-                                    item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
-                                    item_movement.item_movement_value.Add(item_movement_detail);
+                                //Get total value of a Product Row
+                                decimal itemTotal = detail.quantity * detail.unit_cost;
 
-                                    ImpexDB.SaveChanges();
+                                sales_invoice sales_invoice = ImpexDB.sales_invoice.Where(x => x.id_sales_invoice == detail.id_invoice).FirstOrDefault();
+                                item_movement item_movement = ImpexDB.item_movement.Where(x => x.id_sales_invoice == detail.id_invoice).FirstOrDefault();
+
+                                foreach (impex_expense _impex_expense in impex_expenses)
+                                {
+                                    decimal condition_value = _impex_expense.value;
+                                    if (condition_value != 0 && itemTotal != 0)
+                                    {
+                                        //Coeficient is used to get prorated cost of one item
+                                        decimal coeficient = condition_value / itemTotal;
+                                        item_movement_value item_movement_detail = new item_movement_value();
+                                        item_movement_detail.unit_value = detail.unit_cost * coeficient;
+                                        //Improve this in future. For now take from Purchase
+                                        item_movement_detail.id_currencyfx = sales_invoice.id_currencyfx;
+                                        item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
+                                        item_movement.item_movement_value.Add(item_movement_detail);
+
+
+                                    }
                                 }
                             }
+                            impex.status = Status.Documents_General.Approved;
+                            ImpexDB.SaveChanges();
                         }
                     }
                 }

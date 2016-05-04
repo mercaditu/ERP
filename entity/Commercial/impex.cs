@@ -40,7 +40,19 @@ namespace entity
         [Required]
         //[CustomValidation(typeof(entity.Class.EntityValidation), "CheckId")]
         public int id_contact { get; set; }
-        public string status { get; set; }
+        public Status.Documents_General status
+        {
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+                RaisePropertyChanged("status");
+            }
+        }
+        private Status.Documents_General _status;
         public string number { get; set; }
 
         [Required]

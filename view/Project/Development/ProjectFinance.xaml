@@ -106,6 +106,7 @@
                                                                    Converter={StaticResource salesorderdetailtoEnable}}" 
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+                                             Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                              Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              QuantityExec="{Binding quantity_exec, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
@@ -113,16 +114,15 @@
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
              
-                <TextBlock Style="{StaticResource TextAreaH2}" Margin="40,58,36,0" 
+                <TextBlock Style="{StaticResource TextAreaH2}" Margin="40,16,36,0" 
                            Text="{Binding project.name, FallbackValue=ProjectName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                            HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
 
-                <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="6,61"  FontSize="16"
+                <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="6,22"  FontSize="16"
                               VerticalAlignment="Top" HorizontalAlignment="Left"
                               Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" FontFamily="/Cognitivo;component/Resources/#cognitivo" 
                               Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
-
-                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,95,0,0" ItemsSource="{Binding}" 
+                <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,60,0,0" ItemsSource="{Binding}" 
                                         VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
                                         ScrollViewer.CanContentScroll="True"   >
                     <TreeView.ItemContainerStyle>
@@ -155,7 +155,7 @@
                            Style="{StaticResource TextAreaH2}" HorizontalAlignment="Center"/>
                 <StackPanel HorizontalAlignment="Center" Margin="0,16" DataContext="{Binding SelectedItem, ElementName=treeProject}">
                     <StackPanel x:Name="stpcode" >
-                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" DataContext="{Binding}">
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{Binding}">
 
                             <Label Content="" Style="{StaticResource ico_Label}"/>
                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
@@ -184,18 +184,23 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <metro:ToggleSwitch x:Name="ToggleQuantity" OnLabel="BasedOnEstimate" OffLabel="BasedOnProduction" />
+                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" HorizontalAlignment="Right"/>
                       
                         <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtDesc" Text="{Binding item_description}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                        <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}"/>
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
-                        <CheckBox x:Name="chkinvoice" >
-                            <Label Content="Genrate invoice"/>
+                        <CheckBox x:Name="chkinvoice" Style="{StaticResource input_checkbox}">
+                            <TextBlock Style="{StaticResource text_Label}">
+                                <Run Text="{lex:Loc Create}" />
+                                <Run Text="{lex:Loc SalesInvoice}"/>
+                            </TextBlock>
                         </CheckBox>
 
-                        <Button Content="{lex:Loc Generate}" Style="{StaticResource btn_green}" Click="Button_Click"/>
+                        <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

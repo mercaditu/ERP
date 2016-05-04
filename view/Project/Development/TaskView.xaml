@@ -85,20 +85,18 @@
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              Code="{Binding code, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                             TaskName="{Binding item_description}" Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                             TaskName="{Binding item_description}" 
+                                             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                             Quantity="{Binding quantity_est, StringFormat=N2, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                     </HierarchicalDataTemplate>
                 </Grid.Resources>
                 <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding}" 
-                          VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
-                          ScrollViewer.CanContentScroll="True" SelectedItemChanged="treeProject_SelectedItemChanged"  >
+                                        VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
+                                        ScrollViewer.CanContentScroll="True" SelectedItemChanged="treeProject_SelectedItemChanged"  >
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}" >
-                            <Setter Property="IsExpanded" Value="{Binding  ElementName=_TaskView, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            
-
-
+                            <Setter Property="IsExpanded" Value="{Binding ElementName=_TaskView, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </Style>
-                      
                     </TreeView.ItemContainerStyle>
                    
                     <TreeView.ItemsPanel>

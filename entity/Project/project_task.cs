@@ -124,6 +124,24 @@ namespace entity
         private decimal? _quantity_est;
 
         [NotMapped]
+        public decimal? quantity_exe
+        {
+            get
+            {
+                //Check if Production Execution Exists before doing a Sum. Prevents unecesary trips to DB.
+                if(production_execution_detail.Count > 0)
+                {
+                    using (db db = new db())
+                    {
+                        //Sums Total Quantity WHERE Project Task is same as current Task.
+                        return db.production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.quantity);
+                    }
+                }
+                return 0M;
+            }
+        }
+
+        [NotMapped]
         public decimal? quantity_exec { get; set; }
 
         public decimal? unit_cost_est
@@ -133,13 +151,6 @@ namespace entity
             {
                 _unit_price_vat = value;
                 RaisePropertyChanged("unit_cost_est");
-
-                //if (parent != null)
-                //{
-                //    parent.unit_cost_est = objclsproject.getsumunitcost(parent.id_project_task, parent.child);
-                //    parent.RaisePropertyChanged("unit_cost_est");
-                //}
-
             }
         }
         private decimal? _unit_cost_est;

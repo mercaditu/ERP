@@ -127,7 +127,8 @@ namespace entity
                         item_movement.debit = delta < 0 ? Math.Abs(delta) : 0;
                         item_movement.trans_date = item_inventory.trans_date;
                         item_movement.id_application = App.Names.Inventory;
-                        item_movement.id_inventory = item_inventory_detail.id_inventory_detail;
+                        item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
+                        item_movement.id_inventory = item_inventory_detail.id_inventory;
                         item_movement.timestamp = DateTime.Now;
 
 

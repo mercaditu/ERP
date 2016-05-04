@@ -51,9 +51,9 @@
                         <Label Content="{lex:Loc Details}" Style="{StaticResource H3}" Foreground="White"/>-->
                     <DataGrid AutoGenerateColumns="False" Margin="16">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding item}" Header="{lex:Loc Cognitivo:local:name}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding id}" Header="{lex:Loc Cognitivo:local:name}" Width="SizeToHeader" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding balance}" Header="{lex:Loc Cognitivo:local:Balance}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <!--<DataGridTextColumn Binding="{Binding balance}" Header="{lex:Loc Cognitivo:local:Balance}" Width="SizeToHeader" IsReadOnly="True"/>-->
                         </DataGrid.Columns>
                     </DataGrid>
                     <!--</StackPanel>-->

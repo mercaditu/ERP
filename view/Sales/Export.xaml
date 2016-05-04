@@ -6,6 +6,7 @@
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
+       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl" 
       xmlns:entity="clr-namespace:entity;assembly=entity"  Loaded="Page_Loaded"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -17,7 +18,7 @@
     </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="impexViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex}, CreateList=True}"/>
-        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+        
         <CollectionViewSource x:Key="incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}"/>
         <CollectionViewSource x:Key="statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}"/>
@@ -35,6 +36,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
         <cntrl:toolBar x:Name="toolBar" btnNew_Click="toolBar_btnNew_Click"
 			btnEdit_Click="toolBar_btnEdit_Click"
 			btnDelete_Click="toolBar_btnDelete_Click"
@@ -42,15 +45,24 @@
 			btnCancel_Click="toolBar_btnCancel_Click"
 			btnApprove_Click="toolBar_btnApprove_Click"   
 			VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" appName="Export"/>
-        <DataGrid x:Name="impexDataGrid" Grid.Column="0" Grid.Row="1" Style="{StaticResource main_Datagrid}" 
-                  SelectionChanged="impexDataGrid_SelectionChanged"
-                  ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="trans_dateColumn" Binding="{Binding timestamp}" Header="Date" Width="*"/>
-                <DataGridTextColumn x:Name="id_contactColumn" Binding="{Binding contact.name}" Header="Contact" Width="*"/>
-                <DataGridTextColumn x:Name="numberColumn" Binding="{Binding number}" Header="Number" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListBox x:Name="impexDataGrid"  Background="{StaticResource AccentColor_Brush}"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="impexDataGrid_SelectionChanged"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding}" Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding eta, StringFormat=d}" 
+                                   recordSecondaryName="{Binding contact.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   recordName="{Binding name}"
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+                    </cntrl:navList>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -66,17 +78,8 @@
                     <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="numberTextBox" Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
                     <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
-                    <cntrl:SearchableTextbox x:Name="contactComboBox" IsEnabled="{Binding ElementName=pageExport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}" 
-                                              Width="256" HorizontalAlignment="Left" KeyDown="contactComboBox_KeyDown" MouseDoubleClick="contactComboBox_MouseDoubleClick"
-                                            Data="{Binding contact,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                        <cntrl:SearchableTextbox.Columns>
-                            <cntrl:SmartBoxColumn Header="Code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                            <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                            <cntrl:SmartBoxColumn Header="GovId" ForProperty="gov_code" Binding="{Binding gov_code, Mode=Default}" EnableSearch="True"/>
-                            <cntrl:SmartBoxColumn Header="Alias" ForProperty="alias" Binding="{Binding alias, Mode=Default}" EnableSearch="False"/>
-                            <cntrl:SmartBoxColumn Header="Telephone" ForProperty="telephone" Binding="{Binding telephone, Mode=Default}" Hide="True"/>
-                        </cntrl:SearchableTextbox.Columns>
-                    </cntrl:SearchableTextbox>
+                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True"  Select="set_ContactPref"
+                                               HorizontalAlignment="Left" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="{lex:Loc Incoterm}" Style="{StaticResource input_label}"/>
                     <ComboBox x:Name="id_incotermComboBox" Style="{StaticResource input_combobox}"
                           ItemsSource="{Binding Source={StaticResource incotermViewSource}}"
@@ -85,22 +88,32 @@
                     <DatePicker x:Name="etdDatePicker" SelectedDate="{Binding etd, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
                     <Label Content="{lex:Loc ArrivalDate}" Style="{StaticResource input_label}"/>
                     <DatePicker x:Name="etaDatePicker" SelectedDate="{Binding eta, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_datepicker}"/>
-                    <Label Content="{lex:Loc Invoice}" Style="{StaticResource input_label}"/>
+                    <!--<Label Content="{lex:Loc Invoice}" Style="{StaticResource input_label}"/>
                     <StackPanel Orientation="Horizontal">
                         <ComboBox x:Name="id_sal_invoiceComboBox" Style="{StaticResource input_combobox}"
                           ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}"
                           DisplayMemberPath="number" SelectedValuePath="id_sales_invoice"/>
-                        <!--<Button x:Name="btnImportInvoice" Content="{lex:Loc Import}" Height="20" VerticalAlignment="Top" 
-                                Click="btnImportInvoice_Click"/>-->
-                    </StackPanel>
+                        --><!--<Button x:Name="btnImportInvoice" Content="{lex:Loc Import}" Height="20" VerticalAlignment="Top" 
+                                Click="btnImportInvoice_Click"/>--><!--
+                    </StackPanel>-->
                 </StackPanel>
             </ScrollViewer>
             <StackPanel IsEnabled="{Binding ElementName=pageExport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" Margin="4,0,0,0" Background="White">
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="MediumVioletRed"/>
                 <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}"/>
+                
                 <ComboBox x:Name="statusComboBox" Style="{StaticResource input_combobox}"
                           ItemsSource="{Binding Source={StaticResource statusViewSource}}" Width="180"
                           DisplayMemberPath="name" SelectedValuePath="status" SelectedValue="{Binding status,Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                <StackPanel  Orientation="Horizontal" VerticalAlignment="Center">
+                    <Label Content="" Style="{StaticResource ico_Label}" 
+                                FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                    <TextBlock Style="{StaticResource text_Data}">
+                            <Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">
+                                <Run Text="{lex:Loc SalesInvoice}"/>
+                            </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
                 <CheckBox x:Name="is_activeCheckBox" Width="180" Content="{lex:Loc Active}" 
                           IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_checkbox}"/>
             </StackPanel>
@@ -133,7 +146,7 @@
                         <StackPanel IsEnabled="{Binding ElementName=pageExport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
                             <TextBlock>
                                 <Hyperlink PreviewMouseUp="GetExpences_PreviewMouseUp">
-                                    <Run Text="Get Expences"></Run>
+                                    <Run Text="Extract"></Run>
                                 </Hyperlink>
                             </TextBlock>
                             <DataGrid x:Name="impeximpex_expenseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
@@ -160,7 +173,7 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Style="{StaticResource btn_green}" Content="{lex:Loc Calculate}" Click="btnImportInvoice_Click"
+                            <Button Style="{StaticResource btn_green}" Content="{lex:Loc Calculate}" Click="Calculate_Click"
                                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"/>
                         </StackPanel>
                     </ScrollViewer>

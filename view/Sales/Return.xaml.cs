@@ -522,7 +522,7 @@ namespace Cognitivo.Sales
         {
             crud_modal.Visibility = Visibility.Visible;
             pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
-            pnlSalesInvoice._entity = SalesReturnDB;
+            pnlSalesInvoice._entity = new ImpexDB();
         //    pnlSalesInvoice.contactViewSource = contactViewSource;
             if (sbxContact.ContactID > 0)
             {
@@ -553,9 +553,13 @@ namespace Cognitivo.Sales
                     {
                         sales_return_detail sales_return_detail = new sales_return_detail();
                         sales_return_detail.id_sales_invoice_detail = _sales_invoice_detail.id_sales_invoice_detail;
-                        sales_return_detail.sales_invoice_detail = _sales_invoice_detail;
+                       // sales_return_detail.sales_invoice_detail = _sales_invoice_detail;
                         sales_return_detail.sales_return = _sales_return;
-                        sales_return_detail.item = _sales_invoice_detail.item;
+                        if (SalesReturnDB.items.Where(x=>x.id_item== _sales_invoice_detail.id_item).FirstOrDefault()!=null)
+                        {
+                            sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
+                        }
+                       // sales_return_detail.item = _sales_invoice_detail.item;
                         sales_return_detail.id_item = _sales_invoice_detail.id_item;
 
                         sales_return_detail.quantity = _sales_invoice_detail.quantity - SalesReturnDB.sales_return_detail

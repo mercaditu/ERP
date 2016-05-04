@@ -15,7 +15,7 @@ namespace Cognitivo.Purchase
     {
         ImpexDB ImpexDB = new ImpexDB();
         CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource = null;
-        int company_ID = entity.Properties.Settings.Default.company_ID;
+        int company_ID = CurrentSession.Id_Company;
         cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
         public Import()
         {
@@ -38,9 +38,7 @@ namespace Cognitivo.Purchase
                 impexViewSource.Source = ImpexDB.impex.Local;
                 impeximpex_expenseViewSource = FindResource("impeximpex_expenseViewSource") as CollectionViewSource;
 
-                //contactViewSource
-                CollectionViewSource contactViewSource = FindResource("contactViewSource") as CollectionViewSource;
-                contactViewSource.Source = await ImpexDB.contacts.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToListAsync();
+              
                 //incotermViewSource
                 CollectionViewSource incotermViewSource = FindResource("incotermViewSource") as CollectionViewSource;
                 incotermViewSource.Source = await ImpexDB.impex_incoterm.OrderBy(a => a.name).AsNoTracking().ToListAsync();

@@ -18,7 +18,7 @@
     </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="impexViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex}, CreateList=True}"/>
-        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+     
         <CollectionViewSource x:Key="incotermViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:impex_incoterm}, CreateList=True}"/>
         <CollectionViewSource x:Key="statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}"/>

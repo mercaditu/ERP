@@ -259,6 +259,11 @@ namespace Cognitivo.Purchase
                     foreach (var item in impex_incoterm_detail)
                     {
                         impex_expense impex_expense = new impex_expense();
+                        if ( ImpexDB.impex_incoterm_condition.Where(x => x.id_incoterm_condition == item.id_incoterm_condition).FirstOrDefault()!=null)
+                        {
+                            impex_expense.impex_incoterm_condition = ImpexDB.impex_incoterm_condition.Where(x => x.id_incoterm_condition == item.id_incoterm_condition).FirstOrDefault();    
+                        }
+                        
                         impex_expense.id_incoterm_condition = item.id_incoterm_condition;
                         impex_expense.id_currencyfx = purchase_invoice.id_currencyfx;
                         impex_expense.id_purchase_invoice = purchase_invoice.id_purchase_invoice;

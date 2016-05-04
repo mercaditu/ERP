@@ -120,6 +120,7 @@ namespace entity.Brillo.Logic
                     purchase_invoice_detail.id_location = FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
                     purchase_invoice_detail.app_location = db.app_location.Where(x => x.id_location == purchase_invoice_detail.id_location).FirstOrDefault();
 
+              
                     //Improve Comment. More standarized.
                     item_movementList.Add(
                         CreditOnly_Movement(
@@ -132,7 +133,7 @@ namespace entity.Brillo.Logic
                             purchase_invoice_detail.quantity,
                             purchase_invoice.trans_date,
                             purchase_invoice_detail.unit_cost,
-                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number, purchase_invoice.contact.name)
+                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number!=null?purchase_invoice.number:"", purchase_invoice.contact.name)
                             ));
                 }
                 //Return List so we can save into context.

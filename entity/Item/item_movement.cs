@@ -35,6 +35,14 @@ namespace entity
         public int? id_sales_return { get; set; }
         public int? id_inventory { get; set; }
         public int? id_sales_packing { get; set; }
+        public int? id_transfer_detail { get; set; }
+        public int? id_production_execution_detail { get; set; }
+        public int? id_purchase_invoice_detail { get; set; }
+        public int? id_purchase_return_detail { get; set; }
+        public int? id_sales_invoice_detail { get; set; }
+        public int? id_sales_return_detail { get; set; }
+        public int? id_inventory_detail { get; set; }
+        public int? id_sales_packing_detail { get; set; }
         public int transaction_id { get; set; }
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
@@ -61,6 +69,13 @@ namespace entity
         public virtual purchase_return purchase_return { get; set; }
         public virtual sales_invoice sales_invoice { get; set; }
         public virtual sales_return sales_return { get; set; }
+        public virtual sales_packing_detail sales_packing_detail { get; set; }
+        public virtual item_transfer_detail item_transfer_detail { get; set; }
+        public virtual production_execution_detail production_execution_detail { get; set; }
+        public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
+        public virtual purchase_return_detail purchase_return_detail { get; set; }
+        public virtual sales_invoice_detail sales_invoice_detail { get; set; }
+        public virtual sales_return_detail sales_return_detail { get; set; }
         public virtual ICollection<item_movement_value> item_movement_value { get; set; }
         public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
 

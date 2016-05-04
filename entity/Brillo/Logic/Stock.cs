@@ -37,6 +37,7 @@ namespace entity.Brillo.Logic
                     item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.SalesInvoice,
                                              detail.id_sales_invoice,
+                                             (int)detail.id_sales_invoice_detail,
                                              sales_invoice.app_currencyfx,
                                              item_product,
                                              detail.app_location,
@@ -62,6 +63,7 @@ namespace entity.Brillo.Logic
                         CreditOnly_Movement(entity.Status.Stock.InStock,
                                              App.Names.SalesReturn,
                                              sales_return_detail.id_sales_return,
+                                             sales_return_detail.id_sales_return_detail,
                                              sales_return.app_currencyfx,
                                              item_product,
                                              sales_return_detail.app_location,
@@ -96,6 +98,7 @@ namespace entity.Brillo.Logic
                     item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.PurchaseReturn,
                                              purchase_return_detail.id_purchase_return,
+                                             purchase_return_detail.id_purchase_return_detail,
                                              purchase_return.app_currencyfx,
                                              item_product,
                                              purchase_return_detail.app_location,
@@ -127,6 +130,7 @@ namespace entity.Brillo.Logic
                             entity.Status.Stock.InStock,
                             App.Names.PurchaseInvoice,
                             purchase_invoice_detail.id_purchase_invoice,
+                            purchase_invoice_detail.id_purchase_invoice_detail,
                             purchase_invoice.app_currencyfx,
                             item_product,
                             purchase_invoice_detail.app_location,
@@ -158,6 +162,7 @@ namespace entity.Brillo.Logic
                     item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.PackingList,
                                              detail.id_sales_packing,
+                                             detail.id_sales_packing_detail,
                                              null,
                                              item_product,
                                              detail.app_location,
@@ -199,6 +204,7 @@ namespace entity.Brillo.Logic
                                     DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
                                                detail.id_production_execution,
+                                               detail.id_execution_detail,
                                             Currency.get_Default(db,CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                                         item_product,
                                                         production_execution.production_line.app_location,
@@ -213,6 +219,7 @@ namespace entity.Brillo.Logic
                                 item_movementinput.Add(CreditOnly_Movement(entity.Status.Stock.InStock,
                                            App.Names.ProductionExecution,
                                            detail.id_production_execution,
+                                           detail.id_execution_detail,
                                            Currency.get_Default(db, CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                            item_product,
                                            production_execution.production_line.app_location,
@@ -324,6 +331,7 @@ namespace entity.Brillo.Logic
                                         CreditOnly_Movement(entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
                                                         detail.id_production_execution,
+                                                        detail.id_execution_detail,
                                                         Currency.get_Default(db,CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                                         item_product,
                                                         production_execution.production_line.app_location,
@@ -344,6 +352,7 @@ namespace entity.Brillo.Logic
                                 item_movementoutput.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                                                                 App.Names.ProductionExecution,
                                                                                 detail.id_production_execution,
+                                                                                detail.id_execution_detail,
                                                                                 Currency.get_Default(db, CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                                                                 item_product,
                                                                                 production_execution.production_line.app_location,
@@ -433,7 +442,7 @@ namespace entity.Brillo.Logic
             return null;
         }
 
-        public List<item_movement> DebitOnly_MovementLIST(List<item_movement> Items_InStockLIST, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
+        public List<item_movement> DebitOnly_MovementLIST(List<item_movement> Items_InStockLIST, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,int TransactionDetailID,
                                                        app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                                        decimal Quantity, DateTime TransDate, string Comment)
         {
@@ -481,30 +490,37 @@ namespace entity.Brillo.Logic
                     if (ApplicationID==App.Names.Transfer)
                     {
                         item_movement.id_transfer = TransactionID;
+                        item_movement.id_transfer_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.ProductionExecution)
                     {
                         item_movement.id_production_execution = TransactionID;
+                        item_movement.id_production_execution_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
                     {
                         item_movement.id_purchase_invoice = TransactionID;
+                        item_movement.id_purchase_invoice_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.PurchaseReturn)
                     {
                         item_movement.id_purchase_return = TransactionID;
+                        item_movement.id_purchase_return_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.SalesInvoice)
                     {
                         item_movement.id_sales_invoice = TransactionID;
+                        item_movement.id_sales_invoice_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.SalesReturn)
                     {
                         item_movement.id_sales_return= TransactionID;
+                        item_movement.id_sales_return_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.PackingList)
                     {
                         item_movement.id_sales_packing = TransactionID;
+                        item_movement.id_sales_packing_detail = TransactionDetailID;
                     }
                   
                    // item_movement.transaction_id = TransactionID;
@@ -547,26 +563,37 @@ namespace entity.Brillo.Logic
                 if (ApplicationID == App.Names.Transfer)
                 {
                     item_movement.id_transfer = TransactionID;
+                    item_movement.id_transfer_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.ProductionExecution)
                 {
                     item_movement.id_production_execution = TransactionID;
+                    item_movement.id_production_execution_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
                     item_movement.id_purchase_invoice = TransactionID;
+                    item_movement.id_purchase_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseReturn)
                 {
                     item_movement.id_purchase_return = TransactionID;
+                    item_movement.id_purchase_return_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesInvoice)
                 {
                     item_movement.id_sales_invoice = TransactionID;
+                    item_movement.id_sales_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesReturn)
                 {
                     item_movement.id_sales_return = TransactionID;
+                    item_movement.id_sales_return_detail = TransactionDetailID;
+                }
+                else if (ApplicationID == App.Names.PackingList)
+                {
+                    item_movement.id_sales_packing = TransactionID;
+                    item_movement.id_sales_packing_detail = TransactionDetailID;
                 }
 
                 // item_movement.transaction_id = TransactionID;
@@ -592,7 +619,7 @@ namespace entity.Brillo.Logic
             return Final_ItemMovementLIST;
         }
 
-        public item_movement CreditOnly_Movement(entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
+        public item_movement CreditOnly_Movement(entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,int TransactionDetailID,
                                               app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                               decimal Quantity, DateTime TransDate, decimal Cost, string Comment)
         {
@@ -609,28 +636,38 @@ namespace entity.Brillo.Logic
                 if (ApplicationID == App.Names.Transfer)
                 {
                     item_movement.id_transfer = TransactionID;
+                    item_movement.id_transfer_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.ProductionExecution)
                 {
                     item_movement.id_production_execution = TransactionID;
+                    item_movement.id_production_execution_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
                     item_movement.id_purchase_invoice = TransactionID;
+                    item_movement.id_purchase_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseReturn)
                 {
                     item_movement.id_purchase_return = TransactionID;
+                    item_movement.id_purchase_return_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesInvoice)
                 {
                     item_movement.id_sales_invoice = TransactionID;
+                    item_movement.id_sales_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesReturn)
                 {
                     item_movement.id_sales_return = TransactionID;
+                    item_movement.id_sales_return_detail = TransactionDetailID;
                 }
-
+                else if (ApplicationID == App.Names.PackingList)
+                {
+                    item_movement.id_sales_packing = TransactionID;
+                    item_movement.id_sales_packing_detail = TransactionDetailID;
+                }
                 // item_movement.transaction_id = TransactionID;
                 item_movement.trans_date = TransDate;
 

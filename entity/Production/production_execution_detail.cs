@@ -19,6 +19,7 @@ namespace entity
             production_execution_dimension = new List<production_execution_dimension>();
             start_date = DateTime.Now;
             end_date = DateTime.Now;
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -104,6 +105,7 @@ namespace entity
         public virtual production_execution_detail parent { get; set; }
         public virtual ICollection<production_execution_detail> child { get; set; }
         public virtual ICollection<production_execution_dimension> production_execution_dimension { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual hr_time_coefficient hr_time_coefficient { get; set; }
         public virtual production_execution production_execution { get; set; }
         public virtual production_order_detail production_order_detail { get; set; }

@@ -16,6 +16,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -106,6 +107,7 @@ namespace entity
         public virtual purchase_return purchase_return { get; set; }
         public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
         public virtual ICollection<purchase_return_dimension> purchase_return_dimension { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
 
         #region "Validation"
         public string Error

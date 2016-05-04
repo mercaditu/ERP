@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel;
     using System.Text;
+    using System.Collections.Generic;
 
     public partial class sales_return_detail : CommercialSalesDetail, IDataErrorInfo
     {
@@ -15,6 +16,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -56,6 +58,7 @@ namespace entity
         private sales_return _sales_return;
 
         public virtual sales_invoice_detail sales_invoice_detail { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         #endregion
 
         #region "Validation"

@@ -12,6 +12,7 @@ namespace Cognitivo.Class
         public string number { get; set; }
         public int id_item { get; set; }
         public int id_invoice { get; set; }
+        public int id_invoice_detail { get; set; }
         public string item { get; set; }
         public decimal quantity { get; set; }
         public decimal unit_cost { get; set; }

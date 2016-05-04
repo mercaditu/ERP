@@ -16,7 +16,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-
+            item_movement = new List<item_movement>();
             timestamp = DateTime.Now;
         }
 
@@ -53,6 +53,7 @@ namespace entity
         public virtual sales_order_detail sales_order_detail { get; set; }
         public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }
         public virtual IEnumerable<sales_return_detail> sales_return_detail { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         #endregion
 
         #region "Validation"

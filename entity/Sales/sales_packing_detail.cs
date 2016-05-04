@@ -16,6 +16,7 @@ namespace entity
             is_head = true;
             id_item = 0;
             sales_packing_relation = new List<sales_packing_relation>();
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -66,6 +67,7 @@ namespace entity
         public virtual sales_packing sales_packing { get; set; }
         public virtual sales_order_detail sales_order_detail { get; set; }
         public virtual ICollection<sales_packing_relation> sales_packing_relation { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual app_location app_location { get; set; }
 
         public virtual item item { get; set; }

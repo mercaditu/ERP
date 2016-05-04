@@ -15,6 +15,7 @@ namespace entity
             is_head = true;
             quantity = 1;
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();
+            item_movement = new List<item_movement>();
         }
 
         [Key]
@@ -28,6 +29,7 @@ namespace entity
         public virtual purchase_invoice purchase_invoice { get; set; }
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual ICollection<purchase_invoice_dimension> purchase_invoice_dimension { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         #endregion
 
         #region "Validation"

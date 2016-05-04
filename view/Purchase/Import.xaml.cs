@@ -214,7 +214,7 @@ namespace Cognitivo.Purchase
                 ImpexImportDetails.quantity = item.quantity;
                 ImpexImportDetails.unit_cost = item.UnitCost_Vat;
                 ImpexImportDetails.id_invoice = item.id_purchase_invoice;
-
+                ImpexImportDetails.id_invoice_detail = item.id_purchase_invoice_detail;
 
 
                 if (totalExpence > 0)
@@ -299,7 +299,7 @@ namespace Cognitivo.Purchase
                                 decimal itemTotal = detail.quantity * detail.unit_cost;
 
                                 purchase_invoice purchase_invoice = ImpexDB.purchase_invoice.Where(x => x.id_purchase_invoice == detail.id_invoice).FirstOrDefault();
-                                item_movement item_movement = ImpexDB.item_movement.Where(x => x.id_purchase_invoice == detail.id_invoice).FirstOrDefault();
+                                item_movement item_movement = ImpexDB.item_movement.Where(x => x.id_purchase_invoice == detail.id_invoice_detail).FirstOrDefault();
 
                                 foreach (impex_expense _impex_expense in impex_expenses)
                                 {

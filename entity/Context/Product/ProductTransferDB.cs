@@ -81,7 +81,7 @@ namespace entity
                                                                           && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
                                     List<item_movement> item_movement_originList;
-                                    item_movement_originList = stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
+                                    item_movement_originList = stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer,item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail,app_currencyfx, item_transfer_detail.item_product, app_location,
                                           item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                                     base.item_movement.AddRange(item_movement_originList);
@@ -95,6 +95,7 @@ namespace entity
                                     item_movement_Dest = stock.CreditOnly_Movement(
                                         Status.Stock.InStock,
                                         App.Names.Transfer,
+                                        item_transfer_detail.id_transfer,
                                         item_transfer_detail.id_transfer_detail,
                                         app_currencyfxdest,
                                         item_transfer_detail.item_product,
@@ -117,7 +118,7 @@ namespace entity
                                                                           && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
                                     List<item_movement> item_movement_originList;
-                                    item_movement_originList = stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
+                                    item_movement_originList = stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer,item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
                                           item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                                     base.item_movement.AddRange(item_movement_originList);
@@ -174,7 +175,7 @@ namespace entity
 
                                     ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
                                     item_movement_LIST =
-                                        stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer_detail,
+                                        stock.DebitOnly_MovementLIST(Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer,item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail,
                                         app_currencyfx, item_transfer_detail.item_product, app_location, item_transfer_detail.quantity_destination,
                                         item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
@@ -188,6 +189,7 @@ namespace entity
                                         stock.CreditOnly_Movement(
                                             Status.Stock.InStock,
                                             App.Names.Transfer,
+                                            item_transfer_detail.id_transfer,
                                             item_transfer_detail.id_transfer_detail,
                                             app_currencyfx,
                                             item_transfer_detail.item_product,
@@ -210,6 +212,7 @@ namespace entity
                                                 stock.CreditOnly_Movement(
                                                     Status.Stock.InStock,
                                                     App.Names.Transfer,
+                                                    item_transfer_detail.id_transfer,
                                                     item_transfer_detail.id_transfer_detail,
                                                     app_currencyfx,
                                                     item_transfer_detail.item_product,

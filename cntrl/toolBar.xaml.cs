@@ -109,7 +109,7 @@ namespace cntrl
                 Approve_IsEnabled = true;
                 Annul_IsEnabled = false;
             }
-            else if (Status == "Approved")
+            else if (Status == "Approved" && Status == "Issued")
             {
                 IsEditable = false;
                 Edit_IsEnabled = false;

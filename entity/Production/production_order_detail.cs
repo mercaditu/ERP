@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Threading;
 
     public partial class production_order_detail : Audit
     {
@@ -19,6 +20,16 @@ namespace entity
             child = new List<production_order_detail>();
             production_order_dimension = new List<production_order_dimension>();
             trans_date = DateTime.Now;
+
+
+            System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    CalcExecutedQty_TimerTaks();
+                    Thread.Sleep(5000);
+                }
+            });
         }
 
         [Key]
@@ -82,19 +93,7 @@ namespace entity
 
         [NotMapped]
         public decimal? quantity_exe
-        {
-            get
-            {
-                if (production_execution_detail.Count > 0)
-                {
-                    using (db db = new db())
-                    {
-                        return db.production_execution_detail.Where(y => y.id_order_detail == id_order_detail).Sum(x => x.quantity);
-                    }
-                }
-                return 0;
-            }
-        }
+        { get; set; }
 
         public Status.Project? status { get; set; }
 
@@ -136,5 +135,24 @@ namespace entity
         public virtual production_order production_order { get; set; }
         public virtual project_task project_task { get; set; }
         public virtual item item { get; set; }
+
+        #region
+
+        /// <summary>
+        /// Gets the Total Quantity based on Executed Values from Production Execution.
+        /// </summary>
+        public void CalcExecutedQty_TimerTaks()
+        {
+            if (production_execution_detail != null && production_execution_detail.Count > 0)
+            {
+                using (db db = new db())
+                {
+                    quantity_exe = db.production_execution_detail.Where(y => y.id_order_detail == id_order_detail).Sum(x => x.quantity);
+                    RaisePropertyChanged("quantity_exe");
+                }
+            }
+        }
+
+        #endregion
     }
 }

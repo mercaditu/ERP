@@ -145,7 +145,8 @@
             								                 HorizontalAlignment="Stretch"
             								                 Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                              TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-            								                 Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            								                 QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                                             Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -180,7 +181,7 @@
                                                     btnDelete_Click="btnDeleteTask_Click"
                                                     btnApprove_Click="toolIcon_Click"
                                                     btnAnull_Click="toolIcon_Click_1"
-                                                        btnParent_Click="btnAddParentTask_Click"/>
+                                                    btnParent_Click="btnAddParentTask_Click"/>
                                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
                                     <StackPanel x:Name="stpcode" IsEnabled="False">
                                         <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>

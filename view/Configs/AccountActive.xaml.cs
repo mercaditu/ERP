@@ -56,8 +56,8 @@ namespace Cognitivo.Configs
 
                 is_active = objAccount.is_active;
                 RaisePropertyChanged("is_active");
-                var app_account_detailList = objAccount.app_account_detail
-             .GroupBy(ad => new { ad.id_currencyfx })
+                var app_account_detailList = objAccount.app_account_detail.Where(x=>x.payment_type.is_direct)
+             .GroupBy(ad => new { ad.id_currencyfx,ad.id_payment_type })
              .Select(s => new
              {
                  id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
@@ -67,7 +67,7 @@ namespace Cognitivo.Configs
                  amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
              }).ToList();
 
-                var app_account_detailFinalList = app_account_detailList.GroupBy(x => x.cur).Select(s => new
+                var app_account_detailFinalList = app_account_detailList.GroupBy(ad => new { ad.cur,ad.payType }).Select(s => new
                 {
                     id_currencyfx = s.Max(x => x.id_currencyfx),
                     id_paymenttype = s.Max(x => x.id_paymenttype),
@@ -156,11 +156,11 @@ namespace Cognitivo.Configs
                     app_account_detail.id_payment_type = list.id_payment_type;
                     if (app_account.is_active)
                     {
-                        app_account_detail.comment = "For Opening Cash.";
+                        app_account_detail.comment = "For Closing Cash.";
                     }
                     else
                     {
-                        app_account_detail.comment = "For Closing Cash.";
+                        app_account_detail.comment = "For Opening Cash.";
                     }
                   
                     app_account_detail.trans_date = DateTime.Now;

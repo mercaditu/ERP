@@ -18,43 +18,39 @@ namespace Cognitivo.Project.Development
 
         CollectionViewSource project_taskViewSource;
         CollectionViewSource projectViewSource;
-        //CollectionViewSource project_templateproject_template_detailViewSource;
-        //CollectionViewSource project_templateViewSource;
         CollectionViewSource project_task_dimensionViewSource;
         cntrl.PanelAdv.Project_TaskApprove Project_TaskApprove;
-        public Boolean ViewAll { get; set; }
+
+        /// <summary>
+        /// Property used by Open TreeView Button.
+        /// </summary>
+        public bool ViewAll { get; set; }
 
         public TaskView()
         {
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
 
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
-            //project_templateproject_template_detailViewSource = ((CollectionViewSource)(FindResource("project_templateproject_template_detailViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
 
-            ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).Include(x => x.project_task).Load();
+            ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Include(x => x.project_task).Load();
             projectViewSource.Source = ProjectTaskDB.projects.Local;
 
-          
-
-            ProjectTaskDB.project_task_dimension.Where(a => a.id_company == entity.CurrentSession.Id_Company).Load();
+            //Bad Code. Will bring too many items into view.
+            ProjectTaskDB.project_task_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Local;
 
-            //project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
-            //await ProjectTaskDB.project_template.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).LoadAsync();
-            //project_templateViewSource.Source = ProjectTaskDB.project_template.Local;
-
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            await ProjectTaskDB.app_dimension.Where(a => a.id_company == entity.CurrentSession.Id_Company).LoadAsync();
+            ProjectTaskDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_dimensionViewSource.Source = ProjectTaskDB.app_dimension.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            await ProjectTaskDB.app_measurement.Where(a => a.id_company == entity.CurrentSession.Id_Company).LoadAsync();
+            ProjectTaskDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_measurementViewSource.Source = ProjectTaskDB.app_measurement.Local;
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));

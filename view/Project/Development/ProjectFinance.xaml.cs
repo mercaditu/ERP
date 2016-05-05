@@ -6,26 +6,23 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Data.Entity;
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Documents;
 
 namespace Cognitivo.Project
 {
-    /// <summary>
-    /// Interaction logic for ProjectInvoice.xaml
-    /// </summary>
     public partial class ProjectFinance : Page, INotifyPropertyChanged
     {
-        SalesOrderDB SalesOrderDB = new entity.SalesOrderDB();
-      
-
+        SalesOrderDB SalesOrderDB = new SalesOrderDB();
         CollectionViewSource project_taskViewSource;
         CollectionViewSource projectViewSource;
 
-        public Boolean ViewAll { get; set; }
+        /// <summary>
+        /// Property used by Open TreeView Button.
+        /// </summary>
+        public bool ViewAll { get; set; }
+
+
         public ProjectFinance()
         {
             InitializeComponent();
@@ -33,16 +30,12 @@ namespace Cognitivo.Project
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             project_taskViewSource = ((CollectionViewSource)(FindResource("project_taskViewSource")));
             projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-            SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Include(x => x.project_task).Load();
+            SalesOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
             projectViewSource.Source = SalesOrderDB.projects.Local;
             set_price();
             filter_task();
-
-            
-
         }
 
         public void set_price()
@@ -177,7 +170,7 @@ namespace Cognitivo.Project
         {
           
                 project project = projectViewSource.View.CurrentItem as project;
-                crud_modal.Visibility = System.Windows.Visibility.Visible;
+                crud_modal.Visibility = Visibility.Visible;
                 cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
                 objSalesOrder.project = project;
               

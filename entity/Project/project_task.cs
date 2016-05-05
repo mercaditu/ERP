@@ -6,6 +6,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Threading;
 
     public partial class project_task : Audit
     {
@@ -17,6 +18,16 @@ namespace entity
             sales_order_detail = new List<sales_order_detail>();
             production_execution_detail = new List<production_execution_detail>();
             production_order_detail = new List<production_order_detail>();
+
+            System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
+                    {
+                        while (true)
+                        {
+                            CalcExecutedQty_TimerTaks();
+                            Thread.Sleep(5000);
+                        }
+                    });
+
 
             trans_date = DateTime.Now;
             child = new List<project_task>();
@@ -124,21 +135,7 @@ namespace entity
         private decimal? _quantity_est;
 
         [NotMapped]
-        public decimal? quantity_exe
-        {
-            get
-            {
-                if (production_execution_detail.Count > 0)
-                {
-                    using (db db = new db())
-                    {
-                        return db.production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.quantity);
-                    }
-                }
-                return 0;
-            }
-        }
-
+        public decimal? quantity_exe { get; set; }
 
         public decimal? unit_cost_est
         {
@@ -219,9 +216,7 @@ namespace entity
                         _item_description = items.name;
                         RaisePropertyChanged("item_description");
                     }
-                  
                 }
-
             }
         }
 
@@ -379,11 +374,8 @@ namespace entity
                                 app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
                                 return Currency.convert_BackValue(item_price.value, app_currencyfx.id_currencyfx, App.Modules.Sales);
                             }
-
-
                         }
                     }
-
                 }
             }
 
@@ -424,6 +416,26 @@ namespace entity
 
             }
         }
+
         private project_task _parent;
+
+        #region
+
+        /// <summary>
+        /// Gets the Total Quantity based on Executed Values from Production Execution.
+        /// </summary>
+        public void CalcExecutedQty_TimerTaks()
+        {
+            if (production_execution_detail.Count > 0)
+            {
+                using (db db = new db())
+                {
+                    quantity_exe = db.production_execution_detail.Where(y => y.id_project_task == id_project_task).Sum(x => x.quantity);
+                    RaisePropertyChanged("quantity_exe");
+                }
+            }
+        }
+
+        #endregion
     }
 }

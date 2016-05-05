@@ -202,6 +202,7 @@
     <Compile Include="Converters\ProjectStatus2ColorConverter.cs" />
     <Compile Include="Converters\Bool2Collapsed.cs" />
     <Compile Include="Converters\LevelToMarginConverter.cs" />
+    <Compile Include="Converters\Decimal2Visibility.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
     <Compile Include="Curd\AccountingJournal.xaml.cs">
       <DependentUpon>AccountingJournal.xaml</DependentUpon>

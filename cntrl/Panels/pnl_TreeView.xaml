@@ -6,12 +6,13 @@
              xmlns:local="clr-namespace:cntrl.Panels"
              xmlns:convert="clr-namespace:cntrl.Converters"
              xmlns:convertView="clr-namespace:Cognitivo.Converters"
-             xmlns:cntrl="clr-namespace:cntrl" 
+             xmlns:cntrl="clr-namespace:cntrl"
              mc:Ignorable="d" MinWidth="300"
              d:DesignHeight="26">
     <UserControl.Resources>
         <convert:Bool2Collapsed x:Key="BoolToVisibility"/>
         <convertView:InitialsConverter x:Key="InitialsConverter"/>
+        <convertView:Decimal2Visibility x:Key="Decimal2Visibility"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
@@ -49,17 +50,17 @@
                            Margin="4,1" Foreground="Black" VerticalAlignment="Center"/>
             </Border>
             <Label Content="{Binding TaskName, ElementName=pnl_Treeview}" Style="{StaticResource input_label}"/>
-            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0">
+            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0" Visibility="{Binding ElementName=lblProyectedQuantity, Path=Text, Converter={StaticResource Decimal2Visibility}}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="EST" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Quantity, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                    <TextBlock x:Name="lblProyectedQuantity" Text="{Binding Quantity, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
                                Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black"/>
                 </StackPanel>
             </Border>
-            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0">
+            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0" Visibility="{Binding ElementName=lblExecutedQuantity, Path=Text, Converter={StaticResource Decimal2Visibility}}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="EXE" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding QuantityExec, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
+                    <TextBlock x:Name="lblExecutedQuantity" Text="{Binding QuantityExec, ElementName=pnl_Treeview, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, StringFormat={}{0:N}}" VerticalAlignment="Center" 
                                Style="{StaticResource text_Data}" Margin="4,0" Foreground="Black" />
                 </StackPanel>
                 

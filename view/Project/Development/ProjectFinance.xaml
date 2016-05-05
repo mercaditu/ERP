@@ -52,7 +52,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 
-						recordSecondaryName="{Binding priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+						recordSecondaryName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                     />
                 </DataTemplate>

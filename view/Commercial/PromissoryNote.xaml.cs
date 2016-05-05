@@ -29,5 +29,20 @@ namespace Cognitivo.Commercial
         {
 
         }
+
+        private void toolBar_btnApprove_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnAnull_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+
+        }
     }
 }

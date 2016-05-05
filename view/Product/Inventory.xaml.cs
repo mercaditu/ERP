@@ -16,7 +16,6 @@ namespace Cognitivo.Product
         CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, app_branchapp_locationViewSource, app_branchViewSource;
         List<item_inventory_detail> item_inventory_detailList;
         cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
-        int company_ID = entity.Properties.Settings.Default.company_ID;
 
         public Inventory()
         {
@@ -29,7 +28,7 @@ namespace Cognitivo.Product
             item_inventoryitem_inventory_detailViewSource = (CollectionViewSource)(FindResource("item_inventoryitem_inventory_detailViewSource"));
             app_branchapp_locationViewSource = (CollectionViewSource)(FindResource("app_branchapp_locationViewSource"));
             item_inventoryViewSource = ((CollectionViewSource)(FindResource("item_inventoryViewSource")));
-            InventoryDB.item_inventory.Where(a => a.id_company == company_ID).Load();
+            InventoryDB.item_inventory.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             item_inventoryViewSource.Source = InventoryDB.item_inventory.Local;
 
             CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
@@ -40,7 +39,7 @@ namespace Cognitivo.Product
             InventoryDB.app_branch.Include(b => b.app_location)
                 .Where(a => a.is_active == true
                     && a.can_stock == true
-                    && a.id_company == company_ID)
+                    && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).Load();
             app_branchViewSource.Source = InventoryDB.app_branch.Local;
 
@@ -51,22 +50,17 @@ namespace Cognitivo.Product
             {
                 app_branchapp_locationViewSource.View.MoveCurrentToFirst();
             }
-
-
-
         }
 
         private async void BindItemMovement()
         {
-
-
-
             item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+
             if (item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location).Count() == 0)
             {
                 item_inventory_detailList = new List<entity.item_inventory_detail>();
-                List<item_product> item_productLIST = await InventoryDB.item_product.Where(x => x.id_company == company_ID && x.item.is_active).ToListAsync();
+                List<item_product> item_productLIST = await InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToListAsync();
 
                 foreach (item_product i in item_productLIST)
                 {
@@ -175,16 +169,19 @@ namespace Cognitivo.Product
         {
             try
             {
-
-              
-                InventoryDB.SaveChanges();
-                item_inventoryViewSource.View.Refresh();
-                toolBar.msgSaved();
-
+                if (InventoryDB.SaveChanges() == 1)
+                {
+                    toolBar.msgSaved();
+                    item_inventoryViewSource.View.Refresh();
+                }
+                else
+                {
+                    toolBar.msgWarning("Unable to Save");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                throw ex;
             }
         }
 
@@ -233,7 +230,7 @@ namespace Cognitivo.Product
 
         }
 
-        private void location_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void location_ListBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             if (item_inventoryDataGrid.SelectedItem != null)
             {
@@ -244,11 +241,8 @@ namespace Cognitivo.Product
                         BindItemMovement();
                     }
                 }
-
             }
         }
-
-
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -348,9 +342,5 @@ namespace Cognitivo.Product
                 crud_modal.Children.Add(objpnl_ItemMovement);
             }
         }
-
-
-
-
     }
 }

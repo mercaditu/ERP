@@ -417,6 +417,18 @@
                                     SelectedDate="{Binding delivery_date, Mode=TwoWay,
                                                            NotifyOnValidationError=True, ValidatesOnExceptions=True, 
                                                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        <DataGrid x:Name="dgvSalesLogistics" AutoGenerateColumns="False" Margin="5,4" EnableRowVirtualization="True" VerticalScrollBarVisibility="Auto"
+                                  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                                  ItemsSource="{Binding Source={StaticResource sales_ordersales_order_detailViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="sales_order_detailDataGrid_RowEditEnding" 
+                                  InitializingNewItem="sales_order_detailDataGrid_InitializingNewItem" CellEditEnding="sales_order_detailDataGrid_CellEditEnding">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" Width="Auto" Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" Header="{lex:Loc Cognitivo:local:Item}"/>
+                                <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                    Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" CellStyle="{StaticResource Number_CellStyle}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </StackPanel>
                 </TabItem>
             </TabControl>

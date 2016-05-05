@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>खाता</value>
+    <value>लेखा</value>
   </data>
   <data name="Accountant" xml:space="preserve">
     <value>मुनीम</value>
   </data>
   <data name="Accounted" xml:space="preserve">
-    <value>हिसाब</value>
+    <value>जिम्मेदार</value>
   </data>
   <data name="Accounting" xml:space="preserve">
     <value>लेखांकन</value>
@@ -133,7 +133,7 @@
     <value>लेखांकन जर्नल</value>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>लेखा</value>
+    <value>हिसाब किताब</value>
   </data>
   <data name="AccountsPayable" xml:space="preserve">
     <value>देय खाते</value>
@@ -142,10 +142,10 @@
     <value>प्राप्य खाते</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
-    <value>खाते उपयोगिता</value>
+    <value>खाते का उपयोगिता</value>
   </data>
   <data name="Activate" xml:space="preserve">
-    <value>सक्रिय करें</value>
+    <value>सक्रिय</value>
   </data>
   <data name="Active" xml:space="preserve">
     <value>सक्रिय</value>
@@ -172,7 +172,7 @@
     <value>उपनाम</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>मात्रा</value>
+    <value>रकम</value>
   </data>
   <data name="AmountPaid" xml:space="preserve">
     <value>राशि का भुगतान</value>
@@ -181,13 +181,13 @@
     <value>अन्त करना</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>उपयोग</value>
+    <value>आवेदन</value>
   </data>
   <data name="Applicationrestartwillberequired" xml:space="preserve">
     <value>आवेदन को पुनः आरंभ की आवश्यकता होगी</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>स्वीकृत</value>
+    <value>मंजूर</value>
   </data>
   <data name="Area" xml:space="preserve">
     <value>क्षेत्र</value>
@@ -199,7 +199,7 @@
     <value>संपत्ति</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>आडिट</value>
+    <value>लेखा परीक्षा</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
     <value>स्वचालित लेखांकन</value>
@@ -207,8 +207,11 @@
   <data name="AutomaticRecipe" xml:space="preserve">
     <value>स्वत: पकाने की विधि</value>
   </data>
+  <data name="Available" xml:space="preserve">
+    <value>उपलब्ध</value>
+  </data>
   <data name="AvailableCredit" xml:space="preserve">
-    <value>उपलब्ध ऋण</value>
+    <value>बचा हुआ पैसा</value>
   </data>
   <data name="BackgroundImage" xml:space="preserve">
     <value>पृष्ठभूमि छवि</value>
@@ -225,8 +228,14 @@
   <data name="Behavior" xml:space="preserve">
     <value>व्यवहार</value>
   </data>
+  <data name="BelongsTo" xml:space="preserve">
+    <value>का है</value>
+  </data>
   <data name="BloodType" xml:space="preserve">
     <value>रक्त प्रकार</value>
+  </data>
+  <data name="Bonus" xml:space="preserve">
+    <value>बोनस</value>
   </data>
   <data name="BookofExpenses" xml:space="preserve">
     <value>व्यय की पुस्तक</value>
@@ -235,7 +244,7 @@
     <value>आय की पुस्तक</value>
   </data>
   <data name="Branch" xml:space="preserve">
-    <value>शाखा</value>
+    <value>डाली</value>
   </data>
   <data name="Brand" xml:space="preserve">
     <value>ब्रांड</value>
@@ -247,10 +256,10 @@
     <value>क्रेता</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
-    <value>आयाम द्वारा</value>
+    <value>By आयाम</value>
   </data>
   <data name="ByValue" xml:space="preserve">
-    <value>मूल्य से</value>
+    <value>द्वारा मूल्य</value>
   </data>
   <data name="Calculated" xml:space="preserve">
     <value>परिकलित</value>
@@ -265,10 +274,10 @@
     <value>राजधानी संसाधन</value>
   </data>
   <data name="CaractersLeft" xml:space="preserve">
-    <value>Caracters वाम</value>
+    <value>caracters वाम</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>श्रेणी</value>
+    <value>वर्ग</value>
   </data>
   <data name="ChartofAccount" xml:space="preserve">
     <value>खाता चार्ट</value>
@@ -283,7 +292,7 @@
     <value>कोड</value>
   </data>
   <data name="Coeficient" xml:space="preserve">
-    <value>Coeficient</value>
+    <value>coeficient</value>
   </data>
   <data name="CollectionAgent" xml:space="preserve">
     <value>संग्रह एजेंट</value>
@@ -313,7 +322,7 @@
     <value>विन्यास</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>कनेक्ट</value>
+    <value>जुडिये</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
     <value>कनेक्शन बिल्डर</value>
@@ -322,10 +331,10 @@
     <value>कनेक्शन स्ट्रिंग</value>
   </data>
   <data name="ConsumeNextRange" xml:space="preserve">
-    <value>अगले सीमा का उपभोग</value>
+    <value>भस्म अगले सीमा</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>संपर्क</value>
+    <value>से संपर्क करें</value>
   </data>
   <data name="ContactPerson" xml:space="preserve">
     <value>संपर्क व्यक्ति</value>
@@ -335,6 +344,9 @@
   </data>
   <data name="Contacts" xml:space="preserve">
     <value>संपर्क</value>
+  </data>
+  <data name="ContactTags" xml:space="preserve">
+    <value>संपर्क टैग</value>
   </data>
   <data name="Contract" xml:space="preserve">
     <value>अनुबंध</value>
@@ -352,19 +364,19 @@
     <value>बनाएं</value>
   </data>
   <data name="CreateorUpdate" xml:space="preserve">
-    <value>बनाने के लिए या अद्यतन</value>
+    <value>बनाएं या अद्यतन</value>
   </data>
   <data name="Credit" xml:space="preserve">
     <value>श्रेय</value>
   </data>
   <data name="CreditDays" xml:space="preserve">
-    <value>क्रेडिट दिनों</value>
+    <value>क्रेडिट दिन</value>
   </data>
   <data name="CreditLimit" xml:space="preserve">
     <value>क्रेडिट सीमा</value>
   </data>
   <data name="CreditLine" xml:space="preserve">
-    <value>क्रेडिट लाइन</value>
+    <value>सूत्रोल्लेख</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>मुद्रा</value>
@@ -382,10 +394,10 @@
     <value>ग्राहक</value>
   </data>
   <data name="Customize" xml:space="preserve">
-    <value>बनाइए</value>
+    <value>अनुकूलित करें</value>
   </data>
   <data name="Database" xml:space="preserve">
-    <value>डाटाबेस</value>
+    <value>डेटाबेस</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>तारीख</value>
@@ -400,7 +412,7 @@
     <value>चूक</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>हटाना</value>
+    <value>मिटाना</value>
   </data>
   <data name="DeliveryDate" xml:space="preserve">
     <value>डिलीवरी की तारीख</value>
@@ -418,37 +430,40 @@
     <value>लेखा सभी वित्तीय लेनदेन ट्रैक</value>
   </data>
   <data name="desc_AccountsPayable" xml:space="preserve">
-    <value>किए गए भुगतान डालें और क्या बाईं गणना</value>
+    <value>किए गए भुगतान की गणना डालें और whats के बाएं</value>
   </data>
   <data name="desc_AccountsReceivable" xml:space="preserve">
-    <value>राहत महसूस कर भुगतान डालें और क्या बाईं गणना</value>
+    <value>राहत महसूस कर भुगतान की गणना डालें और whats के बाएं</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>बनाएँ और अपने वित्तीय खातों के साथ चलाना</value>
+    <value>बनाएँ और अपने वित्तीय खातों के साथ कारोबार</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
-    <value>बैंकों से अधिक खातों धारण करने की क्षमता है</value>
+    <value>बैंकों को कई खातों धारण करने की क्षमता है</value>
   </data>
   <data name="desc_Contact" xml:space="preserve">
     <value>अपने संपर्कों और आपूर्तिकर्ताओं के लिए संपर्क जानकारी</value>
   </data>
   <data name="desc_ContactRole" xml:space="preserve">
-    <value>भूमिकाओं और अधिकार हमारे संपर्क के लिए परिभाषित करें</value>
+    <value>हमारे संपर्कों के लिए भूमिकाओं और अधिकारों को परिभाषित</value>
+  </data>
+  <data name="desc_contactTag" xml:space="preserve">
+    <value>टैग मदद खोज और जल्दी से संपर्कों को सॉर्ट</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
     <value>विभिन्न मुद्राओं और दरों में लेन-देन की अनुमति देता है</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
-    <value>वाणिज्यीकरण किया जा जाएगा कि सभी आइटम</value>
+    <value>सभी आइटम है कि वाणिज्यीकरण किया जा जाएगा</value>
   </data>
   <data name="desc_ItemTag" xml:space="preserve">
-    <value>टैग खोज और जल्दी से आइटम तरह से मदद</value>
+    <value>टैग मदद खोज और जल्दी से आइटम प्रकार</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
-    <value>स्थान एक शाखा के भीतर सूची पकड़</value>
+    <value>स्थानों एक शाखा के भीतर सूची पकड़</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
-    <value>अपनी संपत्ति के लिए नियंत्रण और अनुसूची रखरखाव</value>
+    <value>नियंत्रण और अपनी संपत्ति के लिए अनुसूची रखरखाव</value>
   </data>
   <data name="desc_Movement" xml:space="preserve">
     <value>करने के लिए और अलग अलग स्थानों से आइटम ले जाएँ</value>
@@ -457,7 +472,7 @@
     <value>अलग-अलग कीमत बिंदुओं पर एक ही मद का व्यवसायीकरण</value>
   </data>
   <data name="desc_Stock" xml:space="preserve">
-    <value>शाखा और स्थान के आधार पर वर्गीकृत स्टॉक का स्तर</value>
+    <value>स्टॉक के स्तर शाखा और स्थान के आधार पर वर्गीकृत किया</value>
   </data>
   <data name="desc_Terminal" xml:space="preserve">
     <value>टर्मिनल हमें दस्तावेजों का उत्सर्जन करने की अनुमति</value>
@@ -469,7 +484,7 @@
     <value>करों के एक बिक्री या खरीद के दौरान लागू</value>
   </data>
   <data name="desc_VATGroup" xml:space="preserve">
-    <value>बस लेन-देन को बांटा जाता है कि वैट</value>
+    <value>वैट है कि बस के लेन-देन को बांटा जाता है</value>
   </data>
   <data name="Designer" xml:space="preserve">
     <value>डिजाइनर</value>
@@ -486,14 +501,26 @@
   <data name="DifferenceinDate" xml:space="preserve">
     <value>तिथि में अंतर</value>
   </data>
+  <data name="Dimension" xml:space="preserve">
+    <value>आयाम</value>
+  </data>
+  <data name="DirectCost" xml:space="preserve">
+    <value>प्रत्यक्ष लागत</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>छूट</value>
+  </data>
+  <data name="Discount1" xml:space="preserve">
+    <value>छूट</value>
+  </data>
   <data name="Document" xml:space="preserve">
     <value>दस्तावेज़</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>कर दिया</value>
+    <value>किये गए</value>
   </data>
   <data name="DownTime" xml:space="preserve">
-    <value>समय नीचे</value>
+    <value>नीचे समय</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
     <value>नक़ल</value>
@@ -502,7 +529,7 @@
     <value>गतिशील क्षेत्रों</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>संपादित</value>
+    <value>संपादित करें</value>
   </data>
   <data name="Education" xml:space="preserve">
     <value>शिक्षा</value>
@@ -520,7 +547,7 @@
     <value>अंतिम तिथि</value>
   </data>
   <data name="Ending" xml:space="preserve">
-    <value>अंत</value>
+    <value>समापन</value>
   </data>
   <data name="EndingDate" xml:space="preserve">
     <value>समाप्त होने की तारीख</value>
@@ -528,8 +555,14 @@
   <data name="Enter" xml:space="preserve">
     <value>दर्ज</value>
   </data>
+  <data name="Equity" xml:space="preserve">
+    <value>इक्विटी</value>
+  </data>
   <data name="Error" xml:space="preserve">
-    <value>एरर</value>
+    <value>त्रुटि</value>
+  </data>
+  <data name="Error1" xml:space="preserve">
+    <value>त्रुटि</value>
   </data>
   <data name="EventManagement" xml:space="preserve">
     <value>इवेंट मैनेजमेंट</value>
@@ -568,16 +601,19 @@
     <value>वित्तीय</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>समाप्त</value>
+    <value>ख़त्म होना</value>
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
     <value>वित्त वर्ष अवधि</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
-    <value>अचल संपत्तियां</value>
+    <value>अचल सम्पत्ति</value>
   </data>
   <data name="Form" xml:space="preserve">
     <value>प्रपत्र</value>
+  </data>
+  <data name="Freight" xml:space="preserve">
+    <value>भाड़ा</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>लिंग</value>
@@ -592,22 +628,25 @@
     <value>विवरण प्राप्त करें</value>
   </data>
   <data name="GovernmentID" xml:space="preserve">
-    <value>सरकारी आईडी</value>
+    <value>सरकारी पहचान पत्र</value>
   </data>
   <data name="Guest" xml:space="preserve">
-    <value>मेहमान</value>
+    <value>अतिथि</value>
   </data>
   <data name="HasPromotion" xml:space="preserve">
-    <value>पदोन्नति है</value>
+    <value>तरक्की की है</value>
   </data>
   <data name="HasWeight" xml:space="preserve">
-    <value>भार है</value>
+    <value>वजन है</value>
   </data>
   <data name="Header" xml:space="preserve">
     <value>हैडर</value>
   </data>
   <data name="Hello" xml:space="preserve">
     <value>नमस्ते</value>
+  </data>
+  <data name="HourCoeficient" xml:space="preserve">
+    <value>घंटो coeficient</value>
   </data>
   <data name="HumanResources" xml:space="preserve">
     <value>मानव संसाधन</value>
@@ -618,11 +657,14 @@
   <data name="Import" xml:space="preserve">
     <value>आयात</value>
   </data>
-  <data name="Imports" xml:space="preserve">
+  <data name="Importation" xml:space="preserve">
     <value>आयात</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
     <value>निष्क्रिय</value>
+  </data>
+  <data name="Incomes" xml:space="preserve">
+    <value>आय</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
     <value>Incoterm</value>
@@ -631,7 +673,7 @@
     <value>Incoterm स्थिति</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>सूचना</value>
+    <value>जानकारी</value>
   </data>
   <data name="InitialAmount" xml:space="preserve">
     <value>मूल धन</value>
@@ -640,7 +682,7 @@
     <value>प्रारंभिक व्यवस्था</value>
   </data>
   <data name="Insert" xml:space="preserve">
-    <value>सम्मिलित</value>
+    <value>डालें</value>
   </data>
   <data name="Integration" xml:space="preserve">
     <value>एकीकरण</value>
@@ -676,22 +718,28 @@
     <value>विकल्प नहीं है</value>
   </data>
   <data name="Issued" xml:space="preserve">
-    <value>जारी किया गया</value>
+    <value>जारी किए गए</value>
   </data>
   <data name="Item" xml:space="preserve">
     <value>मद</value>
+  </data>
+  <data name="ItemDefect" xml:space="preserve">
+    <value>मद दोष</value>
+  </data>
+  <data name="ItemExpired" xml:space="preserve">
+    <value>मद की समय सीमा समाप्त</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
     <value>मद आंदोलन</value>
   </data>
   <data name="ItemTag" xml:space="preserve">
-    <value>मद टैग</value>
+    <value>आइटम टैग</value>
   </data>
   <data name="ItemTransfer" xml:space="preserve">
     <value>आइटम स्थानांतरण</value>
   </data>
   <data name="ItemType" xml:space="preserve">
-    <value>आइटम प्रकार</value>
+    <value>वस्तु परक</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>कुंजीपटल अल्प मार्ग</value>
@@ -714,6 +762,9 @@
   <data name="Line" xml:space="preserve">
     <value>लाइन</value>
   </data>
+  <data name="Link" xml:space="preserve">
+    <value>संपर्क</value>
+  </data>
   <data name="List" xml:space="preserve">
     <value>सूची</value>
   </data>
@@ -724,7 +775,7 @@
     <value>स्थान</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>लॉग इन करें</value>
+    <value>लॉगिन</value>
   </data>
   <data name="Logistics" xml:space="preserve">
     <value>रसद</value>
@@ -772,10 +823,13 @@
     <value>राष्ट्रीयता</value>
   </data>
   <data name="New" xml:space="preserve">
-    <value>नई</value>
+    <value>नया</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>नहीं</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>संख्या</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>व्यवस्था</value>
@@ -790,7 +844,7 @@
     <value>पैकिंग सूची</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>पासवर्ड</value>
+    <value>पारण शब्द</value>
   </data>
   <data name="Payable" xml:space="preserve">
     <value>देय</value>
@@ -814,7 +868,7 @@
     <value>व्यक्ति</value>
   </data>
   <data name="Personal" xml:space="preserve">
-    <value>व्यक्तिगत</value>
+    <value>निजी</value>
   </data>
   <data name="PlaceofBirth" xml:space="preserve">
     <value>जन्म स्थान</value>
@@ -823,19 +877,19 @@
     <value>बिक्री केन्द्र</value>
   </data>
   <data name="Position" xml:space="preserve">
-    <value>स्थिति</value>
+    <value>पद</value>
   </data>
   <data name="Preference" xml:space="preserve">
     <value>पसंद</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>कीमत</value>
+    <value>मूल्य</value>
   </data>
   <data name="PriceList" xml:space="preserve">
     <value>मूल्य सूची</value>
   </data>
   <data name="PricewithVAT" xml:space="preserve">
-    <value>वैट के साथ मूल्य</value>
+    <value>मूल्य वैट के साथ</value>
   </data>
   <data name="Print" xml:space="preserve">
     <value>छाप</value>
@@ -867,6 +921,12 @@
   <data name="ProjectExecution" xml:space="preserve">
     <value>परियोजना निष्पादन</value>
   </data>
+  <data name="ProjectFinance" xml:space="preserve">
+    <value>परियोजना वित्त</value>
+  </data>
+  <data name="PromissoryNote" xml:space="preserve">
+    <value>वचन पत्र</value>
+  </data>
   <data name="Promoted" xml:space="preserve">
     <value>प्रचारित</value>
   </data>
@@ -880,13 +940,13 @@
     <value>यथानुपात लागत</value>
   </data>
   <data name="Purchase" xml:space="preserve">
-    <value>क्रय</value>
+    <value>खरीद फरोख्त</value>
   </data>
   <data name="PurchaseDate" xml:space="preserve">
     <value>खरीद की तारीख</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
-    <value>खरीद चालान</value>
+    <value>खरीदी रसीद</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
     <value>खरीद आदेश</value>
@@ -895,7 +955,7 @@
     <value>क्रय वापसी</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
-    <value>क्रय निविदा</value>
+    <value>खरीद निविदा</value>
   </data>
   <data name="PurchaseValue" xml:space="preserve">
     <value>खरीद मूल्य</value>
@@ -907,25 +967,28 @@
     <value>सवाल</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>आप परिवर्तनों को रद्द करना चाहते हैं?</value>
+    <value>परिवर्तनों को रद्द! क्या आपको यकीन है?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
-    <value>आपके द्वारा चुने गए रिकॉर्ड को नष्ट करना चाहते हैं?</value>
+    <value>करें! क्या आपको यकीन है?</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
     <value>त्वरित कार्रवाई</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
-    <value>त्वरित कार्रवाई</value>
+    <value>त्वरित प्रक्रिया</value>
   </data>
   <data name="QuickLook" xml:space="preserve">
     <value>त्वरित देखो</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>सीमा</value>
+    <value>रेंज</value>
   </data>
   <data name="RangeValues" xml:space="preserve">
     <value>सीमा मूल्यों</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>मूल्यांकन करें</value>
   </data>
   <data name="RawMaterial" xml:space="preserve">
     <value>कच्चा माल</value>
@@ -933,11 +996,17 @@
   <data name="Receipt" xml:space="preserve">
     <value>रसीद</value>
   </data>
+  <data name="Receivable" xml:space="preserve">
+    <value>प्राप्य</value>
+  </data>
   <data name="RecievePayment" xml:space="preserve">
     <value>प्राप्त भुगतान</value>
   </data>
   <data name="Recipe" xml:space="preserve">
     <value>विधि</value>
+  </data>
+  <data name="Refinance" xml:space="preserve">
+    <value>पुनर्वित्त</value>
   </data>
   <data name="RelatedTo" xml:space="preserve">
     <value>से संबंधित</value>
@@ -951,14 +1020,23 @@
   <data name="RememberMe" xml:space="preserve">
     <value>मुझे याद रखना</value>
   </data>
+  <data name="Repair" xml:space="preserve">
+    <value>मरम्मत</value>
+  </data>
   <data name="Reprint" xml:space="preserve">
     <value>पुनर्मुद्रण</value>
   </data>
   <data name="RequestResource" xml:space="preserve">
     <value>अनुरोध संसाधन</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>अपेक्षित</value>
+  </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>वापसी संख्या</value>
+  </data>
+  <data name="Sale" xml:space="preserve">
+    <value>बिक्री</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>बिक्री</value>
@@ -973,7 +1051,7 @@
     <value>विक्रेता</value>
   </data>
   <data name="SalesmanType" xml:space="preserve">
-    <value>विक्रेता के प्रकार</value>
+    <value>विक्रेता प्रकार</value>
   </data>
   <data name="SalesOrder" xml:space="preserve">
     <value>बिक्री आदेश</value>
@@ -987,11 +1065,14 @@
   <data name="Saloon" xml:space="preserve">
     <value>बड़ा दालान</value>
   </data>
+  <data name="Sample" xml:space="preserve">
+    <value>नमूना</value>
+  </data>
   <data name="Save" xml:space="preserve">
-    <value>सहेजें</value>
+    <value>बचाना</value>
   </data>
   <data name="Saved" xml:space="preserve">
-    <value>सहेजा</value>
+    <value>बचाया</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>खोज</value>
@@ -1006,7 +1087,10 @@
     <value>विक्रेता</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>सेवा</value>
+    <value>सर्विस</value>
+  </data>
+  <data name="ServiceContract" xml:space="preserve">
+    <value>सेवा अनुबंध</value>
   </data>
   <data name="ServicesperEvent" xml:space="preserve">
     <value>घटना के अनुसार सेवा</value>
@@ -1036,10 +1120,10 @@
     <value>आरंभ करने की तिथि</value>
   </data>
   <data name="Starting" xml:space="preserve">
-    <value>शुरू</value>
+    <value>शुरुआत में</value>
   </data>
   <data name="StartingDate" xml:space="preserve">
-    <value>प्रारंभिक दिनांक</value>
+    <value>शुरू करने की तिथि - शुरू होने की तिथि - रवाना होने की तिथि</value>
   </data>
   <data name="State" xml:space="preserve">
     <value>राज्य</value>
@@ -1048,10 +1132,10 @@
     <value>स्थिति</value>
   </data>
   <data name="Stock" xml:space="preserve">
-    <value>स्टॉक</value>
+    <value>भण्डार</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
-    <value>शेयर अधिकतम</value>
+    <value>स्टॉक अधिकतम</value>
   </data>
   <data name="StockMinimum" xml:space="preserve">
     <value>स्टॉक न्यूनतम</value>
@@ -1069,13 +1153,22 @@
     <value>आधा</value>
   </data>
   <data name="SubTotalwithVAT" xml:space="preserve">
-    <value>वैट के साथ उप-योग</value>
+    <value>वैट के साथ आधा</value>
   </data>
   <data name="Supplier" xml:space="preserve">
     <value>प्रदायक</value>
   </data>
+  <data name="Supplies" xml:space="preserve">
+    <value>आपूर्ति</value>
+  </data>
   <data name="Tags" xml:space="preserve">
     <value>टैग</value>
+  </data>
+  <data name="Talent" xml:space="preserve">
+    <value>प्रतिभा</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>कार्य</value>
   </data>
   <data name="TaskList" xml:space="preserve">
     <value>कार्य सूची</value>
@@ -1099,7 +1192,7 @@
     <value>चलाना</value>
   </data>
   <data name="Transaction" xml:space="preserve">
-    <value>लेन-देन</value>
+    <value>सौदा</value>
   </data>
   <data name="TransactionDate" xml:space="preserve">
     <value>लेन - देन की तारीख</value>
@@ -1108,13 +1201,13 @@
     <value>लेन - देन संख्या</value>
   </data>
   <data name="Transactions" xml:space="preserve">
-    <value>लेन-देन</value>
+    <value>लेनदेन</value>
   </data>
   <data name="Transfer" xml:space="preserve">
     <value>हस्तांतरण</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>टाइप</value>
+    <value>प्रकार</value>
   </data>
   <data name="Usage" xml:space="preserve">
     <value>प्रयोग</value>
@@ -1145,6 +1238,9 @@
   </data>
   <data name="VATIncluded" xml:space="preserve">
     <value>VAT शामिल</value>
+  </data>
+  <data name="VATWithholding" xml:space="preserve">
+    <value>वैट रोक</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>चेतावनी</value>

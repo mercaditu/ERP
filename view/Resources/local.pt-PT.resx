@@ -118,1038 +118,1146 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Account" xml:space="preserve">
-    <value>Conta</value>
+    <value>계정</value>
   </data>
   <data name="Accountant" xml:space="preserve">
-    <value>Contador</value>
+    <value>회계 원</value>
   </data>
   <data name="Accounted" xml:space="preserve">
-    <value>Representaram</value>
+    <value>차지</value>
   </data>
   <data name="Accounting" xml:space="preserve">
-    <value>Contabilidade</value>
+    <value>회계</value>
   </data>
   <data name="AccountingJournal" xml:space="preserve">
-    <value>Jornal De Contabilidade</value>
+    <value>회계 저널</value>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Contas</value>
+    <value>계정</value>
   </data>
   <data name="AccountsPayable" xml:space="preserve">
-    <value>Contas A Pagar</value>
+    <value>외상 매입금</value>
   </data>
   <data name="AccountsReceivable" xml:space="preserve">
-    <value>Contas Recebíveis</value>
+    <value>채권 계정</value>
   </data>
   <data name="AccountUtility" xml:space="preserve">
-    <value>Utility For Contas</value>
+    <value>계정 유틸리티</value>
   </data>
   <data name="Activate" xml:space="preserve">
-    <value>Ativar</value>
+    <value>활성화</value>
   </data>
   <data name="Active" xml:space="preserve">
-    <value>Ativo</value>
+    <value>유효한</value>
   </data>
   <data name="ActivityPlan" xml:space="preserve">
-    <value>Plano De Actividades</value>
+    <value>활동 계획</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Endereço</value>
+    <value>주소</value>
   </data>
   <data name="Adjust" xml:space="preserve">
-    <value>Ajustar</value>
+    <value>맞추다</value>
   </data>
   <data name="Administrative" xml:space="preserve">
-    <value>Administrativo</value>
+    <value>관리</value>
   </data>
   <data name="Adult" xml:space="preserve">
-    <value>Adulto</value>
+    <value>성인</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>Avançado</value>
+    <value>많은</value>
   </data>
   <data name="Alias" xml:space="preserve">
-    <value>Pseudônimo</value>
+    <value>별명</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>Quantidade</value>
+    <value>양</value>
   </data>
   <data name="AmountPaid" xml:space="preserve">
-    <value>Quantia Paga</value>
+    <value>금액 지급</value>
   </data>
   <data name="Annul" xml:space="preserve">
-    <value>Anular</value>
+    <value>무효로하다</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>Aplicação</value>
+    <value>신청</value>
   </data>
   <data name="Applicationrestartwillberequired" xml:space="preserve">
-    <value>Reinicialização Do Aplicativo Será Exigido</value>
+    <value>응용 프로그램을 다시 시작해야합니다</value>
   </data>
   <data name="Approve" xml:space="preserve">
-    <value>Aprovar</value>
+    <value>승인</value>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>Área</value>
+    <value>지역</value>
   </data>
   <data name="ArrivalDate" xml:space="preserve">
-    <value>Data De Chegada</value>
+    <value>도착 일</value>
   </data>
   <data name="Assets" xml:space="preserve">
-    <value>Ativos</value>
+    <value>자산</value>
   </data>
   <data name="Audit" xml:space="preserve">
-    <value>Auditoria</value>
+    <value>심사</value>
   </data>
   <data name="AutomaticAccounting" xml:space="preserve">
-    <value>Contabilidade Automática</value>
+    <value>자동 회계</value>
   </data>
   <data name="AutomaticRecipe" xml:space="preserve">
-    <value>Receita Automática</value>
+    <value>자동 레시피</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>유효한</value>
   </data>
   <data name="AvailableCredit" xml:space="preserve">
-    <value>Crédito Disponível</value>
+    <value>사용 가능한 신용</value>
   </data>
   <data name="BackgroundImage" xml:space="preserve">
-    <value>Imagem De Fundo</value>
+    <value>배경 이미지</value>
   </data>
   <data name="Bank" xml:space="preserve">
-    <value>Banco</value>
+    <value>은행</value>
   </data>
   <data name="BaseSalary" xml:space="preserve">
-    <value>Salário Base</value>
+    <value>기본 연봉</value>
   </data>
   <data name="Basic" xml:space="preserve">
-    <value>Básico</value>
+    <value>기본</value>
   </data>
   <data name="Behavior" xml:space="preserve">
-    <value>Comportamento</value>
+    <value>행동</value>
+  </data>
+  <data name="BelongsTo" xml:space="preserve">
+    <value>에 속하는</value>
+  </data>
+  <data name="BloodType" xml:space="preserve">
+    <value>혈액형</value>
+  </data>
+  <data name="Bonus" xml:space="preserve">
+    <value>보너스</value>
   </data>
   <data name="BookofExpenses" xml:space="preserve">
-    <value>Livro De Despesas</value>
+    <value>비용의 책</value>
   </data>
   <data name="BookofIncomes" xml:space="preserve">
-    <value>Livro De Receitas</value>
+    <value>소득의 책</value>
   </data>
   <data name="Branch" xml:space="preserve">
-    <value>Ramo</value>
+    <value>분기</value>
   </data>
   <data name="Brand" xml:space="preserve">
-    <value>Marca</value>
+    <value>상표</value>
+  </data>
+  <data name="BudgetNumber" xml:space="preserve">
+    <value>예산 번호</value>
   </data>
   <data name="Buyer" xml:space="preserve">
-    <value>Comprador</value>
+    <value>사는 사람</value>
   </data>
   <data name="ByDimension" xml:space="preserve">
-    <value>Por Dimension</value>
+    <value>차원으로</value>
   </data>
   <data name="ByValue" xml:space="preserve">
-    <value>Por Valor</value>
+    <value>값으로</value>
   </data>
   <data name="Calculated" xml:space="preserve">
-    <value>Calculado</value>
+    <value>계획된</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancelar</value>
+    <value>취소하다</value>
   </data>
   <data name="CanExpire" xml:space="preserve">
-    <value>Pode Expirar</value>
+    <value>만료 수</value>
   </data>
   <data name="CapitalResource" xml:space="preserve">
-    <value>Resource Capital</value>
+    <value>자본 자원</value>
   </data>
   <data name="CaractersLeft" xml:space="preserve">
-    <value>Caracters Esquerda</value>
+    <value>Caracters 왼쪽</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>Categoria</value>
+    <value>범주</value>
   </data>
   <data name="ChartofAccount" xml:space="preserve">
-    <value>Plano De Contas</value>
+    <value>계정의 차트</value>
   </data>
   <data name="Children" xml:space="preserve">
-    <value>Crianças</value>
+    <value>어린이</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>Cidade</value>
+    <value>시티</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>Código</value>
+    <value>암호</value>
   </data>
   <data name="Coeficient" xml:space="preserve">
-    <value>Coeficiente</value>
+    <value>계수 (減 衰 係數)</value>
   </data>
   <data name="CollectionAgent" xml:space="preserve">
-    <value>Coleção Agent</value>
+    <value>컬렉션 에이전트</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>Comente</value>
+    <value>댓글</value>
   </data>
   <data name="Commercial" xml:space="preserve">
-    <value>Comercial</value>
+    <value>광고 방송</value>
   </data>
   <data name="Commision" xml:space="preserve">
-    <value>Comissão</value>
+    <value>Commision</value>
   </data>
   <data name="CommisionBase" xml:space="preserve">
-    <value>Base De Comissão</value>
+    <value>Commision 자료</value>
   </data>
   <data name="CommisionTemplate" xml:space="preserve">
-    <value>Template Comissão</value>
+    <value>Commision 템플릿</value>
   </data>
   <data name="Company" xml:space="preserve">
-    <value>Companhia</value>
+    <value>회사</value>
   </data>
   <data name="Condition" xml:space="preserve">
-    <value>Condição</value>
+    <value>조건</value>
   </data>
   <data name="Configuration" xml:space="preserve">
-    <value>Configuração</value>
+    <value>구성</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Conectar</value>
+    <value>잇다</value>
   </data>
   <data name="ConnectionBuilder" xml:space="preserve">
-    <value>Construtor De Conexão</value>
+    <value>연결 작성기</value>
   </data>
   <data name="ConnectionString" xml:space="preserve">
-    <value>Connection String</value>
+    <value>연결 문자열</value>
+  </data>
+  <data name="ConsumeNextRange" xml:space="preserve">
+    <value>다음 범위를 소비</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>Contato</value>
+    <value>접촉</value>
   </data>
   <data name="ContactPerson" xml:space="preserve">
-    <value>Pessoa De Contato</value>
+    <value>담당자</value>
   </data>
   <data name="ContactRole" xml:space="preserve">
-    <value>Contacto Papel</value>
+    <value>연락 역할</value>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contatos</value>
+    <value>콘택트 렌즈</value>
+  </data>
+  <data name="ContactTags" xml:space="preserve">
+    <value>연락 태그</value>
   </data>
   <data name="Contract" xml:space="preserve">
-    <value>Contrato</value>
+    <value>계약</value>
   </data>
   <data name="Cost" xml:space="preserve">
-    <value>Custo</value>
+    <value>비용</value>
   </data>
   <data name="CostCenter" xml:space="preserve">
-    <value>Centro De Custo</value>
+    <value>비용 센터</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>País</value>
+    <value>국가</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value>Crio</value>
+    <value>몹시 떠들어 대다</value>
   </data>
   <data name="CreateorUpdate" xml:space="preserve">
-    <value>Criar Ou Atualizar</value>
+    <value>만들기 또는 업데이트</value>
   </data>
   <data name="Credit" xml:space="preserve">
-    <value>Crédito</value>
+    <value>신용</value>
   </data>
   <data name="CreditDays" xml:space="preserve">
-    <value>Dias De Crédito</value>
+    <value>신용 일</value>
   </data>
   <data name="CreditLimit" xml:space="preserve">
-    <value>Limite De Crédito</value>
+    <value>신용 한도</value>
   </data>
   <data name="CreditLine" xml:space="preserve">
-    <value>Linha De Crédito</value>
+    <value>신용 라인</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>Moeda</value>
+    <value>통화</value>
   </data>
   <data name="Current" xml:space="preserve">
-    <value>Atual</value>
+    <value>흐름</value>
   </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
-    <value>Actualmente Conta</value>
+    <value>현재 계정에서</value>
   </data>
   <data name="CurrentValue" xml:space="preserve">
-    <value>Valor Atual</value>
+    <value>현재 값</value>
   </data>
   <data name="Customer" xml:space="preserve">
-    <value>Cliente</value>
+    <value>고객</value>
   </data>
   <data name="Customize" xml:space="preserve">
-    <value>Personalize</value>
+    <value>사용자 정의</value>
   </data>
   <data name="Database" xml:space="preserve">
-    <value>Banco De Dados</value>
+    <value>데이터 베이스</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Encontro</value>
+    <value>날짜</value>
   </data>
   <data name="DateofBirth" xml:space="preserve">
-    <value>Data De Nascimento</value>
+    <value>생년월일</value>
   </data>
   <data name="Debit" xml:space="preserve">
-    <value>Débito</value>
+    <value>직불</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Padrão</value>
+    <value>태만</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Excluir</value>
+    <value>지우다</value>
   </data>
   <data name="DeliveryDate" xml:space="preserve">
-    <value>Data De Entrega</value>
+    <value>배달 날짜</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>Departamento</value>
+    <value>학과</value>
   </data>
   <data name="DepartureDate" xml:space="preserve">
-    <value>Data De Partida</value>
+    <value>출발 날짜</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Descrição</value>
+    <value>기술</value>
   </data>
   <data name="desc_Account" xml:space="preserve">
-    <value>Contas Rastrear Todas As Transações Financeiras</value>
+    <value>계정은 모든 금융 거래를 추적</value>
   </data>
   <data name="desc_AccountsPayable" xml:space="preserve">
-    <value>Insira Pagamentos Efectuados E Calcular O Que É Esquerda</value>
+    <value>지불 한 금액을 삽입하고 뭐죠 왼쪽 계산</value>
   </data>
   <data name="desc_AccountsReceivable" xml:space="preserve">
-    <value>Insira Pagamentos Aliviados E Calcular O Que É Esquerda</value>
+    <value>안심 결제를 삽입하고 뭐죠 왼쪽 계산</value>
   </data>
   <data name="desc_AccountUtility" xml:space="preserve">
-    <value>Criar E Transaccionar Com Suas Contas Financeiras</value>
+    <value>만들기 및 금융 계좌와 거래</value>
   </data>
   <data name="desc_Bank" xml:space="preserve">
-    <value>Os Bancos Têm Capacidade De Manter Várias Contas</value>
+    <value>은행은 여러 계정을 보유 할 능력을 가지고</value>
   </data>
   <data name="desc_Contact" xml:space="preserve">
-    <value>Informação De Contato Para Seus Contatos E Fornecedores</value>
+    <value>연락처 및 공급 업체 연락 정보</value>
   </data>
   <data name="desc_ContactRole" xml:space="preserve">
-    <value>Definir Funções E Direitos Para Os Nossos Contactos</value>
+    <value>역할과 권한을 우리의 연락처를 정의</value>
+  </data>
+  <data name="desc_contactTag" xml:space="preserve">
+    <value>태그 검색 및 신속하게 연락처를 정렬하는 데 도움</value>
   </data>
   <data name="desc_Currency" xml:space="preserve">
-    <value>Permite Transações Em Diferentes Moedas E Taxas</value>
+    <value>다른 통화 및 금리 거래를 할 수 있습니다</value>
   </data>
   <data name="desc_Item" xml:space="preserve">
-    <value>Todos Os Itens Que Serão Comercializados</value>
+    <value>상용화 될 모든 항목</value>
   </data>
   <data name="desc_ItemTag" xml:space="preserve">
-    <value>Etiquetas Ajudar A Procurar E Classificar Os Itens Rapidamente</value>
+    <value>태그 검색 및 신속하게 항목을 정렬하는 데 도움</value>
   </data>
   <data name="desc_Location" xml:space="preserve">
-    <value>Locais De Manter Estoques Dentro De Um Ramo</value>
+    <value>위치 분기 내 재고를 보유</value>
   </data>
   <data name="desc_Maintainance" xml:space="preserve">
-    <value>Controle E Manutenção Schedual Para Seus Ativos</value>
+    <value>당신의 자산에 대한 제어 및 schedual 유지 관리 -</value>
   </data>
   <data name="desc_Movement" xml:space="preserve">
-    <value>Mova Os Itens De E Para Locais Diferentes</value>
+    <value>와 다른 위치에서 항목을 이동</value>
   </data>
   <data name="desc_PriceList" xml:space="preserve">
-    <value>Comercializar Mesmo Item Com Preços Diferentes</value>
+    <value>다른 가격대에서 같은 항목을 상용화</value>
   </data>
   <data name="desc_Stock" xml:space="preserve">
-    <value>Os Níveis De Estoque Agrupados Por Ramo E Localização</value>
+    <value>분기 및 위치별로 그룹화 재고 수준</value>
   </data>
   <data name="desc_Terminal" xml:space="preserve">
-    <value>Terminais Permitir-Nos Para Emitir Documentos</value>
+    <value>터미널은 우리가 문서를 방출 할 수 있도록</value>
   </data>
   <data name="desc_Transfer" xml:space="preserve">
-    <value>Transferir Itens De E Para Diferentes Lojas</value>
+    <value>에 다른 상점에서 항목을 이동</value>
   </data>
   <data name="desc_VAT" xml:space="preserve">
-    <value>Impostos Aplicada Durante Uma Compra Ou Venda</value>
+    <value>세금은 판매 또는 구매시 적용</value>
   </data>
   <data name="desc_VATGroup" xml:space="preserve">
-    <value>Iva Que São Agrupados Para Simplesmente Transações</value>
+    <value>단순히 거래로 분류된다 VAT</value>
   </data>
   <data name="Designer" xml:space="preserve">
-    <value>Desenhista</value>
+    <value>디자이너</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>Destino</value>
+    <value>목적지</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Detalhes</value>
+    <value>세부</value>
   </data>
   <data name="DeveloperMode" xml:space="preserve">
-    <value>Modo De Desenvolvedor</value>
+    <value>개발자 모드</value>
   </data>
   <data name="DifferenceinDate" xml:space="preserve">
-    <value>Diferença De Data</value>
+    <value>날짜의 차이</value>
+  </data>
+  <data name="Dimension" xml:space="preserve">
+    <value>치수</value>
+  </data>
+  <data name="DirectCost" xml:space="preserve">
+    <value>직접 비용</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>할인</value>
+  </data>
+  <data name="Discount1" xml:space="preserve">
+    <value>할인</value>
   </data>
   <data name="Document" xml:space="preserve">
-    <value>Documento</value>
+    <value>문서</value>
   </data>
   <data name="Done" xml:space="preserve">
-    <value>Feito</value>
+    <value>끝난</value>
   </data>
   <data name="DownTime" xml:space="preserve">
-    <value>Tempo De Inatividade</value>
+    <value>시간 아래로</value>
   </data>
   <data name="Duplicate" xml:space="preserve">
-    <value>Duplicado</value>
+    <value>복제</value>
   </data>
   <data name="DynamicFields" xml:space="preserve">
-    <value>Campos Dinâmicos</value>
+    <value>동적 필드</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Editar</value>
+    <value>편집하다</value>
   </data>
   <data name="Education" xml:space="preserve">
-    <value>Educação</value>
+    <value>교육</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>O Email</value>
+    <value>이메일</value>
   </data>
   <data name="Employee" xml:space="preserve">
-    <value>Empregado</value>
+    <value>종업원</value>
   </data>
   <data name="EncryptedConnection" xml:space="preserve">
-    <value>Conexão Criptografada</value>
+    <value>암호화 된 연결</value>
   </data>
   <data name="EndDate" xml:space="preserve">
-    <value>Data Final</value>
+    <value>종료 날짜</value>
   </data>
   <data name="Ending" xml:space="preserve">
-    <value>Final</value>
+    <value>종결</value>
   </data>
   <data name="EndingDate" xml:space="preserve">
-    <value>Data De Encerramento</value>
+    <value>종료 날짜</value>
   </data>
   <data name="Enter" xml:space="preserve">
-    <value>Entrar</value>
+    <value>들어가다</value>
+  </data>
+  <data name="Equity" xml:space="preserve">
+    <value>공평</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Erro</value>
+    <value>오류</value>
+  </data>
+  <data name="Error1" xml:space="preserve">
+    <value>오류</value>
   </data>
   <data name="EventManagement" xml:space="preserve">
-    <value>Gestão De Eventos</value>
+    <value>이벤트 관리</value>
   </data>
   <data name="EventType" xml:space="preserve">
-    <value>Tipo De Evento</value>
+    <value>이벤트 종류</value>
   </data>
   <data name="Expenses" xml:space="preserve">
-    <value>Despesas</value>
+    <value>경비</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Exportar</value>
+    <value>수출</value>
   </data>
   <data name="Exports" xml:space="preserve">
-    <value>Exportações</value>
+    <value>수출</value>
   </data>
   <data name="Extract" xml:space="preserve">
-    <value>Extrair</value>
+    <value>추출하다</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>Extras</value>
+    <value>엑스트라</value>
   </data>
   <data name="Family" xml:space="preserve">
-    <value>Família</value>
+    <value>가족</value>
   </data>
   <data name="Favorite" xml:space="preserve">
-    <value>Favorito</value>
+    <value>특히 잘하는</value>
   </data>
   <data name="Female" xml:space="preserve">
-    <value>Fêmea</value>
+    <value>여자</value>
   </data>
   <data name="Finance" xml:space="preserve">
-    <value>Financiar</value>
+    <value>재원</value>
   </data>
   <data name="Financial" xml:space="preserve">
-    <value>Financeiro</value>
+    <value>재정상의</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>Acabado</value>
+    <value>끝마친</value>
   </data>
   <data name="FiscalPeriod" xml:space="preserve">
-    <value>Período Fiscal</value>
+    <value>회계 기간</value>
   </data>
   <data name="FixedAssets" xml:space="preserve">
-    <value>Ativo Permanente</value>
+    <value>고정 자산</value>
   </data>
   <data name="Form" xml:space="preserve">
-    <value>Formato</value>
+    <value>형태</value>
+  </data>
+  <data name="Freight" xml:space="preserve">
+    <value>화물</value>
   </data>
   <data name="Gender" xml:space="preserve">
-    <value>Gênero</value>
+    <value>성별</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>Geral</value>
+    <value>일반</value>
   </data>
   <data name="Geography" xml:space="preserve">
-    <value>Geografia</value>
+    <value>지리학</value>
   </data>
   <data name="GetDetails" xml:space="preserve">
-    <value>Obter Detalhes</value>
+    <value>자세한 내용보기</value>
   </data>
   <data name="GovernmentID" xml:space="preserve">
-    <value>Cnpj</value>
+    <value>정부 ID</value>
   </data>
   <data name="Guest" xml:space="preserve">
-    <value>Hóspede</value>
+    <value>손님</value>
   </data>
   <data name="HasPromotion" xml:space="preserve">
-    <value>Tem Promoção</value>
+    <value>프로모션 있음</value>
   </data>
   <data name="HasWeight" xml:space="preserve">
-    <value>Tem Peso</value>
+    <value>무게를 가지고</value>
+  </data>
+  <data name="Header" xml:space="preserve">
+    <value>머리글</value>
   </data>
   <data name="Hello" xml:space="preserve">
-    <value>Olá</value>
+    <value>안녕하세요</value>
+  </data>
+  <data name="HourCoeficient" xml:space="preserve">
+    <value>시간 계수 (減 衰 係數)</value>
   </data>
   <data name="HumanResources" xml:space="preserve">
-    <value>Recursos Humanos</value>
+    <value>인적 자원</value>
   </data>
   <data name="Humidity" xml:space="preserve">
-    <value>Umidade</value>
+    <value>습기</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Importar</value>
+    <value>수입</value>
   </data>
-  <data name="Imports" xml:space="preserve">
-    <value>Importações</value>
+  <data name="Importation" xml:space="preserve">
+    <value>수입</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
-    <value>Inativar</value>
+    <value>비활성화</value>
+  </data>
+  <data name="Incomes" xml:space="preserve">
+    <value>소득</value>
   </data>
   <data name="Incoterm" xml:space="preserve">
-    <value>Incoterm</value>
+    <value>인코 텀즈</value>
   </data>
   <data name="IncotermCondition" xml:space="preserve">
-    <value>Incoterm Condição</value>
+    <value>인코 텀즈 조건</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Informação</value>
+    <value>정보</value>
   </data>
   <data name="InitialAmount" xml:space="preserve">
-    <value>Montante Inicial</value>
+    <value>초기 금액</value>
   </data>
   <data name="InitialSetup" xml:space="preserve">
-    <value>Configuração Inicial</value>
+    <value>초기 설정</value>
   </data>
   <data name="Insert" xml:space="preserve">
-    <value>Inserir</value>
+    <value>끼워 넣다</value>
   </data>
   <data name="Integration" xml:space="preserve">
-    <value>Integração</value>
+    <value>완성</value>
   </data>
   <data name="InternationalCommerce" xml:space="preserve">
-    <value>Comércio Internacional</value>
+    <value>국제 통상</value>
   </data>
   <data name="Inventory" xml:space="preserve">
-    <value>Inventário</value>
+    <value>목록</value>
   </data>
   <data name="Invoice" xml:space="preserve">
-    <value>Fatura</value>
+    <value>송장</value>
   </data>
   <data name="InvoiceDay" xml:space="preserve">
-    <value>Dia Factura</value>
+    <value>송장 일</value>
   </data>
   <data name="InvoiceInterval" xml:space="preserve">
-    <value>Fatura Interval</value>
+    <value>송장 간격</value>
   </data>
   <data name="InvoiceNumber" xml:space="preserve">
-    <value>Número Da Fatura</value>
+    <value>송장 번호</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>Endereço Do Servidor (Ip Ou Domínio)</value>
+    <value>서버 주소 (IP 또는 도메인)</value>
   </data>
   <data name="IsDirect" xml:space="preserve">
-    <value>É Direto</value>
+    <value>직접인가</value>
   </data>
   <data name="ISOCode" xml:space="preserve">
-    <value>Código Iso</value>
+    <value>ISO 코드</value>
   </data>
   <data name="Issubstitute" xml:space="preserve">
-    <value>É Substituto</value>
+    <value>대체입니다</value>
   </data>
   <data name="Issued" xml:space="preserve">
-    <value>Emitido</value>
+    <value>발행 된</value>
   </data>
   <data name="Item" xml:space="preserve">
-    <value>Item</value>
+    <value>목</value>
+  </data>
+  <data name="ItemDefect" xml:space="preserve">
+    <value>항목 결함</value>
+  </data>
+  <data name="ItemExpired" xml:space="preserve">
+    <value>항목이 만료</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
-    <value>Movimento Item</value>
+    <value>항목 이동</value>
   </data>
   <data name="ItemTag" xml:space="preserve">
-    <value>Elemento Etiqueta</value>
+    <value>상품 태그</value>
   </data>
   <data name="ItemTransfer" xml:space="preserve">
-    <value>Transferência De Item</value>
+    <value>항목 전송</value>
   </data>
   <data name="ItemType" xml:space="preserve">
-    <value>Tipo De Item</value>
+    <value>항목 형식</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
-    <value>Atalhos Do Teclado</value>
+    <value>키보드 바로 가기</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Idioma</value>
+    <value>언어</value>
   </data>
   <data name="LastUsed" xml:space="preserve">
-    <value>Usado Por Último</value>
+    <value>중고 마지막</value>
   </data>
   <data name="LegalRepresentative" xml:space="preserve">
-    <value>Representante Legal</value>
+    <value>법정 대리인</value>
   </data>
   <data name="Length" xml:space="preserve">
-    <value>Comprimento</value>
+    <value>길이</value>
   </data>
   <data name="Liabilities" xml:space="preserve">
-    <value>Passivo</value>
+    <value>부채</value>
   </data>
   <data name="Line" xml:space="preserve">
-    <value>Linha</value>
+    <value>선</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>링크</value>
   </data>
   <data name="List" xml:space="preserve">
-    <value>Lista</value>
+    <value>명부</value>
   </data>
   <data name="LocatetheServer" xml:space="preserve">
-    <value>Localize O Servidor</value>
+    <value>서버를 찾습니다</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Localização</value>
+    <value>위치</value>
   </data>
   <data name="LogIn" xml:space="preserve">
-    <value>Entrar</value>
+    <value>로그인</value>
   </data>
   <data name="Logistics" xml:space="preserve">
-    <value>Logística</value>
+    <value>기호 논리학</value>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>Sair</value>
+    <value>로그 아웃</value>
   </data>
   <data name="LotNumber" xml:space="preserve">
-    <value>Número De Lote</value>
+    <value>로트 번호</value>
   </data>
   <data name="Maintainance" xml:space="preserve">
-    <value>Manutenção</value>
+    <value>유지 관리 -</value>
   </data>
   <data name="MakePayment" xml:space="preserve">
-    <value>Fazer Pagamento</value>
+    <value>결제하기</value>
   </data>
   <data name="Male" xml:space="preserve">
-    <value>Macho</value>
+    <value>남성</value>
   </data>
   <data name="ManufacturingDate" xml:space="preserve">
-    <value>Data De Fabricação</value>
+    <value>제조 날짜</value>
   </data>
   <data name="MaritalStatus" xml:space="preserve">
-    <value>Estado Civil</value>
+    <value>결혼 여부</value>
   </data>
   <data name="Measurement" xml:space="preserve">
-    <value>Medição</value>
+    <value>측정</value>
   </data>
   <data name="MeasurementType" xml:space="preserve">
-    <value>Tipo De Medição</value>
+    <value>측정 유형</value>
   </data>
   <data name="MigrationType" xml:space="preserve">
-    <value>Tipo De Migração</value>
+    <value>마이그레이션 유형</value>
   </data>
   <data name="Module" xml:space="preserve">
-    <value>Módulo</value>
+    <value>기준 치수</value>
   </data>
   <data name="Movement" xml:space="preserve">
-    <value>Movimento</value>
+    <value>운동</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Nome</value>
+    <value>이름</value>
   </data>
   <data name="Nationality" xml:space="preserve">
-    <value>Nacionalidade</value>
+    <value>국적</value>
   </data>
   <data name="New" xml:space="preserve">
-    <value>Novo</value>
+    <value>새로운</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Não</value>
+    <value>아니</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>번호</value>
   </data>
   <data name="Order" xml:space="preserve">
-    <value>Ordem</value>
+    <value>주문</value>
   </data>
   <data name="OrderNumber" xml:space="preserve">
-    <value>Número Do Pedido</value>
+    <value>주문 번호</value>
   </data>
   <data name="Origin" xml:space="preserve">
-    <value>Origem</value>
+    <value>유래</value>
   </data>
   <data name="PackingList" xml:space="preserve">
-    <value>Lista De Embalagem</value>
+    <value>패킹리스트</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Senha</value>
+    <value>암호</value>
   </data>
   <data name="Payable" xml:space="preserve">
-    <value>A Pagar</value>
+    <value>채무</value>
   </data>
   <data name="Payment" xml:space="preserve">
-    <value>Pagamento</value>
+    <value>지불</value>
   </data>
   <data name="PaymentDate" xml:space="preserve">
-    <value>Data De Pagamento</value>
+    <value>지불 날짜</value>
   </data>
   <data name="PaymentForm" xml:space="preserve">
-    <value>Forma De Pagamento</value>
+    <value>결제 양식</value>
   </data>
   <data name="PaymentReceipt" xml:space="preserve">
-    <value>Pagamento Recebido</value>
+    <value>영수증</value>
   </data>
   <data name="PaymentType" xml:space="preserve">
-    <value>Tipo De Pagamento</value>
+    <value>지불 유형</value>
   </data>
   <data name="Person" xml:space="preserve">
-    <value>Pessoa</value>
+    <value>사람</value>
   </data>
   <data name="Personal" xml:space="preserve">
-    <value>Pessoal</value>
+    <value>개인적인</value>
   </data>
   <data name="PlaceofBirth" xml:space="preserve">
-    <value>Local De Nascimento</value>
+    <value>출생지</value>
   </data>
   <data name="PointofSale" xml:space="preserve">
-    <value>Ponto De Venda</value>
+    <value>판매 시점</value>
   </data>
   <data name="Position" xml:space="preserve">
-    <value>Posição</value>
+    <value>위치</value>
   </data>
   <data name="Preference" xml:space="preserve">
-    <value>Preferência</value>
+    <value>우선권</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Preço</value>
+    <value>가격</value>
   </data>
   <data name="PriceList" xml:space="preserve">
-    <value>Lista De Preço</value>
+    <value>가격표</value>
   </data>
   <data name="PricewithVAT" xml:space="preserve">
-    <value>Preço Com Iva</value>
+    <value>VAT 가격</value>
   </data>
   <data name="Print" xml:space="preserve">
-    <value>Imprimir</value>
+    <value>인쇄</value>
   </data>
   <data name="Printer" xml:space="preserve">
-    <value>Impressora</value>
+    <value>인쇄기</value>
   </data>
   <data name="PrinterValues" xml:space="preserve">
-    <value>Valores De Impressora</value>
+    <value>프린터 값</value>
   </data>
   <data name="PrintingPress" xml:space="preserve">
-    <value>Da Imprensa</value>
+    <value>인쇄기</value>
   </data>
   <data name="Product" xml:space="preserve">
-    <value>Produto</value>
+    <value>생성물</value>
   </data>
   <data name="ProductionExecution" xml:space="preserve">
-    <value>Execução De Produção</value>
+    <value>생산 실행</value>
   </data>
   <data name="ProductionOrder" xml:space="preserve">
-    <value>Ordem De Produção</value>
+    <value>생산 주문</value>
   </data>
   <data name="ProductionStatus" xml:space="preserve">
-    <value>Status De Produção</value>
+    <value>생산 현황</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>Projeto</value>
+    <value>계획</value>
   </data>
   <data name="ProjectExecution" xml:space="preserve">
-    <value>Projeto De Execução</value>
+    <value>프로젝트 실행</value>
+  </data>
+  <data name="ProjectFinance" xml:space="preserve">
+    <value>프로젝트 금융</value>
+  </data>
+  <data name="PromissoryNote" xml:space="preserve">
+    <value>약속 어음</value>
   </data>
   <data name="Promoted" xml:space="preserve">
-    <value>Promovido</value>
+    <value>프로모션</value>
   </data>
   <data name="Properties" xml:space="preserve">
-    <value>Propriedades</value>
+    <value>속성</value>
   </data>
   <data name="Property" xml:space="preserve">
-    <value>Propriedade</value>
+    <value>재산</value>
   </data>
   <data name="ProratedCost" xml:space="preserve">
-    <value>Custo Rateado</value>
+    <value>비례 배분 비용</value>
   </data>
   <data name="Purchase" xml:space="preserve">
-    <value>Compra</value>
+    <value>매수</value>
   </data>
   <data name="PurchaseDate" xml:space="preserve">
-    <value>Data De Compra</value>
+    <value>구입 날짜</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
-    <value>Nota Fiscal De Compra</value>
+    <value>구매 송장</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
-    <value>Ordem De Compra</value>
+    <value>구매 주문</value>
   </data>
   <data name="PurchaseReturn" xml:space="preserve">
-    <value>Compra Retorno</value>
+    <value>구매 돌아 가기</value>
   </data>
   <data name="PurchaseTender" xml:space="preserve">
-    <value>Compra Tender</value>
+    <value>구매 입찰</value>
   </data>
   <data name="PurchaseValue" xml:space="preserve">
-    <value>Compra Valor</value>
+    <value>구매 가치</value>
   </data>
   <data name="Quantity" xml:space="preserve">
-    <value>Quantidade</value>
+    <value>수량</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>Questão</value>
+    <value>문제</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>Você Quer Cancelar As Alterações?</value>
+    <value>변경 취소! 확실합니까?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
-    <value>Você Deseja Excluir O Registro Selecionado?</value>
+    <value>지우다! 확실합니까?</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
-    <value>Ação Rápida</value>
+    <value>빠른 액션</value>
   </data>
   <data name="QuickActions" xml:space="preserve">
-    <value>Ações Rápidas</value>
+    <value>빠른 작업</value>
   </data>
   <data name="QuickLook" xml:space="preserve">
-    <value>Uma Olhadela</value>
+    <value>한눈에</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>Alcance</value>
+    <value>범위</value>
   </data>
   <data name="RangeValues" xml:space="preserve">
-    <value>Os Valores Variam</value>
+    <value>범위 값</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>율</value>
   </data>
   <data name="RawMaterial" xml:space="preserve">
-    <value>Matéria-Prima</value>
+    <value>원료</value>
   </data>
   <data name="Receipt" xml:space="preserve">
-    <value>Recibo</value>
+    <value>영수증</value>
+  </data>
+  <data name="Receivable" xml:space="preserve">
+    <value>받을 수 있는</value>
   </data>
   <data name="RecievePayment" xml:space="preserve">
-    <value>Receber Pagamento</value>
+    <value>받으십시오 지불</value>
   </data>
   <data name="Recipe" xml:space="preserve">
-    <value>Receita</value>
+    <value>레시피</value>
+  </data>
+  <data name="Refinance" xml:space="preserve">
+    <value>재 융자</value>
   </data>
   <data name="RelatedTo" xml:space="preserve">
-    <value>Relacionado A</value>
+    <value>와 연관되다</value>
   </data>
   <data name="RelatetoInvoice" xml:space="preserve">
-    <value>Relacionar-Se Com Fatura</value>
+    <value>송장 관련</value>
   </data>
   <data name="Relationship" xml:space="preserve">
-    <value>Relação</value>
+    <value>관계</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
-    <value>Lembre De Mim</value>
+    <value>날 기억해</value>
+  </data>
+  <data name="Repair" xml:space="preserve">
+    <value>수리</value>
   </data>
   <data name="Reprint" xml:space="preserve">
-    <value>Reimprimir</value>
+    <value>재판</value>
   </data>
   <data name="RequestResource" xml:space="preserve">
-    <value>Solicitação De Recursos</value>
+    <value>자원 요청</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>필수</value>
   </data>
   <data name="ReturnNumber" xml:space="preserve">
-    <value>Número De Retorno</value>
+    <value>반환 번호</value>
+  </data>
+  <data name="Sale" xml:space="preserve">
+    <value>판매</value>
   </data>
   <data name="Sales" xml:space="preserve">
-    <value>Vendas</value>
+    <value>매상</value>
   </data>
   <data name="SalesBudget" xml:space="preserve">
-    <value>Orçamento De Vendas</value>
+    <value>판매 예산</value>
   </data>
   <data name="SalesInvoice" xml:space="preserve">
-    <value>Fatura De Vendas</value>
+    <value>판매 송장</value>
   </data>
   <data name="Salesman" xml:space="preserve">
-    <value>Vendedor</value>
+    <value>판매원</value>
   </data>
   <data name="SalesmanType" xml:space="preserve">
-    <value>Tipo De Vendedor</value>
+    <value>세일즈맨 유형</value>
   </data>
   <data name="SalesOrder" xml:space="preserve">
-    <value>Pedido De Vendas</value>
+    <value>판매 주문</value>
   </data>
   <data name="SalesRepresentative" xml:space="preserve">
-    <value>Representante De Vendas</value>
+    <value>영업 담당자</value>
   </data>
   <data name="SalesReturn" xml:space="preserve">
-    <value>Retorno</value>
+    <value>판매 반환</value>
   </data>
   <data name="Saloon" xml:space="preserve">
-    <value>Saloon</value>
+    <value>큰 홀</value>
+  </data>
+  <data name="Sample" xml:space="preserve">
+    <value>견본</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Guardar</value>
+    <value>구하다</value>
   </data>
   <data name="Saved" xml:space="preserve">
-    <value>Salvo</value>
+    <value>저장</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Pesquisa</value>
+    <value>수색</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Segurança</value>
+    <value>보안</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
-    <value>Pergunta De Segurança</value>
+    <value>보안 답변</value>
   </data>
   <data name="Seller" xml:space="preserve">
-    <value>Vendedor</value>
+    <value>파는 사람</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Serviço</value>
+    <value>서비스</value>
+  </data>
+  <data name="ServiceContract" xml:space="preserve">
+    <value>서비스 계약</value>
   </data>
   <data name="ServicesperEvent" xml:space="preserve">
-    <value>Serviços Por Evento</value>
+    <value>이벤트 별 서비스</value>
   </data>
   <data name="ServicesperPerson" xml:space="preserve">
-    <value>Serviços Por Pessoa</value>
+    <value>사람마다 서비스</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Configurações</value>
+    <value>설정</value>
   </data>
   <data name="Sex" xml:space="preserve">
-    <value>Sexo</value>
+    <value>섹스</value>
   </data>
   <data name="SingleCurrency" xml:space="preserve">
-    <value>Moeda Única</value>
+    <value>단일 통화</value>
   </data>
   <data name="SocialID" xml:space="preserve">
-    <value>Id Social</value>
+    <value>사회 ID</value>
   </data>
   <data name="Special" xml:space="preserve">
-    <value>Especial</value>
+    <value>특별한</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Velocidade</value>
+    <value>속도</value>
   </data>
   <data name="StartDate" xml:space="preserve">
-    <value>Data De Início</value>
+    <value>시작 일</value>
   </data>
   <data name="Starting" xml:space="preserve">
-    <value>Iniciando</value>
+    <value>시작</value>
   </data>
   <data name="StartingDate" xml:space="preserve">
-    <value>Data De Início</value>
+    <value>시작 날짜</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>Estado</value>
+    <value>상태</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Estatuto</value>
+    <value>지위</value>
   </data>
   <data name="Stock" xml:space="preserve">
-    <value>Estoque</value>
+    <value>스톡</value>
   </data>
   <data name="StockMaximum" xml:space="preserve">
-    <value>Estoque Máximo</value>
+    <value>주식 최대</value>
   </data>
   <data name="StockMinimum" xml:space="preserve">
-    <value>Da Mínima</value>
+    <value>주식 최소</value>
   </data>
   <data name="StylePrinter" xml:space="preserve">
-    <value>Estilo Printer</value>
+    <value>스타일 프린터</value>
   </data>
   <data name="StyleReceipt" xml:space="preserve">
-    <value>Estilo Receipt</value>
+    <value>스타일 영수증</value>
   </data>
   <data name="Subscription" xml:space="preserve">
-    <value>Subscrição</value>
+    <value>신청</value>
   </data>
   <data name="Subtotal" xml:space="preserve">
-    <value>Subtotal</value>
+    <value>소계</value>
   </data>
   <data name="SubTotalwithVAT" xml:space="preserve">
-    <value>Subtotal Com Iva</value>
+    <value>VAT과 소계</value>
   </data>
   <data name="Supplier" xml:space="preserve">
-    <value>Fornecedor</value>
+    <value>공급 업체</value>
+  </data>
+  <data name="Supplies" xml:space="preserve">
+    <value>용품</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Etiquetas</value>
+    <value>태그</value>
+  </data>
+  <data name="Talent" xml:space="preserve">
+    <value>재능</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>태스크</value>
   </data>
   <data name="TaskList" xml:space="preserve">
-    <value>Lista De Tarefas</value>
+    <value>작업 목록</value>
   </data>
   <data name="Telephone" xml:space="preserve">
-    <value>Telefone</value>
+    <value>전화</value>
   </data>
   <data name="Temperature" xml:space="preserve">
-    <value>Temperatura</value>
+    <value>온도</value>
   </data>
   <data name="Template" xml:space="preserve">
-    <value>Modelo</value>
+    <value>주형</value>
   </data>
   <data name="Terminal" xml:space="preserve">
-    <value>Terminal</value>
+    <value>단말기</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>Total</value>
+    <value>합계</value>
   </data>
   <data name="Transact" xml:space="preserve">
-    <value>Transacionar</value>
+    <value>집행하다</value>
   </data>
   <data name="Transaction" xml:space="preserve">
-    <value>Transação</value>
+    <value>트랜잭션</value>
   </data>
   <data name="TransactionDate" xml:space="preserve">
-    <value>Transaction Data</value>
+    <value>거래 날짜</value>
   </data>
   <data name="TransactionNumber" xml:space="preserve">
-    <value>Número De Transações</value>
+    <value>거래 번호</value>
   </data>
   <data name="Transactions" xml:space="preserve">
-    <value>Transações</value>
+    <value>업무</value>
   </data>
   <data name="Transfer" xml:space="preserve">
-    <value>Transferir</value>
+    <value>이전</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Tipo</value>
+    <value>유형</value>
   </data>
   <data name="Usage" xml:space="preserve">
-    <value>Uso</value>
+    <value>용법</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>Do Utilizador</value>
+    <value>사용자</value>
   </data>
   <data name="UserRole" xml:space="preserve">
-    <value>Função De Usuário</value>
+    <value>사용자 역할</value>
   </data>
   <data name="ValidUntil" xml:space="preserve">
-    <value>Válido Até</value>
+    <value>유효한까지</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Valor</value>
+    <value>값</value>
   </data>
   <data name="Variant" xml:space="preserve">
-    <value>Variante</value>
+    <value>다른</value>
   </data>
   <data name="VAT" xml:space="preserve">
-    <value>Cuba</value>
+    <value>큰 통</value>
   </data>
   <data name="VATExcluded" xml:space="preserve">
-    <value>Excluído Iva</value>
+    <value>VAT 제외</value>
   </data>
   <data name="VATGrouping" xml:space="preserve">
-    <value>Iva Agrupamento</value>
+    <value>VAT 그룹화</value>
   </data>
   <data name="VATIncluded" xml:space="preserve">
-    <value>Iva Incluído</value>
+    <value>VAT 포함</value>
+  </data>
+  <data name="VATWithholding" xml:space="preserve">
+    <value>부가가치세 원천 징수</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Aviso</value>
+    <value>경고</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Largura</value>
+    <value>폭</value>
   </data>
   <data name="WindSpeed" xml:space="preserve">
-    <value>Velocidade Do Vento</value>
+    <value>바람의 속도</value>
   </data>
   <data name="Work" xml:space="preserve">
-    <value>Trabalho</value>
+    <value>작업</value>
   </data>
   <data name="WorkType" xml:space="preserve">
-    <value>Tipo De Trabalho</value>
+    <value>작업 유형</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Sim</value>
+    <value>예</value>
   </data>
 </root>

@@ -110,6 +110,7 @@ namespace Cognitivo.Commercial
                 payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
                 payment_quick.payment_detail.payment.contact = PaymentDB.contacts.Where(x => x.id_contact == payment_quick.payment_detail.payment.id_contact).FirstOrDefault();
                 payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
+                payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
                 if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
                 {
                     payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;

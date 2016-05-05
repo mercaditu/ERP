@@ -234,6 +234,9 @@
   <data name="BloodType" xml:space="preserve">
     <value>Blood Type</value>
   </data>
+  <data name="Bonus" xml:space="preserve">
+    <value>Bonus</value>
+  </data>
   <data name="BookofExpenses" xml:space="preserve">
     <value>Book of Expenses</value>
   </data>
@@ -507,6 +510,9 @@
   <data name="Discount" xml:space="preserve">
     <value>Discount</value>
   </data>
+  <data name="Discount1" xml:space="preserve">
+    <value>Discount</value>
+  </data>
   <data name="Document" xml:space="preserve">
     <value>Document</value>
   </data>
@@ -553,6 +559,9 @@
     <value>Equity</value>
   </data>
   <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error1" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="EventManagement" xml:space="preserve">
@@ -603,6 +612,9 @@
   <data name="Form" xml:space="preserve">
     <value>Form</value>
   </data>
+  <data name="Freight" xml:space="preserve">
+    <value>Freight</value>
+  </data>
   <data name="Gender" xml:space="preserve">
     <value>Gender</value>
   </data>
@@ -645,8 +657,8 @@
   <data name="Import" xml:space="preserve">
     <value>Import</value>
   </data>
-  <data name="Imports" xml:space="preserve">
-    <value>Imports</value>
+  <data name="Importation" xml:space="preserve">
+    <value>Importation</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
     <value>Inactivate</value>
@@ -710,6 +722,12 @@
   </data>
   <data name="Item" xml:space="preserve">
     <value>Item</value>
+  </data>
+  <data name="ItemDefect" xml:space="preserve">
+    <value>Item Defect</value>
+  </data>
+  <data name="ItemExpired" xml:space="preserve">
+    <value>Item Expired</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
     <value>Item Movement</value>
@@ -906,6 +924,9 @@
   <data name="ProjectFinance" xml:space="preserve">
     <value>Project Finance</value>
   </data>
+  <data name="PromissoryNote" xml:space="preserve">
+    <value>Promissory Note</value>
+  </data>
   <data name="Promoted" xml:space="preserve">
     <value>Promoted</value>
   </data>
@@ -946,10 +967,10 @@
     <value>Question</value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>Do you want to cancel changes?</value>
+    <value>Cancel Changes! Are you sure?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
-    <value>Do you want to delete the selected record?</value>
+    <value>Delete! Are you sure?</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
     <value>Quick Action</value>
@@ -999,6 +1020,9 @@
   <data name="RememberMe" xml:space="preserve">
     <value>Remember Me</value>
   </data>
+  <data name="Repair" xml:space="preserve">
+    <value>Repair</value>
+  </data>
   <data name="Reprint" xml:space="preserve">
     <value>Reprint</value>
   </data>
@@ -1010,6 +1034,9 @@
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>Return Number</value>
+  </data>
+  <data name="Sale" xml:space="preserve">
+    <value>Sale</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>Sales</value>
@@ -1037,6 +1064,9 @@
   </data>
   <data name="Saloon" xml:space="preserve">
     <value>Saloon</value>
+  </data>
+  <data name="Sample" xml:space="preserve">
+    <value>Sample</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -1208,6 +1238,9 @@
   </data>
   <data name="VATIncluded" xml:space="preserve">
     <value>VAT Included</value>
+  </data>
+  <data name="VATWithholding" xml:space="preserve">
+    <value>VAT Withholding</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>

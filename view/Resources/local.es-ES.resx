@@ -234,6 +234,9 @@
   <data name="BloodType" xml:space="preserve">
     <value>Tipo De Sangre</value>
   </data>
+  <data name="Bonus" xml:space="preserve">
+    <value>Prima</value>
+  </data>
   <data name="BookofExpenses" xml:space="preserve">
     <value>Libro De Gastos</value>
   </data>
@@ -507,6 +510,9 @@
   <data name="Discount" xml:space="preserve">
     <value>Descuento</value>
   </data>
+  <data name="Discount1" xml:space="preserve">
+    <value>Descuento</value>
+  </data>
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
   </data>
@@ -555,6 +561,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="Error1" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="EventManagement" xml:space="preserve">
     <value>Gestión De Eventos</value>
   </data>
@@ -583,7 +592,7 @@
     <value>Favorito</value>
   </data>
   <data name="Female" xml:space="preserve">
-    <value>Hembra</value>
+    <value>Femenino</value>
   </data>
   <data name="Finance" xml:space="preserve">
     <value>Financiar</value>
@@ -602,6 +611,9 @@
   </data>
   <data name="Form" xml:space="preserve">
     <value>Formar</value>
+  </data>
+  <data name="Freight" xml:space="preserve">
+    <value>Carga</value>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>Género</value>
@@ -645,8 +657,8 @@
   <data name="Import" xml:space="preserve">
     <value>Importar</value>
   </data>
-  <data name="Imports" xml:space="preserve">
-    <value>Las Importaciones</value>
+  <data name="Importation" xml:space="preserve">
+    <value>Importación</value>
   </data>
   <data name="Inactivate" xml:space="preserve">
     <value>Desactivar</value>
@@ -710,6 +722,12 @@
   </data>
   <data name="Item" xml:space="preserve">
     <value>Ítem</value>
+  </data>
+  <data name="ItemDefect" xml:space="preserve">
+    <value>Defecto Del Artículo</value>
+  </data>
+  <data name="ItemExpired" xml:space="preserve">
+    <value>Elemento De Plazo</value>
   </data>
   <data name="ItemMovement" xml:space="preserve">
     <value>Movimiento De Artículos</value>
@@ -906,6 +924,9 @@
   <data name="ProjectFinance" xml:space="preserve">
     <value>Financiación De Proyectos</value>
   </data>
+  <data name="PromissoryNote" xml:space="preserve">
+    <value>Pagaré</value>
+  </data>
   <data name="Promoted" xml:space="preserve">
     <value>Promovido</value>
   </data>
@@ -946,10 +967,10 @@
     <value>Pregunta  </value>
   </data>
   <data name="Question_Cancel" xml:space="preserve">
-    <value>¿Quieres Cancelar Los Cambios?</value>
+    <value>¡Cancelar Cambios! ¿Estás Seguro?</value>
   </data>
   <data name="Question_Delete" xml:space="preserve">
-    <value>¿Quieres Eliminar El Registro Seleccionado?</value>
+    <value>¡Borrar! ¿Estás Seguro?</value>
   </data>
   <data name="QuickAction" xml:space="preserve">
     <value>Acción Rapida</value>
@@ -999,6 +1020,9 @@
   <data name="RememberMe" xml:space="preserve">
     <value>Recuérdame</value>
   </data>
+  <data name="Repair" xml:space="preserve">
+    <value>Reparar</value>
+  </data>
   <data name="Reprint" xml:space="preserve">
     <value>Reimprimir</value>
   </data>
@@ -1010,6 +1034,9 @@
   </data>
   <data name="ReturnNumber" xml:space="preserve">
     <value>Número De Retorno</value>
+  </data>
+  <data name="Sale" xml:space="preserve">
+    <value>Venta</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>Ventas</value>
@@ -1037,6 +1064,9 @@
   </data>
   <data name="Saloon" xml:space="preserve">
     <value>Salon</value>
+  </data>
+  <data name="Sample" xml:space="preserve">
+    <value>Muestra</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Guardar</value>
@@ -1208,6 +1238,9 @@
   </data>
   <data name="VATIncluded" xml:space="preserve">
     <value>Iva Incluido</value>
+  </data>
+  <data name="VATWithholding" xml:space="preserve">
+    <value>Retención De Iva</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Advertencia</value>

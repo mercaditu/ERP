@@ -358,6 +358,8 @@ namespace entity.Brillo.Document
                                   unit_cost = g.unit_cost,
                                   unit_price = g.unit_cost,
                                   unit_price_vat = g.UnitPrice_Vat,
+                                  sales_invoice_number = g.sales_invoice_detail != null ? g.sales_invoice_detail.sales_invoice != null ? g.sales_invoice_detail.sales_invoice.number : "" : "",
+                                  salesman = g.sales_invoice_detail != null ? g.sales_invoice_detail.sales_invoice != null ? g.sales_invoice_detail.sales_invoice.sales_rep != null ? g.sales_invoice_detail.sales_invoice.sales_rep.name : "" : "" : "",
                                   terminale_name = g.sales_return.app_terminal != null ? g.sales_return.app_terminal.name : "",
                                   code = g.sales_return.code,
                                   contact_name = g.sales_return.contact.name,
@@ -388,42 +390,6 @@ namespace entity.Brillo.Document
         {
             using (db db = new db())
             {
-                //reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                //List<sales_budget_detail> sales_budget_detail = db.sales_budget_detail.Where(x => x.id_sales_budget == sales_budget.id_sales_budget).ToList();
-
-                //reportDataSource.Value = sales_budget_detail
-                //    .Select(g => new
-                //    {
-                //        id_sales_budget = g.id_sales_budget,
-                //        id_sales_budget_detail = g.id_sales_budget_detail,
-                //        sales_budget = g.id_sales_budget_detail,
-                //        id_company = g.id_company,
-                //        add1 = g.sales_budget.contact.address,
-                //        telephone = g.sales_budget.contact.telephone,
-                //        email = g.sales_budget.contact.email,
-                //        company_name = g.app_company.name,
-                //        item_code = g.item.code,
-                //        item_description = g.item.name,
-                //        item_brand = g.item.item_brand != null ? g.item.item_brand.name : "",
-                //        quantity = g.quantity,
-                //        sub_Total = g.SubTotal,
-                //        sub_Total_vat = g.SubTotal_Vat,
-                //        unit_cost = g.unit_cost,
-                //        unit_price = g.unit_cost,
-                //        unit_price_vat = g.UnitPrice_Vat,
-                //        terminale_name = g.sales_budget.app_terminal.name,
-                //        code = g.sales_budget.code,
-                //        contact_name = g.sales_budget.contact.name,
-                //        sales_rep_name = g.sales_budget.sales_rep != null ? g.sales_budget.sales_rep.name : "",
-                //        trans_date = g.sales_budget.trans_date,
-                //        id_vat_group = g.id_vat_group,
-                //        gov_id = g.sales_budget.contact.gov_code,
-                //        contract = g.sales_budget.app_contract.name,
-                //        condition = g.sales_budget.app_contract.app_condition.name,
-                //        Number = g.sales_budget.number,
-                //        comment = g.sales_budget.comment
-                //    }).ToList();
-
                 return reportDataSource;
             }
         }
@@ -483,42 +449,6 @@ namespace entity.Brillo.Document
         /// <returns></returns>
         public ReportDataSource PurchaseReturn(purchase_return purchase_return)
         {
-            //using (db db = new db())
-            //{
-            //    List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
-            //    reportDataSource.Value = sales_invoice_detail.Select(g => new
-            //    {
-            //        sales_invoice = g.id_sales_invoice,
-            //        id_company = g.id_company,
-            //        add1 = g.sales_invoice.contact.address,
-            //        telephone = g.sales_invoice.contact.telephone,
-            //        email = g.sales_invoice.contact.email,
-            //        company_name = g.app_company.name,
-            //        item_code = g.item.code,
-            //        item_description = g.item.name,
-            //        Description = g.item.item_brand != null ? g.item.item_brand.name : "",
-            //        quantity = g.quantity,
-            //        sub_Total = g.SubTotal,
-            //        sub_Total_vat = g.SubTotal_Vat,
-            //        unit_cost = g.unit_cost,
-            //        unit_price = g.unit_price,
-            //        unit_price_vat = g.UnitPrice_Vat,
-            //        terminal_name = g.sales_invoice.app_terminal.name,
-            //        code = g.sales_invoice.code,
-            //        customer_contact_name = g.sales_invoice.contact.name,
-            //        customer_code = g.sales_invoice.contact.code,
-            //        customer_alias = g.sales_invoice.contact.alias,
-            //        project_name = g.sales_invoice.project != null ? g.sales_invoice.project.name : "",
-            //        sales_invoice_rep_name = g.sales_invoice.sales_rep != null ? g.sales_invoice.sales_rep.name : "",
-            //        trans_date = g.sales_invoice.trans_date,
-            //        id_vat_group = g.id_vat_group,
-            //        gov_id = g.sales_invoice.contact.gov_code,
-            //        sales_invoice_contract = g.sales_invoice.app_contract.name,
-            //        sales_invoice_condition = g.sales_invoice.app_contract.app_condition.name,
-            //        sales_number = g.sales_invoice.number,
-            //        sales_invoice_Comment = g.sales_invoice.comment
-            //    }).ToList();
-
             return reportDataSource;
         }
 

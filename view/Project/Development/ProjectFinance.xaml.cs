@@ -107,6 +107,7 @@ namespace Cognitivo.Project
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
+         
         }
 
 

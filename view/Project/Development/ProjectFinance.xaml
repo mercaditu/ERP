@@ -22,6 +22,7 @@
     <Page.Resources>
         <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+        <converter:Projectfinance x:Key="Projectfinance"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <converter:Status2ColorConverter x:Key="Status2ColorConverter"/>
@@ -189,7 +190,16 @@
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}"/>
+                        <TextBox x:Name="tbxQuantity"  >
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource Projectfinance}">
+                                    <Binding Path="IsChecked" ElementName="ToggleQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
+                                    <Binding Path="quantity_exe" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
+                                    <Binding Path="quantity_est" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"> </Binding>
+                                    
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
                         <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>
 
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>

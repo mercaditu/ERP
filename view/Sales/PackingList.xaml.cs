@@ -16,10 +16,8 @@ namespace Cognitivo.Sales
     public partial class PackingList : Page
     {
         PackingListDB dbContext = new PackingListDB();
-
+        Sales.Settings SalesSettings = new Settings();
         CollectionViewSource sales_packingViewSource, sales_packingsales_packinglist_detailViewSource,  sales_orderViewSource;
-        PackingListSetting _pref_SalesPackingList = new PackingListSetting();
-        Properties.Settings _pref_Cognitivo = new Properties.Settings();
         cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
         public PackingList()
@@ -58,12 +56,13 @@ namespace Cognitivo.Sales
             PackingListSetting _pref_SalesOrder = new PackingListSetting();
 
             sales_packing sales_packing = dbContext.New();
-            sales_packing.trans_date = DateTime.Now.AddDays(_pref_SalesOrder.TransDate_OffSet);
+            sales_packing.trans_date = DateTime.Now.AddDays(SalesSettings.TransDate_Offset);
           
             dbContext.sales_packing.Add(sales_packing);
             sales_packingViewSource.View.Refresh();
             sales_packingViewSource.View.MoveCurrentToLast();
         }
+
         private void toolBar_btnEdit_Click(object sender)
         {
             if (sales_packingDataGrid.SelectedItem != null)
@@ -117,8 +116,7 @@ namespace Cognitivo.Sales
         private void popupCustomize_Closed(object sender, EventArgs e)
         {
             popupCustomize.PopupAnimation = System.Windows.Controls.Primitives.PopupAnimation.Fade;
-            Sales.PackingListSetting.Default.Save();
-            _pref_SalesPackingList = Sales.PackingListSetting.Default;
+            Sales.Settings.Default.Save();
             popupCustomize.IsOpen = false;
         }
 

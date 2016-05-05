@@ -37,7 +37,7 @@
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>399</ApplicationRevision>
+    <ApplicationRevision>400</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -488,6 +488,7 @@
     <Compile Include="Sales\Packing.xaml.cs">
       <DependentUpon>Packing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sales\PackingListSetting.cs" />
     <Compile Include="Sales\PointOfSale.xaml.cs">
       <DependentUpon>PointOfSale.xaml</DependentUpon>
     </Compile>
@@ -752,11 +753,6 @@
     <Compile Include="Sales\InvoiceSetting.cs" />
     <Compile Include="Sales\PackingList.xaml.cs">
       <DependentUpon>PackingList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sales\PackingListSetting.Designer.cs">
-      <DependentUpon>PackingListSetting.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Sales\Salesman.xaml.cs">
       <DependentUpon>Salesman.xaml</DependentUpon>
@@ -1125,11 +1121,6 @@
     </None>
     <Resource Include="Resources\cognitivo.ttf" />
     <Resource Include="Resources\Entypo.ttf" />
-    <None Include="Sales\PackingListSetting.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>PackingListSetting.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Sales\ReturnSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>ReturnSetting.Designer.cs</LastGenOutput>

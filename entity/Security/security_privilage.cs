@@ -25,11 +25,11 @@ namespace entity
     {
         public enum Privilages
         {
-            [LocalizedDescription("CanUserDiscountByPercent")]
+            //[LocalizedDescription("CanUserDiscountByPercent")]
             CanUserDiscountByPercent=1,
-            [LocalizedDescription("CanUserDiscountByValue")]
+            //[LocalizedDescription("CanUserDiscountByValue")]
             CanUserDiscountByValue=2,
-            [LocalizedDescription("CanUserUpdatePrice")]
+            //[LocalizedDescription("CanUserUpdatePrice")]
             CanUserUpdatePrice=3,
         }
     }

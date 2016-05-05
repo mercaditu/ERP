@@ -98,23 +98,25 @@ namespace cntrl.PanelAdv
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
-            List<sales_order> sales_order = sales_orderDatagrid.ItemsSource.OfType<sales_order>().ToList();
-            selected_sales_order = sales_order.Where(x => x.IsSelected == true).ToList();
-            if (mode == module.sales_invoice)
+            if (sales_orderDatagrid.ItemsSource != null)
             {
-                if (selected_sales_order.Count() > 1)
+                List<sales_order> sales_order = sales_orderDatagrid.ItemsSource.OfType<sales_order>().ToList();
+                selected_sales_order = sales_order.Where(x => x.IsSelected == true).ToList();
+                if (mode == module.sales_invoice)
                 {
-                    MessageBox.Show("only one order will be linked..");
-                    return;
+                    if (selected_sales_order.Count() > 1)
+                    {
+                        MessageBox.Show("only one order will be linked..");
+                        return;
+                    }
                 }
+
+
+                if (SalesOrder_Click != null)
+                {
+                    SalesOrder_Click(sender);
+                }   
             }
-
-
-            if (SalesOrder_Click != null)
-            {
-                SalesOrder_Click(sender);
-            }
-
         }
 
         private void sales_orderDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)

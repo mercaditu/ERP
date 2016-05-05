@@ -72,59 +72,73 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
+            /// VALIDATIONS...
+            /// 
+            /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
+            if (sales_invoice.contact == null)
+            {
+                tabContact.Focus();
+                return;
+            }
+
+            /// Validates if Sales Detail has 0 rows, then take you to Sales Tab.
+            if (sales_invoice.sales_invoice_detail.Count == 0)
+            {
+                tabSales.Focus();
+                return;
+            }
+
+            /// If validation is met, then we can start Sales Process.
             if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
             {
-                IEnumerable<DbEntityValidationResult> validationresult = SalesInvoiceDB.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    SalesInvoiceDB.SaveChanges();
-                }
-                else
-                {
-                    MessageBox.Show("Some Value is missing..");
-                    return;
-                }
-
+                ///Approve Sales Invoice.
+                ///Note> Approve includes Save Logic. No need to seperately Save.
                 SalesInvoiceDB.Approve(true);
 
+
                 payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-
-                payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
-
                 payment.IsSelected = true;
                 payment.status = Status.Documents_General.Pending;
 
                 PaymentDB.payments.Add(payment);
 
+                payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
+
                 PaymentDB.Approve(payment_schedual.id_payment_schedual,(bool)chkreceipt.IsChecked);
 
-                sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
 
+                ///Creating new SALES INVOICE for upcomming sale. 
+                sales_invoice sales_invoice_New = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
                 //Copy the Sales Rep of previous sale.
-                Newsales_invoice.id_sales_rep = sales_invoice.id_sales_rep;
-                SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
+                sales_invoice_New.id_sales_rep = sales_invoice.id_sales_rep;
+
+                SalesInvoiceDB.sales_invoice.Add(sales_invoice_New);
                 
                 sales_invoiceViewSource.View.Refresh();
                 sales_invoiceViewSource.View.MoveCurrentToLast();
+                
+                ///Creating new PAYMENT for upcomming sale. 
                 payment paymentnew = new payment();
                 paymentnew.id_range = GetDefault.Range(entity.App.Names.PaymentUtility);
 
+                //THIS CODE IS WRONG. WHEN WE HAVE MULTIPLE PAYMENT, THIS WILL CAUSE AN ERROR. FIX.
                 if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
                 {
                     payment.app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
                 }
 
                 paymentnew.status = Status.Documents_General.Pending;
-                payment_detail payment_detailnew = new entity.payment_detail();
+                payment_detail payment_detailnew = new payment_detail();
                 payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-                payment_detailnew.id_currency = Newsales_invoice.app_currencyfx.id_currency;
+                payment_detailnew.id_currency = sales_invoice_New.app_currencyfx.id_currency;
                 paymentnew.payment_detail.Add(payment_detailnew);
                 paymentList.Add(paymentnew);
                 paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
                 paymentViewSource.Source = paymentList;
                 paymentViewSource.View.Refresh();
                 paymentViewSource.View.MoveCurrentToLast();
-                tabContact.IsSelected = true;
+
+                tabContact.Focus();
                 sbxContact.Text = "";
                 //Run approve code here.	 
             }

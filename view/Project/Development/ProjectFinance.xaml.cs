@@ -64,8 +64,9 @@ namespace Cognitivo.Project
                         {
                             if (project_task.production_execution_detail.Count() > 0)
                             {
-                                project_task.quantity_exec = (decimal)(project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : project_task.production_execution_detail.Sum(x => x.quantity));
-                                project_task.RaisePropertyChanged("quantity_exec");
+                                //Abhi... I would like to handle such things from Entity Level.
+                                //project_task.quantity_exe = (decimal)(project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : project_task.production_execution_detail.Sum(x => x.quantity));
+                                //project_task.RaisePropertyChanged("quantity_exec");
                             }
 
                         }

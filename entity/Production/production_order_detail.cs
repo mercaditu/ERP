@@ -78,8 +78,24 @@ namespace entity
                 }
             }
         }
-
         private decimal _quantity;
+
+        [NotMapped]
+        public decimal? quantity_exe
+        {
+            get
+            {
+                if (production_execution_detail.Count > 0)
+                {
+                    using (db db = new db())
+                    {
+                        return db.production_execution_detail.Where(y => y.id_order_detail == id_order_detail).Sum(x => x.quantity);
+                    }
+                }
+                return 0;
+            }
+        }
+
         public Status.Project? status { get; set; }
 
         [NotMapped]
@@ -115,6 +131,7 @@ namespace entity
         public virtual production_order_detail parent { get; set; }
         public virtual ICollection<production_order_detail> child { get; set; }
         public virtual ICollection<production_order_dimension> production_order_dimension { get; set; }
+        public virtual ICollection<production_execution_detail> production_execution_detail { get; set; }
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
         public virtual production_order production_order { get; set; }
         public virtual project_task project_task { get; set; }

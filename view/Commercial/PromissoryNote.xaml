@@ -1,0 +1,82 @@
+﻿<Page x:Class="Cognitivo.Commercial.PromissoryNote"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:entity="clr-namespace:entity;assembly=entity" 
+        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="700"
+	Title="{lex:Loc PromissoryNote}">
+    <Page.Resources>
+        <CollectionViewSource x:Key="payment_promissory_noteViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_promissory_note}, CreateList=True}"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox Background="{StaticResource AccentColor_Brush}" SelectionChanged="ListBox_SelectionChanged"
+			     ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
+			     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Source={StaticResource payment_promissory_noteViewSource}}"
+			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding code}" 
+                                   recordSecondaryName="{Binding gov_code}" recordName="{Binding name}" 
+                                   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </cntrl:navList>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="270"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel HorizontalAlignment="Center">
+                <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
+                <TextBox Style="{StaticResource input_textbox}"/>
+                <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                <DatePicker Style="{StaticResource input_datepicker}"/>
+                <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
+                <ComboBox Style="{StaticResource input_combobox}"/>
+                <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
+                <TextBox Style="{StaticResource input_textbox}"/>
+                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                <Label Content="Dollar" Style="{StaticResource generic_Label}"/>
+            </StackPanel>
+            
+            <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Margin="8">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{lex:Loc Number}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc SalesInvoice}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc PurchaseInvoice}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc Condition}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc Contract}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc ExpiryDate}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc Value}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3"
+			           btnApprove_Click="toolBar_btnApprove_Click"
+			           btnAnull_Click="toolBar_btnAnull_Click"
+                       btnSearch_Click="toolBar_btnSearch_Click"/>
+    </Grid>
+</Page>

@@ -110,10 +110,9 @@
         </StackPanel>
 
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3"
-			btnApprove_Click="toolBar_btnApprove_Click"
-			btnAnull_Click="toolBar_btnAnull_Click"
-                       btnSearch_Click="toolBar_btnSearch_Click"
-                       />
+			           btnApprove_Click="toolBar_btnApprove_Click"
+			           btnAnull_Click="toolBar_btnAnull_Click"
+                       btnSearch_Click="toolBar_btnSearch_Click"/>
 
         <Grid Grid.Column="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

@@ -42,14 +42,11 @@
                 </CheckBox>
             </Grid>
             <Label Content="{Binding Code, ElementName=pnl_Treeview}" Style="{StaticResource generic_Label}" />
-            <Border VerticalAlignment="Center" CornerRadius="2" Margin="4,0">
-                <Border.Background>
-                    <SolidColorBrush Color="Red" Opacity="0.32"/>
-                </Border.Background>
-                <TextBlock Text="{Binding Type_Name, Converter={StaticResource InitialsConverter}, ElementName=pnl_Treeview, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                           Margin="4,1" Foreground="Black" VerticalAlignment="Center"/>
-            </Border>
             <Label Content="{Binding TaskName, ElementName=pnl_Treeview}" Style="{StaticResource input_label}"/>
+            <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0">
+                <TextBlock Text="{Binding Type_Name, Converter={StaticResource InitialsConverter}, ElementName=pnl_Treeview, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                           Margin="4,3" FontSize="8" VerticalAlignment="Center"/>
+            </Border>
             <Border VerticalAlignment="Center" CornerRadius="2" Background="Gainsboro" Opacity=".64" Margin="4,0" Visibility="{Binding ElementName=lblProyectedQuantity, Path=Text, Converter={StaticResource Decimal2Visibility}}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="EST" Margin="4,1" FontSize="8" VerticalAlignment="Center"/>

@@ -126,11 +126,16 @@
             </Grid>
 
             <Grid  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                
                 <Button Style="{StaticResource btn_green}" Content="{lex:Loc Extract}" Click="location_ListBox_SelectionChanged"
                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2"/>
-                <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True"  
+                
+                <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
                           RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2">
                     <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                         <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Item}" Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="auto" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True">
                             <DataGridTextColumn.Header>

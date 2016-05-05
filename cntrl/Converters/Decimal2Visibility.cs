@@ -18,9 +18,14 @@ namespace Cognitivo.Converters
         {
             if (value != null)
             {
-                decimal Amount = System.Convert.ToDecimal(value);
-                if (Amount > 0)
-                { return Visibility.Visible; }
+                try
+                {
+                    decimal Amount = System.Convert.ToDecimal(value);
+                    if (Amount > 0)
+                    { return Visibility.Visible; }
+                }
+                catch
+                { }
             }
             return Visibility.Collapsed;
         }

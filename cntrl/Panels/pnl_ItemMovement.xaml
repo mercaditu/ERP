@@ -39,20 +39,18 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
-            <StackPanel Margin="8" Orientation="Horizontal">
-                <StackPanel x:Name="stpDisplay" HorizontalAlignment="Left" >
-          
-
-                <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" 
-                      AutoGenerateColumns="False" Grid.ColumnSpan="2" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
-                      EnableRowVirtualization="True" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem"
-                       Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
-                    <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
-                       <DataGridTextColumn Binding="{Binding value_counted,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
-                           
+            <StackPanel Margin="8" Orientation="Horizontal" DataContext="{StaticResource item_inventory_detailViewSource}">
+                <StackPanel x:Name="stpDisplay">
+                    <Label Content="{Binding items.name}" Style="{StaticResource input_label}"/>
+                    <DataGrid Height="Auto" x:Name="item_inventory_detailDataGrid" Width="340"
+                              AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_inventory_detailViewSource}}"
+                              EnableRowVirtualization="True" InitializingNewItem="item_transfer_detailDataGrid_InitializingNewItem"
+                              Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding timestamp, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Date}" Width="100" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="*"/>
                         </DataGrid.Columns>
-                    <DataGrid.RowDetailsTemplate>
+                        <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
                             <DataGrid x:Name="item_inventory_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" CanUserAddRows="False"
                         		EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource item_inventoryitem_inventory_dimensionViewSource}}"
@@ -61,7 +59,7 @@
                                     <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsReadOnly="True"/>
-                                        <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
+                                        <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" CellStyle="{StaticResource Number_CellStyle}" Header="value" Width="auto"/>
                                     </DataGrid.Columns>
                             </DataGrid>
                         </DataTemplate>

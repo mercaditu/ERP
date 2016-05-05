@@ -110,7 +110,7 @@ namespace Cognitivo.Sales
                 ///Creating new SALES INVOICE for upcomming sale. 
                 sales_invoice sales_invoice_New = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
                 //Copy the Sales Rep of previous sale.
-                sales_invoice_New.id_sales_rep = sales_invoice.id_sales_rep;
+                //sales_invoice_New.id_sales_rep = sales_invoice.id_sales_rep;
 
                 SalesInvoiceDB.sales_invoice.Add(sales_invoice_New);
                 

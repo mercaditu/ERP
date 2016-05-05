@@ -199,7 +199,11 @@ namespace entity.Brillo.Logic
             string Detail = string.Empty;
             string Footer = string.Empty;
             string CompanyName = string.Empty;
-            app_company app_company=null;
+            string BranchName = string.Empty;
+            string TerminalName = string.Empty;
+
+            app_company app_company = null;
+            
             if (sales_invoice.app_company != null)
             {
                 CompanyName = sales_invoice.app_company.name;
@@ -213,12 +217,25 @@ namespace entity.Brillo.Logic
                          app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
                         CompanyName = app_company.name;
                     }
-
-
-
                 }
-
             }
+
+            if (sales_invoice.app_branch != null)
+            {
+                BranchName = sales_invoice.app_branch.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
+                    {
+                        app_branch app_branch = db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                        BranchName = app_branch.name;
+                    }
+                }
+            }
+
             string UserGiven = "";
             if (sales_invoice.security_user != null)
             {
@@ -238,7 +255,6 @@ namespace entity.Brillo.Logic
 
             string TransNumber = sales_invoice.number;
             DateTime TransDate = sales_invoice.trans_date;
-            string BranchName = sales_invoice.app_branch.name;
 
             Header =
                 CompanyName + "\n"
@@ -309,14 +325,19 @@ namespace entity.Brillo.Logic
                     }
                 }
             }
-           
+
             Footer += "-------------------------------";
             Footer += "Cliente    : " + sales_invoice.contact.name + "\n";
             Footer += "Documento  : " + sales_invoice.contact.gov_code + "\n";
             Footer += "Condicion  : " + sales_invoice.app_condition.name + "\n";
             Footer += "-------------------------------";
             Footer += "Sucursal   : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name + "\n";
-            Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";
+            
+            if (sales_invoice.id_sales_rep > 0)
+            {
+                Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";   
+            }
+            
             Footer += "Cajero/a   : " + UserGiven;
 
             string Text = Header + Detail + Footer;
@@ -368,7 +389,6 @@ namespace entity.Brillo.Logic
 
             string TransNumber = payment.number;
             DateTime TransDate = payment.trans_date;
-            string BranchName = payment.app_branch.name;
 
             Header =
                 CompanyName + "\n"

@@ -515,6 +515,8 @@ namespace Cognitivo.Project.Development
                     }
                     project_task_output.id_item = item.id_item;
                     project_task_output.items = item;
+                    project_task_output.item_description = item.name;
+                    project_task_output.RaisePropertyChanged("item_description");
                     project_task_output.RaisePropertyChanged("item");
                     project_task_output.quantity_est = 1;
                 }

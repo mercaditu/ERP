@@ -133,7 +133,7 @@ namespace Cognitivo.Product
 
             dgvdetail.ItemsSource = item_inventory_detailList;
 
-
+           
         }
 
         private void toolBar_btnNew_Click(object sender)
@@ -176,16 +176,7 @@ namespace Cognitivo.Product
             try
             {
 
-                foreach (item_inventory_detail _item_inventory_detail in item_inventory_detailList)
-                {
-
-                    if (_item_inventory_detail.id_inventory_detail == 0)
-                    {
-                        InventoryDB.item_inventory_detail.Add(_item_inventory_detail);
-                    }
-
-
-                }
+              
                 InventoryDB.SaveChanges();
                 item_inventoryViewSource.View.Refresh();
                 toolBar.msgSaved();
@@ -278,9 +269,20 @@ namespace Cognitivo.Product
                             {
                                 item_inventory_detailList.Add(_item_inventory_detail);
                             }
-                            toolBar_btnSave_Click(sender);
+                            //toolBar_btnSave_Click(sender);
+                            foreach (item_inventory_detail _item_inventory_detail in item_inventory_detailList)
+                            {
+
+                                if (_item_inventory_detail.id_inventory_detail == 0)
+                                {
+                                    InventoryDB.item_inventory_detail.Add(_item_inventory_detail);
+                                }
+
+
+                            }
+                            
                             BindItemMovement();
-                            toolBar_btnEdit_Click(sender);
+                            
                         }
 
                     }

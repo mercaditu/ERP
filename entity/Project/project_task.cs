@@ -19,14 +19,14 @@ namespace entity
             production_execution_detail = new List<production_execution_detail>();
             production_order_detail = new List<production_order_detail>();
 
-            System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
-                    {
-                        while (true)
-                        {
-                            CalcExecutedQty_TimerTaks();
-                            Thread.Sleep(5000);
-                        }
-                    });
+            //System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
+            //        {
+            //            while (true)
+            //            {
+            //                CalcExecutedQty_TimerTaks();
+            //                Thread.Sleep(5000);
+            //            }
+            //        });
 
 
             trans_date = DateTime.Now;

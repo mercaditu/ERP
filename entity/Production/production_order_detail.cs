@@ -22,14 +22,14 @@ namespace entity
             trans_date = DateTime.Now;
 
 
-            System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    CalcExecutedQty_TimerTaks();
-                    Thread.Sleep(5000);
-                }
-            });
+            //System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
+            //{
+            //    while (true)
+            //    {
+            //        CalcExecutedQty_TimerTaks();
+            //        Thread.Sleep(5000);
+            //    }
+            //});
         }
 
         [Key]

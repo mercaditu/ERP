@@ -404,14 +404,31 @@ namespace entity.Brillo.Logic
 
             foreach (payment_detail d in payment.payment_detail)
             {
-                string AccountName = d.app_account.name;
-                
+                string AccountName = string.Empty;
+
+                if (d.app_account == null)
+                {
+                    using (db db = new db())
+                    {
+                        app_account app_account = db.app_account.Where(x => x.id_account == d.id_account).FirstOrDefault();
+                        AccountName = app_account.name;
+                    }
+                }
+
+                string currency = string.Empty;
+                if (d.app_currencyfx == null)
+                {
+                    using (db db = new db())
+                    {
+                        currency = db.app_currencyfx.Where(x => x.id_currencyfx == d.id_currencyfx).FirstOrDefault().app_currency.name;
+                    }
+                }
+
                 decimal? value = d.value;
-                string currency = d.app_currencyfx.app_currency.name;
 
                 Detail = Detail
                     + AccountName + "\n"
-                    + value.ToString() + "\t" + currency +  "\n";
+                    + value.ToString() + "\t" + currency + "\n";
             }
 
             Footer = "--------------------------------" + "\n";

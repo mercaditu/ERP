@@ -143,14 +143,18 @@ namespace entity
         /// </summary>
         public void CalcExecutedQty_TimerTaks()
         {
-            if (production_execution_detail != null && production_execution_detail.Count > 0)
+            try
             {
-                using (db db = new db())
+                if (production_execution_detail != null && production_execution_detail.Count > 0)
                 {
-                    quantity_exe = db.production_execution_detail.Where(y => y.id_order_detail == id_order_detail).Sum(x => x.quantity);
-                    RaisePropertyChanged("quantity_exe");
+                    using (db db = new db())
+                    {
+                        quantity_exe = db.production_execution_detail.Where(y => y.id_order_detail == id_order_detail).Sum(x => x.quantity);
+                        RaisePropertyChanged("quantity_exe");
+                    }
                 }
             }
+            catch { }
         }
 
         #endregion

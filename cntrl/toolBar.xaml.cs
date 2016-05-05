@@ -80,6 +80,27 @@ namespace cntrl
             get { return (bool)GetValue(Annul_IsEnabledProperty); }
             set { SetValue(Annul_IsEnabledProperty, value); }
         }
+        private static readonly DependencyProperty CanUserDiscountByPercentProperty
+          = DependencyProperty.Register("CanUserDiscountByPercent", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+        public bool CanUserDiscountByPercent
+        {
+            get { return (bool)GetValue(CanUserDiscountByPercentProperty); }
+            set { SetValue(CanUserDiscountByPercentProperty, value); }
+        }
+        private static readonly DependencyProperty CanUserDiscountByValueProperty
+        = DependencyProperty.Register("CanUserDiscountByValue", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+        public bool CanUserDiscountByValue
+        {
+            get { return (bool)GetValue(CanUserDiscountByValueProperty); }
+            set { SetValue(CanUserDiscountByValueProperty, value); }
+        }
+        private static readonly DependencyProperty CanUserUpdatePriceProperty
+       = DependencyProperty.Register("CanUserUpdatePrice", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+        public bool CanUserUpdatePrice
+        {
+            get { return (bool)GetValue(CanUserUpdatePriceProperty); }
+            set { SetValue(CanUserUpdatePriceProperty, value); }
+        }
 
         #region "Status Properties & Events"
         public static readonly DependencyProperty StatusProperty 
@@ -316,6 +337,8 @@ namespace cntrl
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
+                CanUserDiscountByPercent = security.CanUserDiscountByPercent;
+               
                 get_Icons(toolBarIcons.Basic.ToString(), ref security);
             }
         }

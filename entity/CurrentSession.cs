@@ -76,6 +76,16 @@ namespace entity
             set { _Security_CurdList = value; }
         }
         static List<security_curd> _Security_CurdList = new List<security_curd>();
+        public static List<security_role_privilage> Security_role_privilageList
+        {
+            get
+            {
+
+                return _Security_role_privilageList;
+            }
+            set { _Security_role_privilageList = value; }
+        }
+        static List<security_role_privilage> _Security_role_privilageList = new List<security_role_privilage>();
 
         public static security_user User { get; set; }
 
@@ -84,6 +94,7 @@ namespace entity
         public static void Start(string UserName, string Password)
         {
             Security_CurdList = new List<security_curd>();
+            Security_role_privilageList = new List<security_role_privilage>();
             //Set the User
             User = db.security_user.Where(user => user.name == UserName
                                                && user.password == Password
@@ -135,6 +146,8 @@ namespace entity
             _Security_CurdList.Clear();
             security_user security_user = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault();
             _Security_CurdList = db.security_curd.Where(x => x.id_role == security_user.id_role).ToList();
+            _Security_role_privilageList.Clear();
+            _Security_role_privilageList = db.security_role_privilage.Where(x => x.id_role == security_user.id_role).ToList();
         }
     }
 }

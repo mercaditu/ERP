@@ -11,7 +11,9 @@ namespace entity.Brillo
         public bool delete { get; set; }
         public bool approve { get; set; }
         public bool annul { get; set; }
-
+        public bool CanUserDiscountByPercent { get; set; }
+        public bool CanUserDiscountByValue { get; set; }
+        public bool CanUserUpdatePrice { get; set; }
         public Security(App.Names AppName)
         {
             view = true;
@@ -20,6 +22,9 @@ namespace entity.Brillo
             delete = true;
             approve = true;
             annul = true;
+            CanUserDiscountByPercent = true;
+            CanUserDiscountByValue = true;
+            CanUserUpdatePrice = true;
 
             try
             {
@@ -35,6 +40,30 @@ namespace entity.Brillo
                         delete = security_curd.can_delete;
                         approve = security_curd.can_approve;
                         annul = security_curd.can_annul;
+                    }
+                    if (CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserDiscountByPercent).FirstOrDefault() != null)
+                    {
+                       
+                        security_role_privilage security_role_privilage = CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserDiscountByPercent).FirstOrDefault();
+
+                        CanUserDiscountByPercent = security_role_privilage.has_privilage;
+                        
+                    }
+                    if (CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserDiscountByValue).FirstOrDefault() != null)
+                    {
+
+                        security_role_privilage security_role_privilage = CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserDiscountByValue).FirstOrDefault();
+
+                        CanUserDiscountByValue = security_role_privilage.has_privilage;
+
+                    }
+                    if (CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserUpdatePrice).FirstOrDefault() != null)
+                    {
+
+                        security_role_privilage security_role_privilage = CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage.Privilages.CanUserUpdatePrice).FirstOrDefault();
+
+                        CanUserUpdatePrice = security_role_privilage.has_privilage;
+
                     }
                 }
             }

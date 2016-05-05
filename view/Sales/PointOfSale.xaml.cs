@@ -240,7 +240,7 @@ namespace Cognitivo.Sales
                 {
                     if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
                     {
-                        tabAccount.IsSelected = true;
+                        btnAccount_Click(sender,e);
                     }
                 }
             }));

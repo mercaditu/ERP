@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Cognitivo.Configs.AccountActive"
+﻿<UserControl x:Class="Cognitivo.Configs.AccountActive" x:Name="activeaccount"
      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,6 +15,7 @@
       MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
+        <local:BoolToActiveReverseConverter x:Key="BoolToActiveReverse"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel>
@@ -65,7 +66,7 @@
                         </DataGrid>-->
             <Grid Margin="5">
                 <TextBlock Style="{StaticResource text_Instructions}" Text="once activated, you can use this account to transact normally "/>
-                <Button x:Name="btnActivateAccount" Content="{lex:Loc Active}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
+                <Button x:Name="btnActivateAccount" Content="{Binding is_active,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ElementName=activeaccount, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
             </Grid>
         </StackPanel>
     </Grid>

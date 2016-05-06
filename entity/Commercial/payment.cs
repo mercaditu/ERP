@@ -14,7 +14,6 @@ namespace entity
 
         public payment()
         {
-         
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
@@ -91,34 +90,53 @@ namespace entity
         public virtual app_document_range app_document_range { get; set; }
         #endregion
 
-        [NotMapped]
-        public decimal GrandTotal
-        {
-            get
-            {
-                _GrandTotal = 0;
-                foreach (payment_detail _payment_detail in payment_detail)
-                {
-                    _GrandTotal += _payment_detail.value;
-                }
+        //[NotMapped]
+        //public decimal GrandTotal
+        //{
+        //    get
+        //    {
+        //        _GrandTotal = 0;
+        //        foreach (payment_detail _payment_detail in payment_detail)
+        //        {
+        //            _GrandTotal += _payment_detail.value;
+        //        }
 
                
-                return Math.Round(_GrandTotal, 2);
-            }
-            set
-            {
-                _GrandTotal = value;
-                RaisePropertyChanged("GrandTotal");
-            }
-        }
-        private decimal _GrandTotal;
+        //        return Math.Round(_GrandTotal, 2);
+        //    }
+        //    set
+        //    {
+        //        _GrandTotal = value;
+        //        RaisePropertyChanged("GrandTotal");
+        //    }
+        //}
+        //private decimal _GrandTotal;
         
         /// <summary>
         /// 
         /// </summary>
         public string number { get; set; }
 
+        /// <summary>
+        /// Must be set when initializing. Used by Detail.
+        /// </summary>
+        [NotMapped]
+        public decimal ValueInDefaultCurrency
+        {
+            get
+            {
 
+                return _ValueInDefaultCurrency;
+            }
+            set
+            {
+                if (_ValueInDefaultCurrency != value)
+                {
+                    _ValueInDefaultCurrency = value;
+                }
+            }
+        }
+        private decimal _ValueInDefaultCurrency;
 
 
         /// <summary>

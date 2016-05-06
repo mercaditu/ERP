@@ -14,7 +14,6 @@ namespace entity
     {
         public payment_detail()
         {
-
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
@@ -73,6 +72,8 @@ namespace entity
             {
                 _id_currencyfx = value;
                 RaisePropertyChanged("id_currencyfx");
+
+                //Method to update value
             }
         }
         int _id_currencyfx;
@@ -99,7 +100,39 @@ namespace entity
         /// 
         /// </summary>
         [Required]
-        public decimal value { get; set; }
+        public decimal value 
+        {
+            get { return _value; }
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                }
+            }
+        }
+        private decimal _value;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal ValueInDefaultCurrency 
+        {
+            get 
+            {
+                _ValueInDefaultCurrency = payment.ValueInDefaultCurrency - payment.payment_detail.Where(y => y != this).Sum(x => x.ValueInDefaultCurrency);
+                return _ValueInDefaultCurrency; 
+            }
+            set
+            {
+                if (_ValueInDefaultCurrency != value)
+                {
+                    _ValueInDefaultCurrency = value;
+                }
+            }
+        }
+        private decimal _ValueInDefaultCurrency;
 
         /// <summary>
         /// 
@@ -163,6 +196,7 @@ namespace entity
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
         public virtual IEnumerable<app_account_detail> app_account_detail { get; set; }
 
+        #region Validation
         public string Error
         {
             get
@@ -204,5 +238,6 @@ namespace entity
                 return "";
             }
         }
+        #endregion  
     }
 }

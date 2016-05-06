@@ -95,7 +95,8 @@ namespace Cognitivo.Product
 
                     if (app_branchapp_locationViewSource != null)
                     {
-                       
+
+                        item_inventory_detail.app_location = app_location;
                         item_inventory_detail.id_location = app_location.id_location;
                         item_inventory_detail.timestamp = DateTime.Now;
                  
@@ -114,11 +115,11 @@ namespace Cognitivo.Product
           
             }
             filetr_detail();
-            item_inventoryViewSource.View.Refresh();
-            item_inventoryitem_inventory_detailViewSource.View.Refresh();
-            item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
-           app_branchViewSource.View.Refresh();
-           cbxBranch.SelectedItem = app_location.app_branch;
+           // item_inventoryViewSource.View.Refresh();
+           // item_inventoryitem_inventory_detailViewSource.View.Refresh();
+           // item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
+           //app_branchViewSource.View.Refresh();
+           //cbxBranch.SelectedItem = app_location.app_branch;
         }
 
         private void toolBar_btnNew_Click(object sender)
@@ -235,8 +236,7 @@ namespace Cognitivo.Product
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
-                app_branchViewSource.View.Refresh();
-                cbxBranch.SelectedItem = objpnl_ItemMovement.item_inventoryList.FirstOrDefault().app_location.app_branch;
+             
             }
         }
 
@@ -286,6 +286,11 @@ namespace Cognitivo.Product
                 objpnl_ItemMovement.InventoryDB = InventoryDB;
                 crud_modal.Children.Add(objpnl_ItemMovement);
             }
+        }
+
+        private void location_ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            BindItemMovement();
         }
     }
 }

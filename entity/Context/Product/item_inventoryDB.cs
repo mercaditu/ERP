@@ -73,7 +73,7 @@ namespace entity
             {
                 item_inventory_detail.timestamp = DateTime.Now;
                 item_inventory_detail.State = EntityState.Unchanged;
-              //  Entry(item_inventory_detail).State = EntityState.Added;
+                Entry(item_inventory_detail).State = EntityState.Added;
             }
             else if (item_inventory_detail.State == EntityState.Modified)
             {

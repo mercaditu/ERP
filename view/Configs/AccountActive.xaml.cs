@@ -165,6 +165,7 @@ namespace Cognitivo.Configs
                         app_account_detail.comment = "For Closing Cash.";
                         if (db.app_account_session.Where(x=>x.id_account==app_account.id_account && x.is_active).FirstOrDefault()!=null)
                         {
+                            db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().cl_date = DateTime.Now;
                             app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;    
                         }
                         

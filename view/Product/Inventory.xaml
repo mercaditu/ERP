@@ -56,17 +56,18 @@
         <!--Left Side Part Start-->
         <Grid Grid.Row="1" >
             <ListBox x:Name="item_inventoryDataGrid" Background="WhiteSmoke"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding}"  >
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                     ItemsSource="{Binding}" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                   recordName="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <cntrl:navList recordCode="{Binding security_user.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                       recordSecondaryName="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       recordName="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -107,7 +108,7 @@
                           DisplayMemberPath="name" SelectedValuePath="id_branch" VerticalAlignment="Top"
                           SelectedValue="{Binding id_branch, Mode=TwoWay,Source={StaticResource item_inventoryViewSource}, UpdateSourceTrigger=PropertyChanged}" 
                           SelectionChanged="CbxBranch_SelectionChanged"/>
-                <ListBox x:Name="location_ListBox" Background="White" Margin="0,24,4,10"
+                <ListBox x:Name="location_ListBox" Background="White" Margin="2,32,2,2"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}" 

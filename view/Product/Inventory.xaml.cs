@@ -74,52 +74,42 @@ namespace Cognitivo.Product
                 }
             }
         }
+
         private void BindItemMovement()
         {
             item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
 
-            if (item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location).Count() == 0)
+            if (app_location != null && item_inventory != null)
             {
-         
-                List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList();
-
-                foreach (item_product i in item_productLIST)
+                if (item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location).Count() == 0)
                 {
-                    item_inventory_detail item_inventory_detail = new item_inventory_detail();
-                    item_inventory_detail.State = EntityState.Added;
-                    item_inventory_detail.item_product = i;
-                    item_inventory_detail.id_item_product = i.id_item_product;
-                   
+                    List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList();
 
-
-                    if (app_branchapp_locationViewSource != null)
+                    foreach (item_product i in item_productLIST)
                     {
+                        item_inventory_detail item_inventory_detail = new item_inventory_detail();
+                        item_inventory_detail.State = EntityState.Added;
+                        item_inventory_detail.item_product = i;
+                        item_inventory_detail.id_item_product = i.id_item_product;
 
-                        item_inventory_detail.app_location = app_location;
-                        item_inventory_detail.id_location = app_location.id_location;
-                        item_inventory_detail.timestamp = DateTime.Now;
-                 
-                    if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
-                    {
-                        item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                        if (app_branchapp_locationViewSource != null)
+                        {
+                            item_inventory_detail.app_location = app_location;
+                            item_inventory_detail.id_location = app_location.id_location;
+                            item_inventory_detail.timestamp = DateTime.Now;
+
+                            if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                            {
+                                item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                            }
+
+                            item_inventory.item_inventory_detail.Add(item_inventory_detail);
+                        }
                     }
-
-
-                    item_inventory.item_inventory_detail.Add(item_inventory_detail);
-
                 }
-
+                filetr_detail();
             }
-   
-          
-            }
-            filetr_detail();
-           // item_inventoryViewSource.View.Refresh();
-           // item_inventoryitem_inventory_detailViewSource.View.Refresh();
-           // item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
-           //app_branchViewSource.View.Refresh();
-           //cbxBranch.SelectedItem = app_location.app_branch;
         }
 
         private void toolBar_btnNew_Click(object sender)
@@ -133,8 +123,6 @@ namespace Cognitivo.Product
                 item_inventory.State = EntityState.Added;
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryViewSource.View.MoveCurrentToLast();
-
-
             }
             catch (Exception ex)
             {

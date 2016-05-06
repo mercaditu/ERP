@@ -101,14 +101,12 @@ namespace entity
                 //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
                 payment_schedual _payment_schedual = payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault();
 
+                //Creates Balanced Payment Schedual and Account Detail (if necesary).
                 MakePayment(_payment_schedual, payment, PrintRequire);
             }
         }
 
-
-
-
-        public void MakePayment(payment_schedual payment_schedual, payment payment, bool PrintRequire)
+        public void MakePayment(payment_schedual payment_schedual, payment payment, bool RequirePrint)
         {
             foreach (payment_detail payment_detail in payment.payment_detail)
             {
@@ -116,27 +114,32 @@ namespace entity
                 ///Use this to Balance pending payments.
                 payment_schedual balance_payment_schedual = new payment_schedual();
 
+                //Assigns appCurrencyFX ID & Entity
                 if (payment_detail.id_currencyfx == 0)
                 {
                     payment_detail.id_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                     payment_detail.app_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
                 }
                 
+                ///Assigns appCurrencyFX Entity which is needed for Printing.
                 if (payment_detail.id_currencyfx > 0 && payment_detail.app_currencyfx == null)
                 {
                     payment_detail.app_currencyfx = app_currencyfx.Where(x => x.id_currencyfx == payment_detail.id_currencyfx && x.is_active).FirstOrDefault();
                 }
 
+                ///If by chance Payment Type is Blank, will get Default Payment Type.
                 if (payment_detail.id_payment_type == 0)
                 {
                     payment_detail.id_payment_type = payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
                 }
 
+                ///Checks if Account ID is set.
                 if (payment_detail.id_account == 0 || payment_detail.id_account == null)
                 {
                     payment_detail.id_account = CurrentSession.Id_Account;
                 }
 
+                ///Logic for Value in Balance Payment Schedual.
                 if (payment_detail.value < 0)
                 {
                     ///If PaymentDetail Value is Negative.
@@ -207,40 +210,47 @@ namespace entity
                 ///
                 if (payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault().payment_behavior == entity.payment_type.payment_behaviours.Normal)
                 {
+                    ///Creates new Account Detail for each Payment Detail.
                     app_account_detail app_account_detail = new app_account_detail();
-                    if (base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
-                    {
-                        app_account_detail.id_session = base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
-                    }
 
                     app_account_detail.id_account = (int)payment_detail.id_account;
                     app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
                     app_account_detail.id_payment_type = payment_detail.id_payment_type;
                     app_account_detail.id_payment_detail = payment_detail.id_payment_detail;
                     app_account_detail.trans_date = payment_detail.trans_date;
-                    app_account_detail.debit = 0;
-                    app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
 
+                    ///Gets the Session ID necesary for cashier movement.
+                    if (base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
+                    {
+                        app_account_detail.id_session = base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
+                    }
+
+                    //Logic for Account Detail based on Payment Detail Logic.
+                    if (payment_detail.value < 0)
+                    {
+                        ///If PaymentDetail Value is Negative.
+                        app_account_detail.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
+                    }
+                    else
+                    {
+                        ///If PaymentDetail Value is Positive.
+                        app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
+                    }
+
+                    ///Comment with Module Name and Contact.
+                    ///Insert AccountDetail into Context.
                     app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + payment_schedual.sales_invoice.number + " | " + payment_schedual.contact.name;
                     base.app_account_detail.Add(app_account_detail);
                 }
-
-               
             }
 
             payment.status = Status.Documents_General.Approved;
             base.SaveChanges();
-
-
-
-            if (PrintRequire)
+            
+            if (RequirePrint)
             {
-                
-          
-            entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
-
+                entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
             }
-
         }
     }
 }

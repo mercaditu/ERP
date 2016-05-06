@@ -67,7 +67,6 @@ namespace cntrl.Curd
 
                     itemViewSource = (CollectionViewSource)this.FindResource("itemViewSource");
                     itemViewSource.Source = entity.db.items.Local;
-                    //  itemViewSource.View.Refresh();
                     itemViewSource.View.MoveCurrentTo(itemobject);
                 }
             }

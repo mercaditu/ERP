@@ -20,7 +20,7 @@
     </UserControl.Resources>
     <Grid Width="256">
         <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
-            <crud:contact x:Name="crudContact" btnCancel_Click="crudContact_btnCancel_Click"/>
+            <crud:contact x:Name="crudContact"/>
         </Popup>
         
         <!-- TextBox for Searching -->
@@ -86,16 +86,16 @@
         <Popup x:Name="popContact" IsOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="2">
                 <StackPanel x:Name="stackCRUD">
-                    <TextBlock Text="0 Items Found" Style="{StaticResource text_Instructions}" Margin="4,2">
-                        <Run Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}"/>
-                        <Run Text=" Records"/>
-                    </TextBlock>
-                    <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" AutoGenerateColumns="False" HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource contactViewSource}}" 
-                          IsReadOnly="True" MouseDoubleClick="ContactGrid_MouseDoubleClick" Margin="4">
+                    <TextBlock Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}" 
+                               Style="{StaticResource text_Instructions}" Margin="4,0" />
+                    <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" AutoGenerateColumns="False" 
+                              HeadersVisibility="None" ItemsSource="{Binding Source={StaticResource contactViewSource}}" 
+                              IsReadOnly="True" MouseDoubleClick="ContactGrid_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding code}" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding name}" FontWeight="Bold" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovId}" Binding="{Binding gov_code}" Width="auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Telephone}" Binding="{Binding telephone}" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

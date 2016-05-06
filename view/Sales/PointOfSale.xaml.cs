@@ -447,8 +447,6 @@ namespace Cognitivo.Sales
                 //Add CRUD Panel into View.
                 cntrl.Curd.contact ContactCURD = new cntrl.Curd.contact();
                 ContactCURD.IsCustomer = true;
-                ContactCURD.IsSupplier = false;
-                ContactCURD.IsEmployee = false;
                 stackCustomer.Children.Add(ContactCURD);
             }
         }

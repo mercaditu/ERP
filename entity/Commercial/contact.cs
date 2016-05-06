@@ -58,10 +58,11 @@ namespace entity
 
         public contact()
         {
-            contact_tag_detail = new List<contact_tag_detail>();
             id_user = CurrentSession.Id_User;
             id_company = CurrentSession.Id_Company;
             is_active = true;
+
+            contact_tag_detail = new List<contact_tag_detail>();
             contact_subscription = new List<contact_subscription>();
         }
 
@@ -93,9 +94,11 @@ namespace entity
         public int? lead_time { get; set; }
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }
+
         public bool is_customer { get; set; }
         public bool is_supplier { get; set; }
         public bool is_employee { get; set; }
+
         public bool is_sales_rep { get; set; }
         public bool is_active { get; set; }
         public string comment { get; set; }
@@ -135,6 +138,7 @@ namespace entity
             }
         }
         decimal _credit_availability;
+
         [NotMapped]
         public decimal GrandTotal
         {
@@ -159,15 +163,15 @@ namespace entity
 
                     }
                 }
-              
-               
-               
                 return Math.Round(_GrandTotal, 2);
             }
             set
             {
-                _GrandTotal = value;
-                RaisePropertyChanged("GrandTotal");
+                if (_GrandTotal != value)
+                {
+                    _GrandTotal = value;
+                    RaisePropertyChanged("GrandTotal");   
+                }
             }
         }
         private decimal _GrandTotal;
@@ -222,6 +226,8 @@ namespace entity
         public virtual ICollection<hr_talent_detail> hr_talent_detail { get; set; }
         public virtual IEnumerable<hr_timesheet> hr_timesheet { get; set; }
 
+        #region Validation
+
         public string Error
         {
             get
@@ -243,6 +249,7 @@ namespace entity
                 return error.Length == 0 ? null : error.ToString();
             }
         }
+
         public string this[string columnName]
         {
             get
@@ -261,5 +268,7 @@ namespace entity
                 return "";
             }
         }
+        
+        #endregion
     }
 }

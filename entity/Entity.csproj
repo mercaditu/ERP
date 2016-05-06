@@ -166,6 +166,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app.cs" />
+    <Compile Include="Application\app_account_session.cs" />
     <Compile Include="Application\app_configuration.cs" />
     <Compile Include="Application\app_name_template_detail.cs" />
     <Compile Include="Application\app_name_template.cs" />
@@ -284,6 +285,10 @@
     <Compile Include="Migrations\201605041240184_updatemovement.cs" />
     <Compile Include="Migrations\201605041240184_updatemovement.Designer.cs">
       <DependentUpon>201605041240184_updatemovement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605061009414_app_account_detail.cs" />
+    <Compile Include="Migrations\201605061009414_app_account_detail.Designer.cs">
+      <DependentUpon>201605061009414_app_account_detail.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
@@ -962,6 +967,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605041240184_updatemovement.resx">
       <DependentUpon>201605041240184_updatemovement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605061009414_app_account_detail.resx">
+      <DependentUpon>201605061009414_app_account_detail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -28,13 +28,13 @@ namespace entity
                 {
                     //foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail)
                     //{
-                    //    if (item_inventory_detail.value_counted != 0)
+                    //    if (item_inventory_detail.value_counted != 0 && item_inventory_detail.IsSelected)
                     //    {
                     //        validate_item_inventory_detail(item_inventory_detail);
                     //    }
                     //    else
                     //    {
-                    //         Entry(item_inventory_detail).State = EntityState.Unchanged;
+                    //        Entry(item_inventory_detail).State = EntityState.Unchanged;
                     //    }
                     //}
                     if (item_inventory.State == EntityState.Added)

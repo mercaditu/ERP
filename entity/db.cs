@@ -26,6 +26,7 @@
         public virtual DbSet<accounting_budget> accounting_budget { get; set; }
         public virtual DbSet<app_account> app_account { get; set; }
         public virtual DbSet<app_account_detail> app_account_detail { get; set; }
+        public virtual DbSet<app_account_session> app_account_session { get; set; }
         public virtual DbSet<app_attachment> app_attachment { get; set; }
         public virtual DbSet<app_bank> app_bank { get; set; }
         public virtual DbSet<app_branch> app_branch { get; set; }

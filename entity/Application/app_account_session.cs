@@ -1,49 +1,39 @@
 namespace entity
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
 
-    public partial class app_account_detail : Audit, IDataErrorInfo
+    public partial class app_account_session : Audit, IDataErrorInfo
     {
-        public enum tran_types
-        {
-            OpeningBalance,
-            ClosingBalance
-        }
-        public app_account_detail()
+        public app_account_session()
         {
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
+            op_date = DateTime.Now;
+            cl_date = DateTime.Now;
+            app_account_detail = new List<app_account_detail>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_account_detail { get; set; }
-        [Required]
-        public int id_account { get; set; }
-        [Required]
-        [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
-        public int id_currencyfx { get; set; }
+        public int id_session { get; set; }
         public int? id_payment_detail { get; set; }
-        public int id_payment_type { get; set; }
-        public Status.Documents_General status { get; set; }
-        public decimal debit { get; set; }
-        public decimal credit { get; set; }
-        public string comment { get; set; }
+        [Required]
+        public DateTime op_date { get; set; }
+        [Required]
+        public DateTime cl_date { get; set; }
         [Required]
         public DateTime trans_date { get; set; }
-        public int? id_session { get; set; }
-        public tran_types? tran_type { get; set; }
 
-        public virtual app_account app_account { get; set; }
-        public virtual app_currencyfx app_currencyfx { get; set; }
-        public virtual payment_type payment_type { get; set; }
-        public virtual payment_detail payment_detail { get; set; }
+        public virtual ICollection<app_account_detail> app_account_detail { get; set; }
+       
 
         public string Error
         {
@@ -71,11 +61,7 @@ namespace entity
             get
             {
                 // apply property level validation rules
-                if (columnName == "id_currencyfx")
-                {
-                    if (id_currencyfx == 0)
-                        return "Currencyfx needs to be filled";
-                }
+              
                 if (columnName == "trans_date")
                 {
                     if (trans_date == null)

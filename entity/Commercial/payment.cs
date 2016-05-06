@@ -14,15 +14,16 @@ namespace entity
 
         public payment()
         {
-            id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
             is_head = true;
             trans_date = DateTime.Now;
             status = Status.Documents_General.Pending;
-            Properties.Settings _settings = new Properties.Settings();
             payment_detail = new List<payment_detail>();
-            if (_settings.branch_ID > 0) { id_branch = _settings.branch_ID; }
-            if (_settings.terminal_ID > 0) { id_terminal = _settings.terminal_ID; }
+
+            //Session Variables
+            id_company = CurrentSession.Id_Company;
+            id_user = CurrentSession.Id_User;
+            if (CurrentSession.Id_Branch > 0) { id_branch = CurrentSession.Id_Branch; }
+            if (CurrentSession.Id_Terminal > 0) { id_terminal = CurrentSession.Id_Terminal; }
         }
 
         [Key]

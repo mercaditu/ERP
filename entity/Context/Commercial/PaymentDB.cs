@@ -8,20 +8,39 @@ namespace entity
 {
     public partial class PaymentDB : BaseDB
     {
+        /// <summary>
+        /// Creates new Payment (Header)
+        /// </summary>
+        /// <returns>Payment Entity</returns>
         public payment New()
         {
             payment payment = new entity.payment();
-            payment.id_company = CurrentSession.Id_Company;
-            payment.id_user = CurrentSession.Id_User;
-            payment.is_head = true;
+            payment.status = Status.Documents_General.Pending;
+            payment.State = EntityState.Added;
+
             if (app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
             {
                 payment.app_document_range = app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
             }
-            payment.status = Status.Documents_General.Pending;
+            
             return payment;
         }
 
+        /// <summary>
+        /// Creates a new Payment Detail
+        /// </summary>
+        /// <param name="payment">Payment (Header) to automatically relate</param>
+        /// <returns>Payment Detail Entity</returns>
+        public payment_detail NewPaymentDetail(ref payment payment)
+        {
+            payment_detail payment_detail = new entity.payment_detail();
+            payment_detail.State = EntityState.Added;
+            payment_detail.payment = payment;
+
+            return payment_detail;
+        }
+
+        #region Save
         public override int SaveChanges()
         {
             validate_Contact();
@@ -68,37 +87,44 @@ namespace entity
             }
 
         }
+        #endregion
 
         public void Approve(int id_payment_schedual, bool PrintRequire)
         {
-            foreach (payment payment in payments.Local.Where(x =>
-                                               x.status != Status.Documents_General.Approved
-                                                       && x.IsSelected))
+            foreach (payment payment in payments.Local.Where(x => x.status != Status.Documents_General.Approved && x.IsSelected))
             {
-
                 if (payment.id_payment == 0)
                 {
                     SaveChanges();
                 }
 
-                entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
+                //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
                 payment_schedual _payment_schedual = payment_schedual.Where(x => x.id_payment_schedual == id_payment_schedual).FirstOrDefault();
 
-                ReceivePayment(_payment_schedual, payment, PrintRequire);
+                MakePayment(_payment_schedual, payment, PrintRequire);
             }
         }
 
 
 
 
-        public void ReceivePayment(payment_schedual payment_schedual, payment payment,bool PrintRequire)
+        public void MakePayment(payment_schedual payment_schedual, payment payment, bool PrintRequire)
         {
             foreach (payment_detail payment_detail in payment.payment_detail)
             {
-                //
-                if ( payment_detail.id_currencyfx == 0 || payment_detail.app_currencyfx == null )
+                ///Creates counter balanced in payment schedual.
+                ///Use this to Balance pending payments.
+                payment_schedual balance_payment_schedual = new payment_schedual();
+
+                if (payment_detail.id_currencyfx == 0)
                 {
-                    payment_detail.id_currencyfx = app_currencyfx.Where(x=>x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                    payment_detail.id_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                    payment_detail.app_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+                }
+                
+                if (payment_detail.id_currencyfx > 0 && payment_detail.app_currencyfx == null)
+                {
+                    payment_detail.app_currencyfx = app_currencyfx.Where(x => x.id_currencyfx == payment_detail.id_currencyfx && x.is_active).FirstOrDefault();
                 }
 
                 if (payment_detail.id_payment_type == 0)
@@ -108,98 +134,77 @@ namespace entity
 
                 if (payment_detail.id_account == 0 || payment_detail.id_account == null)
                 {
-                    payment_detail.id_account =CurrentSession.Id_Account;
+                    payment_detail.id_account = CurrentSession.Id_Account;
                 }
-
-                payment_schedual _payment_schedual = new payment_schedual();
 
                 if (payment_detail.value < 0)
                 {
-                    _payment_schedual.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
+                    ///If PaymentDetail Value is Negative.
+                    balance_payment_schedual.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
                 }
                 else
                 {
-                    _payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
+                    ///If PaymentDetail Value is Positive.
+                    balance_payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
                 }
 
-                _payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
-                _payment_schedual.parent = payment_schedual;
-                _payment_schedual.expire_date = payment_schedual.expire_date;
-                _payment_schedual.status = payment_schedual.status;
-                _payment_schedual.id_contact = payment_schedual.id_contact;
-                _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
+                balance_payment_schedual.parent = payment_schedual;
+                balance_payment_schedual.status = Status.Documents_General.Approved;
+                balance_payment_schedual.id_contact = payment_schedual.id_contact;
+                balance_payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
+                balance_payment_schedual.trans_date = payment_detail.trans_date;
+                balance_payment_schedual.expire_date = payment_schedual.expire_date;
 
                 string ModuleName = string.Empty;
 
-                // 
-                if (payment_schedual.id_purchase_invoice == 0)
+                ///
+                if (payment_schedual.id_purchase_invoice != 0)
                 {
-                    _payment_schedual.id_purchase_invoice = null;
-                }
-                else
-                {
-                    payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
+                    balance_payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
                     ModuleName = "PurchaseInvoice";
                 }
 
-                //
-                if (payment_schedual.id_purchase_order == 0)
+                ///
+                if (payment_schedual.id_purchase_order != 0)
                 {
-                    _payment_schedual.id_purchase_order = null;
-                }
-                else
-                {
-                    payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
+                    balance_payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
                     ModuleName = "PurchaseOrder";
                 }
 
-                //
-                if (payment_schedual.id_purchase_return == 0)
+                ///
+                if (payment_schedual.id_purchase_return != 0)
                 {
-                    _payment_schedual.id_purchase_return = null;
-                }
-                else
-                {
-                    payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
+                    balance_payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
                     ModuleName = "PurchaseReturn";
                 }
 
-                //
-                if (payment_schedual.id_sales_invoice == 0)
+                ///
+                if (payment_schedual.id_sales_invoice != 0)
                 {
-                    _payment_schedual.id_sales_invoice = null;
-                }
-                else
-                {
-                    payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
+                    balance_payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
                     ModuleName = "SalesInvoice";
                 }
 
-                //
-                if (payment_schedual.id_sales_order == 0)
+                ///
+                if (payment_schedual.id_sales_order != 0)
                 {
-                    _payment_schedual.id_sales_order = null;
-                }
-                else
-                {
-                    payment_schedual.id_sales_order = payment_schedual.id_sales_order;
+                    balance_payment_schedual.id_sales_order = payment_schedual.id_sales_order;
                     ModuleName = "SalesOrder";
                 }
                 
-                
-                if (payment_detail.id_sales_return == 0)
+                ///
+                if (payment_detail.id_sales_return != 0)
                 {
-                    _payment_schedual.id_sales_return = null;
-                }
-                else
-                {
-                    payment_schedual.id_sales_return = payment_schedual.id_sales_return;
+                    balance_payment_schedual.id_sales_return = payment_schedual.id_sales_return;
                     ModuleName = "SalesReturn";
                 }
 
-                _payment_schedual.trans_date = payment_detail.trans_date;
-                payment_detail.payment_schedual.Add(_payment_schedual);
+                //Add Balance Payment Schedual into Context. 
+                payment_detail.payment_schedual.Add(balance_payment_schedual);
 
+
+                ///Code to specify Accounts.
+                ///
                 if (payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault().payment_behavior == entity.payment_type.payment_behaviours.Normal)
                 {
                     app_account_detail app_account_detail = new app_account_detail();

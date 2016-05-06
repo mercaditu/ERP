@@ -14,7 +14,7 @@ namespace Cognitivo.Product
     {
         InventoryDB InventoryDB = new InventoryDB();
         CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, app_branchapp_locationViewSource, app_branchViewSource;
-       
+
         cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
 
         public Inventory()
@@ -60,24 +60,24 @@ namespace Cognitivo.Product
             {
 
 
-            if (item_inventoryitem_inventory_detailViewSource != null)
-            {
-                if (item_inventoryitem_inventory_detailViewSource.View != null)
+                if (item_inventoryitem_inventory_detailViewSource != null)
                 {
-                    if (item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count() > 0)
+                    if (item_inventoryitem_inventory_detailViewSource.View != null)
                     {
-                        item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
+                        if (item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count() > 0)
                         {
-                            item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
-                            if (item_inventory_detail.id_location == app_location.id_location)
-                                return true;
-                            else
-                                return false;
-                        };
+                            item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
+                            {
+                                item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
+                                if (item_inventory_detail.id_location == app_location.id_location)
+                                    return true;
+                                else
+                                    return false;
+                            };
+                        }
                     }
                 }
             }
-        }
         }
         private void BindItemMovement()
         {
@@ -86,33 +86,34 @@ namespace Cognitivo.Product
 
             if (app_location != null && item_inventory != null)
             {
-            if (item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location).Count() == 0)
-            {
-                List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList();
-
-                foreach (item_product i in item_productLIST)
+                if (item_inventory.item_inventory_detail.Where(x => x.id_location == app_location.id_location).Count() == 0)
                 {
-                    item_inventory_detail item_inventory_detail = new item_inventory_detail();
-                    item_inventory_detail.State = EntityState.Added;
-                    item_inventory_detail.item_product = i;
-                    item_inventory_detail.id_item_product = i.id_item_product;
-                   
-                    if (app_branchapp_locationViewSource != null)
-                    {
-                        item_inventory_detail.app_location = app_location;
-                        item_inventory_detail.id_location = app_location.id_location;
-                        item_inventory_detail.timestamp = DateTime.Now;
-                 
-                    if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
-                    {
-                        item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
-                    }
+                    List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList();
 
-                    item_inventory.item_inventory_detail.Add(item_inventory_detail);
+                    foreach (item_product i in item_productLIST)
+                    {
+                        item_inventory_detail item_inventory_detail = new item_inventory_detail();
+                        item_inventory_detail.State = EntityState.Added;
+                        item_inventory_detail.item_product = i;
+                        item_inventory_detail.id_item_product = i.id_item_product;
+
+                        if (app_branchapp_locationViewSource != null)
+                        {
+                            item_inventory_detail.app_location = app_location;
+                            item_inventory_detail.id_location = app_location.id_location;
+                            item_inventory_detail.timestamp = DateTime.Now;
+
+                            if (InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
+                            {
+                                item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
+                            }
+
+                            item_inventory.item_inventory_detail.Add(item_inventory_detail);
+                        }
+                    }
                 }
-            }
-            }
-            filetr_detail();
+                item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                filetr_detail();
             }
         }
 
@@ -120,10 +121,10 @@ namespace Cognitivo.Product
         {
             try
             {
-               app_branch app_branch= app_branchViewSource.View.CurrentItem as app_branch;
+                app_branch app_branch = app_branchViewSource.View.CurrentItem as app_branch;
                 item_inventory item_inventory = new item_inventory();
                 item_inventory.IsSelected = true;
-              item_inventory.id_branch=app_branch.id_branch;
+                item_inventory.id_branch = app_branch.id_branch;
                 item_inventory.trans_date = DateTime.Now;
                 InventoryDB.Entry(item_inventory).State = EntityState.Added;
                 item_inventory.State = EntityState.Added;
@@ -160,8 +161,8 @@ namespace Cognitivo.Product
                 //if (InventoryDB.SaveChanges() == 0)
                 //{
                 InventoryDB.SaveChanges();
-                    toolBar.msgSaved();
-                    item_inventoryViewSource.View.Refresh();
+                toolBar.msgSaved();
+                item_inventoryViewSource.View.Refresh();
                 //}
                 //else
                 //{
@@ -199,7 +200,7 @@ namespace Cognitivo.Product
 
         }
 
-      
+
 
         private void location_ListBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -217,13 +218,13 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-          
+
             if (crud_modal.IsVisible == false)
             {
-               
-              
+
+
                 item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
-             
+
                 //foreach (item_inventory_detail _item_inventory_detail in objpnl_ItemMovement.item_inventoryList.Skip(1))
                 //{
                 //    item_inventory.item_inventory_detail.Add(_item_inventory_detail);
@@ -233,11 +234,11 @@ namespace Cognitivo.Product
                 //    item_inventory.item_inventory_detail.Remove(_item_inventory_detail);
                 //}
 
-               
+
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
-             
+
             }
         }
 
@@ -254,13 +255,13 @@ namespace Cognitivo.Product
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Hidden;
             item_inventory_detail item_inventory_detail = e.Parameter as item_inventory_detail;
-               item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
+            item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
             if (item_inventory_detail != null)
             {
                 crud_modal.Visibility = System.Windows.Visibility.Visible;
                 objpnl_ItemMovement = new cntrl.Panels.pnl_ItemMovement();
-           
-                foreach (item_inventory_detail _item_inventory_detail in item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x=>x.id_item_product==item_inventory_detail.id_item_product).ToList())
+
+                foreach (item_inventory_detail _item_inventory_detail in item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.id_item_product == item_inventory_detail.id_item_product).ToList())
                 {
                     if (_item_inventory_detail.item_inventory_dimension.Count() == 0)
                     {

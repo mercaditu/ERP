@@ -102,7 +102,14 @@ namespace entity
         [Required]
         public decimal value 
         {
-            get { return _value; }
+            get 
+            {
+                if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                {
+                    _value = ValueInDefaultCurrency;
+                }
+                return _value; 
+            }
             set
             {
                 if (_value != value)

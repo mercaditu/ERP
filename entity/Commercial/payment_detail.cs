@@ -43,16 +43,16 @@ namespace entity
                 _id_currency = value;
                 using (db db = new db())
                 {
-                    int old_currencyfx=id_currencyfx;
-                    if ( db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault()!=null)
+                    int old_currencyfx = id_currencyfx;
+                    if (db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault() != null)
                     {
                         id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
-                        RaisePropertyChanged("id_currencyfx"); 
+                        RaisePropertyChanged("id_currencyfx");
                     }
                     else
                     {
-                        id_currencyfx = db.app_currencyfx.Where(x=>x.is_active).FirstOrDefault().id_currencyfx;
-                        RaisePropertyChanged("id_currencyfx"); 
+                        id_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
+                        RaisePropertyChanged("id_currencyfx");
                     }
                     this.value = Currency.convert_Values(this.value, old_currencyfx, id_currencyfx, App.Modules.Sales);
                     RaisePropertyChanged("value");
@@ -100,15 +100,21 @@ namespace entity
         /// 
         /// </summary>
         [Required]
-        public decimal value 
+        public decimal value
         {
-            get 
+            get
             {
-                if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                if (payment != null)
                 {
-                    _value = ValueInDefaultCurrency;
+
+
+
+                    if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                    {
+                        _value = ValueInDefaultCurrency;
+                    }
                 }
-                return _value; 
+                return _value;
             }
             set
             {
@@ -124,12 +130,12 @@ namespace entity
         /// 
         /// </summary>
         [NotMapped]
-        public decimal ValueInDefaultCurrency 
+        public decimal ValueInDefaultCurrency
         {
-            get 
+            get
             {
                 _ValueInDefaultCurrency = payment.ValueInDefaultCurrency - payment.payment_detail.Where(y => y != this).Sum(x => x.ValueInDefaultCurrency);
-                return _ValueInDefaultCurrency; 
+                return _ValueInDefaultCurrency;
             }
             set
             {
@@ -245,6 +251,6 @@ namespace entity
                 return "";
             }
         }
-        #endregion  
+        #endregion
     }
 }

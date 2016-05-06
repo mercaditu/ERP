@@ -15,7 +15,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            trans_date = DateTime.Now;
+        
             op_date = DateTime.Now;
             is_active = true;
            app_account_detail = new List<app_account_detail>();
@@ -24,13 +24,12 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_session { get; set; }
-        public int? id_payment_detail { get; set; }
+       
        
         public DateTime op_date { get; set; }
      
         public DateTime? cl_date { get; set; }
-        [Required]
-        public DateTime trans_date { get; set; }
+
         public int id_account { get; set; }
         public bool is_active { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
@@ -63,11 +62,7 @@ namespace entity
             {
                 // apply property level validation rules
               
-                if (columnName == "trans_date")
-                {
-                    if (trans_date == null)
-                        return "Transaction date needs to be filled";
-                }
+              
                 return "";
             }
         }

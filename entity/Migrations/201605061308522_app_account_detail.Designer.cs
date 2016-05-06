@@ -13,7 +13,7 @@ namespace entity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201605061118239_app_account_detail"; }
+            get { return "201605061308522_app_account_detail"; }
         }
         
         string IMigrationMetadata.Source

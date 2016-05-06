@@ -12,10 +12,8 @@ namespace entity.Migrations
                 c => new
                     {
                         id_session = c.Int(nullable: false, identity: true),
-                        id_payment_detail = c.Int(),
                         op_date = c.DateTime(nullable: false, precision: 0),
                         cl_date = c.DateTime(precision: 0),
-                        trans_date = c.DateTime(nullable: false, precision: 0),
                         id_account = c.Int(nullable: false),
                         is_active = c.Boolean(nullable: false),
                         id_company = c.Int(nullable: false),

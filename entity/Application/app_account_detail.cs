@@ -10,8 +10,8 @@ namespace entity
     {
         public enum tran_types
         {
-            OpeningBalance,
-            ClosingBalance
+            OpeningBalance=1,
+            ClosingBalance=2
         }
         public app_account_detail()
         {

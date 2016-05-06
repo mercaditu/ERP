@@ -501,8 +501,13 @@ namespace entity.Brillo.Logic
                         document.MaxPageWidth = 300;
 
                         IDocumentPaginatorSource idpSource = document;
-                        pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
-                        pd.PrintDocument(idpSource.DocumentPaginator, Content);
+                        try
+                        {
+                            pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
+                            pd.PrintDocument(idpSource.DocumentPaginator, Content);
+                        }
+                        catch
+                        { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
                     }
                 }
             }

@@ -41,7 +41,7 @@ namespace cntrl.Panels
         public void add_item(item_inventory_detail item_inventory_detail)
         {
             item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
-            item_inventory_detail.item_inventory = item_inventoryList.FirstOrDefault().item_inventory;
+         //   item_inventory_detail.item_inventory = item_inventoryList.FirstOrDefault().item_inventory;
             item_inventory_detail.value_system = item_inventoryList.FirstOrDefault().value_system;
             item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
             item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
@@ -53,7 +53,7 @@ namespace cntrl.Panels
             {
                 item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
             }
-
+            item_inventoryList.FirstOrDefault().item_inventory.item_inventory_detail.Add(item_inventory_detail);
             if (item_inventory_detail.id_item_product > 0)
             {
                 if (InventoryDB.item_product.Where(x => x.id_item_product == item_inventory_detail.id_item_product).FirstOrDefault() != null)

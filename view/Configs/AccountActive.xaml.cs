@@ -173,10 +173,18 @@ namespace Cognitivo.Configs
                     else
                     {
                         app_account_detail.comment = "For Opening Cash.";
-                        app_account_session app_account_session = new entity.app_account_session();
-                        app_account_session.id_account = app_account.id_account;
-                        db.app_account_session.Add(app_account_session);
-                        app_account_detail.id_session = app_account_session.id_session;
+                        using(db dbcontext = new db())
+                        {
+                            app_account_session app_account_session = new entity.app_account_session();
+                            app_account_session.id_account = app_account.id_account;
+                            db.app_account_session.Add(app_account_session);
+                            dbcontext.SaveChanges();
+                        }
+
+                        if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
+                        {
+                            app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
+                        }
                         app_account_detail.tran_type = app_account_detail.tran_types.ClosingBalance;
                     }
 

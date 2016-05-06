@@ -147,6 +147,10 @@ namespace cntrl.Curd
 
                         //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
                         app_account_detail app_account_detail = new app_account_detail();
+                        if (dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
+                        {
+                            app_account_detail.id_session = dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
+                        }
                         app_account_detail.id_account = (int)payment_detail.id_account;
                         app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
                         app_account_detail.id_payment_type = payment_detail.id_payment_type;
@@ -219,6 +223,10 @@ namespace cntrl.Curd
 
                         //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
                         app_account_detail app_account_detail = new app_account_detail();
+                        if (dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
+                        {
+                            app_account_detail.id_session = dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
+                        }
                         app_account_detail.id_account = (int)payment_detail.id_account;
                         app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
                         app_account_detail.id_payment_type = payment_detail.id_payment_type;

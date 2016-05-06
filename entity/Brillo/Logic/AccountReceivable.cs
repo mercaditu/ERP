@@ -112,6 +112,10 @@ namespace entity.Brillo.Logic
                 if (_entity.db.payment_type.Where(x => x.id_payment_type == id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
                 {
                     app_account_detail app_account_detail = new app_account_detail();
+                    if (_entity.db.app_account_session.Where(x => x.id_account == id_account && x.is_active).FirstOrDefault() != null)
+                    {
+                        app_account_detail.id_session = _entity.db.app_account_session.Where(x => x.id_account == id_account && x.is_active).FirstOrDefault().id_session;
+                    }
                     app_account_detail.id_account = id_account;
                     app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
                     app_account_detail.id_payment_type = id_payment_type;

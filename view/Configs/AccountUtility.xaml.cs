@@ -205,6 +205,10 @@ namespace Cognitivo.Configs
                     if (idOriginAccount != null && idDestiAccount != null)
                     {
                         app_account_detail objOriginAcDetail = new app_account_detail();
+                        if (entity.db.app_account_session.Where(x => x.id_account == idOriginAccount.id_account && x.is_active).FirstOrDefault() != null)
+                        {
+                            objOriginAcDetail.id_session = entity.db.app_account_session.Where(x => x.id_account == idOriginAccount.id_account && x.is_active).FirstOrDefault().id_session;
+                        }
                         objOriginAcDetail.id_account = idOriginAccount.id_account;
                         objOriginAcDetail.id_currencyfx = listTransferAmt[0].id_currencyfx;
                         objOriginAcDetail.id_payment_type = listTransferAmt[0].id_payment_type;
@@ -214,6 +218,10 @@ namespace Cognitivo.Configs
                         objOriginAcDetail.trans_date = DateTime.Now;
 
                         app_account_detail objDestinationAcDetail = new app_account_detail();
+                        if (entity.db.app_account_session.Where(x => x.id_account == idDestiAccount.id_account && x.is_active).FirstOrDefault() != null)
+                        {
+                            objDestinationAcDetail.id_session = entity.db.app_account_session.Where(x => x.id_account == idDestiAccount.id_account && x.is_active).FirstOrDefault().id_session;
+                        }
                         objDestinationAcDetail.id_account = idDestiAccount.id_account;
                         objDestinationAcDetail.id_currencyfx = listTransferAmt[0].id_currencyfx;
                         objDestinationAcDetail.id_payment_type = listTransferAmt[0].id_payment_type;

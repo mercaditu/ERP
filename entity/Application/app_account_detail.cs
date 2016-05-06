@@ -44,7 +44,7 @@ namespace entity
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual payment_type payment_type { get; set; }
         public virtual payment_detail payment_detail { get; set; }
-
+        public virtual app_account_session app_account_session { get; set; }
         public string Error
         {
             get

@@ -23,6 +23,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            app_account_session = new List<app_account_session>();
         }
 
 
@@ -56,6 +57,7 @@ namespace entity
 
         public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
+        public virtual ICollection<app_account_session> app_account_session { get; set; }
         public virtual IEnumerable<payment_detail> payment_detail { get; set; }
         public virtual app_bank app_bank { get; set; }
         public virtual app_terminal app_terminal { get; set; }

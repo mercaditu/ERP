@@ -56,8 +56,8 @@ namespace Cognitivo.Configs
 
                 is_active = objAccount.is_active;
                 RaisePropertyChanged("is_active");
-                var app_account_detailList = objAccount.app_account_detail.Where(x=>x.payment_type.is_direct)
-             .GroupBy(ad => new { ad.id_currencyfx,ad.id_payment_type })
+                var app_account_detailList = objAccount.app_account_detail.Where(x => x.payment_type.is_direct)
+             .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
              .Select(s => new
              {
                  id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
@@ -67,7 +67,7 @@ namespace Cognitivo.Configs
                  amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
              }).ToList();
 
-                var app_account_detailFinalList = app_account_detailList.GroupBy(ad => new { ad.cur,ad.payType }).Select(s => new
+                var app_account_detailFinalList = app_account_detailList.GroupBy(ad => new { ad.cur, ad.payType }).Select(s => new
                 {
                     id_currencyfx = s.Max(x => x.id_currencyfx),
                     id_paymenttype = s.Max(x => x.id_paymenttype),
@@ -134,12 +134,16 @@ namespace Cognitivo.Configs
         {
             if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
             {
-                app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
 
+                app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+               
                 foreach (Class.clsTransferAmount list in listOpenAmt)
                 {
                     app_account_detail app_account_detail = new global::entity.app_account_detail();
-
+                    if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
+                    {
+                        app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
+                    }
                     if (app_account.is_active == true)
                     {
                         //Make Inactive
@@ -154,15 +158,28 @@ namespace Cognitivo.Configs
                     app_account_detail.id_account = app_account.id_account;
                     app_account_detail.id_currencyfx = list.id_currencyfx;
                     app_account_detail.id_payment_type = list.id_payment_type;
+                 
+                 
                     if (app_account.is_active)
                     {
                         app_account_detail.comment = "For Closing Cash.";
+                        if (db.app_account_session.Where(x=>x.id_account==app_account.id_account && x.is_active).FirstOrDefault()!=null)
+                        {
+                            app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;    
+                        }
+                        
+                        app_account_detail.tran_type = app_account_detail.tran_types.ClosingBalance;
                     }
                     else
                     {
                         app_account_detail.comment = "For Opening Cash.";
+                        app_account_session app_account_session = new entity.app_account_session();
+                        app_account_session.id_account = app_account.id_account;
+                        db.app_account_session.Add(app_account_session);
+                        app_account_detail.id_session = app_account_session.id_session;
+                        app_account_detail.tran_type = app_account_detail.tran_types.ClosingBalance;
                     }
-                  
+
                     app_account_detail.trans_date = DateTime.Now;
                     db.app_account_detail.Add(app_account_detail);
                 }

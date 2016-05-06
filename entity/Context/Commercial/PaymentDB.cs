@@ -182,6 +182,10 @@ namespace entity
                 if (payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault().payment_behavior == entity.payment_type.payment_behaviours.Normal)
                 {
                     app_account_detail app_account_detail = new app_account_detail();
+                    if (base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
+                    {
+                        app_account_detail.id_session = base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
+                    }
                     app_account_detail.id_account =(int)payment_detail.id_account;
                     app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
                     app_account_detail.id_payment_type = payment_detail.id_payment_type;

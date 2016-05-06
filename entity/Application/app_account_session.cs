@@ -17,23 +17,24 @@ namespace entity
             is_head = true;
             trans_date = DateTime.Now;
             op_date = DateTime.Now;
-            cl_date = DateTime.Now;
-            app_account_detail = new List<app_account_detail>();
+            is_active = true;
+           app_account_detail = new List<app_account_detail>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_session { get; set; }
         public int? id_payment_detail { get; set; }
-        [Required]
+       
         public DateTime op_date { get; set; }
-        [Required]
-        public DateTime cl_date { get; set; }
+     
+        public DateTime? cl_date { get; set; }
         [Required]
         public DateTime trans_date { get; set; }
-
+        public int id_account { get; set; }
+        public bool is_active { get; set; }
         public virtual ICollection<app_account_detail> app_account_detail { get; set; }
-       
+        public virtual app_account app_account { get; set; }
 
         public string Error
         {

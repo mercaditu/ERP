@@ -67,7 +67,7 @@
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Margin="0,8">
                 <StackPanel IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}" 
                             HorizontalAlignment="Center">
                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>

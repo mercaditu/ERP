@@ -435,7 +435,7 @@ namespace Cognitivo.Purchase
             if (contact != null)
             {
                 purchase_invoiceViewSource.Source =
-                   pnlPurchaseInvoice.selected_purchase_invoice;
+                pnlPurchaseInvoice.selected_purchase_invoice;
                 btnImportInvoice_Click(sender, null);
             }
             crud_modal.Children.Clear();

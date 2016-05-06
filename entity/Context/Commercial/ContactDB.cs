@@ -8,8 +8,10 @@ namespace entity
 {
     public partial class ContactDB : BaseDB
     {
-        public void New(contact contact)
+        public contact New()
         {
+            contact contact = new entity.contact();
+
             contact.contact_field_value = new List<contact_field_value>();
             contact.contact_subscription = new List<contact_subscription>();
             contact.hr_education = new List<hr_education>();
@@ -35,6 +37,7 @@ namespace entity
                 }
             }
 
+            return contact;
         }
 
         public override int SaveChanges()

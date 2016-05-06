@@ -356,7 +356,7 @@ namespace Cognitivo.Purchase
             crud_modal.Visibility = Visibility.Visible;
             cntrl.Curd.contact contact = new cntrl.Curd.contact();
            // contact.btnSave_Click += ContactSave_Click;
-            contact.contactobject = sbxContact.Contact;
+            contact.Contact = sbxContact.Contact;
             crud_modal.Children.Add(contact);
 
         }

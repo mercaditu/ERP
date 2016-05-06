@@ -11,12 +11,34 @@ namespace cntrl.Curd
 {
     public partial class contact : UserControl
     {
-        public entity.dbContext entity { get; set; }
+        private entity.ContactDB ContactDB = new ContactDB();
 
-        private entity.contact _contactobject = null;
-        public entity.contact contactobject { get { return _contactobject; } set { _contactobject = value; } }
-        public List<entity.contact> contactList { get; set; }
         CollectionViewSource contactViewSource;
+
+        #region Properties
+
+        public bool IsCustomer { get; set; }
+        public bool IsSupplier { get; set; }
+        public bool IsEmployee { get; set; }
+
+        public int ContactID { get; set; }
+        public string ContactName { get; set; }
+        #endregion
+
+        #region Events
+
+        public event btnCancel_ClickedEventHandler btnCancel_Click;
+        public delegate void btnCancel_ClickedEventHandler(object sender);
+        private void btnCancel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (btnCancel_Click != null)
+            {
+                btnCancel_Click(sender);
+            }
+        }
+
+        #endregion
+
         public contact()
         {
             InitializeComponent();
@@ -26,48 +48,65 @@ namespace cntrl.Curd
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                if (entity != null)
+                if (ContactDB != null)
                 {
-                    contactList = new List<global::entity.contact>();
-                    cbPriceList.ItemsSource = entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-
-                    cbCostCenter.ItemsSource = entity.db.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-
-                    cbxRole.ItemsSource = entity.db.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
-
-                    if (contactobject != null)
+                    ///If Customer, then bring PriceList and Select Checkbox.
+                    if (IsCustomer)
                     {
-                        entity.db.contacts.Add(contactobject);
+                        cbPriceList.ItemsSource = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+                        chbxCustomer.IsChecked = true;
                     }
+                    ///If Supplier, then bring CostCenter and Select Checkbox.
+                    if (IsSupplier)
+                    {
+                        cbCostCenter.ItemsSource = ContactDB.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+                        chbxSupplier.IsChecked = true;
+                    }
+                    ///If Employee, Select Checkbox.
+                    if (IsEmployee)
+                    {
+                        chbxEmployee.IsChecked = true;
+                    }
+                    ///Get Role List.
+                    cbxRole.ItemsSource = ContactDB.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
 
                     contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
-                   // entity.db.contacts.Load();
 
-                    contactViewSource.Source = entity.db.contacts.Local;
-              
-                    contactViewSource.View.MoveCurrentTo(contactobject);
+                    entity.contact contact = null;
+
+                    ///Check for ContactID to check if this form is in EDIT mode or NEW mode.
+                    if (ContactID != null)
+                    {
+                        ///If Contact IsNot Null, then this form is in EDIT MODE. Must add Contact into Context.
+                        contact = ContactDB.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();
+                        ContactDB.contacts.Add(contact);
+                    }
+                    else
+                    {
+                        ///If ContactID is Null, then this form is in NEW MODE. Must create Contact and add into Context.
+                        contact = ContactDB.New();
+                        ContactDB.contacts.Add(contact);
+                    }
+
+                    ///Bring only InMemoria Data.
+                    contactViewSource.Source = ContactDB.contacts.Local;
+                    contactViewSource.View.MoveCurrentTo(contact);
                 }
             }
         }
 
-        public event btnSave_ClickedEventHandler btnSave_Click;
-        public delegate void btnSave_ClickedEventHandler(object sender);
-        public void btnSave_MouseUp(object sender, EventArgs e)
+        private void btnSave_MouseUp(object sender, RoutedEventArgs e)
         {
-
-            if (btnSave_Click != null)
+            entity.contact contact = contactViewSource.View as entity.contact;
+            
+            if (contact != null)
             {
-                btnSave_Click(sender);
+                ContactName = contact.name;
             }
-        }
 
-        public event btnCancel_ClickedEventHandler btnCancel_Click;
-        public delegate void btnCancel_ClickedEventHandler(object sender);
-        private void btnCancel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (btnCancel_Click != null)
+            if (ContactDB.SaveChanges() == 0)
             {
-                btnCancel_Click(sender);
+                MessageBox.Show("Saving Error");
             }
         }
     }

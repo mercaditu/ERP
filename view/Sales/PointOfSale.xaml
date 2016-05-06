@@ -71,7 +71,6 @@
         <Grid.Background>
             <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image}" Stretch="UniformToFill"/>
         </Grid.Background>
-
         <Grid>
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.64">
@@ -152,9 +151,7 @@
         <TabControl x:Name="postab"  Margin="10,150,10,40">
             <!-- Account-->
             <TabItem x:Name="tabAccount">
-                <Grid x:Name="frmActive">
-                    <Frame />
-                </Grid>
+                <Frame Content="AccountActive"/>
             </TabItem>
             <!-- CONTACT -->
             <TabItem x:Name="tabContact" >
@@ -196,7 +193,7 @@
                         </Grid>
                     </Viewbox>
                     <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Mouse" Visibility="Visible">
-                        <curd:contact x:Name="crudContact" btnCancel_Click="crudContact_btnCancel_Click" btnSave_Click="crudContact_btnSave_Click"/>
+                        <curd:contact x:Name="crudContact" btnCancel_Click="crudContact_btnCancel_Click"/>
                     </Popup>
                 </StackPanel>
             </TabItem>

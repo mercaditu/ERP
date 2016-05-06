@@ -282,9 +282,9 @@ namespace cntrl.Controls
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
             if(Sec.create)
             {
-                crudContact.contactobject = new entity.contact();
+                crudContact.Contact = new entity.contact();
 
-                crudContact.entity = db;
+                crudContact.ContactDB = db;
                 popCrud.IsOpen = true;
 
                 popCrud.Visibility = Visibility.Visible;
@@ -304,7 +304,7 @@ namespace cntrl.Controls
             //    }
             //    db.SaveChanges();
             //}
-            db.db.contacts.Add(crudContact.contactobject);
+            db.db.contacts.Add(crudContact.Contact);
             db.SaveChanges();
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
@@ -315,8 +315,8 @@ namespace cntrl.Controls
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
             if(Sec.edit)
             {
-                crudContact.contactobject = Contact;
-                crudContact.entity = db;
+                crudContact.Contact = Contact;
+                crudContact.ContactDB = db;
                 popCrud.IsOpen = true;
                 popCrud.Visibility = System.Windows.Visibility.Visible;
             }

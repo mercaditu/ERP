@@ -17,32 +17,34 @@ namespace Cognitivo.Sales
     {
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         PaymentDB PaymentDB = new PaymentDB();
-        Settings SalesSettings = new Settings();
+        //Settings SalesSettings = new Settings();
         dbContext dbContext = new dbContext();
-        CollectionViewSource sales_invoiceViewSource, paymentViewSource, app_currencyViewSource;
-
-        List<payment> paymentList = new List<payment>();
+        CollectionViewSource sales_invoiceViewSource;
+        CollectionViewSource paymentViewSource;
+        CollectionViewSource app_currencyViewSource;
 
         public PointOfSale()
         {
             InitializeComponent();
         }
 
-        #region Buttons
+        #region ActionButtons
 
-
+        /// <summary>
+        /// Navigates to CLIENT Tab
+        /// </summary>
         private void btnClient_Click(object sender, EventArgs e)
         {
             tabContact.IsSelected = true;
         }
 
+        /// <summary>
+        /// Navigates to ACCOUNT UTILITY Tab
+        /// </summary>
         private void btnAccount_Click(object sender, EventArgs e)
         {
             tabAccount.IsSelected = true;
-            if (frmActive.Children.Count > 0)
-            {
-                frmActive.Children.RemoveAt(0);
-            }
+
             Configs.AccountActive AccountActive = new Configs.AccountActive();
             frmActive.Children.Add(AccountActive);
         }
@@ -190,7 +192,6 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
@@ -370,9 +371,9 @@ namespace Cognitivo.Sales
            
             if (Sec.create)
             {
-                crudContact.contactobject = new entity.contact();
+                crudContact.Contact = new entity.contact();
 
-                crudContact.entity = dbContext;
+                crudContact.ContactDB = dbContext;
                 popCrud.IsOpen = true;
 
                 popCrud.Visibility = Visibility.Visible;
@@ -448,7 +449,7 @@ namespace Cognitivo.Sales
 
         private void crudContact_btnSave_Click(object sender)
         {
-            dbContext.db.contacts.Add(crudContact.contactobject);
+            dbContext.db.contacts.Add(crudContact.Contact);
             dbContext.SaveChanges();
             popCrud.IsOpen = false;
             popCrud.Visibility = System.Windows.Visibility.Collapsed;
@@ -458,9 +459,5 @@ namespace Cognitivo.Sales
         {
             popCrud.IsOpen = false;
         }
-
-
-       
-
     }
 }

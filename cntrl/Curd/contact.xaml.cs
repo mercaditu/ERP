@@ -99,6 +99,7 @@ namespace cntrl.Curd
         {
             entity.contact contact = contactViewSource.View as entity.contact;
             
+            //This is helpful when we want to Automate the search of contact when saving is done.
             if (contact != null)
             {
                 ContactName = contact.name;
@@ -108,6 +109,8 @@ namespace cntrl.Curd
             {
                 MessageBox.Show("Saving Error");
             }
+
+
         }
     }
 }

@@ -15,10 +15,15 @@ namespace Cognitivo.Sales
 {
     public partial class PointOfSale : Page
     {
+        /// <summary>
+        /// Context
+        /// </summary>
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         PaymentDB PaymentDB = new PaymentDB();
-        //Settings SalesSettings = new Settings();
-        dbContext dbContext = new dbContext();
+
+        /// <summary>
+        /// CollectionViewSource
+        /// </summary>
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource paymentViewSource;
         CollectionViewSource app_currencyViewSource;
@@ -44,9 +49,6 @@ namespace Cognitivo.Sales
         private void btnAccount_Click(object sender, EventArgs e)
         {
             tabAccount.IsSelected = true;
-
-            Configs.AccountActive AccountActive = new Configs.AccountActive();
-            frmActive.Children.Add(AccountActive);
         }
 
         private void btnSales_Click(object sender, EventArgs e)
@@ -57,16 +59,16 @@ namespace Cognitivo.Sales
         private void btnPayment_Click(object sender, EventArgs e)
         {
             tabPayment.IsSelected = true;
-            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-            if (payment.payment_detail.FirstOrDefault() != null)
-            {
-                payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
-                payment.payment_detail.FirstOrDefault().RaisePropertyChanged("value");
-            }
+            //sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            //payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
+            //if (payment.payment_detail.FirstOrDefault() != null)
+            //{
+            //    payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
+            //    payment.payment_detail.FirstOrDefault().RaisePropertyChanged("value");
+            //}
 
-            sales_invoiceViewSource.View.Refresh();
-            paymentViewSource.View.Refresh();
+            //sales_invoiceViewSource.View.Refresh();
+            //paymentViewSource.View.Refresh();
         }
 
 
@@ -110,9 +112,9 @@ namespace Cognitivo.Sales
 
 
                 ///Creating new SALES INVOICE for upcomming sale. 
-                sales_invoice sales_invoice_New = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
-                //Copy the Sales Rep of previous sale.
-                //sales_invoice_New.id_sales_rep = sales_invoice.id_sales_rep;
+                ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
+                sales_invoice sales_invoice_New = SalesInvoiceDB.New(0);
+
 
                 SalesInvoiceDB.sales_invoice.Add(sales_invoice_New);
                 
@@ -193,7 +195,7 @@ namespace Cognitivo.Sales
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-            sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
+            sales_invoice sales_invoice = SalesInvoiceDB.New(0);
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
@@ -365,21 +367,6 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void btnNewCustomer_MouseDown(object sender, EventArgs e)
-        {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
-           
-            if (Sec.create)
-            {
-                crudContact.Contact = new entity.contact();
-
-                crudContact.ContactDB = dbContext;
-                popCrud.IsOpen = true;
-
-                popCrud.Visibility = Visibility.Visible;
-            }
-        }
-
         private void boderdiscount_MouseDown(object sender, EventArgs e)
         {
             popupDiscount.IsOpen = true;
@@ -447,17 +434,29 @@ namespace Cognitivo.Sales
           
         }
 
-        private void crudContact_btnSave_Click(object sender)
+        #region Contact CRUD
+
+        private void btnNewCustomer_MouseDown(object sender, EventArgs e)
         {
-            dbContext.db.contacts.Add(crudContact.Contact);
-            dbContext.SaveChanges();
-            popCrud.IsOpen = false;
-            popCrud.Visibility = System.Windows.Visibility.Collapsed;
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
+
+            if (Sec.create)
+            {
+                popCrud.IsOpen = true;
+                popCrud.Visibility = Visibility.Visible;
+
+                //Add CRUD Panel into View.
+                cntrl.Curd.contact ContactCURD = new cntrl.Curd.contact();
+                stackCustomer.Children.Add(ContactCURD);
+            }
         }
 
         private void crudContact_btnCancel_Click(object sender)
         {
+            stackCustomer.Children.RemoveAt(0);
             popCrud.IsOpen = false;
         }
+
+        #endregion
     }
 }

@@ -193,7 +193,7 @@
                         </Grid>
                     </Viewbox>
                     <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Mouse" Visibility="Visible">
-                        <curd:contact x:Name="crudContact" btnCancel_Click="crudContact_btnCancel_Click"/>
+                        <StackPanel x:Name="stackCustomer" />
                     </Popup>
                 </StackPanel>
             </TabItem>

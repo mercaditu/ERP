@@ -11,15 +11,52 @@ namespace cntrl.Curd
 {
     public partial class contact : UserControl
     {
-        private entity.ContactDB ContactDB = new ContactDB();
+        private entity.ContactDB ContactDB { get; set;}
 
         CollectionViewSource contactViewSource;
 
         #region Properties
 
-        public bool IsCustomer { get; set; }
-        public bool IsSupplier { get; set; }
-        public bool IsEmployee { get; set; }
+        public bool IsCustomer 
+        {
+            get { return _IsCustomer; }
+            set
+            {
+                if (_IsCustomer != value)
+                {
+                    cbPriceList.ItemsSource = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+                    chbxCustomer.IsChecked = true;
+                }
+            }
+        }
+        private bool _IsCustomer;
+
+        public bool IsSupplier
+        {
+            get { return _IsSupplier; }
+            set
+            {
+                if (_IsSupplier != value)
+                {
+                    cbCostCenter.ItemsSource = ContactDB.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+                    chbxSupplier.IsChecked = true;
+                }
+            }
+        }
+        private bool _IsSupplier;
+
+        public bool IsEmployee
+        {
+            get { return _IsEmployee; }
+            set
+            {
+                if (_IsEmployee != value)
+                {
+                    chbxEmployee.IsChecked = true;
+                }
+            }
+        }
+        private bool _IsEmployee;
 
         public int ContactID { get; set; }
         public string ContactName { get; set; }
@@ -42,6 +79,8 @@ namespace cntrl.Curd
         public contact()
         {
             InitializeComponent();
+
+            ContactDB = new ContactDB();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -50,23 +89,6 @@ namespace cntrl.Curd
             {
                 if (ContactDB != null)
                 {
-                    ///If Customer, then bring PriceList and Select Checkbox.
-                    if (IsCustomer)
-                    {
-                        cbPriceList.ItemsSource = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-                        chbxCustomer.IsChecked = true;
-                    }
-                    ///If Supplier, then bring CostCenter and Select Checkbox.
-                    if (IsSupplier)
-                    {
-                        cbCostCenter.ItemsSource = ContactDB.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
-                        chbxSupplier.IsChecked = true;
-                    }
-                    ///If Employee, Select Checkbox.
-                    if (IsEmployee)
-                    {
-                        chbxEmployee.IsChecked = true;
-                    }
                     ///Get Role List.
                     cbxRole.ItemsSource = ContactDB.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
 
@@ -75,7 +97,7 @@ namespace cntrl.Curd
                     entity.contact contact = null;
 
                     ///Check for ContactID to check if this form is in EDIT mode or NEW mode.
-                    if (ContactID != null)
+                    if (ContactID > 0)
                     {
                         ///If Contact IsNot Null, then this form is in EDIT MODE. Must add Contact into Context.
                         contact = ContactDB.contacts.Where(x => x.id_contact == ContactID).FirstOrDefault();

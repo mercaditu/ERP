@@ -118,26 +118,26 @@ namespace entity
         /// </summary>
         public string number { get; set; }
 
-        /// <summary>
-        /// Must be set when initializing. Used by Detail.
-        /// </summary>
-        [NotMapped]
-        public decimal ValueInDefaultCurrency
-        {
-            get
-            {
+        ///// <summary>
+        ///// Must be set when initializing. Used by Detail.
+        ///// </summary>
+        //[NotMapped]
+        //public decimal ValueInDefaultCurrency
+        //{
+        //    get
+        //    {
 
-                return _ValueInDefaultCurrency;
-            }
-            set
-            {
-                if (_ValueInDefaultCurrency != value)
-                {
-                    _ValueInDefaultCurrency = value;
-                }
-            }
-        }
-        private decimal _ValueInDefaultCurrency;
+        //        return _ValueInDefaultCurrency;
+        //    }
+        //    set
+        //    {
+        //        if (_ValueInDefaultCurrency != value)
+        //        {
+        //            _ValueInDefaultCurrency = value;
+        //        }
+        //    }
+        //}
+        //private decimal _ValueInDefaultCurrency;
 
 
         /// <summary>

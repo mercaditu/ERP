@@ -122,23 +122,26 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.View.MoveCurrentToLast();
                 
                 ///Creating new PAYMENT for upcomming sale. 
-                payment paymentnew = new payment();
-                paymentnew.id_range = GetDefault.Range(entity.App.Names.PaymentUtility);
+                payment payment_new = new payment();
 
-                //THIS CODE IS WRONG. WHEN WE HAVE MULTIPLE PAYMENT, THIS WILL CAUSE AN ERROR. FIX.
+                payment_new.id_range = GetDefault.Range(entity.App.Names.PaymentUtility);
+
                 if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
                 {
                     payment.app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
                 }
 
-                paymentnew.status = Status.Documents_General.Pending;
+                payment_new.status = Status.Documents_General.Pending;
                 payment_detail payment_detailnew = new payment_detail();
                 payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
                 payment_detailnew.id_currency = sales_invoice_New.app_currencyfx.id_currency;
-                paymentnew.payment_detail.Add(payment_detailnew);
-                paymentList.Add(paymentnew);
-                paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-                paymentViewSource.Source = paymentList;
+                payment_new.payment_detail.Add(payment_detailnew);
+                //paymentList.Add(paymentnew);
+                //paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+                //paymentViewSource.Source = paymentList;
+
+                PaymentDB.payments.Add(payment_new);
+
                 paymentViewSource.View.Refresh();
                 paymentViewSource.View.MoveCurrentToLast();
 
@@ -161,7 +164,6 @@ namespace Cognitivo.Sales
                 payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
                 sales_invoice.id_contact = contact.id_contact;
                 sales_invoice.contact = contact;
-                payment.id_contact = contact.id_contact;
             }
         }
 
@@ -173,16 +175,10 @@ namespace Cognitivo.Sales
 
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
+                SalesInvoiceDB.Select_Item(ref sales_invoice, item, false);
 
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
-
-                payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-                if (payment.payment_detail.FirstOrDefault() != null)
-                {
-                    payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
-                }
 
                 sales_invoiceViewSource.View.Refresh();
                 paymentViewSource.View.Refresh();
@@ -235,9 +231,8 @@ namespace Cognitivo.Sales
 
                 payment_detailnew.id_currency = sales_invoice.app_currencyfx.id_currency;
                 payment.payment_detail.Add(payment_detailnew);
-                paymentList.Add(payment);
                 paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-                paymentViewSource.Source = paymentList;
+                paymentViewSource.Source = PaymentDB.payments.Local;
 
                 if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
                 {
@@ -403,12 +398,15 @@ namespace Cognitivo.Sales
 
         private void Cancel_MouseDown(object sender, EventArgs e)
         {
-            sales_invoice old_salesinvoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            SalesInvoiceDB.sales_invoice.Remove(old_salesinvoice);
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            paymentList.Remove(payment);
+            SalesInvoiceDB.CancelAllChanges();
 
-            sales_invoice Newsales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
+            //sales_invoice old_salesinvoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            //SalesInvoiceDB.sales_invoice.Remove(old_salesinvoice);
+            //payment payment = paymentViewSource.View.CurrentItem as payment;
+
+            PaymentDB.CancelAllChanges();
+
+            sales_invoice Newsales_invoice = SalesInvoiceDB.New(0);
 
             SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
             sales_invoiceViewSource.View.Refresh();
@@ -419,9 +417,10 @@ namespace Cognitivo.Sales
             payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
             paymentnew.payment_detail.Add(payment_detailnew);
             // SalesInvoiceDB.payments.Add(paymentnew);
-            paymentList.Add(paymentnew);
-            paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-            paymentViewSource.Source = paymentList;
+            PaymentDB.payments.Add(paymentnew);
+            //paymentsdb.Add(paymentnew);
+            //paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+            //paymentViewSource.Source = paymentList;
             paymentViewSource.View.Refresh();
             paymentViewSource.View.MoveCurrentToLast();
 
@@ -447,6 +446,9 @@ namespace Cognitivo.Sales
 
                 //Add CRUD Panel into View.
                 cntrl.Curd.contact ContactCURD = new cntrl.Curd.contact();
+                ContactCURD.IsCustomer = true;
+                ContactCURD.IsSupplier = false;
+                ContactCURD.IsEmployee = false;
                 stackCustomer.Children.Add(ContactCURD);
             }
         }

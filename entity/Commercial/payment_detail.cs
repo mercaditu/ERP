@@ -104,16 +104,13 @@ namespace entity
         {
             get
             {
-                if (payment != null)
-                {
-
-
-
-                    if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
-                    {
-                        _value = ValueInDefaultCurrency;
-                    }
-                }
+                //if (payment != null)
+                //{
+                //    if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                //    {
+                //        _value = ValueInDefaultCurrency;
+                //    }
+                //}
                 return _value;
             }
             set
@@ -126,26 +123,26 @@ namespace entity
         }
         private decimal _value;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotMapped]
-        public decimal ValueInDefaultCurrency
-        {
-            get
-            {
-                _ValueInDefaultCurrency = payment.ValueInDefaultCurrency - payment.payment_detail.Where(y => y != this).Sum(x => x.ValueInDefaultCurrency);
-                return _ValueInDefaultCurrency;
-            }
-            set
-            {
-                if (_ValueInDefaultCurrency != value)
-                {
-                    _ValueInDefaultCurrency = value;
-                }
-            }
-        }
-        private decimal _ValueInDefaultCurrency;
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[NotMapped]
+        //public decimal ValueInDefaultCurrency
+        //{
+        //    get
+        //    {
+        //        _ValueInDefaultCurrency = payment.ValueInDefaultCurrency - payment.payment_detail.Where(y => y != this).Sum(x => x.ValueInDefaultCurrency);
+        //        return _ValueInDefaultCurrency;
+        //    }
+        //    set
+        //    {
+        //        if (_ValueInDefaultCurrency != value)
+        //        {
+        //            _ValueInDefaultCurrency = value;
+        //        }
+        //    }
+        //}
+        //private decimal _ValueInDefaultCurrency;
 
         /// <summary>
         /// 

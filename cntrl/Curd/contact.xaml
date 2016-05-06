@@ -72,9 +72,9 @@
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
                 <StackPanel Orientation="Horizontal" Margin="0,8,0,8">
-                    <CheckBox x:Name="chbxCustomer" Content="{lex:Loc Customer}" IsEnabled="False" IsChecked="{Binding is_customer, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
-                    <CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" IsEnabled="False" IsChecked="{Binding is_supplier, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
-                    <CheckBox x:Name="chbxEmployee" Content="{lex:Loc Employee}" IsEnabled="False" IsChecked="{Binding is_employee, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+                    <CheckBox x:Name="chbxCustomer" Content="{lex:Loc Customer}" IsEnabled="False" Margin="3"/>
+                    <CheckBox x:Name="chbxSupplier" Content="{lex:Loc Supplier}" IsEnabled="False" Margin="3"/>
+                    <CheckBox x:Name="chbxEmployee" Content="{lex:Loc Employee}" IsEnabled="False" Margin="3"/>
                 </StackPanel>
                 <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
                                Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"/>

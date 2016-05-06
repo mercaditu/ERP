@@ -99,9 +99,7 @@ namespace Cognitivo.Commercial
         #region Toolbar Events
         private void toolBar_btnNew_Click(object sender)
         {
-            contact contact = new contact();
-
-            ContactDB.New(contact);
+            contact contact = ContactDB.New();
 
             contact.is_employee = false;
             contact.State = EntityState.Added;

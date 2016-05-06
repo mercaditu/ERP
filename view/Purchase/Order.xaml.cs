@@ -349,6 +349,7 @@ namespace Cognitivo.Purchase
         }
 
         #region Add/Edit Config
+
         private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             sbxContact.Contact.State = EntityState.Added;
@@ -356,7 +357,7 @@ namespace Cognitivo.Purchase
             crud_modal.Visibility = Visibility.Visible;
             cntrl.Curd.contact contact = new cntrl.Curd.contact();
            // contact.btnSave_Click += ContactSave_Click;
-            contact.Contact = sbxContact.Contact;
+            //contact.Contact = sbxContact.Contact;
             crud_modal.Children.Add(contact);
 
         }
@@ -391,93 +392,7 @@ namespace Cognitivo.Purchase
             //    MessageBox.Show("Please select contact first.", "Cognitivo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             //}
         }
- 
 
-
-        private void CreateNewCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                dbContext entity = new dbContext();
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.condition condition = new cntrl.condition();
-                //condition.conditionViewSource = conditionViewSource;
-                //condition.MainViewSource = purchase_orderViewSource;
-                //condition.curObject = purchase_orderViewSource.View.CurrentItem;
-                //condition.entity = entity;
-                //condition.operationMode = cntrl.Class.clsCommon.Mode.Add;
-                //condition.isExternalCall = true;
-                crud_modal.Children.Add(condition);
-            }
-        }
-
-        private void EditCondition_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource conditionViewSource = (CollectionViewSource)FindResource("conditionViewSource");
-                db.app_condition.Where(a => a.is_active == true && a.id_company == _setting.company_ID).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = db.app_condition.Local;
-                app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                if (app_condition != null)
-                {
-                    dbContext entity = new dbContext();
-                    crud_modal.Visibility = Visibility.Visible;
-                    cntrl.condition condition = new cntrl.condition();
-                    crud_modal.Children.Add(condition);
-                }
-            }
-        }
-
-        private void CreateNewContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
-                db.app_contract.Where(a => a.is_active == true && a.id_company == _setting.company_ID).Load();
-                contractViewSource.Source = db.app_contract.Local;
-
-                dbContext entity = new dbContext();
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.contract contract = new cntrl.contract();
-                contract.app_contractViewSource = contractViewSource;
-                contract.MainViewSource = purchase_orderViewSource;
-                contract.curObject = purchase_orderViewSource.View.CurrentItem;
-                contract.entity = entity;
-                contract.operationMode = cntrl.Class.clsCommon.Mode.Add;
-                contract.isExternalCall = true;
-                crud_modal.Children.Add(contract);
-            }
-        }
-
-        private void EditContract_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            using (db db = new db())
-            {
-                CollectionViewSource contractViewSource = (CollectionViewSource)FindResource("contractViewSource");
-                db.app_contract.Where(a => a.is_active == true && a.id_company == _setting.company_ID).Load();
-                contractViewSource.Source = db.app_contract.Local;
-
-                app_contract app_contract = cbxContract.SelectedItem as app_contract;
-                if (app_contract != null)
-                {
-                    dbContext entity = new dbContext();
-                    crud_modal.Visibility = Visibility.Visible;
-                    cntrl.contract contract = new cntrl.contract();
-                    contract.app_contractViewSource = contractViewSource;
-                    contract.MainViewSource = purchase_orderViewSource;
-                    contract.curObject = purchase_orderViewSource.View.CurrentItem;
-                    contract.entity = entity;
-                    contract.app_contractobject = app_contract;
-                    contract.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-                    contract.isExternalCall = true;
-                    crud_modal.Children.Add(contract);
-                }
-            }
-        }
         #endregion
 
         private void toolBar_btnSearch_Click(object sender, string query)

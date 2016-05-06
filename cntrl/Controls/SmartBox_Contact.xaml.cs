@@ -282,44 +282,23 @@ namespace cntrl.Controls
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
             if(Sec.create)
             {
-                crudContact.Contact = new entity.contact();
-
-                crudContact.ContactDB = db;
                 popCrud.IsOpen = true;
-
+                cntrl.Curd.contact contactCURD = new Curd.contact();
+                stackCRUD.Children.Add(contactCURD);
                 popCrud.Visibility = Visibility.Visible;
             }
         }
 
-        private void crudContact_btnSave_Click(object sender)
-        {
-            //if (crudContact.contactList.Count() > 0)
-            //{
-            //    foreach (entity.contact contact in crudContact.contactList)
-            //    {
-            //        if (contact.id_contact == 0)
-            //        {
-            //            db.db.contacts.Add(contact);
-            //        }
-            //    }
-            //    db.SaveChanges();
-            //}
-            db.db.contacts.Add(crudContact.Contact);
-            db.SaveChanges();
-            popCrud.IsOpen = false;
-            popCrud.Visibility = System.Windows.Visibility.Collapsed;
-        }
-
         private void Edit_PreviewMouseUp_1(object sender, MouseButtonEventArgs e)
         {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
-            if(Sec.edit)
-            {
-                crudContact.Contact = Contact;
-                crudContact.ContactDB = db;
-                popCrud.IsOpen = true;
-                popCrud.Visibility = System.Windows.Visibility.Visible;
-            }
+            //entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
+            //if(Sec.edit)
+            //{
+            //    crudContact.Contact = Contact;
+            //    crudContact.ContactDB = db;
+            //    popCrud.IsOpen = true;
+            //    popCrud.Visibility = System.Windows.Visibility.Visible;
+            //}
         }
 
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)

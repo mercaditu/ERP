@@ -170,7 +170,6 @@
                                                 Get_Customers="True" 
                                                 Select="sbxContact_Select"/>
                     </Viewbox>
-                    
                     <Viewbox Margin="16" VerticalAlignment="Top" HorizontalAlignment="Center" StretchDirection="Both" Stretch="Uniform" Height="45">
                         <Grid Cursor="Hand" MouseDown="btnNewCustomer_MouseDown" TouchDown="btnNewCustomer_MouseDown" ToolTip="{lex:Loc New}">
                             <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -193,7 +192,7 @@
                         </Grid>
                     </Viewbox>
                     <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Mouse" Visibility="Visible">
-                        <StackPanel x:Name="stackCustomer" />
+                        <StackPanel x:Name="stackCustomer"/>
                     </Popup>
                 </StackPanel>
             </TabItem>

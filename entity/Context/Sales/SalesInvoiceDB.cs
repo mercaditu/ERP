@@ -24,6 +24,31 @@ namespace entity
 
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
 
+            if (app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault() != null)
+            {
+                app_document _app_document = app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault();
+                
+                if (_app_document.filterby_branch && _app_document.filterby_tearminal)
+                {
+                    sales_invoice.app_document_range = app_document_range.Where(
+                        x => 
+                            x.is_active && 
+                            x.id_company == CurrentSession.Id_Company && 
+                            x.app_document.id_application == entity.App.Names.SalesInvoice &&
+                            x.id_branch == CurrentSession.Id_Branch && 
+                            x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
+                }
+                else if (_app_document.filterby_branch)
+                {
+                    sales_invoice.app_document_range = app_document_range.Where(
+                        x =>
+                            x.is_active &&
+                            x.id_company == CurrentSession.Id_Company &&
+                            x.app_document.id_application == entity.App.Names.SalesInvoice &&
+                            x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                }
+            }
+            
             if (app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
             {
                 sales_invoice.app_document_range = app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();

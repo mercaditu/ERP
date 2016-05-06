@@ -254,15 +254,7 @@
                              x:Name="numberTextBox" 
 					         Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
                              UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <Grid>
-                        <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-                            <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="CreateNewCondition_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                            <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="EditCondition_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                        </StackPanel>
-                    </Grid>
+                    <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
                     <ComboBox  Style="{DynamicResource input_combobox}" 
 					x:Name="cbxCondition"
 					DisplayMemberPath="name" SelectedValue="{Binding id_condition, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -274,15 +266,7 @@
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
                     </ComboBox>
-                    <Grid>
-                        <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="False">
-                            <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="CreateNewContract_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                            <Label Content="e" HorizontalAlignment="Right" PreviewMouseUp="EditContract_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                        </StackPanel>
-                    </Grid>
+                    <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}"/>
                     <ComboBox Style="{DynamicResource input_combobox}" 
 					            DisplayMemberPath="name" x:Name="cbxContract"
 					            SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

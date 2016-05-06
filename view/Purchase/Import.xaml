@@ -101,7 +101,7 @@
                           ItemsSource="{Binding Source={StaticResource statusViewSource}}" Width="180"
                           DisplayMemberPath="name" SelectedValuePath="status" SelectedValue="{Binding status,Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <StackPanel  Orientation="Horizontal" VerticalAlignment="Center">
-                    <Label Content="" Style="{StaticResource ico_Label}" 
+                    <Label Content="" Style="{StaticResource ico_Label}" 
                                 FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                     <TextBlock Style="{StaticResource text_Data}">
                             <Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">

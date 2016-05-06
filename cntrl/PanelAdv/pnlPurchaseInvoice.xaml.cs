@@ -19,6 +19,9 @@ namespace cntrl.PanelAdv
   
         public ImpexDB _entity { get; set; }
         public contact _contact { get; set; }
+
+        public bool IsImpex { get; set; }
+
         public pnlPurchaseInvoice()
         {
             InitializeComponent();
@@ -37,14 +40,18 @@ namespace cntrl.PanelAdv
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 //Load your data here and assign the result to the CollectionViewSource.
-              
-              
                 if (_contact != null)
                 {
-
-
                     purchase_invoiceViewSource = (CollectionViewSource)Resources["purchase_invoiceViewSource"];
-                    purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
+
+                    if (IsImpex)
+                    {
+                        purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact && x.is_impex).ToList();
+                    }
+                    else
+                    {
+                        purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
+                    }
                 }
 
             }
@@ -68,13 +75,15 @@ namespace cntrl.PanelAdv
         {
             if (_entity.purchase_invoice_detail.Count() > 0)
             {
-
-
                 purchase_invoice _purchase_invoice = ((System.Windows.Controls.DataGrid)sender).SelectedItem as purchase_invoice;
                 int id_purchase_invoice = _purchase_invoice.id_purchase_invoice;
                 System.Windows.Controls.DataGrid RowDataGrid = e.DetailsElement as System.Windows.Controls.DataGrid;
                 var purchaseInvoice = _purchase_invoice.purchase_invoice_detail;
-                RowDataGrid.ItemsSource = purchaseInvoice;
+
+                if (RowDataGrid != null)
+                {
+                    RowDataGrid.ItemsSource = purchaseInvoice;
+                }
             }
         }
 
@@ -83,28 +92,18 @@ namespace cntrl.PanelAdv
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                _contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
                 purchase_invoiceViewSource = (CollectionViewSource)Resources["purchase_invoiceViewSource"];
-                purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
+                if (IsImpex)
+                {
+                    purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact && x.is_impex).ToList();
+                }
+                else
+                {
+                    purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
+                }
             }
         }
-       
-
-        //private void purchase_orderDatagrid_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    if (purchase_orderViewSource != null)
-        //    {
-        //        List<purchase_order> purchase_order = purchase_orderViewSource.View.Cast<purchase_order>().ToList();
-        //        foreach (purchase_order order in purchase_order)
-        //        {
-        //            if (order != null)
-        //            {
-        //                order.get_Puchase_Total();
-        //            }
-        //        }
-        //    }
-        //}
-
     }
 }

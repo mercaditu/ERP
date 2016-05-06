@@ -29,7 +29,7 @@
         </Grid>
         <Grid Background="{StaticResource appConfig}">
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
-                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Select="ContactPref" Margin="4" VerticalAlignment="Center"/>
+                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="ContactPref" Margin="4" VerticalAlignment="Center"/>
                 <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnSave_MouseUp"/>
             </StackPanel>
         </Grid>
@@ -44,12 +44,14 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <DataGrid AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
-                            <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Item}" Width="SizeToHeader" IsReadOnly="True"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid Background="{StaticResource AccentColor_Introvert}">
+                        <DataGrid AutoGenerateColumns="False" Margin="4">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Item}" Width="SizeToHeader" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

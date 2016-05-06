@@ -412,17 +412,18 @@ namespace Cognitivo.Purchase
             crud_modal.Visibility = Visibility.Visible;
             pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
             pnlPurchaseInvoice._entity = ImpexDB;
-            //    pnlSalesInvoice.contactViewSource = contactViewSource;
+
             if (sbxContact.ContactID > 0)
             {
                 contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 pnlPurchaseInvoice._contact = contact;
+                pnlPurchaseInvoice.IsImpex = true;
             }
 
             pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
             crud_modal.Children.Add(pnlPurchaseInvoice);
-
         }
+
         public void PurchaseInvoice_Click(object sender)
         {
             contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();

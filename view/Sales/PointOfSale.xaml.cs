@@ -59,6 +59,9 @@ namespace Cognitivo.Sales
         private void btnPayment_Click(object sender, EventArgs e)
         {
             tabPayment.IsSelected = true;
+
+            //Add Logic to calculated payment total.
+
             //sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             //payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
             //if (payment.payment_detail.FirstOrDefault() != null)
@@ -90,6 +93,13 @@ namespace Cognitivo.Sales
             {
                 tabSales.Focus();
                 return;
+            }
+
+            /// Validate Payment <= Sales.GrandTotal
+            if (true)
+            {
+                //tabSales.Focus();
+                //return;
             }
 
             /// If validation is met, then we can start Sales Process.
@@ -147,7 +157,6 @@ namespace Cognitivo.Sales
 
                 tabContact.Focus();
                 sbxContact.Text = "";
-                //Run approve code here.	 
             }
         }
 
@@ -255,24 +264,6 @@ namespace Cognitivo.Sales
             payment_detail.app_currencyfx = sales_invoice.app_currencyfx;
             payment_detail.id_payment = payment.id_payment;
             payment_detail.payment = payment;
-            //List<payment_detail> payment_detaillist = payment.payment_detail.GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList();
-            //decimal totalpaid = 0;
-            //foreach (app_currency app_currency in app_currencyViewSource.View.Cast<app_currency>().ToList())
-            //{
-            //    decimal amount = payment_detaillist.Where(x => x.id_currency == app_currency.id_currency).Sum(x => x.value);
-
-            //    if (sales_invoice.app_currencyfx.id_currency == app_currency.id_currency)
-            //    {
-            //        totalpaid += amount;
-            //    }
-            //    else
-            //    {
-
-            //        totalpaid += Currency.convert_Values(amount, app_currency.id_currency, sales_invoice.id_currencyfx, entity.App.Modules.Sales);
-
-            //    }
-            //}
-            //payment_detail.value = sales_invoice.GrandTotal - totalpaid;
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)

@@ -59,7 +59,7 @@
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding}" SelectionChanged="item_inventoryDataGrid_SelectionChanged">
+                 ItemsSource="{Binding}" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -80,7 +80,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1**"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
@@ -107,7 +107,7 @@
                           DisplayMemberPath="name" SelectedValuePath="id_branch" VerticalAlignment="Top"
                           SelectedValue="{Binding item_inventory.id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           SelectionChanged="CbxBranch_SelectionChanged"/>
-                <ListBox x:Name="location_ListBox" Background="White" Margin="2,32,2,2"
+                <ListBox x:Name="location_ListBox" Background="White" Margin="0,24,4,10"
                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}" 
@@ -131,7 +131,7 @@
                         VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2"/>
                 
                 <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
-                          RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}">
+                          RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}"

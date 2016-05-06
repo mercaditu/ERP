@@ -3,7 +3,7 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+    using System.Linq;
     public partial class item_inventory_detail : Audit
     {
         public item_inventory_detail()
@@ -22,7 +22,40 @@ namespace entity
         public int id_location { get; set; }
         public int id_item_product { get; set; }
         public Status.Documents status { get; set; }
-        public decimal value_system { get; set; }
+        public decimal value_system { 
+            get 
+            {
+                if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                {
+                    using (db db = new db())
+                    {
+                        if (db.item_movement.Where(x => x.id_item_product == id_item_product && x.app_location.id_location == id_location && x.status == Status.Stock.InStock).ToList().Count()>0
+                                                                     )
+                        {
+                            return db.item_movement.Where(x => x.id_item_product == id_item_product && x.app_location.id_location == id_location && x.status == Status.Stock.InStock)
+                                                                     .Sum(y => y.credit - y.debit);
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                       
+                    }
+
+                }
+                else
+                {
+                    return 0;
+                }
+            } 
+            set
+            {
+
+                _value_system =value;
+        
+            } 
+        }
+        decimal _value_system = 0;
         public decimal value_counted { get; set; }
         public string comment { get; set; }
         public int id_currencyfx { get; set; }

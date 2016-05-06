@@ -19,16 +19,6 @@ namespace entity
             production_execution_detail = new List<production_execution_detail>();
             production_order_detail = new List<production_order_detail>();
 
-            //System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
-            //        {
-            //            while (true)
-            //            {
-            //                CalcExecutedQty_TimerTaks();
-            //                Thread.Sleep(5000);
-            //            }
-            //        });
-
-
             trans_date = DateTime.Now;
             child = new List<project_task>();
             is_active = true;
@@ -92,30 +82,37 @@ namespace entity
             get { return _quantity_est; }
             set
             {
-                _quantity_est = value;
-                RaisePropertyChanged("quantity_est");
-
-                int i = production_execution_detail.Count();
-
-                if (parent != null && parent.items != null)
+                if (_quantity_est != value)
                 {
-                    if (!parent.items.is_autorecepie)
-                    {
-                        parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
-                        parent.RaisePropertyChanged("quantity_est");
-                    }
-                }
+                    _quantity_est = value;
+                    RaisePropertyChanged("quantity_est");
 
-                if (this.items != null)
-                {
-                    if (this.items.is_autorecepie)
+                    //System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
+                    //{
+                    //    Thread.Sleep(5000);
+                    //    CalcExecutedQty_TimerTaks();
+                    //});
+
+                    if (parent != null && parent.items != null)
                     {
-                        if (child.Count > 0)
+                        if (!parent.items.is_autorecepie)
                         {
-                            foreach (project_task project_task in child)
+                            parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
+                            parent.RaisePropertyChanged("quantity_est");
+                        }
+                    }
+
+                    if (this.items != null)
+                    {
+                        if (this.items.is_autorecepie)
+                        {
+                            if (child.Count > 0)
                             {
-                                project_task.quantity_est = project_task.items.item_recepie_detail.FirstOrDefault().quantity * this.quantity_est;
-                                project_task.RaisePropertyChanged("quantity_est");
+                                foreach (project_task project_task in child)
+                                {
+                                    project_task.quantity_est = project_task.items.item_recepie_detail.FirstOrDefault().quantity * this.quantity_est;
+                                    project_task.RaisePropertyChanged("quantity_est");
+                                }
                             }
                         }
                     }
@@ -294,7 +291,6 @@ namespace entity
                 if (_production_execution_detail != value)
 	            {
                     _production_execution_detail = value;
-                    CalcExecutedQty_TimerTaks();
 	            }
             }
         }

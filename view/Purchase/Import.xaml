@@ -63,8 +63,8 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="10"/>
+                <RowDefinition Height="290"/>
+                <RowDefinition Height="5"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Margin="0,8">

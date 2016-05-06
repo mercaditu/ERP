@@ -41,7 +41,7 @@
 			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-			     ItemsSource="{Binding}" Grid.Row="1" Margin="0,50">
+			     ItemsSource="{Binding}" Grid.Row="1" Margin="0,45,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 

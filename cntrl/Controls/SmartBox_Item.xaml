@@ -31,7 +31,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
           
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
 
@@ -41,7 +41,7 @@
 
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
                    Visibility="{Binding can_Edit, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"                    
-                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                  Padding="4" FontWeight="Bold"/>
         </StackPanel>
         <!-- Progress Ring -->

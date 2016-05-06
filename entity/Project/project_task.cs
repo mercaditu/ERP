@@ -95,7 +95,7 @@ namespace entity
                 _quantity_est = value;
                 RaisePropertyChanged("quantity_est");
 
-
+                int i = production_execution_detail.Count();
 
                 if (parent != null && parent.items != null)
                 {
@@ -108,34 +108,25 @@ namespace entity
 
                 if (this.items != null)
                 {
-
-
                     if (this.items.is_autorecepie)
                     {
-
                         if (child.Count > 0)
                         {
                             foreach (project_task project_task in child)
                             {
                                 project_task.quantity_est = project_task.items.item_recepie_detail.FirstOrDefault().quantity * this.quantity_est;
                                 project_task.RaisePropertyChanged("quantity_est");
-
-
-
                             }
-
                         }
-
-
                     }
                 }
-
             }
         }
         private decimal? _quantity_est;
 
         [NotMapped]
-        public decimal? quantity_exe { get; set; }
+        public decimal? quantity_exe
+        { get; set; }
 
         public decimal? unit_cost_est
         {
@@ -291,22 +282,24 @@ namespace entity
 
         public virtual ICollection<project_task_dimension> project_task_dimension { get; set; }
         public virtual ICollection<production_order_detail> production_order_detail { get; set; }
+
         public virtual ICollection<production_execution_detail> production_execution_detail
         {
             get
             {
-
-
-                return _production_execustion_detail;
+                return _production_execution_detail;
             }
             set
             {
-                _production_execustion_detail = value;
-
-
+                if (_production_execution_detail != value)
+	            {
+                    _production_execution_detail = value;
+                    CalcExecutedQty_TimerTaks();
+	            }
             }
         }
-        ICollection<production_execution_detail> _production_execustion_detail;
+        ICollection<production_execution_detail> _production_execution_detail;
+
         public virtual IEnumerable<item_request_detail> item_request_detail { get; set; }
         public virtual ICollection<sales_budget_detail> sales_budget_detail { get; set; }
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }

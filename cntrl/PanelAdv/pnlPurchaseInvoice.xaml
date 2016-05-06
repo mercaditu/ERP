@@ -11,50 +11,57 @@
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
              mc:Ignorable="d" Background="White"
-             Height="256" Width="512" Loaded="UserControl_Loaded">
+             Height="512" Width="512" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="16"/>
     </UserControl.Effect>
-    <StackPanel DataContext="{StaticResource purchase_invoiceViewSource}">
-        <Grid Background="#344C6B">
-            <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="26" Foreground="White" Margin="4,0"
+    <Border BorderBrush="#344C6B" BorderThickness="3">
+        <StackPanel DataContext="{StaticResource purchase_invoiceViewSource}" Background="{StaticResource appConfig}">
+            <Grid Background="#344C6B">
+                <Label Content="" FontFamily="/cntrl;component/Resources/#cognitivo" FontSize="26" Foreground="White" Margin="4,0"
                    VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <Label Content="{lex:Loc PurchaseInvoice}" FontSize="25" Margin="40,0,0,0" Foreground="White"/>
-            <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                <Label Content="{lex:Loc PurchaseInvoice}" FontSize="25" Margin="40,0,0,0" Foreground="White"/>
+                <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
                    HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                    FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
-        </Grid>
-        <Grid Background="{StaticResource appConfig}">
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
-                <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="ContactPref" Margin="4" VerticalAlignment="Center"/>
-                <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnSave_MouseUp"/>
-            </StackPanel>
-        </Grid>
-        <DataGrid x:Name="purchase_invoiceDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails"
-                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected}" Header="" Width="32"/>
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date}"  Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number}" Width="*" IsReadOnly="True"/>
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding order_Total, StringFormat={}{0:N}}" Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" Binding="{Binding app_currencyfx.app_currency.name}" Width="SizeToHeader" IsReadOnly="True"/>
-            </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <Grid Background="{StaticResource AccentColor_Introvert}">
-                        <DataGrid AutoGenerateColumns="False" Margin="4">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding quantity}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Item}" Width="SizeToHeader" IsReadOnly="True"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
-        </DataGrid>
+            </Grid>
+            <Grid>
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="ContactPref" Margin="4" VerticalAlignment="Center"/>
+                    <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnSave_MouseUp"/>
+                </StackPanel>
+            </Grid>
+            <DataGrid x:Name="purchase_invoiceDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_invoiceDatagrid_LoadingRowDetails"
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected"
+                  CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected}"
+                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date}"  Width="128" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Invoice}" Binding="{Binding number}" Width="128" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, StringFormat={}{0:N}}" Width="*" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" Binding="{Binding app_currencyfx.app_currency.name}" Width="SizeToHeader" IsReadOnly="True"/>
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <Grid Background="{StaticResource AccentColor_Introvert}">
+                            <DataGrid AutoGenerateColumns="False" Margin="4" ItemsSource="{Binding}" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
+                                    <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Item}" MinWidth="128" Width="Auto" />
+                                    <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" />
+                                    <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="SizeToHeader" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
 
-    </StackPanel>
+        </StackPanel>
+    </Border>
 </UserControl>

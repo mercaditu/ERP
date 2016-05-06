@@ -67,31 +67,15 @@ namespace cntrl.PanelAdv
         {
             if (_entity.purchase_order_detail.Count() > 0)
             {
-
-
                 purchase_order _purchase_order = ((System.Windows.Controls.DataGrid)sender).SelectedItem as purchase_order;
-                int id_purchaeOrder = _purchase_order.id_purchase_order;
-                System.Windows.Controls.DataGrid RowDataGrid = e.DetailsElement as System.Windows.Controls.DataGrid;
-                var purchaseOrder = (from purchase_order_detail in _entity.purchase_order_detail
-                                     where purchase_order_detail.id_purchase_order == id_purchaeOrder
-                                     join purchase_invoice_detail in _entity.purchase_invoice_detail
-                                  on purchase_order_detail.id_purchase_order_detail equals purchase_invoice_detail.id_purchase_order_detail into lst
-                                     from list in lst.DefaultIfEmpty()
-                                     group list by new
-                                     {
-                                         purchase_order_detail = purchase_order_detail,
+                int id_purchase_order = _purchase_order.id_purchase_order;
+                System.Windows.Controls.Grid Grid = e.DetailsElement as System.Windows.Controls.Grid;
+                var purchaseorder = _purchase_order.purchase_order_detail;
 
-                                     }
-                                         into grouped
-                                         select new
-                                         {
-                                             id = grouped.Key.purchase_order_detail.id_purchase_order_detail,
-                                             quantity = grouped.Key.purchase_order_detail.quantity != null ? grouped.Key.purchase_order_detail.quantity : 0,
-                                             balance = grouped.Key.purchase_order_detail.quantity != null ? grouped.Key.purchase_order_detail.quantity : 0 - grouped.Sum(x => x.quantity),
-                                             //price = grouped.Key.sales_order_detail.unit_price_vat, 
-                                             //subtotal_vat = grouped.Key.sales_order_detail.sub_Total_vat
-                                         }).ToList();
-                RowDataGrid.ItemsSource = purchaseOrder;
+                if (Grid != null)
+                {
+                    Grid.DataContext = purchaseorder;
+                }
             }
         }
 

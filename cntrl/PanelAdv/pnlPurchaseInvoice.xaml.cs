@@ -56,7 +56,6 @@ namespace cntrl.PanelAdv
 
             }
         }
-
       
         public event btnSave_ClickedEventHandler PurchaseInvoice_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);
@@ -71,18 +70,18 @@ namespace cntrl.PanelAdv
 
         }
 
-        private void sales_orderDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
+        private void sales_invoiceDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
         {
             if (_entity.purchase_invoice_detail.Count() > 0)
             {
                 purchase_invoice _purchase_invoice = ((System.Windows.Controls.DataGrid)sender).SelectedItem as purchase_invoice;
                 int id_purchase_invoice = _purchase_invoice.id_purchase_invoice;
-                System.Windows.Controls.DataGrid RowDataGrid = e.DetailsElement as System.Windows.Controls.DataGrid;
+                System.Windows.Controls.Grid Grid = e.DetailsElement as System.Windows.Controls.Grid;
                 var purchaseInvoice = _purchase_invoice.purchase_invoice_detail;
 
-                if (RowDataGrid != null)
+                if (Grid != null)
                 {
-                    RowDataGrid.ItemsSource = purchaseInvoice;
+                    Grid.DataContext = purchaseInvoice;
                 }
             }
         }

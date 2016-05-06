@@ -36,7 +36,7 @@
             <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
                 <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
                     <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="9" VerticalAlignment="Center" Margin="0" 
-                           HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                            PreviewMouseUp="Label_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
                     <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
@@ -65,7 +65,7 @@
                 </StackPanel>
             </StackPanel>
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
 
@@ -75,7 +75,7 @@
 
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
                    Visibility="{Binding can_Edit, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"                    
-                   HorizontalAlignment="Left" Foreground="{StaticResource Label_ImportantColor}" Cursor="Hand"
+                   HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="Edit_PreviewMouseUp_1" Padding="4" FontWeight="Bold"/>
         </StackPanel>
 

@@ -428,18 +428,19 @@ namespace Cognitivo.Purchase
         {
             contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
-            impex impex = (impex)impexViewSource.View.CurrentItem;
-            impex.contact = contact;
-
-            sbxContact.Text = contact.name;
             if (contact != null)
             {
+                impex impex = (impex)impexViewSource.View.CurrentItem;
+                impex.contact = contact;
+
+                sbxContact.Text = contact.name;
                 purchase_invoiceViewSource.Source =
                 pnlPurchaseInvoice.selected_purchase_invoice;
                 btnImportInvoice_Click(sender, null);
+
+                crud_modal.Children.Clear();
+                crud_modal.Visibility = Visibility.Collapsed;
             }
-            crud_modal.Children.Clear();
-            crud_modal.Visibility = Visibility.Collapsed;
         }
     }
 }

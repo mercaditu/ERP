@@ -64,9 +64,8 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            payment payment = paymentViewSource.View.CurrentItem as payment; 
-
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = paymentViewSource.View.CurrentItem as payment;
             /// VALIDATIONS...
             /// 
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
@@ -84,10 +83,10 @@ namespace Cognitivo.Sales
             }
 
             /// Validate Payment <= Sales.GrandTotal
-            if (payment.GrandTotal >= payment.GrandTotal_Detail)
+            if (payment.GrandTotal>=payment.GrandTotalDetail)
             {
-                //tabSales.Focus();
-                //return;
+                tabPayment.Focus();
+                return;
             }
 
             /// If all validation is met, then we can start Sales Process.

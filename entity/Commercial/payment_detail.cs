@@ -132,7 +132,7 @@ namespace entity
                 if (_value != value)
                 {
                      
-                    _value = value;
+                  
                     if (payment!=null)
                     {
                         ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment.id_currencyfx, App.Modules.Sales); ;

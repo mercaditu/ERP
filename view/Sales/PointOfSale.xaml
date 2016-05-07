@@ -312,9 +312,9 @@
 					                            SelectedValueBinding="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True,  
                                                 UpdateSourceTrigger=PropertyChanged}"/>
 
-                                <DataGridTextColumn Binding="{Binding ValueInDefaultCurrency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
+                                <!--<DataGridTextColumn Binding="{Binding ValueInDefaultCurrency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                                         CellStyle="{StaticResource Number_CellStyle}"
-                                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>
+                                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>-->
                                 <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                                         CellStyle="{StaticResource Number_CellStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>
@@ -334,6 +334,12 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <TextBlock  FontSize="30" Foreground="White"
+                           Text="{Binding GrandTotalDetail, FallbackValue=0, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource paymentViewSource}}">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="White" ShadowDepth="0"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
                     </StackPanel>
                 </StackPanel>
             </TabItem>

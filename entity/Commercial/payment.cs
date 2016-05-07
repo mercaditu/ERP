@@ -39,7 +39,7 @@ namespace entity
 
         public virtual contact contact { get { return _contact; } set { _contact = value; RaisePropertyChanged("contact"); } }
         private contact _contact;
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -49,12 +49,12 @@ namespace entity
         /// 
         /// </summary>
         public virtual accounting_journal accounting_journal { get; set; }
-        
+
         /// <summary>
         /// 
         /// </summary>
         public Status.Documents_General status { get; set; }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -105,6 +105,25 @@ namespace entity
             }
         }
         private decimal _GrandTotal;
+        [NotMapped]
+        public decimal GrandTotalDetail
+        {
+            get
+            {
+                _GrandTotalDetail = 0;
+                foreach (payment_detail _payment_detail in payment_detail)
+                {
+                    _GrandTotalDetail += _payment_detail.ValueInDefaultCurrency;
+                }
+                return Math.Round(_GrandTotalDetail, 2);
+            }
+            set
+            {
+                _GrandTotalDetail = value;
+                RaisePropertyChanged("GrandTotalDetail");
+            }
+        }
+        private decimal _GrandTotalDetail;
 
         [NotMapped]
         public int id_currencyfx
@@ -120,7 +139,7 @@ namespace entity
             }
         }
         private int _id_currencyfx;
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -147,8 +166,8 @@ namespace entity
         /// </summary>
         [NotMapped]
         public string NumberWatermark { get; set; }
-        
-        
+
+
         /// <summary>
         /// 
         /// </summary>

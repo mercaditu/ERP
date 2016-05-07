@@ -112,7 +112,9 @@ namespace entity
                 if (_value != value)
                 {
                     _value = value;
-                    RaisePropertyChanged("ValueInDefaultCurrency");
+                   // RaisePropertyChanged("ValueInDefaultCurrency");
+                    ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment.id_currencyfx, App.Modules.Sales); ;
+
                 }
             }
         }
@@ -126,8 +128,11 @@ namespace entity
         {
             get
             {
-              
 
+                if (_ValueInDefaultCurrency==0)
+                {
+                    
+              
 
                     if (payment != null)
                     {
@@ -145,9 +150,15 @@ namespace entity
                     }
                     else
                     {
-                        return 0;
+                        return value;
                     }
-                    return 0;
+                    return value;
+
+                }
+                else
+                {
+                    return value;
+                }
                 
             }
             set
@@ -155,6 +166,7 @@ namespace entity
                 if (_ValueInDefaultCurrency != value)
                 {
                     _ValueInDefaultCurrency = value;
+                    RaisePropertyChanged("ValueInDefaultCurrency");
                 }
             }
         }

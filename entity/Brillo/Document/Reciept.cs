@@ -392,15 +392,19 @@ namespace entity.Brillo.Logic
 
             Header =
                 CompanyName + "\n"
-                + "RUC:" + app_company.gov_code + "\n"
+                + "R.U.C.   :" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
-                + "Timbrado: " + payment.app_document_range.code + " Vto: " + payment.app_document_range.expire_date
+                + "Timbrado : " + payment.app_document_range.code + " Vto: " + payment.app_document_range.expire_date
+                + "Fecha    : " + payment.trans_date
                 + "\n"
                 + "--------------------------------"
                 + "Cuenta, Valor, Moneda" + "\n"
                 + "--------------------------------" + "\n"
                 + "\n";
+
+            string InvoiceNumber = string.Empty;
+            string CustomerName = string.Empty;
 
             foreach (payment_detail d in payment.payment_detail)
             {
@@ -429,9 +433,16 @@ namespace entity.Brillo.Logic
                 Detail = Detail
                     + AccountName + "\n"
                     + value.ToString() + "\t" + currency + "\n";
+
+                if (InvoiceNumber == string.Empty)
+                {
+		            InvoiceNumber = d.payment_schedual.FirstOrDefault().sales_invoice.number;
+                    CustomerName = d.payment_schedual.FirstOrDefault().contact.name;
+                }
             }
 
-            Footer = "--------------------------------" + "\n";
+            Footer += "Factura  : " + InvoiceNumber + "\n";
+            Footer += "--------------------------------" + "\n";
 
             string Text = Header + Detail + Footer;
             return Text;

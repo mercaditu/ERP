@@ -38,6 +38,13 @@ namespace entity
             payment_detail.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
             payment.payment_detail.Add(payment_detail);
 
+            // payment_detail payment_detail = e.NewItem as payment_detail;
+            // payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
+            // payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
+            // payment_detail.app_currencyfx = sales_invoice.app_currencyfx;
+            // payment_detail.id_payment = payment.id_payment;
+            // payment_detail.payment = payment;
+
             return payment_detail;
         }
 

@@ -207,19 +207,6 @@ namespace Cognitivo.Sales
             }));
         }
 
-        private void dgvPaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
-        {
-           sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            payment_detail payment_detail = e.NewItem as payment_detail;
-            payment_detail.State = EntityState.Added;
-            payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
-            payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
-            payment_detail.app_currencyfx = sales_invoice.app_currencyfx;
-            payment_detail.id_payment = payment.id_payment;
-            payment_detail.payment = payment;
-        }
-
         private void Page_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F1)
@@ -244,17 +231,54 @@ namespace Cognitivo.Sales
             }
         }
 
+        private void Cancel_MouseDown(object sender, EventArgs e)
+        {
+            SalesInvoiceDB.CancelAllChanges();
+            PaymentDB.CancelAllChanges();
+
+            New_Sale_Payment();
+
+            //Clean up Contact Data.
+            sbxContact.Text = "";
+            sbxContact.ContactID = 0;
+            sbxContact.Contact = null;
+
+            sbxItem.Text = string.Empty;
+            sbxItem.ItemID = 0;
+            sbxItem.Item = null;
+
+            tabContact.IsSelected = true;
+        }
+
+        #region Details
+
         private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             sales_invoiceViewSource.View.Refresh();
 
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
+            //TODO > CHANGE THIS TO A NON MAPPED PROPERTY IN PAYMENT HEADER.
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
             if (payment.payment_detail.FirstOrDefault() != null)
             {
                 payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
             }
+        }
+
+        private void dgvPaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        {
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+            payment_detail payment_detail = e.NewItem as payment_detail;
+
+            payment_detail.State = EntityState.Added;
+            payment_detail.IsSelected = true;
+            payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
+            payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
+
+            payment_detail.id_payment = payment.id_payment;
+            payment_detail.payment = payment;
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -306,6 +330,10 @@ namespace Cognitivo.Sales
                 throw ex;
             }
         }
+        
+        #endregion
+
+        #region Discount
 
         private void boderdiscount_MouseDown(object sender, EventArgs e)
         {
@@ -317,45 +345,7 @@ namespace Cognitivo.Sales
             popupDiscount.IsOpen = false;
         }
 
-        private void dgvPaymentDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-            payment_detail _payment_detail = (payment_detail)dgvPaymentDetail.SelectedItem;
-            decimal Selectedvalue = Currency.convert_Values(_payment_detail.value, _payment_detail.id_currencyfx, sales_invoice.id_currencyfx, entity.App.Modules.Sales);
-            decimal amount = sales_invoice.GrandTotal - Selectedvalue;
-            if (payment.payment_detail.Count() > 1)
-            {
-                //amount =Currency.convert_Values(amount, _payment_detail.id_currencyfx, sales_invoice.id_currencyfx, entity.App.Modules.Sales);
-                decimal value = (amount / (payment.payment_detail.Count() - 1));
-
-                foreach (payment_detail payment_detail in payment.payment_detail)
-                {
-                    if (payment_detail != _payment_detail)
-                    {
-
-                        payment_detail.value = value;
-                        payment_detail.RaisePropertyChanged("value");
-                    }
-                }
-            }
-        }
-
-        private void Cancel_MouseDown(object sender, EventArgs e)
-        {
-            SalesInvoiceDB.CancelAllChanges();
-            PaymentDB.CancelAllChanges();
-
-
-
-            //Clean up Contact Data.
-            sbxContact.Text = "";
-            sbxContact.ContactID = 0;
-            sbxContact.Contact = null;
-
-            tabContact.IsSelected = true;
-          
-        }
+        #endregion
 
         #region Contact CRUD
 

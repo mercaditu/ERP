@@ -64,7 +64,8 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            payment payment = paymentViewSource.View.CurrentItem as payment; 
 
             /// VALIDATIONS...
             /// 
@@ -83,7 +84,7 @@ namespace Cognitivo.Sales
             }
 
             /// Validate Payment <= Sales.GrandTotal
-            if (true)
+            if (payment.GrandTotal >= payment.GrandTotal_Detail)
             {
                 //tabSales.Focus();
                 //return;

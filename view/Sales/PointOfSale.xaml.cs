@@ -59,19 +59,6 @@ namespace Cognitivo.Sales
         private void btnPayment_Click(object sender, EventArgs e)
         {
             tabPayment.IsSelected = true;
-
-            //Add Logic to calculated payment total.
-
-            //sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            //payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-            //if (payment.payment_detail.FirstOrDefault() != null)
-            //{
-            //    payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
-            //    payment.payment_detail.FirstOrDefault().RaisePropertyChanged("value");
-            //}
-
-            //sales_invoiceViewSource.View.Refresh();
-            //paymentViewSource.View.Refresh();
         }
 
 

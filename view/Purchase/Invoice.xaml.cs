@@ -234,7 +234,6 @@ namespace Cognitivo.Purchase
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
                 }));
 
-
                 await PurchaseInvoiceDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToListAsync();
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {

@@ -117,7 +117,9 @@
                             </ComboBox.ItemsPanel>
                         </ComboBox>
                         <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                        <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus"/>
+                        <Controls:CurrencyBox x:Name="cbxCurrency" 
+                                              SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                              LostFocus="cbxCurrency_LostFocus"/>
                         <!--<Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
                         <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
                     </StackPanel>

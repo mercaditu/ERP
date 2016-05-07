@@ -140,7 +140,7 @@ namespace entity
                 {
                     _id_range = value;
                     
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State==0)
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
                     {
                         using (db db = new db())
                         {
@@ -241,11 +241,6 @@ namespace entity
         /// </summary>
         public bool is_issued { get; set; }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public bool is_accounted { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -293,7 +288,9 @@ namespace entity
         public ICollection<CommercialVAT> CommercialVAT { get; set; }
 
         #region Navigation
+
         public virtual app_currencyfx app_currencyfx { get; set; }
+        
         #endregion
 
         #region Methods

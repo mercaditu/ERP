@@ -148,14 +148,9 @@ namespace entity
             {
                 if (_CurrencyFX_ID != value)
                 {
-
-                 
-
                     if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
-
-                       unit_cost = Currency.convert_Values(unit_cost,_CurrencyFX_ID, value, App.Modules.Purchase);
-                       // unit_cost = Currency.convert_Value(unit_cost,  value, App.Modules.Purchase);
+                        unit_cost = Currency.convert_Values(unit_cost, _CurrencyFX_ID, value, App.Modules.Purchase);
                         RaisePropertyChanged("unit_cost");
                     }
                     _CurrencyFX_ID = value;
@@ -396,15 +391,12 @@ namespace entity
 
         #endregion
 
-
         #region "Foreign Key"
         public virtual app_vat_group app_vat_group { get; set; }
         public virtual app_cost_center app_cost_center { get; set; }
         public virtual app_location app_location { get; set; }
         public virtual item item { get; set; }
         #endregion
-
-
 
         #region Methods
 

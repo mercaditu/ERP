@@ -142,11 +142,8 @@ namespace entity
             }
             set
             {
-
                 if (_CurrencyFX_ID != value)
                 {
-                   
-
                     if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
                         unit_price = Currency.convert_Values(unit_price,_CurrencyFX_ID, value, App.Modules.Sales);

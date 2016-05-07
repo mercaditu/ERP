@@ -96,11 +96,7 @@
         </EventTrigger>
     </Page.Triggers>
     <Grid>
-        <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Panel.ZIndex="1"/>
-        <Grid x:Name="LayoutRoot">
-            <Grid.Background>
-                <SolidColorBrush Color="White" Opacity="0.8"/>
-            </Grid.Background>
+        <Grid x:Name="LayoutRoot" Style="{StaticResource ThemeBackGround}">
             <Border x:Name="border" CornerRadius="15" Width="350" VerticalAlignment="Center" Margin="262,72,262,72"
 				HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                 <Border.RenderTransform>

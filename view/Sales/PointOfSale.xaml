@@ -71,14 +71,8 @@
         <Grid.Background>
             <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image}" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Grid>
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.64">
-                    <GradientStop Color="#FF2D9AFF" Offset="0"/>
-                    <GradientStop Color="#FF004867" Offset="1"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-        </Grid>
+        <Grid Style="{StaticResource ThemeBackGround}"/>
+
 
         <Grid x:Name="gridBottom" VerticalAlignment="Bottom" Height="40">
             <Grid.Background>

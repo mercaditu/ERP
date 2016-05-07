@@ -177,6 +177,17 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="ThemeBackGround" TargetType="{x:Type Grid}">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.32">
+                            <GradientStop Color="#F1BB95" Offset="0"/>
+                            <GradientStop Color="#8664ad" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
             <Style x:Key="ComboToLabelStyle" BasedOn="{StaticResource MetroComboBox}" TargetType="{x:Type ComboBox}">
                 <Setter Property="Template">
                     <Setter.Value>

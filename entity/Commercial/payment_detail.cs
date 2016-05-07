@@ -89,8 +89,29 @@ namespace entity
         /// </summary>
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
-        public int id_payment_type { get; set; }
+        public int id_payment_type 
+        {
+            get 
+            { 
+                if (_id_payment_type == 0)
+	            {
+                    using (db db = new db())
+                    {
+                        return db.payment_type.Where(x => x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().id_payment_type;
+                    }
+	            }
 
+                return _id_payment_type;
+            }
+            set 
+            {
+                if (_id_payment_type != value)
+                {
+                    _id_payment_type = value;
+                }
+            }
+        }
+        private int _id_payment_type;
         /// <summary>
         /// 
         /// </summary>
@@ -119,7 +140,7 @@ namespace entity
                     }
                    // RaisePropertyChanged("ValueInDefaultCurrency");
                
-
+                    RaisePropertyChanged("ValueInDefaultCurrency");
                 }
             }
         }
@@ -147,18 +168,11 @@ namespace entity
                             this.value = payment.GrandTotal - amount;
 
                             return payment.GrandTotal - amount;
-
+                        }
                     }
-                    }
-
-                    return value;
-
                 }
-                else
-                {
-                    return value;
-                }
-                
+
+                return _ValueInDefaultCurrency;
             }
             set
             {

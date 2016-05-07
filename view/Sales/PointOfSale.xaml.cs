@@ -147,7 +147,7 @@ namespace Cognitivo.Sales
         {
             if (sbxItem.ItemID > 0)
             {
-                sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
@@ -159,6 +159,10 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.View.Refresh();
                 paymentViewSource.View.Refresh();
                 sbxItem.Focus();
+
+                sales_invoiceViewSource.View.Refresh();
+                payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
+                payment.GrandTotal = sales_invoice.GrandTotal;
             }
         }
 
@@ -242,12 +246,12 @@ namespace Cognitivo.Sales
         private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             sales_invoiceViewSource.View.Refresh();
-
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-
-            //TODO > CHANGE THIS TO A NON MAPPED PROPERTY IN PAYMENT HEADER.
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
             payment.GrandTotal = sales_invoice.GrandTotal;
+
+            //TODO > CHANGE THIS TO A NON MAPPED PROPERTY IN PAYMENT HEADER.
+
             //if (payment.payment_detail.FirstOrDefault() != null)
             //{
             //    payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;

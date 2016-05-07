@@ -104,7 +104,6 @@ namespace entity
         {
             get
             {
-               
                 return _value;
             }
             set
@@ -112,7 +111,6 @@ namespace entity
                 if (_value != value)
                 {
                     _value = value;
-                   // RaisePropertyChanged("ValueInDefaultCurrency");
                     ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment.id_currencyfx, App.Modules.Sales); ;
 
                 }
@@ -128,12 +126,8 @@ namespace entity
         {
             get
             {
-
-                if (_ValueInDefaultCurrency==0)
+                if (_ValueInDefaultCurrency == 0)
                 {
-                    
-              
-
                     if (payment != null)
                     {
                         if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
@@ -143,15 +137,13 @@ namespace entity
                             {
                                 amount += Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
                             }
-
+                            this.value = payment.GrandTotal - amount;
 
                             return payment.GrandTotal - amount;
+
                         }
                     }
-                    else
-                    {
-                        return value;
-                    }
+
                     return value;
 
                 }

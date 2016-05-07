@@ -119,45 +119,30 @@ namespace Cognitivo.Sales
                 payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
 
                 PaymentDB.Approve(payment_schedual.id_payment_schedual,(bool)chkreceipt.IsChecked);
-
-
-                ///Creating new SALES INVOICE for upcomming sale. 
-                ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-                sales_invoice sales_invoice_New = SalesInvoiceDB.New(0);
-
-
-                SalesInvoiceDB.sales_invoice.Add(sales_invoice_New);
-                
-                sales_invoiceViewSource.View.Refresh();
-                sales_invoiceViewSource.View.MoveCurrentToLast();
-                
-                ///Creating new PAYMENT for upcomming sale. 
-                payment payment_new = new payment();
-
-                payment_new.id_range = GetDefault.Range(entity.App.Names.PaymentUtility);
-
-                if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
-                {
-                    payment.app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
-                }
-
-                payment_new.status = Status.Documents_General.Pending;
-                payment_detail payment_detailnew = new payment_detail();
-                payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-                payment_detailnew.id_currency = sales_invoice_New.app_currencyfx.id_currency;
-                payment_new.payment_detail.Add(payment_detailnew);
-                //paymentList.Add(paymentnew);
-                //paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-                //paymentViewSource.Source = paymentList;
-
-                PaymentDB.payments.Add(payment_new);
-
-                paymentViewSource.View.Refresh();
-                paymentViewSource.View.MoveCurrentToLast();
-
-                tabContact.Focus();
-                sbxContact.Text = "";
             }
+        }
+
+        private void NewSale()
+        {
+            ///Creating new SALES INVOICE for upcomming sale. 
+            ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
+            sales_invoice sales_invoice_New = SalesInvoiceDB.New(0);
+
+
+            SalesInvoiceDB.sales_invoice.Add(sales_invoice_New);
+
+            sales_invoiceViewSource.View.Refresh();
+            sales_invoiceViewSource.View.MoveCurrentToLast();
+
+            ///Creating new PAYMENT for upcomming sale. 
+            payment payment = PaymentDB.New();
+            payment_detail payment_detail = PaymentDB.NewPaymentDetail(ref payment);
+
+            paymentViewSource.View.Refresh();
+            paymentViewSource.View.MoveCurrentToLast();
+
+            tabContact.Focus();
+            sbxContact.Text = "";
         }
 
         #endregion
@@ -221,11 +206,11 @@ namespace Cognitivo.Sales
                 app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
 
                 payment payment = new payment();
-                payment.id_range = GetDefault.Range(entity.App.Names.PaymentUtility);
                 if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
                 {
                     payment.app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
                 }
+
                 payment.status = Status.Documents_General.Pending;
                 payment_detail payment_detailnew = new payment_detail();
                 if (SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)

@@ -9,71 +9,46 @@ namespace entity.Brillo
         /// </summary>
         public static decimal Rate_Previous { get; set; }
 
-        public static app_currency get_Default(db db,int id_company)
+        /// <summary>
+        /// Gets Default Currency for Company in Session.
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        public static app_currency get_Default(db db)
         {
-            app_currency app_currency = new app_currency();
-            if (id_company > 0)
+            if (CurrentSession.Id_Company > 0)
             {
-                
-                    app_currency = db.app_currency.Where(x => x.id_company == id_company).FirstOrDefault();
-                
+                return db.app_currency.Where(x => x.is_priority && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
             }
-            return app_currency;
+
+            //Returns Null if Nothing was found.
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns>CurrencyFX Entity</returns>
+        public static app_currencyfx get_DefaultFX(db db)
+        {
+            if (CurrentSession.Id_Company > 0 && CurrentSession.Id_Company != null)
+            {
+                app_currency app_currency = db.app_currency.Where(x => x.is_priority && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                return db.app_currencyfx.Where(x => x.is_active && x.id_currency == app_currency.id_currency).FirstOrDefault();
+            }
+
+            return null;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="originalValue"></param>
-        /// <param name="app_currencyfx"></param>
+        /// <param name="old_app_currencyfx"></param>
+        /// <param name="id_app_currencyfx"></param>
         /// <param name="Modules"></param>
         /// <returns></returns>
-        //public static decimal convert_Value(decimal originalValue, int id_app_currencyfx, App.Modules? Modules)
-        //{
-        //    decimal rate = 0;
-        //    app_currencyfx app_currencyfx = null;
-
-        //    using (db db = new db())
-        //    {
-        //        app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == id_app_currencyfx).FirstOrDefault();
-
-
-        //        if (app_currencyfx != null)
-        //        {
-        //            if (Modules == App.Modules.Sales)
-        //            {
-        //                rate = app_currencyfx.buy_value;
-        //            }
-        //            else //Purchase Rates
-        //            {
-        //                rate = app_currencyfx.sell_value;
-        //            }
-
-        //            if (app_currencyfx.app_currency == null)
-        //            {
-        //                Rate_Previous = rate;
-        //                return originalValue * rate;
-        //            }
-
-        //            if (app_currencyfx.app_currency.is_priority == true) //Towards Default
-        //            {
-        //                if (Rate_Previous == 0)
-        //                {
-        //                    Rate_Previous = rate;
-        //                }
-
-        //                return originalValue * (1 / Rate_Previous);
-        //            }
-        //            else //Away from Default
-        //            {
-        //                Rate_Previous = rate;
-        //                return originalValue * rate;
-        //            }
-        //        }
-        //    }
-        //    return 0;
-        //}
-
         public static decimal convert_Values(decimal originalValue, int old_app_currencyfx, int id_app_currencyfx, App.Modules? Modules)
         {
             decimal rate = 0;

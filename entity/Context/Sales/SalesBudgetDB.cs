@@ -12,7 +12,11 @@ namespace entity
             sales_budget sales_budget = new sales_budget();
             sales_budget.status = Status.Documents_General.Pending;
             sales_budget.State = EntityState.Added;
-            sales_budget.id_range = Brillo.GetDefault.Range(App.Names.SalesBudget);
+            sales_budget.app_document_range = Brillo.GetDefault.Range(this, App.Names.SalesBudget);
+            if (sales_budget.app_document_range != null)
+            {
+                sales_budget.id_range = sales_budget.app_document_range.id_range;
+            }
             sales_budget.trans_date = DateTime.Now;
 
 

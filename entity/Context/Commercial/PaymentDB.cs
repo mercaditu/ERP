@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Linq;
 using System.Collections.Generic;
+using entity.Brillo;
 
 namespace entity
 {
@@ -18,24 +19,28 @@ namespace entity
             payment.status = Status.Documents_General.Pending;
             payment.State = EntityState.Added;
 
-            if (app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault() != null)
-            {
-                payment.app_document_range = app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.PaymentUtility).FirstOrDefault();
-            }
-            
+            payment.app_document_range = GetDefault.Range(this, entity.App.Names.PaymentUtility);
+            if (payment.app_document_range != null)
+	        {
+                payment.id_range = payment.app_document_range.id_range;
+	        }
+
             return payment;
         }
 
         /// <summary>
-        /// Creates a new Payment Detail
+        /// Creates a new Payment Detail, and Adds it into Payment
         /// </summary>
         /// <param name="payment">Payment (Header) to automatically relate</param>
         /// <returns>Payment Detail Entity</returns>
+
         public payment_detail NewPaymentDetail(ref payment payment)
         {
             payment_detail payment_detail = new entity.payment_detail();
             payment_detail.State = EntityState.Added;
-            payment_detail.payment = payment;
+            payment_detail.id_payment_type = payment_type.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_payment_type;
+            payment_detail.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
+            payment.payment_detail.Add(payment_detail);
 
             return payment_detail;
         }

@@ -12,7 +12,12 @@ namespace entity
         {
             purchase_order purchase_order = new purchase_order();
             purchase_order.State = EntityState.Added;
-            purchase_order.id_range = Brillo.GetDefault.Range(App.Names.PurchaseOrder);
+            purchase_order.app_document_range = Brillo.GetDefault.Range(this, App.Names.PurchaseOrder);
+            if (purchase_order.app_document_range != null)
+            {
+                purchase_order.id_range = purchase_order.app_document_range.id_range;
+            }
+            purchase_order.id_range = purchase_order.app_document_range.id_range;
             purchase_order.status = Status.Documents_General.Pending;
             purchase_order.trans_date = DateTime.Now;
 

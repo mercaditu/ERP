@@ -12,7 +12,11 @@ namespace entity
         {
             sales_return sales_return = new sales_return();
             sales_return.State = EntityState.Added;
-            sales_return.id_range = Brillo.GetDefault.Range(App.Names.SalesReturn);
+            sales_return.app_document_range = Brillo.GetDefault.Range(this, App.Names.SalesReturn);
+            if (sales_return.app_document_range != null)
+            {
+                sales_return.id_range = sales_return.app_document_range.id_range;
+            }
             sales_return.status = Status.Documents_General.Pending;
             sales_return.trans_date = DateTime.Now;
 

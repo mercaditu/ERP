@@ -12,12 +12,7 @@ namespace entity
         {
             sales_order sales_order = new sales_order();
             sales_order.State = EntityState.Added;
-            sales_order.app_document_range = Brillo.GetDefault.Range(this, App.Names.SalesOrder);
-            if (sales_order.app_document_range != null)
-            {
-                sales_order.id_range = sales_order.app_document_range.id_range;
-            }
-            sales_order.id_range = sales_order.app_document_range.id_range;
+            sales_order.id_range = Brillo.GetDefault.Return_RangeID(App.Names.SalesOrder);
             sales_order.status = Status.Documents_General.Pending;
             
             sales_order.State = EntityState.Added;

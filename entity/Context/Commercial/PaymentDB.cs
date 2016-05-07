@@ -18,12 +18,7 @@ namespace entity
             payment payment = new entity.payment();
             payment.status = Status.Documents_General.Pending;
             payment.State = EntityState.Added;
-
-            payment.app_document_range = GetDefault.Range(this, entity.App.Names.PaymentUtility);
-            if (payment.app_document_range != null)
-	        {
-                payment.id_range = payment.app_document_range.id_range;
-	        }
+            payment.id_range = GetDefault.Return_RangeID(entity.App.Names.PaymentUtility);
 
             return payment;
         }

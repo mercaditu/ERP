@@ -13,12 +13,7 @@ namespace entity
         {
             sales_packing sales_packing = new sales_packing();
             sales_packing.State = EntityState.Added;
-            sales_packing.app_document_range = Brillo.GetDefault.Range(this, App.Names.PackingList);
-            if (sales_packing.app_document_range != null)
-            {
-                sales_packing.id_range = sales_packing.app_document_range.id_range;
-            }
-          
+            sales_packing.id_range = Brillo.GetDefault.Return_RangeID(App.Names.PackingList);
             sales_packing.IsSelected = true;
 
             return sales_packing;

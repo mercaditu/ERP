@@ -102,13 +102,12 @@ namespace Cognitivo.Sales
                 //return;
             }
 
-            /// If validation is met, then we can start Sales Process.
+            /// If all validation is met, then we can start Sales Process.
             if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
             {
                 ///Approve Sales Invoice.
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 SalesInvoiceDB.Approve(true);
-
 
                 payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
                 payment.IsSelected = true;
@@ -119,26 +118,32 @@ namespace Cognitivo.Sales
                 payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
 
                 PaymentDB.Approve(payment_schedual.id_payment_schedual,(bool)chkreceipt.IsChecked);
+
+                //Start New Sale
+                New_Sale_Payment();
             }
         }
 
-        private void NewSale()
+        private void New_Sale_Payment()
         {
             ///Creating new SALES INVOICE for upcomming sale. 
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoice sales_invoice = SalesInvoiceDB.New(0);
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
+            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
             sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
 
 
             ///Creating new PAYMENT for upcomming sale. 
             payment payment = PaymentDB.New();
+            PaymentDB.payments.Add(payment);
 
-            paymentViewSource.View.Refresh();
-            paymentViewSource.View.MoveCurrentToLast();
+            paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+            paymentViewSource.Source = PaymentDB.payments.Local;
+            paymentViewSource.View.MoveCurrentTo(payment);
+
 
             tabContact.Focus();
             sbxContact.Text = "";
@@ -184,10 +189,11 @@ namespace Cognitivo.Sales
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ///This code will create a new Sale & Payment Information.
-            NewSale();
+            New_Sale_Payment();
 
-            //cbxSalesRep
+            //PAYMENT TYPE
             SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
+            //CURRENCY LIST
             SalesInvoiceDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -199,29 +205,6 @@ namespace Cognitivo.Sales
 
                 app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
                 app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
-
-                payment payment = new payment();
-                if (PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
-                {
-                    payment.app_document_range = PaymentDB.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
-                }
-
-                payment.status = Status.Documents_General.Pending;
-                payment_detail payment_detailnew = new payment_detail();
-                if (SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
-                {
-                    payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-
-                }
-                else
-                {
-                    MessageBox.Show("Please Select Defult Payment Type");
-                }
-
-                payment_detailnew.id_currency = sales_invoice.app_currencyfx.id_currency;
-                payment.payment_detail.Add(payment_detailnew);
-                paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-                paymentViewSource.Source = PaymentDB.payments.Local;
 
                 if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
                 {

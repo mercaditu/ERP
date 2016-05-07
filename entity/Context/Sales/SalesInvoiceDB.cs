@@ -14,12 +14,8 @@ namespace entity
             sales_invoice sales_invoice = new sales_invoice();
             sales_invoice.State = EntityState.Added;
             sales_invoice.status = Status.Documents_General.Pending;
-            sales_invoice.app_document_range = Brillo.GetDefault.Range(this, App.Names.SalesInvoice);
-            if (sales_invoice.app_document_range != null)
-            {
-                sales_invoice.id_range = sales_invoice.app_document_range.id_range;
-            }
-
+            sales_invoice.IsSelected = true;
+            sales_invoice.id_range = Brillo.GetDefault.Return_RangeID(App.Names.SalesInvoice);
             sales_invoice.trans_type = Status.TransactionTypes.Normal;
             sales_invoice.trans_date = DateTime.Now.AddDays(TransDate_OffSet);
             sales_invoice.State = EntityState.Added;
@@ -28,35 +24,35 @@ namespace entity
 
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
 
-            if (app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault() != null)
-            {
-                app_document _app_document = app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault();
+            //if (app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault() != null)
+            //{
+            //    app_document _app_document = app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault();
                 
-                if (_app_document.filterby_branch && _app_document.filterby_tearminal)
-                {
-                    sales_invoice.app_document_range = app_document_range.Where(
-                        x => 
-                            x.is_active && 
-                            x.id_company == CurrentSession.Id_Company && 
-                            x.app_document.id_application == entity.App.Names.SalesInvoice &&
-                            x.id_branch == CurrentSession.Id_Branch && 
-                            x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
-                }
-                else if (_app_document.filterby_branch)
-                {
-                    sales_invoice.app_document_range = app_document_range.Where(
-                        x =>
-                            x.is_active &&
-                            x.id_company == CurrentSession.Id_Company &&
-                            x.app_document.id_application == entity.App.Names.SalesInvoice &&
-                            x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-                }
-            }
+            //    if (_app_document.filterby_branch && _app_document.filterby_tearminal)
+            //    {
+            //        sales_invoice.app_document_range = app_document_range.Where(
+            //            x => 
+            //                x.is_active && 
+            //                x.id_company == CurrentSession.Id_Company && 
+            //                x.app_document.id_application == entity.App.Names.SalesInvoice &&
+            //                x.id_branch == CurrentSession.Id_Branch && 
+            //                x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
+            //    }
+            //    else if (_app_document.filterby_branch)
+            //    {
+            //        sales_invoice.app_document_range = app_document_range.Where(
+            //            x =>
+            //                x.is_active &&
+            //                x.id_company == CurrentSession.Id_Company &&
+            //                x.app_document.id_application == entity.App.Names.SalesInvoice &&
+            //                x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            //    }
+            //}
             
-            if (app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
-            {
-                sales_invoice.app_document_range = app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();
-            }
+            //if (app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
+            //{
+            //    sales_invoice.app_document_range = app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();
+            //}
 
             if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
             {
@@ -67,14 +63,9 @@ namespace entity
                 }
             }
 
-            //No need to run this every time, we can do this on Load and Save values.
-            if (app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault() != null)
-            {
-                if (app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault() != null)
-                {
-                    sales_invoice.app_currencyfx = app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault();
-                }
-            }
+            sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
+                //} app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault();
+                //} 
 
             return sales_invoice;
         }
@@ -231,6 +222,8 @@ namespace entity
 
                     invoice.status = Status.Documents_General.Approved;
                     SaveChanges();
+
+                    invoice.IsSelected = false;
 
                     if (invoice.Error != null)
                     {

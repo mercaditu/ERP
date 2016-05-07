@@ -65,13 +65,32 @@ namespace cntrl.PanelAdv
                                        quantity = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0,
                                        balance = grouped.Key.sales_budget_detail.quantity > 0 ? grouped.Key.sales_budget_detail.quantity : 0 - grouped.Sum(x => x.quantity > 0 ? x.quantity : 0),
                                    }).ToList()
-                  .Where(x => x.balance > 0)
+                 
                   .Select(x => x.id);
             sales_budgetViewSource = (CollectionViewSource)Resources["sales_budgetViewSource"];
             sales_budgetViewSource.Source = db.sales_budget.Where(x => salesBudget.Contains(x.id_sales_budget)).ToList();
 
         }
-
+        void filter_sales()
+        {
+            if (sales_budgetViewSource != null)
+            {
+                if (sales_budgetViewSource.View != null)
+                {
+                    if (sales_budgetViewSource.View.OfType<sales_budget>().Count() > 0)
+                    {
+                        sales_budgetViewSource.View.Filter = i =>
+                        {
+                            sales_budget sales_budget = (sales_budget)i;
+                            if (sales_budget.sales_budget_detail.Sum(x => x.balance) > 0)
+                                return true;
+                            else
+                                return false;
+                        };
+                    }
+                }
+            }
+        }
         public event btnSave_ClickedEventHandler SalesBudget_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)

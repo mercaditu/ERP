@@ -87,12 +87,32 @@ namespace cntrl.PanelAdv
                                  id_sales_order=grouped.Key.sales_order_detail.sales_order.id_sales_order,
                                  salesOrder = grouped.Key.sales_order_detail.sales_order,
                                  balance = grouped.Key.sales_order_detail.quantity != null ? grouped.Key.sales_order_detail.quantity : 0 - grouped.Sum(x => x.quantity != null ? x.quantity : 0)
-                             }).ToList().Where(x => x.balance > 0).Select(x => x.id_sales_order);
+                             }).ToList().Select(x => x.id_sales_order);
        
             sales_orderViewSource = (CollectionViewSource)Resources["sales_orderViewSource"];
 
             sales_orderViewSource.Source = _entity.sales_order.Where(x => order.Contains(x.id_sales_order)).ToList();
-
+            filter_sales();
+        }
+        void filter_sales()
+        {
+            if (sales_orderViewSource != null)
+            {
+                if (sales_orderViewSource.View != null)
+                {
+                    if (sales_orderViewSource.View.OfType<sales_order>().Count() > 0)
+                    {
+                        sales_orderViewSource.View.Filter = i =>
+                        {
+                            sales_order sales_order = (sales_order)i;
+                            if (sales_order.sales_order_detail.Sum(x => x.balance) > 0 )
+                                return true;
+                            else
+                                return false;
+                        };
+                    }
+                }
+            }
         }
         public event btnSave_ClickedEventHandler SalesOrder_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);

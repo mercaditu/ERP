@@ -104,13 +104,7 @@ namespace entity
         {
             get
             {
-                //if (payment != null)
-                //{
-                //    if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
-                //    {
-                //        _value = ValueInDefaultCurrency;
-                //    }
-                //}
+               
                 return _value;
             }
             set
@@ -118,31 +112,53 @@ namespace entity
                 if (_value != value)
                 {
                     _value = value;
+                    RaisePropertyChanged("ValueInDefaultCurrency");
                 }
             }
         }
         private decimal _value;
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //[NotMapped]
-        //public decimal ValueInDefaultCurrency
-        //{
-        //    get
-        //    {
-        //        _ValueInDefaultCurrency = payment.ValueInDefaultCurrency - payment.payment_detail.Where(y => y != this).Sum(x => x.ValueInDefaultCurrency);
-        //        return _ValueInDefaultCurrency;
-        //    }
-        //    set
-        //    {
-        //        if (_ValueInDefaultCurrency != value)
-        //        {
-        //            _ValueInDefaultCurrency = value;
-        //        }
-        //    }
-        //}
-        //private decimal _ValueInDefaultCurrency;
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal ValueInDefaultCurrency
+        {
+            get
+            {
+              
+
+
+                    if (payment != null)
+                    {
+                        if (payment.State != System.Data.Entity.EntityState.Added || payment.State != System.Data.Entity.EntityState.Modified)
+                        {
+                            decimal amount = 0;
+                            foreach (payment_detail payment_detail in payment.payment_detail)
+                            {
+                                amount += Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
+                            }
+
+
+                            return payment.GrandTotal - amount;
+                        }
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                    return 0;
+                
+            }
+            set
+            {
+                if (_ValueInDefaultCurrency != value)
+                {
+                    _ValueInDefaultCurrency = value;
+                }
+            }
+        }
+        private decimal _ValueInDefaultCurrency;
 
         /// <summary>
         /// 

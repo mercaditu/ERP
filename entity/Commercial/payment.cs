@@ -91,53 +91,74 @@ namespace entity
         public virtual app_document_range app_document_range { get; set; }
         #endregion
 
-        //[NotMapped]
-        //public decimal GrandTotal
-        //{
-        //    get
-        //    {
-        //        _GrandTotal = 0;
-        //        foreach (payment_detail _payment_detail in payment_detail)
-        //        {
-        //            _GrandTotal += _payment_detail.value;
-        //        }
+        [NotMapped]
+        public decimal GrandTotal
+        {
+            get
+            {
+                //_GrandTotal = 0;
+                //foreach (payment_detail _payment_detail in payment_detail)
+                //{
+                //    _GrandTotal += _payment_detail.value;
+                //}
 
-               
-        //        return Math.Round(_GrandTotal, 2);
-        //    }
-        //    set
-        //    {
-        //        _GrandTotal = value;
-        //        RaisePropertyChanged("GrandTotal");
-        //    }
-        //}
-        //private decimal _GrandTotal;
+
+                return Math.Round(_GrandTotal, 2);
+            }
+            set
+            {
+                _GrandTotal = value;
+                RaisePropertyChanged("GrandTotal");
+            }
+        }
+        private decimal _GrandTotal;
+        [NotMapped]
+        public int id_currencyfx
+        {
+            get
+            {
+                //_GrandTotal = 0;
+                //foreach (payment_detail _payment_detail in payment_detail)
+                //{
+                //    _GrandTotal += _payment_detail.value;
+                //}
+
+
+                return _id_currencyfx;
+            }
+            set
+            {
+                _id_currencyfx = value;
+                RaisePropertyChanged("GrandTotal");
+            }
+        }
+        private int _id_currencyfx;
         
         /// <summary>
         /// 
         /// </summary>
         public string number { get; set; }
 
-        ///// <summary>
-        ///// Must be set when initializing. Used by Detail.
-        ///// </summary>
-        //[NotMapped]
-        //public decimal ValueInDefaultCurrency
-        //{
-        //    get
-        //    {
+        /// <summary>
+        /// Must be set when initializing. Used by Detail.
+        /// </summary>
+        [NotMapped]
+        public decimal ValueInDefaultCurrency
+        {
+            get
+            {
 
-        //        return _ValueInDefaultCurrency;
-        //    }
-        //    set
-        //    {
-        //        if (_ValueInDefaultCurrency != value)
-        //        {
-        //            _ValueInDefaultCurrency = value;
-        //        }
-        //    }
-        //}
-        //private decimal _ValueInDefaultCurrency;
+                return payment_detail.Sum(x=>x.value);
+            }
+            set
+            {
+                if (_ValueInDefaultCurrency != value)
+                {
+                    _ValueInDefaultCurrency = value;
+                }
+            }
+        }
+        private decimal _ValueInDefaultCurrency;
 
 
         /// <summary>

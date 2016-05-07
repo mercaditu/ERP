@@ -31,6 +31,10 @@ namespace entity.Brillo.Logic
 
 
                 payment_detail payment_detailreturn = new payment_detail();
+                if (_entity.db.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
+                {
+                    payment_detailreturn.app_currencyfx = _entity.db.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+                }
 
                 payment_detailreturn.id_currencyfx = id_currencyfx;
                 payment_detailreturn.id_payment_type = id_payment_type;
@@ -80,6 +84,10 @@ namespace entity.Brillo.Logic
 
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.id_account = id_account;
+                if (_entity.db.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
+                {
+                    payment_detail.app_currencyfx = _entity.db.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+                }
                 payment_detail.id_currencyfx = id_currencyfx;
                 payment_detail.id_payment_type = id_payment_type;
 
@@ -117,7 +125,7 @@ namespace entity.Brillo.Logic
                         app_account_detail.id_session = _entity.db.app_account_session.Where(x => x.id_account == id_account && x.is_active).FirstOrDefault().id_session;
                     }
                     app_account_detail.id_account = id_account;
-                    app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
+                    app_account_detail.id_currencyfx = payment_detail.id_currencyfx;
                     app_account_detail.id_payment_type = id_payment_type;
                     app_account_detail.trans_date = trans_date;
                     app_account_detail.debit = 0;

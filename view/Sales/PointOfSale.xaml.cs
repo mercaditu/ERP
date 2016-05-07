@@ -260,10 +260,11 @@ namespace Cognitivo.Sales
 
             //TODO > CHANGE THIS TO A NON MAPPED PROPERTY IN PAYMENT HEADER.
             payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-            if (payment.payment_detail.FirstOrDefault() != null)
-            {
-                payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
-            }
+            payment.GrandTotal = sales_invoice.GrandTotal;
+            //if (payment.payment_detail.FirstOrDefault() != null)
+            //{
+            //    payment.payment_detail.FirstOrDefault().value = sales_invoice.GrandTotal;
+            //}
         }
 
         private void dgvPaymentDetail_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
@@ -276,7 +277,7 @@ namespace Cognitivo.Sales
             payment_detail.IsSelected = true;
             payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
             payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
-
+            payment.id_currencyfx = sales_invoice.id_currencyfx; 
             payment_detail.id_payment = payment.id_payment;
             payment_detail.payment = payment;
         }

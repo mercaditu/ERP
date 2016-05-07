@@ -317,6 +317,10 @@
                                                 DisplayMemberPath="name" SelectedValuePath="id_payment_type" 
 					                            SelectedValueBinding="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True,  
                                                 UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <DataGridTextColumn Binding="{Binding ValueInDefaultCurrency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
+                                                        CellStyle="{StaticResource Number_CellStyle}"
+                                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>
                                 <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                                         CellStyle="{StaticResource Number_CellStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>

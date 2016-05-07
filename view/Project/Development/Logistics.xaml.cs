@@ -74,9 +74,11 @@ namespace Cognitivo.Project.Development
                                                         _id_task = last.Max(x => x.id_project_task),
                                                         _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
                                                         avlqtyColumn = last.Key.IM.quantity,
-                                                        buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.quantity != 0 ? last.Key.IM.id_purchase_tender_detail : 0 ),
+                                                        buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.quantity != 0 ? last.Key.IM.quantity : 0),
                                                         item = last.Key.items
                                                     }).ToList();
+                        
+                           
 
                         var productlist = (from PL in productlistbasic
                                            group PL by new { PL.item }

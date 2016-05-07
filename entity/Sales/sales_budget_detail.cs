@@ -5,6 +5,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel;
     using System.Text;
+    using System.Linq;
 
     public partial class sales_budget_detail : CommercialSalesDetail, IDataErrorInfo
     {
@@ -14,12 +15,28 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             quantity = 1;
+            sales_order_detail = new List<sales_order_detail>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_budget_detail { get; set; }
         public int id_sales_budget { get; set; }
+        [NotMapped]
+        public decimal balance
+        {
+            get
+            {
+
+                _balance = quantity - sales_order_detail.Sum(x => x.quantity != null ? x.quantity : 0);
+                return _balance;
+            }
+            set
+            {
+                _balance = value;
+            }
+        }
+        decimal _balance;
 
     
 
@@ -47,7 +64,7 @@ namespace entity
             }
         }
         private sales_budget _sales_budget;
-        public virtual IEnumerable<sales_order_detail> sales_order_detail { get; set; }
+        public virtual ICollection<sales_order_detail> sales_order_detail { get; set; }
         #endregion
 
         #region "Validation"

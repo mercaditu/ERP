@@ -361,7 +361,7 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DataContext="{StaticResource paymentViewSource}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock  FontSize="30" Foreground="White" HorizontalAlignment="Center"
                                     Text="{lex:Loc Total}">
                                 <TextBlock.Effect>
@@ -370,7 +370,7 @@
                             </TextBlock>
                             <Label Content=" "/>
                             <TextBlock FontSize="30" Foreground="White"
-                                       Text="{Binding GrandTotalDetail, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                                       Text="{Binding GrandTotalDetail, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource paymentViewSource}}">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="White" ShadowDepth="0"/>
                                 </TextBlock.Effect>

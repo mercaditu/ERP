@@ -26,27 +26,26 @@ namespace entity
             string str = LocExtension.GetLocalizedValue<string>("Cognitivo:local:" + "Question_Cancel");
             if (MessageBox.Show(str, "Cognitivo ERP", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-
                 foreach (var entry in ChangeTracker.Entries())
                 {
                     switch (entry.State)
                     {
                         case EntityState.Modified:
-                            {
-                                entry.CurrentValues.SetValues(entry.OriginalValues);
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
+                        {
+                            entry.CurrentValues.SetValues(entry.OriginalValues);
+                            entry.State = EntityState.Unchanged;
+                            break;
+                        }
                         case EntityState.Deleted:
-                            {
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            }
+                        {
+                            entry.State = EntityState.Unchanged;
+                            break;
+                        }
                         case EntityState.Added:
-                            {
-                                entry.State = EntityState.Detached;
-                                break;
-                            }
+                        {
+                            entry.State = EntityState.Detached;
+                            break;
+                        }
                     }
                 }
             }

@@ -126,17 +126,16 @@ namespace Cognitivo.Sales
         {
             ///Creating new SALES INVOICE for upcomming sale. 
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-            sales_invoice sales_invoice_New = SalesInvoiceDB.New(0);
+            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
+            sales_invoice sales_invoice = SalesInvoiceDB.New(0);
+            SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
+            sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
+            sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
 
-            SalesInvoiceDB.sales_invoice.Add(sales_invoice_New);
-
-            sales_invoiceViewSource.View.Refresh();
-            sales_invoiceViewSource.View.MoveCurrentToLast();
 
             ///Creating new PAYMENT for upcomming sale. 
             payment payment = PaymentDB.New();
-            payment_detail payment_detail = PaymentDB.NewPaymentDetail(ref payment);
 
             paymentViewSource.View.Refresh();
             paymentViewSource.View.MoveCurrentToLast();
@@ -184,12 +183,8 @@ namespace Cognitivo.Sales
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
-            sales_invoice sales_invoice = SalesInvoiceDB.New(0);
-            SalesInvoiceDB.sales_invoice.Add(sales_invoice);
-
-            sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
-            sales_invoiceViewSource.View.MoveCurrentToLast();
+            ///This code will create a new Sale & Payment Information.
+            NewSale();
 
             //cbxSalesRep
             SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();

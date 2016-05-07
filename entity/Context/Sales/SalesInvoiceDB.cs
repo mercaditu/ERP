@@ -21,38 +21,8 @@ namespace entity
             sales_invoice.State = EntityState.Added;
 
             sales_invoice.IsSelected = true;
-
-            sales_invoice.app_branch = app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
-
-            //if (app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault() != null)
-            //{
-            //    app_document _app_document = app_document.Where(x => x.id_company == CurrentSession.Id_Company && x.id_application == App.Names.SalesInvoice).FirstOrDefault();
-                
-            //    if (_app_document.filterby_branch && _app_document.filterby_tearminal)
-            //    {
-            //        sales_invoice.app_document_range = app_document_range.Where(
-            //            x => 
-            //                x.is_active && 
-            //                x.id_company == CurrentSession.Id_Company && 
-            //                x.app_document.id_application == entity.App.Names.SalesInvoice &&
-            //                x.id_branch == CurrentSession.Id_Branch && 
-            //                x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault();
-            //    }
-            //    else if (_app_document.filterby_branch)
-            //    {
-            //        sales_invoice.app_document_range = app_document_range.Where(
-            //            x =>
-            //                x.is_active &&
-            //                x.id_company == CurrentSession.Id_Company &&
-            //                x.app_document.id_application == entity.App.Names.SalesInvoice &&
-            //                x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-            //    }
-            //}
-            
-            //if (app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault() != null)
-            //{
-            //    sales_invoice.app_document_range = app_document_range.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.app_document.id_application == entity.App.Names.SalesInvoice).FirstOrDefault();
-            //}
+            sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            sales_invoice.id_range = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
 
             if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
             {

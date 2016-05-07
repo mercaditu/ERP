@@ -109,14 +109,7 @@ namespace Cognitivo.Sales
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 SalesInvoiceDB.Approve(true);
 
-                payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
-                payment.IsSelected = true;
-                payment.status = Status.Documents_General.Pending;
-
-                PaymentDB.payments.Add(payment);
-
                 payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
-
                 PaymentDB.Approve(payment_schedual.id_payment_schedual,(bool)chkreceipt.IsChecked);
 
                 //Start New Sale
@@ -135,7 +128,6 @@ namespace Cognitivo.Sales
             sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
             sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
 
-
             ///Creating new PAYMENT for upcomming sale. 
             payment payment = PaymentDB.New();
             PaymentDB.payments.Add(payment);
@@ -143,7 +135,6 @@ namespace Cognitivo.Sales
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
             paymentViewSource.Source = PaymentDB.payments.Local;
             paymentViewSource.View.MoveCurrentTo(payment);
-
 
             tabContact.Focus();
             sbxContact.Text = "";
@@ -353,30 +344,9 @@ namespace Cognitivo.Sales
         private void Cancel_MouseDown(object sender, EventArgs e)
         {
             SalesInvoiceDB.CancelAllChanges();
-
-            //sales_invoice old_salesinvoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            //SalesInvoiceDB.sales_invoice.Remove(old_salesinvoice);
-            //payment payment = paymentViewSource.View.CurrentItem as payment;
-
             PaymentDB.CancelAllChanges();
 
-            sales_invoice Newsales_invoice = SalesInvoiceDB.New(0);
 
-            SalesInvoiceDB.sales_invoice.Add(Newsales_invoice);
-            sales_invoiceViewSource.View.Refresh();
-            sales_invoiceViewSource.View.MoveCurrentToLast();
-            payment paymentnew = new entity.payment();
-            paymentnew.status = Status.Documents_General.Pending;
-            payment_detail payment_detailnew = new entity.payment_detail();
-            payment_detailnew.id_payment_type = SalesInvoiceDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-            paymentnew.payment_detail.Add(payment_detailnew);
-            // SalesInvoiceDB.payments.Add(paymentnew);
-            PaymentDB.payments.Add(paymentnew);
-            //paymentsdb.Add(paymentnew);
-            //paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
-            //paymentViewSource.Source = paymentList;
-            paymentViewSource.View.Refresh();
-            paymentViewSource.View.MoveCurrentToLast();
 
             //Clean up Contact Data.
             sbxContact.Text = "";

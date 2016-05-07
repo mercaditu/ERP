@@ -31,6 +31,7 @@ namespace cntrl.Curd
         private void btnCancel_MouseDown(object sender, EventArgs e)
         {
             StackPanel parentGrid = (StackPanel)this.Parent;
+            parentGrid.Children.RemoveAt(0);
         }
 
         private void btnSave_MouseUp(object sender, RoutedEventArgs e)

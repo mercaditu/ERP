@@ -89,13 +89,14 @@
                 </Ellipse>
                 <Label Style="{StaticResource H3}" VerticalAlignment="Center" Content="Cognitivo ERP" Foreground="White"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,0">
-                <TextBlock x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"
-                           Text="{Binding GrandTotal, FallbackValue=0, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}">
-                    <TextBlock.Effect>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,-6, 4, 0">
+                <Label x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"
+                       TargetUpdated="lblGrandTotalsales_DataContextChanged"
+                       Content="{Binding GrandTotal, Mode=OneWay, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}">
+                    <Label.Effect>
                         <DropShadowEffect Color="White" ShadowDepth="0"/>
-                    </TextBlock.Effect>
-                </TextBlock>
+                    </Label.Effect>
+                </Label>
                 <TextBlock FontSize="16" Foreground="Gainsboro" Margin="4,0" VerticalAlignment="Center"
                            Text="{Binding app_currencyfx.app_currency.name, FallbackValue=FX, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}">
                     <TextBlock.Effect>
@@ -277,32 +278,57 @@
                                    VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                             <Label Content="{lex:Loc Payment}" Style="{StaticResource H1}" Foreground="White"/>
                         </StackPanel>
-                        
-                        <!-- PRINT PAYMENT -->
-                        <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Center" ToolTip="{lex:Loc Print}">
-                            <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <Border.Background>
-                                    <SolidColorBrush Color="#FF004867" Opacity="0.32"/>
-                                </Border.Background>
-                                <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
-                                    <CheckBox Style="{StaticResource input_checkbox}" Width="Auto" x:Name="chkreceipt">
-                                        <CheckBox.Content>
-                                            <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke">
-                                                <Run Text="{lex:Loc Print}" />
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                            
+                            <!-- PRINT PAYMENT -->
+                            <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Center" ToolTip="{lex:Loc Print}"
+                                  MouseUp="NewPayment_MouseUp">
+                                <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#FF004867" Opacity="0.32"/>
+                                    </Border.Background>
+                                    <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
+                                        <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke" Margin="8">
+                                                <Run Text="{lex:Loc New}" />
                                                 <Run Text="{lex:Loc Payment}"/>
-                                            </TextBlock>
-                                        </CheckBox.Content>
-                                    </CheckBox>
-                                </StackPanel>
-                            </Border>
-                            <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                                <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left"
                                     BorderBrush="White" BorderThickness="1">
-                                <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15" 
+                                    <Label Content="+" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15" 
                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
                                        Foreground="White"/>
-                            </Border>
-                        </Grid>
-                       
+                                </Border>
+                            </Grid>
+
+                            <!-- PRINT PAYMENT -->
+                            <Grid Margin="8" ToolTip="{lex:Loc Print}">
+                                <Border CornerRadius="16,5,5,16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="#FF004867" Opacity="0.32"/>
+                                    </Border.Background>
+                                    <StackPanel Orientation="Horizontal" Margin="32,0,2,0">
+                                        <CheckBox x:Name="chkreceipt" Style="{StaticResource input_checkbox}" Width="Auto">
+                                            <CheckBox.Content>
+                                                <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke">
+                                                <Run Text="{lex:Loc Print}" />
+                                                <Run Text="{lex:Loc Payment}"/>
+                                                </TextBlock>
+                                            </CheckBox.Content>
+                                        </CheckBox>
+                                    </StackPanel>
+                                </Border>
+                                <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                        BorderBrush="White" BorderThickness="1">
+                                    <Label Content="p" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15" 
+                                           VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                           Foreground="White"/>
+                                </Border>
+                            </Grid>
+                        </StackPanel>
+                      
                         <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16"
                                       ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" InitializingNewItem="dgvPaymentDetail_InitializingNewItem">
                             <DataGrid.Columns>
@@ -312,12 +338,13 @@
 					                            SelectedValueBinding="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True,  
                                                 UpdateSourceTrigger=PropertyChanged}"/>
 
-                                <!--<DataGridTextColumn Binding="{Binding ValueInDefaultCurrency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
-                                                        CellStyle="{StaticResource Number_CellStyle}"
-                                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>-->
+                                <DataGridTextColumn Binding="{Binding ValueInDefaultCurrency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
+                                                        CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True" CanUserResize="False"
+                                                        Header="En Dolar" MaxWidth="1" FontWeight="Bold"/>
                                 <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
                                                         CellStyle="{StaticResource Number_CellStyle}"
-                                                        Header="{lex:Loc Cognitivo:local:Amount}" Width="256" FontWeight="Bold"/>
+                                                        Header="{lex:Loc Cognitivo:local:Value}" Width="256" FontWeight="Bold"/>
+                                
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="128"
 					                            ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"  
                                                 DisplayMemberPath="name" SelectedValuePath="id_currency" 
@@ -334,12 +361,21 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <TextBlock  FontSize="30" Foreground="White"
-                           Text="{Binding GrandTotalDetail, FallbackValue=0, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource paymentViewSource}}">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="White" ShadowDepth="0"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DataContext="{StaticResource paymentViewSource}">
+                            <TextBlock  FontSize="30" Foreground="White" HorizontalAlignment="Center"
+                                    Text="{lex:Loc Total}">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="White" ShadowDepth="0"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <Label Content=" "/>
+                            <TextBlock FontSize="30" Foreground="White"
+                                       Text="{Binding GrandTotalDetail, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBlock.Effect>
+                                    <DropShadowEffect Color="White" ShadowDepth="0"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </TabItem>

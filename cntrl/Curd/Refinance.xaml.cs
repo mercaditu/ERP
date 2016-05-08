@@ -12,26 +12,29 @@ namespace cntrl.Curd
 {
     public partial class Refinance : UserControl
     {
-      public  enum Mode
-	{
+        public enum Mode
+	    {
             AccountReceivable,
             AccountPayable
-	         
-	}
+	    }
+
+        private Mode WindowsMode { get; set; }
+
+
         CollectionViewSource _payment_schedualViewSource = null;
         public CollectionViewSource payment_schedualViewSource { get { return _payment_schedualViewSource; } set { _payment_schedualViewSource = value; } }
 
-        private dbContext _entity = null;
-        public dbContext objEntity { get { return _entity; } set { _entity = value; } }
+        private PaymentDB _entity = null;
+        public PaymentDB objEntity { get { return _entity; } set { _entity = value; } }
         public int id_contact { get; set; }
         public int id_currency { get; set; }
-        public Mode WindowsMode { get; set; }
         decimal total = 0;
        
 
-        public Refinance()
+        public Refinance(Mode Mode)
         {
             InitializeComponent();
+            WindowsMode = Mode;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -42,10 +45,8 @@ namespace cntrl.Curd
                 try
                 {
                     CollectionViewSource app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
-                    objEntity.db.app_currency.Where(a => a.is_active == true).Load();
-                    app_currencyViewSource.Source = objEntity.db.app_currency.Local;
-
-
+                    objEntity.app_currency.Where(a => a.is_active == true).Load();
+                    app_currencyViewSource.Source = objEntity.app_currency.Local;
 
                     lbldiff.Content = 0;
                     payment_schedualViewSource.View.Filter = i =>
@@ -100,7 +101,7 @@ namespace cntrl.Curd
         {
             try
             {
-                objEntity.CancelChanges();
+                objEntity.CancelAllChanges();
                   payment_schedualViewSource.View.Refresh();
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();

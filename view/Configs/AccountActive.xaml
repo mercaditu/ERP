@@ -36,34 +36,12 @@
                                       Margin="10,26,10,10" Height="Auto" MaxHeight="180" 
                                       RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True"
-                                                        Binding="{Binding PaymentTypeName}" Header="Payment Type" Width="*"/>
-                    <DataGridTextColumn
-                                                        Binding="{Binding amount}" Header="Amount" Width="*"/>
-                    <DataGridTextColumn
-                                                        Binding="{Binding amountCounted}" Header="Counted Amount" Width="*"/>
-                    <DataGridTextColumn IsReadOnly="True"
-                                                        Binding="{Binding Currencyfxname}" Header="Currency" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding PaymentTypeName}" Header="Payment Type" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding amount}" Header="Amount" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding amountCounted}" Header="Counted Amount" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Currencyfxname}" Header="Currency" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <!--<StackPanel Margin="5">
-                            <Label Content="{lex:Loc InitialAmount}" Style="{StaticResource input_label}"/>
-                            <TextBox x:Name="txtInitialAmount" Style="{StaticResource input_textbox}"/>
-                        </StackPanel>-->
-            <!--<DataGrid x:Name="app_account_Activate_detailDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
-                                  EnableRowVirtualization="True" Height="Auto" BorderThickness="1" BorderBrush="Gray"
-                                  ItemsSource="{Binding Source={StaticResource app_account_detailViewSource}}" 
-                                  Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn x:Name="accountNameColumn" Binding="{Binding ac_name,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="account" Width="*"/>
-                                <DataGridTextColumn x:Name="id_accountColumn" Binding="{Binding id_account,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="" Visibility="Collapsed" Width="*"/>
-                                <DataGridTextColumn x:Name="payTypeColumn1" Binding="{Binding pay_type,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Payment Type" Width="*"/>
-                                <DataGridTextColumn x:Name="debitColumn1" Binding="{Binding debit,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="debit" Width="*"/>
-                                <DataGridTextColumn x:Name="creditColumn1" Binding="{Binding credit,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="credit" Width="*"/>
-                                <DataGridTextColumn x:Name="id_currencyfxColumn2" Binding="{Binding cur,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="currency" Width="*"/>
-                                <DataGridTextColumn x:Name="is_activeColumn" Binding="{Binding active,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource BoolToStringConverter}}" Header="Active" Width="SizeToHeader"/>
-                            </DataGrid.Columns>
-                        </DataGrid>-->
             <Grid Margin="5">
                 <TextBlock Style="{StaticResource text_Instructions}" Text="once activated, you can use this account to transact normally "/>
                 <Button x:Name="btnActivateAccount" Content="{Binding is_active,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ElementName=activeaccount, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>

@@ -13,17 +13,16 @@ namespace Cognitivo.Commercial
 {
     public partial class AccountsPayable : Page
     {
-        dbContext dbContext = new dbContext();
-
-        int id_comapny = CurrentSession.Id_Company;
+        PaymentDB PaymentDB = new PaymentDB();
 
         CollectionViewSource contactViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-       // List<contact> contactLIST;
         cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick();
-        cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance();
+        cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
         cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
+
+
         public AccountsPayable()
         {
             InitializeComponent();
@@ -75,7 +74,7 @@ namespace Cognitivo.Commercial
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             List<contact> contactLIST = new List<contact>();
 
-            foreach (payment_schedual payment in dbContext.db.payment_schedual.Local.ToList())
+            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.ToList())
             {
                 if (contactLIST.Contains(payment.contact) == false)
                 {
@@ -91,8 +90,8 @@ namespace Cognitivo.Commercial
         private async void load_Schedual()
         {
             payment_schedualViewSource = (CollectionViewSource)FindResource("payment_schedualViewSource");
-            payment_schedualViewSource.Source = await dbContext.db.payment_schedual
-                                                                    .Where(x => x.id_payment_detail == null && x.id_company == id_comapny
+            payment_schedualViewSource.Source = await PaymentDB.payment_schedual
+                                                                    .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                                                                        && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) 
                                                                        && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0)
                                                                     .ToListAsync();
@@ -116,9 +115,9 @@ namespace Cognitivo.Commercial
                
 
             }
-            if (dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+            if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
             {
-                payment_quick.payment_detail.id_payment_type = dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
 
             }
             else
@@ -129,7 +128,7 @@ namespace Cognitivo.Commercial
         
             payment_quick.payment_detail.App_Name = global::entity.App.Names.PurchaseInvoice;
             payment_quick.contacts = contactViewSource.View.OfType<contact>().ToList();
-            payment_quick.mode = cntrl.Curd.payment_quick.modes.purchase; 
+            payment_quick.mode = cntrl.Curd.payment_quick.Modes.Payable; 
             payment_quick.btnSave_Click += Save_Click;
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(payment_quick);
@@ -181,12 +180,12 @@ namespace Cognitivo.Commercial
 
                     //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
 
-                    if (dbContext.db.payment_type.Where(x => x.id_payment_type == payment_quick.payment_detail.id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
+                    if (PaymentDB.payment_type.Where(x => x.id_payment_type == payment_quick.payment_detail.id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
                     {
                         app_account_detail app_account_detail = new app_account_detail();
-                        if (dbContext.db.app_account_session.Where(x => x.id_account == payment_quick.payment_detail.id_account && x.is_active).FirstOrDefault() != null)
+                        if (PaymentDB.app_account_session.Where(x => x.id_account == payment_quick.payment_detail.id_account && x.is_active).FirstOrDefault() != null)
                         {
-                            app_account_detail.id_session = dbContext.db.app_account_session.Where(x => x.id_account == payment_quick.payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
+                            app_account_detail.id_session = PaymentDB.app_account_session.Where(x => x.id_account == payment_quick.payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
                         }
                         app_account_detail.id_account = (int)payment_quick.payment_detail.id_account;
                         app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
@@ -194,15 +193,15 @@ namespace Cognitivo.Commercial
                         app_account_detail.trans_date = payment_quick.payment_detail.trans_date;
                         app_account_detail.credit = 0;
                         app_account_detail.debit = Convert.ToDecimal(payment_quick.payment_detail.value);
-                        dbContext.db.app_account_detail.Add(app_account_detail);
+                        PaymentDB.app_account_detail.Add(app_account_detail);
                     }
 
-                    dbContext.db.payments.Add(payment);
+                    PaymentDB.payments.Add(payment);
 
-                    IEnumerable<DbEntityValidationResult> validationresult = dbContext.db.GetValidationErrors();
+                    IEnumerable<DbEntityValidationResult> validationresult = PaymentDB.GetValidationErrors();
                     if (validationresult.Count() == 0)
                     {
-                        dbContext.db.SaveChanges();
+                        PaymentDB.SaveChanges();
                         crud_modal.Children.Clear();
                         crud_modal.Visibility = System.Windows.Visibility.Collapsed;
                     }
@@ -273,7 +272,7 @@ namespace Cognitivo.Commercial
                 {
                     VATWithholding.invoiceList = new List<object>();
                     VATWithholding.invoiceList.Add(purchase_invoice);
-                    VATWithholding.objEntity = dbContext;
+                    VATWithholding.objEntity = PaymentDB;
                     VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
                     VATWithholding.percentage = PaymentSetting.Default.vatwithholdingpercent;
                     crud_modal.Visibility = System.Windows.Visibility.Visible;
@@ -288,12 +287,12 @@ namespace Cognitivo.Commercial
             }
             
         }
+
         private void Refince_Click(object sender, RoutedEventArgs e)
         {
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
-            Refinance.WindowsMode = cntrl.Curd.Refinance.Mode.AccountPayable;
 
-            Refinance.objEntity = dbContext;
+            Refinance.objEntity = PaymentDB;
             Refinance.payment_schedualViewSource = payment_schedualViewSource;
             Refinance.id_contact = PaymentSchedual.id_contact;
             Refinance.id_currency = PaymentSchedual.app_currencyfx.id_currency;
@@ -304,10 +303,10 @@ namespace Cognitivo.Commercial
 
         public void SaveRefinance_Click(object sender)
         {
-            IEnumerable<DbEntityValidationResult> validationresult = dbContext.db.GetValidationErrors();
+            IEnumerable<DbEntityValidationResult> validationresult = PaymentDB.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
-                dbContext.db.SaveChanges();
+                PaymentDB.SaveChanges();
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = System.Windows.Visibility.Collapsed;
             }

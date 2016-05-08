@@ -12,56 +12,55 @@ namespace cntrl.Curd
 {
     public partial class payment_quick : UserControl
     {
-        dbContext dbContext = new dbContext();
-        public enum modes
+        PaymentDB PaymentDB = new PaymentDB();
+
+        public enum Modes
         {
-            sales,
-            purchase
+            Recievable,
+            Payable
         }
-        public payment_quick()
+
+        private Modes Mode;
+
+        public payment_quick(Modes App_Mode, int? ContactID)
         {
             InitializeComponent();
+            Mode = App_Mode;
         }
 
-        public List<entity.contact> contacts { get; set; }
-        public payment_detail payment_detail { get; set; }
-        public modes mode { get; set; }
+        CollectionViewSource paymentpayment_detailViewSource;
+        CollectionViewSource paymentViewSource;
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            entity.Properties.Settings _Settings = new entity.Properties.Settings();
-
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-            dbContext.db.payment_type.Where(a => a.is_active == true).Load();
-            payment_typeViewSource.Source = dbContext.db.payment_type.Local;
-
-            CollectionViewSource contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
-            contactViewSource.Source = contacts;
+            PaymentDB.payment_type.Where(a => a.is_active).Load();
+            payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            dbContext.db.app_account.Where(a => a.is_active == true && a.id_company == _Settings.company_ID).Load();
-            app_accountViewSource.Source = dbContext.db.app_account.Local;
+            PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
+            app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-            List<payment_detail> payment_detailList = new List<payment_detail>();
-            payment_detailList.Add(payment_detail);
-            paymentpayment_detailViewSource.Source = payment_detailList;
+            //CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+            //List<payment_detail> payment_detailList = new List<payment_detail>();
+            //payment_detailList.Add(payment_detail);
+            //paymentpayment_detailViewSource.Source = payment_detailList;
 
-            CollectionViewSource purchase_returnViewSource = (CollectionViewSource)this.FindResource("purchase_returnViewSource");
-            dbContext.db.purchase_return.Where(x => x.id_contact == payment_detail.payment.id_contact).Load();
-            purchase_returnViewSource.Source = dbContext.db.purchase_return.Local;
-            CollectionViewSource sales_returnViewSource = (CollectionViewSource)this.FindResource("sales_returnViewSource");
-            dbContext.db.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice == null).Load();
-            sales_returnViewSource.Source = dbContext.db.sales_return.Local;
+            //CollectionViewSource purchase_returnViewSource = (CollectionViewSource)this.FindResource("purchase_returnViewSource");
+            //PaymentDB.purchase_return.Where(x => x.id_contact == payment_detail.payment.id_contact).Load();
+            //purchase_returnViewSource.Source = PaymentDB.purchase_return.Local;
+            
+            //CollectionViewSource sales_returnViewSource = (CollectionViewSource)this.FindResource("sales_returnViewSource");
+            //PaymentDB.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice == null).Load();
+            //sales_returnViewSource.Source = PaymentDB.sales_return.Local;
 
-            cbxDocument.ItemsSource = dbContext.db.app_document_range.Where(d => d.is_active == true
-                                           && d.app_document.id_application == entity.App.Names.PaymentUtility
-                                           && d.id_company == _Settings.company_ID).Include(i => i.app_document).ToList();
-            cbxDocument.SelectedIndex = 0;
-          
-            // entity.db.payment_detail.Add(payment_detail);
-            paymentpayment_detailViewSource.View.Refresh();
-            paymentpayment_detailViewSource.View.MoveCurrentToLast();
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+      
+            //paymentpayment_detailViewSource.View.Refresh();
+            //paymentpayment_detailViewSource.View.MoveCurrentToLast();
         }
+
+        #region Events
 
         public event btnSave_ClickedEventHandler btnSave_Click;
         public delegate void btnSave_ClickedEventHandler(object sender);
@@ -69,6 +68,7 @@ namespace cntrl.Curd
         {
             if (btnSave_Click != null)
             {
+                //Run Save Code.
                 btnSave_Click(sender);
             }
         }
@@ -80,47 +80,58 @@ namespace cntrl.Curd
             parentGrid.Visibility = Visibility.Hidden;
         }
 
+        #endregion
+
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbxPamentType.SelectedItem != null)
             {
-                entity.payment_type payment_type = (entity.payment_type)cbxPamentType.SelectedItem;
-                if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.Normal)
+                entity.payment_type payment_type = cbxPamentType.SelectedItem as entity.payment_type;
+                if (payment_type != null)
                 {
-                    stpaccount.Visibility = Visibility.Visible;
-                    stpcreditpurchase.Visibility = Visibility.Collapsed;
-                    stpcreditsales.Visibility = Visibility.Collapsed;
-
-                }
-                else if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
-                {
-                    stpaccount.Visibility = Visibility.Collapsed;
-                    if (mode == modes.purchase)
+                    if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.WithHoldingVAT)
                     {
-                        stpcreditpurchase.Visibility = Visibility.Visible;
+                        //If payment behaviour is WithHoldingVAT, hide everything.
+                        stpaccount.Visibility = Visibility.Collapsed;
+                        stpcreditpurchase.Visibility = Visibility.Collapsed;
+                        stpcreditsales.Visibility = Visibility.Collapsed;
+                    }
+                    else if (payment_type.payment_behavior == global::entity.payment_type.payment_behaviours.CreditNote)
+                    {
+                        //If payment behaviour is Credit Note, then hide Account.
+                        stpaccount.Visibility = Visibility.Collapsed;
+
+                        //Check Mode. 
+                        if (Mode == Modes.Payable)
+                        { //If Payable, then Hide->Sales and Show->Payment
+                            stpcreditsales.Visibility = Visibility.Collapsed;
+                            stpcreditpurchase.Visibility = Visibility.Visible;
+                        }
+                        else
+                        { //If Recievable, then Hide->Payment and Show->Sales
+                            stpcreditpurchase.Visibility = Visibility.Collapsed;
+                            stpcreditsales.Visibility = Visibility.Visible;
+                        }
                     }
                     else
                     {
-                        stpcreditsales.Visibility = Visibility.Visible;
+                        //If paymentbehaviour is not WithHoldingVAT & CreditNote, it must be Normal, so only show Account.
+                        stpaccount.Visibility = Visibility.Visible;
+                        stpcreditpurchase.Visibility = Visibility.Collapsed;
+                        stpcreditsales.Visibility = Visibility.Collapsed;
                     }
-                    stpcreditpurchase.Visibility = Visibility.Visible;
 
-                }
-                else
-                {
-                    stpaccount.Visibility = Visibility.Collapsed;
-                    stpcreditpurchase.Visibility = Visibility.Collapsed;
-                    stpcreditsales.Visibility = Visibility.Collapsed;
-                }
-
-                if (payment_type.id_document > 0)
-                {
-                    stpDetailDocument.Visibility = Visibility.Visible;
-                    payment_detail.id_range = dbContext.db.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).Include(i => i.app_document).FirstOrDefault().id_range;
-                }
-                else
-                {
-                    stpDetailDocument.Visibility = Visibility.Collapsed;
+                    //If PaymentType has Document to print, then show Document. Example, Checks or Bank Transfers.
+                    if (payment_type.id_document > 0 && paymentpayment_detailViewSource != null && paymentpayment_detailViewSource.View != null)
+                    {
+                        stpDetailDocument.Visibility = Visibility.Visible;
+                        payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+                        payment_detail.id_range = PaymentDB.app_document_range.Where(d => d.id_document == payment_type.id_document && d.is_active == true).Include(i => i.app_document).FirstOrDefault().id_range;
+                    }
+                    else
+                    {
+                        stpDetailDocument.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
         }

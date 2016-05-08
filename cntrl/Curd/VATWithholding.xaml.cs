@@ -14,8 +14,8 @@ namespace cntrl
         List<object> _invoiceList = null;
         public List<object> invoiceList { get { return _invoiceList; } set { _invoiceList = value; } }
 
-        private dbContext _entity = null;
-        public dbContext objEntity { get { return _entity; } set { _entity = value; } }
+        private PaymentDB _entity = null;
+        public PaymentDB objEntity { get { return _entity; } set { _entity = value; } }
 
         //Change to List. We will need to add multiple payment scheduals.
         public payment_schedual payment_schedual { get; set; }
@@ -102,7 +102,7 @@ namespace cntrl
                    
                     payment_withholding_tax.payment_withholding_details.Add(payment_withholding_details);
              
-                objEntity.db.payment_withholding_tax.Add(payment_withholding_tax);
+                objEntity.payment_withholding_tax.Add(payment_withholding_tax);
                 payment_schedual _payment_schedual = new payment_schedual();
 
                 if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
@@ -128,15 +128,15 @@ namespace cntrl
                 _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
                 _payment_schedual.trans_date = (DateTime)DtpTransdate.SelectedDate;
 
-                objEntity.db.payment_schedual.Add(_payment_schedual);
+                objEntity.payment_schedual.Add(_payment_schedual);
 
-                IEnumerable<DbEntityValidationResult> validationresult = objEntity.db.GetValidationErrors();
+                IEnumerable<DbEntityValidationResult> validationresult = objEntity.GetValidationErrors();
 
                 if (validationresult.Count() == 0)
                 {
                     objEntity.SaveChanges();
-                    entity.Properties.Settings.Default.company_ID = objEntity.db.app_company.FirstOrDefault().id_company;
-                    entity.Properties.Settings.Default.company_Name = objEntity.db.app_company.FirstOrDefault().alias;
+                    entity.Properties.Settings.Default.company_ID = objEntity.app_company.FirstOrDefault().id_company;
+                    entity.Properties.Settings.Default.company_Name = objEntity.app_company.FirstOrDefault().alias;
                     entity.Properties.Settings.Default.Save();
                     btnCancel_Click(sender, e);
                 }
@@ -151,7 +151,7 @@ namespace cntrl
         {
             try
             {
-                objEntity.CancelChanges();
+                objEntity.CancelAllChanges();
 
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();

@@ -30,10 +30,13 @@ namespace Cognitivo.Configs
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
+
         List<Class.clsTransferAmount> listOpenAmt = null;
+
         public db db { get; set; }
         public CollectionViewSource app_accountViewSource { get; set; }
         public Boolean is_active { get; set; }
+
         public AccountActive()
         {
             InitializeComponent();
@@ -43,6 +46,7 @@ namespace Cognitivo.Configs
         {
             getInitialAmount();
         }
+
         private void getInitialAmount()
         {
             if (db == null)

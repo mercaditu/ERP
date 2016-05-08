@@ -47,23 +47,23 @@
                 <Rectangle Fill="Silver" Height="1" Margin="8"/>
                 <DataGrid  AutoGenerateColumns="False" RowEditEnding="DataGrid_RowEditEnding" ItemsSource="{Binding}"  >
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn x:Name="dateColumn" Header="Date" Width="auto">
+                        <DataGridTemplateColumn x:Name="dateColumn" Header="{lex:Loc Cognitivo:local:Date}" Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true,UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn  Binding="{Binding debit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                        Header="{lex:Loc Cognitivo:local:receivable}" Width="auto" />
-                        <DataGridTextColumn  Binding="{Binding credit,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                        Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" />
+                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            Header="{lex:Loc Cognitivo:local:receivable}" Width="auto" />
+                        <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                            Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Label Content="{lex:Loc Origintal}" Style="{StaticResource input_label}"/>
+                <Label Content="{lex:Loc Balance}" Style="{StaticResource input_label}"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Name="lblBalance" Content="{Binding AccountReceivableBalance}" Style="{StaticResource generic_Label}"/>
-                    <Label Content="{Binding Path=Text,ElementName=cbxCurrency}" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding Path=Text, ElementName=cbxCurrency}" Style="{StaticResource generic_Label}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Name="lbldiff" Style="{StaticResource generic_Label}"/>

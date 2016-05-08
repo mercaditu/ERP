@@ -82,8 +82,8 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn  Binding="{Binding accounting_chart.code}" Header="Code" Width="128" IsReadOnly="True"/>
                     <DataGridTextColumn  Binding="{Binding accounting_chart.name}" Header="Name" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn  Binding="{Binding debit, StringFormat={}{0:N2}}" Header="Debit" Width="128" CellStyle="{StaticResource Number_CellStyle}"/>
-                    <DataGridTextColumn  Binding="{Binding credit, StringFormat={}{0:N2}}" Header="Credit" Width="128" CellStyle="{StaticResource Number_CellStyle}"/>
+                    <DataGridTextColumn  Binding="{Binding debit, StringFormat={}{0:N2}}" Header="Debit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                    <DataGridTextColumn  Binding="{Binding credit, StringFormat={}{0:N2}}" Header="Credit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

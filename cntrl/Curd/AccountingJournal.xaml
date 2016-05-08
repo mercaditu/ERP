@@ -54,9 +54,9 @@
 						                                SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="name" 
 						                                SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="128"/>
-                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" CellStyle="{StaticResource Number_CellStyle}"
+                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Debit}" Width="auto" />
-                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" CellStyle="{StaticResource Number_CellStyle}"
+                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Credit}" Width="auto"/>
                             <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
 						                                SelectedValueBinding="{Binding id_currencyfx,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

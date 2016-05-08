@@ -64,7 +64,7 @@
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
-                                        CellStyle="{StaticResource Number_CellStyle}"/>
+                                        ElementStyle="{StaticResource RightAlignStyle}"/>
                     <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"
                                         Foreground="{Binding expire_date, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2Color}}"/>

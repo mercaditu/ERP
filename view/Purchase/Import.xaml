@@ -125,14 +125,14 @@
                             <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="64"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" Binding="{Binding item}"/>
                             <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" 
-                                                Header="{lex:Loc Cognitivo:local:Quantity}" CellStyle="{StaticResource Number_CellStyle}"/>
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"/>
                             <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N2}}" 
-                                                Header="{lex:Loc Cognitivo:local:UnitCost}" CellStyle="{StaticResource Number_CellStyle}"/>
+                                                Header="{lex:Loc Cognitivo:local:UnitCost}" ElementStyle="{StaticResource RightAlignStyle}"/>
                             <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Total}" 
-                                                CellStyle="{StaticResource Number_CellStyle}"/>
+                                                ElementStyle="{StaticResource RightAlignStyle}"/>
                             <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Cost}" CellStyle="{StaticResource Number_CellStyle}"/>
+                                                Header="{lex:Loc Cognitivo:local:Cost}" ElementStyle="{StaticResource RightAlignStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -152,7 +152,7 @@
                                                             DisplayMemberPath="number" SelectedValuePath="id_purchase_invoice"
                                                             SelectedValueBinding="{Binding number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
                                     <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
-                                                        Header="Value" CellStyle="{StaticResource Number_CellStyle}"/>
+                                                        Header="Value" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource currencyfxViewSource}}"
                                                             DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
                                                             SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

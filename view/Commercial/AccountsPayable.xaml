@@ -64,7 +64,7 @@
                     <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" 
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding AccountPayableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                        Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" IsReadOnly="True" CellStyle="{StaticResource Number_CellStyle}"/>
+                                        Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
                     <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"
                                         Foreground="{Binding expire_date, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2Color}}"/>

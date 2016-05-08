@@ -43,7 +43,7 @@
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date}"  Width="128" IsReadOnly="True"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Invoice}" Binding="{Binding number}" Width="128" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, StringFormat={}{0:N}}" Width="*" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, StringFormat={}{0:N}}" Width="*" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" Binding="{Binding app_currencyfx.app_currency.name}" Width="SizeToHeader" IsReadOnly="True"/>
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
@@ -51,10 +51,10 @@
                         <Grid Background="{StaticResource AccentColor_Introvert}">
                             <DataGrid AutoGenerateColumns="False" Margin="4" ItemsSource="{Binding}" IsReadOnly="True">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
+                                    <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
                                     <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Item}" MinWidth="128" Width="Auto" />
-                                    <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" />
-                                    <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}}" CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="SizeToHeader" />
+                                    <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" />
+                                    <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="SizeToHeader" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

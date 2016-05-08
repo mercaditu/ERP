@@ -138,12 +138,12 @@
                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                 EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                         <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Item}" MinWidth="128" Width="Auto"/>
-                        <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" CellStyle="{StaticResource Number_CellStyle}" IsReadOnly="True">
+                        <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" System"/></TextBlock>
                             </DataGridTextColumn.Header>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" CellStyle="{StaticResource Number_CellStyle}">
+                        <DataGridTextColumn Binding="{Binding value_counted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="64" ElementStyle="{StaticResource RightAlignStyle}">
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" Counted"/></TextBlock>
                             </DataGridTextColumn.Header>
@@ -157,7 +157,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Value}" Binding="{Binding unit_value, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" CellStyle="{StaticResource Number_CellStyle}" Width="Auto"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Value}" Binding="{Binding unit_value, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"/>
                         <DataGridComboBoxColumn x:Name="App_currencyfxcombobox" Header="Currency" Width="Auto"
 									                        ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
 									                        SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>

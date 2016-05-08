@@ -176,7 +176,7 @@
                                 <DataGridTextColumn Binding="{Binding item.name, Mode=OneWay}" Header="{lex:Loc Cognitivo:local:Name}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Description}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" 
-                                                    CellStyle="{StaticResource Number_CellStyle}"/>
+                                                    ElementStyle="{StaticResource RightAlignStyle}"/>
                             </DataGrid.Columns>
                             <DataGrid.RowDetailsTemplate>
                                 <DataTemplate>
@@ -274,18 +274,18 @@
 					                            SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
                                                 UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                                    CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
+                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="auto"/>
                                 <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                                    CellStyle="{StaticResource Number_CellStyle}" Header="{lex:Loc Cognitivo:local:Cost}" Width="auto"/>
+                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Cost}" Width="auto"/>
                                 <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Header="{lex:Loc Cognitivo:local:PricewithVAT}" CellStyle="{StaticResource Number_CellStyle}" Width="Auto" 
+                                            Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" 
                                           />
                                 <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
-                                            CellStyle="{StaticResource Number_CellStyle}"/>
+                                            ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
                                             
-                                            Width="Auto" IsReadOnly="True" CellStyle="{StaticResource Number_CellStyle}"/>
+                                            Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

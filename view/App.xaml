@@ -46,8 +46,12 @@
             </Style>
 
             <Style x:Key="Number_CellStyle" BasedOn="{StaticResource MetroDataGridCell}" TargetType="DataGridCell">
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            </Style>
+
+            <Style x:Key="RightAlignStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="TextAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
 
             <Style x:Key="detail_Datagrid" BasedOn="{StaticResource MetroDataGrid}" TargetType="DataGrid">

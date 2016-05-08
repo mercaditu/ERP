@@ -346,7 +346,7 @@
                                             Header="{lex:Loc Cognitivo:local:Price}" Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto"  CellStyle="{StaticResource Number_CellStyle}"/>
+                                                Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto"  ElementStyle="{StaticResource RightAlignStyle}"/>
                         
                         <!-- UnitPrice_Vat -->
                         <DataGridTextColumn Binding="{Binding UnitCost_Vat, Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

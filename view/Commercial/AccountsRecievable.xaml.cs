@@ -90,24 +90,21 @@ namespace Cognitivo.Commercial
 
         private void Payment_Click(object sender, RoutedEventArgs e)
         {
-         
+            //TODO Check
+
             List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            decimal total = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
+            decimal TotalReceivable = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
 
-            payment_quick.payment_detail = new payment_detail();
-            payment_quick.payment_detail.id_purchase_return = 0;
-            payment_quick.payment_detail.id_sales_return = 0;
-            payment_quick.payment_detail.value = total;
-            payment_quick.payment_detail.payment = PaymentDB.New();
+            cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Recievable, PaymentSchedualList.FirstOrDefault().id_contact);
+            payment_quick.payment_detail.value = TotalReceivable;
+            payment_quick.payment_detail.payment.GrandTotal = TotalReceivable;
+            payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
 
-            payment_quick.payment_detail.payment.IsSelected = true;
-            payment_quick.payment_detail.payment.status = Status.Documents_General.Pending;
             if (PaymentSchedualList.Count == 1)
             {
-                payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
-                payment_quick.payment_detail.payment.contact = PaymentDB.contacts.Where(x => x.id_contact == payment_quick.payment_detail.payment.id_contact).FirstOrDefault();
                 payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
                 payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
+
                 if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
                 {
                     payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
@@ -119,36 +116,35 @@ namespace Cognitivo.Commercial
                 }
 
             }
-            payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
 
-            payment_quick.contacts = contactViewSource.View.OfType<contact>().ToList();
-            payment_quick.mode = cntrl.Curd.payment_quick.Modes.Recievable;
-            payment_quick.btnSave_Click += Save_Click;
+
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(payment_quick);
         }
 
         public void Save_Click(object sender)
         {
-            entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-            List<payment_schedual> PaymentSchedual = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            decimal total = PaymentSchedual.Sum(x => x.AccountReceivableBalance);
+            ////entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
+            //List<payment_schedual> PaymentSchedual = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
+            //decimal total = PaymentSchedual.Sum(x => x.AccountReceivableBalance);
             
-            foreach (payment_schedual payment_schedual in PaymentSchedual)
-            {
-                if (total > 0)
-                {
-                    payment_quick.payment_detail.payment.payment_detail.Add(payment_quick.payment_detail);
-                    PaymentDB.payments.Add(payment_quick.payment_detail.payment);
-                    PaymentDB.Approve(payment_schedual.id_payment_schedual,true);
+            //foreach (payment_schedual payment_schedual in PaymentSchedual)
+            //{
+            //    if (total > 0)
+            //    {
+            //        payment_quick.payment_detail.payment.payment_detail.Add(payment_quick.payment_detail);
+            //        PaymentDB.payments.Add(payment_quick.payment_detail.payment);
+            //        PaymentDB.Approve(payment_schedual.id_payment_schedual,true);
 
-                    total = total - payment_quick.payment_detail.value;
-                }
-            }
+            //        total = total - payment_quick.payment_detail.value;
+            //    }
+            //}
 
-            crud_modal.Children.Clear();
-            crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-            load_Schedual();
+            //crud_modal.Children.Clear();
+            //crud_modal.Visibility = System.Windows.Visibility.Collapsed;
+            //load_Schedual();
+
+
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -212,6 +208,7 @@ namespace Cognitivo.Commercial
         private void Refince_Click(object sender, RoutedEventArgs e)
         {
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
+            cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountReceivable);
 
             Refinance.objEntity = PaymentDB;
             Refinance.payment_schedualViewSource = payment_schedualViewSource;
@@ -244,6 +241,8 @@ namespace Cognitivo.Commercial
                 
                 if (sales_invoice.payment_withholding_details.Count() == 0)
                 {
+                    cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
+
                     VATWithholding.invoiceList = new List<object>();
                     VATWithholding.invoiceList.Add(sales_invoice);
                     VATWithholding.objEntity = PaymentDB;

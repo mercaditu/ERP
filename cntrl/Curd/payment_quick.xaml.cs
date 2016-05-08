@@ -21,15 +21,29 @@ namespace cntrl.Curd
         }
 
         private Modes Mode;
+        CollectionViewSource paymentpayment_detailViewSource;
+        CollectionViewSource paymentViewSource;
+
+        public payment_detail payment_detail { get; set; }
 
         public payment_quick(Modes App_Mode, int? ContactID)
         {
             InitializeComponent();
-            Mode = App_Mode;
-        }
 
-        CollectionViewSource paymentpayment_detailViewSource;
-        CollectionViewSource paymentViewSource;
+            //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
+            Mode = App_Mode;
+
+            paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
+            paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+
+            payment payment = PaymentDB.New();
+            paymentViewSource.Source = PaymentDB.payments.Local;
+
+            payment_detail = new payment_detail();
+            payment.payment_detail.Add(payment_detail);
+
+            paymentViewSource.View.MoveCurrentTo(payment);
+        }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -69,6 +83,8 @@ namespace cntrl.Curd
             if (btnSave_Click != null)
             {
                 //Run Save Code.
+                SaveChanges();
+
                 btnSave_Click(sender);
             }
         }
@@ -81,6 +97,12 @@ namespace cntrl.Curd
         }
 
         #endregion
+
+        private void SaveChanges()
+        {
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+
+        }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -136,27 +158,17 @@ namespace cntrl.Curd
             }
         }
 
+        #region Purchase and Sales Returns
+
         private void purchasereturnComboBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                try
-                {
-                    if (purchasereturnComboBox.Data != null)
-                    {
-                        purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
-                        purchasereturnComboBox.Text = purchase_return.number;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                    // toolBar.msgError(ex);
-                }
+                purchasereturnComboBox_MouseDoubleClick(null, null);
             }
         }
 
-        private void purchasereturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void purchasereturnComboBox_MouseDoubleClick(object sender, EventArgs e)
         {
             try
             {
@@ -169,7 +181,6 @@ namespace cntrl.Curd
             catch (Exception ex)
             {
                 throw ex;
-                // toolBar.msgError(ex);
             }
         }
 
@@ -177,39 +188,11 @@ namespace cntrl.Curd
         {
             if (e.Key == Key.Enter)
             {
-                try
-                {
-                    if (salesreturnComboBox.Data != null)
-                    {
-                        CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-                        payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
-                        sales_return sales_return = (sales_return)salesreturnComboBox.Data;
-                        salesreturnComboBox.Text = sales_return.number;
-                        decimal return_value = (sales_return.GrandTotal - sales_return.payment_schedual.Where(x => x.id_sales_return == sales_return.id_sales_return).Sum(x => x.credit));
-                        payment_detail.id_sales_return = sales_return.id_sales_return;
-                        if (payment_detail.value > return_value)
-                        {
-                          
-                            payment_detail.value = return_value;
-                            payment_detail.RaisePropertyChanged("value");
-                        }
-                        else
-                        {
-                            payment_detail.value = payment_detail.value;
-                            payment_detail.RaisePropertyChanged("value");
-                        }
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                    // toolBar.msgError(ex);
-                }
+                salesreturnComboBox_MouseDoubleClick(null, null);
             }
         }
 
-        private void salesreturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void salesreturnComboBox_MouseDoubleClick(object sender, EventArgs e)
         {
             try
             {
@@ -239,8 +222,9 @@ namespace cntrl.Curd
             catch (Exception ex)
             {
                 throw ex;
-                // toolBar.msgError(ex);
             }
         }
+        
+        #endregion
     }
 }

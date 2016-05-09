@@ -90,6 +90,9 @@
                                     Content="+" FontFamily="cognitivo" Foreground="RoyalBlue"/>
                             <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32"
                                     Content="e" FontFamily="cognitivo" Foreground="RoyalBlue"/>
+                            <Rectangle Width="1" Fill="Silver" Margin="8"/>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32"
+                                    Content="d" FontFamily="cognitivo" Foreground="RoyalBlue"/>
                         </StackPanel>
                     </Grid>
                     <!-- Detail -->

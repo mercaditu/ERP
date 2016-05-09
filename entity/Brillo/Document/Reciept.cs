@@ -567,7 +567,7 @@
 
             string SessionID = app_account_session.id_session.ToString();
             DateTime OpenDate = app_account_session.op_date;
-            DateTime CloseDate;
+            DateTime CloseDate = DateTime.Now;
 
             if (app_account_session.cl_date != null)
 	        {

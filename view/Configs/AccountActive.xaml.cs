@@ -201,7 +201,7 @@ namespace Cognitivo.Configs
                             app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
                         }
 
-                        app_account_detail.tran_type = app_account_detail.tran_types.ClosingBalance;
+                        app_account_detail.tran_type = app_account_detail.tran_types.Close;
                     }
                     else
                     {
@@ -220,7 +220,7 @@ namespace Cognitivo.Configs
                         {
                             app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
                         }
-                        app_account_detail.tran_type = app_account_detail.tran_types.OpeningBalance;
+                        app_account_detail.tran_type = app_account_detail.tran_types.Open;
                     }
 
                     app_account_detail.trans_date = DateTime.Now;

@@ -82,7 +82,7 @@
         </TabControl>
         <StackPanel Grid.Row="2" Grid.Column="1" IsEnabled="{Binding ElementName=toolbar,Path=IsEditable}">
             <Label Style="{StaticResource H2}" Content="{lex:Loc AccountingJournal}" Height="45"/>
-            <cntrl:SearchableTextbox x:Name="cbxAccount" HorizontalAlignment="Left" Width="256"
+            <cntrl:SearchableTextbox x:Name="cbxAccount" HorizontalAlignment="Left" Width="256" Margin="8,4"
             	                        focusGrid="True" Height="27" CollectionViewSource="{StaticResource accounting_chartViewSource}" 
             	                        KeyDown="cbxAccount_KeyDown" MouseDoubleClick="cbxAccount_MouseDoubleClick">
                 <cntrl:SearchableTextbox.Columns>
@@ -91,7 +91,7 @@
                 </cntrl:SearchableTextbox.Columns>
             </cntrl:SearchableTextbox>
             <DataGrid  ItemsSource="{Binding Source={StaticResource accounting_journalaccounting_journal_detailViewSource}}" 
-                       IsReadOnly="True"
+                       IsReadOnly="True" Margin="8,0"
                        AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn  Binding="{Binding accounting_chart.code}" Header="Code" Width="128" IsReadOnly="True"/>
@@ -100,9 +100,9 @@
                     <DataGridTextColumn  Binding="{Binding credit, StringFormat={}{0:N2}}" Header="Credit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Label Content="{Binding TotalDebit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="128" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding TotalCredit, UpdateSourceTrigger=PropertyChanged}" Width="128" Style="{StaticResource input_label}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,0">
+                <Label Content="{Binding TotalDebit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding TotalCredit, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" Style="{StaticResource input_label}"/>
             </StackPanel>
         </StackPanel>
     

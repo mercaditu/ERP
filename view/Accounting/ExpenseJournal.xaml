@@ -86,6 +86,10 @@
                     <DataGridTextColumn  Binding="{Binding credit, StringFormat={}{0:N2}}" Header="Credit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,0">
+                <Label Content="{Binding TotalDebit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding TotalCredit, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" Style="{StaticResource input_label}"/>
+            </StackPanel>
         </StackPanel>
 
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="2" VerticalAlignment="Top" 

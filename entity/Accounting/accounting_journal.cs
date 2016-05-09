@@ -91,11 +91,12 @@
         {
             get 
             {
+                decimal total = 0;
                 foreach (accounting_journal_detail detail in accounting_journal_detail)
                 {
-                    _TotalCredit += detail.credit;
+                    total += detail.credit;
                 }
-                return _TotalCredit; 
+                return total; 
             }
             set
             {

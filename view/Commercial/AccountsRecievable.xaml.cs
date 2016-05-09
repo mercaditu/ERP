@@ -89,33 +89,33 @@ namespace Cognitivo.Commercial
             //TODO Check
 
             List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            decimal TotalReceivable = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
+            //decimal TotalReceivable = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
 
-            cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Recievable, PaymentSchedualList.FirstOrDefault().id_contact);
+            cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Recievable, PaymentSchedualList.FirstOrDefault().id_contact,PaymentSchedualList);
           
-            payment_quick.payment_detail.value = TotalReceivable;
+           // payment_quick.payment_detail.value = TotalReceivable;
         
-            payment_quick.payment_detail.payment.GrandTotal = TotalReceivable;
-            payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
+           // payment_quick.payment_detail.payment.GrandTotal = TotalReceivable;
+           // payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
 
             if (PaymentSchedualList.Count == 1)
-            {
-                payment_quick.id_payment_schedual = PaymentSchedualList.FirstOrDefault().id_payment_schedual;
-                payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
-                payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
-              //  payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
+            //{
+            //    payment_quick.id_payment_schedual = PaymentSchedualList.FirstOrDefault().id_payment_schedual;
+            //    payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
+            //    payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
+            //  //  payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
 
-                if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
-                {
-                    payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-                }
-                else
-                {
-                    toolbar.msgWarning("Please insert paymnent Type");
-                    return;
-                }
+            //    if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+            //    {
+            //        payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+            //    }
+            //    else
+            //    {
+            //        toolbar.msgWarning("Please insert paymnent Type");
+            //        return;
+            //    }
 
-            }
+            //}
 
 
             crud_modal.Visibility = System.Windows.Visibility.Visible;

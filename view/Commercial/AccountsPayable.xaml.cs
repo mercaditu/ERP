@@ -18,7 +18,7 @@ namespace Cognitivo.Commercial
         CollectionViewSource contactViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-        cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Payable, 0);
+       // cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Payable, 0);
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
         cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
 
@@ -100,38 +100,38 @@ namespace Cognitivo.Commercial
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            decimal TotalPayable = PaymentSchedualList.Sum(x => x.AccountPayableBalance);
+            //List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
+            //decimal TotalPayable = PaymentSchedualList.Sum(x => x.AccountPayableBalance);
 
-            cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Payable, PaymentSchedualList.FirstOrDefault().id_contact);
+            //cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Payable, PaymentSchedualList.FirstOrDefault().id_contact);
 
-            payment_quick.payment_detail.value = TotalPayable;
+            //payment_quick.payment_detail.value = TotalPayable;
 
-            payment_quick.payment_detail.payment.GrandTotal = TotalPayable;
-            payment_quick.payment_detail.App_Name = global::entity.App.Names.PurchaseInvoice;
+            //payment_quick.payment_detail.payment.GrandTotal = TotalPayable;
+            //payment_quick.payment_detail.App_Name = global::entity.App.Names.PurchaseInvoice;
 
-            if (PaymentSchedualList.Count == 1)
-            {
-                payment_quick.id_payment_schedual = PaymentSchedualList.FirstOrDefault().id_payment_schedual;
-                payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
-                payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
-                //  payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
+            //if (PaymentSchedualList.Count == 1)
+            //{
+            //    payment_quick.id_payment_schedual = PaymentSchedualList.FirstOrDefault().id_payment_schedual;
+            //    payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
+            //    payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
+            //    //  payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
 
-                if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
-                {
-                    payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-                }
-                else
-                {
-                    toolbar.msgWarning("Please insert paymnent Type");
-                    return;
-                }
+            //    if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+            //    {
+            //        payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+            //    }
+            //    else
+            //    {
+            //        toolbar.msgWarning("Please insert paymnent Type");
+            //        return;
+            //    }
 
-            }
+            //}
 
 
-            crud_modal.Visibility = System.Windows.Visibility.Visible;
-            crud_modal.Children.Add(payment_quick);
+            //crud_modal.Visibility = System.Windows.Visibility.Visible;
+            //crud_modal.Children.Add(payment_quick);
 
 
 

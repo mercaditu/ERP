@@ -101,8 +101,8 @@
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,0">
-                <Label Content="{Binding TotalDebit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding TotalCredit, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding TotalDebit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" HorizontalContentAlignment="Right" Width="128" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding TotalCredit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128" HorizontalContentAlignment="Right" Style="{StaticResource input_label}"/>
             </StackPanel>
         </StackPanel>
     

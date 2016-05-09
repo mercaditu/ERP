@@ -158,80 +158,101 @@ namespace Cognitivo.Purchase
 
         private void set_ContactPref(object sender, RoutedEventArgs e)
         {
-            if (sbxContact.ContactID > 0 && purchase_tenderViewSource.View != null)
+            if (sbxContact.ContactID > 0)
             {
-                purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
-
+                //Get Contact from SmartBox.
                 contact contact = PurchaseTenderDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
-                purchase_tender_contact.contact = contact;
-                purchase_tender_contact.id_contact = contact.id_contact;
-                purchase_tender_contact.id_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
-                if (contact.lead_time != null)
+
+                if (purchase_tenderViewSource.View != null)
                 {
-                    purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
-                }
+                    purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
 
-                purchase_tender_contact.app_contract = (app_contract)cbxContract.SelectedItem;
-                purchase_tender_contact.app_condition = (app_condition)cbxCondition.SelectedItem;
-
-
-                if (purchase_tender != null)
-                {
+                    purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
+                    purchase_tender_contact.contact = contact;
+                    purchase_tender_contact.id_contact = contact.id_contact;
 
 
-                    List<purchase_tender_item> listtender = purchase_tender.purchase_tender_item_detail.ToList();
-                    foreach (purchase_tender_item purchase_tender_item in listtender)
+                    if (purchase_tender_contact.contact.id_currency == 0)
                     {
-                        if (purchase_tender_contact.id_purchase_tender_contact == 0)
+                        //Contact does not have Currency, take default currency from Company.
+                        if (PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault() != null)
                         {
-                            if (purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).Count() == 0)
-                            {
-                                purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
-
-                                purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
-                                purchase_tender_detail.purchase_tender_item = purchase_tender_item;
-                                purchase_tender_detail.quantity = purchase_tender_item.quantity;
-                                purchase_tender_detail.unit_cost = 0;
-                                purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
-                                purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
-                            }
-                            else
-                            {
-                                purchase_tender_detail purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).FirstOrDefault();
-                                purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
-
-                            }
-
+                            purchase_tender_contact.id_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                         }
-                        else
+                    }
+                    else
+                    {
+                        //Contact has Currency, take FX Rate of Currency. 
+                        if (PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.id_currency == purchase_tender_contact.contact.id_currency && x.is_active).FirstOrDefault() != null)
                         {
-                            if (PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item) == null)
-                            {
-                                purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
-
-                                purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
-                                purchase_tender_detail.purchase_tender_item = purchase_tender_item;
-                                purchase_tender_detail.quantity = 1;
-                                purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
-
-                                purchase_tender_detail.unit_cost = 0;
-                                purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
-                            }
-                            else
-                            {
-                                purchase_tender_detail purchase_tender_detail = PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).FirstOrDefault();
-                                purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
-                            }
+                            purchase_tender_contact.id_currencyfx = PurchaseTenderDB.app_currencyfx.Where(x => x.app_currency.id_currency == purchase_tender_contact.contact.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
                         }
                     }
 
+                    if (contact.lead_time != null)
+                    {
+                        purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
+                    }
+
+                    purchase_tender_contact.app_contract = (app_contract)cbxContract.SelectedItem;
+                    purchase_tender_contact.app_condition = (app_condition)cbxCondition.SelectedItem;
+
+
+                    if (purchase_tender != null)
+                    {
+                        List<purchase_tender_item> listtender = purchase_tender.purchase_tender_item_detail.ToList();
+                        foreach (purchase_tender_item purchase_tender_item in listtender)
+                        {
+                            if (purchase_tender_contact.id_purchase_tender_contact == 0)
+                            {
+                                if (purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).Count() == 0)
+                                {
+                                    purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
+
+                                    purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
+                                    purchase_tender_detail.purchase_tender_item = purchase_tender_item;
+                                    purchase_tender_detail.quantity = purchase_tender_item.quantity;
+                                    purchase_tender_detail.unit_cost = 0;
+                                    purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+                                    purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
+                                }
+                                else
+                                {
+                                    purchase_tender_detail purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.Where(x => x.purchase_tender_item.id_item == purchase_tender_item.id_item).FirstOrDefault();
+                                    purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
+
+                                }
+
+                            }
+                            else
+                            {
+                                if (PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item) == null)
+                                {
+                                    purchase_tender_detail purchase_tender_detail = new purchase_tender_detail();
+
+                                    purchase_tender_detail.id_purchase_tender_item = purchase_tender_item.id_purchase_tender_item;
+                                    purchase_tender_detail.purchase_tender_item = purchase_tender_item;
+                                    purchase_tender_detail.quantity = 1;
+                                    purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+
+                                    purchase_tender_detail.unit_cost = 0;
+                                    purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
+                                }
+                                else
+                                {
+                                    purchase_tender_detail purchase_tender_detail = PurchaseTenderDB.purchase_tender_detail.Where(x => x.id_purchase_tender_contact == purchase_tender_contact.id_purchase_tender_contact && x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).FirstOrDefault();
+                                    purchase_tender_detail.quantity = purchase_tender_detail.quantity + 1;
+                                }
+                            }
+                        }
+
+                    }
+                    purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
+
+                    purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
+
+                    purchase_tenderpurchase_tender_contact_detailViewSource.View.MoveCurrentTo(purchase_tender_contact);
                 }
-                purchase_tender.purchase_tender_contact_detail.Add(purchase_tender_contact);
-
-                purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
-
-                purchase_tenderpurchase_tender_contact_detailViewSource.View.MoveCurrentTo(purchase_tender_contact);
             }
         }
 

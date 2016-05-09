@@ -10,7 +10,7 @@ using System.Windows.Data;
 
 namespace cntrl.Curd
 {
-    public partial class payment_quick_new : UserControl
+    public partial class Payment : UserControl
     {
         PaymentDB PaymentDB = new PaymentDB();
 
@@ -27,7 +27,7 @@ namespace cntrl.Curd
         //public int id_payment_schedual { get; set; } 
         //public payment_detail payment_detail { get; set; }
 
-        public payment_quick_new(Modes App_Mode, int? ContactID, List<payment_schedual> _payment_schedualList)
+        public Payment(Modes App_Mode, int? ContactID, List<payment_schedual> _payment_schedualList)
         {
             InitializeComponent();
 
@@ -295,6 +295,11 @@ namespace cntrl.Curd
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
          //wrwserwerw   
+        }
+
+        private void btnAddDetail_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
 

@@ -222,8 +222,8 @@
     <Compile Include="Curd\Item_Asset_Group.xaml.cs">
       <DependentUpon>Item_Asset_Group.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Curd\payment_quick_new.xaml.cs">
-      <DependentUpon>payment_quick_new.xaml</DependentUpon>
+    <Compile Include="Curd\Payment.xaml.cs">
+      <DependentUpon>Payment.xaml</DependentUpon>
     </Compile>
     <Compile Include="Curd\receive_payment.xaml.cs">
       <DependentUpon>receive_payment.xaml</DependentUpon>
@@ -647,7 +647,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Curd\payment_quick_new.xaml">
+    <Page Include="Curd\Payment.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

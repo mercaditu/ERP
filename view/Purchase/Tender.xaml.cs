@@ -15,7 +15,7 @@ namespace Cognitivo.Purchase
         PurchaseTenderDB PurchaseTenderDB = new PurchaseTenderDB();
 
         CollectionViewSource purchase_tenderpurchase_tender_item_detailViewSource, purchase_tenderViewSource, purchase_tenderpurchase_tender_itemViewSource,
-            purchase_tenderpurchase_tender_contact_detailViewSource, contactViewSource, app_conditionViewSource, app_contractViewSource, app_currencyfxViewSource;
+            purchase_tenderpurchase_tender_contact_detailViewSource, app_conditionViewSource, app_contractViewSource, app_currencyfxViewSource;
 
         public Tender()
         {
@@ -84,39 +84,36 @@ namespace Cognitivo.Purchase
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            entity.Properties.Settings _setting = new entity.Properties.Settings();
-            int company_ID = _setting.company_ID;
-
-            PurchaseTenderDB.purchase_tender.Where(a => a.id_company == company_ID).Load();
+            PurchaseTenderDB.purchase_tender.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             purchase_tenderViewSource = FindResource("purchase_tenderViewSource") as CollectionViewSource;
             purchase_tenderViewSource.Source = PurchaseTenderDB.purchase_tender.Local;
 
             purchase_tenderpurchase_tender_contact_detailViewSource = FindResource("purchase_tenderpurchase_tender_contact_detailViewSource") as CollectionViewSource;
             purchase_tenderpurchase_tender_itemViewSource = FindResource("purchase_tenderpurchase_tender_itemViewSource") as CollectionViewSource;
             purchase_tenderpurchase_tender_item_detailViewSource = FindResource("purchase_tenderpurchase_tender_item_detailViewSource") as CollectionViewSource;
-            PurchaseTenderDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
 
+            PurchaseTenderDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxBranch.ItemsSource = PurchaseTenderDB.app_branch.Local;
 
-            PurchaseTenderDB.app_department.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
+            PurchaseTenderDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxDepartment.ItemsSource = PurchaseTenderDB.app_department.Local;
 
-            PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == company_ID).OrderBy(b => b.name).ToList();
+            PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxProject.ItemsSource = PurchaseTenderDB.projects.Local;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, _setting.terminal_ID);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
-            PurchaseTenderDB.app_condition.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
+            PurchaseTenderDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
             app_conditionViewSource = FindResource("app_conditionViewSource") as CollectionViewSource;
             app_conditionViewSource.Source = PurchaseTenderDB.app_condition.Local;
 
-            PurchaseTenderDB.app_contract.Where(a => a.is_active == true && a.id_company == company_ID).OrderBy(a => a.name).ToList();
+            PurchaseTenderDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
             app_contractViewSource.Source = PurchaseTenderDB.app_contract.Local;
 
-            PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == company_ID).ToList();
+            PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
 
             app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
@@ -175,12 +172,8 @@ namespace Cognitivo.Purchase
                     purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
                 }
 
-
-
                 purchase_tender_contact.app_contract = (app_contract)cbxContract.SelectedItem;
                 purchase_tender_contact.app_condition = (app_condition)cbxCondition.SelectedItem;
-
-
 
 
                 if (purchase_tender != null)

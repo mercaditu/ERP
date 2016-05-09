@@ -102,39 +102,14 @@
                                      ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" Grid.Row="1" >
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <cntrl:navList recordCode="{Binding id_currencyfx.app_currency.name}" recordSecondaryName="{Binding id_payment_type}"
-					                                   recordName="{Binding value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                        <cntrl:navList recordCode="{Binding id_currencyfx.app_currency.name, FallbackValue=Currency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
+                                                       recordSecondaryName="{Binding id_payment_type, FallbackValue=Payment, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+					                                   recordName="{Binding value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+                                                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                                                        IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <!--<DataGrid Style="{StaticResource detail_Datagrid}" Margin="4,5"
-                                      HorizontalAlignment="Center" FontSize="16"
-                                      ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" >
-                                <DataGrid.Columns>
-                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="75"
-					                            ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"  
-                                                DisplayMemberPath="name" SelectedValuePath="id_payment_type" 
-					                            SelectedValueBinding="{Binding id_payment_type, Mode=TwoWay, NotifyOnValidationError=True,  
-                                                UpdateSourceTrigger=PropertyChanged}"/>
-                                     <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"
-                                                         ElementStyle="{StaticResource RightAlignStyle}"
-                                                         Header="{lex:Loc Cognitivo:local:Value}" Width="100" FontWeight="Bold"/>
-                                    <DataGridTextColumn Binding="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                        ElementStyle="{StaticResource RightAlignStyle}"
-                                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="100" FontWeight="Bold"/>
-                                    <DataGridTemplateColumn Width="Auto" Header="">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Command="customcmd:CustomCommands.Delete"
-                                                        Style="{StaticResource btnDeleteChildStyle}"
-                                                        CommandParameter="{Binding}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>-->
                         </StackPanel>
                         <StackPanel>
                             <Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>

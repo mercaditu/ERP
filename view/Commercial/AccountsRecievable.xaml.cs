@@ -91,12 +91,12 @@ namespace Cognitivo.Commercial
             List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
             //decimal TotalReceivable = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
 
-            cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Recievable, PaymentSchedualList.FirstOrDefault().id_contact,PaymentSchedualList);
-          
-           // payment_quick.payment_detail.value = TotalReceivable;
+            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList);
+
+            // payment_quick.payment_detail.value = TotalReceivable;
         
-           // payment_quick.payment_detail.payment.GrandTotal = TotalReceivable;
-           // payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
+            // payment_quick.payment_detail.payment.GrandTotal = TotalReceivable;
+            // payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
 
             //if (PaymentSchedualList.Count == 1)
             //{
@@ -117,9 +117,8 @@ namespace Cognitivo.Commercial
 
             //}
 
-
             crud_modal.Visibility = System.Windows.Visibility.Visible;
-            crud_modal.Children.Add(payment_quick);
+            crud_modal.Children.Add(Payment);
         }
 
         public void Save_Click(object sender)

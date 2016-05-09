@@ -24,10 +24,8 @@ namespace cntrl.Curd
         CollectionViewSource paymentpayment_detailViewSource;
         CollectionViewSource paymentViewSource;
         public List<payment_schedual> payment_schedualList { get; set; }
-        //public int id_payment_schedual { get; set; } 
-        //public payment_detail payment_detail { get; set; }
 
-        public Payment(Modes App_Mode, int? ContactID, List<payment_schedual> _payment_schedualList)
+        public Payment(Modes App_Mode, List<payment_schedual> _payment_schedualList)
         {
             InitializeComponent();
 

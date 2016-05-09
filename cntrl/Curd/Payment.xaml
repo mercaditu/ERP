@@ -13,7 +13,7 @@
              xmlns:Controls="clr-namespace:cntrl.Controls" 
              xmlns:cntrl="clr-namespace:cntrl"
              xmlns:entity="clr-namespace:entity;assembly=entity"
-             mc:Ignorable="d" VerticalAlignment="Center" Width="550" Height="512" Loaded="UserControl_Loaded"
+             mc:Ignorable="d" VerticalAlignment="Center" Width="550" Height="600" Loaded="UserControl_Loaded"
              BorderBrush="RoyalBlue" BorderThickness="2">
     <UserControl.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
@@ -128,7 +128,7 @@
                                     </ItemsPanelTemplate>
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
-                            <StackPanel Background="{StaticResource AccentColor_Brush}">
+                            <StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Brush}">
                                 <Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}"/>
                                 <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
                                          metro:TextBoxHelper.SelectAllOnFocus="True"

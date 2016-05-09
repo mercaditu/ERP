@@ -7,6 +7,7 @@
       xmlns:entity="clr-namespace:entity;assembly=entity" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:cls="clr-namespace:Cognitivo.Class"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
       mc:Ignorable="d" 
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -14,6 +15,7 @@
         lex:LocalizeDictionary.DesignCulture="en-US" 
       d:DesignHeight="400" d:DesignWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
+        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
         <CollectionViewSource x:Key="item_inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
@@ -86,7 +88,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.ColumnSpan="2">
-                <StackPanel Margin="8">
+                <StackPanel Margin="8" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
                     <Label Content="{lex:Loc Date}"/>
                     <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource item_inventoryViewSource}}"  Style="{StaticResource input_datepicker}"/>
                     <Label Content="{lex:Loc Comment}"/>
@@ -129,9 +131,11 @@
             <Grid  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                 
                 <Button Style="{StaticResource btn_green}" Content="{lex:Loc Extract}" Click="location_ListBox_SelectionChanged"
-                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2"/>
+                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"/>
                 
                 <DataGrid x:Name="dgvdetail" AutoGenerateColumns="False" EnableRowVirtualization="True" BorderBrush="WhiteSmoke" BorderThickness="1"
+                          IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
+                                                       UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
                           RowDetailsVisibilityMode="VisibleWhenSelected" Margin="2,32,2,2" Style="{StaticResource AzureDataGrid}"  ItemsSource="{Binding}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -151,7 +155,7 @@
                         <DataGridTemplateColumn Width="Auto" Header="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Command="customcmd:CustomCommands.EditAll"
+                                    <Button Command="customcmd:CustomCommands.EditAll" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
                                                     Style="{StaticResource btnEditChildStyle}"
                                                     CommandParameter="{Binding}"/>
                                 </DataTemplate>

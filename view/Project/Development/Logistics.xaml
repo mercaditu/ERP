@@ -52,8 +52,7 @@
         </ListBox>
 
         <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}">
-            <StackPanel Grid.Row="0">
-                <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" x:Name="TabLogistics" SelectionChanged="TabLogistics_SelectionChanged">
+            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" x:Name="TabLogistics" SelectionChanged="TabLogistics_SelectionChanged">
                     <TabItem Header="{lex:Loc Product}" x:Name="tabproduct">
                         <DataGrid x:Name="item_ProductDataGrid" 
                                   VerticalScrollBarVisibility="Auto"
@@ -107,33 +106,12 @@
                                 <DataGridTextColumn Binding="{Binding _code}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding _name}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" 
-                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
+                                                        ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" 
-                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:InStock}" Width="SizeToHeader" />
+                                                        ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:InStock}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" 
-                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="buy qty" Width="SizeToHeader" />
+                                                        ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Purchase}" Width="SizeToHeader" />
                             </DataGrid.Columns>
-                            <!--<DataGrid.RowDetailsTemplate>
-                                <DataTemplate>
-                                    <DataGrid x:Name="item_movementDataGrid" 
-                  VerticalScrollBarVisibility="Auto"
-                  AutoGenerateColumns="False" Grid.Column="1"
-                  EnableRowVirtualization="True"  Grid.Row="1" 
-                  IsReadOnly="True">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding code}" Header="{lex:Loc Cognitivo:local:Code}" Width="*" />
-                                            <DataGridTextColumn Binding="{Binding name}" Header="{lex:Loc Cognitivo:local:RawMaterial}" Width="*" />
-                                            <DataGridTextColumn Binding="{Binding BranchName}" Header="{lex:Loc Cognitivo:local:Branch}" Width="*" />
-                                            <DataGridTextColumn Binding="{Binding quntitiy, StringFormat={}{0:N}}" 
-                                                                ElementStyle="{StaticResource RightAlignStyle}" 
-                                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="*" />
-                                            <DataGridTextColumn Binding="{Binding measurement}" 
-                                                                Header="{lex:Loc Cognitivo:local:Measurement}" Width="*" />
-                                        </DataGrid.Columns>
-
-                                    </DataGrid>
-                                </DataTemplate>
-                            </DataGrid.RowDetailsTemplate>-->
                         </DataGrid>
                     </TabItem>
                     <TabItem Header="{lex:Loc Service}" x:Name="tabservice">
@@ -231,8 +209,6 @@
                     </TabItem>
 
                 </TabControl>
-
-            </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2" Margin="0,42,0,0" Background="WhiteSmoke" HorizontalAlignment="Right">
             <StackPanel  Grid.Column="3" >

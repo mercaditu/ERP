@@ -104,7 +104,28 @@ namespace entity
 
         #endregion
 
-        public virtual purchase_return purchase_return { get; set; }
+        
+        public virtual purchase_return purchase_return
+        {
+            get { return _purchase_return; }
+            set
+            {
+                if (value != null)
+                {
+                    if (_purchase_return != value)
+                    {
+                        _purchase_return = value;
+                        CurrencyFX_ID = value.id_currencyfx;
+                    }
+                }
+                else
+                {
+                    _purchase_return = null;
+                    RaisePropertyChanged("sales_invoice");
+                }
+            }
+        }
+        purchase_return _purchase_return;
         public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
         public virtual ICollection<purchase_return_dimension> purchase_return_dimension { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }

@@ -27,7 +27,28 @@ namespace entity
         //public int? id_sales_budget_detail { get; set; }
 
         #region "Navigation Properties"
-        public virtual purchase_order purchase_order { get; set; }
+        
+        public virtual purchase_order purchase_order
+        {
+            get { return _purchase_order; }
+            set
+            {
+                if (value != null)
+                {
+                    if (_purchase_order != value)
+                    {
+                        _purchase_order = value;
+                        CurrencyFX_ID = value.id_currencyfx;
+                    }
+                }
+                else
+                {
+                    _purchase_order = null;
+                    RaisePropertyChanged("sales_invoice");
+                }
+            }
+        }
+        purchase_order _purchase_order;
         public virtual purchase_tender_detail purchase_tender_detail { get; set; }
 
         public virtual IEnumerable<purchase_packing_detail> purchase_packing_detail { get; set; }

@@ -119,7 +119,7 @@ namespace entity
             }
         }
 
-        public void MakePayment(payment payment, bool RequirePrint)
+        public void MakePayment(payment_schedual Parent_Schedual,payment payment, bool RequirePrint)
         {
             foreach (payment_detail payment_detail in payment.payment_detail)
             {

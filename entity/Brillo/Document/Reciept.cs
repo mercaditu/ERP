@@ -1,6 +1,4 @@
-﻿
-
-namespace entity.Brillo.Logic
+﻿namespace entity.Brillo.Logic
 {
     using System;
     using System.Collections.Generic;
@@ -583,47 +581,47 @@ namespace entity.Brillo.Logic
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
                 + "Apertura : " + OpenDate + "    Cierre: " + CloseDate
+                + "Balance de Apertura : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Open).FirstOrDefault().credit
+                + "Balance de Cierre   : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close).FirstOrDefault().debit
                 + "\n"
                 + "--------------------------------"
-                + "Cuenta, Valor, Moneda" + "\n"
-                + "--------------------------------" + "\n"
-                + "\n";
+                + "Hora   Cuenta              Valor" + "\n";
 
             string InvoiceNumber = string.Empty;
             string CustomerName = string.Empty;
 
-            foreach (app_account_detail d in app_account_session.app_account_detail)
+            foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).ToList())
             {
-                string AccountName = string.Empty;
+                Header += "--------------------------------" + "\n"
+                        + "Moneda : " + detail.app_currencyfx.app_currency.name;
 
-                if (d.app_account == null)
+                foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction).ToList())
                 {
-                    using (db db = new db())
+                    string AccountName = string.Empty;
+
+                    if (d.app_account == null)
                     {
-                        app_account app_account = db.app_account.Where(x => x.id_account == d.id_account).FirstOrDefault();
-                        AccountName = app_account.name;
+                        using (db db = new db())
+                        {
+                            app_account app_account = db.app_account.Where(x => x.id_account == d.id_account).FirstOrDefault();
+                            AccountName = app_account.name;
+                        }
                     }
-                }
 
-                string currency = string.Empty;
-                if (d.app_currencyfx == null)
-                {
-                    using (db db = new db())
+                    string currency = string.Empty;
+                    if (d.app_currencyfx == null)
                     {
-                        currency = db.app_currencyfx.Where(x => x.id_currencyfx == d.id_currencyfx).FirstOrDefault().app_currency.name;
+                        using (db db = new db())
+                        {
+                            currency = db.app_currencyfx.Where(x => x.id_currencyfx == d.id_currencyfx).FirstOrDefault().app_currency.name;
+                        }
                     }
-                }
 
-                decimal? value = d.credit - d.debit;
+                    decimal? value = d.credit - d.debit;
 
-                Detail = Detail
-                    + AccountName + "\n"
-                    + value.ToString() + "\t" + currency + "\n";
-
-                if (InvoiceNumber == string.Empty)
-                {
-                    InvoiceNumber = d.payment_schedual.FirstOrDefault().sales_invoice.number;
-                    CustomerName = d.payment_schedual.FirstOrDefault().contact.name;
+                    Detail = Detail
+                        + AccountName + "\n"
+                        + value.ToString() + "\t" + currency + "\n";
                 }
             }
 

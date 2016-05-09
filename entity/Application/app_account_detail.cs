@@ -10,9 +10,11 @@ namespace entity
     {
         public enum tran_types
         {
-            OpeningBalance=1,
-            ClosingBalance=2
+            Open = 1,
+            Transaction = 2,
+            Close = 3
         }
+
         public app_account_detail()
         {
             id_company = CurrentSession.Id_Company;

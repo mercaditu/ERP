@@ -28,6 +28,7 @@
             sales_invoice = new List<sales_invoice>();
             purchase_invoice = new List<purchase_invoice>();
             status = Status.Documents_General.Pending;
+
             using (db context = new db())
             {
                 accounting_cycle accounting_cycle = context.accounting_cycle.Where(i => i.is_active == true).FirstOrDefault();
@@ -50,8 +51,6 @@
         public int id_cycle { get; set; }
         public Types type { get; set; }
 
-        //Abhi> Add logic to increase Group Code +1 for every group of transaction within 
-        //Period. If Period is starting, then start from 0.
         public int code { get; set; }
         public string comment { get; set; }
         public DateTime trans_date { get; set; }
@@ -64,6 +63,50 @@
 
         [NotMapped]
         public bool is_accounted { get; set; }
+
+        [NotMapped]
+        public decimal TotalDebit
+        {
+            get
+            {
+                foreach (accounting_journal_detail detail in accounting_journal_detail)
+                {
+                    _TotalDebit += detail.debit;
+                }
+                return _TotalDebit;
+            }
+            set
+            {
+                if (_TotalDebit != value)
+                {
+                    _TotalDebit = value;
+                    RaisePropertyChanged("TotalDebit");
+                }
+            }
+        }
+        private decimal _TotalDebit;
+
+        [NotMapped]
+        public decimal TotalCredit
+        {
+            get 
+            {
+                foreach (accounting_journal_detail detail in accounting_journal_detail)
+                {
+                    _TotalCredit += detail.credit;
+                }
+                return _TotalCredit; 
+            }
+            set
+            {
+                if (_TotalCredit != value)
+                {
+                    _TotalCredit = value;
+                    RaisePropertyChanged("TotalCredit");
+                }
+            }
+        }
+        private decimal _TotalCredit;
 
         public virtual app_branch app_branch { get; set; }
         public virtual accounting_cycle accounting_cycle { get; set; }

@@ -85,14 +85,14 @@
                     
                     <Grid>
                         <Label Content="{lex:Loc Details}" Style="{StaticResource H3}"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">           
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Click="btnAddDetail_Click"
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White" Click="btnAddDetail_Click"
                                     Content="+" FontFamily="cognitivo" Foreground="RoyalBlue"/>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32"
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="#FFBCE0FF" BorderThickness="3" BorderBrush="White"
                                     Content="e" FontFamily="cognitivo" Foreground="RoyalBlue"/>
-                            <Rectangle Width="1" Fill="Silver" Margin="8"/>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32"
-                                    Content="d" FontFamily="cognitivo" Foreground="RoyalBlue"/>
+                            <Rectangle Width="0.3" Fill="Black" Margin="8"/>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Background="Pink" BorderThickness="3" BorderBrush="White"
+                                    Content="d" FontFamily="cognitivo" Foreground="Crimson"/>
                         </StackPanel>
                     </Grid>
                     <!-- Detail -->
@@ -128,7 +128,7 @@
                                     </ItemsPanelTemplate>
                                 </ComboBox.ItemsPanel>
                             </ComboBox>
-                            <StackPanel x:Name="stpDetailDocument" Background="{StaticResource AccentColor_Brush}">
+                            <StackPanel Background="{StaticResource AccentColor_Brush}">
                                 <Label Content="{lex:Loc Receipt}" Style="{StaticResource input_label}"/>
                                 <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
                                          metro:TextBoxHelper.SelectAllOnFocus="True"
@@ -138,20 +138,20 @@
                             </StackPanel>
                             <StackPanel x:Name="stpaccount">
                                 <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
-                                <ComboBox x:Name="app_accountComboBox"
-						                  DisplayMemberPath="name" SelectedValuePath="id_account"
+                                <ComboBox DisplayMemberPath="name" SelectedValuePath="id_account"
 						                  Style="{StaticResource input_combobox}"
 						                  ItemsSource="{Binding Source={StaticResource app_accountViewSource}}"
                                           SelectedValue="{Binding id_account, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged}">
                                 </ComboBox>
 
                                 <Label Content="{lex:Loc Currency}" Style="{DynamicResource input_label}"/>
-                                <Controls:CurrencyBox x:Name="cbxCurrency" HorizontalAlignment="Left" Width="256" 
+                                <Controls:CurrencyBox HorizontalAlignment="Left" Width="256" 
                                                       SelectedValue="{Binding id_currencyfx, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                             </StackPanel>
                             <StackPanel x:Name="stpcreditpurchase" Visibility="Collapsed">
                                 <TextBlock Style="{StaticResource text_Label}" FontWeight="Medium">
-                            <Run Text="{lex:Loc ReturnNumber}"/> | <Run Text="{lex:Loc Purchase}"/>
+                                    <Run Text="{lex:Loc ReturnNumber}"/> | 
+                                    <Run Text="{lex:Loc Purchase}"/>
                                 </TextBlock>
                                 <cntrl:SearchableTextbox x:Name="purchasereturnComboBox" KeyDown="purchasereturnComboBox_KeyDown" MouseDoubleClick="purchasereturnComboBox_MouseDoubleClick"
                                                          CollectionViewSource="{StaticResource purchase_returnViewSource}"
@@ -178,8 +178,9 @@
                                     </cntrl:SearchableTextbox.Columns>
                                 </cntrl:SearchableTextbox>
                             </StackPanel>
+                            
                             <Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}"/>
-                            <TextBox x:Name="txtAmount" Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"
+                            <TextBox Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"
                                      Text="{Binding value, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, 
                                      UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"/>
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>

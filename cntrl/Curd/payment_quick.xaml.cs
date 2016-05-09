@@ -60,14 +60,6 @@ namespace cntrl.Curd
             //payment_detailList.Add(payment_detail);
             //paymentpayment_detailViewSource.Source = payment_detailList;
 
-            //CollectionViewSource purchase_returnViewSource = (CollectionViewSource)this.FindResource("purchase_returnViewSource");
-            //PaymentDB.purchase_return.Where(x => x.id_contact == payment_detail.payment.id_contact).Load();
-            //purchase_returnViewSource.Source = PaymentDB.purchase_return.Local;
-            
-            //CollectionViewSource sales_returnViewSource = (CollectionViewSource)this.FindResource("sales_returnViewSource");
-            //PaymentDB.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice == null).Load();
-            //sales_returnViewSource.Source = PaymentDB.sales_return.Local;
-
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
       
             //paymentpayment_detailViewSource.View.Refresh();
@@ -125,14 +117,24 @@ namespace cntrl.Curd
 
                         //Check Mode. 
                         if (Mode == Modes.Payable)
-                        { //If Payable, then Hide->Sales and Show->Payment
+                        { 
+                            //If Payable, then Hide->Sales and Show->Payment
                             stpcreditsales.Visibility = Visibility.Collapsed;
                             stpcreditpurchase.Visibility = Visibility.Visible;
+
+                            CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
+                            PaymentDB.purchase_return.Where(x => x.id_contact == payment_detail.payment.id_contact).Load();
+                            purchase_returnViewSource.Source = PaymentDB.purchase_return.Local;
                         }
                         else
-                        { //If Recievable, then Hide->Payment and Show->Sales
+                        { 
+                            //If Recievable, then Hide->Payment and Show->Sales
                             stpcreditpurchase.Visibility = Visibility.Collapsed;
                             stpcreditsales.Visibility = Visibility.Visible;
+
+                            CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
+                            PaymentDB.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice == null).Load();
+                            sales_returnViewSource.Source = PaymentDB.sales_return.Local;
                         }
                     }
                     else

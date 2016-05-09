@@ -93,7 +93,7 @@ namespace cntrl.Curd
         private void SaveChanges()
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
-
+            PaymentDB.Approve();
         }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)

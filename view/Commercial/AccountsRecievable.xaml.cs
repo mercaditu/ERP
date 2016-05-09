@@ -7,13 +7,60 @@ using System.Windows.Data;
 using System.Data.Entity;
 using entity;
 using System.Data.Entity.Validation;
+using System.ComponentModel;
 
 namespace Cognitivo.Commercial
 {
-    public partial class AccountsRecievable : Page
+    public partial class AccountsRecievable : Page, INotifyPropertyChanged
     {
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+        #endregion
+
         CollectionViewSource payment_schedualViewSource, contactViewSource;
         PaymentDB PaymentDB = new entity.PaymentDB();
+
+        public DateTime FirstDate 
+        {
+            get
+            {
+                return _firstDate;
+            }
+            set
+            {
+                if (_firstDate != value)
+                {
+                    _firstDate = value;
+                    RaisePropertyChanged("FirstDate");
+                }
+            }
+        }
+        private DateTime _firstDate;
+
+        public DateTime EndDate
+        {
+            get
+            {
+                return _endDate;
+            }
+            set
+            {
+                if (_endDate != value)
+                {
+                    _endDate = value;
+                    RaisePropertyChanged("EndDate");
+                }
+            }
+        }
+        private DateTime _endDate;
 
         public AccountsRecievable()
         {
@@ -47,6 +94,9 @@ namespace Cognitivo.Commercial
                         return false;
                     }
                 };
+
+                FirstDate = PaymentDB.payment_schedual.Local.Where(x => x.id_contact == contact.id_contact).OrderBy(x => x.expire_date).FirstOrDefault().expire_date;
+                EndDate = PaymentDB.payment_schedual.Local.Where(x => x.id_contact == contact.id_contact).OrderByDescending(x => x.expire_date).FirstOrDefault().expire_date;
             }
             else
             {

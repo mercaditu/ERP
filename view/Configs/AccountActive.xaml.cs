@@ -57,10 +57,15 @@ namespace Cognitivo.Configs
             if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
             {
                 app_account objAccount = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+                int id_session = 0;
+                if (db.app_account_session.Where(x => x.id_account == objAccount.id_account && x.is_active).FirstOrDefault() != null)
+                {
+                    id_session = db.app_account_session.Where(x => x.id_account == objAccount.id_account && x.is_active).FirstOrDefault().id_session;
+                }
 
                 is_active = objAccount.is_active;
                 RaisePropertyChanged("is_active");
-                var app_account_detailList = objAccount.app_account_detail.Where(x => x.payment_type.is_direct)
+                var app_account_detailList = objAccount.app_account_detail.Where(x => x.payment_type.is_direct && x.id_session == id_session)
              .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
              .Select(s => new
              {
@@ -92,6 +97,28 @@ namespace Cognitivo.Configs
                         clsTransferAmount.id_payment_type = item.id_paymenttype;
                         clsTransferAmount.id_currencyfx = item.id_currencyfx;
                         listOpenAmt.Add(clsTransferAmount);
+                    }
+                    foreach (app_currencyfx app_currencyfx in db.app_currencyfx.Where(x => x.is_active).ToList())
+                    {
+                        if (listOpenAmt.Where(x => x.id_currencyfx == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
+                        {
+                            string paymenttypename = "";
+                            int id_paymentType = 0;
+                            Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
+                            if (db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+                            {
+                                payment_type payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
+                                paymenttypename = payment_type.name;
+                                id_paymentType = payment_type.id_payment_type;
+                            }
+                       
+                            clsTransferAmount.PaymentTypeName = paymenttypename;
+                            clsTransferAmount.amount = 0;
+                            clsTransferAmount.Currencyfxname = app_currencyfx.app_currency.name;
+                            clsTransferAmount.id_payment_type = id_paymentType;
+                            clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
+                            listOpenAmt.Add(clsTransferAmount);
+                        }
                     }
 
                 }
@@ -140,7 +167,7 @@ namespace Cognitivo.Configs
             {
 
                 app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
-               
+
                 foreach (Class.clsTransferAmount list in listOpenAmt)
                 {
                     app_account_detail app_account_detail = new global::entity.app_account_detail();
@@ -162,17 +189,18 @@ namespace Cognitivo.Configs
                     app_account_detail.id_account = app_account.id_account;
                     app_account_detail.id_currencyfx = list.id_currencyfx;
                     app_account_detail.id_payment_type = list.id_payment_type;
-                 
-                 
+
+
                     if (app_account.is_active)
                     {
                         app_account_detail.comment = "For Closing Cash.";
-                        if (db.app_account_session.Where(x=>x.id_account==app_account.id_account && x.is_active).FirstOrDefault()!=null)
+                        if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
                         {
                             db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().cl_date = DateTime.Now;
-                            app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;    
+                            db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().is_active = false;
+                            app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
                         }
-                        
+
                         app_account_detail.tran_type = app_account_detail.tran_types.ClosingBalance;
                     }
                     else

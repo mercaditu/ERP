@@ -23,7 +23,7 @@ namespace cntrl.Curd
         private Modes Mode;
         CollectionViewSource paymentpayment_detailViewSource;
         CollectionViewSource paymentViewSource;
-
+        public int id_payment_schedual { get; set; } 
         public payment_detail payment_detail { get; set; }
 
         public payment_quick(Modes App_Mode, int? ContactID)
@@ -93,7 +93,7 @@ namespace cntrl.Curd
         private void SaveChanges()
         {
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            PaymentDB.Approve();
+            PaymentDB.Approve(id_payment_schedual,true);
         }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -133,7 +133,7 @@ namespace cntrl.Curd
                             stpcreditsales.Visibility = Visibility.Visible;
 
                             CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
-                            PaymentDB.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && x.sales_invoice == null).Load();
+                            PaymentDB.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact ).Load();
                             sales_returnViewSource.Source = PaymentDB.sales_return.Local;
                         }
                     }

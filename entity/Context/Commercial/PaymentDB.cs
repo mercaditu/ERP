@@ -19,6 +19,11 @@ namespace entity
             payment.status = Status.Documents_General.Pending;
             payment.State = EntityState.Added;
             payment.id_range = GetDefault.Return_RangeID(entity.App.Names.PaymentUtility);
+            if (app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault()!=null)
+            {
+                payment.app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();      
+            }
+          
             payment.IsSelected = true;
 
             return payment;

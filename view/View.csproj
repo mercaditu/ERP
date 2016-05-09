@@ -802,14 +802,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Resource Include="bin\Debug\Images\Wallpaper\ElCapitan.jpg" />
-    <Resource Include="bin\Debug\Images\Wallpaper\MatternHorn.jpg" />
-    <Resource Include="bin\Debug\Images\Wallpaper\Structures.jpg" />
+    <Content Include="bin\Debug\Images\Wallpaper\ElCapitan.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Images\Wallpaper\MatternHorn.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Images\Wallpaper\Structures.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="bin\Debug\Images\Wallpaper\Sunrise.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="bin\Debug\Images\Wallpaper\Waves.jpg" />
-    <Resource Include="bin\Debug\Images\Wallpaper\Yosemite.jpg" />
+    <Content Include="bin\Debug\Images\Wallpaper\Waves.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Images\Wallpaper\Yosemite.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="bin\Debug\SalesInvoice.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

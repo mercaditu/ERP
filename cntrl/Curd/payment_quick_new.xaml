@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:cntrl.Curd"
-                   xmlns:customcmd="clr-namespace:Cognitivo.Class"
+             xmlns:local="clr-namespace:cntrl.Curd" xmlns:customcmd="clr-namespace:Cognitivo.Class"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -14,7 +13,7 @@
              xmlns:Controls="clr-namespace:cntrl.Controls" 
              xmlns:cntrl="clr-namespace:cntrl"
              xmlns:entity="clr-namespace:entity;assembly=entity"
-             mc:Ignorable="d" VerticalAlignment="Center" Width="512" Loaded="UserControl_Loaded"
+             mc:Ignorable="d" VerticalAlignment="Center" Width="550" Height="412" Loaded="UserControl_Loaded"
              BorderBrush="RoyalBlue" BorderThickness="2">
     <UserControl.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
@@ -28,60 +27,61 @@
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
         <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
-                <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
     </UserControl.Effect>
-    <Grid DataContext="{StaticResource paymentpayment_detailViewSource}">
+    <Grid DataContext="{StaticResource paymentpayment_detailViewSource}" Margin="0,1,0,-1">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="512"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        <!-- TopBar -->
         <Grid Background="RoyalBlue">
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="$" FontSize="25" Margin="8,0"
                    VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White"/>
             <TextBlock x:Name="lblTitle" Text="{lex:Loc Payment}" FontSize="25" Margin="40,3,0,0" Foreground="White"/>
             <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+                     Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" Foreground="White"
-                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                   HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" Foreground="White"
+                   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
         </Grid>
-        <Grid Background="WhiteSmoke" Grid.Row="1">
-            <ListBox Background="WhiteSmoke"></ListBox>
-        </Grid>
-
+        
         <Grid Grid.Column="1" Grid.Row="1"  Background="White" >
-            <ScrollViewer Margin="0,0,0,32">
-
-                <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
-
-                    <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
-                    <DatePicker Style="{DynamicResource input_datepicker}"
-					    	SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"     />
-                    <Label Content="{lex:Loc Contact}" Style="{DynamicResource input_label}"/>
-                    <Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <StackPanel x:Name="stpDocument" Background="{StaticResource AccentColor_Brush}">
-                        <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
-                        <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
-                                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
-                                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                                  Style="{StaticResource input_combobox}"
-                                  SelectedValue="{Binding payment.id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
-                        <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-                        <TextBox
-                                metro:TextBoxHelper.Watermark="{Binding payment.NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
-                                metro:TextBoxHelper.SelectAllOnFocus="True"
-                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                             Text="{Binding payment.number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    </StackPanel>
-
-                    <Rectangle Style="{StaticResource line_Bar}"/>
+            <ScrollViewer Margin="0,0,0,30">
+                <StackPanel>
+                    <Label Content="{lex:Loc Header}" Style="{StaticResource H3}"/>
+                    <WrapPanel Height="120">
+                        <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
+                            <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
+                            <DatePicker Style="{DynamicResource input_datepicker}"
+					    	            SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"     />
+                            <Label Content="{lex:Loc Contact}" Style="{DynamicResource input_label}"/>
+                            <Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel x:Name="stpDocument" Background="WhiteSmoke">
+                            <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
+                            <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+                                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
+                                      metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                                      Style="{StaticResource input_combobox}"
+                                      SelectedValue="{Binding payment.id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                            <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
+                            <TextBox metro:TextBoxHelper.Watermark="{Binding payment.NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
+                                     metro:TextBoxHelper.SelectAllOnFocus="True"
+                                     metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                     metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                                     Text="{Binding payment.number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        </StackPanel>
+                    </WrapPanel>
+                    <Label Content="{lex:Loc Details}" Style="{StaticResource H3}"/>
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel  Width="100">
-                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="0,24,0,0" HorizontalAlignment="Center" FontSize="16"
+                        <StackPanel  Width="256" Margin="4">
+                            <DataGrid x:Name="dgvPaymentDetail" Style="{StaticResource detail_Datagrid}" Margin="4,5"
+                                      HorizontalAlignment="Center" FontSize="16"
                                       ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" >
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Type}" Width="128"
@@ -101,8 +101,8 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Command="customcmd:CustomCommands.Delete"
-                                                    Style="{StaticResource btnDeleteChildStyle}"
-                                                    CommandParameter="{Binding}"/>
+                                                        Style="{StaticResource btnDeleteChildStyle}"
+                                                        CommandParameter="{Binding}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -197,16 +197,6 @@
                         <Button.Content>
                             <TextBlock>
                                 <Run Text="{lex:Loc Save}"/>
-                            </TextBlock>
-                        </Button.Content>
-                    </Button>
-                    <Label Content="|" VerticalAlignment="Center" FontSize="13"/>
-                    <Button HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue" BorderThickness="0" FontWeight="Medium">
-                        <Button.Content>
-                            <TextBlock>
-                                <Run Text="{lex:Loc Save}"/>
-                                <Run Text="&amp;"/>
-                                <Run Text="{lex:Loc New}"/>
                             </TextBlock>
                         </Button.Content>
                     </Button>

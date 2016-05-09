@@ -119,7 +119,7 @@ namespace entity
             }
         }
 
-        public void MakePayment(payment_schedual payment_schedual, payment payment, bool RequirePrint)
+        public void MakePayment(payment payment, bool RequirePrint)
         {
             foreach (payment_detail payment_detail in payment.payment_detail)
             {
@@ -153,7 +153,7 @@ namespace entity
                 }
 
                 ///Logic for Value in Balance Payment Schedual.
-                if (payment_schedual.id_purchase_invoice > 0 || payment_schedual.id_purchase_order > 0 || payment_schedual.id_sales_return > 0)
+                if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
                 {
                     ///If PaymentDetail Value is Negative.
                     balance_payment_schedual.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
@@ -164,54 +164,54 @@ namespace entity
                     balance_payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
                 }
 
-                balance_payment_schedual.parent = payment_schedual;
+                balance_payment_schedual.parent = Parent_Schedual;
                 balance_payment_schedual.status = Status.Documents_General.Approved;
-                balance_payment_schedual.id_contact = payment_schedual.id_contact;
-                balance_payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
+                balance_payment_schedual.id_contact = Parent_Schedual.id_contact;
+                balance_payment_schedual.id_currencyfx = Parent_Schedual.id_currencyfx;
                 balance_payment_schedual.trans_date = payment_detail.trans_date;
-                balance_payment_schedual.expire_date = payment_schedual.expire_date;
+                balance_payment_schedual.expire_date = Parent_Schedual.expire_date;
 
                 string ModuleName = string.Empty;
 
                 ///
-                if (payment_schedual.id_purchase_invoice != 0)
+                if (Parent_Schedual.id_purchase_invoice != 0)
                 {
-                    balance_payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
+                    balance_payment_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
                     ModuleName = "PurchaseInvoice";
                 }
 
                 ///
-                if (payment_schedual.id_purchase_order != 0)
+                if (Parent_Schedual.id_purchase_order != 0)
                 {
-                    balance_payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
+                    balance_payment_schedual.id_purchase_order = Parent_Schedual.id_purchase_order;
                     ModuleName = "PurchaseOrder";
                 }
 
                 ///
-                if (payment_schedual.id_purchase_return != 0)
+                if (Parent_Schedual.id_purchase_return != 0)
                 {
-                    balance_payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
+                    balance_payment_schedual.id_purchase_return = Parent_Schedual.id_purchase_return;
                     ModuleName = "PurchaseReturn";
                 }
 
                 ///
-                if (payment_schedual.id_sales_invoice != 0)
+                if (Parent_Schedual.id_sales_invoice != 0)
                 {
-                    balance_payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
+                    balance_payment_schedual.id_sales_invoice = Parent_Schedual.id_sales_invoice;
                     ModuleName = "SalesInvoice";
                 }
 
                 ///
-                if (payment_schedual.id_sales_order != 0)
+                if (Parent_Schedual.id_sales_order != 0)
                 {
-                    balance_payment_schedual.id_sales_order = payment_schedual.id_sales_order;
+                    balance_payment_schedual.id_sales_order = Parent_Schedual.id_sales_order;
                     ModuleName = "SalesOrder";
                 }
 
                 ///
                 if (payment_detail.id_sales_return != 0)
                 {
-                    balance_payment_schedual.id_sales_return = payment_schedual.id_sales_return;
+                    balance_payment_schedual.id_sales_return = Parent_Schedual.id_sales_return;
                     ModuleName = "SalesReturn";
                 }
 
@@ -239,7 +239,7 @@ namespace entity
                     }
 
                     //Logic for Account Detail based on Payment Detail Logic.
-                    if (payment_schedual.id_purchase_invoice > 0 || payment_schedual.id_purchase_order > 0 || payment_schedual.id_sales_return > 0)
+                    if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
                     {
                         ///If PaymentDetail Value is Negative.
                         app_account_detail.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
@@ -254,23 +254,23 @@ namespace entity
                     ///Insert AccountDetail into Context.
                     ///
                     string number = "";
-                    if (payment_schedual.id_purchase_invoice > 0 || payment_schedual.id_purchase_order > 0 || payment_schedual.id_sales_return > 0)
+                    if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
                     {
                         
-                        if (payment_schedual.purchase_invoice!=null)
+                        if (Parent_Schedual.purchase_invoice!=null)
                         {
-                            number = payment_schedual.purchase_invoice.number;
+                            number = Parent_Schedual.purchase_invoice.number;
                         }
 
                     }
                     else
                     {
-                        if (payment_schedual.sales_invoice != null)
+                        if (Parent_Schedual.sales_invoice != null)
                         {
-                            number = payment_schedual.sales_invoice.number;
+                            number = Parent_Schedual.sales_invoice.number;
                         }
                     }
-                    app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + number + " | " + payment_schedual.contact.name;
+                    app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
                     base.app_account_detail.Add(app_account_detail);
                 }
             }

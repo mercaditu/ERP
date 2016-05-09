@@ -15,10 +15,6 @@ namespace Cognitivo.Commercial
         CollectionViewSource payment_schedualViewSource, contactViewSource;
         PaymentDB PaymentDB = new entity.PaymentDB();
 
-        //cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick();
-        //cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountReceivable);
-        //cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
-
         public AccountsRecievable()
         {
             InitializeComponent();

@@ -137,7 +137,7 @@
                         </cntrl:SearchableTextbox>
                     </StackPanel>
                     <Label Content="{lex:Loc Amount}" Style="{DynamicResource input_label}"/>
-                    <TextBox x:Name="txtAmount" Style="{StaticResource input_textbox}" 
+                    <TextBox x:Name="txtAmount" Style="{StaticResource input_textbox}" HorizontalContentAlignment="Right"
                              Text="{Binding value, Mode=TwoWay, Source={StaticResource paymentpayment_detailViewSource}, 
                              UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}"/>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>

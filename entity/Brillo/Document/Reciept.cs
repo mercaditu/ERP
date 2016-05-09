@@ -13,6 +13,80 @@ namespace entity.Brillo.Logic
 
     public class Reciept
     {
+        public void Document_Print(int document_id, object obj)
+        {
+            app_document app_document;
+            string PrinterName;
+            string Content = "";
+
+
+            using (db db = new db())
+            {
+                app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
+                PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
+                if (app_document.id_application == App.Names.Movement)
+                {
+                    item_transfer item_transfer = (item_transfer)obj;
+                    Content = ItemMovement(item_transfer);
+                }
+                else if (app_document.id_application == App.Names.SalesReturn)
+                {
+                    sales_return sales_return = (sales_return)obj;
+                    Content = SalesReturn(sales_return);
+                }
+                else if (app_document.id_application == App.Names.SalesInvoice)
+                {
+                    sales_invoice sales_invoice = (sales_invoice)obj;
+                    Content = SalesInvoice(sales_invoice);
+                }
+                else if (app_document.id_application == App.Names.PaymentUtility)
+                {
+                    payment payment = (payment)obj;
+                    Content = Payment(payment);
+                }
+            }
+
+            if (Content != "")
+            {
+
+
+                if (app_document != null && PrinterName != string.Empty)
+                {
+                    if (app_document.style_reciept == true)
+                    {
+                        Reciept Reciept = new Reciept();
+                        PrintDialog pd = new PrintDialog();
+
+                        FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
+                        document.Name = "ItemMovement";
+                        document.FontFamily = new FontFamily("Courier New");
+                        document.FontSize = 11.0;
+                        document.FontStretch = FontStretches.Normal;
+                        document.FontWeight = FontWeights.Normal;
+
+                        document.PagePadding = new Thickness(20);
+
+                        document.PageHeight = double.NaN;
+                        document.PageWidth = double.NaN;
+                        //document.
+
+                        //Specify minimum page sizes. Origintally 283, but was too small.
+                        document.MinPageWidth = 283;
+                        //Specify maximum page sizes.
+                        document.MaxPageWidth = 300;
+
+                        IDocumentPaginatorSource idpSource = document;
+                        try
+                        {
+                            pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
+                            pd.PrintDocument(idpSource.DocumentPaginator, Content);
+                        }
+                        catch
+                        { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
+                    }
+                }
+            }
+        }
 
         public string ItemMovement(item_transfer i)
         {
@@ -356,6 +430,7 @@ namespace entity.Brillo.Logic
             if (payment.app_company != null)
             {
                 CompanyName = payment.app_company.name;
+                app_company = payment.app_company;
             }
             else
             {
@@ -448,80 +523,116 @@ namespace entity.Brillo.Logic
             return Text;
         }
 
-
-        public void Document_Print(int document_id, object obj)
+        public string ZReport(app_account_session app_account_session)
         {
-            app_document app_document;
-            string PrinterName;
-            string Content = "";
+            string Header = string.Empty;
+            string Detail = string.Empty;
+            string Footer = string.Empty;
 
+            string CompanyName = string.Empty;
+            app_company app_company = null;
 
-            using (db db = new db())
+            if (app_account_session.app_company != null)
             {
-                app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
-                PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
-                if (app_document.id_application == App.Names.Movement)
-                {
-                    item_transfer item_transfer = (item_transfer)obj;
-                    Content = ItemMovement(item_transfer);
-                }
-                else if (app_document.id_application == App.Names.SalesReturn)
-                {
-                    sales_return sales_return = (sales_return)obj;
-                    Content = SalesReturn(sales_return);
-                }
-                else if (app_document.id_application == App.Names.SalesInvoice)
-                {
-                    sales_invoice sales_invoice = (sales_invoice)obj;
-                    Content = SalesInvoice(sales_invoice);
-                }
-                else if (app_document.id_application == App.Names.PaymentUtility)
-                {
-                    payment payment = (payment)obj;
-                    Content = Payment(payment);
-                }
+                CompanyName = app_account_session.app_company.name;
+                app_company = app_account_session.app_company;
             }
-
-            if (Content != "")
+            else
             {
-
-
-                if (app_document != null && PrinterName != string.Empty)
+                using (db db = new db())
                 {
-                    if (app_document.style_reciept == true)
+                    if (db.app_company.Where(x => x.id_company == app_account_session.id_company).FirstOrDefault() != null)
                     {
-                        Reciept Reciept = new Reciept();
-                        PrintDialog pd = new PrintDialog();
-
-                        FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
-                        document.Name = "ItemMovement";
-                        document.FontFamily = new FontFamily("Courier New");
-                        document.FontSize = 11.0;
-                        document.FontStretch = FontStretches.Normal;
-                        document.FontWeight = FontWeights.Normal;
-
-                        document.PagePadding = new Thickness(20);
-
-                        document.PageHeight = double.NaN;
-                        document.PageWidth = double.NaN;
-                        //document.
-
-                        //Specify minimum page sizes. Origintally 283, but was too small.
-                        document.MinPageWidth = 283;
-                        //Specify maximum page sizes.
-                        document.MaxPageWidth = 300;
-
-                        IDocumentPaginatorSource idpSource = document;
-                        try
-                        {
-                            pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
-                            pd.PrintDocument(idpSource.DocumentPaginator, Content);
-                        }
-                        catch
-                        { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
+                        app_company = db.app_company.Where(x => x.id_company == app_account_session.id_company).FirstOrDefault();
+                        CompanyName = app_company.name;
                     }
                 }
             }
+
+            string UserName = "";
+
+            if (app_account_session.security_user != null)
+            {
+                UserName = app_account_session.security_user.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    if (db.security_user.Where(x => x.id_user == app_account_session.id_user).FirstOrDefault() != null)
+                    {
+                        security_user security_user = db.security_user.Where(x => x.id_user == app_account_session.id_user).FirstOrDefault();
+                        UserName = security_user.name;
+                    }
+                }
+            }
+
+            string SessionID = app_account_session.id_session.ToString();
+            DateTime OpenDate = app_account_session.op_date;
+            DateTime CloseDate;
+
+            if (app_account_session.cl_date != null)
+	        {
+                CloseDate = (DateTime)app_account_session.cl_date;
+	        }
+
+            Header =
+                "***Z Report***"
+                + CompanyName + "\n"
+                + "R.U.C.   :" + app_company.gov_code + "\n"
+                + app_company.address + "\n"
+                + "***" + app_company.alias + "***" + "\n"
+                + "Apertura : " + OpenDate + "    Cierre: " + CloseDate
+                + "\n"
+                + "--------------------------------"
+                + "Cuenta, Valor, Moneda" + "\n"
+                + "--------------------------------" + "\n"
+                + "\n";
+
+            string InvoiceNumber = string.Empty;
+            string CustomerName = string.Empty;
+
+            foreach (app_account_detail d in app_account_session.app_account_detail)
+            {
+                string AccountName = string.Empty;
+
+                if (d.app_account == null)
+                {
+                    using (db db = new db())
+                    {
+                        app_account app_account = db.app_account.Where(x => x.id_account == d.id_account).FirstOrDefault();
+                        AccountName = app_account.name;
+                    }
+                }
+
+                string currency = string.Empty;
+                if (d.app_currencyfx == null)
+                {
+                    using (db db = new db())
+                    {
+                        currency = db.app_currencyfx.Where(x => x.id_currencyfx == d.id_currencyfx).FirstOrDefault().app_currency.name;
+                    }
+                }
+
+                decimal? value = d.credit - d.debit;
+
+                Detail = Detail
+                    + AccountName + "\n"
+                    + value.ToString() + "\t" + currency + "\n";
+
+                if (InvoiceNumber == string.Empty)
+                {
+                    InvoiceNumber = d.payment_schedual.FirstOrDefault().sales_invoice.number;
+                    CustomerName = d.payment_schedual.FirstOrDefault().contact.name;
+                }
+            }
+
+            Footer += "Factura  : " + InvoiceNumber + "\n";
+            Footer += "--------------------------------" + "\n";
+
+            string Text = Header + Detail + Footer;
+            return Text;
         }
+
     }
 }

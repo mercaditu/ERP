@@ -96,14 +96,18 @@ namespace Cognitivo.Commercial
             decimal TotalReceivable = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
 
             cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Recievable, PaymentSchedualList.FirstOrDefault().id_contact);
+          
             payment_quick.payment_detail.value = TotalReceivable;
+        
             payment_quick.payment_detail.payment.GrandTotal = TotalReceivable;
             payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
 
             if (PaymentSchedualList.Count == 1)
             {
+                payment_quick.id_payment_schedual = PaymentSchedualList.FirstOrDefault().id_payment_schedual;
+                payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
                 payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
-                payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
+              //  payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
 
                 if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
                 {

@@ -19,11 +19,11 @@ namespace entity
             payment.status = Status.Documents_General.Pending;
             payment.State = EntityState.Added;
             payment.id_range = GetDefault.Return_RangeID(entity.App.Names.PaymentUtility);
-            if (app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault()!=null)
+            if (app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
             {
-                payment.app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();      
+                payment.app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
             }
-          
+
             payment.IsSelected = true;
 
             return payment;
@@ -133,7 +133,7 @@ namespace entity
                     payment_detail.id_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                     payment_detail.app_currencyfx = app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
                 }
-                
+
                 ///Assigns appCurrencyFX Entity which is needed for Printing.
                 if (payment_detail.id_currencyfx > 0 && payment_detail.app_currencyfx == null)
                 {
@@ -153,7 +153,7 @@ namespace entity
                 }
 
                 ///Logic for Value in Balance Payment Schedual.
-                if (payment_detail.value < 0)
+                if (payment_schedual.id_purchase_invoice > 0 || payment_schedual.id_purchase_order > 0 || payment_schedual.id_sales_return > 0)
                 {
                     ///If PaymentDetail Value is Negative.
                     balance_payment_schedual.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
@@ -207,7 +207,7 @@ namespace entity
                     balance_payment_schedual.id_sales_order = payment_schedual.id_sales_order;
                     ModuleName = "SalesOrder";
                 }
-                
+
                 ///
                 if (payment_detail.id_sales_return != 0)
                 {
@@ -239,7 +239,7 @@ namespace entity
                     }
 
                     //Logic for Account Detail based on Payment Detail Logic.
-                    if (payment_detail.value < 0)
+                    if (payment_schedual.id_purchase_invoice > 0 || payment_schedual.id_purchase_order > 0 || payment_schedual.id_sales_return > 0)
                     {
                         ///If PaymentDetail Value is Negative.
                         app_account_detail.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
@@ -252,14 +252,32 @@ namespace entity
 
                     ///Comment with Module Name and Contact.
                     ///Insert AccountDetail into Context.
-                    app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + payment_schedual.sales_invoice.number + " | " + payment_schedual.contact.name;
+                    ///
+                    string number = "";
+                    if (payment_schedual.id_purchase_invoice > 0 || payment_schedual.id_purchase_order > 0 || payment_schedual.id_sales_return > 0)
+                    {
+                        
+                        if (payment_schedual.purchase_invoice!=null)
+                        {
+                            number = payment_schedual.purchase_invoice.number;
+                        }
+
+                    }
+                    else
+                    {
+                        if (payment_schedual.sales_invoice != null)
+                        {
+                            number = payment_schedual.sales_invoice.number;
+                        }
+                    }
+                    app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + number + " | " + payment_schedual.contact.name;
                     base.app_account_detail.Add(app_account_detail);
                 }
             }
 
             payment.status = Status.Documents_General.Approved;
             base.SaveChanges();
-            
+
             if (RequirePrint)
             {
                 entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);

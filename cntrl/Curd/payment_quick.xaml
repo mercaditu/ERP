@@ -21,8 +21,8 @@
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}"/>
         <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}"/>
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
-        <CollectionViewSource x:Key="paymentpayment_detailViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
+        <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
+                <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
@@ -149,7 +149,7 @@
             <Grid Background="WhiteSmoke" Height="32" VerticalAlignment="Bottom" >
                 <!--<Button Content="{lex:Loc Delete}" BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" Foreground="Crimson" FontWeight="Medium"></Button>-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Click="btnSave_MouseUp" HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue" 
+                    <Button Click="Button_Click" HorizontalAlignment="Right"  Background="Transparent" Foreground="RoyalBlue" 
                             BorderThickness="0" FontWeight="Medium">
                         <Button.Content>
                             <TextBlock>

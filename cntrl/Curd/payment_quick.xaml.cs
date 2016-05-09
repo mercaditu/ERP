@@ -37,12 +37,15 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
 
             payment payment = PaymentDB.New();
+            PaymentDB.payments.Add(payment);
             paymentViewSource.Source = PaymentDB.payments.Local;
 
             payment_detail = new payment_detail();
+            payment_detail.payment = payment;
             payment.payment_detail.Add(payment_detail);
 
             paymentViewSource.View.MoveCurrentTo(payment);
+            paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -64,22 +67,24 @@ namespace cntrl.Curd
       
             //paymentpayment_detailViewSource.View.Refresh();
             //paymentpayment_detailViewSource.View.MoveCurrentToLast();
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+            if (PaymentDB.contacts.Where(x=>x.id_contact==payment.id_contact).FirstOrDefault()!=null)
+            {
+                payment.contact = PaymentDB.contacts.Where(x => x.id_contact == payment.id_contact).FirstOrDefault();
+            }
+            int id_currencyfx = payment.payment_detail.FirstOrDefault().id_currencyfx;
+            if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
+            {
+                payment.payment_detail.FirstOrDefault().app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+            }
+
+            paymentViewSource.View.Refresh();
+            paymentpayment_detailViewSource.View.Refresh();
         }
 
         #region Events
 
-        public event btnSave_ClickedEventHandler btnSave_Click;
-        public delegate void btnSave_ClickedEventHandler(object sender);
-        public void btnSave_MouseUp(object sender, EventArgs e)
-        {
-            if (btnSave_Click != null)
-            {
-                //Run Save Code.
-                SaveChanges();
-
-                btnSave_Click(sender);
-            }
-        }
+       
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -133,7 +138,7 @@ namespace cntrl.Curd
                             stpcreditsales.Visibility = Visibility.Visible;
 
                             CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
-                            PaymentDB.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact ).Load();
+                            PaymentDB.sales_return.Where(x => x.id_contact == payment_detail.payment.id_contact && (x.sales_invoice.GrandTotal-x.GrandTotal)>0).Load();
                             sales_returnViewSource.Source = PaymentDB.sales_return.Local;
                         }
                     }
@@ -170,7 +175,7 @@ namespace cntrl.Curd
             }
         }
 
-        private void purchasereturnComboBox_MouseDoubleClick(object sender, EventArgs e)
+        private void purchasereturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -194,7 +199,7 @@ namespace cntrl.Curd
             }
         }
 
-        private void salesreturnComboBox_MouseDoubleClick(object sender, EventArgs e)
+        private void salesreturnComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -228,5 +233,15 @@ namespace cntrl.Curd
         }
         
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SaveChanges();
+            lblCancel_MouseDown(sender, null);
+        }
+
+      
+
+      
     }
 }

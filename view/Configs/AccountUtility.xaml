@@ -74,10 +74,6 @@
             <TabControl x:Name="tabAccount" Margin="0,128,0,0" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="{lex:Loc General}" HorizontalAlignment="Left" Width="103">
                     <Grid Background="WhiteSmoke">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="157*"/>
-                            <ColumnDefinition Width="434*"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="10"></RowDefinition>
@@ -89,16 +85,16 @@
                                       Margin="10,26,10,10" Height="Auto" MaxHeight="180" 
                                       RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
-                                <DataGridTextColumn x:Name="payTypeColumn" 
+                                <DataGridTextColumn x:Name="payTypeColumn"
                                                         Binding="{Binding payType}" Header="Payment Type" Width="*"/>
-                                <DataGridTextColumn x:Name="amountColumn" 
-                                                        Binding="{Binding amount}" Header="Amount" Width="*"/>
+                                <DataGridTextColumn x:Name="amountColumn" ElementStyle="{StaticResource RightAlignStyle}"
+                                                        Binding="{Binding amount, StringFormat={}{0:N2}}" Header="Amount" Width="*"/>
                                 <DataGridTextColumn x:Name="id_currencyfxColumn" 
                                                         Binding="{Binding cur}" Header="Currency" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <GridSplitter Grid.Row="1" Height="5" Margin="0,2" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" />
-                        <Label Content="{lex:Loc Last100Transactions}" Grid.Row="2" Grid.ColumnSpan="2"/>
+                        <Label Content="Last 100 Transactions" Grid.Row="2" Grid.ColumnSpan="2"/>
                         <DataGrid x:Name="app_account_detailDataGrid1" IsReadOnly="True" Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
                                       AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="10,26,10,10" Height="Auto" MaxHeight="180" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                       ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}"
@@ -106,8 +102,8 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn x:Name="trans_dateColumn" Binding="{Binding trans_date, StringFormat=d}" Header="Transaction Date" Width="*"/>
                                 <DataGridTextColumn x:Name="commentColumn" Binding="{Binding comment}" Header="comment" Width="*"/>
-                                <DataGridTextColumn x:Name="debitColumn" Binding="{Binding debit}" Header="debit" Width="*"/>
-                                <DataGridTextColumn x:Name="creditColumn" Binding="{Binding credit}" Header="credit" Width="*"/>
+                                <DataGridTextColumn x:Name="debitColumn" Binding="{Binding debit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Debit}" Width="*" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTextColumn x:Name="creditColumn" Binding="{Binding credit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="*" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTextColumn x:Name="id_currencyfxColumn1" Binding="{Binding app_currencyfx.app_currency.name}" Header="currency" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -117,49 +113,6 @@
                     <Grid x:Name="frmActive" Background="WhiteSmoke">
                         
                     </Grid>
-                    <!--<StackPanel Background="WhiteSmoke">
-                        <Grid Margin="5">
-                            <Label Content="{lex:Loc add all items in cash drawer before activating.}"/>
-                            <Button Content="{lex:Loc Open Drawer}" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        </Grid>
-                        <DataGrid x:Name="CashDataGrid" AutoGenerateColumns="False" BorderThickness="1" BorderBrush="Gray"
-                                      EnableRowVirtualization="True"  Grid.Row="0"
-                                      Margin="10,26,10,10" Height="Auto" MaxHeight="180" 
-                                      RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn IsReadOnly="True"
-                                                        Binding="{Binding PaymentTypeName}" Header="Payment Type" Width="*"/>
-                                <DataGridTextColumn
-                                                        Binding="{Binding amount}" Header="Amount" Width="*"/>
-                                <DataGridTextColumn
-                                                        Binding="{Binding amountCounted}" Header="Counted Amount" Width="*"/>
-                                <DataGridTextColumn IsReadOnly="True"
-                                                        Binding="{Binding Currencyfxname}" Header="Currency" Width="*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        --><!--<StackPanel Margin="5">
-                            <Label Content="{lex:Loc InitialAmount}" Style="{StaticResource input_label}"/>
-                            <TextBox x:Name="txtInitialAmount" Style="{StaticResource input_textbox}"/>
-                        </StackPanel>-->
-                        <!--<DataGrid x:Name="app_account_Activate_detailDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
-                                  EnableRowVirtualization="True" Height="Auto" BorderThickness="1" BorderBrush="Gray"
-                                  ItemsSource="{Binding Source={StaticResource app_account_detailViewSource}}" 
-                                  Margin="10" RowDetailsVisibilityMode="VisibleWhenSelected">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn x:Name="accountNameColumn" Binding="{Binding ac_name,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="account" Width="*"/>
-                                <DataGridTextColumn x:Name="id_accountColumn" Binding="{Binding id_account,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="" Visibility="Collapsed" Width="*"/>
-                                <DataGridTextColumn x:Name="payTypeColumn1" Binding="{Binding pay_type,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Payment Type" Width="*"/>
-                                <DataGridTextColumn x:Name="debitColumn1" Binding="{Binding debit,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="debit" Width="*"/>
-                                <DataGridTextColumn x:Name="creditColumn1" Binding="{Binding credit,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="credit" Width="*"/>
-                                <DataGridTextColumn x:Name="id_currencyfxColumn2" Binding="{Binding cur,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="currency" Width="*"/>
-                                <DataGridTextColumn x:Name="is_activeColumn" Binding="{Binding active,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Converter={StaticResource BoolToStringConverter}}" Header="Active" Width="SizeToHeader"/>
-                            </DataGrid.Columns>
-                        </DataGrid>--><!--
-                        <Grid Margin="5">
-                            <Label Content="once activated, you can use this account to transact normally "/>
-                            <Button x:Name="btnActivateAccount" Content="{Binding is_active, Converter={StaticResource BoolToActiveReverse}}" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Right" Click="btnActivateAccount_Click" Width="100"/>
-                        </Grid>
-                    </StackPanel>-->
                 </TabItem>
                 <TabItem Header="{lex:Loc Adjust}" Height="39" VerticalAlignment="Top">
                     <StackPanel Background="WhiteSmoke">
@@ -180,8 +133,8 @@
                                                         ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}" 
                                                         DisplayMemberPath="name" SelectedValuePath="id_payment_type"
                                                         SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                <DataGridTextColumn Binding="{Binding debit, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="*"/>
-                                <DataGridTextColumn Binding="{Binding credit, UpdateSourceTrigger=PropertyChanged}" Header="credit" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding debit, UpdateSourceTrigger=PropertyChanged}" Header="debit" Width="*" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTextColumn Binding="{Binding credit, UpdateSourceTrigger=PropertyChanged}" Header="credit" Width="*" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="*"
                                                         ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
                                                         DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
@@ -212,7 +165,7 @@
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn x:Name="payTypeCollum" Header="Payment Type" Width="*" ItemsSource="{Binding Source={StaticResource payment_typeViewSource}}"
                                                         DisplayMemberPath="name" SelectedValuePath="id_payment_type" SelectedValueBinding="{Binding id_payment_type, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                <DataGridTextColumn x:Name="amtColumn" Header="Amount" Width="*" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                <DataGridTextColumn x:Name="amtColumn" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" Binding="{Binding amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                 <DataGridComboBoxColumn x:Name="curColumn" Header="Currency" Width="*"
                                                         ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}"
                                                         DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"

@@ -49,6 +49,7 @@ namespace Cognitivo.Sales
         private void btnAccount_Click(object sender, EventArgs e)
         {
             tabAccount.IsSelected = true;
+            frmaccount.Refresh();
         }
 
         private void btnSales_Click(object sender, EventArgs e)

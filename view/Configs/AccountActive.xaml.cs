@@ -61,6 +61,7 @@ namespace Cognitivo.Configs
             {
                 app_account objAccount = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
                 int id_session = 0;
+                
                 if (db.app_account_session.Where(x => x.id_account == objAccount.id_account && x.is_active).FirstOrDefault() != null)
                 {
                     id_session = db.app_account_session.Where(x => x.id_account == objAccount.id_account && x.is_active).FirstOrDefault().id_session;
@@ -68,16 +69,17 @@ namespace Cognitivo.Configs
 
                 is_active = objAccount.is_active;
                 RaisePropertyChanged("is_active");
+
                 var app_account_detailList = objAccount.app_account_detail.Where(x => x.payment_type.is_direct && x.id_session == id_session)
-             .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
-             .Select(s => new
-             {
-                 id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
-                 id_paymenttype = s.Max(ad => ad.id_payment_type),
-                 cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
-                 payType = s.Max(ad => ad.payment_type.name),
-                 amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
-             }).ToList();
+                     .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
+                     .Select(s => new
+                     {
+                         id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
+                         id_paymenttype = s.Max(ad => ad.id_payment_type),
+                         cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
+                         payType = s.Max(ad => ad.payment_type.name),
+                         amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
+                     }).ToList();
 
                 var app_account_detailFinalList = app_account_detailList.GroupBy(ad => new { ad.cur, ad.payType }).Select(s => new
                 {
@@ -89,8 +91,10 @@ namespace Cognitivo.Configs
                 }).ToList();
 
                 listOpenAmt = new List<Class.clsTransferAmount>();
+
                 if (app_account_detailFinalList.Count > 0)
                 {
+
                     foreach (dynamic item in app_account_detailFinalList)
                     {
                         Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
@@ -101,6 +105,7 @@ namespace Cognitivo.Configs
                         clsTransferAmount.id_currencyfx = item.id_currencyfx;
                         listOpenAmt.Add(clsTransferAmount);
                     }
+
                     foreach (app_currencyfx app_currencyfx in db.app_currencyfx.Where(x => x.is_active).ToList())
                     {
                         if (listOpenAmt.Where(x => x.id_currencyfx == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
@@ -132,6 +137,7 @@ namespace Cognitivo.Configs
                     int id_paymentType = 0;
                     string curname = "";
                     int id_currencyfx = 0;
+
                     List<app_currency> app_currencyList = new List<app_currency>();
                     app_currencyList = db.app_currency.ToList();
                     foreach (app_currency app_currency in app_currencyList)
@@ -146,12 +152,14 @@ namespace Cognitivo.Configs
 
                         clsTransferAmount.PaymentTypeName = paymenttypename;
                         clsTransferAmount.amount = 0;
+
                         if (db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault() != null)
                         {
                             app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault();
                             curname = app_currencyfx.app_currency.name;
                             id_currencyfx = app_currencyfx.id_currencyfx;
                         }
+
                         clsTransferAmount.Currencyfxname = curname;
                         clsTransferAmount.id_payment_type = id_paymentType;
                         clsTransferAmount.id_currencyfx = id_currencyfx;

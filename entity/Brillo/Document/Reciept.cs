@@ -586,8 +586,6 @@
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
                 + "Apertura : " + OpenDate + "    Cierre: " + CloseDate
-                + "Balance de Apertura : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Open).FirstOrDefault().credit
-                + "Balance de Cierre   : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close).FirstOrDefault().debit
                 + "\n"
                 + "--------------------------------"
                 + "Hora   Cuenta              Valor" + "\n";
@@ -599,6 +597,11 @@
             {
                 Header += "--------------------------------" + "\n"
                         + "Moneda : " + detail.app_currencyfx.app_currency.name;
+
+                if (detail.tran_type == app_account_detail.tran_types.Open)
+	            {
+		            Header += "Balance de Apertura : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Open).FirstOrDefault().credit;
+	            }
 
                 foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction).ToList())
                 {
@@ -627,6 +630,11 @@
                     Detail = Detail
                         + AccountName + "\n"
                         + value.ToString() + "\t" + currency + "\n";
+                }
+
+                if (detail.tran_type == app_account_detail.tran_types.Close)
+                {
+                    Header += "Balance de Cierre   : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close).FirstOrDefault().debit;
                 }
             }
             foreach (app_account_detail app_account_detail in app_account_session.app_account_detail)

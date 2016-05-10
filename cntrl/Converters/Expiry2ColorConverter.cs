@@ -18,7 +18,7 @@ namespace Cognitivo.Converters
             }
             else if (ExpiryDate < DateTime.Now.AddDays(10))
             {
-                return new SolidColorBrush(Colors.Gold);
+                return new SolidColorBrush(Colors.Orange);
             }
 
             return new SolidColorBrush(Colors.Black);

@@ -273,6 +273,7 @@ namespace entity
                     app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
                     base.app_account_detail.Add(app_account_detail);
                 }
+                
             }
 
             payment.status = Status.Documents_General.Approved;

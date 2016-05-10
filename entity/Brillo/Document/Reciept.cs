@@ -42,6 +42,11 @@
                     payment payment = (payment)obj;
                     Content = Payment(payment);
                 }
+                else if (app_document.id_application == App.Names.AccountUtility)
+                {
+                    app_account_session app_account_session = (app_account_session)obj;
+                    Content = ZReport(app_account_session);
+                }
             }
 
             if (Content != "")
@@ -275,7 +280,7 @@
             string TerminalName = string.Empty;
 
             app_company app_company = null;
-            
+
             if (sales_invoice.app_company != null)
             {
                 CompanyName = sales_invoice.app_company.name;
@@ -286,7 +291,7 @@
                 {
                     if (db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault() != null)
                     {
-                         app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
+                        app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
                         CompanyName = app_company.name;
                     }
                 }
@@ -346,7 +351,7 @@
                 string ItemCode = d.item.code;
                 decimal? Qty = d.quantity;
                 string TaskName = d.item_description;
-                decimal? UnitPrice_Vat = Math.Round(d.UnitPrice_Vat,2);
+                decimal? UnitPrice_Vat = Math.Round(d.UnitPrice_Vat, 2);
 
                 Detail = Detail
                     + ItemName + "\n"
@@ -355,7 +360,7 @@
 
             decimal DiscountTotal = sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
 
-            Footer = "--------------------------------" + "\n"; 
+            Footer = "--------------------------------" + "\n";
             Footer += "Total Bruto       : " + (sales_invoice.GrandTotal + DiscountTotal) + "\n";
             Footer += "Total Descuento   : -" + sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
             Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
@@ -391,9 +396,9 @@
                         }).ToList();
                         foreach (dynamic item in VAtList)
                         {
-                            Footer += item.vatname + "   : " + Math.Round(item.value,2) + "\n";
+                            Footer += item.vatname + "   : " + Math.Round(item.value, 2) + "\n";
                         }
-                        Footer += "Total IVA : " + sales_invoice.app_currencyfx.app_currency.name + " " + Math.Round(VAtList.Sum(x=>x.value),2) + "\n";
+                        Footer += "Total IVA : " + sales_invoice.app_currencyfx.app_currency.name + " " + Math.Round(VAtList.Sum(x => x.value), 2) + "\n";
                     }
                 }
             }
@@ -404,18 +409,18 @@
             Footer += "Condicion  : " + sales_invoice.app_condition.name + "\n";
             Footer += "-------------------------------";
             Footer += "Sucursal   : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name + "\n";
-            
+
             if (sales_invoice.id_sales_rep > 0)
             {
-                Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";   
+                Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";
             }
-            
+
             Footer += "Cajero/a   : " + UserGiven;
 
             string Text = Header + Detail + Footer;
             return Text;
         }
-        
+
         public string Payment(payment payment)
         {
             string Header = string.Empty;
@@ -509,7 +514,7 @@
 
                 if (InvoiceNumber == string.Empty)
                 {
-		            InvoiceNumber = d.payment_schedual.FirstOrDefault().sales_invoice.number;
+                    InvoiceNumber = d.payment_schedual.FirstOrDefault().sales_invoice.number;
                     CustomerName = d.payment_schedual.FirstOrDefault().contact.name;
                 }
             }
@@ -570,9 +575,9 @@
             DateTime CloseDate = DateTime.Now;
 
             if (app_account_session.cl_date != null)
-	        {
+            {
                 CloseDate = (DateTime)app_account_session.cl_date;
-	        }
+            }
 
             Header =
                 "***Z Report***"
@@ -623,6 +628,18 @@
                         + AccountName + "\n"
                         + value.ToString() + "\t" + currency + "\n";
                 }
+            }
+            foreach (app_account_detail app_account_detail in app_account_session.app_account_detail)
+            {
+                payment_detail payment_detail = app_account_detail.payment_detail as payment_detail;
+                foreach (payment_schedual payment_schedual in payment_detail.payment_schedual)
+                {
+                    if (!(InvoiceNumber.Contains(payment_schedual.sales_invoice.number)))
+                    {
+                        InvoiceNumber += payment_schedual.sales_invoice.number;
+                    }
+                }
+
             }
 
             Footer += "Factura  : " + InvoiceNumber + "\n";

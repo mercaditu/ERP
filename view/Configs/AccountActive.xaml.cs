@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
 using System.ComponentModel;
+using System.Printing;
+using entity.Brillo.Logic;
+
 namespace Cognitivo.Configs
 {
     /// <summary>
@@ -111,7 +114,7 @@ namespace Cognitivo.Configs
                                 paymenttypename = payment_type.name;
                                 id_paymentType = payment_type.id_payment_type;
                             }
-                       
+
                             clsTransferAmount.PaymentTypeName = paymenttypename;
                             clsTransferAmount.amount = 0;
                             clsTransferAmount.Currencyfxname = app_currencyfx.app_currency.name;
@@ -231,6 +234,7 @@ namespace Cognitivo.Configs
                 {
                     //Make Inactive
                     db.Entry(app_account).Entity.is_active = false;
+
                 }
                 else
                 {
@@ -250,6 +254,11 @@ namespace Cognitivo.Configs
                     is_active = app_account.is_active;
                     RaisePropertyChanged("is_active");
                     MessageBox.Show("Account is Activated:");
+                    //if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
+                    //{
+                    //         entity.Brillo.Document.Start.Automatic(db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault(), null);
+                    //}
+                  
                 }
                 else
                 {
@@ -270,5 +279,38 @@ namespace Cognitivo.Configs
 
             }
         }
+        //private void Receipt_Printing(app_account_session app_account_session )
+        //{
+        //    Reciept Reciept = new Reciept();
+        //    String Content = Reciept.ZReport(app_account_session);
+        //    PrintDialog pd = new PrintDialog();
+        //    pd.ShowDialog();
+        //    FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
+        //    document.Name = "ItemMovement";
+        //    document.FontFamily = new FontFamily("Courier New");
+        //    document.FontSize = 11.0;
+        //    document.FontStretch = FontStretches.Normal;
+        //    document.FontWeight = FontWeights.Normal;
+
+        //    document.PagePadding = new Thickness(20);
+
+        //    document.PageHeight = double.NaN;
+        //    document.PageWidth = double.NaN;
+        //    //document.
+
+        //    //Specify minimum page sizes. Origintally 283, but was too small.
+        //    document.MinPageWidth = 283;
+        //    //Specify maximum page sizes.
+        //    document.MaxPageWidth = 300;
+
+        //    IDocumentPaginatorSource idpSource = document;
+        //    try
+        //    {
+        //        pd.PrintQueue = new PrintQueue(new PrintServer(), pd.s);
+        //        pd.PrintDocument(idpSource.DocumentPaginator, Content);
+        //    }
+        //    catch
+        //    { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
+        //}
     }
 }

@@ -22,14 +22,16 @@ namespace Cognitivo.Configs
 {
     public partial class AccountActive : UserControl, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string prop)
-        {
-            if (PropertyChanged != null)
+        #region NotifyPropertyChange
+            public event PropertyChangedEventHandler PropertyChanged;
+            public void RaisePropertyChanged(string prop)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                }
             }
-        }
+        #endregion
 
         List<Class.clsTransferAmount> listOpenAmt = null;
 
@@ -44,11 +46,6 @@ namespace Cognitivo.Configs
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            getInitialAmount();
-        }
-
-        private void getInitialAmount()
-        {
             if (db == null)
             {
                 db = new db();
@@ -56,18 +53,19 @@ namespace Cognitivo.Configs
 
             if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
             {
-                app_account objAccount = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
-                int id_session = 0;
-                
-                if (db.app_account_session.Where(x => x.id_account == objAccount.id_account && x.is_active).FirstOrDefault() != null)
-                {
-                    id_session = db.app_account_session.Where(x => x.id_account == objAccount.id_account && x.is_active).FirstOrDefault().id_session;
-                }
-
-                is_active = objAccount.is_active;
+                ///Gets the Current
+                app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+                is_active = app_account.is_active;
                 RaisePropertyChanged("is_active");
 
-                var app_account_detailList = objAccount.app_account_detail.Where(x => x.payment_type.is_direct && x.id_session == id_session)
+                ///Assign a Session ID for this block of code.
+                int id_session = 0;
+                if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
+                {
+                    id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
+                }
+
+                var app_account_detailList = app_account.app_account_detail.Where(x => x.payment_type.is_direct && x.id_session == id_session)
                      .GroupBy(ad => new { ad.id_currencyfx, ad.id_payment_type })
                      .Select(s => new
                      {
@@ -173,115 +171,96 @@ namespace Cognitivo.Configs
         {
             if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
             {
-
+                //Get the correct Account.
                 app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
+                
+                app_account_session app_account_session = null;
 
-                int SessionID = 0;
-
-                foreach (Class.clsTransferAmount list in listOpenAmt)
+                if (db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).Max(x => x.id_session) != null)
                 {
-                    app_account_detail app_account_detail = new global::entity.app_account_detail();
+                    app_account_session = db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).FirstOrDefault();
+                }
 
-                    if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
+                if (app_account_session != null && app_account_session.is_active)
+                {
+                    ///We need to CLOSE (InActive) the active Session.
+                    ///For this we will need... 
+                    ///- Create Account Details for each type of Closing Balance.
+                    ///- Close Session.
+                    ///- Keep Account Active. (Previously we used to close Account, now Session handles that.)
+
+                    //Loop through each account and create an Account Detail for the Opening Balance.
+                    foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
                     {
-                        app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
-                    }
-
-                    if (app_account.is_active == true)
-                    {
-                        //Make Inactive
-                        app_account_detail.debit = list.amountCounted;
-                    }
-                    else
-                    {
-                        //Make Active
-                        app_account_detail.credit = list.amountCounted;
-                    }
-
-                    app_account_detail.id_account = app_account.id_account;
-                    app_account_detail.id_currencyfx = list.id_currencyfx;
-                    app_account_detail.id_payment_type = list.id_payment_type;
-
-
-                    if (app_account.is_active)
-                    {
-                        app_account_detail.comment = "For Closing Cash.";
-                        if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
-                        {
-                            db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().cl_date = DateTime.Now;
-                            db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().is_active = false;
-                            app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
-                            SessionID = (int)app_account_detail.id_session;
-                        }
-
+                        app_account_detail app_account_detail = new global::entity.app_account_detail();
+                        app_account_detail.id_session = 0; //PLACEHOLDER. FIX
+                        app_account_detail.id_account = app_account_session.id_account;
+                        app_account_detail.id_currencyfx = counted_account_detail.id_currencyfx;
+                        app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
+                        app_account_detail.app_account.is_active = false;
+                        app_account_detail.debit = counted_account_detail.amountCounted;
+                        app_account_detail.comment = "Closing Balance";
                         app_account_detail.tran_type = app_account_detail.tran_types.Close;
-                    }
-                    else
-                    {
-                        app_account_detail.comment = "For Opening Cash.";
-                        if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() == null)
+                        app_account_detail.trans_date = DateTime.Now;
+
+                        //CHECK
+                        app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
+                        db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().cl_date = DateTime.Now;
+                        db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().is_active = false;
+
+
+                        //Save Changes
+                        db.SaveChanges();
+
+                        is_active = app_account_session.is_active;
+                        RaisePropertyChanged("is_active");
+
+                        if (MessageBox.Show("Session is Closed, thank you for using CognitivoERP! "
+                                       + "/n Would you like to Print the Z-Report?", "Print Z-Report?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                         {
-                            using (db dbcontext = new db())
+                            try
                             {
-                                app_account_session app_account_session = new entity.app_account_session();
-                                app_account_session.id_account = app_account.id_account;
-
-                                dbcontext.app_account_session.Add(app_account_session);
-                                dbcontext.SaveChanges();
-
-                                app_account_detail.id_session = app_account_session.id_session;
-                                SessionID = app_account_session.id_session;
+                                entity.Brillo.Logic.Reciept TicketPrint = new entity.Brillo.Logic.Reciept();
+                                TicketPrint.ZReport(app_account_session);
                             }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error: Trying to print Z-Report : " + ex.Message);
+                            }   
                         }
+                    }
+                }
+                else
+                {
+                    //We need to OPEN (Activate) the inactive Session..
 
+                    //Create New Session.
+                    app_account_session = new entity.app_account_session();
+                    app_account_session.id_account = app_account.id_account;
+
+                    //Loop through each account and create an Account Detail for the Closing Balance.
+                    foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
+                    {
+                        app_account_detail app_account_detail = new global::entity.app_account_detail();
+                        app_account_detail.id_session = 0; //PLACEHOLDER. FIX
+                        app_account_detail.id_account = app_account.id_account;
+                        app_account_detail.id_currencyfx = counted_account_detail.id_currencyfx;
+                        app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
+                        app_account_detail.app_account.is_active = false;
+                        app_account_detail.credit = counted_account_detail.amountCounted;
+                        app_account_detail.comment = "Opening Balance";
                         app_account_detail.tran_type = app_account_detail.tran_types.Open;
-                    }
+                        app_account_detail.trans_date = DateTime.Now;
 
-                    app_account_detail.trans_date = DateTime.Now;
+                        app_account_session.app_account_detail.Add(app_account_detail);
+                        db.app_account_session.Add(app_account_session);
 
-                    db.app_account_detail.Add(app_account_detail);
-                }
+                        //Save Changes
+                        db.SaveChanges();
 
-                if (app_account.is_active == true)
-                {
-                    //Make Inactive
-                    db.Entry(app_account).Entity.is_active = false;
-
-                }
-                else
-                {
-                    //Make Active
-                    db.Entry(app_account).Entity.is_active = true;
-                }
-                // entity.db.Entry(app_account).Entity.initial_amount = Convert.ToDecimal(txtInitialAmount.Text.Trim());
-                db.Entry(app_account).State = EntityState.Modified;
-
-                db.SaveChanges();
-
-                //Reload Data
-                db.Entry(app_account).Reload();
-
-                if (app_account.is_active)
-                {
-                    is_active = app_account.is_active;
-                    RaisePropertyChanged("is_active");
-                    MessageBox.Show("Account is Activated:");
-                }
-                else
-                {
-                    is_active = app_account.is_active;
-                    RaisePropertyChanged("is_active");
-                    MessageBox.Show("Account is DeActivated:");
-
-                    try
-                    {
-                        app_account_session app_account_session = db.app_account_session.Where(x => x.id_session == SessionID).FirstOrDefault();
-                        entity.Brillo.Logic.Reciept TicketPrint = new entity.Brillo.Logic.Reciept();
-                        TicketPrint.ZReport(app_account_session);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error while trying to print Z-Report");
+                        is_active = app_account_session.is_active;
+                        RaisePropertyChanged("is_active");
+                        MessageBox.Show("Session is Open, Good Luck!");
                     }
                 }
 
@@ -293,6 +272,10 @@ namespace Cognitivo.Configs
                     }
                 }
 
+                db.SaveChanges();
+
+                //Reload Data
+                db.Entry(app_account).Reload();
             }
         }
     }

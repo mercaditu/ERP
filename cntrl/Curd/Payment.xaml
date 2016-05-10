@@ -15,11 +15,7 @@
              xmlns:entity="clr-namespace:entity;assembly=entity"
              mc:Ignorable="d" VerticalAlignment="Center" Width="550" Height="600" Loaded="UserControl_Loaded"
              BorderBrush="RoyalBlue" BorderThickness="2">
-    <UserControl.CommandBindings>
-        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
-                        CanExecute="DeleteCommandBinding_CanExecute" 
-                        Executed="DeleteCommandBinding_Executed"/>
-    </UserControl.CommandBindings>
+  
     <UserControl.Resources>
         <Converters:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
@@ -114,7 +110,18 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel x:Name="stppaymentdetail" >
+                            <!--<Label Content="{lex:Loc SalesInvoice}" Style="{DynamicResource input_label}"/>
+                            <ComboBox x:Name="cbxPaymentSchedual"
+					                  DisplayMemberPath="sales_invoice.number" SelectedValue="sales_invoice.number"
+						              Style="{StaticResource input_combobox}" 
+                                      SelectionChanged="cbxPaymentSchedual_SelectionChanged">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>-->
                             <Label Content="{lex:Loc PaymentType}" Style="{DynamicResource input_label}"/>
                             <ComboBox x:Name="cbxPamentType"
 					                  DisplayMemberPath="name" SelectedValuePath="id_payment_type"

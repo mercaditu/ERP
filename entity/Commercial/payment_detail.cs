@@ -29,7 +29,7 @@ namespace entity
         public int? id_purchase_return { get; set; }
 
         public int? id_account { get; set; }
-        [Required]
+       
 
         [NotMapped]
         public int id_currency
@@ -83,6 +83,8 @@ namespace entity
         /// </summary>
         [NotMapped]
         public App.Names App_Name { get; set; }
+        [NotMapped]
+        public int id_payment_schedual { get; set; }
 
         /// <summary>
         /// 

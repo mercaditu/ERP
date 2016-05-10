@@ -174,42 +174,42 @@ namespace entity
                 string ModuleName = string.Empty;
 
                 ///
-                if (Parent_Schedual.id_purchase_invoice != 0)
+                if (Parent_Schedual.id_purchase_invoice != null)
                 {
                     balance_payment_schedual.id_purchase_invoice = Parent_Schedual.id_purchase_invoice;
                     ModuleName = "PurchaseInvoice";
                 }
 
                 ///
-                if (Parent_Schedual.id_purchase_order != 0)
+                if (Parent_Schedual.id_purchase_order != null)
                 {
                     balance_payment_schedual.id_purchase_order = Parent_Schedual.id_purchase_order;
                     ModuleName = "PurchaseOrder";
                 }
 
                 ///
-                if (Parent_Schedual.id_purchase_return != 0)
+                if (Parent_Schedual.id_purchase_return != null)
                 {
                     balance_payment_schedual.id_purchase_return = Parent_Schedual.id_purchase_return;
                     ModuleName = "PurchaseReturn";
                 }
 
                 ///
-                if (Parent_Schedual.id_sales_invoice != 0)
+                if (Parent_Schedual.id_sales_invoice != null)
                 {
                     balance_payment_schedual.id_sales_invoice = Parent_Schedual.id_sales_invoice;
                     ModuleName = "SalesInvoice";
                 }
 
                 ///
-                if (Parent_Schedual.id_sales_order != 0)
+                if (Parent_Schedual.id_sales_order != null)
                 {
                     balance_payment_schedual.id_sales_order = Parent_Schedual.id_sales_order;
                     ModuleName = "SalesOrder";
                 }
 
                 ///
-                if (payment_detail.id_sales_return != 0)
+                if (payment_detail.id_sales_return != null)
                 {
                     balance_payment_schedual.id_sales_return = Parent_Schedual.id_sales_return;
                     ModuleName = "SalesReturn";

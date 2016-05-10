@@ -20,9 +20,6 @@ using entity.Brillo.Logic;
 
 namespace Cognitivo.Configs
 {
-    /// <summary>
-    /// Interaction logic for AccountActive.xaml
-    /// </summary>
     public partial class AccountActive : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -182,10 +179,12 @@ namespace Cognitivo.Configs
                 foreach (Class.clsTransferAmount list in listOpenAmt)
                 {
                     app_account_detail app_account_detail = new global::entity.app_account_detail();
+
                     if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
                     {
                         app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
                     }
+
                     if (app_account.is_active == true)
                     {
                         //Make Inactive
@@ -223,19 +222,19 @@ namespace Cognitivo.Configs
                             {
                                 app_account_session app_account_session = new entity.app_account_session();
                                 app_account_session.id_account = app_account.id_account;
-                           
-                                db.app_account_session.Add(app_account_session);
+
+                                dbcontext.app_account_session.Add(app_account_session);
                                 dbcontext.SaveChanges();
+
+                                app_account_detail.id_session = app_account_session.id_session;
                             }
                         }
-                        if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
-                        {
-                            app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
-                        }
+
                         app_account_detail.tran_type = app_account_detail.tran_types.Open;
                     }
 
                     app_account_detail.trans_date = DateTime.Now;
+
                     db.app_account_detail.Add(app_account_detail);
                 }
 
@@ -288,38 +287,5 @@ namespace Cognitivo.Configs
 
             }
         }
-        //private void Receipt_Printing(app_account_session app_account_session )
-        //{
-        //    Reciept Reciept = new Reciept();
-        //    String Content = Reciept.ZReport(app_account_session);
-        //    PrintDialog pd = new PrintDialog();
-        //    pd.ShowDialog();
-        //    FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
-        //    document.Name = "ItemMovement";
-        //    document.FontFamily = new FontFamily("Courier New");
-        //    document.FontSize = 11.0;
-        //    document.FontStretch = FontStretches.Normal;
-        //    document.FontWeight = FontWeights.Normal;
-
-        //    document.PagePadding = new Thickness(20);
-
-        //    document.PageHeight = double.NaN;
-        //    document.PageWidth = double.NaN;
-        //    //document.
-
-        //    //Specify minimum page sizes. Origintally 283, but was too small.
-        //    document.MinPageWidth = 283;
-        //    //Specify maximum page sizes.
-        //    document.MaxPageWidth = 300;
-
-        //    IDocumentPaginatorSource idpSource = document;
-        //    try
-        //    {
-        //        pd.PrintQueue = new PrintQueue(new PrintServer(), pd.s);
-        //        pd.PrintDocument(idpSource.DocumentPaginator, Content);
-        //    }
-        //    catch
-        //    { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
-        //}
     }
 }

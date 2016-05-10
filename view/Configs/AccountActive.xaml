@@ -36,10 +36,11 @@
                                       Margin="10,26,10,10" Height="Auto" MaxHeight="180" 
                                       RowDetailsVisibilityMode="VisibleWhenSelected" Grid.ColumnSpan="2">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding PaymentTypeName}" Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding amount, StringFormat={}{0:N2}}" IsReadOnly="True" Header="Amount" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding amountCounted, StringFormat={}{0:N2}}" Header="Counted Amount" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding Currencyfxname}" Header="{lex:Loc Cognitivo:local:Currency}" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding PaymentTypeName}" Header="{lex:Loc Cognitivo:local:PaymentType}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding amount, StringFormat={}{0:N2}}" Header="Amount" Width="*" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding amountCounted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+                                        ElementStyle="{StaticResource RightAlignStyle}" Header="Counted Amount" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Currencyfxname}" Header="{lex:Loc Cognitivo:local:Currency}" Width="*" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Margin="5">

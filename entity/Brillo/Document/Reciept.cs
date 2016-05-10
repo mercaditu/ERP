@@ -588,9 +588,8 @@
                 + "Apertura : " + OpenDate + "    Cierre: " + CloseDate
                 + "\n"
                 + "--------------------------------"
-                + "Hora   Cuenta              Valor" + "\n";
+                + "Hora   Factura      / Valor    Moneda" + "\n";
 
-            string InvoiceNumber = string.Empty;
             string CustomerName = string.Empty;
 
             foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).ToList())
@@ -625,10 +624,23 @@
                         }
                     }
 
+                    string InvoiceNumber = string.Empty;
+                    string InvoiceTime = string.Empty;
+
+                    payment_detail payment_detail = d.payment_detail as payment_detail;
+                    foreach (payment_schedual payment_schedual in payment_detail.payment_schedual)
+                    {
+                        if (!(InvoiceNumber.Contains(payment_schedual.sales_invoice.number)))
+                        {
+                            InvoiceNumber += payment_schedual.sales_invoice.number;
+                            InvoiceTime = payment_schedual.sales_invoice.trans_date.ToShortTimeString();
+                        }
+                    }
+
                     decimal? value = d.credit - d.debit;
 
                     Detail = Detail
-                        + AccountName + "\n"
+                        + "Factura: " + InvoiceTime + " " + InvoiceNumber + "\n"
                         + value.ToString() + "\t" + currency + "\n";
                 }
 
@@ -637,20 +649,7 @@
                     Header += "Balance de Cierre   : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close).FirstOrDefault().debit;
                 }
             }
-            foreach (app_account_detail app_account_detail in app_account_session.app_account_detail)
-            {
-                payment_detail payment_detail = app_account_detail.payment_detail as payment_detail;
-                foreach (payment_schedual payment_schedual in payment_detail.payment_schedual)
-                {
-                    if (!(InvoiceNumber.Contains(payment_schedual.sales_invoice.number)))
-                    {
-                        InvoiceNumber += payment_schedual.sales_invoice.number;
-                    }
-                }
 
-            }
-
-            Footer += "Factura  : " + InvoiceNumber + "\n";
             Footer += "--------------------------------" + "\n";
 
             string Text = Header + Detail + Footer;

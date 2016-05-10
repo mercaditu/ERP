@@ -158,20 +158,13 @@ namespace Cognitivo.Product
         {
             try
             {
-                //if (InventoryDB.SaveChanges() == 0)
-                //{
                 InventoryDB.SaveChanges();
                 toolBar.msgSaved();
                 item_inventoryViewSource.View.Refresh();
-                //}
-                //else
-                //{
-                //    toolBar.msgWarning("Unable to Save");
-                //}
             }
             catch (Exception ex)
             {
-                throw ex;
+                toolBar.msgError(ex);
             }
         }
 
@@ -200,8 +193,6 @@ namespace Cognitivo.Product
 
         }
 
-
-
         private void location_ListBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             if (item_inventoryDataGrid.SelectedItem != null)
@@ -221,24 +212,37 @@ namespace Cognitivo.Product
 
             if (crud_modal.IsVisible == false)
             {
-
-
                 item_inventory item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
-
-                //foreach (item_inventory_detail _item_inventory_detail in objpnl_ItemMovement.item_inventoryList.Skip(1))
-                //{
-                //    item_inventory.item_inventory_detail.Add(_item_inventory_detail);
-                //}
-                //foreach (item_inventory_detail _item_inventory_detail in item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Where(x => x.IsSelected).ToList())
-                //{
-                //    item_inventory.item_inventory_detail.Remove(_item_inventory_detail);
-                //}
-
 
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryitem_inventory_detailViewSource.View.Refresh();
                 item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
-
+            }
+        }
+        
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+            if (app_location != null)
+            {
+                if (item_inventoryitem_inventory_detailViewSource != null)
+                {
+                    if (item_inventoryitem_inventory_detailViewSource.View != null)
+                    {
+                        if (item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count() > 0)
+                        {
+                            item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
+                            {
+                                item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
+                                if (item_inventory_detail.item_product.item.name.Contains(txtsearch.Text.ToUpper()) ||
+                                    item_inventory_detail.item_product.item.code.Contains(txtsearch.Text.ToUpper()))
+                                    return true;
+                                else
+                                    return false;
+                            };
+                        }
+                    }
+                }
             }
         }
 

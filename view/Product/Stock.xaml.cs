@@ -165,19 +165,16 @@ namespace Cognitivo.Product
             {
                 if (inventoryViewSource.View != null)
                 {
-                    
-                        inventoryViewSource.View.Filter = i =>
-                        {
-                            dynamic TmpInventory = (dynamic)i;
-                            if (TmpInventory.code.ToUpper().Contains(txtsearch.Text.ToUpper()) || TmpInventory.name.ToUpper().Contains(txtsearch.Text.ToUpper()))
-                                return true;
-                            else
-                                return false;
-                        };
-                    
+                    inventoryViewSource.View.Filter = i =>
+                    {
+                        dynamic TmpInventory = (dynamic)i;
+                        if (TmpInventory.code.ToUpper().Contains(txtsearch.Text.ToUpper()) || TmpInventory.name.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                            return true;
+                        else
+                            return false;
+                    };
                 }
             }
-
         }
     }
    

@@ -274,7 +274,7 @@ namespace entity
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                     base.app_account_detail.Add(app_account_detail);
                 }
-                
+                //pankeel
             }
 
             payment.status = Status.Documents_General.Approved;

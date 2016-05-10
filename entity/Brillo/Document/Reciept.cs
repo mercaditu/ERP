@@ -526,7 +526,7 @@
             return Text;
         }
 
-        public string ZReport(app_account_session app_account_session)
+        public void ZReport(app_account_session app_account_session)
         {
             string Header = string.Empty;
             string Detail = string.Empty;
@@ -653,7 +653,40 @@
             Footer += "--------------------------------" + "\n";
 
             string Text = Header + Detail + Footer;
-            return Text;
+
+            Reciept Reciept = new Reciept();
+            PrintDialog pd = new PrintDialog();
+
+            FlowDocument document = new FlowDocument(new Paragraph(new Run(Text)));
+            document.Name = "ItemMovement";
+            document.FontFamily = new FontFamily("Courier New");
+            document.FontSize = 11.0;
+            document.FontStretch = FontStretches.Normal;
+            document.FontWeight = FontWeights.Normal;
+
+            document.PagePadding = new Thickness(20);
+
+            document.PageHeight = double.NaN;
+            document.PageWidth = double.NaN;
+            //document.
+
+            //Specify minimum page sizes. Origintally 283, but was too small.
+            document.MinPageWidth = 283;
+            //Specify maximum page sizes.
+            document.MaxPageWidth = 300;
+
+            IDocumentPaginatorSource idpSource = document;
+            try
+            {
+                Nullable<bool> print = pd.ShowDialog();
+                if (print == true)
+                {
+                    pd.PrintDocument(idpSource.DocumentPaginator, Text);
+                }
+            }
+            catch
+            { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
+
         }
 
     }

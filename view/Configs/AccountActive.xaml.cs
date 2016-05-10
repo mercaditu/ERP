@@ -176,6 +176,8 @@ namespace Cognitivo.Configs
 
                 app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
 
+                int SessionID = 0;
+
                 foreach (Class.clsTransferAmount list in listOpenAmt)
                 {
                     app_account_detail app_account_detail = new global::entity.app_account_detail();
@@ -209,6 +211,7 @@ namespace Cognitivo.Configs
                             db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().cl_date = DateTime.Now;
                             db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().is_active = false;
                             app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
+                            SessionID = (int)app_account_detail.id_session;
                         }
 
                         app_account_detail.tran_type = app_account_detail.tran_types.Close;
@@ -227,6 +230,7 @@ namespace Cognitivo.Configs
                                 dbcontext.SaveChanges();
 
                                 app_account_detail.id_session = app_account_session.id_session;
+                                SessionID = app_account_session.id_session;
                             }
                         }
 
@@ -262,17 +266,23 @@ namespace Cognitivo.Configs
                     is_active = app_account.is_active;
                     RaisePropertyChanged("is_active");
                     MessageBox.Show("Account is Activated:");
-                    //if (db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault() != null)
-                    //{
-                    //         entity.Brillo.Document.Start.Automatic(db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault(), null);
-                    //}
-                  
                 }
                 else
                 {
                     is_active = app_account.is_active;
                     RaisePropertyChanged("is_active");
                     MessageBox.Show("Account is DeActivated:");
+
+                    try
+                    {
+                        app_account_session app_account_session = db.app_account_session.Where(x => x.id_session == SessionID).FirstOrDefault();
+                        entity.Brillo.Logic.Reciept TicketPrint = new entity.Brillo.Logic.Reciept();
+                        TicketPrint.ZReport(app_account_session);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error while trying to print Z-Report");
+                    }
                 }
 
                 if (app_accountViewSource != null)
@@ -281,8 +291,6 @@ namespace Cognitivo.Configs
                     {
                         app_accountViewSource.View.Refresh();
                     }
-
-
                 }
 
             }

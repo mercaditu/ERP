@@ -271,6 +271,7 @@ namespace entity
                         }
                     }
                     app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
+                    app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
                     base.app_account_detail.Add(app_account_detail);
                 }
                 

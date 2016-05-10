@@ -121,6 +121,7 @@ namespace Cognitivo.Sales
             PaymentDB = new PaymentDB();
             ///Creating new PAYMENT for upcomming sale. 
             payment payment = PaymentDB.New();
+            payment.id_currencyfx = sales_invoice.id_currencyfx;
             PaymentDB.payments.Add(payment);
 
         

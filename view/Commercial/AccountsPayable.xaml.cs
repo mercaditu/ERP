@@ -271,7 +271,9 @@ namespace Cognitivo.Commercial
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            PaymentDB = new entity.PaymentDB();
             load_Schedual();
+            ListBox_SelectionChanged(sender, null);
         }
 
         #region PrefSettings

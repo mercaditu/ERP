@@ -59,7 +59,7 @@
                                             EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                     <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" 
+                    <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 

@@ -42,11 +42,11 @@
                     payment payment = (payment)obj;
                     Content = Payment(payment);
                 }
-                else if (app_document.id_application == App.Names.AccountUtility)
-                {
-                    app_account_session app_account_session = (app_account_session)obj;
-                    Content = ZReport(app_account_session);
-                }
+                //else if (app_document.id_application == App.Names.AccountUtility)
+                //{
+                //    app_account_session app_account_session = (app_account_session)obj;
+                //    ZReport(app_account_session);
+                //}
             }
 
             if (Content != "")

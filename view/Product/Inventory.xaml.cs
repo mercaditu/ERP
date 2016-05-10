@@ -58,8 +58,6 @@ namespace Cognitivo.Product
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
             if (app_location != null)
             {
-
-
                 if (item_inventoryitem_inventory_detailViewSource != null)
                 {
                     if (item_inventoryitem_inventory_detailViewSource.View != null)

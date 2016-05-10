@@ -176,7 +176,7 @@ namespace Cognitivo.Configs
                 
                 app_account_session app_account_session = null;
 
-                if (db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).Max(x => x.id_session) != null)
+                if (db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).FirstOrDefault() != null)
                 {
                     app_account_session = db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).FirstOrDefault();
                 }
@@ -193,11 +193,10 @@ namespace Cognitivo.Configs
                     foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
                     {
                         app_account_detail app_account_detail = new global::entity.app_account_detail();
-                        app_account_detail.id_session = 0; //PLACEHOLDER. FIX
+                        app_account_detail.id_session = app_account_session.id_session;
                         app_account_detail.id_account = app_account_session.id_account;
                         app_account_detail.id_currencyfx = counted_account_detail.id_currencyfx;
                         app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
-                        app_account_detail.app_account.is_active = false;
                         app_account_detail.debit = counted_account_detail.amountCounted;
                         app_account_detail.comment = "Closing Balance";
                         app_account_detail.tran_type = app_account_detail.tran_types.Close;
@@ -214,19 +213,19 @@ namespace Cognitivo.Configs
 
                         is_active = app_account_session.is_active;
                         RaisePropertyChanged("is_active");
-
-                        if (MessageBox.Show("Session is Closed, thank you for using CognitivoERP! "
-                                       + "/n Would you like to Print the Z-Report?", "Print Z-Report?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    }
+                    
+                    if (MessageBox.Show("Session is Closed, thank you for using CognitivoERP! "
+                                   + "/n Would you like to Print the Z-Report?", "Print Z-Report?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        try
                         {
-                            try
-                            {
-                                entity.Brillo.Logic.Reciept TicketPrint = new entity.Brillo.Logic.Reciept();
-                                TicketPrint.ZReport(app_account_session);
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Error: Trying to print Z-Report : " + ex.Message);
-                            }   
+                            entity.Brillo.Logic.Reciept TicketPrint = new entity.Brillo.Logic.Reciept();
+                            TicketPrint.ZReport(app_account_session);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: Trying to print Z-Report : " + ex.Message);
                         }
                     }
                 }
@@ -242,11 +241,9 @@ namespace Cognitivo.Configs
                     foreach (Class.clsTransferAmount counted_account_detail in listOpenAmt)
                     {
                         app_account_detail app_account_detail = new global::entity.app_account_detail();
-                        app_account_detail.id_session = 0; //PLACEHOLDER. FIX
                         app_account_detail.id_account = app_account.id_account;
                         app_account_detail.id_currencyfx = counted_account_detail.id_currencyfx;
                         app_account_detail.id_payment_type = counted_account_detail.id_payment_type;
-                        app_account_detail.app_account.is_active = false;
                         app_account_detail.credit = counted_account_detail.amountCounted;
                         app_account_detail.comment = "Opening Balance";
                         app_account_detail.tran_type = app_account_detail.tran_types.Open;
@@ -254,14 +251,14 @@ namespace Cognitivo.Configs
 
                         app_account_session.app_account_detail.Add(app_account_detail);
                         db.app_account_session.Add(app_account_session);
-
-                        //Save Changes
-                        db.SaveChanges();
-
-                        is_active = app_account_session.is_active;
-                        RaisePropertyChanged("is_active");
-                        MessageBox.Show("Session is Open, Good Luck!");
                     }
+
+                    //Save Changes
+                    db.SaveChanges();
+
+                    is_active = app_account_session.is_active;
+                    RaisePropertyChanged("is_active");
+                    MessageBox.Show("Session is Open, Good Luck!");
                 }
 
                 if (app_accountViewSource != null)
@@ -271,8 +268,6 @@ namespace Cognitivo.Configs
                         app_accountViewSource.View.Refresh();
                     }
                 }
-
-                db.SaveChanges();
 
                 //Reload Data
                 db.Entry(app_account).Reload();

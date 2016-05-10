@@ -12,7 +12,7 @@ namespace Cognitivo.Product
 {
     public partial class Stock : Page, INotifyPropertyChanged
     {
-        StockDB StockDB = new StockDB();
+        StockDB StockDB;
 
         CollectionViewSource item_movementViewSource, inventoryViewSource;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -40,6 +40,7 @@ namespace Cognitivo.Product
 
         private async void StockPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+            StockDB = new StockDB();
             await StockDB.app_branch.Include(x => x.app_location)
                 .Where(a => a.can_stock == true
                          && a.is_active == true

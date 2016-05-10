@@ -14,14 +14,14 @@ namespace Cognitivo.Converters
 
             if (ExpiryDate < DateTime.Now)
             {
-                return new SolidColorBrush(Colors.Pink);
+                return new SolidColorBrush(Colors.Crimson);
             }
             else if (ExpiryDate < DateTime.Now.AddDays(10))
             {
                 return new SolidColorBrush(Colors.Gold);
             }
 
-            return null;
+            return new SolidColorBrush(Colors.Black);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, 

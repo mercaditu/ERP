@@ -130,42 +130,29 @@ namespace Cognitivo.Commercial
             payment_schedualViewSource.Source = await PaymentDB.payment_schedual
                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
-                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0).OrderBy(x => x.expire_date)
                     .ToListAsync();
         }
 
         private void Payment_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Check
+            List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
 
-            List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            //decimal TotalReceivable = PaymentSchedualList.Sum(x => x.AccountReceivableBalance);
+            if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
+	        {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
+	        }
+            else if (payment_schedualViewSource.View.OfType<payment_schedual>().ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().ToList();
+            }
+            else
+            {
+                //If nothing found, then exit.
+                return;
+            }
 
             cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Recievable, PaymentSchedualList);
-
-            // payment_quick.payment_detail.value = TotalReceivable;
-        
-            // payment_quick.payment_detail.payment.GrandTotal = TotalReceivable;
-            // payment_quick.payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
-
-            //if (PaymentSchedualList.Count == 1)
-            //{
-            //    payment_quick.id_payment_schedual = PaymentSchedualList.FirstOrDefault().id_payment_schedual;
-            //    payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
-            //    payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
-            //  //  payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
-
-            //    if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
-            //    {
-            //        payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-            //    }
-            //    else
-            //    {
-            //        toolbar.msgWarning("Please insert paymnent Type");
-            //        return;
-            //    }
-
-            //}
 
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(Payment);
@@ -173,26 +160,6 @@ namespace Cognitivo.Commercial
 
         public void Save_Click(object sender)
         {
-            ////entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-            //List<payment_schedual> PaymentSchedual = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            //decimal total = PaymentSchedual.Sum(x => x.AccountReceivableBalance);
-            
-            //foreach (payment_schedual payment_schedual in PaymentSchedual)
-            //{
-            //    if (total > 0)
-            //    {
-            //        payment_quick.payment_detail.payment.payment_detail.Add(payment_quick.payment_detail);
-            //        PaymentDB.payments.Add(payment_quick.payment_detail.payment);
-            //        PaymentDB.Approve(payment_schedual.id_payment_schedual,true);
-
-            //        total = total - payment_quick.payment_detail.value;
-            //    }
-            //}
-
-            //crud_modal.Children.Clear();
-            //crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-            //load_Schedual();
-
 
         }
 

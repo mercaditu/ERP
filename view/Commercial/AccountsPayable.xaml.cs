@@ -8,17 +8,62 @@ using System.Data.Entity;
 using entity;
 using System.Data.Entity.Validation;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace Cognitivo.Commercial
 {
-    public partial class AccountsPayable : Page
+    public partial class AccountsPayable : Page, INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+        #endregion
+
+        public DateTime FirstDate
+        {
+            get
+            {
+                return _firstDate;
+            }
+            set
+            {
+                if (_firstDate != value)
+                {
+                    _firstDate = value;
+                    RaisePropertyChanged("FirstDate");
+                }
+            }
+        }
+        private DateTime _firstDate;
+
+        public DateTime EndDate
+        {
+            get
+            {
+                return _endDate;
+            }
+            set
+            {
+                if (_endDate != value)
+                {
+                    _endDate = value;
+                    RaisePropertyChanged("EndDate");
+                }
+            }
+        }
+        private DateTime _endDate;
+        
         PaymentDB PaymentDB = new PaymentDB();
 
         CollectionViewSource contactViewSource;
         CollectionViewSource payment_schedualViewSource;
 
-       // cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Payable, 0);
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
         cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
 
@@ -93,156 +138,33 @@ namespace Cognitivo.Commercial
             payment_schedualViewSource.Source = await PaymentDB.payment_schedual
                                                                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                                                                        && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) 
-                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0)
+                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0).OrderBy(x => x.expire_date)
                                                                     .ToListAsync();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            List<payment_schedual> PaymentSchedualList = new List<payment_schedual>();
 
-            //List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-            //decimal TotalPayable = PaymentSchedualList.Sum(x => x.AccountPayableBalance);
+            if (payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
+            }
+            else if (payment_schedualViewSource.View.OfType<payment_schedual>().ToList().Count > 0)
+            {
+                PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().ToList();
+            }
+            else
+            {
+                //If nothing found, then exit.
+                return;
+            }
 
-            //cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(cntrl.Curd.payment_quick.Modes.Payable, PaymentSchedualList.FirstOrDefault().id_contact);
+            cntrl.Curd.Payment Payment = new cntrl.Curd.Payment(cntrl.Curd.Payment.Modes.Payable, PaymentSchedualList);
 
-            //payment_quick.payment_detail.value = TotalPayable;
-
-            //payment_quick.payment_detail.payment.GrandTotal = TotalPayable;
-            //payment_quick.payment_detail.App_Name = global::entity.App.Names.PurchaseInvoice;
-
-            //if (PaymentSchedualList.Count == 1)
-            //{
-            //    payment_quick.id_payment_schedual = PaymentSchedualList.FirstOrDefault().id_payment_schedual;
-            //    payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
-            //    payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
-            //    //  payment_quick.payment_detail.app_currencyfx = PaymentSchedualList.FirstOrDefault().app_currencyfx;
-
-            //    if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
-            //    {
-            //        payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-            //    }
-            //    else
-            //    {
-            //        toolbar.msgWarning("Please insert paymnent Type");
-            //        return;
-            //    }
-
-            //}
-
-
-            //crud_modal.Visibility = System.Windows.Visibility.Visible;
-            //crud_modal.Children.Add(payment_quick);
-
-
-
-          //  List<payment_schedual> PaymentSchedualList = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-          //  decimal total = PaymentSchedualList.Sum(x => x.AccountPayableBalance);
-
-          //  payment_quick.payment_detail = new payment_detail();
-          //  payment_quick.payment_detail.id_purchase_return = 0;
-          //  payment_quick.payment_detail.id_sales_return = 0;
-          //  payment_quick.payment_detail.value = total;
-          //  payment_quick.payment_detail.payment = new payment();
-          //  if (PaymentSchedualList.Count == 1)
-          //  {
-          //      payment_quick.payment_detail.payment.id_contact = PaymentSchedualList.FirstOrDefault().id_contact;
-          //      payment_quick.payment_detail.payment.contact = PaymentSchedualList.FirstOrDefault().contact;
-          //      payment_quick.payment_detail.id_currencyfx = PaymentSchedualList.FirstOrDefault().id_currencyfx;
-               
-
-          //  }
-          //  if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
-          //  {
-          //      payment_quick.payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-
-          //  }
-          //  else
-          //  {
-          //      toolbar.msgWarning("Please insert paymnent Type");
-          //      return;
-          //  }
-        
-          //  payment_quick.payment_detail.App_Name = global::entity.App.Names.PurchaseInvoice;
-          ////  payment_quick.btnSave_Click += Save_Click;
-          //  crud_modal.Visibility = System.Windows.Visibility.Visible;
-          //  crud_modal.Children.Add(payment_quick);
+            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Children.Add(Payment);
         }
-
-        //public void Save_Click(object sender)
-        //{
-        //    List<payment_schedual> PaymentSchedual = payment_schedualViewSource.View.OfType<payment_schedual>().Where(x => x.IsSelected == true).ToList();
-        //    decimal total = PaymentSchedual.Sum(x => x.AccountPayableBalance);
-            
-        //    foreach (payment_schedual payment_schedual in PaymentSchedual)
-        //    {
-        //        if (total > 0)
-        //        {
-        //            payment payment = new payment();
-        //            payment.id_contact = payment_quick.payment_detail.payment.contact.id_contact;
-        //            payment.id_payment = payment_quick.payment_detail.payment.id_payment;
-        //            payment.number = payment_quick.payment_detail.payment.number;
-        //            payment_detail payment_detail = new payment_detail();
-        //            payment_detail.id_account = payment_quick.payment_detail.id_account;
-        //            payment_detail.id_currencyfx = payment_quick.payment_detail.id_currencyfx;
-        //            payment_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
-                    
-        //            payment_detail.id_purchase_return = payment_quick.payment_detail.id_purchase_return;
-        //            payment_detail.id_sales_return = payment_quick.payment_detail.id_sales_return;
-                    
-        //            payment_detail.value = payment_quick.payment_detail.value;
-        //            payment_detail.comment = payment_quick.payment_detail.comment;
-        //            payment_schedual _payment_schedual = new payment_schedual();
-
-        //            _payment_schedual.debit = Convert.ToDecimal(payment_quick.payment_detail.value);
-        //            _payment_schedual.parent = payment_schedual;
-        //            _payment_schedual.expire_date = payment_schedual.expire_date;
-        //            _payment_schedual.status = payment_schedual.status;
-        //            _payment_schedual.id_contact = payment_schedual.id_contact;
-        //            _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
-        //            _payment_schedual.id_purchase_invoice = payment_schedual.id_purchase_invoice;
-        //            _payment_schedual.id_purchase_order = payment_schedual.id_purchase_order;
-        //            _payment_schedual.id_purchase_return = payment_schedual.id_purchase_return;
-        //            _payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
-        //            _payment_schedual.id_sales_order = payment_schedual.id_sales_order;
-        //            _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
-        //            _payment_schedual.trans_date = payment_quick.payment_detail.trans_date;
-        //            total = total - payment_quick.payment_detail.value;
-        //            _payment_schedual.AccountPayableBalance = total;
-
-        //            payment_detail.payment_schedual.Add(_payment_schedual);
-        //            payment.payment_detail.Add(payment_detail);
-
-        //            //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
-
-        //            if (PaymentDB.payment_type.Where(x => x.id_payment_type == payment_quick.payment_detail.id_payment_type).FirstOrDefault().payment_behavior == payment_type.payment_behaviours.Normal)
-        //            {
-        //                app_account_detail app_account_detail = new app_account_detail();
-        //                if (PaymentDB.app_account_session.Where(x => x.id_account == payment_quick.payment_detail.id_account && x.is_active).FirstOrDefault() != null)
-        //                {
-        //                    app_account_detail.id_session = PaymentDB.app_account_session.Where(x => x.id_account == payment_quick.payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
-        //                }
-        //                app_account_detail.id_account = (int)payment_quick.payment_detail.id_account;
-        //                app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
-        //                app_account_detail.id_payment_type = payment_quick.payment_detail.id_payment_type;
-        //                app_account_detail.trans_date = payment_quick.payment_detail.trans_date;
-        //                app_account_detail.credit = 0;
-        //                app_account_detail.debit = Convert.ToDecimal(payment_quick.payment_detail.value);
-        //                PaymentDB.app_account_detail.Add(app_account_detail);
-        //            }
-
-        //            PaymentDB.payments.Add(payment);
-
-        //            IEnumerable<DbEntityValidationResult> validationresult = PaymentDB.GetValidationErrors();
-        //            if (validationresult.Count() == 0)
-        //            {
-        //                PaymentDB.SaveChanges();
-        //                crud_modal.Children.Clear();
-        //                crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-        //            }
-        //            load_Schedual();
-        //        }
-        //    }
-        //}
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {

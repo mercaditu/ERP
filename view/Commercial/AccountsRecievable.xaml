@@ -15,7 +15,7 @@
       Title="{lex:Loc AccountsReceivable}" Loaded="Page_Loaded">
 
     <Page.Resources>
-        <converters:Expiry2ColorConverter x:Key="Status2Color"/>
+        <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter"/>
         <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
@@ -60,13 +60,18 @@
                     <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
                     <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
-                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
+                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{Binding expire_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Expiry2ColorConverter}}"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
                                         ElementStyle="{StaticResource RightAlignStyle}"/>
                     <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"
-                                        Foreground="{Binding expire_date, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2Color}}"/>
+                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
 

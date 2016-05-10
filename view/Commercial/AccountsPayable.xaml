@@ -17,7 +17,7 @@
       Title="AccountsPayable" Loaded="Page_Loaded">
 
     <Page.Resources>
-        <converters:Expiry2ColorConverter x:Key="Status2Color"/>
+        <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter"/>
         <CollectionViewSource x:Key="payment_schedualViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
@@ -61,13 +61,18 @@
                                             EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                     <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" MinWidth="128" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:d}}" 
-                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
+                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{Binding expire_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Expiry2ColorConverter}}"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding AccountPayableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
                     <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"
-                                        Foreground="{Binding expire_date, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2Color}}"/>
+                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -116,9 +121,11 @@
 
         <Grid Grid.Column="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="11/11/2015" Style="{StaticResource generic_Label}"/>
-                <Label Content="-" Style="{StaticResource generic_Label}"/>
-                <Label Content="11/11/2015" Style="{StaticResource generic_Label}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Content="{Binding FirstDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>
+                    <Label Content="-" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding EndDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>
+                </StackPanel>
             </StackPanel>
             <metro:RangeSlider HorizontalAlignment="Stretch" Margin="64,2" 
 				VerticalAlignment="Bottom" MinRangeWidth="1" MoveWholeRange="True" IsMoveToPointEnabled="True" 

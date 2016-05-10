@@ -300,6 +300,16 @@ namespace cntrl.Curd
 
         }
 
+        private void btnDeleteDetail_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEditDetail_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
 
 
 

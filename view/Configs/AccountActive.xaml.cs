@@ -215,6 +215,7 @@ namespace Cognitivo.Configs
                             {
                                 app_account_session app_account_session = new entity.app_account_session();
                                 app_account_session.id_account = app_account.id_account;
+                           
                                 db.app_account_session.Add(app_account_session);
                                 dbcontext.SaveChanges();
                             }

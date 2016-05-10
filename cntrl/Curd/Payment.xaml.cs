@@ -134,19 +134,18 @@ namespace cntrl.Curd
         {
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
-
-
 
             foreach (payment_detail payment_detail in payment.payment_detail)
             {
-
-
-                PaymentDB.Approve(payment_detail.id_payment_schedual, true);
-
+                if (Mode == Modes.Recievable)
+	            {
+		            PaymentDB.Approve(payment_detail.id_payment_schedual, true);
+                }
+                else
+                {
+                    PaymentDB.Approve(payment_detail.id_payment_schedual, false);
+                }
             }
-
-
         }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -30,7 +30,7 @@ namespace Cognitivo.Commercial
             entity.Properties.Settings _entity = new entity.Properties.Settings();
 
             //Contact
-            ContactDB.contacts.Where(a => a.is_active == true && a.id_company == _entity.company_ID && a.is_employee == false).OrderBy(a => a.code).Load();
+            ContactDB.contacts.Where(a =>a.id_company == _entity.company_ID && a.is_employee == false).OrderBy(a => a.code).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;

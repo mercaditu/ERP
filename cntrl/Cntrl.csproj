@@ -228,6 +228,9 @@
     <Compile Include="Curd\receive_payment.xaml.cs">
       <DependentUpon>receive_payment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\PurchaseTender.xaml.cs">
+      <DependentUpon>PurchaseTender.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\Refinance.xaml.cs">
       <DependentUpon>Refinance.xaml</DependentUpon>
     </Compile>
@@ -654,6 +657,10 @@
     <Page Include="Curd\receive_payment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\PurchaseTender.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Curd\Refinance.xaml">
       <Generator>MSBuild:Compile</Generator>

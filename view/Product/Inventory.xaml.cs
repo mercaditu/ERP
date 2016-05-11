@@ -56,24 +56,21 @@ namespace Cognitivo.Product
         private void filetr_detail()
         {
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-          item_inventory item_inventory=item_inventoryViewSource.View.CurrentItem as item_inventory;
+            item_inventory item_inventory = item_inventoryViewSource.View.CurrentItem as item_inventory;
             if (app_location != null)
             {
                 if (item_inventoryitem_inventory_detailViewSource != null)
                 {
                     if (item_inventoryitem_inventory_detailViewSource.View != null)
                     {
-                        //if (item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count() > 0)
-                        //{
-                            item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
-                            {
-                                item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
-                                if (item_inventory_detail.id_location == app_location.id_location && item_inventory_detail.id_inventory == item_inventory.id_inventory)
-                                    return true;
-                                else
-                                    return false;
-                            };
-                       // }
+                        item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
+                        {
+                            item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
+                            if (item_inventory_detail.id_location == app_location.id_location && item_inventory_detail.id_inventory == item_inventory.id_inventory)
+                                return true;
+                            else
+                                return false;
+                        };
                     }
                 }
             }
@@ -228,18 +225,16 @@ namespace Cognitivo.Product
                 {
                     if (item_inventoryitem_inventory_detailViewSource.View != null)
                     {
-                        if (item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count() > 0)
+                        item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
                         {
-                            item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
-                            {
-                                item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
-                                if (item_inventory_detail.item_product.item.name.Contains(txtsearch.Text.ToUpper()) ||
-                                    item_inventory_detail.item_product.item.code.Contains(txtsearch.Text.ToUpper()))
-                                    return true;
-                                else
-                                    return false;
-                            };
-                        }
+                            item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
+                            if ((item_inventory_detail.item_product.item.name.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
+                                 item_inventory_detail.item_product.item.code.ToUpper().Contains(txtsearch.Text.ToUpper())) && 
+                                 app_location.id_location == item_inventory_detail.id_location)
+                                return true;
+                            else
+                                return false;
+                        };
                     }
                 }
             }

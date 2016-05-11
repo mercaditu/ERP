@@ -69,7 +69,8 @@
         </ListBox>
         <cntrl:navPagination x:Name="navPagination" VerticalAlignment="Bottom" Grid.Row="2" btnSearch_Click="navPagination_btnSearch_Click" DisplayMode="Month"/>
 
-        <Grid Grid.Column="1" Grid.Row="1" Background="White">
+        <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
@@ -209,7 +210,7 @@
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                         <Label Content="" Style="{StaticResource ico_Label}"/>
-                        <TextBlock Margin="5,0" Text="{lex:Loc Imports}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
+                        <TextBlock Margin="5,0" Text="{lex:Loc Importation}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
                         <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     
@@ -280,9 +281,17 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
+        </ScrollViewer>
+        
         <Grid Grid.Column="1" Grid.Row="2" Background="White">
             <Rectangle Height="0.7" Fill="Silver" VerticalAlignment="Top" Margin="32,0"/>
-            <StackPanel Orientation="Horizontal" Margin="4" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" >
+                <Label Content="Discount(%)" Style="{StaticResource input_label}" />
+                <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding ElementName=toolBar, Path=CanUserDiscountByPercent}" Width="32"/>
+                <Label Content="Discount" Style="{StaticResource input_label}"/>
+                <TextBox Text="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=toolBar, Path=CanUserDiscountByValue}" Width="64"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="4,24" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
                 <Label Content="{lex:Loc Total}" FontWeight="Medium" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
                 <TextBox x:Name="txtTotal" 
                                  Text="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource purchase_invoiceViewSource}, StringFormat={}{0:N}}"

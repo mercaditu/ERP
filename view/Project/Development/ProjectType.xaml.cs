@@ -152,7 +152,7 @@ namespace Cognitivo.Project.Development
             project_template project_template = project_templateViewSource.View.CurrentItem as project_template;
             project_template_detail project_template_detail = treeProject.SelectedItem_ as project_template_detail;
 
-            if (project_template_detail != null)
+            if (project_template_detail != null && project_template_detail.item.id_item_type == entity.item.item_type.Task)
             {
                 //Adding a Child Item.
                 project_template_detail n_project_template = new project_template_detail();
@@ -180,6 +180,7 @@ namespace Cognitivo.Project.Development
             }
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
         }
+
         private void btnAddParentTask_Click(object sender)
         {
             stpcode.IsEnabled = true;

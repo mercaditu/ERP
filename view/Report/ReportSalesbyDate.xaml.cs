@@ -17,15 +17,14 @@ using System.Data.SqlClient;
 using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+
 namespace Cognitivo.Report
 {
-    /// <summary>
-    /// Interaction logic for ReportSalesbyTerminal.xaml
-    /// </summary>
     public partial class ReportSalesbyDate : Page
     {
         db db = new db();
         string _connString = string.Empty;
+
         public ReportSalesbyDate()
         {
             InitializeComponent();
@@ -36,18 +35,13 @@ namespace Cognitivo.Report
             db.app_terminal.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxTerminal.ItemsSource = db.app_terminal.Local;
 
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "localhost";
-            builder.UserID = "root";
-            builder.Password = "root";
-            builder.InitialCatalog = db.Database.Connection.Database;
-            builder.IntegratedSecurity = true;
-            _connString = builder.ToString();
+            Cognitivo.Properties.Settings Settings = new Properties.Settings();
+            _connString = Settings.MySQLconnString;
 
             DataTable dt = exeDT(sql());
             dgvreport.ItemsSource = dt.DefaultView;
-
         }
+
         public DataTable exeDT(string sql)
         {
             DataTable dt = new DataTable();
@@ -67,17 +61,18 @@ namespace Cognitivo.Report
             }
             return dt;
         }
+
         private string sql()
         {
 
             string sql = string.Empty;
 
-            sql = " select ";
-            sql += " (select code from items where id_item=sales_invoice_detail.id_item) as code,";
-            sql += " (select name from items where id_item=sales_invoice_detail.id_item) as Description,";
-            sql += " sum(quantity) as qty,sum(unit_price) as price,";
-            sql += " (sum(item_movement.credit)-sum(item_movement.debit))as profit";
-            sql += " ,sum(discount) as discount";
+            sql =  " select ";
+            sql += " (select code from items where id_item=sales_invoice_detail.id_item) as code, ";
+            sql += " (select name from items where id_item=sales_invoice_detail.id_item) as Description, ";
+            sql += " sum(quantity) as qty,sum(unit_price) as price, ";
+            sql += " (sum(item_movement.credit)-sum(item_movement.debit))as profit, ";
+            sql += "  sum(discount) as discount";
             sql += " from sales_invoice_detail left outer join item_movement on item_movement.id_sales_invoice_detail=sales_invoice_detail.id_sales_invoice_detail ";
 
 
@@ -85,17 +80,19 @@ namespace Cognitivo.Report
             if (dtpTrans_Date.SelectedDate != null)
             {
                 sql += " where trans_date = '" + dtpTrans_Date.SelectedDate + "'";
-
             }
             else
             {
-                sql += " where 1=1 ";
+                sql += " where 1=1";
             }
+
             if (cbxTerminal.SelectedValue != null)
             {
                 sql += " and (select id_terminal from sales_invoice where id_sales_invoice=sales_invoice_detail.id_sales_invoice) = " + cbxTerminal.SelectedValue;
             }
+
             sql += " group by trans_date";
+
             return sql;
         }
         private void Button_Click(object sender, RoutedEventArgs e)

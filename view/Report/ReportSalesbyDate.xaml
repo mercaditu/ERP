@@ -27,21 +27,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <StackPanel Orientation="Horizontal" >
-            <TextBlock Text="{lex:Loc Date}" Style="{StaticResource text_Label}"/>
-            <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"/>
-            <TextBlock Text="{lex:Loc Terminal}" Style="{StaticResource text_Label}"/>
-            <ComboBox x:Name="cbxTerminal" Width="Auto" Margin="0"  Style="{StaticResource ComboToLabelStyle}"
-                                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{lex:Loc Date}" Style="{StaticResource text_Label}" VerticalAlignment="Center"/>
+            <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}" Width="128" VerticalAlignment="Center"/>
+            <TextBlock Text="{lex:Loc Terminal}" Style="{StaticResource text_Label}"  VerticalAlignment="Center"/>
+            <ComboBox x:Name="cbxTerminal" Width="Auto" Margin="0"  Style="{StaticResource input_combobox}"
+                                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"  VerticalAlignment="Center"
                                           metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                           DisplayMemberPath="name" SelectedValuePath="id_terminal" />
-            <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click"/>
+            <Button Content="{lex:Loc Extract}" Margin="8" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click"/>
 
         </StackPanel>
         <StackPanel Grid.Row="1">
-            <DataGrid x:Name="dgvreport" Style="{StaticResource detail_Datagrid}" AutoGenerateColumns="True">
-            
-            </DataGrid>
+            <DataGrid x:Name="dgvreport" Style="{StaticResource detail_Datagrid}" AutoGenerateColumns="True"/>
+
+
         </StackPanel>
      
        

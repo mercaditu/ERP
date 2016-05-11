@@ -19,7 +19,7 @@ namespace Cognitivo.Menu
             Transactions,
             Financial,
             Inventory,
-            Imports,
+            Importation,
             Exports,
 
             Documents,
@@ -84,7 +84,7 @@ namespace Cognitivo.Menu
 
             //Impex
             dtApp.Rows.Add(entity.App.Modules.Impex, Namespace.Exports, "Sales.Export", entity.App.Names.Export, "Export");
-            dtApp.Rows.Add(entity.App.Modules.Impex, Namespace.Imports, "Purchase.Import", entity.App.Names.Import, "Import");
+            dtApp.Rows.Add(entity.App.Modules.Impex, Namespace.Importation, "Purchase.Import", entity.App.Names.Import, "Import");
             dtApp.Rows.Add(entity.App.Modules.Impex, entity.App.Modules.Configuration, "Commercial.Incoterm", entity.App.Names.Incoterm, "");
             dtApp.Rows.Add(entity.App.Modules.Impex, entity.App.Modules.Configuration, "Configs.IncotermCondition", entity.App.Names.IncotermCondition, "");
 

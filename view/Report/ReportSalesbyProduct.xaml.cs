@@ -36,15 +36,8 @@ namespace Cognitivo.Report
             db.app_terminal.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxTerminal.ItemsSource = db.app_terminal.Local;
 
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "localhost";
-            builder.UserID = "root";
-            builder.Password = "root";
-            builder.InitialCatalog = db.Database.Connection.Database;
-            builder.IntegratedSecurity = true;
-            _connString = builder.ToString();
-
-
+            Cognitivo.Properties.Settings Settings = new Properties.Settings();
+            _connString = Settings.MySQLconnString;
 
             DataTable dt = exeDT(sql());
             dgvreport.ItemsSource = dt.DefaultView;

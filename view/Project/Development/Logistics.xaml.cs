@@ -46,6 +46,8 @@ namespace Cognitivo.Project.Development
         {
             try
             {
+                LogisticsList.Clear();
+                LogisticsListService.Clear();
                 if (projectViewSource != null)
                 {
                     item_ProductDataGrid.ItemsSource = null;
@@ -93,22 +95,27 @@ namespace Cognitivo.Project.Development
                                                    _ordered_quantity = last.Max(x => x._ordered_quantity),
                                                    //avlqtyColumn = last.Sum(x => x.avlqtyColumn),
                                                    //buyqty = last.Sum(x => x.avlqtyColumn) < last.Max(x => x._ordered_quantity) ? (last.Max(x => x._ordered_quantity) != 0 ? last.Max(x => x._ordered_quantity) : 0) - (last.Sum(x => x.avlqtyColumn) != 0 ? last.Sum(x => x.avlqtyColumn) : 0) : 0,
-                                                   item = last.Key.item,
-                                                   task=last.Max(x=>x)
+                                                   item = last.Key.item
                                                }).ToList();
 
                         foreach (dynamic item in productlist)
                         {
-                            project_task project_task = (project_task)item.task;
+                            int id_task = (int)item._id_task;
                             Logistic Logistics = new Logistic();
+                            if (ProjectTaskDB.project_task.Where(x => x.id_project_task == id_task).FirstOrDefault() != null)
+                            {
+                                project_task project_task = ProjectTaskDB.project_task.Where(x => x.id_project_task == id_task).FirstOrDefault();
+                                Logistics.avlqtyColumn = project_task.purchase_tender_item.Sum(x => x.quantity);
+                                Logistics.buyqty = (decimal)item._ordered_quantity - (decimal)project_task.purchase_tender_item.Sum(x => x.quantity);
+                            }
+
+                           
                             Logistics._id_item = item._id_item;
                             Logistics._code = item._code;
                             Logistics._name = item._name;
                             Logistics._id_task = item._id_task;
                             Logistics._ordered_quantity = item._ordered_quantity;
-                            Logistics.item = item._ordered_quantity;
-                            Logistics.avlqtyColumn = project_task.purchase_tender_item.Sum(x=>x.quantity);
-                            Logistics.buyqty = item._ordered_quantity - project_task.purchase_tender_item.Sum(x => x.quantity);
+                            Logistics.item = item.item;
                             LogisticsList.Add(Logistics);
                         }
 
@@ -132,14 +139,14 @@ namespace Cognitivo.Project.Development
 
                         foreach (dynamic item in servicelist)
                         {
-                            project_task project_task = (project_task)item.task;
+
                             Logistic Logistics = new Logistic();
                             Logistics._id_item = item._id_item;
                             Logistics._code = item._code;
                             Logistics._name = item._name;
                             Logistics._id_task = item._id_task;
                             Logistics._ordered_quantity = item._ordered_quantity;
-                            Logistics.item = item._ordered_quantity;
+                            Logistics.item = item.item;
                             LogisticsListService.Add(Logistics);
                         }
                         item_ServiceDataGrid.ItemsSource = LogisticsListService.Where(IT => IT.item.id_item_type == item.item_type.Service).ToList();
@@ -357,7 +364,7 @@ namespace Cognitivo.Project.Development
         {
             try
             {
-                int _id_project =  ((project)projectViewSource.View.CurrentItem).id_project;
+                int _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
                 Logistic obj = (Logistic)DataGrid.SelectedItem;
                 if (obj != null)
                 {
@@ -482,10 +489,10 @@ namespace Cognitivo.Project.Development
         public string _code { get; set; }
         public string _name { get; set; }
         public int _id_task { get; set; }
-        public int _ordered_quantity { get; set; }
+        public decimal _ordered_quantity { get; set; }
         public decimal avlqtyColumn { get; set; }
         public item item { get; set; }
-        public int buyqty { get; set; }
+        public decimal buyqty { get; set; }
 
 
 

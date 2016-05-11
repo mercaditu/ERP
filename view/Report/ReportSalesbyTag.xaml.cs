@@ -33,8 +33,8 @@ namespace Cognitivo.Report
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            db.app_terminal.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
-            cbxTerminal.ItemsSource = db.app_terminal.Local;
+            //db.app_terminal.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            //cbxTerminal.ItemsSource = db.app_terminal.Local;
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "localhost";
@@ -78,7 +78,7 @@ namespace Cognitivo.Report
             sql += " sum(quantity) as qty,sum(unit_price) as price,";
             sql += " (sum(item_movement.credit)-sum(item_movement.debit))as profit";
             sql += " ,sum(discount) as discount,(select max(id_item_tag_detail) from item_tag_detail where id_item=sales_invoice_detail.id_item) as tag_detail";
-            sql += " from sales_invoice_detail left outer join item_movement on item_movement.id_sales_invoice_detail=sales_invoice_detail.id_sales_invoice_detail  group by id_item) as itemgroup ";
+            sql += " from sales_invoice_detail left outer join item_movement on item_movement.id_sales_invoice_detail=sales_invoice_detail.id_sales_invoice_detail   ";
             if (dtpTrans_Date.SelectedDate != null)
             {
                 sql += " where trans_date = '" + dtpTrans_Date.SelectedDate + "'";
@@ -88,15 +88,15 @@ namespace Cognitivo.Report
             {
                 sql += " where 1=1 ";
             }
-            
-            sql += " group by itemgroup.tag_detail";
+
+            sql += " group by id_item) as itemgroup group by itemgroup.tag_detail";
             return sql;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DataTable dt = exeDT(sql());
             dgvreport.ItemsSource = dt.DefaultView;
-            cbxTerminal.SelectedValue = null;
+            //cbxTerminal.SelectedValue = null;
         }
     }
 }

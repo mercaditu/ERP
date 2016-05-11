@@ -93,7 +93,7 @@ namespace Cognitivo.Report
             }
             if (cbxTerminal.SelectedValue != null)
             {
-                sql += " and id_terminal = " + cbxTerminal.SelectedValue;
+                sql += " and (select id_terminal from sales_invoice where id_sales_invoice=sales_invoice_detail.id_sales_invoice) = " + cbxTerminal.SelectedValue;
             }
             sql += " group by trans_date";
             return sql;
@@ -102,6 +102,7 @@ namespace Cognitivo.Report
         {
             DataTable dt = exeDT(sql());
             dgvreport.ItemsSource = dt.DefaultView;
+            cbxTerminal.SelectedValue = null;
         }
     }
 }

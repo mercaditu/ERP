@@ -38,7 +38,7 @@
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected"
                   CanUserAddRows="False">
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected}"
+                    <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date}"  Width="128" IsReadOnly="True"/>

@@ -216,7 +216,6 @@ namespace Cognitivo.Purchase
                 ImpexImportDetails.id_invoice = item.id_purchase_invoice;
                 ImpexImportDetails.id_invoice_detail = item.id_purchase_invoice_detail;
 
-
                 if (totalExpence > 0)
                 {
                     //  ImpexImportDetails.prorated_cost = Math.Round(item.unit_cost + (ImpexImportDetails.unit_cost / TotalInvoiceAmount) * totalExpence, 2);
@@ -426,20 +425,23 @@ namespace Cognitivo.Purchase
 
         public void PurchaseInvoice_Click(object sender)
         {
-            contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-
-            if (contact != null)
+            if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() != null)
             {
-                impex impex = (impex)impexViewSource.View.CurrentItem;
-                impex.contact = contact;
+                if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact != null)
+                {
+                    contact contact = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact;
 
-                sbxContact.Text = contact.name;
-                purchase_invoiceViewSource.Source =
-                pnlPurchaseInvoice.selected_purchase_invoice;
-                btnImportInvoice_Click(sender, null);
+                    impex impex = (impex)impexViewSource.View.CurrentItem;
+                    impex.contact = contact;
 
-                crud_modal.Children.Clear();
-                crud_modal.Visibility = Visibility.Collapsed;
+                    sbxContact.Text = contact.name;
+                    purchase_invoiceViewSource.Source =
+                    pnlPurchaseInvoice.selected_purchase_invoice;
+                    btnImportInvoice_Click(sender, null);
+
+                    crud_modal.Children.Clear();
+                    crud_modal.Visibility = Visibility.Collapsed;
+                }   
             }
         }
     }

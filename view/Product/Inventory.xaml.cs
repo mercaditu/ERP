@@ -56,23 +56,24 @@ namespace Cognitivo.Product
         private void filetr_detail()
         {
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+          item_inventory item_inventory=item_inventoryViewSource.View.CurrentItem as item_inventory;
             if (app_location != null)
             {
                 if (item_inventoryitem_inventory_detailViewSource != null)
                 {
                     if (item_inventoryitem_inventory_detailViewSource.View != null)
                     {
-                        if (item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count() > 0)
-                        {
+                        //if (item_inventoryitem_inventory_detailViewSource.View.OfType<item_inventory_detail>().Count() > 0)
+                        //{
                             item_inventoryitem_inventory_detailViewSource.View.Filter = i =>
                             {
                                 item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
-                                if (item_inventory_detail.id_location == app_location.id_location)
+                                if (item_inventory_detail.id_location == app_location.id_location && item_inventory_detail.id_inventory == item_inventory.id_inventory)
                                     return true;
                                 else
                                     return false;
                             };
-                        }
+                       // }
                     }
                 }
             }
@@ -217,7 +218,7 @@ namespace Cognitivo.Product
                 item_inventoryitem_inventory_detailViewSource.View.MoveCurrentToFirst();
             }
         }
-        
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             app_location app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;

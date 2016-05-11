@@ -45,7 +45,7 @@ namespace entity
                 }
                 else
                 {
-                    return 0;
+                    return _value_system;
                 }
             } 
             set

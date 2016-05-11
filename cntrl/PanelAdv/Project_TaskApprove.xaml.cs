@@ -82,7 +82,8 @@ namespace cntrl.PanelAdv
                 if (id_range!=null)
                 {
                     project_task project_task = db.project_task.FirstOrDefault();
-                    project_task.id_range = id_range;
+                    project_task.State = System.Data.Entity.EntityState.Modified;
+                    project_task.id_range =(int)cbxDocument.SelectedValue;
                     number = project_task.NumberWatermark;
                     RaisePropertyChanged("number"); 
                 }

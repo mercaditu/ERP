@@ -65,6 +65,10 @@
                                   ModuleName="{lex:Loc Production}"
                                   MouseUp="get_Apps"
                                   Tag="Production"/>
+                <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modLink.png"
+                                  ModuleName="{lex:Loc Report}"
+                                  MouseUp="get_Apps"
+                                  Tag="Report"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Label Content="{Binding Source={x:Static my:Settings.Default}, Path=branch_Name}" Style="{StaticResource generic_Label}"/>

@@ -1,0 +1,50 @@
+﻿<Page x:Class="Cognitivo.Report.ReportSalesbyDate"
+         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 
+  
+      xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+      xmlns:Curd="clr-namespace:cntrl.Curd;assembly=cntrl" 
+      mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="700"
+    
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US" 
+	 Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+        <CollectionViewSource x:Key="sales_repViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
+    </Page.Resources>
+
+    <Grid DataContext="{StaticResource sales_repViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" >
+            <TextBlock Text="{lex:Loc Date}" Style="{StaticResource text_Label}"/>
+            <DatePicker x:Name="dtpTrans_Date" Style="{StaticResource input_datepicker}"/>
+            <TextBlock Text="{lex:Loc Terminal}" Style="{StaticResource text_Label}"/>
+            <ComboBox x:Name="cbxTerminal" Width="Auto" Margin="0"  Style="{StaticResource ComboToLabelStyle}"
+                                          metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                          metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                                          DisplayMemberPath="name" SelectedValuePath="id_terminal" />
+            <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click"/>
+
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <DataGrid x:Name="dgvreport" Style="{StaticResource detail_Datagrid}" AutoGenerateColumns="True">
+            
+            </DataGrid>
+        </StackPanel>
+     
+       
+      
+    </Grid>
+</Page>

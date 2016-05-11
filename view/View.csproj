@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V405\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V407\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>407</ApplicationRevision>
+    <ApplicationRevision>408</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -475,6 +475,15 @@
     </Compile>
     <Compile Include="ReportViewerAccounting.xaml.cs">
       <DependentUpon>ReportViewerAccounting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesbyDate.xaml.cs">
+      <DependentUpon>ReportSalesbyDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesbyProduct.xaml.cs">
+      <DependentUpon>ReportSalesbyProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReportSalesbyTag.xaml.cs">
+      <DependentUpon>ReportSalesbyTag.xaml</DependentUpon>
     </Compile>
     <Compile Include="RowDef.cs" />
     <Compile Include="Sales\Budget.xaml.cs">
@@ -1415,6 +1424,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ReportViewerAccounting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Report\ReportSalesbyDate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Report\ReportSalesbyProduct.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Report\ReportSalesbyTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

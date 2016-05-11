@@ -31,13 +31,15 @@ namespace entity
             Production,
             [LocalizedDescription("Configuration")]
             Configuration,
+            [LocalizedDescription("Report")]
+            Report,
         }
-        
-       // [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+
+        // [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Names
         {
             /// <summary>
-            /// Last Used : 78
+            /// Last Used : 79
             /// </summary>
 
             //Sales
@@ -84,7 +86,7 @@ namespace entity
             [LocalizedDescription("PaymentUtility")]
             PaymentUtility = 16,
             [LocalizedDescription("PaymentType")]
-            PaymentType=51,
+            PaymentType = 51,
             [LocalizedDescription("ItemTransfer")]
             PaymentWithHolding = 31,
             [LocalizedDescription("AccountUtility")]
@@ -102,7 +104,7 @@ namespace entity
             [LocalizedDescription("Movement")]
             Movement = 13,
             [LocalizedDescription("Import")]
-            Import= 14,
+            Import = 14,
             [LocalizedDescription("IncotermCondition")]
             IncotermCondition = 45,
             [LocalizedDescription("Incoterm")]
@@ -128,11 +130,11 @@ namespace entity
             [LocalizedDescription("ProductionExecution")]
             ProductionExecution = 17,
             [LocalizedDescription("ProductionLine")]
-            Line=19,
+            Line = 19,
             [LocalizedDescription("ProductionOrder")]
-            ProductionOrder=20,
+            ProductionOrder = 20,
             [LocalizedDescription("ProductionTemplate")]
-            ProductionTemplate=21,
+            ProductionTemplate = 21,
 
             //Project
             [LocalizedDescription("Template")]
@@ -211,6 +213,12 @@ namespace entity
             Type = 76,
             [LocalizedDescription("CostCenter")]
             CostCenter = 77,
+            [LocalizedDescription("ReportSalesbyTag")]
+            ReportSalesbyTag = 79,
+            [LocalizedDescription("ReportSalesbyProduct")]
+            ReportSalesbyProduct,
+            [LocalizedDescription("ReportSalesbyDate")]
+            ReportSalesbyDate,
         }
     }
 }

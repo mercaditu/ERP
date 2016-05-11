@@ -180,6 +180,13 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Sales, "Contact.ContactTag", "ContactTag", "Contact");
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Sales, "Configs.ItemAssetGroup", "ItemAssetGroup", "ItemAssetGroup");
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Project_Dev, "Project.ProjectTag", "ProjectTag", "Project");
+
+
+
+            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Report.ReportSalesbyTag", "ReportSalesbyTag", "");
+            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Report.ReportSalesbyProduct", "ReportSalesbyProduct", "");
+            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Report.ReportSalesbyDate", "ReportSalesbyDate", "");
+            
         }
 
         public cntrl.applicationIcon get_AppIcon(DataRow app)

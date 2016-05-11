@@ -23,14 +23,14 @@ namespace Cognitivo.Configs
     public partial class AccountActive : UserControl, INotifyPropertyChanged
     {
         #region NotifyPropertyChange
-            public event PropertyChangedEventHandler PropertyChanged;
-            public void RaisePropertyChanged(string prop)
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
             {
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs(prop));
-                }
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
+        }
         #endregion
 
         List<Class.clsTransferAmount> listOpenAmt = null;
@@ -173,7 +173,7 @@ namespace Cognitivo.Configs
             {
                 //Get the correct Account.
                 app_account app_account = db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault();
-                
+
                 app_account_session app_account_session = null;
 
                 if (db.app_account_session.Where(x => x.id_account == CurrentSession.Id_Account && x.is_active).FirstOrDefault() != null)
@@ -203,18 +203,19 @@ namespace Cognitivo.Configs
                         app_account_detail.trans_date = DateTime.Now;
 
                         //CHECK
-                        app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().id_session;
-                        db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().cl_date = DateTime.Now;
-                        db.app_account_session.Where(x => x.id_account == app_account.id_account && x.is_active).FirstOrDefault().is_active = false;
+                        app_account_detail.id_session = app_account_session.id_session;
+                        app_account_session.cl_date = DateTime.Now;
+                        app_account_session.is_active = false;
 
-
+                        db.app_account_detail.Add(app_account_detail);
+                        app_account.is_active = false;
                         //Save Changes
                         db.SaveChanges();
 
                         is_active = app_account_session.is_active;
                         RaisePropertyChanged("is_active");
                     }
-                    
+
                     if (MessageBox.Show("Session is Closed, thank you for using CognitivoERP! "
                                    + "/n Would you like to Print the Z-Report?", "Print Z-Report?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
@@ -253,6 +254,7 @@ namespace Cognitivo.Configs
                         db.app_account_session.Add(app_account_session);
                     }
 
+                    app_account.is_active = true;
                     //Save Changes
                     db.SaveChanges();
 

@@ -587,22 +587,23 @@
                 + "***" + app_company.alias + "***" + "\n"
                 + "Apertura : " + OpenDate + "    Cierre: " + CloseDate
                 + "\n"
-                + "--------------------------------"
-                + "Hora   Factura      / Valor    Moneda" + "\n";
+                + "--------------------------------" + "\n"
+                + "Hora   Factura      / Valor    Moneda" + "\n"
+                + "--------------------------------" + "\n";
 
             string CustomerName = string.Empty;
 
-            foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).ToList())
+            foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).Select(x=>x.FirstOrDefault()).ToList())
             {
-                Header += "--------------------------------" + "\n"
-                        + "Moneda : " + detail.app_currencyfx.app_currency.name;
+                Header += "Moneda : " + detail.app_currencyfx.app_currency.name;
 
                 if (detail.tran_type == app_account_detail.tran_types.Open)
 	            {
-		            Header += "Balance de Apertura : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Open).FirstOrDefault().credit;
+		            Header += "\nBalance de Apertura : " + detail.credit;
+                    Header += "\n--------------------------------" + "\n";
 	            }
 
-                foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction).ToList())
+                foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx).ToList())
                 {
                     string AccountName = string.Empty;
 
@@ -640,13 +641,20 @@
                     decimal? value = d.credit - d.debit;
 
                     Detail = Detail
-                        + "Factura: " + InvoiceTime + " " + InvoiceNumber + "\n"
+                        + "\nFactura: " + InvoiceTime + " " + InvoiceNumber + "\n"
                         + value.ToString() + "\t" + currency + "\n";
                 }
+                Detail += "\n--------------------------------" + "\n";
+               
+            }
+            foreach (app_account_detail detail in app_account_session.app_account_detail.Where(x=>x.tran_type==app_account_detail.tran_types.Close).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
+            {
+                Detail += "Moneda : " + detail.app_currencyfx.app_currency.name;
 
                 if (detail.tran_type == app_account_detail.tran_types.Close)
                 {
-                    Header += "Balance de Cierre   : " + app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close).FirstOrDefault().debit;
+                    Detail += "\nBalance de Cierre : " + detail.debit;
+                    Detail += "\n--------------------------------" + "\n";
                 }
             }
 

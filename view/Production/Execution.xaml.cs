@@ -136,6 +136,7 @@ namespace Cognitivo.Production
             }
 
         }
+
         public void filter_order(CollectionViewSource CollectionViewSource, item.item_type item_type)
         {
             int id_production_order = 0;
@@ -143,15 +144,16 @@ namespace Cognitivo.Production
             {
                 id_production_order = ((production_execution)production_executionViewSource.View.CurrentItem).id_production_order;
             }
+
             if (CollectionViewSource != null)
             {
 
                 List<production_order_detail> _production_order_detail =
                     ExecutionDB.production_order_detail.Where(a =>
-                          a.status == Status.Project.Approved
-                         && (a.item.id_item_type == item_type
-                         || a.item.id_item_type == item.item_type.Task)
-                         && a.id_production_order == id_production_order)
+                          (a.status == Status.Project.Approved || a.item.id_item_type == item.item_type.Task)
+                       && (a.item.id_item_type == item_type
+                        || a.item.id_item_type == item.item_type.Task)
+                        && a.id_production_order == id_production_order)
                          .ToList();
                 if (_production_order_detail.Count() > 0)
                 {
@@ -162,6 +164,7 @@ namespace Cognitivo.Production
                     CollectionViewSource.Source = null;
                 }
             }
+
             if (CollectionViewSource != null)
             {
                 if (CollectionViewSource.View != null)

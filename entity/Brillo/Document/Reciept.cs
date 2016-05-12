@@ -580,7 +580,7 @@
             }
 
             Header =
-                "***Z Report***"
+                "***Z Report***" + "\n"
                 + CompanyName + "\n"
                 + "R.U.C.   :" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
@@ -595,12 +595,12 @@
 
             foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
             {
-                Header += "Moneda : " + detail.app_currencyfx.app_currency.name;
+                Detail += "Moneda : " + detail.app_currencyfx.app_currency.name;
 
                 if (detail.tran_type == app_account_detail.tran_types.Open)
                 {
-                    Header += "\nBalance de Apertura : " + detail.credit;
-                    Header += "\n--------------------------------" + "\n";
+                    Detail += "\nBalance de Apertura : " + Math.Round(detail.credit,2);
+
                 }
                 foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx).ToList())
                 {
@@ -636,27 +636,44 @@
                             InvoiceTime = payment_schedual.sales_invoice.trans_date.ToShortTimeString();
                         }
                     }
-                    
+
                     decimal? value = d.credit - d.debit;
 
-                    Detail = Detail
-                        + "\nFactura: " + InvoiceTime + " " + InvoiceNumber + "\n"
-                        + value.ToString() + "\t" + currency + "\n";
+                    //Detail = Detail
+                    //    + "\nFactura: " + InvoiceTime + " " + InvoiceNumber + "\n"
+                    //    + value.ToString() + "\t" + currency ;
+                }
+           
+                var listvat = app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx)
+                         .GroupBy(a => new { a.id_payment_type, a.id_currencyfx })
+                     .Select(g => new
+                     {
+                         Currencyname = g.Max(x => x.app_currencyfx).app_currency.name,
+                         paymentname = g.Max(x => x.payment_type).name,
+                         id_currencyfx = g.Key.id_currencyfx,
+                         id_payment_type = g.Key.id_payment_type,
+                         value = g.Sum(a => a.credit)
+                     }).ToList().OrderBy(x => x.id_currencyfx);
+                Detail += "\nTotal de ventas Neto :" + Math.Round(listvat.Sum(x => x.value),2) + detail.app_currencyfx.app_currency.name + "\n";
+                foreach (dynamic item in listvat)
+                {
+                    Detail += item.paymentname + "\t" + Math.Round(item.value,2) + detail.app_currencyfx.app_currency.name + "\n";
+
+                }
+                foreach (app_account_detail account_detail in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close && x.id_currencyfx == detail.id_currencyfx).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
+                {
+
+
+                   
+                        Detail += "\nBalance de Cierre : " + Math.Round(account_detail.debit,2);
+                        Detail += "\n--------------------------------" + "\n";
+                   
                 }
                 Detail += "\n--------------------------------" + "\n";
-
             }
-            foreach (app_account_detail detail in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
-            {
-                Detail += "Moneda : " + detail.app_currencyfx.app_currency.name;
 
-                if (detail.tran_type == app_account_detail.tran_types.Close)
-                {
-                    Detail += "\nBalance de Cierre : " + detail.debit;
-                    Detail += "\n--------------------------------" + "\n";
-                }
-            }
-         
+
+
 
             Footer += "--------------------------------" + "\n";
 

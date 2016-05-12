@@ -12,11 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using entity;
 
 namespace Cognitivo.Product
 {
     public partial class FixedAssets : Page
     {
+        entity.ItemDB ItemDB = new entity.ItemDB();
+
         public FixedAssets()
         {
             InitializeComponent();
@@ -70,6 +73,11 @@ namespace Cognitivo.Product
         private void StackPanel_Drop(object sender, DragEventArgs e)
         {
 
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).ToList();
         }
     }
 }

@@ -42,21 +42,19 @@ namespace Cognitivo.Product
 
             itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
             itemitem_priceViewSource = FindResource("itemitem_priceViewSource") as CollectionViewSource;
-            //itemitem_propertyViewSource = FindResource("itemitem_propertyViewSource") as CollectionViewSource;
             itemitem_dimentionViewSource = FindResource("itemitem_dimentionViewSource") as CollectionViewSource;
             itemitem_productViewSource = FindResource("itemitem_productViewSource") as CollectionViewSource;
             itemitem_capitalViewSource = FindResource("itemitem_capitalViewSource") as CollectionViewSource;
             itemitem_tagdetailViewSource = FindResource("itemitem_tagdetailViewSource") as CollectionViewSource;
-            item_brandViewSource = ((CollectionViewSource)(FindResource("item_brandViewSource")));
-            item_price_listViewSource = ((CollectionViewSource)(FindResource("item_price_listViewSource")));
-            app_vat_groupViewSource = ((CollectionViewSource)(FindResource("app_vat_groupViewSource")));
-            //app_propertyViewSource = ((CollectionViewSource)(FindResource("app_propertyViewSource")));
-            app_dimentionViewSource = (CollectionViewSource)FindResource("app_dimentionViewSource");
-            hr_talentViewSource = (CollectionViewSource)FindResource("hr_talentViewSource");
-            itemitem_serviceViewSource = (CollectionViewSource)FindResource("itemitem_serviceViewSource");
-            item_templateViewSource = (CollectionViewSource)FindResource("item_templateViewSource");
-            item_templateitem_template_detaildetailViewSource = (CollectionViewSource)FindResource("item_templateitem_template_detaildetailViewSource");
-            item_asset_groupViewSource = (CollectionViewSource)FindResource("item_asset_groupViewSource");
+            item_brandViewSource = (FindResource("item_brandViewSource")) as CollectionViewSource;
+            item_price_listViewSource = (FindResource("item_price_listViewSource") as CollectionViewSource;
+            app_vat_groupViewSource = (FindResource("app_vat_groupViewSource") as CollectionViewSource;
+            app_dimentionViewSource = FindResource("app_dimentionViewSource") as CollectionViewSource;
+            hr_talentViewSource = FindResource("hr_talentViewSource") as CollectionViewSource;
+            itemitem_serviceViewSource = FindResource("itemitem_serviceViewSource") as CollectionViewSource;
+            item_templateViewSource = FindResource("item_templateViewSource") as CollectionViewSource;
+            item_templateitem_template_detaildetailViewSource = FindResource("item_templateitem_template_detaildetailViewSource") as CollectionViewSource;
+            item_asset_groupViewSource = FindResource("item_asset_groupViewSource") as CollectionViewSource;
         }
 
         private void load_PrimaryData()
@@ -79,11 +77,6 @@ namespace Cognitivo.Product
             {
                 ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.RawMaterial).Load();
             }
-
-            //if (_pref_Product.FixedAsset)
-            //{
-            //    ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).Load();
-            //}
 
             if (_pref_Product.Service)
             {

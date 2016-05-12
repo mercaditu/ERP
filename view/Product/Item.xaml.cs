@@ -46,9 +46,9 @@ namespace Cognitivo.Product
             itemitem_productViewSource = FindResource("itemitem_productViewSource") as CollectionViewSource;
             itemitem_capitalViewSource = FindResource("itemitem_capitalViewSource") as CollectionViewSource;
             itemitem_tagdetailViewSource = FindResource("itemitem_tagdetailViewSource") as CollectionViewSource;
-            item_brandViewSource = (FindResource("item_brandViewSource")) as CollectionViewSource;
-            item_price_listViewSource = (FindResource("item_price_listViewSource") as CollectionViewSource;
-            app_vat_groupViewSource = (FindResource("app_vat_groupViewSource") as CollectionViewSource;
+            item_brandViewSource = FindResource("item_brandViewSource") as CollectionViewSource;
+            item_price_listViewSource = FindResource("item_price_listViewSource") as CollectionViewSource;
+            app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_dimentionViewSource = FindResource("app_dimentionViewSource") as CollectionViewSource;
             hr_talentViewSource = FindResource("hr_talentViewSource") as CollectionViewSource;
             itemitem_serviceViewSource = FindResource("itemitem_serviceViewSource") as CollectionViewSource;
@@ -394,23 +394,20 @@ namespace Cognitivo.Product
             {
                 //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
                 item item = itemViewSource.View.CurrentItem as item;
-                if (ItemDB.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item) && item.State==EntityState.Added)
+
+                if (ItemDB.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item))
                 {
                     toolBar.msgWarning("Product Already Exist..");
                     return;
                 }
-                if (ItemDB.items.Any(x => x.code.Contains(item.code) && x.id_item != item.id_item) && item.State == EntityState.Added)
+
+                if (ItemDB.SaveChanges() == 1)
                 {
-                    toolBar.msgWarning("Code Already Exist..");
-                    return;
+                    //Save Changes
+                    itemViewSource.View.Refresh();
+
+                    toolBar.msgSaved();   
                 }
-
-                //Save Changes
-                ItemDB.SaveChanges();
-
-                itemViewSource.View.Refresh();
-                toolBar.msgSaved();
-
             }
         }
 

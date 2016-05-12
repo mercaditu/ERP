@@ -42,22 +42,38 @@ namespace Cognitivo.Product
 
         private void toolBar_btnEdit_Click(object sender)
         {
-
+            if (itemDataGrid.SelectedItem != null)
+            {
+                item item = itemDataGrid.SelectedItem as item;
+                item.IsSelected = true;
+                item.State = System.Data.Entity.EntityState.Modified;
+            }
+            else
+            {
+                toolBar.msgWarning("Please Select an Item");
+            }
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-
+            if (ItemDB.SaveChanges() == 1)
+            {
+                toolBar.msgSaved();
+            }
         }
 
         private void toolBar_btnNew_Click(object sender)
         {
+            item item = ItemDB.New();
+            item_asset _capital = new item_asset();
+            item.item_asset.Add(_capital);
 
+            ItemDB.items.Add(item);
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
-
+            ItemDB.CancelAllChanges();
         }
 
         private void toolBar_btnDelete_Click(object sender)

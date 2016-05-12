@@ -193,8 +193,8 @@
             </TabItem>
             <!-- VENTAS -->
             <TabItem x:Name="tabSales">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16">
+                <Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16" VerticalAlignment="Top">
                         <StackPanel.Effect>
                             <DropShadowEffect ShadowDepth="0" Color="White"/>
                         </StackPanel.Effect>
@@ -202,11 +202,11 @@
                             VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                         <Label Content="{lex:Loc Sales}" metro:ControlsHelper.ContentCharacterCasing="Upper" Style="{StaticResource H1}" Foreground="White"/>
                     </StackPanel>
-                    <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60">
+                    <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60" VerticalAlignment="Top" Margin="0,80,0,0">
                         <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="sbxItem_Select"/>
                     </Viewbox>
-                    <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" 
-                              Margin="64,58,64,0" CanUserAddRows="False" FontSize="16"
+                    <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
+                              Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
                               ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" 
                               RowEditEnding="dgvSalesDetail_RowEditEnding">
                         <DataGrid.RowBackground>
@@ -264,7 +264,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                </StackPanel>
+                </Grid>
             </TabItem>
             <!-- PAYMENT -->
             <TabItem x:Name="tabPayment">

@@ -17,7 +17,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid>
-            <ListBox x:Name="item_inventoryDataGrid" Background="WhiteSmoke"
+            <ListBox x:Name="itemDataGrid" Background="WhiteSmoke"
                      ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"

@@ -3,17 +3,116 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
-	Title="{lex:Loc FixedAssets}">
+	  Title="{lex:Loc FixedAssets}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        <Grid>
+            <ListBox x:Name="item_inventoryDataGrid" Background="WhiteSmoke"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                     ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <cntrl:navList recordCode="{Binding security_user.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                       recordSecondaryName="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       recordName="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <Grid Grid.Column="1" Margin="0,40,0,0" Background="{StaticResource winBackground}">
+            <StackPanel Orientation="Horizontal" Height="128" VerticalAlignment="Top">
+                <Grid Height="128" Width="128" AllowDrop="True" Drop="StackPanel_Drop" HorizontalAlignment="Left">
+                    <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
+                               FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
+                    <Image x:Name="imageViewer" Margin="4"/>
+                </Grid>
+                <StackPanel Margin="16" VerticalAlignment="Center">
+                    <Label Content="FixedAssetName" Style="{StaticResource H2}"/>
+                    <Label Content="Code" Style="{StaticResource H3}"/>
+                </StackPanel>
+            </StackPanel>
+            <TabControl Margin="0,128,0,0">
+                <TabItem Header="{lex:Loc General}">
+                    <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                            <TextBox Text="{Binding name}" Style="{StaticResource input_textbox}"/>
+                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                            <TextBox Text="{Binding code}" Style="{StaticResource input_textbox}"/>
+                            <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
+                            <AdornerDecorator>
+                                <ComboBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource ComboToLabelStyle}"
+                                          SelectedValue="{Binding id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                                  ValidatesOnDataErrors=True}"/>
+                            </AdornerDecorator>
+                            <Rectangle Style="{StaticResource line_Bar}"/>
+                            <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
+                            <TextBox Text="{Binding description}" Style="{StaticResource input_textbox}" Height="128"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
+                            <DatePicker Style="{StaticResource input_datepicker}"/>
+                            <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />
+                            <TextBox Style="{StaticResource input_textbox}"/>
+                            <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
+                            <TextBox Style="{StaticResource input_textbox}"/>
+                        </StackPanel>
+                    </WrapPanel>
+                </TabItem>
+                <TabItem Header="{lex:Loc Maintainance}" Height="40" Margin="-0.5,0,-0.5,-0.5" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal">
+                        <DataGrid Width="300" Margin="8">
+                            
+                        </DataGrid>
+                        <StackPanel>
+                            <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
+                            <ComboBox Style="{StaticResource input_combobox}"/>
+                            <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
+                            <DatePicker Style="{StaticResource input_datepicker}"/>
+                            <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}" />
+                            <DatePicker Style="{StaticResource input_datepicker}"/>
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
+                            <TextBox Style="{StaticResource input_textbox}" Height="64"/>
+                            
+                            <Rectangle Style="{StaticResource line_Bar}"/>
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}" />
+                                <ComboBox IsReadOnly="True" Style="{StaticResource ComboToLabelStyle}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top"
+                       btnEdit_Click="toolBar_btnEdit_Click" 
+                       btnSave_Click="toolBar_btnSave_Click"
+                       btnNew_Click="toolBar_btnNew_Click"
+                       btnCancel_Click="toolBar_btnCancel_Click"
+                       btnDelete_Click="toolBar_btnDelete_Click"
+                       appName="Inventory"
+                       btnApprove_Click="toolBar_btnApprove_Click"
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Margin="0"/>
     </Grid>
 </Page>

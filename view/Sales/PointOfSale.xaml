@@ -74,7 +74,7 @@
         <Grid Style="{StaticResource ThemeBackGround}"/>
 
 
-        <Grid x:Name="gridBottom" VerticalAlignment="Bottom" Height="40">
+        <Grid x:Name="gridBottom" VerticalAlignment="Top" Height="40">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".64"/>
             </Grid.Background>
@@ -143,7 +143,7 @@
                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
         </StackPanel>
-        <TabControl x:Name="postab"  Margin="10,150,10,40">
+        <TabControl x:Name="postab"  Margin="10,150,10,10">
             <!-- Account-->
             <TabItem x:Name="tabAccount">
                 <Frame x:Name="frmaccount" NavigationUIVisibility="Hidden" Content="AccountActive" Source="/Cognitivo;component/Configs/AccountActive.xaml"/>
@@ -382,7 +382,7 @@
         </TabControl>
 
         <!-- SalesMan -->
-        <StackPanel x:Name="stackLeft" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,40" RenderTransformOrigin="0.5,0.5">
+        <StackPanel x:Name="stackLeft" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,40" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -422,7 +422,7 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel x:Name="stackRight" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,40" RenderTransformOrigin="0.5,0.5">
+        <StackPanel x:Name="stackRight" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

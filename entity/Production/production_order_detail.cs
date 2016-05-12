@@ -107,7 +107,26 @@ namespace entity
                 {
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
-                    if (production_order!=null)
+
+                    if (parent != null)
+                    {
+                        parent.IsSelected = value;
+                        parent.RaisePropertyChanged("IsSelected");
+                    }
+
+                    //if (child != null)
+                    //{
+                    //    if (child.Count() > 0)
+                    //    {
+                    //        foreach (production_order_detail _child in child)
+                    //        {
+                    //            _child.IsSelected = value;
+                    //            _child.RaisePropertyChanged("IsSelected");
+                    //        }
+                    //    }
+                    //} 
+
+                    if (production_order != null)
                     {
                         production_order.Update_SelectedCount();
                     }
@@ -136,7 +155,12 @@ namespace entity
         public virtual project_task project_task { get; set; }
         public virtual item item { get; set; }
 
-        #region
+        #region Methods
+
+        public void ApproveOnlyParent_NotChild()
+        {
+
+        }
 
         /// <summary>
         /// Gets the Total Quantity based on Executed Values from Production Execution.

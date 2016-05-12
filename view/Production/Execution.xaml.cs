@@ -71,10 +71,6 @@ namespace Cognitivo.Production
             production_order_detaillSupplyViewSource = FindResource("production_order_detaillSupplyViewSource") as CollectionViewSource;
             production_order_detaillServiceContractViewSource = FindResource("production_order_detaillServiceContractViewSource") as CollectionViewSource;
 
-            //CollectionViewSource employeeViewSource = FindResource("employeeViewSource") as CollectionViewSource;
-            //ExecutionDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == true).Load();
-            //employeeViewSource.Source = ExecutionDB.contacts.Local;
-
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
             ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company).Load();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
@@ -150,11 +146,11 @@ namespace Cognitivo.Production
 
                 List<production_order_detail> _production_order_detail =
                     ExecutionDB.production_order_detail.Where(a =>
-                          a.status == Status.Project.Approved
-                       && (a.item.id_item_type == item_type
-                        || a.item.id_item_type == item.item_type.Task)
+                           a.status == Status.Project.Approved
+                        && (a.item.id_item_type == item_type || a.item.id_item_type == item.item_type.Task)
                         && a.id_production_order == id_production_order)
                          .ToList();
+
                 if (_production_order_detail.Count() > 0)
                 {
                     CollectionViewSource.Source = _production_order_detail;

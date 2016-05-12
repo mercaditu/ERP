@@ -153,7 +153,7 @@
 						                        ItemsSource="{Binding Source={StaticResource app_cost_centerViewSource}}"
 						                        DisplayMemberPath="name" SelectedValuePath="id_cost_center"
 						                        SelectedValueBinding="{Binding id_cost_center, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" Binding="{Binding item_code, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader" Binding="{Binding items.code, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="60">
                             <DataGridTemplateColumn.CellTemplate>

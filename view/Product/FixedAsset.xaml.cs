@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Product
 {
-    /// <summary>
-    /// Interaction logic for FixedAsset.xaml
-    /// </summary>
     public partial class FixedAsset : Page
     {
         public FixedAsset()

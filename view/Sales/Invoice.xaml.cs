@@ -94,16 +94,14 @@ namespace Cognitivo.Sales
         private async void load_SecondaryDataThread()
         {
             SalesInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+            
                 cbxContract.ItemsSource = SalesInvoiceDB.app_contract.Local;
-            }));
+           
 
             SalesInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+           
                 cbxCondition.ItemsSource = SalesInvoiceDB.app_condition.Local;
-            }));
+         
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 

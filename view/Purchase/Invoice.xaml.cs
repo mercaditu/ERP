@@ -68,10 +68,10 @@ namespace Cognitivo.Purchase
         {
 
             PurchaseInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 cbxContract.ItemsSource = PurchaseInvoiceDB.app_contract.Local;
-            }));
+            //}));
 
 
             PurchaseInvoiceDB.app_department.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
@@ -82,10 +82,10 @@ namespace Cognitivo.Purchase
 
 
             PurchaseInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 cbxCondition.ItemsSource = PurchaseInvoiceDB.app_condition.Local;
-            }));
+            //}));
 
             PurchaseInvoiceDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>

@@ -56,36 +56,34 @@ namespace Cognitivo.Sales
             }
             else
             {
-                await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company 
+                await dbContext.sales_order.Where(a => a.id_company == CurrentSession.Id_Company
                                             && (
                     //a.trans_date >= navPagination.start_Date
                     // && a.trans_date <= navPagination.end_Date 
                     // && 
                                              a.is_head == true)).OrderByDescending(x => x.trans_date).ToListAsync();
             }
-            
+
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 sales_orderViewSource = ((CollectionViewSource)(FindResource("sales_orderViewSource")));
                 sales_orderViewSource.Source = dbContext.sales_order.Local;
             }));
-           
+
         }
 
         private async void load_SecondaryDataThread()
         {
-
-            dbContext.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxContract.ItemsSource = dbContext.app_contract.Local;
-            }));
-
             dbContext.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+           
                 cbxCondition.ItemsSource = dbContext.app_condition.Local;
-            }));
+          
+            dbContext.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
+
+            cbxContract.ItemsSource = dbContext.app_contract.Local;
+
+
+        
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -123,7 +121,7 @@ namespace Cognitivo.Sales
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-           load_PrimaryData();
+            load_PrimaryData();
         }
 
         #region toolbar Events
@@ -369,7 +367,7 @@ namespace Cognitivo.Sales
                 _sales_order_detail.item_description = item.description;
                 _sales_order_detail.item = item;
                 _sales_order_detail.id_item = item.id_item;
-            
+
                 sales_order.sales_order_detail.Add(_sales_order_detail);
             }
             else

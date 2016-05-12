@@ -69,16 +69,16 @@ namespace Cognitivo.Purchase
         {
 
             dbContext.app_contract.Where(a => a.is_active == true && a.id_company == _setting.company_ID).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 cbxContract.ItemsSource = dbContext.app_contract.Local;
-            }));
+            //}));
 
             dbContext.app_department.Where(a => a.is_active == true && a.id_company == _setting.company_ID).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 cbxDepartment.ItemsSource = dbContext.app_department.Local;
-            }));
+           // }));
 
             dbContext.projects.Where(a => a.is_active == true && a.id_company == _setting.company_ID).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>

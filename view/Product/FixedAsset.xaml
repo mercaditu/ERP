@@ -43,8 +43,8 @@
                     <Image x:Name="imageViewer" Margin="4"/>
                 </Grid>
                 <StackPanel Margin="16" VerticalAlignment="Center">
-                    <Label Content="FixedAssetName" Style="{StaticResource H2}"/>
-                    <Label Content="Code" Style="{StaticResource H3}"/>
+                    <Label Content="{Binding name, Mode=OneWay, FallbackValue=Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H2}"/>
+                    <Label Content="{Binding name, Mode=OneWay, FallbackValue=Code, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H3}"/>
                 </StackPanel>
             </StackPanel>
             <TabControl Margin="0,128,0,0">
@@ -52,7 +52,7 @@
                     <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <StackPanel>
                             <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding name}" Style="{StaticResource input_textbox}"/>
+                            <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding code}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />

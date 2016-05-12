@@ -593,16 +593,15 @@
 
             string CustomerName = string.Empty;
 
-            foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).Select(x=>x.FirstOrDefault()).ToList())
+            foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
             {
                 Header += "Moneda : " + detail.app_currencyfx.app_currency.name;
 
                 if (detail.tran_type == app_account_detail.tran_types.Open)
-	            {
-		            Header += "\nBalance de Apertura : " + detail.credit;
+                {
+                    Header += "\nBalance de Apertura : " + detail.credit;
                     Header += "\n--------------------------------" + "\n";
-	            }
-
+                }
                 foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx).ToList())
                 {
                     string AccountName = string.Empty;
@@ -637,7 +636,7 @@
                             InvoiceTime = payment_schedual.sales_invoice.trans_date.ToShortTimeString();
                         }
                     }
-
+                    
                     decimal? value = d.credit - d.debit;
 
                     Detail = Detail
@@ -645,9 +644,9 @@
                         + value.ToString() + "\t" + currency + "\n";
                 }
                 Detail += "\n--------------------------------" + "\n";
-               
+
             }
-            foreach (app_account_detail detail in app_account_session.app_account_detail.Where(x=>x.tran_type==app_account_detail.tran_types.Close).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
+            foreach (app_account_detail detail in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
             {
                 Detail += "Moneda : " + detail.app_currencyfx.app_currency.name;
 
@@ -657,6 +656,7 @@
                     Detail += "\n--------------------------------" + "\n";
                 }
             }
+         
 
             Footer += "--------------------------------" + "\n";
 

@@ -49,15 +49,21 @@ namespace cntrl
                     if (_invoiceList.FirstOrDefault().GetType().BaseType==typeof(sales_invoice))
                     {
                         sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
-                        lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
+                        if (sales_invoice.GrandTotal>0)
+                        {
+                            lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);    
+                        }
+                        
                       
                         
                     }
                     else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
                     {
                         purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
-                        lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage,4);
-                        
+                        if (purchase_invoice.GrandTotal > 0)
+                        {
+                            lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
+                        }
                     }
                     
                 }

@@ -227,7 +227,8 @@ namespace cntrl
                             }
                             else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
                             {
-                                if (SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault() != null)
+
+                                if (_project_task.production_execution_detail != null)
                                 {
                                     //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
                                     //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);

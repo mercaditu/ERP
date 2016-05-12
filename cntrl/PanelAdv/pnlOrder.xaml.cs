@@ -148,6 +148,9 @@ namespace cntrl.PanelAdv
         }
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            production_order production_order = (production_order)production_orderViewSource.View.CurrentItem;
+
+            shared_dbContext.db.production_order.Remove(production_order);
             foreach (var item in project_taskLIST)
             {
                 project_task _project_task = (project_task)item;

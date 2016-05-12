@@ -44,7 +44,7 @@
                 </Grid>
                 <StackPanel Margin="16" VerticalAlignment="Center">
                     <Label Content="{Binding name, Mode=OneWay, FallbackValue=Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H2}"/>
-                    <Label Content="{Binding name, Mode=OneWay, FallbackValue=Code, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H3}"/>
+                    <Label Content="{Binding code, Mode=OneWay, FallbackValue=Code, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource H3}"/>
                 </StackPanel>
             </StackPanel>
             <TabControl Margin="0,128,0,0">

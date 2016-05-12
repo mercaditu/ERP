@@ -79,9 +79,16 @@
                 <TabItem Header="{lex:Loc Maintainance}" Height="40" Margin="-0.5,0,-0.5,-0.5" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal">
                         <DataGrid Width="300" Margin="8">
-                            
+                            <DataGrid.Columns>
+                                <DataGridTextColumn />
+                                <DataGridTextColumn />
+                            </DataGrid.Columns>
                         </DataGrid>
                         <StackPanel>
+                            <cntrl:toolBar_Mini Margin="0,4"
+                                                btnNew_Click="toolBar_Mini_btnNew_Click" 
+                                                btnEdit_Click="toolBar_Mini_btnEdit_Click"
+                                                btnSave_Click="toolBar_Mini_btnSave_Click"/>
                             <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
                             <ComboBox Style="{StaticResource input_combobox}"/>
                             <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />

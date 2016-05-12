@@ -24,5 +24,55 @@ namespace Cognitivo.Product
         {
             InitializeComponent();
         }
+
+        private void toolBar_Mini_btnSave_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnEdit_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnNew_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnEdit_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnSave_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnNew_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnCancel_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnDelete_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnApprove_Click(object sender)
+        {
+
+        }
+
+        private void StackPanel_Drop(object sender, DragEventArgs e)
+        {
+
+        }
     }
 }

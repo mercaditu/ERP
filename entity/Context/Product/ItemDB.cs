@@ -7,8 +7,11 @@ namespace entity
 {
     public partial class ItemDB : BaseDB
     {
-        public void New(item item)
+        public item New()
         {
+            item item = new item();
+            item.State = System.Data.Entity.EntityState.Added;
+            item.IsSelected = true;
             item.unit_cost = 0;
 
             if (item.State > 0)
@@ -21,15 +24,12 @@ namespace entity
                         item.id_vat_group = 0;
                 }
             }
+            return item;
         }
 
         public override int SaveChanges()
         {
             validate_Item();
-
-       
-            
-
             return base.SaveChanges();
         }
 
@@ -53,17 +53,9 @@ namespace entity
                     }
                     else if (item.State == EntityState.Modified)
                     {
-
-
                         item.timestamp = DateTime.Now;
                         item.State = EntityState.Unchanged;
                         Entry(item).State = EntityState.Modified;
-                    }
-                    else if (item.State == EntityState.Deleted)
-                    {
-                        item.timestamp = DateTime.Now;
-                        item.State = EntityState.Unchanged;
-                        base.items.Remove(item);
                     }
                 }
                 else if (item.State > 0)

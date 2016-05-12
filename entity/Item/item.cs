@@ -182,7 +182,7 @@ namespace entity
                     {
                         using (db db = new db())
                         {
-                            if (db.items.Any(x => x.code == code))
+                            if (db.items.Any(x => x.code == code && x.id_item != id_item))
                             {
                                return "Duplicate Code Not Allowed"; 
                             }

@@ -15,9 +15,9 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Product
 {
-    public partial class FixedAsset : Page
+    public partial class FixedAssets : Page
     {
-        public FixedAsset()
+        public FixedAssets()
         {
             InitializeComponent();
         }

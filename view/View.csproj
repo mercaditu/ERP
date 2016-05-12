@@ -410,8 +410,8 @@
     <Compile Include="HumanResource\Talent.xaml.cs">
       <DependentUpon>Talent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Product\FixedAsset.xaml.cs">
-      <DependentUpon>FixedAsset.xaml</DependentUpon>
+    <Compile Include="Product\FixedAssets.xaml.cs">
+      <DependentUpon>FixedAssets.xaml</DependentUpon>
     </Compile>
     <Compile Include="Product\TransferSetting.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1366,7 +1366,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Product\FixedAsset.xaml">
+    <Page Include="Product\FixedAssets.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

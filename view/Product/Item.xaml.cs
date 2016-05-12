@@ -18,11 +18,10 @@ namespace Cognitivo.Product
 {
     public partial class Item : Page, Menu.ApplicationWindow.ICanClose
     {
-        ItemDB dbContext = new ItemDB();
+        ItemDB ItemDB = new ItemDB();
 
         CollectionViewSource itemViewSource,
             itemitem_priceViewSource,
-            //itemitem_propertyViewSource,
             itemitem_dimentionViewSource,
             itemitem_capitalViewSource,
             item_brandViewSource,
@@ -36,7 +35,6 @@ namespace Cognitivo.Product
             item_templateViewSource,
             item_templateitem_template_detaildetailViewSource,
             item_asset_groupViewSource;
-            //app_propertyViewSource;
 
         public Item()
         {
@@ -74,48 +72,48 @@ namespace Cognitivo.Product
 
             if (_pref_Product.Product)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Product).Load();
+                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Product).Load();
             }
 
             if (_pref_Product.RawMaterial)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.RawMaterial).Load();
+                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.RawMaterial).Load();
             }
 
-            if (_pref_Product.FixedAsset)
-            {
-                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).Load();
-            }
+            //if (_pref_Product.FixedAsset)
+            //{
+            //    ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).Load();
+            //}
 
             if (_pref_Product.Service)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Service).Load();
+                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Service).Load();
             }
 
             if (_pref_Product.Task)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Task).Load();
+                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Task).Load();
             }
 
             if (_pref_Product.Supplies)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Supplies).Load();
+                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Supplies).Load();
             }
             if (_pref_Product.ServiceContract)
             {
-                dbContext.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.ServiceContract).Load();
+                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.ServiceContract).Load();
             }
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                itemViewSource.Source = dbContext.items.Local.OrderBy(x => x.name);
+                itemViewSource.Source = ItemDB.items.Local.OrderBy(x => x.name);
             }));
         }
 
         private async void load_SecondaryDataThread()
         {
-            await dbContext.app_measurement
-                    .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
+            await ItemDB.app_measurement
+                    .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
                     .OrderBy(a => a.name).LoadAsync();
 
             await Dispatcher.InvokeAsync(new Action(() =>
@@ -123,90 +121,81 @@ namespace Cognitivo.Product
                 CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
                 CollectionViewSource app_measurementViewSourceconvert = ((CollectionViewSource)(FindResource("app_measurementViewSourceconvert")));
                 CollectionViewSource app_measurementViewSourcenew = ((CollectionViewSource)(FindResource("app_measurementViewSourcenew")));
-                app_measurementViewSource.Source = dbContext.app_measurement.Local;
-                app_measurementViewSourceconvert.Source = dbContext.app_measurement.Local;
-                app_measurementViewSourcenew.Source = dbContext.app_measurement.Local;
+
+                app_measurementViewSource.Source = ItemDB.app_measurement.Local;
+                app_measurementViewSourceconvert.Source = ItemDB.app_measurement.Local;
+                app_measurementViewSourcenew.Source = ItemDB.app_measurement.Local;
             }));
 
-            await dbContext.app_dimension
+            await ItemDB.app_dimension
                 .Where(a => a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                app_dimentionViewSource.Source = dbContext.app_dimension.Local;
+                app_dimentionViewSource.Source = ItemDB.app_dimension.Local;
             }));
 
-            await dbContext.app_vat_group
+            await ItemDB.app_vat_group
                 .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                app_vat_groupViewSource.Source = dbContext.app_vat_group.Local;
+                app_vat_groupViewSource.Source = ItemDB.app_vat_group.Local;
             }));
 
-            await dbContext.item_tag
-                .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
+            await ItemDB.item_tag
+                .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
                 .OrderBy(x => x.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
-                item_tagViewSource.Source = dbContext.item_tag.Local;
+                item_tagViewSource.Source = ItemDB.item_tag.Local;
             }));
 
-            await dbContext.item_template
-             .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
+            await ItemDB.item_template
+             .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
              .OrderBy(x => x.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 item_templateViewSource = ((CollectionViewSource)(FindResource("item_templateViewSource")));
-                item_templateViewSource.Source = dbContext.item_template.Local;
+                item_templateViewSource.Source = ItemDB.item_template.Local;
             }));
 
-            await dbContext.app_currency
-                .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
+            await ItemDB.app_currency
+                .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
-                app_currencyViewSource.Source = dbContext.app_currency.Local;
+                app_currencyViewSource.Source = ItemDB.app_currency.Local;
             }));
 
-            await dbContext.hr_talent
-                .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
+            await ItemDB.hr_talent
+                .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                hr_talentViewSource.Source = dbContext.hr_talent.Local;
+                hr_talentViewSource.Source = ItemDB.hr_talent.Local;
             }));
 
-            await dbContext.item_price_list
-               .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
+            await ItemDB.item_price_list
+               .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
                .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                item_price_listViewSource.Source = dbContext.item_price_list.Local;
+                item_price_listViewSource.Source = ItemDB.item_price_list.Local;
             }));
 
-            await dbContext.item_brand
+            await ItemDB.item_brand
                 .Where(a => a.id_company == CurrentSession.Id_Company)
                 .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                item_brandViewSource.Source = dbContext.item_brand.Local;
+                item_brandViewSource.Source = ItemDB.item_brand.Local;
             }));
-             await dbContext.item_asset_group
-                .Where(a => a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).LoadAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                item_asset_groupViewSource.Source = dbContext.item_asset_group.Local;
-            }));
-
-           
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                // toolBar.Visibility = Visibility.Visible;
                 toolBar.IsEnabled = true;
             }));
         }
@@ -222,16 +211,16 @@ namespace Cognitivo.Product
         #region Implementing Interface For CanClose
         public bool CanClose()
         {
-            if (dbContext.ChangeTracker.HasChanges())
+            if (ItemDB.ChangeTracker.HasChanges())
             {
                 MessageBoxResult savechnages = MessageBox.Show("Do you want to save changes?", "Cognitivo", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                 if (savechnages == MessageBoxResult.Yes)
                 {
-                    IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
+                    IEnumerable<DbEntityValidationResult> validationresult = ItemDB.GetValidationErrors();
                     if (validationresult.Count() == 0)
                     {
-                        dbContext.item_tag.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
-                        dbContext.SaveChanges();
+                        ItemDB.item_tag.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+                        ItemDB.SaveChanges();
                         return true;
                     }
                     else
@@ -271,12 +260,12 @@ namespace Cognitivo.Product
 
             if (item.State == EntityState.Added)
             {
-                dbContext.Entry(item).State = EntityState.Detached;
+                ItemDB.Entry(item).State = EntityState.Detached;
             }
             else
             {
                 item.State = EntityState.Unchanged;
-                dbContext.Entry(item).State = EntityState.Unchanged;
+                ItemDB.Entry(item).State = EntityState.Unchanged;
             }
             itemViewSource.View.Refresh();
             //SetIsEnable = false;
@@ -305,10 +294,9 @@ namespace Cognitivo.Product
         {
             if (itemDataGrid.SelectedItem != null)
             {
-                item item = (item)itemDataGrid.SelectedItem;
+                item item = itemDataGrid.SelectedItem as item;
                 item.IsSelected = true;
                 item.State = System.Data.Entity.EntityState.Modified;
-                dbContext.Entry(item).State = EntityState.Modified;
             }
             else
             {
@@ -318,17 +306,14 @@ namespace Cognitivo.Product
 
         private void toolBar_btnNew_Click(object sender)
         {
-            item _item = new item();
+            item item = ItemDB.New();
             item_price _item_price = new item_price();
 
-            _item.IsSelected = true;
-            _item.item_price.Add(_item_price);
-
-            _item.State = System.Data.Entity.EntityState.Added;
-            dbContext.items.Add(_item);
+            item.item_price.Add(_item_price);
+            ItemDB.items.Add(item);
 
             itemViewSource.View.Refresh();
-            itemViewSource.View.MoveCurrentToFirst();
+            itemViewSource.View.MoveCurrentTo(item);
         }
 
         private void cmbitem_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -358,7 +343,7 @@ namespace Cognitivo.Product
                         List<item_asset> records = item.item_asset.ToList();
                         foreach (var record in records)
                         {
-                            dbContext.item_asset.Remove(record);
+                            ItemDB.item_asset.Remove(record);
                         }
                     }
                 }
@@ -370,7 +355,7 @@ namespace Cognitivo.Product
                         List<item_asset> records = item.item_asset.ToList();
                         foreach (var record in records)
                         {
-                            dbContext.item_asset.Remove(record);
+                            ItemDB.item_asset.Remove(record);
                         }
                     }
                     if (item.item_product.Count > 0)
@@ -378,7 +363,7 @@ namespace Cognitivo.Product
                         List<item_product> records = item.item_product.ToList();
                         foreach (var record in records)
                         {
-                            dbContext.item_product.Remove(record);
+                            ItemDB.item_product.Remove(record);
                         }
                     }
                 }
@@ -401,7 +386,7 @@ namespace Cognitivo.Product
                         List<item_product> records = item.item_product.ToList();
                         foreach (var record in records)
                         {
-                            dbContext.item_product.Remove(record);
+                            ItemDB.item_product.Remove(record);
                         }
                     }
                 }
@@ -411,24 +396,24 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
+            IEnumerable<DbEntityValidationResult> validationresult = ItemDB.GetValidationErrors();
             if (validationresult.Count() == 0)
             {
                 //Check if exact same name exist with the same name. Check if the product is not the same so as not to affect already inserted items.
                 item item = itemViewSource.View.CurrentItem as item;
-                if (dbContext.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item) && item.State==EntityState.Added)
+                if (ItemDB.items.Any(x => x.name.Contains(item.name) && x.id_item != item.id_item) && item.State==EntityState.Added)
                 {
                     toolBar.msgWarning("Product Already Exist..");
                     return;
                 }
-                if (dbContext.items.Any(x => x.code.Contains(item.code) && x.id_item != item.id_item) && item.State == EntityState.Added)
+                if (ItemDB.items.Any(x => x.code.Contains(item.code) && x.id_item != item.id_item) && item.State == EntityState.Added)
                 {
                     toolBar.msgWarning("Code Already Exist..");
                     return;
                 }
 
                 //Save Changes
-                dbContext.SaveChanges();
+                ItemDB.SaveChanges();
 
                 itemViewSource.View.Refresh();
                 toolBar.msgSaved();
@@ -530,20 +515,20 @@ namespace Cognitivo.Product
                     if (e.Parameter as item_price != null)
                     {
                         item_priceDataGrid.CancelEdit();
-                        dbContext.item_price.Remove(e.Parameter as item_price);
+                        ItemDB.item_price.Remove(e.Parameter as item_price);
                         itemitem_priceViewSource.View.Refresh();
                     }
                     if (e.Parameter as item_dimension != null)
                     {
                         item_dimentionDataGrid.CancelEdit();
-                        dbContext.item_dimension.Remove(e.Parameter as item_dimension);
+                        ItemDB.item_dimension.Remove(e.Parameter as item_dimension);
                         itemitem_dimentionViewSource.View.Refresh();
                     }
 
                     if (e.Parameter as item_tag_detail != null)
                     {
                         item_tag_detailDataGrid.CancelEdit();
-                        dbContext.item_tag_detail.Remove(e.Parameter as item_tag_detail);
+                        ItemDB.item_tag_detail.Remove(e.Parameter as item_tag_detail);
                         itemitem_tagdetailViewSource.View.Refresh();
                     }
                 }
@@ -764,11 +749,11 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            dbContext.item_brand
+            ItemDB.item_brand
               .Where(a => a.id_company == CurrentSession.Id_Company)
               .OrderBy(a => a.name).Load();
 
-            item_brandViewSource.Source = dbContext.item_brand.Local;
+            item_brandViewSource.Source = ItemDB.item_brand.Local;
 
         }
 

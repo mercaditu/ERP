@@ -26,6 +26,21 @@ namespace entity
             item_movement = new List<item_movement>();
             //Get Status.
             status = Status.Documents_General.Pending;
+            using(db db = new db())
+            {
+                if (db.app_condition.Where(x => x.is_active).FirstOrDefault()!=null)
+                {
+                    id_condition = db.app_condition.Where(x => x.is_active).FirstOrDefault().id_condition;
+                    if (db.app_contract.Where(x => x.is_default && x.id_condition == id_condition).FirstOrDefault() != null)
+                    {
+                        id_contract = db.app_contract.Where(x => x.is_default && x.id_condition == id_condition).FirstOrDefault().id_contract;
+
+                    }
+                    
+                }
+               
+             
+            }
          
         }
 

@@ -21,5 +21,5 @@ namespace entity
     
         public virtual security_privilage security_privilage { get; set; }
         public virtual security_role security_role { get; set; }
-    }
+    } 
 }

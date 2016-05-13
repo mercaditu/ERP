@@ -11,6 +11,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800" Loaded="Page_Loaded"
 	  Title="{lex:Loc FixedAssets}">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -50,7 +51,7 @@
             <TabControl Margin="0,128,0,0">
                 <TabItem Header="{lex:Loc General}">
                     <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <StackPanel>
+                        <StackPanel Margin="8,0">
                             <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
@@ -66,7 +67,7 @@
                             <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding description}" Style="{StaticResource input_textbox}" Height="128"/>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="8,0">
                             <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
                             <DatePicker Style="{StaticResource input_datepicker}"/>
                             <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />

@@ -369,28 +369,28 @@ namespace Cognitivo.Product
                     }
                 }
                 //Capital Resource
-                else if (item.id_item_type == item.item_type.FixedAssets)
-                {
-                    if (item.item_asset.Count == 0)
-                    {
-                        item_asset _capital = new item_asset();
-                        item.item_asset.Add(_capital);
-                        if (itemitem_capitalViewSource.View != null)
-                        {
-                            itemitem_capitalViewSource.View.Refresh();
-                            itemitem_capitalViewSource.View.MoveCurrentTo(_capital);
-                        }
+                //else if (item.id_item_type == item.item_type.FixedAssets)
+                //{
+                //    if (item.item_asset.Count == 0)
+                //    {
+                //        item_asset _capital = new item_asset();
+                //        item.item_asset.Add(_capital);
+                //        if (itemitem_capitalViewSource.View != null)
+                //        {
+                //            itemitem_capitalViewSource.View.Refresh();
+                //            itemitem_capitalViewSource.View.MoveCurrentTo(_capital);
+                //        }
 
-                    }
-                    if (item.item_product.Count > 0)
-                    {
-                        List<item_product> records = item.item_product.ToList();
-                        foreach (var record in records)
-                        {
-                            ItemDB.item_product.Remove(record);
-                        }
-                    }
-                }
+                //    }
+                //    if (item.item_product.Count > 0)
+                //    {
+                //        List<item_product> records = item.item_product.ToList();
+                //        foreach (var record in records)
+                //        {
+                //            ItemDB.item_product.Remove(record);
+                //        }
+                //    }
+                //}
             }
             //Product
         }

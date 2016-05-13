@@ -276,6 +276,12 @@
     <Compile Include="Commercial\AccountsRecievable.xaml.cs">
       <DependentUpon>AccountsRecievable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commercial\CashFlow.xaml.cs">
+      <DependentUpon>CashFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commercial\Payments.xaml.cs">
+      <DependentUpon>Payments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Commercial\PaymentSetting.cs" />
     <Compile Include="Commercial\PromissoryNote.xaml.cs">
       <DependentUpon>PromissoryNote.xaml</DependentUpon>
@@ -1211,6 +1217,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Commercial\CashFlow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Commercial\Contact.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1220,6 +1230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Commercial\Incoterm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Commercial\Payments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

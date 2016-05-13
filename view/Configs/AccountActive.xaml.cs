@@ -118,6 +118,24 @@ namespace Cognitivo.Configs
                             }
                           
                         }
+                        else
+                        {
+                            foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
+                            {
+                                if (listOpenAmt.Where(x => x.id_payment_type == payment_type.id_payment_type && x.id_currencyfx == app_currencyfx.id_currencyfx).FirstOrDefault() == null)
+                                {
+                                    Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
+                                    clsTransferAmount.PaymentTypeName = payment_type.name;
+                                    clsTransferAmount.amount = 0;
+                                    clsTransferAmount.Currencyfxname = app_currencyfx.app_currency.name;
+                                    clsTransferAmount.id_payment_type = payment_type.id_payment_type;
+                                    clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
+                                    listOpenAmt.Add(clsTransferAmount);
+                                    
+                                }
+                            
+                            }
+                        }
                     }
 
                 }

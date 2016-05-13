@@ -32,8 +32,8 @@ namespace Cognitivo.Report
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            db.app_terminal.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
-            cbxTerminal.ItemsSource = db.app_terminal.Local;
+            db.app_location.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            cbxTerminal.ItemsSource = db.app_location.Local;
 
             Cognitivo.Properties.Settings Settings = new Properties.Settings();
             _connString = Settings.MySQLconnString;
@@ -68,6 +68,8 @@ namespace Cognitivo.Report
             string sql = string.Empty;
 
             sql =  " select ";
+            sql += " (select name from app_terminal where id_terminal=(select id_terminal from sales_invoice where sales_invoice.id_sales_invoice=sales_invoice_detail.id_sales_invoice)) as Terminal, ";
+            sql += " (select number from sales_invoice where sales_invoice.id_sales_invoice=sales_invoice_detail.id_sales_invoice) as number, ";
             sql += " (select code from items where id_item=sales_invoice_detail.id_item) as code, ";
             sql += " (select name from items where id_item=sales_invoice_detail.id_item) as Description, ";
             sql += " sum(quantity) as qty,sum(unit_price) as price, ";

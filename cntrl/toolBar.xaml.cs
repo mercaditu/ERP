@@ -81,21 +81,21 @@ namespace cntrl
             set { SetValue(Annul_IsEnabledProperty, value); }
         }
         private static readonly DependencyProperty CanUserDiscountByPercentProperty
-          = DependencyProperty.Register("CanUserDiscountByPercent", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+          = DependencyProperty.Register("CanUserDiscountByPercent", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
         public bool CanUserDiscountByPercent
         {
             get { return (bool)GetValue(CanUserDiscountByPercentProperty); }
             set { SetValue(CanUserDiscountByPercentProperty, value); }
         }
         private static readonly DependencyProperty CanUserDiscountByValueProperty
-        = DependencyProperty.Register("CanUserDiscountByValue", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+        = DependencyProperty.Register("CanUserDiscountByValue", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
         public bool CanUserDiscountByValue
         {
             get { return (bool)GetValue(CanUserDiscountByValueProperty); }
             set { SetValue(CanUserDiscountByValueProperty, value); }
         }
         private static readonly DependencyProperty CanUserUpdatePriceProperty
-       = DependencyProperty.Register("CanUserUpdatePrice", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
+       = DependencyProperty.Register("CanUserUpdatePrice", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
         public bool CanUserUpdatePrice
         {
             get { return (bool)GetValue(CanUserUpdatePriceProperty); }
@@ -338,6 +338,8 @@ namespace cntrl
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
                 CanUserDiscountByPercent = security.CanUserDiscountByPercent;
+                CanUserDiscountByValue = security.CanUserDiscountByValue;
+                CanUserUpdatePrice = security.CanUserUpdatePrice;
                
                 get_Icons(toolBarIcons.Basic.ToString(), ref security);
             }

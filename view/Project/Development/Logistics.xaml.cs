@@ -109,7 +109,7 @@ namespace Cognitivo.Project.Development
                                 Logistics.buyqty = (decimal)item._ordered_quantity - (decimal)project_task.purchase_tender_item.Sum(x => x.quantity);
                             }
 
-                           
+
                             Logistics._id_item = item._id_item;
                             Logistics._code = item._code;
                             Logistics._name = item._name;
@@ -475,6 +475,87 @@ namespace Cognitivo.Project.Development
                 LoadData();
                 itemDataGrid.ItemsSource = null;
             }
+        }
+
+        private void chkqtyneeded_Checked(object sender, RoutedEventArgs e)
+        {
+            LogisticsList.Clear();
+            project project = ((project)projectViewSource.View.CurrentItem);
+            int id_project = ((project)projectViewSource.View.CurrentItem).id_project;
+            if (id_project > 0)
+            {
+
+
+                if (chkqtyneeded.IsChecked == true)
+                {
+
+
+                    var item_List_group_basic = (from IT in ProjectTaskDB.project_task
+                                                 where (IT.status == Status.Project.Approved)
+                                                 && IT.status != null && IT.id_project == id_project
+                                                 join IK in ProjectTaskDB.item_product on IT.id_item equals IK.id_item
+                                                 join IO in ProjectTaskDB.item_movement on IK.id_item_product equals IO.id_item_product into a
+                                                 from IM in a.DefaultIfEmpty()
+                                                 group IT by new { IT.items, IM }
+                                                     into last
+                                                     select new
+                                                     {
+                                                         _id_item = last.Key.items.id_item != 0 ? last.Key.items.id_item : 0,
+                                                         _code = last.Key.items != null ? last.Key.items.code : "",
+                                                         _name = last.Key.items != null ? last.Key.items.name : "",
+                                                         _id_task = last.Max(x => x.id_project_task),
+                                                         _ordered_quantity = last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0,
+                                                         avlqtyColumn = last.Key.IM.credit - last.Key.IM.debit,
+                                                         buyqty = (last.Sum(x => x.quantity_est) != 0 ? last.Sum(x => x.quantity_est) : 0) - (last.Key.IM.credit != null ? last.Key.IM.credit : 0 - last.Key.IM.debit != null ? last.Key.IM.debit : 0),
+                                                         item = last.Key.items
+                                                     }).ToList();
+
+                    var item_List_group = (from PL in item_List_group_basic
+                                           group PL by new { PL.item }
+                                               into last
+                                               select new
+                                               {
+                                                   _id_item = last.Key.item.id_item != 0 ? last.Key.item.id_item : 0,
+                                                   _code = last.Key.item != null ? last.Key.item.code : "",
+                                                   _name = last.Key.item != null ? last.Key.item.name : "",
+                                                   _id_task = last.Max(x => x._id_task),
+                                                   _ordered_quantity = last.Max(x => x._ordered_quantity),
+                                                   avlqtyColumn = last.Sum(x => x.avlqtyColumn),
+                                                   buyqty = last.Sum(x => x.avlqtyColumn) < last.Max(x => x._ordered_quantity) ? (last.Max(x => x._ordered_quantity) != 0 ? last.Max(x => x._ordered_quantity) : 0) - (last.Sum(x => x.avlqtyColumn) != 0 ? last.Sum(x => x.avlqtyColumn) : 0) : 0,
+                                                   item = last.Key.item
+                                               }).ToList();
+
+
+                    foreach (dynamic item in item_List_group)
+                    {
+                        int id_task = (int)item._id_task;
+                        Logistic Logistics = new Logistic();
+
+                        Logistics.avlqtyColumn = item.avlqtyColumn;
+                        Logistics.buyqty = item.buyqty;
+
+
+
+                        Logistics._id_item = item._id_item;
+                        Logistics._code = item._code;
+                        Logistics._name = item._name;
+                        Logistics._id_task = item._id_task;
+                        Logistics._ordered_quantity = item._ordered_quantity;
+                        Logistics.item = item.item;
+                        LogisticsList.Add(Logistics);
+                    }
+                    item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.item.id_item_type == item.item_type.Product);
+                    item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.item.id_item_type == item.item_type.RawMaterial);
+                }
+
+            }
+        }
+
+        private void chkqtyneeded_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+            LoadData();
+
         }
 
 

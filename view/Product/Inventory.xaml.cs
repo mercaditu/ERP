@@ -96,7 +96,7 @@ namespace Cognitivo.Product
                         item_inventory_detail.item_product = i;
                         item_inventory_detail.id_item_product = i.id_item_product;
 
-                        if (app_branchapp_locationViewSource != null)
+                        if (app_location != null)
                         {
                             item_inventory_detail.app_location = app_location;
                             item_inventory_detail.id_location = app_location.id_location;

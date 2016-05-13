@@ -325,11 +325,16 @@
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="FontSize" Value="12"/>
                 <Setter Property="FontWeight" Value="Medium"/>
-                <Setter Property="Foreground" Value="RoyalBlue"/>
+                <Setter Property="Foreground" Value="#FF00AEFF"/>
                 <Setter Property="TextDecorations" Value="Underline"/>
                 <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect Color="RoyalBlue" ShadowDepth="0" BlurRadius="1" Opacity="0.75"/>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <Style x:Key="generic_Label" 

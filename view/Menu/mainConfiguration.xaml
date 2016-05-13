@@ -29,7 +29,7 @@
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                         <TextBlock Text="Basic details for this PC" 
-                                   Style="{StaticResource text_Instructions}" 
+                                   Style="{StaticResource text_Instructions}" Foreground="White"
                                    Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -38,7 +38,7 @@
                             <TextBlock Text="{lex:Loc KeyboardShortcuts}" Focusable="True" MouseUp="config_MouseUp" Tag="KeyGestureSettings"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Customize key combinations that are used in entire system for CRUD operations" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Customize key combinations that are used in entire system for CRUD operations" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -46,7 +46,7 @@
                             <TextBlock Text="{lex:Loc Language}" Focusable="True" MouseUp="config_MouseUp" Tag="Language"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Select the Language you would like to use with Cognitivo" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Select the Language you would like to use with Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -54,7 +54,7 @@
                             <TextBlock Text="{lex:Loc BackgroundImage}" Focusable="True" MouseUp="config_MouseUp" Tag="Wallpaper"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -62,19 +62,19 @@
                             <TextBlock Text="{lex:Loc LocatetheServer}" Focusable="True" MouseUp="config_MouseUp" Tag="ConnectionBuilder"
                             Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Change your connection to another Database" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Change your connection to another Database" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />
-                            <TextBlock Text="Migration : Ria" Focusable="True" MouseUp="config_MouseUp" Tag="MigrationAssistant"
+                            <TextBlock Text="Migration Ria" Focusable="True" MouseUp="config_MouseUp" Tag="MigrationAssistant"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
                             <Image Height="24" Source="/Cognitivo;component/Images/Application/128/DefaultIcon.png" />
-                            <TextBlock Text="Migration : Cogent" Focusable="True" MouseUp="config_MouseUp" Tag="MigrationGUI"
+                            <TextBlock Text="Migration Cogent" Focusable="True" MouseUp="config_MouseUp" Tag="MigrationGUI"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
                     </StackPanel>
@@ -87,7 +87,7 @@
                             <TextBlock Text="{lex:Loc Company}" MouseUp="config_MouseUp" Tag="Company"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Company}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Company}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -96,7 +96,7 @@
                             <TextBlock Text="{lex:Loc Branch}"  MouseUp="config_MouseUp" Tag="Branch"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Branch}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Branch}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -105,7 +105,7 @@
                             <TextBlock Text="{lex:Loc Terminal}"  MouseUp="config_MouseUp" Tag="Terminal"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Terminal}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Terminal}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                    Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -114,7 +114,7 @@
                             <TextBlock Text="{lex:Loc VAT}" MouseUp="config_MouseUp" Tag="VAT"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_VAT}" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_VAT}" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -122,7 +122,7 @@
                             <TextBlock Text="{lex:Loc VATGrouping}" MouseUp="config_MouseUp" Tag="VATGroup"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_VATGroup}" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="{lex:Loc desc_VATGroup}" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5" >
                       
@@ -131,7 +131,7 @@
                             <TextBlock Text="{lex:Loc Geography}" MouseUp="config_MouseUp" Focusable="True" Tag="Geography"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Select Wallpaper and Theme for Cognitivo" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -141,7 +141,7 @@
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
                         <TextBlock Text="Define departments." 
-                           Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel>
@@ -154,7 +154,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_PriceList}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_PriceList}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
@@ -165,7 +165,7 @@
                                FontSize="16" Margin="5,0"/>
                             </StackPanel>
                             <TextBlock Text="Sales Rep earn commision on sales or payments" 
-                           Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
                             <StackPanel Orientation="Horizontal" Margin="0">
@@ -173,7 +173,7 @@
                                 <TextBlock Text="{lex:Loc PaymentType}" Focusable="True" MouseUp="config_MouseUp" Tag="PaymentType"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_PaymentType}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_PaymentType}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
@@ -182,7 +182,7 @@
                                 <TextBlock Text="{lex:Loc ContactRole}" Focusable="True" MouseUp="config_MouseUp" Tag="ContactRole"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
@@ -192,7 +192,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_contactTag}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_contactTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                        
@@ -206,7 +206,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_CostCenter}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_CostCenter}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
@@ -215,7 +215,7 @@
                                 <TextBlock Text="{lex:Loc ContactRole}" Focusable="True" MouseUp="config_MouseUp" Tag="ContactRole"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                     </StackPanel>
@@ -231,7 +231,7 @@
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
                         <TextBlock Text="{lex:Loc desc_Location}" 
-                           Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                           Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -240,7 +240,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemTag}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_ItemTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -250,7 +250,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemBrand}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_ItemBrand}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -259,7 +259,7 @@
                             <TextBlock Text="{lex:Loc Type}" MouseUp="config_MouseUp" Tag="MeasurementType"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Define types of measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Define types of measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -267,7 +267,7 @@
                             <TextBlock Text="{lex:Loc Measurement}" MouseUp="config_MouseUp" Tag="Measurement"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Measurement that are used to measure units of products or services" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -275,7 +275,7 @@
                             <TextBlock Text="{lex:Loc Dimension}" MouseUp="config_MouseUp" Tag="Dimension"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Specify item dimensions" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Specify item dimensions" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -284,7 +284,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemTempalte}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_ItemTempalte}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -294,7 +294,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_ItemAssetGroupTag}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_ItemAssetGroupTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <!--<StackPanel Margin="32,5">
@@ -303,7 +303,7 @@
                             <TextBlock Text="{lex:Loc Property}" MouseUp="config_MouseUp" Tag="Property"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Define properties of item" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Define properties of item" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>-->
               
                 </StackPanel>
@@ -315,7 +315,7 @@
                             <TextBlock Text="{lex:Loc Currency}" MouseUp="config_MouseUp" Tag="Currency"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Currency}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Currency}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                    Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5" >
@@ -324,7 +324,7 @@
                             <TextBlock Text="{lex:Loc Bank}" MouseUp="config_MouseUp" Tag="Bank"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Bank}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Bank}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -333,7 +333,7 @@
                             <TextBlock Text="{lex:Loc Account}" MouseUp="config_MouseUp" Tag="Account"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Account}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Account}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -342,7 +342,7 @@
                             <TextBlock Text="{lex:Loc HourCoeficient}" MouseUp="config_MouseUp" Tag="Hr_coefficient"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <!--<TextBlock Text="{lex:Loc desc_Account}" Style="{StaticResource text_Instructions}" 
+                        <!--<TextBlock Text="{lex:Loc desc_Account}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>-->
                     </StackPanel>
                 </StackPanel>
@@ -354,7 +354,7 @@
                             <TextBlock Text="{lex:Loc Condition}" MouseUp="config_MouseUp" Tag="Condition"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Conditions for a Sale or Purchase, such as Cash or Credit" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Conditions for a Sale or Purchase, such as Cash or Credit" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -362,7 +362,7 @@
                             <TextBlock Text="{lex:Loc Contract}" MouseUp="config_MouseUp" Tag="Contract"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Contracts help create a structured method of payment for a specific condition" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Contracts help create a structured method of payment for a specific condition" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -370,7 +370,7 @@
                             <TextBlock Text="{lex:Loc IncotermCondition}" MouseUp="config_MouseUp" Tag="IncotermCondition"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Incoterm Conditions" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Incoterm Conditions" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -378,7 +378,7 @@
                             <TextBlock Text="{lex:Loc Incoterm}" MouseUp="config_MouseUp" Tag="Incoterm"
                                            Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Incoterm" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Incoterm" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="16,8" Width="270" Height="244">
@@ -389,7 +389,7 @@
                             <TextBlock Text="{lex:Loc Document}" MouseUp="config_MouseUp" Tag="Document"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Document}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Document}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
@@ -398,7 +398,7 @@
                             <TextBlock Text="{lex:Loc Range}" MouseUp="config_MouseUp" Tag="DocumentRange"
                                         Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="{lex:Loc desc_Range}" Style="{StaticResource text_Instructions}" 
+                        <TextBlock Text="{lex:Loc desc_Range}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         
                     </StackPanel>
@@ -411,7 +411,7 @@
                                            Style="{StaticResource text_HyperLinks}" 
                                FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ProjectTag}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_ProjectTag}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                         <StackPanel Margin="32,5">
@@ -420,7 +420,7 @@
                                 <TextBlock Text="{lex:Loc ContactRole}" Focusable="True" MouseUp="config_MouseUp" Tag="ContactRole"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                             </StackPanel>
-                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" 
+                            <TextBlock Text="{lex:Loc desc_ContactRole}" Style="{StaticResource text_Instructions}" Foreground="White" 
                                        Margin="28,0,0,0" Width="188"/>
                         </StackPanel>
                     </StackPanel>
@@ -434,7 +434,7 @@
                             <TextBlock Text="{lex:Loc UserRole}" MouseUp="config_MouseUp" Tag="UserRole"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Roles help group Users into groups." Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Roles help group Users into groups." Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                     <StackPanel Margin="32,5">
                         <StackPanel Orientation="Horizontal" Margin="0">
@@ -442,7 +442,7 @@
                             <TextBlock Text="{lex:Loc User}" MouseUp="config_MouseUp" Tag="User"
                                        Style="{StaticResource text_HyperLinks}" FontSize="16" Margin="5,0"/>
                         </StackPanel>
-                        <TextBlock Text="Users are linked to Contacts" Style="{StaticResource text_Instructions}" Margin="28,0,0,0" Width="188"/>
+                        <TextBlock Text="Users are linked to Contacts" Style="{StaticResource text_Instructions}" Foreground="White" Margin="28,0,0,0" Width="188"/>
                     </StackPanel>
                 </StackPanel>
             </WrapPanel>

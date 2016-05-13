@@ -218,11 +218,11 @@ namespace entity
             [LocalizedDescription("CostCenter")]
             CostCenter = 77,
             //[LocalizedDescription("ReportSalesbyTag")]
-            ReportSalesbyTag = 79,
+            Reports = 79,
             //[LocalizedDescription("ReportSalesbyProduct")]
-            ReportSalesbyProduct,
+            ReportSalesbyProduct = 82,
             //[LocalizedDescription("ReportSalesbyDate")]
-            ReportSalesbyDate
+            ReportSalesbyDate = 83
         }
     }
 }

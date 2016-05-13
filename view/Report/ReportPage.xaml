@@ -15,8 +15,8 @@
         <ListBox Grid.Column="0">
             <ListBoxItem IsSelected="False">
                 <StackPanel Orientation="Horizontal">
-                    <Image Height="16" Source="/Cognitivo;component/Images/Menu/modSales.png" />
-                    <Label Style="{StaticResource input_label}" Content="Sales"/>
+                    <Image Height="24" Source="/Cognitivo;component/Images/Menu/modSales.png" />
+                    <Label Style="{StaticResource H3}" Content="Sales"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem>
@@ -27,8 +27,14 @@
             </ListBoxItem>
             <ListBoxItem>
                 <StackPanel Orientation="Horizontal">
-                    <Label Style="{StaticResource ico_Label}" Content="S"/>
+                    <Label Style="{StaticResource ico_Label}" Content="C"/>
                     <Label Style="{StaticResource generic_Label}" Content="SalesDetail"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="S"/>
+                    <Label Style="{StaticResource generic_Label}" Content="SalesBySalesman"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem>
@@ -45,7 +51,7 @@
             </ListBoxItem>
             <ListBoxItem>
                 <StackPanel Orientation="Horizontal">
-                    <Label Style="{StaticResource ico_Label}" Content="$"/>
+                    <Label Style="{StaticResource ico_Label}" Content="$" HorizontalContentAlignment="Center"/>
                     <Label Style="{StaticResource generic_Label}" Content="PaymentsRecieved"/>
                 </StackPanel>
             </ListBoxItem>
@@ -57,8 +63,8 @@
             </ListBoxItem>
             <ListBoxItem IsSelected="False">
                 <StackPanel Orientation="Horizontal">
-                    <Image Height="16" Source="/Cognitivo;component/Images/Menu/modPurchase.png" />
-                    <Label Style="{StaticResource input_label}" Content="Purchase"/>
+                    <Image Height="24" Source="/Cognitivo;component/Images/Menu/modPurchase.png" />
+                    <Label Style="{StaticResource H3}" Content="Purchase"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem>
@@ -69,7 +75,7 @@
             </ListBoxItem>
             <ListBoxItem>
                 <StackPanel Orientation="Horizontal">
-                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource ico_Label}" Content="C"/>
                     <Label Style="{StaticResource generic_Label}" Content="PurchaseDetail"/>
                 </StackPanel>
             </ListBoxItem>
@@ -99,8 +105,8 @@
             </ListBoxItem>
             <ListBoxItem IsSelected="False">
                 <StackPanel Orientation="Horizontal">
-                    <Image Height="16" Source="/Cognitivo;component/Images/Menu/modStock.png" />
-                    <Label Style="{StaticResource input_label}" Content="Stock"/>
+                    <Image Height="24" Source="/Cognitivo;component/Images/Menu/modStock.png" />
+                    <Label Style="{StaticResource H3}" Content="Stock"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem>
@@ -128,5 +134,8 @@
                 </StackPanel>
             </ListBoxItem>
         </ListBox>
+        <Grid Grid.Column="1" Background="Gainsboro">
+            
+        </Grid>
     </Grid>
 </Page>

@@ -141,15 +141,12 @@ namespace Cognitivo.Configs
                 }
                 else
                 {
-
-                   
                     int id_paymentType = 0;
-                    string curname = "";
-                    int id_currencyfx = 0;
 
-                    List<app_currencyfx> app_currencyList = new List<app_currencyfx>();
-                    app_currencyList = db.app_currencyfx.ToList();
-                    foreach (app_currencyfx app_currencyfx in app_currencyList)
+                    List<app_currency> app_currencyList = new List<app_currency>();
+                    app_currencyList = db.app_currency.ToList();
+
+                    foreach (app_currency app_currency in app_currencyList)
                     {
                         foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
                         {
@@ -158,19 +155,17 @@ namespace Cognitivo.Configs
                             clsTransferAmount.PaymentTypeName = payment_type.name;
                          
                             clsTransferAmount.id_payment_type = payment_type.id_payment_type;
-                            clsTransferAmount.amount = app_account.app_account_detail.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.credit - x.debit);
+                            clsTransferAmount.amount = app_account.app_account_detail.Where(x => 
+                                x.app_currencyfx.id_currency == app_currency.id_currency 
+                                && x.id_payment_type == payment_type.id_payment_type)
+                                .Sum(x => x.credit - x.debit);
 
-                            clsTransferAmount.Currencyfxname = app_currencyfx.app_currency.name;
+                            clsTransferAmount.Currencyfxname = app_currency.name;
                             clsTransferAmount.id_payment_type = id_paymentType;
-                            clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
+                            clsTransferAmount.id_currencyfx = db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
                             listOpenAmt.Add(clsTransferAmount);
                         }
-                          
-
-
-                       
                     }
-
                 }
 
                 CashDataGrid.ItemsSource = listOpenAmt;

@@ -86,7 +86,7 @@ namespace Cognitivo.Sales
             /// Validate Payment <= Sales.GrandTotal
             //if (payment.GrandTotal >= payment.GrandTotal_Detail)
             //{
-            if (payment.GrandTotal > payment.GrandTotalDetail)
+            if (payment.GrandTotalDetail <= sales_invoice.GrandTotal)
             {
                 tabPayment.Focus();
                 return;

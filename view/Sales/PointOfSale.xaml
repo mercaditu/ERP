@@ -361,12 +361,13 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock  FontSize="30" Foreground="White" HorizontalAlignment="Center"
-                                    Text="{lex:Loc Total}">
+                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" Margin="128,0">
+                            <TextBlock  FontSize="30" Foreground="White" HorizontalAlignment="Center">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="White" ShadowDepth="0"/>
                                 </TextBlock.Effect>
+                                <Run Text="{lex:Loc Total}"/>
+                                <Run Text="{lex:Loc Payment}"/>
                             </TextBlock>
                             <Label Content=" "/>
                             <TextBlock FontSize="30" Foreground="White"

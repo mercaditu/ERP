@@ -135,7 +135,7 @@ namespace entity
                 {
                     _value = value;
 
-                    if (payment!=null)
+                    if (payment != null)
                     {
                         ValueInDefaultCurrency = Currency.convert_Values(value, id_currencyfx, payment.id_currencyfx, App.Modules.Sales);
                         RaisePropertyChanged("ValueInDefaultCurrency");
@@ -179,6 +179,9 @@ namespace entity
                 {
                     _ValueInDefaultCurrency = value;
                     RaisePropertyChanged("ValueInDefaultCurrency");
+
+                    //To refresh header for payment toal in DefaultCurrency.
+                    payment.RaisePropertyChanged("GrandTotalDetail");
                 }
             }
         }

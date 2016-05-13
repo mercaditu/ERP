@@ -105,6 +105,7 @@ namespace entity
             }
         }
         private decimal _GrandTotal;
+
         [NotMapped]
         public decimal GrandTotalDetail
         {

@@ -599,7 +599,7 @@
 
                 if (detail.tran_type == app_account_detail.tran_types.Open)
                 {
-                    Detail += "\nBalance de Apertura : " + Math.Round(detail.credit,2);
+                    Detail += "\nBalance de Apertura : " + Math.Round(detail.credit, 2);
 
                 }
                 foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx).ToList())
@@ -643,7 +643,7 @@
                     //    + "\nFactura: " + InvoiceTime + " " + InvoiceNumber + "\n"
                     //    + value.ToString() + "\t" + currency ;
                 }
-           
+
                 var listvat = app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx)
                          .GroupBy(a => new { a.id_payment_type, a.id_currencyfx })
                      .Select(g => new
@@ -654,25 +654,37 @@
                          id_payment_type = g.Key.id_payment_type,
                          value = g.Sum(a => a.credit)
                      }).ToList().OrderBy(x => x.id_currencyfx);
-                Detail += "\nTotal de ventas Neto :" + Math.Round(listvat.Sum(x => x.value),2) + detail.app_currencyfx.app_currency.name + "\n";
+                Detail += "\nTotal de ventas Neto :" + Math.Round(listvat.Sum(x => x.value), 2) + detail.app_currencyfx.app_currency.name + "\n";
                 foreach (dynamic item in listvat)
                 {
-                    Detail += item.paymentname + "\t" + Math.Round(item.value,2) + detail.app_currencyfx.app_currency.name + "\n";
+                    Detail += item.paymentname + "\t" + Math.Round(item.value, 2) + detail.app_currencyfx.app_currency.name + "\n";
 
                 }
                 foreach (app_account_detail account_detail in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close && x.id_currencyfx == detail.id_currencyfx).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
                 {
 
 
-                   
-                        Detail += "\nBalance de Cierre : " + Math.Round(account_detail.debit,2);
-                        Detail += "\n--------------------------------" + "\n";
-                   
+
+                    Detail += "\nBalance de Cierre : " + Math.Round(account_detail.debit, 2);
+                    Detail += "\n--------------------------------" + "\n";
+
                 }
-             
+
                 Detail += "\n--------------------------------" + "\n";
             }
 
+            using (db db = new db())
+            {
+                if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault() != null)
+                {
+                     app_currencyfx app_currencyfx= db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault();
+                     int id_currencyfx = app_currencyfx.id_currencyfx;
+                    decimal amount = app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == id_currencyfx).Sum(x => x.credit);
+
+                    Detail += "\nTotal de ventas Neto :" + Math.Round(amount, 2) + app_currencyfx.app_currency.name + "\n";
+                }
+                Detail += "\n--------------------------------" + "\n";
+            }
 
 
 

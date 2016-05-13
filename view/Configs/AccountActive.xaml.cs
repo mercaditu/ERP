@@ -146,7 +146,7 @@ namespace Cognitivo.Configs
                         }
 
                         clsTransferAmount.PaymentTypeName = paymenttypename;
-                        clsTransferAmount.amount = 0;
+                
 
                         if (db.app_currencyfx.Where(x => x.id_currency == app_currency.id_currency && x.is_active).FirstOrDefault() != null)
                         {
@@ -154,6 +154,7 @@ namespace Cognitivo.Configs
                             curname = app_currencyfx.app_currency.name;
                             id_currencyfx = app_currencyfx.id_currencyfx;
                         }
+                        clsTransferAmount.amount = app_account.app_account_detail.Where(x => x.id_currencyfx == id_currencyfx).Sum(x=>x.credit-x.debit);
 
                         clsTransferAmount.Currencyfxname = curname;
                         clsTransferAmount.id_payment_type = id_paymentType;

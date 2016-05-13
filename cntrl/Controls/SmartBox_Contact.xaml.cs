@@ -208,7 +208,7 @@ namespace cntrl.Controls
 
             var predicate = PredicateBuilder.True<entity.contact>();
 
-            predicate = (x => x.is_active);
+            predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company);
 
             if (Get_Customers)
             {

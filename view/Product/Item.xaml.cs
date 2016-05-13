@@ -13,12 +13,13 @@ using entity;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Threading.Tasks;
+using cntrl.Controls;
 
 namespace Cognitivo.Product
 {
     public partial class Item : Page, Menu.ApplicationWindow.ICanClose
     {
-        ItemDB ItemDB = new ItemDB();
+        ItemDB ItemDB = null;
 
         CollectionViewSource itemViewSource,
             itemitem_priceViewSource,
@@ -59,48 +60,55 @@ namespace Cognitivo.Product
 
         private void load_PrimaryData()
         {
-            Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
-            task_PrimaryData.Wait();
+            ItemDB = new ItemDB();
+
+            load_PrimaryDataThread();
             Task thread_SecondaryData = Task.Factory.StartNew(() => load_SecondaryDataThread());
         }
 
-        private async void load_PrimaryDataThread()
+        private void load_PrimaryDataThread()
         {
-            ProductSettings _pref_Product = new ProductSettings();
+            var predicate = PredicateBuilder.True<entity.item>();
+            predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company);
 
-            if (_pref_Product.Product)
+            var predicateOR = PredicateBuilder.False<entity.item>();
+
+            if (ProductSettings.Default.Product)
             {
-                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Product).Load();
+                predicateOR = predicateOR.Or(x => x.id_item_type == item.item_type.Product);
             }
 
-            if (_pref_Product.RawMaterial)
+            if (ProductSettings.Default.RawMaterial)
             {
-                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.RawMaterial).Load();
+                predicateOR = predicateOR.Or(x => x.id_item_type == item.item_type.RawMaterial);
             }
 
-            if (_pref_Product.Service)
+            if (ProductSettings.Default.Supplies)
             {
-                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Service).Load();
+                predicateOR = predicateOR.Or(x => x.id_item_type == item.item_type.Supplies);
             }
 
-            if (_pref_Product.Task)
+            if (ProductSettings.Default.Task)
             {
-                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Task).Load();
+                predicateOR = predicateOR.Or(x => x.id_item_type == item.item_type.Task);
             }
 
-            if (_pref_Product.Supplies)
+            if (ProductSettings.Default.Service)
             {
-                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.Supplies).Load();
-            }
-            if (_pref_Product.ServiceContract)
-            {
-                ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.ServiceContract).Load();
+                predicateOR = predicateOR.Or(x => x.id_item_type == item.item_type.Service);
             }
 
-            await Dispatcher.InvokeAsync(new Action(() =>
+            if (ProductSettings.Default.ServiceContract)
             {
-                itemViewSource.Source = ItemDB.items.Local.OrderBy(x => x.name);
-            }));
+                predicateOR = predicateOR.Or(x => x.id_item_type == item.item_type.ServiceContract);
+            }
+
+            predicate = predicate.And
+            (
+                predicateOR
+            );
+
+            itemViewSource.Source = ItemDB.items.Where(predicate).OrderBy(x => x.name).ToList();
         }
 
         private async void load_SecondaryDataThread()
@@ -545,7 +553,7 @@ namespace Cognitivo.Product
             _pref_Product = ProductSettings.Default;
             popupCustomize.IsOpen = false;
 
-            Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
+            load_PrimaryDataThread();
 
             toolBar.msgWarning("Close and Open Window to see Changes");
         }

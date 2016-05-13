@@ -489,6 +489,9 @@
     <Compile Include="ReportViewerAccounting.xaml.cs">
       <DependentUpon>ReportViewerAccounting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Report\ReportSalesbyDate.xaml.cs">
       <DependentUpon>ReportSalesbyDate.xaml</DependentUpon>
     </Compile>
@@ -1449,6 +1452,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ReportViewerAccounting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Report\ReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

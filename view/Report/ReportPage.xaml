@@ -1,0 +1,132 @@
+﻿<Page x:Class="Cognitivo.Report.ReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="700"
+	Title="ReportPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0">
+            <ListBoxItem IsSelected="False">
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="16" Source="/Cognitivo;component/Images/Menu/modSales.png" />
+                    <Label Style="{StaticResource input_label}" Content="Sales"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="S"/>
+                    <Label Style="{StaticResource generic_Label}" Content="Sales"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="S"/>
+                    <Label Style="{StaticResource generic_Label}" Content="SalesDetail"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="SalesByProduct"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="PendingDocuments"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="$"/>
+                    <Label Style="{StaticResource generic_Label}" Content="PaymentsRecieved"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="U"/>
+                    <Label Style="{StaticResource generic_Label}" Content="CurrentAccount"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem IsSelected="False">
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="16" Source="/Cognitivo;component/Images/Menu/modPurchase.png" />
+                    <Label Style="{StaticResource input_label}" Content="Purchase"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="Purchase"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="PurchaseDetail"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="PurchaseByCostCenter"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="PendingDocuments"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="$"/>
+                    <Label Style="{StaticResource generic_Label}" Content="PaymentsMade"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="U"/>
+                    <Label Style="{StaticResource generic_Label}" Content="CurrentAccount"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem IsSelected="False">
+                <StackPanel Orientation="Horizontal">
+                    <Image Height="16" Source="/Cognitivo;component/Images/Menu/modStock.png" />
+                    <Label Style="{StaticResource input_label}" Content="Stock"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="Item"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="ItemCatalog"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="HistoricStockLevel"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="ValuedStockLevels"/>
+                </StackPanel>
+            </ListBoxItem>
+        </ListBox>
+    </Grid>
+</Page>

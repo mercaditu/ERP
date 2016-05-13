@@ -23,6 +23,7 @@
         <converter:AccountingChartGroupExpense x:Key="AccountingChartGroupExpense"/>
         <converter:AccountingChartGroupIncome x:Key="AccountingChartGroupIncome"/>
         <converter:ChartOfAccountSelectionConverter x:Key="SelectedAccountConverter"/>
+        <converter:AccountingChart2BooleanConverter x:Key="AccountingChart2BooleanConverter"/>
         <converter:TrueToFalseConverter x:Key="TrueFalse"/>
         <CollectionViewSource x:Key="accounting_chartViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:accounting_chart}, CreateList=True}"/>
         <CollectionViewSource x:Key="accounting_chartParentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:accounting_chart}, CreateList=True}"/>
@@ -49,7 +50,7 @@
         <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
         <!-- Navigation -->
-        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="chartdatagrid"
+        <!--<ListBox Background="{StaticResource AccentColor_Brush}" x:Name="chartdatagrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="chartdatagrid_SelectionChanged"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -63,19 +64,45 @@
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        </ListBox>
+        </ListBox>-->
+        <Grid Grid.Row="1">
+            <Grid.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type data:accounting_chart}" 
+                                          ItemsSource="{Binding child, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <Panels:pnl_TreeChart IsChecked="{Binding is_selected, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                          Code="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"
+                                          ChartName="{Binding name, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
+                </HierarchicalDataTemplate>
+            </Grid.Resources>
+            <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}"  
+                                        VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
+                                        ScrollViewer.CanContentScroll="True"   >
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}" >
+                        <Setter Property="IsExpanded" Value="True"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+
+                <TreeView.ItemsPanel>
+                    <ItemsPanelTemplate >
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </TreeView.ItemsPanel>
+            </cntrl:ExtendedTreeView>
+        </Grid>
+  
 
         <TabControl Grid.Column="1" Grid.Row="1">
             <TabItem Header="{lex:Loc ChartofAccount}">
-                <StackPanel Background="White" Grid.Column="1" Grid.Row="1" Margin="16"
-                        IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                    <Label Content="{lex:Loc Parent}" Style="{StaticResource input_label}"/>
-                    <StackPanel Orientation="Horizontal">
+                <StackPanel Background="White" Grid.Column="1" Grid.Row="1" Margin="16" DataContext="{Binding SelectedItem_, ElementName=treeProject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding state, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Converter={StaticResource AccountingChart2BooleanConverter}}" >
+                    <!--<Label Content="{lex:Loc Parent}" Style="{StaticResource input_label}"/>-->
+                    <!--<StackPanel Orientation="Horizontal">
                         <ComboBox Name="cbxParent" ItemsSource="{Binding Source={StaticResource accounting_chartParentViewSource}}"
                           Grid.Column="1" Style="{StaticResource input_combobox}" SelectedValuePath="id_chart" DisplayMemberPath="name"
                           IsSynchronizedWithCurrentItem="True" VerticalAlignment="Center"/>
                         <Button Name="btnClearParent" Click="btnClearParent_Click" VerticalAlignment="Top" ToolTip="{lex:Loc Clear}" Content=" X "/>
-                    </StackPanel>
+                    </StackPanel>-->
                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="txtName" TabIndex="0" Style="{StaticResource input_textbox}"
 					     Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -301,7 +328,7 @@
 			btnDelete_Click="toolBar_btnDelete_Click"
 			btnSave_Click="toolBar_btnSave_Click"
 			           btnCancel_Click="toolBar_btnCancel_Click" 
-                       btnSearch_Click="toolBar_btnSearch_Click"
+                      
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                         Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        appName="ChartofAccount"/>

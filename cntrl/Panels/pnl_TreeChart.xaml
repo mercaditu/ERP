@@ -29,8 +29,8 @@
                         </Style>
                     </CheckBox.Style>
                 </CheckBox>
-            <Label Content="{Binding Code, ElementName=TreeChart, UpdateSourceTrigger=PropertyChanged}" Foreground="White" Style="{StaticResource generic_Label}" />
-            <Label Content="{Binding ChartName, ElementName=TreeChart, UpdateSourceTrigger=PropertyChanged}" Foreground="White" FontSize="12"
+            <Label Content="{Binding Code, ElementName=TreeChart, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
+            <Label Content="{Binding ChartName, ElementName=TreeChart, UpdateSourceTrigger=PropertyChanged}"  FontSize="12"
                    Style="{StaticResource input_label}"/>
         </StackPanel>
     </Grid>

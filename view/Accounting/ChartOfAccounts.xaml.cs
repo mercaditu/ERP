@@ -15,8 +15,8 @@ namespace Cognitivo.Accounting
     {
         AccountingChartDB AccountingChartDB = new AccountingChartDB();
         CollectionViewSource accounting_chartViewSource = null;
-        CollectionViewSource accounting_chartParentViewSource;
-        
+       // CollectionViewSource accounting_chartParentViewSource;
+
         public ChartOfAccounts()
         {
             InitializeComponent();
@@ -79,53 +79,89 @@ namespace Cognitivo.Accounting
             cbxChartType.ItemsSource = Enum.GetValues(typeof(accounting_chart.ChartType));
 
             accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
-            accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
+           // accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
 
             AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
-            accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
+            //accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
 
+            //filter_Parentchart();
             filter_chart();
+            treeProject.SelectedItem_ = accounting_chartViewSource.View.CurrentItem as accounting_chart;
         }
 
+        //public void filter_Parentchart()
+        //{
+        //    if (accounting_chartViewSource.View.CurrentItem != null)
+        //    {
+        //        if (treeProject.SelectedItem_ != null)
+        //        {
+
+
+
+        //            int id_chart = ((accounting_chart)treeProject.SelectedItem_).id_chart;
+
+        //            if (accounting_chartParentViewSource != null)
+        //            {
+        //                if (accounting_chartParentViewSource.View != null)
+        //                {
+        //                    accounting_chartParentViewSource.View.Filter = i =>
+        //                    {
+        //                        accounting_chart accounting_chart = i as accounting_chart;
+        //                        if (accounting_chart.id_chart != id_chart)
+        //                        {
+        //                            return true;
+        //                        }
+        //                        else
+        //                        {
+        //                            return false;
+        //                        }
+        //                    };
+        //                }
+
+
+        //            }
+        //            cbxParent.SelectedItem = ((accounting_chart)accounting_chartViewSource.View.CurrentItem).parent;
+        //        }
+        //    }
+        //}
         public void filter_chart()
         {
-            if (accounting_chartViewSource.View.CurrentItem != null)
+
+
+
+
+
+            if (accounting_chartViewSource != null)
             {
-
-
-                int id_chart = ((accounting_chart)accounting_chartViewSource.View.CurrentItem).id_chart;
-
-                if (accounting_chartParentViewSource != null)
+                if (accounting_chartViewSource.View != null)
                 {
-                    if (accounting_chartParentViewSource.View != null)
+                    accounting_chartViewSource.View.Filter = i =>
                     {
-                        accounting_chartParentViewSource.View.Filter = i =>
+                        accounting_chart accounting_chart = i as accounting_chart;
+                        if (accounting_chart.parent ==null)
                         {
-                            accounting_chart accounting_chart = i as accounting_chart;
-                            if (accounting_chart.id_chart != id_chart)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        };
-                    }
-
-
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
                 }
-                cbxParent.SelectedItem = ((accounting_chart)accounting_chartViewSource.View.CurrentItem).parent;
+
+
             }
-           
+
+
+
         }
         #region toolBar Events
 
         private void toolBar_btnNew_Click(object sender)
         {
-            accounting_chart accounting_chart = (accounting_chart)accounting_chartViewSource.View.CurrentItem; 
-           
+            accounting_chart accounting_chart = (accounting_chart)treeProject.SelectedItem_;
+
             if (accounting_chart != null)
             {
 
@@ -140,7 +176,10 @@ namespace Cognitivo.Accounting
                 n_accounting_chart.chartsub_type = accounting_chart.chartsub_type;
                 accounting_chart.child.Add(n_accounting_chart);
                 AccountingChartDB.accounting_chart.Add(n_accounting_chart);
-             
+                treeProject.SelectedItem_ = n_accounting_chart;
+                accounting_chartViewSource.View.Refresh();
+                accounting_chartViewSource.View.MoveCurrentTo(n_accounting_chart);
+
             }
             else
             {
@@ -151,25 +190,31 @@ namespace Cognitivo.Accounting
                 n_accounting_chart.IsSelected = true;
                 n_accounting_chart.State = EntityState.Added;
                 AccountingChartDB.accounting_chart.Add(n_accounting_chart);
+                treeProject.SelectedItem_ = n_accounting_chart;
+                accounting_chartViewSource.View.Refresh();
+                accounting_chartViewSource.View.MoveCurrentTo(n_accounting_chart);
             }
-
-            accounting_chartViewSource.View.Refresh();
-            accounting_chartViewSource.View.MoveCurrentToLast();
-            filter_chart();
+          filter_chart();
+           
+            //filter_Parentchart();
+          
         }
 
         private void toolBar_btnEdit_Click(object sender)
         {
-            accounting_chart accounting_chart = accounting_chartViewSource.View.CurrentItem as accounting_chart;
+            accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
             accounting_chart.State = EntityState.Modified;
             accounting_chart.IsSelected = true;
+            filter_chart();
+            accounting_chartViewSource.View.Refresh();
+            accounting_chartViewSource.View.MoveCurrentToLast();
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
             if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                accounting_chart accounting_chart = (accounting_chart)accounting_chartViewSource.View.CurrentItem;
+                accounting_chart accounting_chart = (accounting_chart)treeProject.SelectedItem_;
                 accounting_chart.is_active = false;
                 toolBar_btnSave_Click(sender);
                 accounting_chartViewSource.View.Filter = i =>
@@ -181,25 +226,26 @@ namespace Cognitivo.Accounting
                         return false;
                 };
             }
-          
+            filter_chart();
             accounting_chartViewSource.View.MoveCurrentToLast();
+           
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
-            accounting_chart accounting_chart = accounting_chartViewSource.View.CurrentItem as accounting_chart;
+            accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
             accounting_chart.State = System.Data.Entity.EntityState.Unchanged;
 
             if (accounting_chart != null)
-            { 
-                accounting_chart.chart_type = (accounting_chart.ChartType)cbxChartType.SelectedItem; 
+            {
+                accounting_chart.chart_type = (accounting_chart.ChartType)cbxChartType.SelectedItem;
             }
 
 
-            if (cbxParent.SelectedItem != null)
-            { 
-                accounting_chart.parent = (accounting_chart)cbxParent.SelectedItem; 
-            }
+            //if (cbxParent.SelectedItem != null)
+            //{
+            //    accounting_chart.parent = (accounting_chart)cbxParent.SelectedItem;
+            //}
 
             try
             {
@@ -210,6 +256,7 @@ namespace Cognitivo.Accounting
                     toolBar.msgSaved();
                     accounting_chartViewSource.View.MoveCurrentTo(accounting_chart);
                 }
+                filter_chart();
             }
             catch (Exception ex)
             {
@@ -219,7 +266,7 @@ namespace Cognitivo.Accounting
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            accounting_chart accounting_chart = accounting_chartViewSource.View.CurrentItem as accounting_chart;
+            accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
             accounting_chart.State = EntityState.Unchanged;
             accounting_chartViewSource.View.MoveCurrentTo(accounting_chart);
 
@@ -238,83 +285,84 @@ namespace Cognitivo.Accounting
                         break;
                     default: break;
                 }
-            } 
+            }
+            filter_chart();
             accounting_chartViewSource.View.Refresh();
             accounting_chartViewSource.View.MoveCurrentToLast();
-            //filter_task();
           
+
         }
         #endregion
 
-        private void toolBar_btnSearch_Click(object sender, string query)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(query))
-                {
-                    accounting_chartViewSource.View.Filter = i =>
-                    {
-                        accounting_chart accounting_chart = i as accounting_chart;
-                        if (accounting_chart.name.ToLower().Contains(query.ToLower())
-                            || accounting_chart.code.ToLower().Contains(query.ToLower())
-                            )
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
-                }
-                else
-                {
-                    accounting_chartViewSource.View.Filter = null;
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
+        //private void toolBar_btnSearch_Click(object sender, string query)
+        //{
+        //    try
+        //    {
+        //        if (!string.IsNullOrEmpty(query))
+        //        {
+        //            accounting_chartViewSource.View.Filter = i =>
+        //            {
+        //                accounting_chart accounting_chart = i as accounting_chart;
+        //                if (accounting_chart.name.ToLower().Contains(query.ToLower())
+        //                    || accounting_chart.code.ToLower().Contains(query.ToLower())
+        //                    )
+        //                {
+        //                    return true;
+        //                }
+        //                else
+        //                {
+        //                    return false;
+        //                }
+        //            };
+        //        }
+        //        else
+        //        {
+        //            accounting_chartViewSource.View.Filter = null;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        toolBar.msgError(ex);
+        //    }
+        //}
 
-        private void chartdatagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            filter_chart();
-        }
+        //private void chartdatagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    filter_Parentchart();
+        //}
 
-        private void btnClearParent_Click(object sender, RoutedEventArgs e)
-        {
-            accounting_chart accounting_chart = accounting_chartViewSource.View.CurrentItem as accounting_chart;
-            accounting_chart.parent = null;
-            cbxParent.SelectedItem = null;
-        }
+        //private void btnClearParent_Click(object sender, RoutedEventArgs e)
+        //{
+        //    accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
+        //    accounting_chart.parent = null;
+        //    cbxParent.SelectedItem = null;
+        //}
 
         private void rbtnCash_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton rd = (RadioButton)sender;
-            int chartsubtype=Convert.ToInt32(rd.Tag);
-            if (rd.IsChecked==true)
+            int chartsubtype = Convert.ToInt32(rd.Tag);
+            if (rd.IsChecked == true)
             {
-                accounting_chart accounting_chart = accounting_chartViewSource.View.CurrentItem as accounting_chart;
-                accounting_chart.chartsub_type=(accounting_chart.ChartSubType)chartsubtype;
+                accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
+                accounting_chart.chartsub_type = (accounting_chart.ChartSubType)chartsubtype;
             }
         }
 
         private void rbtnRevenue_Loaded(object sender, RoutedEventArgs e)
         {
-            accounting_chart accounting_chart = accounting_chartViewSource.View.CurrentItem as accounting_chart;
-            if (accounting_chart!=null)
+            accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
+            if (accounting_chart != null)
             {
                 RadioButton rd = (RadioButton)sender;
                 int chartsubtype = Convert.ToInt32(accounting_chart.chartsub_type);
-                if (Convert.ToInt32(rd.Tag)==chartsubtype)
+                if (Convert.ToInt32(rd.Tag) == chartsubtype)
                 {
                     rd.IsChecked = true;
                 }
             }
-         
-           
+
+
         }
 
         private void btnParaguayChart_Click(object sender, RoutedEventArgs e)
@@ -323,13 +371,16 @@ namespace Cognitivo.Accounting
             Charts.Paraguay((bool)chbxDelete.IsChecked);
 
             accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
-            accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
+         //   accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
 
             AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
-            accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
+           // accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
 
             accounting_chartViewSource.View.Refresh();
+            filter_chart();
         }
+
+       
     }
 }

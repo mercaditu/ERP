@@ -134,15 +134,18 @@ namespace entity
                             sales_order.RaisePropertyChanged("number");
                             sales_order.is_issued = true;
 
+                            //Save Changes before Printing, so that all fields show up.
+                            sales_order.status = Status.Documents_General.Approved;
+                            SaveChanges();
+
                             Brillo.Document.Start.Automatic(sales_order, app_document_range);
                         }
                         else
                         {
                             sales_order.is_issued = false;
+                            sales_order.status = Status.Documents_General.Approved;
+                            SaveChanges();
                         }
-
-                        sales_order.status = Status.Documents_General.Approved;
-                        SaveChanges();
                     }
                 }
 

@@ -112,14 +112,17 @@ namespace entity
                             sales_budget.is_issued = true;
 
                             Brillo.Document.Start.Automatic(sales_budget, app_document_range);
+
+                            //Save Changes before Printing, so that all fields show up.
+                            sales_budget.status = Status.Documents_General.Approved;
+                            SaveChanges();
                         }
                         else
                         {
                             sales_budget.is_issued = false;
+                            sales_budget.status = Status.Documents_General.Approved;
+                            SaveChanges();
                         }
-                        
-                        sales_budget.status = Status.Documents_General.Approved;
-                        SaveChanges();
                     }
                 }
 

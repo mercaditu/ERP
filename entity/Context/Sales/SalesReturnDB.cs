@@ -121,6 +121,9 @@ namespace entity
                             sales_return.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             sales_return.RaisePropertyChanged("number");
                             sales_return.is_issued = true;
+                            
+                            //Save values bofore printing.
+                            SaveChanges();
 
                             Brillo.Document.Start.Automatic(sales_return, app_document_range);
                         }
@@ -128,6 +131,7 @@ namespace entity
                         {
                             sales_return.is_issued = false;
                         }
+
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
                         payment_schedualList = _Payment.insert_Schedual(sales_return);

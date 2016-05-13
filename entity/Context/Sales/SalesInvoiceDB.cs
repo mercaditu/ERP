@@ -183,15 +183,19 @@ namespace entity
                         invoice.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                         invoice.RaisePropertyChanged("number");
 
+                        //Save Changes before Printing, so that all fields show up.
+                        invoice.status = Status.Documents_General.Approved;
+                        SaveChanges();
+
                         Brillo.Document.Start.Automatic(invoice, app_document_range);
                     }
                     else
                     {
                         invoice.is_issued = false;
-                    }
 
-                    invoice.status = Status.Documents_General.Approved;
-                    SaveChanges();
+                        invoice.status = Status.Documents_General.Approved;
+                        SaveChanges();
+                    }
 
                     invoice.IsSelected = false;
 

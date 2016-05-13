@@ -96,6 +96,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn />
                                 <DataGridTextColumn />
+                                <DataGridTextColumn />
                             </DataGrid.Columns>
                         </DataGrid>
 

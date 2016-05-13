@@ -421,6 +421,7 @@ namespace entity
         }
 
         #endregion
+
         #region Discount Calculations
 
         /// <summary>

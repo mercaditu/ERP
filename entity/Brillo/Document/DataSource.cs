@@ -487,6 +487,8 @@ namespace entity.Brillo.Document
                               {
                                   total = g.payment.payment_detail.Sum(x => x.value),
                                   id_company = g.id_company,
+                                  payment_type = g.payment_type != null ? g.payment_type.name : "",
+                                  comments = g.comment,
                                   company_name = g.app_company != null ? g.app_company.name : "",
                                   amount = g.value,
                                   contact_name = g.payment.contact != null ? g.payment.contact.name : "",

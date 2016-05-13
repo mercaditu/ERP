@@ -147,9 +147,9 @@ namespace Cognitivo.Configs
                     string curname = "";
                     int id_currencyfx = 0;
 
-                    List<app_currency> app_currencyList = new List<app_currency>();
-                    app_currencyList = db.app_currency.ToList();
-                    foreach (app_currency app_currency in app_currencyList)
+                    List<app_currencyfx> app_currencyList = new List<app_currencyfx>();
+                    app_currencyList = db.app_currencyfx.ToList();
+                    foreach (app_currencyfx app_currencyfx in app_currencyList)
                     {
                         foreach (payment_type payment_type in db.payment_type.Where(x => x.payment_behavior == payment_type.payment_behaviours.Normal).ToList())
                         {
@@ -160,9 +160,9 @@ namespace Cognitivo.Configs
                             clsTransferAmount.id_payment_type = payment_type.id_payment_type;
                             clsTransferAmount.amount = app_account.app_account_detail.Where(x => x.id_currencyfx == id_currencyfx).Sum(x => x.credit - x.debit);
 
-                            clsTransferAmount.Currencyfxname = curname;
+                            clsTransferAmount.Currencyfxname = app_currencyfx.app_currency.name;
                             clsTransferAmount.id_payment_type = id_paymentType;
-                            clsTransferAmount.id_currencyfx = id_currencyfx;
+                            clsTransferAmount.id_currencyfx = app_currencyfx.id_currencyfx;
                             listOpenAmt.Add(clsTransferAmount);
                         }
                           

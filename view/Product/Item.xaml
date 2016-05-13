@@ -24,11 +24,11 @@
     </Page.CommandBindings>
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <convert:TrueToFalseConverter x:Key="TrueToFalse"/>
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
         <convert:ItemProduct2VisibilityConverter x:Key="ItemProduct2VisibilityConverter"/>
         <convert:ImageConverter x:Key="ConvertImage"/>
         <convert:NumberFormat x:Key="Numberformatting"/>
-        <convert:TrueToFalseConverter x:Key="TrueToFalse"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSourcenew" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
@@ -42,8 +42,6 @@
         <CollectionViewSource x:Key="itemitem_priceViewSource" Source="{Binding item_price, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_conversion_factorViewSource" Source="{Binding item_conversion_factor, Source={StaticResource itemitem_productViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_serviceViewSource" Source="{Binding item_service, Source={StaticResource itemViewSource}}"/>
-        <CollectionViewSource x:Key="itemitem_capitalViewSource" Source="{Binding item_asset, Source={StaticResource itemViewSource}}"/>
-        <!--<CollectionViewSource x:Key="itemitem_propertyViewSource" Source="{Binding item_property, Source={StaticResource itemViewSource}}"/>-->
         <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>
 
         <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
@@ -97,7 +95,8 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" Width="264" 
+                        IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
                     <Label Content="A" Style="{StaticResource btn_Label}" MouseUp="Label_MouseUp"/>
@@ -393,7 +392,6 @@
                                 <DataGridTextColumn x:Name="id_talentColumn" Binding="{Binding hr_talent.name}" Header="id talent" Width="SizeToHeader"/>
                             </DataGrid.Columns>
                         </DataGrid>
-
                     </StackPanel>
                 </TabItem>
             </TabControl>

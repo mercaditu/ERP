@@ -24,7 +24,6 @@ namespace Cognitivo.Product
         CollectionViewSource itemViewSource,
             itemitem_priceViewSource,
             itemitem_dimentionViewSource,
-            itemitem_capitalViewSource,
             item_brandViewSource,
             app_vat_groupViewSource,
             item_price_listViewSource,
@@ -45,7 +44,6 @@ namespace Cognitivo.Product
             itemitem_priceViewSource = FindResource("itemitem_priceViewSource") as CollectionViewSource;
             itemitem_dimentionViewSource = FindResource("itemitem_dimentionViewSource") as CollectionViewSource;
             itemitem_productViewSource = FindResource("itemitem_productViewSource") as CollectionViewSource;
-            itemitem_capitalViewSource = FindResource("itemitem_capitalViewSource") as CollectionViewSource;
             itemitem_tagdetailViewSource = FindResource("itemitem_tagdetailViewSource") as CollectionViewSource;
             item_brandViewSource = FindResource("item_brandViewSource") as CollectionViewSource;
             item_price_listViewSource = FindResource("item_price_listViewSource") as CollectionViewSource;

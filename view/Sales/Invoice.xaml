@@ -40,11 +40,11 @@
     </Page.Resources>
     <Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="43"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1" Margin="-2">
-            <TabItem>
+        <TabControl Grid.Row="1" Margin="-3,-7,-3,-3">
+            <TabItem Padding="0">
                 <Grid>
                     <DataGrid ItemsSource="{Binding}">
                         <DataGrid.Columns>
@@ -54,7 +54,7 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem>
+            <TabItem Padding="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -161,10 +161,14 @@
                                 </StackPanel>
                                 <!--sidepanel-->
                                 <StackPanel Grid.Column="1">
-                                    <Label Content="{lex:Loc Warning}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+                                    <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <StackPanel Orientation="Horizontal" Margin="4,0" Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
                                         <TextBlock Text="" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="4" Foreground="Crimson"/>
                                         <TextBlock Text="{lex:Loc Stock}" Style="{StaticResource text_Label}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="4,0">
+                                        <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
+                                        <TextBlock Text="{lex:Loc Accounted}" Style="{StaticResource text_Label}"/>
                                     </StackPanel>
 
                                     <Label Content="{lex:Loc QuickActions}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
@@ -597,6 +601,6 @@
 			           btnCancel_Click="toolBar_btnCancel_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-			           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="-1,3,1,0" Grid.RowSpan="2"/>
+			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
     </Grid>
 </Page>

@@ -39,15 +39,70 @@ namespace cntrl
         }
     }
 
-    public partial class toolBar : UserControl
+    public partial class toolBar : UserControl, INotifyPropertyChanged
     {
+        #region NotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+
+        #endregion
+
+        #region Window Style Tab Properites
+
         /// <summary>
         /// Sets the property that Shows/Hides the Tabs for the style change.
         /// </summary>
-        public bool MultipleStyleForm { get; set; }
+        public bool MultipleStyleForm
+        {
+            get { return _MultipleStyleForm; }
+            set
+            {
+                if (_MultipleStyleForm != value)
+                {
+                    _MultipleStyleForm = value;
+                    RaisePropertyChanged("MultipleStyleForm");
+                }
+            }
+        }
+        private bool _MultipleStyleForm = false;
 
-        public bool IsSelected_GridView { get; set; }
-        public bool IsSelected_FormView { get; set; }
+        public bool IsSelected_GridView
+        {
+            get { return _IsSelected_GridView; }
+            set
+            {
+                if (_IsSelected_GridView != value)
+                {
+                    _IsSelected_GridView = value;
+                    RaisePropertyChanged("IsSelected_GridView");
+                }
+            }
+        }
+        private bool _IsSelected_GridView = false;
+
+        public bool IsSelected_FormView
+        {
+            get { return _IsSelected_FormView; }
+            set
+            {
+                if (_IsSelected_FormView != value)
+                {
+                    _IsSelected_FormView = value;
+                    RaisePropertyChanged("IsSelected_FormView");
+                }
+            }
+        }
+        private bool _IsSelected_FormView = true;
+
+
+        #endregion
 
         private static readonly DependencyProperty IsEditabledProperty 
             = DependencyProperty.Register("IsEditable", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
@@ -558,6 +613,25 @@ namespace cntrl
         private void remove_Message(toolMessage toolMessage)
         {
             stackMessages.Children.Remove(toolMessage);
+        }
+
+
+        /// <summary>
+        /// Updates the IsSelected_GridView = True, this is used by the forms to update tab control.
+        /// </summary>
+        private void btnGridView_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            IsSelected_GridView = true;
+            IsSelected_FormView = false;
+        }
+
+        /// <summary>
+        /// Updates the IsSelected_FormView = True, this is used by the forms to update tab control.
+        /// </summary>
+        private void btnFormView_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            IsSelected_GridView = false;
+            IsSelected_FormView = true;
         }
     }
 }

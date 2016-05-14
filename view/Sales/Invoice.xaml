@@ -31,8 +31,6 @@
         <converter:IsActive2ColorConverter x:Key="ActiveValueConverter"/>
         <converter:TextChangeToIsEnableConverter x:Key="TextChangeToEnable"/>
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
-        <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>-->
-        <!--<CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
@@ -43,20 +41,21 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1" Margin="-3,-7,-3,-3">
-            <TabItem Padding="0">
+        
+        <TabControl Grid.Row="1" Margin="-3,0,-3,-3">
+            <TabItem Padding="0" IsSelected="{Binding ElementName=toolBar, Path=IsSelected_GridView, FallbackValue=False, UpdateSourceTrigger=PropertyChanged}">
                 <Grid>
                     <DataGrid AutoGenerateColumns="False" VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True" EnableColumnVirtualization="True"
-                              ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}">
+                              ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Padding="0">
+            <TabItem Padding="0" IsSelected="{Binding ElementName=toolBar, Path=IsSelected_FormView, FallbackValue=True, UpdateSourceTrigger=PropertyChanged}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -591,7 +590,8 @@
                     </Grid>
                 </Grid>
             </TabItem>
-        </TabControl>        
+        </TabControl>
+        
         <cntrl:toolBar x:Name="toolBar" appName="SalesInvoice"
 			           btnNew_Click="btnNew_Click" 
 			           btnDelete_Click="btnDelete_Click" 

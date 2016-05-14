@@ -61,12 +61,15 @@
 
     </UserControl.Triggers>
     <Grid x:Name="gridButtons" Background="White">
+        <Grid.Effect>
+            <DropShadowEffect Direction="270" ShadowDepth="3" Opacity="0.32"/>
+        </Grid.Effect>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Column="1" Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, FallbackValue=Collapsed, Converter={StaticResource Bool2Visibility}}"
+        <StackPanel x:Name="stackPanel" Orientation="Horizontal" Grid.Column="1" Visibility="{Binding ElementName=_toolBar, Path=MultipleStyleForm, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-34">
             <Border x:Name="borderForm" BorderBrush="Silver" BorderThickness="0.3,0,0.3,0.3" CornerRadius="0,0,4,4" 
                     Background="WhiteSmoke" Padding="2" Margin="4,0">

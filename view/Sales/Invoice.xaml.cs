@@ -687,6 +687,16 @@ namespace Cognitivo.Sales
             }
         }
 
+        private void toolBar_btnGridView_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnFormView_Click(object sender)
+        {
+
+        }
+
 
     }
 }

@@ -41,7 +41,13 @@ namespace cntrl
 
     public partial class toolBar : UserControl
     {
+        /// <summary>
+        /// Sets the property that Shows/Hides the Tabs for the style change.
+        /// </summary>
         public bool MultipleStyleForm { get; set; }
+
+        public bool IsSelected_GridView { get; set; }
+        public bool IsSelected_FormView { get; set; }
 
         private static readonly DependencyProperty IsEditabledProperty 
             = DependencyProperty.Register("IsEditable", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
@@ -82,27 +88,28 @@ namespace cntrl
             get { return (bool)GetValue(Annul_IsEnabledProperty); }
             set { SetValue(Annul_IsEnabledProperty, value); }
         }
-        private static readonly DependencyProperty CanUserDiscountByPercentProperty
-          = DependencyProperty.Register("CanUserDiscountByPercent", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
-        public bool CanUserDiscountByPercent
-        {
-            get { return (bool)GetValue(CanUserDiscountByPercentProperty); }
-            set { SetValue(CanUserDiscountByPercentProperty, value); }
-        }
-        private static readonly DependencyProperty CanUserDiscountByValueProperty
-        = DependencyProperty.Register("CanUserDiscountByValue", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
-        public bool CanUserDiscountByValue
-        {
-            get { return (bool)GetValue(CanUserDiscountByValueProperty); }
-            set { SetValue(CanUserDiscountByValueProperty, value); }
-        }
-        private static readonly DependencyProperty CanUserUpdatePriceProperty
-       = DependencyProperty.Register("CanUserUpdatePrice", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
-        public bool CanUserUpdatePrice
-        {
-            get { return (bool)GetValue(CanUserUpdatePriceProperty); }
-            set { SetValue(CanUserUpdatePriceProperty, value); }
-        }
+
+       // private static readonly DependencyProperty CanUserDiscountByPercentProperty
+       //   = DependencyProperty.Register("CanUserDiscountByPercent", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
+       // public bool CanUserDiscountByPercent
+       // {
+       //     get { return (bool)GetValue(CanUserDiscountByPercentProperty); }
+       //     set { SetValue(CanUserDiscountByPercentProperty, value); }
+       // }
+       // private static readonly DependencyProperty CanUserDiscountByValueProperty
+       // = DependencyProperty.Register("CanUserDiscountByValue", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
+       // public bool CanUserDiscountByValue
+       // {
+       //     get { return (bool)GetValue(CanUserDiscountByValueProperty); }
+       //     set { SetValue(CanUserDiscountByValueProperty, value); }
+       // }
+       // private static readonly DependencyProperty CanUserUpdatePriceProperty
+       //= DependencyProperty.Register("CanUserUpdatePrice", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
+       // public bool CanUserUpdatePrice
+       // {
+       //     get { return (bool)GetValue(CanUserUpdatePriceProperty); }
+       //     set { SetValue(CanUserUpdatePriceProperty, value); }
+       // }
 
         #region "Status Properties & Events"
         public static readonly DependencyProperty StatusProperty 
@@ -207,6 +214,28 @@ namespace cntrl
         public App.Names appName { get; set; }
 
         #region "Events"
+
+        ////GridView Click
+        //public event btnGridView_ClickedEventHandler btnGridView_Click;
+        //public delegate void btnGridView_ClickedEventHandler(object sender);
+        //public void btnGridView_MouseUp(object sender, EventArgs e)
+        //{
+        //    if (btnGridView_Click != null)
+        //    {
+        //        btnGridView_Click(this);
+        //    }
+        //}
+
+        ////FormView Click
+        //public event btnFormView_ClickedEventHandler btnFormView_Click;
+        //public delegate void btnFormView_ClickedEventHandler(object sender);
+        //public void btnFormView_MouseUp(object sender, EventArgs e)
+        //{
+        //    if (btnFormView_Click != null)
+        //    {
+        //        btnFormView_Click(this);
+        //    }
+        //}
 
         //NEW
         public event btnNew_ClickedEventHandler btnNew_Click;
@@ -339,10 +368,6 @@ namespace cntrl
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 entity.Brillo.Security security = new entity.Brillo.Security(appName);
-                CanUserDiscountByPercent = security.CanUserDiscountByPercent;
-                CanUserDiscountByValue = security.CanUserDiscountByValue;
-                CanUserUpdatePrice = security.CanUserUpdatePrice;
-               
                 get_Icons(toolBarIcons.Basic.ToString(), ref security);
             }
         }

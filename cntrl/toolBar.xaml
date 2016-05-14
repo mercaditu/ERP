@@ -70,14 +70,14 @@
                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,4,-34">
             <Border x:Name="borderForm" BorderBrush="Silver" BorderThickness="0.3,0,0.3,0.3" CornerRadius="0,0,4,4" 
                     Background="WhiteSmoke" Padding="2" Margin="4,0">
-                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                <StackPanel Orientation="Horizontal" Cursor="Hand" MouseUp="btnFormView_MouseUp">
                     <Label x:Name="lblForm" Foreground="RosyBrown" Content="Z" FontSize="18" FontFamily="/cntrl;component/Resources/#cognitivo"/>
                     <TextBlock Text="{lex:Loc Form}" VerticalAlignment="Center" Margin="0,0,4,0"/>
                 </StackPanel>
             </Border>
             <Border x:Name="borderGrid" BorderBrush="Silver" BorderThickness="0.3,0,0.3,0.3" CornerRadius="0,0,4,4" 
                     Background="WhiteSmoke" Padding="2">
-                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                <StackPanel Orientation="Horizontal" Cursor="Hand" MouseUp="btnGridView_MouseUp">
                     <Label x:Name="lblGrid" Foreground="RosyBrown" Content="&#xE80D;" FontSize="18" FontFamily="/cntrl;component/Resources/#cognitivo"/>
                     <TextBlock Text="{lex:Loc Grid}" VerticalAlignment="Center" Margin="0,0,4,0"/>
                 </StackPanel>

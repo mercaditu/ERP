@@ -46,10 +46,12 @@
         <TabControl Grid.Row="1" Margin="-3,-7,-3,-3">
             <TabItem Padding="0">
                 <Grid>
-                    <DataGrid ItemsSource="{Binding}">
+                    <DataGrid AutoGenerateColumns="False" VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True" EnableColumnVirtualization="True"
+                              ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn />
-                            <DataGridTextColumn />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -599,6 +601,9 @@
 			           btnApprove_Click="btnApprove_Click"
                        btnAnull_Click="toolBar_btnAnull_Click"
 			           btnCancel_Click="toolBar_btnCancel_Click"
+                       
+                       MultipleStyleForm="True"
+                       
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
 			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>

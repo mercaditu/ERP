@@ -41,6 +41,8 @@ namespace cntrl
 
     public partial class toolBar : UserControl
     {
+        public bool MultipleStyleForm { get; set; }
+
         private static readonly DependencyProperty IsEditabledProperty 
             = DependencyProperty.Register("IsEditable", typeof(bool), typeof(toolBar), new UIPropertyMetadata(false));
         public bool IsEditable

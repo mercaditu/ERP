@@ -39,17 +39,12 @@
         <CollectionViewSource x:Key="sales_invoicesales_invoice_detailsales_packinglist_relationViewSource" Source="{Binding sales_packinglist_relation, Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource sales_invoiceViewSource}" Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="43"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <TabControl Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0,40,0,0">
-            <TabItem Header="DataGrid">
+        <TabControl Grid.Row="1" Margin="-2">
+            <TabItem>
                 <Grid>
                     <DataGrid ItemsSource="{Binding}">
                         <DataGrid.Columns>
@@ -59,28 +54,34 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Form">
+            <TabItem>
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- CRUD Modal -->
                     <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
-              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+                          Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+                    <!-- Navigation ListBox -->
                     <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="sales_invoiceDataGrid"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemContainerStyle="{StaticResource nav_ListSelection}"
-                 ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="sales_invoiceDataGrid_SelectionChanged">
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemContainerStyle="{StaticResource nav_ListSelection}"
+                             ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="sales_invoiceDataGrid_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                                   recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                                   recordSecondaryName="{Binding number, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   recordName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                               recordCode="{Binding trans_date, StringFormat=d, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                               recordSecondaryName="{Binding number, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                               recordName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                               IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                               State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                               Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-
+                    <!-- Sales Invoice Form -->
                     <Grid Grid.Column="1" Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="380"/>

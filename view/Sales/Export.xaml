@@ -38,15 +38,6 @@
         </Grid.RowDefinitions>
         <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
               Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
-        <cntrl:toolBar x:Name="toolBar" btnNew_Click="toolBar_btnNew_Click"
-			btnEdit_Click="toolBar_btnEdit_Click"
-			btnDelete_Click="toolBar_btnDelete_Click"
-			btnSave_Click="toolBar_btnSave_Click"
-			btnCancel_Click="toolBar_btnCancel_Click"
-			btnApprove_Click="toolBar_btnApprove_Click"   
-                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-			VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" appName="Export"/>
         <ListBox x:Name="impexDataGrid"  Background="{StaticResource AccentColor_Brush}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="impexDataGrid_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -182,5 +173,14 @@
                 </TabItem>
             </TabControl>
         </Grid>
+        <cntrl:toolBar x:Name="toolBar" btnNew_Click="toolBar_btnNew_Click"
+			btnEdit_Click="toolBar_btnEdit_Click"
+			btnDelete_Click="toolBar_btnDelete_Click"
+			btnSave_Click="toolBar_btnSave_Click"
+			btnCancel_Click="toolBar_btnCancel_Click"
+			btnApprove_Click="toolBar_btnApprove_Click"   
+                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+			VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" appName="Export"/>
     </Grid>
 </Page>

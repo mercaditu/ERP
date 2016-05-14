@@ -23,7 +23,6 @@
                         Executed="DeleteCommandBinding_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
-        
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <converter:CustomStringFormatConverter x:Key="CustomStringFormat"/>
         <converter:Status2Enable x:Key="Status2Enable"/>
@@ -42,15 +41,51 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <TabControl Grid.Row="1" Margin="-3,0,-3,-3">
+        <TabControl Grid.Row="1" Margin="-3">
             <TabItem Padding="0" IsSelected="{Binding ElementName=toolBar, Path=IsSelected_GridView, FallbackValue=False, UpdateSourceTrigger=PropertyChanged}">
                 <Grid>
-                    <DataGrid AutoGenerateColumns="False" VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True" EnableColumnVirtualization="True"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Background="WhiteSmoke" Grid.Column="0">
+                        <StackPanel>
+                            <Label Content="{lex:Loc Range}" Style="{StaticResource generic_Label}" />
+                            <DatePicker Style="{StaticResource input_datepicker}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="{lex:Loc Range}" Style="{StaticResource generic_Label}" />
+                            <DatePicker Style="{StaticResource input_datepicker}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="{lex:Loc Customer}" Style="{StaticResource generic_Label}" />
+                            <Controls:SmartBox_Contact Get_Customers="True"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="{lex:Loc Customer}" Style="{StaticResource generic_Label}" />
+                            <Controls:SmartBox_Contact Get_Customers="True"/>
+                        </StackPanel>
+                        <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" Style="{DynamicResource MetroCircleButtonStyle}" 
+                                VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue"/>
+                    </StackPanel>
+                    <DataGrid AutoGenerateColumns="False" Grid.Column="1"
+                              VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True" EnableColumnVirtualization="True"
                               ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" 
+                                                Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium"
+                                                Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" 
+                                                Binding="{Binding number, UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Condition}"
+                                                Binding="{Binding app_condition.name, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contract}"
+                                                Binding="{Binding app_contract.name, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" FontWeight="Medium"
+                                                Binding="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged, StringFormat=N}" ElementStyle="{StaticResource RightAlignStyle}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" 
+                                                Binding="{Binding app_currencyfx.app_currency.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -372,11 +407,10 @@
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" >
                                             <Label Content="" Style="{StaticResource ico_Label}"/>
                                             <TextBlock Text="{lex:Loc Type}" Style="{StaticResource text_Label}"/>
-                                            <ComboBox Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
-                                          Name="cbxTransType"
-                                          SelectedValue="{Binding trans_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
-                                                                  ValidatesOnDataErrors=True}"/>
+                                            <ComboBox Name="cbxTransType" Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
+                                                      SelectedValue="{Binding trans_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                                              ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                                              ValidatesOnDataErrors=True}"/>
                                         </StackPanel>
 
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
@@ -493,9 +527,9 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" >
                                 <Label Content="Discount(%)" Style="{StaticResource input_label}" />
-                                <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding ElementName=toolBar, Path=CanUserDiscountByPercent}" Width="75"/>
+                                <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="75"/>
                                 <Label Content="Discount" Style="{StaticResource input_label}"/>
-                                <TextBox Text="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=toolBar, Path=CanUserDiscountByValue}" Width="75"/>
+                                <TextBox Text="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="75"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,0,0">
 

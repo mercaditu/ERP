@@ -16,7 +16,7 @@
           lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d"
-      MinHeight="550" MinWidth="750" Loaded="SalesInvoice_Loaded">
+      MinHeight="550" MinWidth="800" Loaded="SalesInvoice_Loaded">
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
                         CanExecute="DeleteCommandBinding_CanExecute" 
@@ -50,17 +50,40 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Background="WhiteSmoke" Grid.Column="0">
                         <StackPanel HorizontalAlignment="Center">
-                            <Label Content="{lex:Loc Range}" Style="{StaticResource generic_Label}" />
-                            <DatePicker Style="{StaticResource input_datepicker}" />
-                            <Label Content="{lex:Loc Range}" Style="{StaticResource generic_Label}" />
-                            <DatePicker Style="{StaticResource input_datepicker}" />
-                            <Label Content="{lex:Loc Customer}" Style="{StaticResource generic_Label}" />
+                            <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+                            
+                            <Label Content="{lex:Loc Customer}" Style="{StaticResource input_label}" />
                             <Controls:SmartBox_Contact Get_Customers="True"/>
-                            <Label Content="{lex:Loc Geography}" Style="{StaticResource generic_Label}" />
+                            
+                            <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
                             <Controls:SmartBox_Geography />
-                            <Label Content="{lex:Loc Item}" Style="{StaticResource generic_Label}" />
-                            <Controls:SmartBox_Item />
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="4,0">
+                                    <Label Content="{lex:Loc Range}" Style="{StaticResource input_label}" />
+                                    <DatePicker Width="124"/>
+                                </StackPanel>
+                                <StackPanel Margin="2,0">
+                                    <Label Content="{lex:Loc Range}" Style="{StaticResource input_label}" />
+                                    <DatePicker Width="124"/>
+                                </StackPanel>
+                            </StackPanel>
 
+                            <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
+                            <ComboBox Style="{StaticResource input_combobox}"/>
+
+                            <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
+                            <ComboBox Style="{StaticResource input_combobox}"/>
+
+                            <Rectangle Style="{StaticResource line_Bar}"/>
+
+                            <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+
+                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
+                            <Controls:SmartBox_Item />
+                            <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
+                            <TextBox Style="{StaticResource input_textbox}"/>
+                            
                             <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" Style="{DynamicResource MetroCircleButtonStyle}" 
                                 VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue"/>
                         </StackPanel>

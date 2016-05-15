@@ -84,7 +84,7 @@ namespace cntrl
                     _IsSelected_GridView = value;
                     RaisePropertyChanged("IsSelected_GridView");
                     Storyboard GridClick = (Storyboard)FindResource("GridClick");
-                    GridClick.Begin(this);
+                    GridClick.Begin();
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace cntrl
                     _IsSelected_FormView = value;
                     RaisePropertyChanged("IsSelected_FormView");
                     Storyboard FormClick = (Storyboard)FindResource("FormClick");
-                    FormClick.Begin(this);
+                    FormClick.Begin();
                 }
             }
         }

@@ -23,14 +23,7 @@ namespace entity
         {
             get
             {
-                if (_timestamp == null)
-                {
-                    return DateTime.Now;
-                }
-                else
-                {
-                    return _timestamp;
-                }
+                return _timestamp;
             }
             set
             {

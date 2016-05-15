@@ -49,29 +49,29 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Background="WhiteSmoke" Grid.Column="0">
-                        <StackPanel>
+                        <StackPanel HorizontalAlignment="Center">
                             <Label Content="{lex:Loc Range}" Style="{StaticResource generic_Label}" />
                             <DatePicker Style="{StaticResource input_datepicker}" />
-                        </StackPanel>
-                        <StackPanel>
                             <Label Content="{lex:Loc Range}" Style="{StaticResource generic_Label}" />
                             <DatePicker Style="{StaticResource input_datepicker}" />
-                        </StackPanel>
-                        <StackPanel>
                             <Label Content="{lex:Loc Customer}" Style="{StaticResource generic_Label}" />
                             <Controls:SmartBox_Contact Get_Customers="True"/>
-                        </StackPanel>
-                        <StackPanel>
-                            <Label Content="{lex:Loc Customer}" Style="{StaticResource generic_Label}" />
-                            <Controls:SmartBox_Contact Get_Customers="True"/>
-                        </StackPanel>
-                        <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" Style="{DynamicResource MetroCircleButtonStyle}" 
+                            <Label Content="{lex:Loc Geography}" Style="{StaticResource generic_Label}" />
+                            <Controls:SmartBox_Geography />
+                            <Label Content="{lex:Loc Item}" Style="{StaticResource generic_Label}" />
+                            <Controls:SmartBox_Item />
+
+                            <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" Style="{DynamicResource MetroCircleButtonStyle}" 
                                 VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue"/>
+                        </StackPanel>
                     </StackPanel>
                     <DataGrid AutoGenerateColumns="False" Grid.Column="1"
                               VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True" EnableColumnVirtualization="True"
                               ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">
                         <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                    EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" 
                                                 Binding="{Binding trans_date, UpdateSourceTrigger=PropertyChanged, StringFormat=d}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Customer}" FontWeight="Medium"
@@ -137,12 +137,6 @@
 					            SelectedDate="{Binding trans_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     <Grid>
                                         <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
-                                        <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
-                                   Style="{StaticResource btn_Label}"/>
-                                <Label Content="e" HorizontalAlignment="Right"
-                                   Style="{StaticResource btn_Label}"/>
-                            </StackPanel>-->
                                     </Grid>
                                     <Controls:SmartBox_Contact x:Name="sbxContact" Get_Customers="True" Get_Employees="False" Select="set_ContactPref"
                                                    can_Edit="True" can_New="True"
@@ -299,16 +293,6 @@
                                     </Hyperlink>
                                             </TextBlock>
                                         </StackPanel>
-                                        <!--
-                            <StackPanel Orientation="Horizontal" IsEnabled="False">
-                                <Label Content="" Style="{StaticResource btn_Label}"/>
-                                <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                <Hyperlink x:Name="btnDuplicateInvoice" PreviewMouseUp="btnDuplicateInvoice_PreviewMouseUp">
-                                    <Run Text="{lex:Loc Duplicate}"/>
-                                </Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
-                            -->
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Content="" Style="{StaticResource btn_Label}"/>
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
@@ -585,21 +569,21 @@
                                             Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"  IsReadOnly="{Binding ElementName=toolBar, Path=CanUserUpdatePrice}"
                                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                     <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" IsReadOnly="{Binding ElementName=toolBar, Path=CanUserDiscountByValue}"
+                                            Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
                                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                     <!-- UnitPrice_Vat -->
-                                    <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  IsReadOnly="{Binding ElementName=toolBar, Path=CanUserUpdatePrice}"
+                                    <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" 
                                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     <DataGridTextColumn Binding="{Binding DiscountVat,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" IsReadOnly="{Binding ElementName=toolBar, Path=CanUserDiscountByValue}"
+                                            Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
                                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                     <!-- SubTotal -->
                                     <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
                                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, 
                                             UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ElementStyle="{StaticResource RightAlignStyle}"/>
-                                    <DataGridTextColumn Binding="{Binding Discount_SubTotal,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  IsReadOnly="{Binding ElementName=toolBar, Path=CanUserDiscountByValue}"
+                                    <DataGridTextColumn Binding="{Binding Discount_SubTotal,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
                                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     <!-- SubTotal_VAT -->

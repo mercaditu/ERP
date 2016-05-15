@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Windows.Media.Animation;
 
 namespace cntrl
 {  
@@ -82,6 +83,8 @@ namespace cntrl
                 {
                     _IsSelected_GridView = value;
                     RaisePropertyChanged("IsSelected_GridView");
+                    Storyboard GridClick = (Storyboard)FindResource("GridClick");
+                    GridClick.Begin(this);
                 }
             }
         }
@@ -96,6 +99,8 @@ namespace cntrl
                 {
                     _IsSelected_FormView = value;
                     RaisePropertyChanged("IsSelected_FormView");
+                    Storyboard FormClick = (Storyboard)FindResource("FormClick");
+                    FormClick.Begin(this);
                 }
             }
         }

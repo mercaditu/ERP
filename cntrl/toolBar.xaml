@@ -11,14 +11,6 @@
              Height="40" MinWidth="500" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Storyboard x:Key="FormClick">
-            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="lblForm">
-                <SplineColorKeyFrame KeyTime="0" Value="RosyBrown"/>
-                <SplineColorKeyFrame KeyTime="0:0:0.5" Value="Crimson"/>
-            </ColorAnimationUsingKeyFrames>
-            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="lblGrid">
-                <SplineColorKeyFrame KeyTime="0" Value="Crimson"/>
-                <SplineColorKeyFrame KeyTime="0:0:0.5" Value="RosyBrown"/>
-            </ColorAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="borderForm">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.32"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
@@ -37,14 +29,6 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.32"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
-            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="lblForm">
-                <SplineColorKeyFrame KeyTime="0" Value="Crimson"/>
-                <SplineColorKeyFrame KeyTime="0:0:0.5" Value="RosyBrown"/>
-            </ColorAnimationUsingKeyFrames>
-            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Label.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="lblGrid">
-                <SplineColorKeyFrame KeyTime="0" Value="RosyBrown"/>
-                <SplineColorKeyFrame KeyTime="0:0:0.5" Value="Crimson"/>
-            </ColorAnimationUsingKeyFrames>
         </Storyboard>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
     </UserControl.Resources>

@@ -21,6 +21,14 @@ namespace Cognitivo.Report
     {
         public entity.App.Names Reports { get; set; }
 
+        public app_geography Geography { get; set; }
+        public contact Contact { get; set; }
+        public item Item { get; set; }
+
+        public string[] ConditionList { get; set; }
+        public string[] ContractList { get; set; }
+        public string[] TagList { get; set; }
+
         public ReportPage()
         {
             InitializeComponent();

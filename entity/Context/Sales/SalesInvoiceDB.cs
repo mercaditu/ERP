@@ -223,6 +223,7 @@ namespace entity
             if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
             {
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
+                _sales_invoice_detail.State = EntityState.Added;
                 _sales_invoice_detail.sales_invoice = sales_invoice;
                 
                 _sales_invoice_detail.Contact = sales_invoice.contact;

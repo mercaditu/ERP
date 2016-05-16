@@ -268,6 +268,7 @@ namespace Cognitivo.Sales
             if (sales_budget.sales_budget_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_budget_detail _sales_budget_detail = new sales_budget_detail();
+                _sales_budget_detail.State = EntityState.Added;
                 _sales_budget_detail.sales_budget = sales_budget;
                 _sales_budget_detail.Contact = sales_budget.contact;
                 _sales_budget_detail.item_description = item.description;

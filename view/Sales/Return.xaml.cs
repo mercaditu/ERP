@@ -378,6 +378,7 @@ namespace Cognitivo.Sales
             if (sales_return.sales_return_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
             {
                 sales_return_detail _sales_return_detail = new sales_return_detail();
+                _sales_return_detail.State = EntityState.Added;
                 _sales_return_detail.sales_return = sales_return;
                 _sales_return_detail.Contact = sales_return.contact;
                 _sales_return_detail.item_description = item.description;

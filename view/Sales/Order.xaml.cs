@@ -362,6 +362,7 @@ namespace Cognitivo.Sales
             if (sales_order.sales_order_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || SalesSettings.AllowDuplicateItem)
             {
                 sales_order_detail _sales_order_detail = new sales_order_detail();
+                _sales_order_detail.State = EntityState.Added;
                 _sales_order_detail.sales_order = sales_order;
                 _sales_order_detail.Contact = sales_order.contact;
                 _sales_order_detail.item_description = item.description;

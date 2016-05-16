@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=Entity"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -78,7 +79,9 @@
                                                                   ValidatesOnDataErrors=True}"/>
                             </AdornerDecorator>
                             <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding description}" Style="{StaticResource input_textbox}" Height="128"/>
+                            <toolkit:RichTextBox x:Name="rtbxDetails" Margin="5" BorderBrush="Gray" Padding="4" MinHeight="128" Width="256"
+                                          Text="{Binding description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
+                                          ScrollViewer.VerticalScrollBarVisibility="Auto" />
                         </StackPanel>
                         <StackPanel Margin="8,0" DataContext="{StaticResource itemitem_capitalViewSource}">
                             <Label Content="{lex:Loc FixedAssetGroup}" Style="{StaticResource input_label}" />
@@ -93,7 +96,7 @@
                             <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />
                             <TextBox Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
-                            <TextBox Style="{StaticResource input_textbox}"/>
+                            <TextBox Style="{StaticResource input_textbox}" IsReadOnly="True"/>
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>

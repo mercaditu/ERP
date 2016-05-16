@@ -12,17 +12,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 using entity;
 
 namespace Cognitivo.Report
 {
-    public partial class ReportPage : Page
+    public partial class ReportPage : MetroWindow
     {
         public entity.App.Names Reports { get; set; }
 
         public ReportPage()
         {
             InitializeComponent();
+        }
+
+        private void btnGridSearch(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            flyFilter.IsOpen = true;
         }
     }
 }

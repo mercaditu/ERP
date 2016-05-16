@@ -27,29 +27,46 @@ namespace Cognitivo.Menu
 
         private void open_PageThread(string appName)
         {
-            try
+            Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
+
+            if (appName.Contains("Report"))
             {
-                Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
-                Page objPage = default(Page);
-                Type PageInstanceType = null;
+                Window objWindow = default(Window);
+                Type WindowInstanceType = null;
 
                 Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    PageInstanceType = Type.GetType(appName, true, true);
-                    objPage = (Page)Activator.CreateInstance(PageInstanceType);
-                    objPage.Tag = apptag;
-                    mainFrame.Navigate(objPage);
-                    Cursor = Cursors.Arrow;
-
-                    if (objPage.Title != null)
                     {
-                        Title = objPage.Title;
+                        WindowInstanceType = Type.GetType(appName, true, true);
+                        objWindow = (Window)Activator.CreateInstance(WindowInstanceType);
+                        objWindow.Show();
+                        objWindow.Tag = apptag;
+                        Cursor = Cursors.Arrow;
+                        this.Close();
                     }
-                }));
+                    ));
             }
-            catch
+            else
             {
-                
+                try
+                {
+                    Page objPage = default(Page);
+                    Type PageInstanceType = null;
+
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        PageInstanceType = Type.GetType(appName, true, true);
+                        objPage = (Page)Activator.CreateInstance(PageInstanceType);
+                        objPage.Tag = apptag;
+                        mainFrame.Navigate(objPage);
+                        Cursor = Cursors.Arrow;
+
+                        if (objPage.Title != null)
+                        {
+                            Title = objPage.Title;
+                        }
+                    }));
+                }
+                catch { }
             }
         }
 

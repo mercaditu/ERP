@@ -87,6 +87,7 @@ namespace Cognitivo.Menu
         {
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
             string name = appName.Tag.ToString();
+
             if (Cognitivo.Properties.Settings.Default.open_Window)
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
@@ -98,6 +99,7 @@ namespace Cognitivo.Menu
             {
                 dynamic taskAuth = Task.Factory.StartNew(() => open_PageThread(name));
             }
+
             e.Handled = true;
         }
 

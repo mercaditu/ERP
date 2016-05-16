@@ -1,5 +1,5 @@
-﻿<Page x:Class="Cognitivo.Sales.SuppliesRequest"
-      xmlns:main="clr-namespace:Cognitivo.Properties"
+﻿<Page x:Class="Cognitivo.Product.SuppliesRequest"
+     xmlns:main="clr-namespace:Cognitivo.Properties"
       xmlns:pref="clr-namespace:Cognitivo.Sales"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,54 +15,15 @@
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US" 
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
-	  Title="{lex:Loc SuppliesRequest}">
+	  Title="{lex:Loc SuppliesRequest}" Loaded="Page_Loaded">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
-        <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
-        <CollectionViewSource x:Key="sales_invoicesales_invoice_detailViewSource" Source="{Binding sales_invoice_detail, Source={StaticResource sales_invoiceViewSource}}"/>
-        <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
-        <CollectionViewSource x:Key="payment_typeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_type}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
-        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
-        <CollectionViewSource x:Key="paymentpayment_detailViewSource" Source="{Binding payment_detail, Source={StaticResource paymentViewSource}}"/>
-        <Storyboard x:Key="stackLeftOpen">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="stackLeft">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-            <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="stackLeft">
-                <EasingPointKeyFrame KeyTime="0" Value="0,0"/>
-                <EasingPointKeyFrame KeyTime="0:0:0.5" Value="0.5,0.5"/>
-            </PointAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="stackLeft">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-24"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="stackRightOpen">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="stackRight">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-            <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="stackRight">
-                <EasingPointKeyFrame KeyTime="0" Value="0,0"/>
-                <EasingPointKeyFrame KeyTime="0:0:0.5" Value="0.5,0.5"/>
-            </PointAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="stackRight">
-                <EasingDoubleKeyFrame KeyTime="0" Value="72"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
+        <CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}" />
+        <CollectionViewSource x:Key="item_requestitem_request_detailViewSource" Source="{Binding item_request_detail, Source={StaticResource item_requestViewSource}}"/>
+
     </Page.Resources>
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="stackLeft1">
-            <BeginStoryboard Storyboard="{StaticResource stackLeftOpen}"/>
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="gridBottom">
-            <BeginStoryboard x:Name="stackRightOpen_BeginStoryboard" Storyboard="{StaticResource stackRightOpen}"/>
-        </EventTrigger>
-    </Page.Triggers>
-    <Grid DataContext="{StaticResource sales_invoiceViewSource}">
+
+    <Grid DataContext="{StaticResource item_requestViewSource}">
         <Grid.Background>
             <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image}" Stretch="UniformToFill"/>
         </Grid.Background>
@@ -87,11 +48,11 @@
         </Grid>
         <Grid>
             <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60" VerticalAlignment="Top" Margin="0,80,0,0">
-                <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" />
+                <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="sbxItem_Select" />
             </Viewbox>
             <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
-                            Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" >
+                            Margin="64,155,64,36" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" >
                 <DataGrid.RowBackground>
                     <SolidColorBrush Color="White" Opacity="0.32"/>
                 </DataGrid.RowBackground>
@@ -101,43 +62,15 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                             Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
-                    <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    <DataGridTextColumn Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                             Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding vat_group.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"
-                                            Header="{lex:Loc Cognitivo:local:VAT}" IsReadOnly="True" Width="*" Visibility="Hidden"/>
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />
-                    <!-- UnitPrice -->
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"
-                                            Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  
-                                            Header="{lex:Loc Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <!-- UnitPrice_Vat -->
-                    <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"  IsReadOnly="True"
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTextColumn Binding="{Binding DiscountVat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  
-                                            Header="{lex:Loc Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <!-- SubTotal -->
-                    <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
-                                            Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True" FontWeight="Bold"
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, 
-                                            UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ElementStyle="{StaticResource RightAlignStyle}"/>
-                    <DataGridTextColumn Binding="{Binding Discount_SubTotal,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <!-- SubTotal_VAT -->
-                    <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" FontWeight="Bold" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                            Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}" />
-                    <DataGridTextColumn Binding="{Binding Discount_SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"
-                                            Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Content="Save" Margin="715,564,10,10" Width="75"  />
+
         </Grid>
     </Grid>
 </Page>

@@ -71,13 +71,7 @@
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
                             </AdornerDecorator>
-                            <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
-                            <AdornerDecorator>
-                                <ComboBox x:Name="cbxType" Grid.Column="1" IsEnabled="False" Style="{StaticResource ComboToLabelStyle}"
-                                          SelectedValue="{Binding id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
-                                                                  ValidatesOnDataErrors=True}"/>
-                            </AdornerDecorator>
+                           
                             <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
                             <toolkit:RichTextBox x:Name="rtbxDetails" Margin="5" BorderBrush="Gray" Padding="4" MinHeight="128" Width="256"
                                           Text="{Binding description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
@@ -143,8 +137,7 @@
                        btnCancel_Click="toolBar_btnCancel_Click"
                        btnDelete_Click="toolBar_btnDelete_Click"
                        appName="Inventory"
-                       btnApprove_Click="toolBar_btnApprove_Click"
-                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Margin="0"/>
     </Grid>

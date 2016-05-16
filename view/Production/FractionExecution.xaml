@@ -38,22 +38,12 @@
         <CollectionViewSource x:Key="production_executionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_execution}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_order_detaillProductViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_order_detaillRawViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_order_detaillServiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_order_detaillAssetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_order_detaillSupplyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_order_detaillServiceContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
-        <CollectionViewSource x:Key="employeeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="production_execution_detailProductViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_execution_detailRawViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailAssetViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailServiceViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
-        <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
+
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
-        <CollectionViewSource x:Key="hr_time_coefficientViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_time_coefficient}, CreateList=True}"/>
+
     </Page.Resources>
     <Grid Background="White" DataContext="{StaticResource production_executionViewSource}">
         <Grid.ColumnDefinitions>
@@ -140,7 +130,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Background="WhiteSmoke">
-                    <Grid Grid.Row="1" Grid.Column="0" Background="White" DataContext="{StaticResource production_order_detaillProductViewSource}">
+                    <Grid Grid.Row="1" Grid.Column="0" Background="White" DataContext="{StaticResource production_order_detaillRawViewSource}">
                         <Grid.Resources >
                             <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource tree}, ConverterParameter={StaticResource IntOne}}">
@@ -165,14 +155,14 @@
                     </Grid>
                     <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                 </Grid>
-                <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailProductViewSource}"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailRawViewSource}"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8">
                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
                         <TextBox x:Name="txtProduct" Width="64" VerticalAlignment="Top" />
                         <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                     </StackPanel>
                     <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 
-                                      ItemsSource="{Binding Source={StaticResource production_execution_detailProductViewSource}}" 
+                                      ItemsSource="{Binding Source={StaticResource production_execution_detailRawViewSource}}" 
                                       SelectionChanged="dgproduct_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"

@@ -78,6 +78,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Movement", entity.App.Names.Movement, "BranchLocation");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Transfer", entity.App.Names.Transfer, "ProductSend");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Request", entity.App.Names.RequestResource, "ProjectPlan");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.SuppliesRequest", entity.App.Names.RequestResource, "ProjectPlan");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transactions, "Product.Maintainance", entity.App.Names.Maintainance, "");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.ItemTag", entity.App.Names.ItemTag, "ProductTag");
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.PriceList", entity.App.Names.PriceList, "ProductPriceList");
@@ -122,6 +123,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Form, "Production.Line", entity.App.Names.Line, "");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution");
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.FractionExecution", entity.App.Names.ProductionExecution, "ProductionExecution");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.QualityAssurance", "QualityAssurance", "");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.ShopFloor", "Factory", "");
 

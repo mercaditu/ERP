@@ -94,6 +94,11 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
+                <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="cmbtype"  Style="{DynamicResource input_combobox}" 
+					    SelectedValue="{Binding type, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
+					              
+                </ComboBox>
                 <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
                 <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
                 <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>

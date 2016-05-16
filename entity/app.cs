@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 81
+            /// Last Used : 84
             /// </summary>
 
             //Sales
@@ -222,7 +222,8 @@ namespace entity
             //[LocalizedDescription("ReportSalesbyProduct")]
             ReportSalesbyProduct = 82,
             //[LocalizedDescription("ReportSalesbyDate")]
-            ReportSalesbyDate = 83
+            ReportSalesbyDate = 83,
+            SuppliesRequest=84
         }
     }
 }

@@ -89,9 +89,10 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Background="WhiteSmoke" Grid.Column="0" Height="32" VerticalAlignment="Top">
-            <Button FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="21" Content="" HorizontalAlignment="Left"
-                    Style="{DynamicResource MetroCircleButtonStyle}" BorderThickness="1" BorderBrush="Black" Width="33"/>
+        <StackPanel Orientation="Horizontal" Background="WhiteSmoke" Grid.Column="0" Height="32" 
+                    VerticalAlignment="Top">
+            <Button FontFamily="/Cognitivo;component/Resources/#cognitivo" Click="btnFilter_Click" FontSize="21" Content="" HorizontalAlignment="Left"
+                    Style="{DynamicResource MetroCircleButtonStyle}" Width="33"/>
             <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Filter}" FontSize="16"/>
         </StackPanel>
         <ListBox Grid.Column="0" Margin="0,32,0,0" x:Name="NavList" Background="WhiteSmoke">

@@ -382,62 +382,62 @@ namespace entity.Brillo.Logic
         /// <returns></returns>
         public List<item_movement> revert_Stock(db db, App.Names Application_ID, int Transaction_ID)
         {
-            List<item_movement> item_movementList = new List<item_movement>();
+            //List<item_movement> item_movementList = new List<item_movement>();
 
-            if (Application_ID == App.Names.Transfer)
-            {
-                // item_movement.transaction_id = TransactionID;
-                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
-                                                             && x.id_transfer == Transaction_ID)
-                                                                 .ToList(); 
-            }
-            else if (Application_ID == App.Names.ProductionExecution)
-            {
-                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
-                                                                && x.id_production_execution == Transaction_ID)
-                                                                    .ToList(); 
+            //if (Application_ID == App.Names.Transfer)
+            //{
+            //    // item_movement.transaction_id = TransactionID;
+            //    item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+            //                                                 && x.id_transfer == Transaction_ID)
+            //                                                     .ToList(); 
+            //}
+            //else if (Application_ID == App.Names.ProductionExecution)
+            //{
+            //    item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+            //                                                    && x.id_production_execution == Transaction_ID)
+            //                                                        .ToList(); 
               
-            }
-            else if (Application_ID == App.Names.PurchaseInvoice)
-            {
-                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
-                                                                 && x.id_purchase_invoice == Transaction_ID)
-                                                                     .ToList(); 
+            //}
+            //else if (Application_ID == App.Names.PurchaseInvoice)
+            //{
+            //    item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+            //                                                     && x.id_purchase_invoice == Transaction_ID)
+            //                                                         .ToList(); 
                 
-            }
-            else if (Application_ID == App.Names.PurchaseReturn)
-            {
-                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
-                                                                 && x.id_purchase_return == Transaction_ID)
-                                                                     .ToList(); 
+            //}
+            //else if (Application_ID == App.Names.PurchaseReturn)
+            //{
+            //    item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+            //                                                     && x.id_purchase_return == Transaction_ID)
+            //                                                         .ToList(); 
                
-            }
-            else if (Application_ID == App.Names.SalesInvoice)
-            {
-                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
-                                                                 && x.id_sales_invoice == Transaction_ID)
-                                                                     .ToList(); 
+            //}
+            //else if (Application_ID == App.Names.SalesInvoice)
+            //{
+            //    item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+            //                                                     && x.id_sales_invoice == Transaction_ID)
+            //                                                         .ToList(); 
                 
-            }
-            else if (Application_ID == App.Names.SalesReturn)
-            {
-                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
-                                                                 && x.id_sales_return == Transaction_ID)
-                                                                     .ToList(); 
+            //}
+            //else if (Application_ID == App.Names.SalesReturn)
+            //{
+            //    item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+            //                                                     && x.id_sales_return == Transaction_ID)
+            //                                                         .ToList(); 
                
-            }
-            else if (Application_ID == App.Names.PackingList)
-            {
-                item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
-                                                                && x.id_sales_packing == Transaction_ID)
-                                                                    .ToList(); 
+            //}
+            //else if (Application_ID == App.Names.PackingList)
+            //{
+            //    item_movementList = db.item_movement.Where(x => x.id_application == Application_ID
+            //                                                    && x.id_sales_packing == Transaction_ID)
+            //                                                        .ToList(); 
                
-            }
+            //}
           
-            if (item_movementList != null)
-            {
-                return item_movementList;
-            }
+            //if (item_movementList != null)
+            //{
+            //    return item_movementList;
+            //}
 
             return null;
         }
@@ -489,37 +489,30 @@ namespace entity.Brillo.Logic
                     item_movement.id_application = ApplicationID;
                     if (ApplicationID==App.Names.Transfer)
                     {
-                        item_movement.id_transfer = TransactionID;
                         item_movement.id_transfer_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.ProductionExecution)
                     {
-                        item_movement.id_production_execution = TransactionID;
                         item_movement.id_production_execution_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
                     {
-                        item_movement.id_purchase_invoice = TransactionID;
                         item_movement.id_purchase_invoice_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.PurchaseReturn)
                     {
-                        item_movement.id_purchase_return = TransactionID;
                         item_movement.id_purchase_return_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.SalesInvoice)
                     {
-                        item_movement.id_sales_invoice = TransactionID;
                         item_movement.id_sales_invoice_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.SalesReturn)
                     {
-                        item_movement.id_sales_return= TransactionID;
                         item_movement.id_sales_return_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.PackingList)
                     {
-                        item_movement.id_sales_packing = TransactionID;
                         item_movement.id_sales_packing_detail = TransactionDetailID;
                     }
                   
@@ -562,37 +555,30 @@ namespace entity.Brillo.Logic
                 item_movement.id_application = ApplicationID;
                 if (ApplicationID == App.Names.Transfer)
                 {
-                    item_movement.id_transfer = TransactionID;
                     item_movement.id_transfer_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.ProductionExecution)
                 {
-                    item_movement.id_production_execution = TransactionID;
                     item_movement.id_production_execution_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
-                    item_movement.id_purchase_invoice = TransactionID;
                     item_movement.id_purchase_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseReturn)
                 {
-                    item_movement.id_purchase_return = TransactionID;
                     item_movement.id_purchase_return_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesInvoice)
                 {
-                    item_movement.id_sales_invoice = TransactionID;
                     item_movement.id_sales_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesReturn)
                 {
-                    item_movement.id_sales_return = TransactionID;
                     item_movement.id_sales_return_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PackingList)
                 {
-                    item_movement.id_sales_packing = TransactionID;
                     item_movement.id_sales_packing_detail = TransactionDetailID;
                 }
 
@@ -635,37 +621,30 @@ namespace entity.Brillo.Logic
                 item_movement.id_application = ApplicationID;
                 if (ApplicationID == App.Names.Transfer)
                 {
-                    item_movement.id_transfer = TransactionID;
                     item_movement.id_transfer_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.ProductionExecution)
                 {
-                    item_movement.id_production_execution = TransactionID;
                     item_movement.id_production_execution_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
-                    item_movement.id_purchase_invoice = TransactionID;
                     item_movement.id_purchase_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseReturn)
                 {
-                    item_movement.id_purchase_return = TransactionID;
                     item_movement.id_purchase_return_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesInvoice)
                 {
-                    item_movement.id_sales_invoice = TransactionID;
                     item_movement.id_sales_invoice_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.SalesReturn)
                 {
-                    item_movement.id_sales_return = TransactionID;
                     item_movement.id_sales_return_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PackingList)
                 {
-                    item_movement.id_sales_packing = TransactionID;
                     item_movement.id_sales_packing_detail = TransactionDetailID;
                 }
                 // item_movement.transaction_id = TransactionID;

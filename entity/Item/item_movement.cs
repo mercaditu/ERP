@@ -27,14 +27,14 @@ namespace entity
         public long id_movement { get; set; }
         public int id_item_product { get; set; }
         public App.Names id_application { get; set; }
-        public int? id_transfer { get; set; }
-        public int? id_production_execution { get; set; }
-        public int? id_purchase_invoice { get; set; }
-        public int? id_purchase_return { get; set; }
-        public int? id_sales_invoice { get; set; }
-        public int? id_sales_return { get; set; }
-        public int? id_inventory { get; set; }
-        public int? id_sales_packing { get; set; }
+        //public int? id_transfer { get; set; }
+        //public int? id_production_execution { get; set; }
+        //public int? id_purchase_invoice { get; set; }
+        //public int? id_purchase_return { get; set; }
+        //public int? id_sales_invoice { get; set; }
+        //public int? id_sales_return { get; set; }
+        //public int? id_inventory { get; set; }
+        //public int? id_sales_packing { get; set; }
         public int? id_transfer_detail { get; set; }
         public int? id_production_execution_detail { get; set; }
         public int? id_purchase_invoice_detail { get; set; }
@@ -43,7 +43,7 @@ namespace entity
         public int? id_sales_return_detail { get; set; }
         public int? id_inventory_detail { get; set; }
         public int? id_sales_packing_detail { get; set; }
-        public int transaction_id { get; set; }
+        //public int transaction_id { get; set; }
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
         public decimal debit { get; set; }
@@ -62,13 +62,13 @@ namespace entity
 
         public virtual app_location app_location { get; set; }
         public virtual item_product item_product { get; set; }
-        public virtual sales_packing sales_packing { get; set; }
-        public virtual item_transfer item_transfer { get; set; }
-        public virtual production_execution production_execution { get; set; }
-        public virtual purchase_invoice purchase_invoice { get; set; }
-        public virtual purchase_return purchase_return { get; set; }
-        public virtual sales_invoice sales_invoice { get; set; }
-        public virtual sales_return sales_return { get; set; }
+        //public virtual sales_packing sales_packing { get; set; }
+        //public virtual item_transfer item_transfer { get; set; }
+        //public virtual production_execution production_execution { get; set; }
+        //public virtual purchase_invoice purchase_invoice { get; set; }
+        //public virtual purchase_return purchase_return { get; set; }
+        //public virtual sales_invoice sales_invoice { get; set; }
+        //public virtual sales_return sales_return { get; set; }
         public virtual sales_packing_detail sales_packing_detail { get; set; }
         public virtual item_transfer_detail item_transfer_detail { get; set; }
         public virtual production_execution_detail production_execution_detail { get; set; }

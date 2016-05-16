@@ -16,8 +16,6 @@ namespace Cognitivo.Menu
         Task taskAuth;
         MainWindow myWindow = Application.Current.MainWindow as MainWindow;
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
-
         public Version AssemblyVersion
         {
             get
@@ -58,9 +56,10 @@ namespace Cognitivo.Menu
 
             Task taskdb = Task.Factory.StartNew(() => check_createdb());
 
-            if (_settings.user_UserName != null && _settings.user_UserName != "")
+            entity.Properties.Settings Settings = new entity.Properties.Settings();
+            if (Settings.user_Name != null && Settings.user_UserName != "")
             {
-                tbxUser.Text = _settings.user_UserName;
+                tbxUser.Text = Settings.user_UserName;
                 tbxPassword.Focus();
                 chbxRemember.IsChecked = true;
             }
@@ -75,6 +74,7 @@ namespace Cognitivo.Menu
             using (var db = new db())
             {
                 bool db_exists = db.Database.Exists();
+
                 if (!db_exists)
                 {
                     Dispatcher.BeginInvoke((Action)(() => { myFrame.Navigate(new StartUp()); }));
@@ -82,7 +82,7 @@ namespace Cognitivo.Menu
                 else
                 {
                     string company_Alias = string.Empty;
-                    app_company app_company = db.app_company.Where(x => x.id_company == _settings.company_ID).FirstOrDefault();
+                    app_company app_company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
                     
                     if (app_company != null)
                     {
@@ -95,10 +95,12 @@ namespace Cognitivo.Menu
                             company_Alias = app_company.name;
                         }
                     }
-                    _settings.company_Name = company_Alias;
+
+                    entity.Properties.Settings Settings = new entity.Properties.Settings();
+                    Settings.company_Name = company_Alias;
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        _settings.Save();
+                        Settings.Save();
                     }));
                 }
             }
@@ -121,12 +123,13 @@ namespace Cognitivo.Menu
             
             try
             {
-                if(_settings.company_ID == 0)
+                entity.Properties.Settings Settings = new entity.Properties.Settings();
+                if (Settings.company_ID == 0)
                 {
                     using (db db = new db())
                     {
-                        _settings.company_ID = db.app_company.FirstOrDefault().id_company;
-                        _settings.Save();
+                        Settings.company_ID = db.app_company.FirstOrDefault().id_company;
+                        Settings.Save();
                     }
                 }
 
@@ -139,7 +142,8 @@ namespace Cognitivo.Menu
                     {
                         if (chbxRemember.IsChecked == true)
                         {
-                            _settings.user_UserName = tbxUser.Text;
+                            Settings.user_UserName = tbxUser.Text;
+                            Settings.Save();
                         }
                     }));
 

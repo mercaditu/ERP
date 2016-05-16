@@ -281,27 +281,26 @@ namespace entity.Migrations
             DropColumn("item_movement", "transaction_id");
 
             Sql(@"ALTER TABLE `abhi`.`item_movement` 
-DROP FOREIGN KEY `FK_d7f23589f78a4e15b97260b12c8fbaa1`,
-DROP FOREIGN KEY `FK_88afdd83a2e44c27b32645c87cd4482e`;
-ALTER TABLE `abhi`.`item_movement` 
-DROP COLUMN `sales_invoice_detail_id_sales_invoice_detail`,
-DROP COLUMN `production_execution_detail_id_execution_detail`,
-ADD INDEX `FK_item_movement_sales_packing_detail_id_production_execust_idx` (`id_execution_detail` ASC),
-DROP INDEX `IX_id_execution_detail` ,
-DROP INDEX `IX_sales_invoice_detail_id_sales_invoice_detail` ;
-ALTER TABLE `abhi`.`item_movement` 
-ADD CONSTRAINT `FK_item_movement_sales_packing_detail_id_sales_invoice_detail`
-  FOREIGN KEY (`id_sales_invoice_detail`)
-  REFERENCES `abhi`.`sales_invoice_detail` (`id_sales_invoice_detail`)
-  ON DELETE RESTRICT
-  ON UPDATE RESTRICT,
-ADD CONSTRAINT `FK_item_movement_id_production_execustion_detail`
-  FOREIGN KEY (`id_execution_detail`)
-  REFERENCES `abhi`.`production_execution_detail` (`id_execution_detail`)
-  ON DELETE RESTRICT
-  ON UPDATE RESTRICT;
-");
-
+                    DROP FOREIGN KEY `FK_d7f23589f78a4e15b97260b12c8fbaa1`,
+                    DROP FOREIGN KEY `FK_88afdd83a2e44c27b32645c87cd4482e`;
+                    ALTER TABLE `abhi`.`item_movement` 
+                    DROP COLUMN `sales_invoice_detail_id_sales_invoice_detail`,
+                    DROP COLUMN `production_execution_detail_id_execution_detail`,
+                    ADD INDEX `FK_item_movement_sales_packing_detail_id_production_execust_idx` (`id_execution_detail` ASC),
+                    DROP INDEX `IX_id_execution_detail` ,
+                    DROP INDEX `IX_sales_invoice_detail_id_sales_invoice_detail` ;
+                    ALTER TABLE `abhi`.`item_movement` 
+                    ADD CONSTRAINT `FK_item_movement_sales_packing_detail_id_sales_invoice_detail`
+                      FOREIGN KEY (`id_sales_invoice_detail`)
+                      REFERENCES `abhi`.`sales_invoice_detail` (`id_sales_invoice_detail`)
+                      ON DELETE RESTRICT
+                      ON UPDATE RESTRICT,
+                    ADD CONSTRAINT `FK_item_movement_id_production_execustion_detail`
+                      FOREIGN KEY (`id_execution_detail`)
+                      REFERENCES `abhi`.`production_execution_detail` (`id_execution_detail`)
+                      ON DELETE RESTRICT
+                      ON UPDATE RESTRICT;
+                    ");
         }
 
         public override void Down()

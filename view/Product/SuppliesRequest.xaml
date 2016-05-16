@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Sales.PointOfSale"
+﻿<Page x:Class="Cognitivo.Sales.SuppliesRequest"
       xmlns:main="clr-namespace:Cognitivo.Properties"
       xmlns:pref="clr-namespace:Cognitivo.Sales"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -15,12 +15,7 @@
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US" 
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
-	  Title="{lex:Loc PointOfSale}" Loaded="Page_Loaded" KeyDown="Page_KeyDown">
-    <Page.CommandBindings>
-        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
-                        CanExecute="DeleteCommandBinding_CanExecute" 
-                        Executed="DeleteCommandBinding_Executed"/>
-    </Page.CommandBindings>
+	  Title="{lex:Loc SuppliesRequest}">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
@@ -92,12 +87,11 @@
         </Grid>
         <Grid>
             <Viewbox StretchDirection="Both" Stretch="Uniform" Width="512" Height="60" VerticalAlignment="Top" Margin="0,80,0,0">
-                <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" Select="sbxItem_Select" />
+                <cntrl:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Center" />
             </Viewbox>
             <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
                             Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" 
-                            RowEditEnding="dgvSalesDetail_RowEditEnding">
+                            ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" >
                 <DataGrid.RowBackground>
                     <SolidColorBrush Color="White" Opacity="0.32"/>
                 </DataGrid.RowBackground>
@@ -142,15 +136,6 @@
                     <DataGridTextColumn Binding="{Binding Discount_SubTotal_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"
                                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <DataGridTemplateColumn Width="Auto" Header="" >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Command="customcmd:CustomCommands.Delete"
-                                            Style="{StaticResource btnDeleteChildStyle}"
-                                            CommandParameter="{Binding}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

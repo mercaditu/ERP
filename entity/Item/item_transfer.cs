@@ -16,7 +16,6 @@ namespace entity
         }
         public item_transfer()
         {
-            //Properties.Settings _settings = new Properties.Settings();
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
@@ -27,7 +26,6 @@ namespace entity
             trans_date = DateTime.Now;
             timestamp = DateTime.Now;
             status = Status.Documents_General.Pending;
-            item_movement = new List<item_movement>();
         }
 
         [Key]

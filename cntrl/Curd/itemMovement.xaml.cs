@@ -65,7 +65,6 @@ namespace cntrl.Curd
                     item_movement item_movement_origin = new item_movement();
                     item_movement_origin.debit = 0;
                     item_movement_origin.credit = item.quantity_origin;
-                    item_movement_origin.id_application = App.Names.SalesInvoice;
                     item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
                   //  item_movement_origin.transaction_id = 0;
                     item_movement_origin.status = Status.Stock.InStock;
@@ -81,7 +80,6 @@ namespace cntrl.Curd
                     item_movement item_movement_dest = new item_movement();
                     item_movement_dest.debit = item.quantity_destination;
                     item_movement_dest.credit = 0;
-                    item_movement_dest.id_application = App.Names.PurchaseInvoice;
                     item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
                     //item_movement_dest.transaction_id = 0;
                     item_movement_dest.status = Status.Stock.InStock;

@@ -119,7 +119,6 @@ namespace entity
                         item_movement.debit = 0;
                         item_movement.credit = item_inventory_detail.value_counted;
                         item_movement.trans_date = item_inventory.trans_date;
-                        item_movement.id_application = App.Names.Inventory;
                         item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
                         item_movement.timestamp = DateTime.Now;
 
@@ -166,7 +165,6 @@ namespace entity
                                 item_movement.credit = delta > 0 ? delta : 0;
                                 item_movement.debit = delta < 0 ? Math.Abs(delta) : 0;
                                 item_movement.trans_date = item_inventory.trans_date;
-                                item_movement.id_application = App.Names.Inventory;
                                 item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
                                 item_movement.timestamp = DateTime.Now;
 

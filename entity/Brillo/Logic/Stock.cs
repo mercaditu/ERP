@@ -486,14 +486,13 @@ namespace entity.Brillo.Logic
                     item_movement.status = Status;
                     item_movement.id_location = app_location.id_location;
                     item_movement._parent = null;
-                    item_movement.id_application = ApplicationID;
                     if (ApplicationID==App.Names.Transfer)
                     {
                         item_movement.id_transfer_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.ProductionExecution)
                     {
-                        item_movement.id_production_execution_detail = TransactionDetailID;
+                        item_movement.id_execution_detail = TransactionDetailID;
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
                     {
@@ -552,14 +551,13 @@ namespace entity.Brillo.Logic
                 item_movement.status = Status;
                 item_movement.id_location = app_location.id_location;
                 item_movement._parent = null;
-                item_movement.id_application = ApplicationID;
                 if (ApplicationID == App.Names.Transfer)
                 {
                     item_movement.id_transfer_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.ProductionExecution)
                 {
-                    item_movement.id_production_execution_detail = TransactionDetailID;
+                    item_movement.id_execution_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
@@ -618,14 +616,13 @@ namespace entity.Brillo.Logic
                 item_movement.credit = Quantity;
                 item_movement.status = Status;
                 item_movement.id_location = app_location.id_location;
-                item_movement.id_application = ApplicationID;
                 if (ApplicationID == App.Names.Transfer)
                 {
                     item_movement.id_transfer_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.ProductionExecution)
                 {
-                    item_movement.id_production_execution_detail = TransactionDetailID;
+                    item_movement.id_execution_detail = TransactionDetailID;
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {

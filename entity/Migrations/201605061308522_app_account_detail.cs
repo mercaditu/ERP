@@ -45,7 +45,7 @@ namespace entity.Migrations
             DropIndex("app_account_session", new[] { "id_company" });
             DropIndex("app_account_session", new[] { "id_account" });
             DropIndex("app_account_detail", new[] { "id_session" });
-            DropColumn("app_account_detail", "tran_type");
+          
             DropColumn("app_account_detail", "id_session");
             DropTable("app_account_session");
         }

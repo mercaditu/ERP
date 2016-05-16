@@ -25,7 +25,7 @@ namespace entity
 
             sales_return_detail = new List<sales_return_detail>();
             payment_schedual = new List<payment_schedual>();
-            item_movement = new List<item_movement>();
+           
             status = Status.Documents_General.Pending;
         }
 
@@ -179,7 +179,7 @@ namespace entity
         public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual sales_invoice sales_invoice { get; set; }
         public virtual crm_opportunity crm_opportunity { get; set; }
-        public virtual ICollection<item_movement> item_movement { get; set; }
+        
         public string Error
         {
             get

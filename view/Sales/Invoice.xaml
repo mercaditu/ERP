@@ -90,6 +90,7 @@
 
                             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
                             <Controls:SmartBox_Item x:Name="grid_sbxItem"/>
+                            
                             <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
                             <TextBox x:Name="grid_tbxTags" Style="{StaticResource input_textbox}"/>
                             
@@ -120,6 +121,20 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Currency}" 
                                                 Binding="{Binding app_currencyfx.app_currency.name, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
                         </DataGrid.Columns>
+                        <DataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"
+                                          Margin="16" ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" SelectionMode="Single"
+                                          IsReadOnly="True" HorizontalAlignment="Stretch" FontSize="10" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="128"/>
+                                        <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="auto"/>
+                                        <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Debit}" Width="128"/>
+                                        <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </DataTemplate>
+                        </DataGrid.RowDetailsTemplate>
                     </DataGrid>
                 </Grid>
             </TabItem>

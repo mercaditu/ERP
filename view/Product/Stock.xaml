@@ -50,7 +50,8 @@
                     <DataGridTextColumn Binding="{Binding code}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
                     <DataGridTextColumn Binding="{Binding name}" Header="{lex:Loc Cognitivo:local:Product}" Width="*"/>
                     <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" 
-                        ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
+                                        ElementStyle="{StaticResource RightAlignStyle}" 
+                                        Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                     <DataGridTextColumn Binding="{Binding measurement}" Header="{lex:Loc Cognitivo:local:Measurement}" Width="Auto"/>
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>

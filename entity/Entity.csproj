@@ -293,9 +293,9 @@
     <Compile Include="Migrations\201605061308522_app_account_detail.Designer.cs">
       <DependentUpon>201605061308522_app_account_detail.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605161246450_TryingToFix_ItemMovement_ExcessFK.cs" />
-    <Compile Include="Migrations\201605161246450_TryingToFix_ItemMovement_ExcessFK.Designer.cs">
-      <DependentUpon>201605161246450_TryingToFix_ItemMovement_ExcessFK.cs</DependentUpon>
+    <Compile Include="Migrations\201605161345367_TryingToFix_ItemMovement_ExcessFK.cs" />
+    <Compile Include="Migrations\201605161345367_TryingToFix_ItemMovement_ExcessFK.Designer.cs">
+      <DependentUpon>201605161345367_TryingToFix_ItemMovement_ExcessFK.cs</DependentUpon>
     </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
@@ -977,6 +977,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605061308522_app_account_detail.resx">
       <DependentUpon>201605061308522_app_account_detail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605161345367_TryingToFix_ItemMovement_ExcessFK.resx">
+      <DependentUpon>201605161345367_TryingToFix_ItemMovement_ExcessFK.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

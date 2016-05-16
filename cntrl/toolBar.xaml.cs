@@ -28,7 +28,7 @@ namespace cntrl
             dtIconList.Columns.Add("img");
 
             //Basic
-            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Parent", "+");
+            dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Parent", "C");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "New", "+");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "a", "Edit", "e");
             dtIconList.Rows.Add(toolBarIcons.Basic.ToString(), "m", "b", "Save", "s");

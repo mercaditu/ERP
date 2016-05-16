@@ -24,11 +24,11 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMain" Background="White">
             <Grid Background="#0099ff">
-                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" 
-                       VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Black" Margin="4"/>
-                <Label x:Name="lblTitle" Content="{lex:Loc Contract}" FontSize="25" Margin="32,0,0,0"/>
+                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="" FontSize="25" Foreground="White"
+                       VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc Contract}" Foreground="White" FontSize="25" Margin="32,0,0,0"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>

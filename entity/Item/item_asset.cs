@@ -17,6 +17,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_asset { get; set; }
         public int id_item { get; set; }
+        public int? id_branch { get; set; }
         public int? id_item_asset_group { get; set; }
         public DateTime? manufacture_date { get; set; }
         public DateTime? purchase_date { get; set; }
@@ -35,5 +36,6 @@ namespace entity
         //Nav Properties
         public virtual item item { get; set; }
         public virtual item_asset_group item_asset_group { get; set; }
+        public virtual app_branch app_branch { get; set; }
     }
 }

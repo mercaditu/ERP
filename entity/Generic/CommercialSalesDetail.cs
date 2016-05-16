@@ -30,25 +30,26 @@ namespace entity
             get { return _id_item; }
             set
             {
-                if (value > 0 && value != _id_item)
+                if (State > 0)
                 {
-                    _id_item = value;
-                    RaisePropertyChanged("id_item");
-
-                    //if (item == null)
-                    //{
-                    using (db db = new db())
+                    if (value > 0 && value != _id_item)
                     {
-                         item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
+                        _id_item = value;
+                        RaisePropertyChanged("id_item");
 
-                        id_vat_group = Vat.getItemVat(_item);
-                        RaisePropertyChanged("id_vat_group");
-                        item_description = _item.name;
-                        RaisePropertyChanged("item_description");
+                        using (db db = new db())
+                        {
+                            item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
+
+                            id_vat_group = Vat.getItemVat(_item);
+                            RaisePropertyChanged("id_vat_group");
+                            item_description = _item.name;
+                            RaisePropertyChanged("item_description");
+                        }
+
+                        update_UnitPrice();
+                        update_UnitCost();
                     }
-
-                    update_UnitPrice();
-                    update_UnitCost();
                 }
             }
         }

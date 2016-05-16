@@ -222,6 +222,8 @@
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="Execustionstrategy.cs" />
     <Compile Include="Generic\CommercialVAT.cs" />
+    <Compile Include="Item\item_asset_maintainance_detail.cs" />
+    <Compile Include="Item\item_asset_maintainance.cs" />
     <Compile Include="Item\item_inventory_dimension.cs" />
     <Compile Include="Item\item_movement_value.cs" />
     <Compile Include="Item\item_template.cs" />

@@ -15,10 +15,15 @@ namespace entity
         public int id_branch { get; set; }
         public int? id_geography { get; set; }
         public int? id_vat { get; set; }
+        
         [Required]
         public string name { get; set; }
+        
         [Required]
         public string code { get; set; }
+
+        public decimal? area { get; set; }
+        public int? id_measurement { get; set; }
 
         public decimal? geo_lat { get; set; }
         public decimal? geo_long { get; set; }
@@ -39,7 +44,7 @@ namespace entity
 
         public virtual app_vat app_vat { get; set; }
         public virtual app_geography app_geography { get; set; }
-
+        public virtual app_measurement app_measurement { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
         public virtual ICollection<app_location> app_location { get; set; }
         public virtual ICollection<app_terminal> app_terminal { get; set; }

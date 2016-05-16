@@ -63,6 +63,13 @@
                             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                            <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
+                            <AdornerDecorator>
+                                <ComboBox Grid.Column="1" IsEnabled="False" Style="{StaticResource input_combobox}"
+                                          SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                                  ValidatesOnDataErrors=True}"/>
+                            </AdornerDecorator>
                             <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
                                 <ComboBox x:Name="cbxType" Grid.Column="1" IsEnabled="False" Style="{StaticResource ComboToLabelStyle}"

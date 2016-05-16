@@ -251,12 +251,20 @@ namespace entity.Migrations
             AddColumn("purchase_packing", "is_read", c => c.Boolean(nullable: false));
             AddColumn("purchase_packing_detail", "is_read", c => c.Boolean(nullable: false));
             AddColumn("purchase_packing_dimension", "is_read", c => c.Boolean(nullable: false));
-            //AlterColumn("item_movement", "id_sales_invoice_detail", c => c.Long());
-            //CreateIndex("app_branch", "id_measurement");
-            //CreateIndex("item_movement", "id_sales_invoice_detail");
-            //CreateIndex("item_asset", "id_branch");
-            //AddForeignKey("item_asset", "id_branch", "app_branch", "id_branch");
-            //AddForeignKey("app_branch", "id_measurement", "app_measurement", "id_measurement");
+
+            //Sales Invoice -> Item Movement
+            AlterColumn("item_movement", "id_sales_invoice_detail", c => c.Long());
+            CreateIndex("item_movement", "id_sales_invoice_detail");
+            AddForeignKey("item_movement", "id_sales_invoice_detail", "sales_invoice_detail", "id_sales_invoice_detail");
+            //Production Execution -> Item Movement
+            AddColumn("item_movement", "id_execution_detail", c => c.Int(nullable: true));
+            CreateIndex("item_movement", "id_execution_detail");
+            AddForeignKey("item_movement", "id_execution_detail", "production_execution_detail", "id_execution_detail");
+
+            CreateIndex("app_branch", "id_measurement");
+            CreateIndex("item_asset", "id_branch");
+            AddForeignKey("item_asset", "id_branch", "app_branch", "id_branch");
+            AddForeignKey("app_branch", "id_measurement", "app_measurement", "id_measurement");
             //DropColumn("item_movement", "id_application");
             //DropColumn("item_movement", "id_transfer");
             //DropColumn("item_movement", "id_production_execution");
@@ -269,6 +277,34 @@ namespace entity.Migrations
             //DropColumn("item_movement", "id_production_execution_detail");
             //DropColumn("item_movement", "transaction_id");
 
+            Sql(
+             @" ALTER TABLE `item_movement` "
+            + " DROP FOREIGN KEY `FK_item_movement_sales_return_id_sales_return`,"
+            + " DROP FOREIGN KEY `FK_item_movement_sales_packing_id_sales_packing`,"
+            + " DROP FOREIGN KEY `FK_item_movement_sales_invoice_id_sales_invoice`,"
+            + " DROP FOREIGN KEY `FK_item_movement_purchase_return_id_purchase_return`,"
+            + " DROP FOREIGN KEY `FK_item_movement_purchase_invoice_id_purchase_invoice`,"
+            + " DROP FOREIGN KEY `FK_item_movement_production_execution_id_production_execution`,"
+            + " DROP FOREIGN KEY `FK_item_movement_item_transfer_id_transfer`;"
+            + " ALTER TABLE `item_movement` "
+            + " DROP COLUMN `id_production_execution_detail`,"
+            + " DROP COLUMN `id_sales_packing`,"
+            + " DROP COLUMN `id_inventory`,"
+            + " DROP COLUMN `id_sales_return`,"
+            + " DROP COLUMN `id_sales_invoice`,"
+            + " DROP COLUMN `id_purchase_return`,"
+            + " DROP COLUMN `id_purchase_invoice`,"
+            + " DROP COLUMN `id_production_execution`,"
+            + " DROP COLUMN `id_transfer`,"
+            + " DROP COLUMN `transaction_id`,"
+            + " DROP COLUMN `id_application`,"
+            + " DROP INDEX `IX_id_sales_packing`,"
+            + " DROP INDEX `IX_id_sales_return`,"
+            + " DROP INDEX `IX_id_sales_invoice`,"
+            + " DROP INDEX `IX_id_purchase_return`,"
+            + " DROP INDEX `IX_id_purchase_invoice`,"
+            //+ " DROP INDEX `IX_id_production_execution`,"
+            + " DROP INDEX `IX_id_transfer`;");
         }
         
         public override void Down()

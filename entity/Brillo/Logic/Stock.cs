@@ -442,7 +442,7 @@ namespace entity.Brillo.Logic
             return null;
         }
 
-        public List<item_movement> DebitOnly_MovementLIST(List<item_movement> Items_InStockLIST, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,int TransactionDetailID,
+        public List<item_movement> DebitOnly_MovementLIST(List<item_movement> Items_InStockLIST, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
                                                        app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
                                                        decimal Quantity, DateTime TransDate, string Comment)
         {
@@ -486,7 +486,8 @@ namespace entity.Brillo.Logic
                     item_movement.status = Status;
                     item_movement.id_location = app_location.id_location;
                     item_movement._parent = null;
-                    if (ApplicationID==App.Names.Transfer)
+
+                    if (ApplicationID == App.Names.Transfer)
                     {
                         item_movement.id_transfer_detail = TransactionDetailID;
                     }
@@ -515,7 +516,6 @@ namespace entity.Brillo.Logic
                         item_movement.id_sales_packing_detail = TransactionDetailID;
                     }
                   
-                   // item_movement.transaction_id = TransactionID;
                     item_movement.trans_date = TransDate;
 
                     item_movement._parent = parent_Movement;

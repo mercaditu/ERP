@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="app.cs" />
     <Compile Include="Application\app_account_session.cs" />
+    <Compile Include="Application\app_branch_walkin.cs" />
     <Compile Include="Application\app_configuration.cs" />
     <Compile Include="Application\app_name_template_detail.cs" />
     <Compile Include="Application\app_name_template.cs" />

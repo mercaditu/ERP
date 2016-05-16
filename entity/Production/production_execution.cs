@@ -40,6 +40,8 @@ namespace entity
         public virtual production_order production_order { get; set; }
         public virtual ICollection<production_execution_detail> production_execution_detail { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
+
+        #region Validation
         public string Error
         {
             get
@@ -73,5 +75,6 @@ namespace entity
                 return "";
             }
         }
+        #endregion
     }
 }

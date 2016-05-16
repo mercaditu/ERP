@@ -13,6 +13,15 @@ namespace entity
             AddValue
         }
 
+        public enum Status
+        {
+            Pending,
+            Working,
+            Done,
+            CannotBeFixed,
+            Rejected
+        }
+
         public item_asset_maintainance()
         {
             id_company = CurrentSession.Id_Company;
@@ -25,6 +34,7 @@ namespace entity
         public int id_maintainance { get; set; }
         public int id_item_asset { get; set; }
 
+        public Status status { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public string comment { get; set; }

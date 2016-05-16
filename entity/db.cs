@@ -30,6 +30,7 @@
         public virtual DbSet<app_attachment> app_attachment { get; set; }
         public virtual DbSet<app_bank> app_bank { get; set; }
         public virtual DbSet<app_branch> app_branch { get; set; }
+        public virtual DbSet<app_branch_walkins> app_branch_walkins { get; set; }
         public virtual DbSet<app_company> app_company { get; set; }
         public virtual DbSet<app_condition> app_condition { get; set; }
         public virtual DbSet<app_contract> app_contract { get; set; }
@@ -80,6 +81,8 @@
         public virtual DbSet<item_request_decision> item_request_decision { get; set; }
         public virtual DbSet<item_asset> item_asset { get; set; }
         public virtual DbSet<item_asset_group> item_asset_group { get; set; }
+        public virtual DbSet<item_asset_maintainance> item_asset_maintainance { get; set; }
+        public virtual DbSet<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
         public virtual DbSet<item_product> item_product { get; set; }
         public virtual DbSet<item_service> item_service { get; set; }
         public virtual DbSet<item_price> item_price { get; set; }

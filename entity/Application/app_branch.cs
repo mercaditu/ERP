@@ -48,6 +48,7 @@ namespace entity
         public virtual ICollection<item_request> item_request { get; set; }
         public virtual ICollection<app_location> app_location { get; set; }
         public virtual ICollection<app_terminal> app_terminal { get; set; }
+        public virtual IEnumerable<app_branch_walkins> app_branch_walkins { get; set; }
 
         //Stock
         public virtual IEnumerable<item_transfer> item_transfer { get; set; }
@@ -73,8 +74,6 @@ namespace entity
             {
                 StringBuilder error = new StringBuilder();
 
-                // iterate over all of the properties
-                // of this object - aggregating any validation errors
                 PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
                 foreach (PropertyDescriptor prop in props)
                 {

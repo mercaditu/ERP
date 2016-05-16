@@ -101,7 +101,6 @@ namespace entity
         public sales_packing newer { get; set; }
 
         public virtual ICollection<sales_packing_detail> sales_packing_detail { get; set; }
-        public virtual ICollection<item_movement> item_movement { get; set; }
       
         public virtual contact contact
         {

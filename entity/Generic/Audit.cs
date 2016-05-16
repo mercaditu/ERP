@@ -35,6 +35,8 @@ namespace entity
         }
         public DateTime _timestamp;
 
+        public bool is_read { get; set; }
+
         //Data
         [NotMapped]
         public bool HasErrors { get; set; }

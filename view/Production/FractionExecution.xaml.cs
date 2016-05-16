@@ -164,20 +164,16 @@ namespace Cognitivo.Production
                 {
                     CollectionViewSource.View.Filter = i =>
                     {
-
                         production_order_detail production_order_detail = (production_order_detail)i;
                         if (production_order_detail.parent == null)
                         {
-
                             return true;
-
                         }
                         else { return false; }
 
                     };
                 }
             }
-
         }
 
         private void toolBar_btnSave_Click(object sender)

@@ -82,6 +82,24 @@ namespace Cognitivo.Report
         }
         private string _tbxTag;
 
+        public string[] BrandArray { get; set; }
+        public string tbxBrand
+        {
+            get
+            {
+                return _tbxBrand;
+            }
+            set
+            {
+                if (_tbxBrand != value)
+                {
+                    _tbxBrand = value;
+                    TagArray = _tbxBrand.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxBrand;
+
 
         public ReportPage()
         {

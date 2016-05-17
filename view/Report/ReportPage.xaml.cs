@@ -25,9 +25,63 @@ namespace Cognitivo.Report
         public contact Contact { get; set; }
         public item Item { get; set; }
 
-        public string[] ConditionList { get; set; }
-        public string[] ContractList { get; set; }
-        public string[] TagList { get; set; }
+        /// <summary>
+        /// Condition KeyWord Array.
+        /// </summary>
+        public string[] ConditionArray { get; set; }
+        public string tbxCondition
+        {
+            get 
+            {
+                return _tbxCondition;
+            }
+            set
+            {
+                if (_tbxCondition != value)
+                {
+                    _tbxCondition = value;
+                    ConditionArray = _tbxCondition.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxCondition;
+
+        public string[] ContractArray { get; set; }
+        public string tbxContract
+        {
+            get
+            {
+                return _tbxContract;
+            }
+            set
+            {
+                if (_tbxContract != value)
+                {
+                    _tbxContract = value;
+                    ContractArray = _tbxContract.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxContract;
+
+        public string[] TagArray { get; set; }
+        public string tbxTag
+        {
+            get
+            {
+                return _tbxTag;
+            }
+            set
+            {
+                if (_tbxTag != value)
+                {
+                    _tbxTag = value;
+                    TagArray = _tbxTag.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxTag;
+
 
         public ReportPage()
         {

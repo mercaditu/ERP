@@ -1,4 +1,4 @@
-﻿<metro:MetroWindow x:Class="Cognitivo.Report.ReportPage"
+﻿<metro:MetroWindow x:Class="Cognitivo.Report.ReportPage" x:Name="_ReportPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -61,20 +61,23 @@
                         </StackPanel>
 
                         <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="grid_tbxCondition" Style="{StaticResource input_textbox}"/>
+                        <TextBox Text="{Binding tbxCondition, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
 
                         <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="grid_tbxContract" Style="{StaticResource input_textbox}"/>
+                        <TextBox Text="{Binding tbxContract, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
 
                         <Rectangle Style="{StaticResource line_Bar}"/>
 
                         <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
                         <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
-                        <Controls:SmartBox_Item x:Name="grid_sbxItem"/>
+                        <Controls:SmartBox_Item x:Name="grid_sbxItem" />
+
+                        <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
+                        <TextBox Text="{Binding tbxBrand, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
 
                         <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
-                        <TextBox x:Name="grid_tbxTags" Style="{StaticResource input_textbox}"/>
+                        <TextBox Text="{Binding tbxTag, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
 
                         <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo"
                                     Style="{DynamicResource MetroCircleButtonStyle}" Click="btnGridSearch"

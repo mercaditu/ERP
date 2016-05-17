@@ -657,19 +657,17 @@
                          value = g.Sum(a => a.credit)
                      }).ToList().OrderBy(x => x.id_currencyfx);
                 Detail += "\n Total de Ventas Neto :" + Math.Round(listvat.Sum(x => x.value), 2) + detail.app_currencyfx.app_currency.name + "\n";
+                
                 foreach (dynamic item in listvat)
                 {
                     Detail += item.paymentname + "\t" + Math.Round(item.value, 2) + detail.app_currencyfx.app_currency.name + "\n";
 
                 }
+
                 foreach (app_account_detail account_detail in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close && x.id_currencyfx == detail.id_currencyfx).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
                 {
-
-
-
                     Detail += "\n Balance de Cierre : " + Math.Round(account_detail.debit, 2);
                     Detail += "\n--------------------------------" + "\n";
-
                 }
 
                 Detail += "\n--------------------------------" + "\n";
@@ -679,16 +677,22 @@
             {
                 decimal amount = 0M;
 
-                foreach (app_account_detail account_detail in db.app_account_detail.Where(x => x.id_session == app_account_session.id_session).ToList())
+                foreach (app_account_detail account_detail in db.app_account_detail.Where(x => x.id_session == app_account_session.id_session && x.tran_type == app_account_detail.tran_types.Transaction).ToList())
                 {
-                    
                     foreach (payment_schedual payment_schedual in account_detail.payment_detail.payment_schedual.ToList())
                     {
-                        amount += payment_schedual.parent.credit;
+                        if (payment_schedual.parent != null)
+                        {
+                            amount += payment_schedual.parent.debit;
+                        }
+                        else
+                        {
+                            amount += payment_schedual.credit;
+                        }
                     }
                 }
 
-                Detail += "Total de Ventas Neto :" + Math.Round(amount, 2);
+                Detail += "Total de Ventas Neto :" + Math.Round(amount, 2) + "\n";
             }
 
             Footer += "--------------------------------" + "\n";

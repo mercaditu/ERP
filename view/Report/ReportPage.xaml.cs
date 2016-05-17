@@ -25,6 +25,9 @@ namespace Cognitivo.Report
         public contact Contact { get; set; }
         public item Item { get; set; }
 
+        public DateTime start_Range { get; set; }
+        public DateTime end_Range { get; set; }
+
         /// <summary>
         /// Condition KeyWord Array.
         /// </summary>

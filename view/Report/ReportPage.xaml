@@ -47,7 +47,7 @@
                                             <Run Text="{lex:Loc StartDate}"/>
                                     </TextBlock>
                                 </Label>
-                                <DatePicker x:Name="grid_dateStart" Width="124"/>
+                                <DatePicker x:Name="grid_dateStart" Width="124" Text="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </StackPanel>
                             <StackPanel Margin="2,0">
                                 <Label Style="{StaticResource input_label}">
@@ -56,7 +56,7 @@
                                             <Run Text="{lex:Loc EndDate}"/>
                                     </TextBlock>
                                 </Label>
-                                <DatePicker x:Name="grid_dateEnd" Width="124"/>
+                                <DatePicker x:Name="grid_dateEnd" Width="124" Text="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </StackPanel>
                         </StackPanel>
 
@@ -220,8 +220,8 @@
                 </StackPanel>
             </ListBoxItem>
         </ListBox>
-        <Grid Grid.Column="1" Background="DimGray">
-            
-        </Grid>
+        
+        <Frame Grid.Column="1" Background="DimGray"/>
+
     </Grid>
 </metro:MetroWindow>

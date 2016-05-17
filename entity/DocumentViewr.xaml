@@ -10,6 +10,5 @@
         <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <rv:ReportViewer x:Name="reportViewer" ShowBackButton="False" ShowRefreshButton="False" ShowStopButton="False" KeepSessionAlive="False" />
         </WindowsFormsHost>
-        <!--<DocumentViewer  HorizontalAlignment="Left" Margin="188,65,0,0" VerticalAlignment="Top" Height="535" Width="612"/>-->
     </Grid>
 </UserControl>

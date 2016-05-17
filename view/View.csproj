@@ -507,6 +507,9 @@
     <Compile Include="Report\ReportSalesbyTag.xaml.cs">
       <DependentUpon>ReportSalesbyTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\Sales\Sales_Report.xaml.cs">
+      <DependentUpon>Sales_Report.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RowDef.cs" />
     <Compile Include="Sales\Budget.xaml.cs">
       <DependentUpon>Budget.xaml</DependentUpon>
@@ -1482,6 +1485,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Report\ReportSalesbyTag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Report\Sales\Sales_Report.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

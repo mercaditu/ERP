@@ -21,11 +21,18 @@ namespace Cognitivo.Report
 {
     public partial class Sales_Report : Page
     {
-        ReportPage ReportPage = Application.Current.Windows.OfType<ReportPage>() as ReportPage;
+        ReportPage ReportPage = null; // Application.Current.Windows.OfType<ReportPage>() as ReportPage;
+
         db db = new db();
+
         public Sales_Report()
         {
             InitializeComponent();
+        }
+
+        private void rpt_Loaded(object sender, RoutedEventArgs e)
+        {
+            ReportPage = Application.Current.Windows.OfType<ReportPage>().SingleOrDefault() as ReportPage;
 
             QueryBuilder();
         }
@@ -33,15 +40,21 @@ namespace Cognitivo.Report
         private void QueryBuilder()
         {
             var predicate = PredicateBuilder.True<entity.sales_invoice>();
-            if (ReportPage.ConditionArray.Count() > 0)
-            {
-                predicate = predicate.And(x => ReportPage.ConditionArray.Contains(x.app_condition.name));
 
+            if (ReportPage.ConditionArray != null)
+            {
+                if (ReportPage.ConditionArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ReportPage.ConditionArray.Contains(x.app_condition.name));
+                }
             }
-            if (ReportPage.ContractArray.Count() > 0)
-            {
-                predicate = predicate.And(x => ReportPage.ContractArray.Contains(x.app_contract.name));
 
+            if (ReportPage.ContractArray != null)
+            {
+                if (ReportPage.ContractArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ReportPage.ContractArray.Contains(x.app_contract.name));
+                }
             }
 
             if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
@@ -57,7 +70,6 @@ namespace Cognitivo.Report
             if (ReportPage.Contact != null)
             {
                 predicate = predicate.And(x => x.contact == ReportPage.Contact);
-
             }
 
             ReportDataSource reportDataSource = new ReportDataSource();
@@ -130,7 +142,6 @@ namespace Cognitivo.Report
 
 
 
-        }
-   
+        }   
     }
 }

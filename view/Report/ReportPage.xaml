@@ -6,7 +6,7 @@
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
           xmlns:lex="http://wpflocalizeextension.codeplex.com"        
-          lex:LocalizeDictionary.DesignCulture="en-US"
+          lex:LocalizeDictionary.DesignCulture="es-US"
           lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d" 

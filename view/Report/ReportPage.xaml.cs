@@ -111,7 +111,7 @@ namespace Cognitivo.Report
 
         private void btnGridSearch(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void btnFilter_Click(object sender, EventArgs e)

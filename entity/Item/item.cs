@@ -113,7 +113,7 @@ namespace entity
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual IEnumerable<purchase_tender_item> purchase_tender_item_detail { get; set; }
         public virtual IEnumerable<purchase_packing_detail> purchase_packing_detail { get; set; }
-
+        public virtual IEnumerable<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
         public virtual IEnumerable<sales_return_detail> sales_return_detail { get; set; }
         public virtual IEnumerable<sales_packing_detail> sales_packing_detail { get; set; }
         public virtual IEnumerable<sales_budget_detail> sales_budget_detail { get; set; }

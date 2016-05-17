@@ -14,15 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using entity;
 using System.IO;
+using System.Data.Entity;
 
 namespace Cognitivo.Product
 {
     public partial class FixedAssets : Page
     {
         entity.ItemDB ItemDB = new entity.ItemDB();
+        dbContext dbContext = new dbContext();
         CollectionViewSource 
             itemViewSource,
-            itemitem_capitalViewSource;
+            itemitem_capitalViewSource, item_asset_maintainanceViewSource;
 
         public FixedAssets()
         {
@@ -37,23 +39,40 @@ namespace Cognitivo.Product
             ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).ToList();
             itemViewSource.Source = ItemDB.items.Local;
 
-           
+            item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
+            dbContext.db.item_asset_maintainance.Load();
+            item_asset_maintainanceViewSource.Source = dbContext.db.item_asset_maintainance.Local;
+
+
+            cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+
+            cbxassetGroup.ItemsSource = ItemDB.item_asset_group.Where(b => b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            cbxType.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.MaintainanceTypes));
+            cbxStatus.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.Status));
         }
 
         #region Mini ToolBar
         private void toolBar_Mini_btnSave_Click(object sender)
         {
-
+            dbContext.db.SaveChanges();
         }
 
         private void toolBar_Mini_btnEdit_Click(object sender)
         {
-
+            item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
+            item_asset_maintainance.IsSelected = true;
+            item_asset_maintainance.State = EntityState.Modified;
+            dbContext.db.Entry(item_asset_maintainance).State = EntityState.Modified;
         }
 
         private void toolBar_Mini_btnNew_Click(object sender)
         {
+            item_asset_maintainance item_asset_maintainance = new item_asset_maintainance();
+            item_asset_maintainance.IsSelected = true;
+            item_asset_maintainance.State = EntityState.Added;
+            dbContext.db.Entry(item_asset_maintainance).State = EntityState.Added;
 
+            item_asset_maintainanceViewSource.View.MoveCurrentToLast();
         }
         #endregion
 

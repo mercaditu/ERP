@@ -20,6 +20,8 @@
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemitem_capitalViewSource" Source="{Binding item_asset, Source={StaticResource itemViewSource}}"/>
+        <CollectionViewSource x:Key="item_asset_maintainanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_maintainance}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_asset_maintainanceitem_asset_maintainance_detailViewSource" Source="{Binding item_asset_maintainance_detail, Source={StaticResource item_asset_maintainanceViewSource}}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource itemViewSource}">
         <Grid.ColumnDefinitions>
@@ -66,7 +68,7 @@
                             <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
-                                <ComboBox Grid.Column="1" IsEnabled="False" Style="{StaticResource input_combobox}"
+                                <ComboBox x:Name="cbxBranch" Grid.Column="1"  Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
                                           SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
@@ -80,7 +82,7 @@
                         <StackPanel Margin="8,0" DataContext="{StaticResource itemitem_capitalViewSource}">
                             <Label Content="{lex:Loc FixedAssetGroup}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
-                                <ComboBox Grid.Column="1" IsEnabled="False" Style="{StaticResource input_combobox}"
+                                <ComboBox Grid.Column="1" x:Name="cbxassetGroup"  Style="{StaticResource input_combobox}" DisplayMemberPath="name" SelectedValuePath="id_item_asset_group"
                                           SelectedValue="{Binding id_asset_group, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
@@ -88,9 +90,9 @@
                             <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
                             <DatePicker Style="{StaticResource input_datepicker}"/>
                             <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />
-                            <TextBox Style="{StaticResource input_textbox}"/>
+                            <TextBox Text="{Binding purchase_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
-                            <TextBox Style="{StaticResource input_textbox}" IsReadOnly="True"/>
+                            <TextBox Text="{Binding current_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>
@@ -110,19 +112,30 @@
                                                 btnEdit_Click="toolBar_Mini_btnEdit_Click"
                                                 btnSave_Click="toolBar_Mini_btnSave_Click"/>
                             <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}" />
-                            <ComboBox Style="{StaticResource input_combobox}"/>
-                            <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
-                            <DatePicker Style="{StaticResource input_datepicker}"/>
-                            <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}" />
-                            <DatePicker Style="{StaticResource input_datepicker}"/>
-                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
-                            <TextBox Style="{StaticResource input_textbox}" Height="64"/>
-                            
+                            <ComboBox Name="cbxType" Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
+                                                      SelectedValue="{Binding maintainance_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                                              ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                                              ValidatesOnDataErrors=True}"/>
+                            <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
+                            <DatePicker x:Name="start_dateDatePicker" Style="{StaticResource input_datepicker}"
+					            SelectedDate="{Binding start_date, Mode=TwoWay, NotifyOnValidationError=true, 
+                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
+                            <DatePicker x:Name="end_dateDatePicker" Style="{StaticResource input_datepicker}"
+					            SelectedDate="{Binding end_date, Mode=TwoWay, NotifyOnValidationError=true, 
+                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                            <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
+                                 Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap"/>
+
                             <Rectangle Style="{StaticResource line_Bar}"/>
                             
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}" />
-                                <ComboBox IsReadOnly="True" Style="{StaticResource ComboToLabelStyle}"/>
+                                <ComboBox Name="cbxStatus" Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
+                                                      SelectedValue="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                                              ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                                              ValidatesOnDataErrors=True}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

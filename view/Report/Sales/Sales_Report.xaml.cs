@@ -39,13 +39,13 @@ namespace Cognitivo.Report
 
         private void QueryBuilder()
         {
-            var predicate = PredicateBuilder.True<entity.sales_invoice>();
+            var predicate = PredicateBuilder.True<entity.sales_invoice_detail>();
 
             if (ReportPage.ConditionArray != null)
             {
                 if (ReportPage.ConditionArray.Count() > 0)
                 {
-                    predicate = predicate.And(x => ReportPage.ConditionArray.Contains(x.app_condition.name));
+                    predicate = predicate.And(x => ReportPage.ConditionArray.Contains(x.sales_invoice.app_condition.name));
                 }
             }
 
@@ -53,28 +53,28 @@ namespace Cognitivo.Report
             {
                 if (ReportPage.ContractArray.Count() > 0)
                 {
-                    predicate = predicate.And(x => ReportPage.ContractArray.Contains(x.app_contract.name));
+                    predicate = predicate.And(x => ReportPage.ContractArray.Contains(x.sales_invoice.app_contract.name));
                 }
             }
 
             if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
             {
-                predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
+                predicate = predicate.And(x => x.sales_invoice.trans_date >= ReportPage.start_Range);
 
             }
             if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
             {
-                predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
+                predicate = predicate.And(x => x.sales_invoice.trans_date <= ReportPage.end_Range);
 
             }
             if (ReportPage.Contact != null)
             {
-                predicate = predicate.And(x => x.contact == ReportPage.Contact);
+                predicate = predicate.And(x => x.sales_invoice.contact == ReportPage.Contact);
             }
 
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.ToList();
+            List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.Where(predicate).ToList();
             reportDataSource.Value = sales_invoice_detail.Select(g => new
             {
                 geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",

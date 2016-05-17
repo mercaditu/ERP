@@ -6,12 +6,7 @@ namespace entity
 
     public partial class item_asset_maintainance_detail : Audit
     {
-        public enum MaintainanceTypes
-        {
-            Preventive,
-            Corrective,
-            AddValue
-        }
+ 
 
         public item_asset_maintainance_detail()
         {
@@ -30,6 +25,7 @@ namespace entity
         public decimal quantity { get; set; }
         public decimal unit_cost { get; set; }
         public int? id_currencyfx { get; set; }
+        
 
         //Nav Properties
         public virtual item_asset_maintainance item_asset_maintainance { get; set; }

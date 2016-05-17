@@ -1,6 +1,7 @@
 namespace entity
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,6 +12,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            item_asset_maintainance = new List<item_asset_maintainance>();
         }
 
         [Key]
@@ -37,5 +39,6 @@ namespace entity
         public virtual item item { get; set; }
         public virtual item_asset_group item_asset_group { get; set; }
         public virtual app_branch app_branch { get; set; }
+        public virtual ICollection<item_asset_maintainance> item_asset_maintainance { get; set; }
     }
 }

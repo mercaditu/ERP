@@ -35,8 +35,7 @@
         </Grid.ColumnDefinitions>
 
         <ListBox x:Name="itemmainatencetail"  Background="{StaticResource AccentColor_Brush}"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
                  ItemsSource="{Binding}" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="1">
             <ListBox.ItemTemplate>

@@ -7,7 +7,12 @@ namespace entity
 
     public partial class item_asset_maintainance : Audit
     {
-        
+        public enum MaintainanceTypes
+        {
+            Preventive,
+            Corrective,
+            AddValue
+        }
         public enum Status
         {
             Pending,
@@ -34,6 +39,7 @@ namespace entity
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public string comment { get; set; }
+        public MaintainanceTypes maintainance_type { get; set; }
         
         //Nav Properties
         public virtual item_asset item_asset { get; set; }

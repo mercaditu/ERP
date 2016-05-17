@@ -49,6 +49,9 @@ namespace Cognitivo.Report
         }
         private string _tbxCondition;
 
+        /// <summary>
+        /// Contract KeyWord Array.
+        /// </summary>
         public string[] ContractArray { get; set; }
         public string tbxContract
         {
@@ -67,6 +70,9 @@ namespace Cognitivo.Report
         }
         private string _tbxContract;
 
+        /// <summary>
+        /// Tag KeyWord Array.
+        /// </summary>
         public string[] TagArray { get; set; }
         public string tbxTag
         {
@@ -85,6 +91,9 @@ namespace Cognitivo.Report
         }
         private string _tbxTag;
 
+        /// <summary>
+        /// Brand KeyWord Array.
+        /// </summary>
         public string[] BrandArray { get; set; }
         public string tbxBrand
         {

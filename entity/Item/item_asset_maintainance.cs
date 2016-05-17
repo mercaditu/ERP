@@ -1,18 +1,13 @@
 namespace entity
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class item_asset_maintainance : Audit
     {
-        public enum MaintainanceTypes
-        {
-            Preventive,
-            Corrective,
-            AddValue
-        }
-
+        
         public enum Status
         {
             Pending,
@@ -27,6 +22,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
         }
 
         [Key]
@@ -41,5 +37,6 @@ namespace entity
         
         //Nav Properties
         public virtual item_asset item_asset { get; set; }
+        public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
     }
 }

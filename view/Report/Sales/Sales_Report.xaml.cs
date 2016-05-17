@@ -74,7 +74,8 @@ namespace Cognitivo.Report
 
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            reportDataSource.Value = db.sales_invoice_detail.Select(g => new
+            List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.ToList();
+            reportDataSource.Value = sales_invoice_detail.Select(g => new
             {
                 geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",
                 sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
@@ -122,21 +123,21 @@ namespace Cognitivo.Report
             {
                 Directory.CreateDirectory(path);
                 Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales_PackingList.rdlc", path + SubFolder + "\\Sales_PackingList.rdlc");
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoiceReport.rdlc", path + SubFolder + "\\SalesInvoiceReport.rdlc");
             }
             else if (!Directory.Exists(path + SubFolder))
             {
                 Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales_PackingList.rdlc", path + SubFolder + "\\Sales_PackingList.rdlc");
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoiceReport.rdlc", path + SubFolder + "\\SalesInvoiceReport.rdlc");
 
             }
-            else if (!File.Exists(path + SubFolder + "\\Sales_PackingList.rdlc"))
+            else if (!File.Exists(path + SubFolder + "\\SalesInvoiceReport.rdlc"))
             {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales_PackingList.rdlc", path + SubFolder + "\\Sales_PackingList.rdlc");
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoiceReport.rdlc", path + SubFolder + "\\SalesInvoiceReport.rdlc");
             }
 
 
-            reportViewer.LocalReport.ReportPath = path + SubFolder + "\\Sales_PackingList.rdlc"; // Path of the rdlc file
+            reportViewer.LocalReport.ReportPath = path + SubFolder + "\\SalesInvoiceReport.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();
 

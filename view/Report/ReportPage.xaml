@@ -105,13 +105,13 @@
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <ListBoxItem Tag="Sales" Selected="list_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <ListBoxItem Tag="SalesDetail" Selected="list_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="C"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesDetail}"/>
@@ -220,8 +220,8 @@
                 </StackPanel>
             </ListBoxItem>
         </ListBox>
-        
-        <Frame Grid.Column="1" Background="DimGray"/>
+
+        <Frame Name="rptFrame" Grid.Column="1" Background="DimGray"/>
 
     </Grid>
 </metro:MetroWindow>

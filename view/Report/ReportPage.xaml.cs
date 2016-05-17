@@ -118,5 +118,27 @@ namespace Cognitivo.Report
         {
             flyFilter.IsOpen = true;
         }
+
+        private void list_Selected(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem ListBoxItem = sender as ListBoxItem;
+
+            if (ListBoxItem != null)
+            {
+                string ReportName = ListBoxItem.Tag + "_Report";
+
+                try
+                {
+                    Page objPage = default(Page);
+                    Type PageInstanceType = null;
+
+                    PageInstanceType = Type.GetType(ReportName, false, true);
+                    objPage = (Page)Activator.CreateInstance(PageInstanceType);
+                    rptFrame.Navigate(objPage);
+                    Cursor = Cursors.Arrow;
+                }
+                catch { }
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Cognitivo.Report.Sales
+namespace Cognitivo.Report
 {
     public partial class Sales_Report : Page
     {
@@ -22,6 +22,8 @@ namespace Cognitivo.Report.Sales
         public Sales_Report()
         {
             InitializeComponent();
+
+            QueryBuilder();
         }
 
         private void QueryBuilder()

@@ -29,7 +29,25 @@
                  metro:TextBoxHelper.Watermark="{lex:Loc Search}" 
                  KeyUp="StartSearch"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="4,0" Visibility="{Binding}">
-          
+            <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
+                <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
+                    <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="A"  FontSize="9" VerticalAlignment="Center" Margin="0" 
+                           HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
+                           PreviewMouseUp="Label_PreviewMouseUp" Padding="4" FontWeight="Bold"/>
+                    <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed" StaysOpen="False"
+                               PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
+                        <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
+                            <StackPanel Orientation="Vertical" Background="White">
+                               
+                                <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Stock Item}" 
+                                      IsChecked="{Binding ElementName=_SmartBox_Item, Path=Is_Stock, Mode=TwoWay}"
+                                     />
+                              
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </StackPanel>
+            </StackPanel>
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"

@@ -99,7 +99,7 @@
                                     VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue"/>
                         </StackPanel>
                     </StackPanel>
-                    <DataGrid AutoGenerateColumns="False" Grid.Column="1"
+                    <DataGrid AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False"
                               VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True" EnableColumnVirtualization="True"
                               ItemsSource="{Binding Source={StaticResource sales_invoiceViewSource}}">
                         <DataGrid.Columns>

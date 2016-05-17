@@ -34,7 +34,7 @@ namespace Cognitivo.Report
         public string[] ConditionArray { get; set; }
         public string tbxCondition
         {
-            get 
+            get
             {
                 return _tbxCondition;
             }
@@ -111,7 +111,7 @@ namespace Cognitivo.Report
 
         private void btnGridSearch(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void btnFilter_Click(object sender, EventArgs e)
@@ -125,7 +125,7 @@ namespace Cognitivo.Report
 
             if (ListBoxItem != null)
             {
-                string ReportName = ListBoxItem.Tag + "_Report";
+                string ReportName = "Cognitivo.Report." + ListBoxItem.Tag + "_Report";
 
                 try
                 {
@@ -140,5 +140,7 @@ namespace Cognitivo.Report
                 catch { }
             }
         }
+
+
     }
 }

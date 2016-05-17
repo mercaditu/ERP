@@ -12,7 +12,7 @@ using System.Windows.Threading;
 
 namespace cntrl.Controls
 {
-    public partial class SmartBox_Item : UserControl,INotifyPropertyChanged
+    public partial class SmartBox_Item : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string prop)
@@ -27,20 +27,32 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                 entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
-                 if (Sec.create)
-                 {
-                     _can_new = value;
-                     RaisePropertyChanged("can_New");
-                 }
-                 else
-                 {
-                     _can_new = false;
-                     RaisePropertyChanged("can_New");
-                 }
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                if (Sec.create)
+                {
+                    _can_new = value;
+                    RaisePropertyChanged("can_New");
+                }
+                else
+                {
+                    _can_new = false;
+                    RaisePropertyChanged("can_New");
+                }
             }
         }
         bool _can_new;
+        public bool Is_Stock
+        {
+            get { return _Is_Stock; }
+            set
+            {
+
+                _Is_Stock = value;
+                RaisePropertyChanged("Is_Stock");
+
+            }
+        }
+        bool _Is_Stock;
         public bool can_Edit
         {
             get { return _can_new; }
@@ -59,7 +71,7 @@ namespace cntrl.Controls
                 }
             }
         }
-bool _can_edit;
+        bool _can_edit;
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Item));
         public string Text
@@ -127,7 +139,7 @@ bool _can_edit;
                     tbxSearch.Focus();
                 }));
             }
-        }  
+        }
 
         private void StartSearch(object sender, KeyEventArgs e)
         {
@@ -182,37 +194,29 @@ bool _can_edit;
                 db.Configuration.AutoDetectChangesEnabled = false;
 
                 List<entity.item> results;
-                if (item_types == null)
-                {
-                    results = db.items
-                               .Where(x =>
-                                         x.id_company == entity.CurrentSession.Id_Company &&
+                var predicate = PredicateBuilder.True<entity.item>();
+
+                predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
                                          (
                                              x.code.Contains(SearchText) ||
                                              x.name.Contains(SearchText) ||
                                              x.item_brand.name.Contains(SearchText)
-                                         ) &&
-                                        x.is_active == true
-                                       )
-                               .OrderBy(x => x.name)
-                               .ToList();
-                }
-                else
-                {
-                    results = db.items
-                                  .Where(x =>
-                                            x.id_company == entity.CurrentSession.Id_Company && x.id_item_type == item_types &&
-                                            (
-                                                x.code.Contains(SearchText) ||
-                                                x.name.Contains(SearchText) ||
-                                                x.item_brand.name.Contains(SearchText)
-                                            ) &&
-                                           x.is_active == true
-                                          )
-                                  .OrderBy(x => x.name)
-                                  .ToList();
+                                         ));
 
+                if (item_types != null)
+                {
+                    predicate = predicate.And(x => x.id_item_type == item_types);
                 }
+                //if (Is_Stock)
+                //{
+                //    predicate = predicate.And(x => x.item_product.FirstOrDefault().stock > 0);
+                //}
+
+                results = db.items
+                           .Where(predicate)
+                           .OrderBy(x => x.name)
+                           .ToList();
+
 
                 Dispatcher.InvokeAsync(new Action(() =>
                 {
@@ -276,6 +280,18 @@ bool _can_edit;
             popCrud.IsOpen = false;
         }
 
-     
+        private void popupCustomize_Closed(object sender, EventArgs e)
+        {
+            popupCustomize.IsOpen = false;
+            popupCustomize.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popupCustomize.IsOpen = true;
+            popupCustomize.Visibility = System.Windows.Visibility.Visible;
+        }
+
+
     }
 }

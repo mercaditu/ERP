@@ -875,6 +875,7 @@
     <EmbeddedResource Include="bin\Debug\PaymentUtility.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="bin\Debug\Report\SalesInvoiceReport.rdlc" />
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
     <EmbeddedResource Include="bin\Debug\PurchaseOrder.rdlc" />
     <Content Include="bin\Debug\PackingList.rdlc">

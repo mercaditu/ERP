@@ -22,7 +22,12 @@ namespace entity
 
             sales_invoice.IsSelected = true;
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-            sales_invoice.id_range = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
+            if (entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault()!=null)
+            {
+                sales_invoice.id_range = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
+                
+            }
+        
 
             if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
             {
@@ -358,7 +363,7 @@ namespace entity
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.revert_Stock(this, App.Names.SalesInvoice, sales_invoice.id_sales_invoice);
+                        item_movementList = _Stock.revert_Stock(this, App.Names.SalesInvoice, sales_invoice);
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {

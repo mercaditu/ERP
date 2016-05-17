@@ -3,7 +3,8 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+    using System.Linq;
+
     public partial class item_product : Audit
     {
         public enum COGS_Types
@@ -15,7 +16,7 @@ namespace entity
         public item_product()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             cogs_type = COGS_Types.FIFO;
             is_head = true;
             item_movement = new List<item_movement>();
@@ -31,7 +32,18 @@ namespace entity
         public bool can_expire { get; set; }
         public bool is_weigted { get; set; }
         public COGS_Types cogs_type { get; set; }
-
+        [NotMapped]
+        public decimal stock
+        {
+            get
+            {
+                _stock = item_movement.Sum(x => x.credit - x.credit);
+                RaisePropertyChanged("stock");
+                return _stock;
+            }
+            set { _stock=value; }
+        }
+        public decimal _stock;
         public virtual item item { get; set; }
         public virtual IEnumerable<item_movement> item_movement { get; set; }
         public virtual IEnumerable<item_inventory_detail> item_inventory_detail { get; set; }

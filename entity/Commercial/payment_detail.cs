@@ -247,7 +247,7 @@ namespace entity
         public virtual app_currencyfx app_currencyfx { get; set; }
 
         public virtual ICollection<payment_type_detail> payment_type_detail { get; set; }
-        public virtual IEnumerable<app_account_detail> app_account_detail { get; set; }
+        public virtual ICollection<app_account_detail> app_account_detail { get; set; }
 
         #region Validation
         public string Error

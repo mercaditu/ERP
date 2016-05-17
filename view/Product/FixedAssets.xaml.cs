@@ -38,17 +38,15 @@ namespace Cognitivo.Product
         {
             ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).ToList();
             itemViewSource.Source = ItemDB.items.Local;
-
+            
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
             dbContext.db.item_asset_maintainance.Load();
             item_asset_maintainanceViewSource.Source = dbContext.db.item_asset_maintainance.Local;
-
 
             cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
 
             cbxassetGroup.ItemsSource = ItemDB.item_asset_group.Where(b => b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxType.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.MaintainanceTypes));
-            cbxStatus.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.Status));
         }
 
         #region Mini ToolBar
@@ -62,17 +60,28 @@ namespace Cognitivo.Product
             item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
             item_asset_maintainance.IsSelected = true;
             item_asset_maintainance.State = EntityState.Modified;
-            dbContext.db.Entry(item_asset_maintainance).State = EntityState.Modified;
         }
 
         private void toolBar_Mini_btnNew_Click(object sender)
         {
-            item_asset_maintainance item_asset_maintainance = new item_asset_maintainance();
-            item_asset_maintainance.IsSelected = true;
-            item_asset_maintainance.State = EntityState.Added;
-            dbContext.db.Entry(item_asset_maintainance).State = EntityState.Added;
+            item item = itemViewSource.View.CurrentItem as item;
 
-            item_asset_maintainanceViewSource.View.MoveCurrentToLast();
+            if (item != null)
+            {
+                if (item.item_asset != null)
+                {
+                    item_asset item_asset = item.item_asset.FirstOrDefault() as item_asset;
+
+                    item_asset_maintainance item_asset_maintainance = new item_asset_maintainance();
+                    item_asset_maintainance.IsSelected = true;
+                    item_asset_maintainance.State = EntityState.Added;
+
+                    item_asset.item_asset_maintainance.Add(item_asset_maintainance);
+
+                    item_asset_maintainanceViewSource.View.Refresh();
+                    item_asset_maintainanceViewSource.View.MoveCurrentTo(item_asset_maintainance);      
+                }
+            }
         }
         #endregion
 

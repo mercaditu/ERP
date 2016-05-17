@@ -21,7 +21,6 @@
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemitem_capitalViewSource" Source="{Binding item_asset, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="item_asset_maintainanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_maintainance}, CreateList=True}"/>
-        <CollectionViewSource x:Key="item_asset_maintainanceitem_asset_maintainance_detailViewSource" Source="{Binding item_asset_maintainance_detail, Source={StaticResource item_asset_maintainanceViewSource}}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource itemViewSource}">
         <Grid.ColumnDefinitions>
@@ -97,17 +96,19 @@
                     </WrapPanel>
                 </TabItem>
                 <TabItem Header="{lex:Loc Maintainance}" Height="40" Margin="-0.5,0,-0.5,-0.5" VerticalAlignment="Top">
-                    <StackPanel Orientation="Horizontal">
-                        <DataGrid Width="300" Margin="8" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
+                    <StackPanel Orientation="Horizontal" DataContext="{StaticResource item_asset_maintainanceViewSource}">
+                        <DataGrid Width="300" Margin="8" ItemsSource="{Binding}" AutoGenerateColumns="False"
+                                  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn />
-                                <DataGridTextColumn />
-                                <DataGridTextColumn />
+                                <DataGridTextColumn Binding="{Binding status}"/>
+                                <DataGridTextColumn Binding="{Binding start_date}"/>
+                                <DataGridTextColumn Binding="{Binding comment}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
                         <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <cntrl:toolBar_Mini Margin="0,4"
+                            <cntrl:toolBar_Mini Margin="0,4" appName="Maintainance" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 btnNew_Click="toolBar_Mini_btnNew_Click" 
                                                 btnEdit_Click="toolBar_Mini_btnEdit_Click"
                                                 btnSave_Click="toolBar_Mini_btnSave_Click"/>
@@ -130,11 +131,8 @@
                             <Rectangle Style="{StaticResource line_Bar}"/>
                             
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}" />
-                                <ComboBox Name="cbxStatus" Grid.Column="1" Style="{StaticResource ComboToLabelStyle}"
-                                                      SelectedValue="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                                                                              ValidatesOnExceptions=True, NotifyOnValidationError=True, 
-                                                                              ValidatesOnDataErrors=True}"/>
+                                <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}"/>
+                                <Label Content="{Binding status, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

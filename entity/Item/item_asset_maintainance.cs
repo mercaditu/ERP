@@ -27,6 +27,8 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            status = Status.Pending;
+
             item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
         }
 

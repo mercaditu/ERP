@@ -338,8 +338,8 @@
                 + "RUC:" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
-                + "Timbrado: " + sales_invoice.app_document_range.code + " Vto: " + sales_invoice.app_document_range.expire_date
-                + "\n"
+                + "Timbrado    : " + sales_invoice.app_document_range.code + "\n" 
+                + "Vencimiento : " + sales_invoice.app_document_range.expire_date + "\n"
                 + "--------------------------------"
                 + "Descripcion, Cantiad, Precio" + "\n"
                 + "--------------------------------" + "\n"
@@ -362,8 +362,8 @@
 
             Footer = "--------------------------------" + "\n";
             Footer += "Total Bruto       : " + (sales_invoice.GrandTotal + DiscountTotal) + "\n";
-            Footer += "Total Descuento   : -" + sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
-            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + ": " + sales_invoice.GrandTotal + "\n";
+            Footer += "Total Descuento   : -" + sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat) + "\n";
+            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + " : " + sales_invoice.GrandTotal + "\n";
             Footer += "Fecha & Hora      : " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura : " + sales_invoice.number + "\n";
             Footer += "-------------------------------" + "\n";
@@ -408,13 +408,15 @@
             Footer += "Documento  : " + sales_invoice.contact.gov_code + "\n";
             Footer += "Condicion  : " + sales_invoice.app_condition.name + "\n";
             Footer += "-------------------------------";
-            Footer += "Sucursal   : " + sales_invoice.app_branch.name + " Terminal: " + sales_invoice.app_terminal.name + "\n";
+            Footer += "Sucursal   : " + sales_invoice.app_branch.name + "\n";
+            Footer += "Terminal   : " + sales_invoice.app_terminal.name;
 
             if (sales_invoice.id_sales_rep > 0)
             {
+                Footer += "\n";
                 Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";
             }
-
+            Footer += "\n";
             Footer += "Cajero/a   : " + UserGiven;
 
             string Text = Header + Detail + Footer;
@@ -599,7 +601,7 @@
 
                 if (detail.tran_type == app_account_detail.tran_types.Open)
                 {
-                    Detail += "\nBalance de Apertura : " + Math.Round(detail.credit, 2);
+                    Detail += "\n Balance de Apertura : " + Math.Round(detail.credit, 2);
 
                 }
                 foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx).ToList())
@@ -654,7 +656,7 @@
                          id_payment_type = g.Key.id_payment_type,
                          value = g.Sum(a => a.credit)
                      }).ToList().OrderBy(x => x.id_currencyfx);
-                Detail += "\nTotal de ventas Neto :" + Math.Round(listvat.Sum(x => x.value), 2) + detail.app_currencyfx.app_currency.name + "\n";
+                Detail += "\n Total de Ventas Neto :" + Math.Round(listvat.Sum(x => x.value), 2) + detail.app_currencyfx.app_currency.name + "\n";
                 foreach (dynamic item in listvat)
                 {
                     Detail += item.paymentname + "\t" + Math.Round(item.value, 2) + detail.app_currencyfx.app_currency.name + "\n";
@@ -665,7 +667,7 @@
 
 
 
-                    Detail += "\nBalance de Cierre : " + Math.Round(account_detail.debit, 2);
+                    Detail += "\n Balance de Cierre : " + Math.Round(account_detail.debit, 2);
                     Detail += "\n--------------------------------" + "\n";
 
                 }
@@ -675,18 +677,19 @@
 
             using (db db = new db())
             {
-                if (db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault() != null)
+                decimal amount = 0M;
+
+                foreach (app_account_detail account_detail in db.app_account_detail.Where(x => x.id_session == app_account_session.id_session).ToList())
                 {
-                     app_currencyfx app_currencyfx= db.app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault();
-                     int id_currencyfx = app_currencyfx.id_currencyfx;
-                    decimal amount = app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == id_currencyfx).Sum(x => x.credit);
-
-                    Detail += "\nTotal de ventas Neto :" + Math.Round(amount, 2) + app_currencyfx.app_currency.name + "\n";
+                    
+                    foreach (payment_schedual payment_schedual in account_detail.payment_detail.payment_schedual.ToList())
+                    {
+                        amount += payment_schedual.parent.credit;
+                    }
                 }
-                Detail += "\n--------------------------------" + "\n";
+
+                Detail += "Total de Ventas Neto :" + Math.Round(amount, 2);
             }
-
-
 
             Footer += "--------------------------------" + "\n";
 

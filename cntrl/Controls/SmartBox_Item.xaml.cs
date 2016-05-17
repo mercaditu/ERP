@@ -121,10 +121,10 @@ namespace cntrl.Controls
 
         public SmartBox_Item()
         {
-            InitializeComponent();
-            this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
+                InitializeComponent();
+                this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
                 itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
             }
         }

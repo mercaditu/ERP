@@ -109,6 +109,11 @@ namespace cntrl.Controls
 
         public SmartBox_Contact()
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
             InitializeComponent();
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
             if (!DesignerProperties.GetIsInDesignMode(this))

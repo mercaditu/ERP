@@ -32,7 +32,7 @@ namespace Cognitivo.Report
 
         private void rpt_Loaded(object sender, RoutedEventArgs e)
         {
-            ReportPage = Application.Current.Windows.OfType<ReportPage>().SingleOrDefault() as ReportPage;
+            ReportPage = Application.Current.Windows.OfType<ReportPage>().FirstOrDefault() as ReportPage;
 
             QueryBuilder();
         }

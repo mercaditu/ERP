@@ -108,16 +108,12 @@ namespace Cognitivo.Product
                 item item = db.db.items.Where(x => x.id_item == sbxFixedasset.ItemID).FirstOrDefault();
                 item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
                 if (item_asset_maintainance.item_asset_maintainance_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
-                
                 {
                     item_asset_maintainance_detail item_asset_maintainance_detail = new item_asset_maintainance_detail();
                     item_asset_maintainance_detail.id_item = item.id_item;
                     item_asset_maintainance_detail.quantity = 1;
                     item_asset_maintainance_detail.unit_cost =(decimal)item.unit_cost;
-                    
-     
                 }
-               
             }
         }
     }

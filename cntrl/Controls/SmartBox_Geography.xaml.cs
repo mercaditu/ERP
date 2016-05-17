@@ -20,6 +20,11 @@ namespace cntrl.Controls
     {
         public SmartBox_Geography()
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                return;
+            }
+
             InitializeComponent();
 
             continentViewSource = ((CollectionViewSource)(FindResource("continentViewSource")));

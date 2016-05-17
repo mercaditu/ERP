@@ -21,11 +21,7 @@
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_asset_maintainanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_maintainance}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_asset_maintainanceitem_asset_maintainance_detailViewSource" Source="{Binding item_asset_maintainance_detail, Source={StaticResource item_asset_maintainanceViewSource}}"/>
-        <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"></CollectionViewSource>
-        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"></CollectionViewSource>
-        <CollectionViewSource x:Key="project_taskViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task}, CreateList=True}"></CollectionViewSource>
-        <CollectionViewSource x:Key="project_templateproject_type_templateViewSource1" Source="{Binding project_template_detail, Source={StaticResource project_templateViewSource}}"/>-->
-    </Page.Resources>
+   </Page.Resources>
 
     <Grid Background="White" DataContext="{StaticResource item_asset_maintainanceViewSource}">
         <Grid.RowDefinitions>
@@ -68,7 +64,7 @@
 					            SelectedDate="{Binding end_date, Mode=TwoWay, NotifyOnValidationError=true, 
                                 ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
-                <Controls:SmartBox_Item x:Name="sbxFixedasset" HorizontalAlignment="Left" item_types="Fixed Assets" Width="256" Height="26" Select="item_Select"
+                <Controls:SmartBox_Item x:Name="sbxFixedasset" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                 <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                 <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
@@ -78,7 +74,7 @@
         </Grid>
         <StackPanel  Grid.Row="2" Grid.Column="1">
             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
-            <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" item_types="Fixed Assets" Width="256" Height="26" Select="sbxitem_Select"
+            <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select"
                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
             <DataGrid x:Name="dgvMaintainceDetail"
                           VerticalScrollBarVisibility="Auto" Height="Auto"

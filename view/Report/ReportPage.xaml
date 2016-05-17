@@ -56,7 +56,8 @@
                                             <Run Text="{lex:Loc EndDate}"/>
                                     </TextBlock>
                                 </Label>
-                                <DatePicker x:Name="grid_dateEnd" Width="124" Text="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                <DatePicker x:Name="grid_dateEnd" Width="124"
+                                            Text="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </StackPanel>
                         </StackPanel>
 
@@ -114,7 +115,7 @@
             <ListBoxItem Tag="SalesDetail" Selected="list_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="C"/>
-                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesDetail}"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesDetails}"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem>

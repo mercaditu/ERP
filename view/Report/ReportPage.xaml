@@ -47,7 +47,8 @@
                                             <Run Text="{lex:Loc StartDate}"/>
                                     </TextBlock>
                                 </Label>
-                                <DatePicker x:Name="grid_dateStart" Width="124" Text="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                <DatePicker x:Name="grid_dateStart" Width="124" 
+                                            SelectedDate="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </StackPanel>
                             <StackPanel Margin="2,0">
                                 <Label Style="{StaticResource input_label}">
@@ -57,7 +58,7 @@
                                     </TextBlock>
                                 </Label>
                                 <DatePicker x:Name="grid_dateEnd" Width="124"
-                                            Text="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            SelectedDate="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </StackPanel>
                         </StackPanel>
 

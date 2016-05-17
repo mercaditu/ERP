@@ -16,9 +16,6 @@ using System.Windows.Documents;
 
 namespace Cognitivo.Product
 {
-    /// <summary>
-    /// Interaction logic for Maintainance.xaml
-    /// </summary>
     public partial class Maintainance : Page
     {
         dbContext db = new dbContext();

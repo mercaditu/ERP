@@ -125,7 +125,7 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbySalesman}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <ListBoxItem Tag="SalesByItem" Selected="list_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbyItem}"/>

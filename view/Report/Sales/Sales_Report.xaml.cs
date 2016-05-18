@@ -89,6 +89,7 @@ namespace Cognitivo.Report
                 item_code = g.sid.item != null ? g.sid.item.code : "",
                 item_name = g.sid.item != null ? g.sid.item.name : "",
                 item_description = g.sid.item_description,
+                item_type = g.sid.item != null ? g.sid.item.id_item_type.ToString() : "",
                 Description = g.sid.item != null ? g.sid.item.item_brand != null ? g.sid.item.item_brand.name : "" : "",
                 currency = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.name : "",
                 currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,

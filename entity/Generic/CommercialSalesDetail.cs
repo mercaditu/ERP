@@ -30,8 +30,8 @@ namespace entity
             get { return _id_item; }
             set
             {
-                if (State > 0)
-                {
+                //if (State > 0)
+                //{
                     if (value > 0 && value != _id_item)
                     {
                         _id_item = value;
@@ -50,7 +50,7 @@ namespace entity
                         update_UnitPrice();
                         update_UnitCost();
                     }
-                }
+                //}
             }
         }
         private int _id_item;

@@ -58,7 +58,7 @@
                                     </TextBlock>
                                 </Label>
                                 <DatePicker x:Name="grid_dateEnd" Width="124"
-                                            SelectedDate="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            SelectedDate="{Binding ElementName=_ReportPage, Path=end_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </StackPanel>
                         </StackPanel>
 

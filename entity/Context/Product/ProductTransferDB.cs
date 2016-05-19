@@ -194,30 +194,6 @@ namespace entity
                         }
                         else
                         {
-                            if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0 && MoveByTruck)
-                            {
-                                if (base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
-                                }
-                                if (base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
-                                }
-                                if (base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.user_Code = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
-                                }
-                                if (base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.project_Code = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
-                                }
-
-                                app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
-                                item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-                                item_transfer.RaisePropertyChanged("number");
-                            }
-
                             //Credit Destination.
                             item_movement item_movement_dest;
                             item_movement_dest =
@@ -239,6 +215,32 @@ namespace entity
                         item_transfer.status = Status.Documents_General.Approved;
                     }
                 }
+
+                ///Print Document only if 
+                if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)
+                {
+                    if (base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                    {
+                        Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
+                    }
+                    if (base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                    {
+                        Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                    }
+                    if (base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                    {
+                        Brillo.Logic.Range.user_Code = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                    }
+                    if (base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                    {
+                        Brillo.Logic.Range.project_Code = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                    }
+
+                    app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == item_transfer.id_range).FirstOrDefault();
+                    item_transfer.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                    item_transfer.RaisePropertyChanged("number");
+                }
+
             }
 
             base.SaveChanges();

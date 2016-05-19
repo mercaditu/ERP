@@ -98,12 +98,6 @@
                           SelectedValuePath="id_branch" Grid.Row="2" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                           ItemsSource="{Binding Source={StaticResource branch_destViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
-                <!--<Label Content="{lex:Loc Status}" Style="{DynamicResource input_label}"/>
-                <ComboBox x:Name="statusComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValue="{Binding status, Mode=TwoWay, NotifyOnValidationError=True, 
-                          ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="status" 
-                          ItemsSource="{Binding Source={StaticResource app_statusViewSource}}"  Grid.Row="3" 
-                          Style="{StaticResource input_combobox}" />-->
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">

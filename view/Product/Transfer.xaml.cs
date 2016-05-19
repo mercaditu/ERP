@@ -123,8 +123,7 @@ namespace Cognitivo.Product
 
                 item_transfer_detail.status = Status.Documents_General.Pending;
                 item_transfer_detail.quantity_origin = 1;
-                //Add 5 Days as default. But user may ask for a preference in this case. Just update code here and we should be fine.
-                item_transfer_detail.timestamp = DateTime.Now.AddDays(5);
+                item_transfer_detail.timestamp = DateTime.Now;
                 item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                 item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
                 item_transfer_detail.RaisePropertyChanged("item_product");
@@ -149,10 +148,15 @@ namespace Cognitivo.Product
                 item_transfer.app_branch_origin = (id_branch_originComboBox.SelectedItem as app_branch);
                 item_transfer.app_location_destination = (id_branch_destinComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
                 item_transfer.app_location_origin = (id_branch_originComboBox.SelectedItem as app_branch).app_location.Where(x => x.is_default).FirstOrDefault();
-                ProductTransferDB.SaveChanges();
+
                 TransferSetting TransferSetting = new Product.TransferSetting();
+
                 ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
-                toolBar.msgSaved();
+
+                if (ProductTransferDB.SaveChanges() == 1)
+                {
+                    toolBar.msgSaved();
+                } 
             }
             catch (Exception ex)
             {
@@ -162,12 +166,14 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApproveDestination_Click(object sender)
         {
-          
-
             TransferSetting TransferSetting = new Product.TransferSetting();
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
             ProductTransferDB.ApproveDestination( (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
-            toolBar.msgSaved();
+            
+            if (ProductTransferDB.SaveChanges() == 1)
+            {
+                toolBar.msgSaved();
+            }
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)

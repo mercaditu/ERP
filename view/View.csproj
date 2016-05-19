@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V414\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V415\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>418</ApplicationRevision>
+    <ApplicationRevision>419</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -882,15 +882,14 @@
     <EmbeddedResource Include="bin\Debug\PaymentUtility.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Content Include="bin\Debug\Report\SalesInvoicebyitem.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="bin\Debug\Report\SalesInvoiceDetail.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\Report\SalesInvoicebyitem.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\SalesInvoiceReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="bin\Debug\Report\SalesInvoiceReport.rdlc" />
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
     <EmbeddedResource Include="bin\Debug\PurchaseOrder.rdlc" />
     <Content Include="bin\Debug\PackingList.rdlc">

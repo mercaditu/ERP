@@ -19,7 +19,7 @@ namespace Cognitivo.Product
     public partial class Maintainance : Page
     {
         dbContext db = new dbContext();
-        CollectionViewSource item_asset_maintainanceViewSource, app_currencyfxViewSource;
+        CollectionViewSource item_asset_maintainanceViewSource, app_currencyfxViewSource, item_asset_maintainanceitem_asset_maintainance_detailViewSource;
         public Maintainance()
         {
             InitializeComponent();
@@ -74,44 +74,50 @@ namespace Cognitivo.Product
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            item_asset_maintainanceitem_asset_maintainance_detailViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceitem_asset_maintainance_detailViewSource")));
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
             db.db.item_asset_maintainance.Load();
             item_asset_maintainanceViewSource.Source = db.db.item_asset_maintainance.Local;
+
             app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            db.db.app_currencyfx.Where(x=>x.is_active).Load();
+            db.db.app_currencyfx.Where(x => x.is_active).Load();
             app_currencyfxViewSource.Source = db.db.app_currencyfx.Local;
         }
 
         private void item_Select(object sender, RoutedEventArgs e)
         {
-            if (sbxFixedasset.ItemID>0)
+            if (sbxFixedasset.ItemID > 0)
             {
-                item item=db.db.items.Where(x=>x.id_item==sbxFixedasset.ItemID).FirstOrDefault();
+                item item = db.db.items.Where(x => x.id_item == sbxFixedasset.ItemID).FirstOrDefault();
                 item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
-                if ( item.item_asset.FirstOrDefault()!=null)
+                if (item.item_asset.FirstOrDefault() != null)
                 {
                     item_asset_maintainance.id_item_asset = item.item_asset.FirstOrDefault().id_item_asset;
                 }
-              
+
             }
-            
+
 
         }
 
         private void sbxitem_Select(object sender, RoutedEventArgs e)
         {
-            if (sbxFixedasset.ItemID > 0)
+            if (sbxitem.ItemID > 0)
             {
-                item item = db.db.items.Where(x => x.id_item == sbxFixedasset.ItemID).FirstOrDefault();
+                item item = db.db.items.Where(x => x.id_item == sbxitem.ItemID).FirstOrDefault();
                 item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
                 if (item_asset_maintainance.item_asset_maintainance_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null)
                 {
                     item_asset_maintainance_detail item_asset_maintainance_detail = new item_asset_maintainance_detail();
+                    item_asset_maintainance_detail.item = item;
                     item_asset_maintainance_detail.id_item = item.id_item;
                     item_asset_maintainance_detail.quantity = 1;
                     item_asset_maintainance_detail.unit_cost =(decimal)item.unit_cost;
+                    item_asset_maintainance.item_asset_maintainance_detail.Add(item_asset_maintainance_detail);
                 }
             }
+            item_asset_maintainanceViewSource.View.Refresh();
+            item_asset_maintainanceitem_asset_maintainance_detailViewSource.View.Refresh();
         }
     }
 }

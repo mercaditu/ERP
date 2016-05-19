@@ -20,7 +20,8 @@
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemitem_capitalViewSource" Source="{Binding item_asset, Source={StaticResource itemViewSource}}"/>
-        <CollectionViewSource x:Key="item_asset_maintainanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_maintainance}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_asset_maintainanceViewSource" Source="{Binding item_asset_maintainance, Source={StaticResource itemitem_capitalViewSource}}"/>
+        <!--<CollectionViewSource x:Key="item_asset_maintainanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_maintainance}, CreateList=True}"/>-->
     </Page.Resources>
     <Grid DataContext="{StaticResource itemViewSource}">
         <Grid.ColumnDefinitions>
@@ -68,30 +69,31 @@
                             <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
                                 <ComboBox x:Name="cbxBranch" Grid.Column="1" Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
-                                          SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                          SelectedValue="{Binding id_branch,Source={StaticResource itemitem_capitalViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
                             </AdornerDecorator>
                            
                             <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
                             <toolkit:RichTextBox x:Name="rtbxDetails" Margin="5" BorderBrush="Gray" Padding="4" MinHeight="128" Width="256"
-                                          Text="{Binding description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
+                                          Text="{Binding description,Source={StaticResource itemitem_capitalViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
                                           ScrollViewer.VerticalScrollBarVisibility="Auto" />
                         </StackPanel>
                         <StackPanel Margin="8,0" DataContext="{StaticResource itemitem_capitalViewSource}">
                             <Label Content="{lex:Loc FixedAssetGroup}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
                                 <ComboBox Grid.Column="1" x:Name="cbxassetGroup"  Style="{StaticResource input_combobox}" DisplayMemberPath="name" SelectedValuePath="id_item_asset_group"
-                                          SelectedValue="{Binding id_asset_group, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                          SelectedValue="{Binding id_item_asset_group, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
                             </AdornerDecorator>
                             <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
-                            <DatePicker Style="{StaticResource input_datepicker}"/>
+                            <DatePicker SelectedDate="{Binding purchase_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
                             <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding purchase_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
-                            <Label Content="{Binding current_value, FallbackValue=0, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}" />
+                            <TextBox Text="{Binding current_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                            
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>
@@ -100,9 +102,9 @@
                         <DataGrid Width="300" Margin="8" ItemsSource="{Binding}" AutoGenerateColumns="False"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding status}"/>
-                                <DataGridTextColumn Binding="{Binding start_date}"/>
-                                <DataGridTextColumn Binding="{Binding comment}"/>
+                                <DataGridTextColumn Binding="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Binding="{Binding start_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Binding="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             </DataGrid.Columns>
                         </DataGrid>
 

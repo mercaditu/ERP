@@ -40,8 +40,8 @@ namespace Cognitivo.Product
             itemViewSource.Source = ItemDB.items.Local;
             
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
-            dbContext.db.item_asset_maintainance.Load();
-            item_asset_maintainanceViewSource.Source = dbContext.db.item_asset_maintainance.Local;
+            //ItemDB.item_asset_maintainance.Load();
+            //item_asset_maintainanceViewSource.Source = dbContext.db.item_asset_maintainance.Local;
 
             cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
 
@@ -52,7 +52,7 @@ namespace Cognitivo.Product
         #region Mini ToolBar
         private void toolBar_Mini_btnSave_Click(object sender)
         {
-            dbContext.db.SaveChanges();
+            ItemDB.SaveChanges();
         }
 
         private void toolBar_Mini_btnEdit_Click(object sender)
@@ -78,6 +78,7 @@ namespace Cognitivo.Product
 
                     item_asset.item_asset_maintainance.Add(item_asset_maintainance);
 
+                    itemitem_capitalViewSource.View.Refresh();
                     item_asset_maintainanceViewSource.View.Refresh();
                     item_asset_maintainanceViewSource.View.MoveCurrentTo(item_asset_maintainance);      
                 }
@@ -103,11 +104,10 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (ItemDB.SaveChanges() == 1)
-            {
+            ItemDB.SaveChanges();
                 toolBar.msgSaved();
                 itemViewSource.View.Refresh();
-            }
+           
         }
 
         private void toolBar_btnNew_Click(object sender)

@@ -34,10 +34,10 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox x:Name="itemmainatencetail"  Background="{StaticResource AccentColor_Brush}"
+        <ListBox x:Name="itemmainatencetail"  Background="{StaticResource AccentColor_Brush}" 
                 
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding}" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="1">
+                 ItemsSource="{Binding}" Grid.RowSpan="2" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding start_date, StringFormat=d}" 
@@ -52,7 +52,7 @@
         </ListBox>
 
         <Grid Grid.Column="1" Grid.Row="1" DataContext="{StaticResource item_asset_maintainanceViewSource}">
-            <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" 
+            <StackPanel 
                             Background="White"   HorizontalAlignment="Left" Width="450">
                 <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
                 <DatePicker x:Name="start_dateDatePicker" Style="{StaticResource input_datepicker}"
@@ -74,11 +74,11 @@
         <StackPanel  Grid.Row="2" Grid.Column="1">
             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
             <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select"
-                                        IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+                                      />
             <DataGrid x:Name="dgvMaintainceDetail"
                           VerticalScrollBarVisibility="Auto" Height="Auto"
                           AutoGenerateColumns="False"
-                          IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+                       
 				          EnableRowVirtualization="True"
                           ItemsSource="{Binding Source={StaticResource item_asset_maintainanceitem_asset_maintainance_detailViewSource}}" 
                           RowDetailsVisibilityMode="VisibleWhenSelected">

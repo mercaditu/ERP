@@ -121,12 +121,12 @@ namespace entity
                         }
 
                         item_transfer_detail.status = Status.Documents_General.Approved;
-
-                        if (item_transfer != null)
-                        {
-                            entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
-                        }
                     }
+                }
+
+                if (item_transfer != null)
+                {
+                    entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
                 }
             }
 
@@ -219,18 +219,22 @@ namespace entity
                 ///Print Document only if 
                 if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.id_range > 0)
                 {
+
                     if (base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
                     {
                         Brillo.Logic.Range.branch_Code = base.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault().code;
                     }
+                    
                     if (base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
                     {
                         Brillo.Logic.Range.terminal_Code = base.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
                     }
+                    
                     if (base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
                     {
                         Brillo.Logic.Range.user_Code = base.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
                     }
+
                     if (base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
                     {
                         Brillo.Logic.Range.project_Code = base.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;

@@ -120,7 +120,7 @@ namespace Cognitivo.Report
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             path = path + "\\CogntivoERP";
             string SubFolder = "";
-            SubFolder = "\\TemplateFiles";
+            SubFolder = "\\Reports";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

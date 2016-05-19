@@ -885,7 +885,9 @@
     <Content Include="bin\Debug\Report\SalesInvoiceDetail.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="bin\Debug\Report\SalesInvoiceReport.rdlc" />
+    <Content Include="bin\Debug\Report\SalesInvoiceReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
     <EmbeddedResource Include="bin\Debug\PurchaseOrder.rdlc" />
     <Content Include="bin\Debug\PackingList.rdlc">

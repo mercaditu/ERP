@@ -149,6 +149,12 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc CustomerCurrentAccount}"/>
                 </StackPanel>
             </ListBoxItem>
+            <ListBoxItem Selected="ListBoxItemSales_Selected">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="U"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Hechuka}"/>
+                </StackPanel>
+            </ListBoxItem>
             <ListBoxItem IsSelected="False" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Height="24" Source="/Cognitivo;component/Images/Menu/modPurchase.png" />
@@ -189,6 +195,12 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="U"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SupplierCurrentAccount}"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem Selected="ListBoxItemPurchase_Selected">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="U"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Hechuka}"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem IsSelected="False" IsEnabled="False">

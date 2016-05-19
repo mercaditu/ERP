@@ -74,7 +74,7 @@ namespace Cognitivo.Report
 
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            List<sales_invoice> sales_invoiceList = db.sales_invoice.ToList();
+            List<sales_invoice> sales_invoiceList = db.sales_invoice.Where(predicate).ToList();
             reportDataSource.Value = sales_invoiceList
             .Join(db.sales_invoice_detail, u => u.id_sales_invoice, sid => sid.id_sales_invoice, (sales_invoice, sid) => new { sales_invoice, sid }).Select(g => new
             {

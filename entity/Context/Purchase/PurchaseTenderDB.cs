@@ -122,7 +122,13 @@ namespace entity
                         base.purchase_order.Add(purchase_order);
                     }
 
-
+                    if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseTender).FirstOrDefault() != null)
+                    {
+                        purchase_tender.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseTender).FirstOrDefault().id_range;
+                        app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_tender.id_range).FirstOrDefault();
+                        purchase_tender.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                        purchase_tender.RaisePropertyChanged("number");
+                    }
                     purchase_tender.status = Status.Documents_General.Approved;
                     SaveChanges();
                 }

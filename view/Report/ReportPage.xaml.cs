@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using entity;
+using System.IO;
+using cntrl.Controls;
+
 
 namespace Cognitivo.Report
 {
@@ -24,8 +27,8 @@ namespace Cognitivo.Report
         public app_geography Geography { get; set; }
         public contact Contact { get; set; }
         public item Item { get; set; }
-
-        public DateTime start_Range 
+        db db = new db();
+        public DateTime start_Range
         {
             get { return _start_Range; }
             set
@@ -171,6 +174,212 @@ namespace Cognitivo.Report
                     Cursor = Cursors.Arrow;
                 }
                 catch { }
+            }
+        }
+
+        private void ListBoxItemSales_Selected(object sender, RoutedEventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            path = path + "\\CogntivoERP";
+            string SubFolder = "";
+            SubFolder = "\\TemplateFiles";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path + SubFolder);
+            }
+            else if (!Directory.Exists(path + SubFolder))
+            {
+                Directory.CreateDirectory(path + SubFolder);
+
+            }
+            var predicate = PredicateBuilder.True<entity.sales_invoice>();
+
+            if (ConditionArray != null)
+            {
+                if (ConditionArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ConditionArray.Contains(x.app_condition.name));
+                }
+            }
+
+            if (ContractArray != null)
+            {
+                if (ContractArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ContractArray.Contains(x.app_contract.name));
+                }
+            }
+
+            if (start_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date >= start_Range);
+
+            }
+            if (end_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date <= end_Range);
+
+            }
+            if (Contact != null)
+            {
+                predicate = predicate.And(x => x.contact == Contact);
+            }
+
+
+            using (System.IO.StreamWriter file =
+           new System.IO.StreamWriter(@path + SubFolder + "\\SalesHechuka.txt", true))
+            {
+
+                List<sales_invoice> SaleInvoiceList = db.sales_invoice.Where(predicate).ToList();
+                foreach (sales_invoice sales_invoice in SaleInvoiceList)
+                {
+                    string Line = sales_invoice.contact.gov_code + "\t" + sales_invoice.contact.name + "\t" + sales_invoice.number + "\t" + sales_invoice.trans_date + "\t";
+                    file.WriteLine(Line);
+                }
+                var predicatePurchaseReturn = PredicateBuilder.True<entity.purchase_return>();
+
+                if (ConditionArray != null)
+                {
+                    if (ConditionArray.Count() > 0)
+                    {
+                        predicatePurchaseReturn = predicatePurchaseReturn.And(x => ConditionArray.Contains(x.app_condition.name));
+                    }
+                }
+
+                if (ContractArray != null)
+                {
+                    if (ContractArray.Count() > 0)
+                    {
+                        predicatePurchaseReturn = predicatePurchaseReturn.And(x => ContractArray.Contains(x.app_contract.name));
+                    }
+                }
+
+                if (start_Range != Convert.ToDateTime("1/1/0001"))
+                {
+                    predicatePurchaseReturn = predicatePurchaseReturn.And(x => x.trans_date >= start_Range);
+
+                }
+                if (end_Range != Convert.ToDateTime("1/1/0001"))
+                {
+                    predicatePurchaseReturn = predicatePurchaseReturn.And(x => x.trans_date <= end_Range);
+
+                }
+                if (Contact != null)
+                {
+                    predicatePurchaseReturn = predicatePurchaseReturn.And(x => x.contact == Contact);
+                }
+                List<purchase_return> PurchaseReturnList = db.purchase_return.Where(predicatePurchaseReturn).ToList();
+                foreach (purchase_return purchase_return in PurchaseReturnList)
+                {
+                    string Line = purchase_return.contact.gov_code + "\t" + purchase_return.contact.name + "\t" + purchase_return.number + "\t" + purchase_return.trans_date + "\t";
+                    file.WriteLine(Line);
+                }
+                
+                MessageBox.Show("Files Saved...");
+
+            }
+        }
+
+        private void ListBoxItemPurchase_Selected(object sender, RoutedEventArgs e)
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            path = path + "\\CogntivoERP";
+            string SubFolder = "";
+            SubFolder = "\\TemplateFiles";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path + SubFolder);
+            }
+            else if (!Directory.Exists(path + SubFolder))
+            {
+                Directory.CreateDirectory(path + SubFolder);
+
+            }
+            var predicate = PredicateBuilder.True<entity.purchase_invoice>();
+
+            if (ConditionArray != null)
+            {
+                if (ConditionArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ConditionArray.Contains(x.app_condition.name));
+                }
+            }
+
+            if (ContractArray != null)
+            {
+                if (ContractArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ContractArray.Contains(x.app_contract.name));
+                }
+            }
+
+            if (start_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date >= start_Range);
+
+            }
+            if (end_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date <= end_Range);
+
+            }
+            if (Contact != null)
+            {
+                predicate = predicate.And(x => x.contact == Contact);
+            }
+
+
+            using (System.IO.StreamWriter file =
+           new System.IO.StreamWriter(@path + SubFolder + "\\PurchaseHechuka.txt", true))
+            {
+
+                List<purchase_invoice> purchase_invoiceList = db.purchase_invoice.Where(predicate).ToList();
+                foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
+                {
+                    string Line = purchase_invoice.contact.gov_code + "\t" + purchase_invoice.contact.name + "\t" + purchase_invoice.number + "\t" + purchase_invoice.trans_date + "\t";
+                    file.WriteLine(Line);
+                }
+                var predicateSalesReturn = PredicateBuilder.True<entity.sales_return>();
+
+                if (ConditionArray != null)
+                {
+                    if (ConditionArray.Count() > 0)
+                    {
+                        predicateSalesReturn = predicateSalesReturn.And(x => ConditionArray.Contains(x.app_condition.name));
+                    }
+                }
+
+                if (ContractArray != null)
+                {
+                    if (ContractArray.Count() > 0)
+                    {
+                        predicateSalesReturn = predicateSalesReturn.And(x => ContractArray.Contains(x.app_contract.name));
+                    }
+                }
+
+                if (start_Range != Convert.ToDateTime("1/1/0001"))
+                {
+                    predicateSalesReturn = predicateSalesReturn.And(x => x.trans_date >= start_Range);
+
+                }
+                if (end_Range != Convert.ToDateTime("1/1/0001"))
+                {
+                    predicateSalesReturn = predicateSalesReturn.And(x => x.trans_date <= end_Range);
+
+                }
+                if (Contact != null)
+                {
+                    predicateSalesReturn = predicateSalesReturn.And(x => x.contact == Contact);
+                }
+                List<sales_return> sales_returnList = db.sales_return.Where(predicateSalesReturn).ToList();
+                foreach (sales_return sales_return in sales_returnList)
+                {
+                    string Line = sales_return.contact.gov_code + "\t" + sales_return.contact.name + "\t" + sales_return.number + "\t" + sales_return.trans_date + "\t";
+                    file.WriteLine(Line);
+                }
+                MessageBox.Show("Files Saved...");
             }
         }
 

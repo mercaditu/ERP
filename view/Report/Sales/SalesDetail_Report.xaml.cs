@@ -78,7 +78,7 @@ namespace Cognitivo.Report
             reportDataSource.Value = sales_invoice_detail.Select(g => new
             {
                 geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",
-                sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
+                id_sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
                 id_company = g.id_company,
                 add1 = g.sales_invoice != null ? g.sales_invoice.contact.address != null ? g.sales_invoice.contact.address : "" : "",
                 telephone = g.sales_invoice != null ? g.sales_invoice.contact.telephone != null ? g.sales_invoice.contact.telephone : "" : "",

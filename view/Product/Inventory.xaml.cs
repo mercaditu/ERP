@@ -76,12 +76,12 @@ namespace Cognitivo.Product
             item_inventory item_inventory = null;
             app_location app_location = null;
 
-            Dispatcher.InvokeAsync(new Action(() =>
-            {
+            //Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
                 app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-            }));
-
+          //  }));
+           
 
             if (app_location != null && item_inventory != null)
             {
@@ -111,11 +111,11 @@ namespace Cognitivo.Product
                         }
                     }
                 }
-                Dispatcher.InvokeAsync(new Action(() =>
-                {
+                //Dispatcher.InvokeAsync(new Action(() =>
+                //{
                     item_inventoryitem_inventory_detailViewSource.View.Refresh();
                     filetr_detail();
-                }));
+                //}));
             }
         }
 
@@ -124,15 +124,17 @@ namespace Cognitivo.Product
             try
             {
                 app_branch app_branch = app_branchViewSource.View.CurrentItem as app_branch;
-                item_inventory item_inventory = new item_inventory();
+               item_inventory item_inventory = new item_inventory();
                 item_inventory.IsSelected = true;
                 item_inventory.id_branch = app_branch.id_branch;
                 item_inventory.trans_date = DateTime.Now;
                 InventoryDB.Entry(item_inventory).State = EntityState.Added;
                 item_inventory.State = EntityState.Added;
+                app_branchViewSource.View.MoveCurrentToFirst();
+                app_branchapp_locationViewSource.View.MoveCurrentToFirst();
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryViewSource.View.MoveCurrentToLast();
-                app_branchapp_locationViewSource.View.MoveCurrentToFirst();
+              
 
             }
             catch (Exception ex)
@@ -203,7 +205,8 @@ namespace Cognitivo.Product
                 {
                     if (app_branchapp_locationViewSource.View != null)
                     {
-                        Task thread_SecondaryData = Task.Factory.StartNew(() => BindItemMovement());
+                       BindItemMovement();
+                   //   Task thread_SecondaryData = Task.Factory.StartNew(() => BindItemMovement());
                     }
                 }
             }
@@ -296,7 +299,17 @@ namespace Cognitivo.Product
 
         private void location_ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            filetr_detail();
+            if (item_inventoryDataGrid.SelectedItem != null)
+            {
+                if (app_branchapp_locationViewSource != null)
+                {
+                    if (app_branchapp_locationViewSource.View != null)
+                    {
+                        filetr_detail();
+                        // Task thread_SecondaryData = Task.Factory.StartNew(() => BindItemMovement());
+                    }
+                }
+            }
         }
     }
 }

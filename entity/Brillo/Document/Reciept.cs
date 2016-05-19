@@ -430,6 +430,7 @@
             string Footer = string.Empty;
 
             string CompanyName = string.Empty;
+           
             app_company app_company = null;
 
             if (payment.app_company != null)
@@ -466,6 +467,8 @@
                     }
                 }
             }
+
+         
 
             string TransNumber = payment.number;
             DateTime TransDate = payment.trans_date;
@@ -535,6 +538,7 @@
             string Footer = string.Empty;
 
             string CompanyName = string.Empty;
+            string BranchName = string.Empty;
             app_company app_company = null;
 
             if (app_account_session.app_company != null)
@@ -571,6 +575,14 @@
                     }
                 }
             }
+            using (db db = new db())
+            {
+                if (db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
+                {
+                    app_branch app_branch = db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                    BranchName = app_branch.name;
+                }
+            }
 
             string SessionID = app_account_session.id_session.ToString();
             DateTime OpenDate = app_account_session.op_date;
@@ -583,7 +595,7 @@
 
             Header =
                 "***Z Report***" + "\n"
-                + CompanyName + "\n"
+                + CompanyName + "\t" + BranchName + "\n"
                 + "R.U.C.   :" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
@@ -632,11 +644,15 @@
                     payment_detail payment_detail = d.payment_detail as payment_detail;
                     foreach (payment_schedual payment_schedual in payment_detail.payment_schedual)
                     {
-                        if (!(InvoiceNumber.Contains(payment_schedual.sales_invoice.number)))
+                        if (payment_schedual.sales_invoice.number!=null)
                         {
-                            InvoiceNumber += payment_schedual.sales_invoice.number;
-                            InvoiceTime = payment_schedual.sales_invoice.trans_date.ToShortTimeString();
+                            if (!(InvoiceNumber.Contains(payment_schedual.sales_invoice.number)))
+                            {
+                                InvoiceNumber += payment_schedual.sales_invoice.number;
+                                InvoiceTime = payment_schedual.sales_invoice.trans_date.ToShortTimeString();
+                            }
                         }
+                       
                     }
 
                     decimal? value = d.credit - d.debit;
@@ -676,19 +692,26 @@
             using (db db = new db())
             {
                 decimal amount = 0M;
+                int[] id_schedual= new int[10];
+                int index=0;
 
                 foreach (app_account_detail account_detail in db.app_account_detail.Where(x => x.id_session == app_account_session.id_session && x.tran_type == app_account_detail.tran_types.Transaction).ToList())
                 {
                     foreach (payment_schedual payment_schedual in account_detail.payment_detail.payment_schedual.ToList())
                     {
-                        if (payment_schedual.parent != null)
+                        if (!id_schedual.Contains(payment_schedual.parent.id_payment_schedual))
                         {
-                            amount += payment_schedual.parent.debit;
+                            if (payment_schedual.parent != null)
+                            {
+                                id_schedual[index] = payment_schedual.parent.id_payment_schedual;
+                                amount += payment_schedual.parent.debit;
+                            }
+                            else
+                            {
+                                amount += payment_schedual.credit;
+                            }
                         }
-                        else
-                        {
-                            amount += payment_schedual.credit;
-                        }
+                        
                     }
                 }
 

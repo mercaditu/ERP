@@ -69,7 +69,7 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Save" Margin="715,564,10,10" Width="75"  />
+            <Button Content="Approve" Margin="715,564,10,10" Width="75"  />
 
         </Grid>
     </Grid>

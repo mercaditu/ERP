@@ -209,7 +209,12 @@
                                 <Run Text="{lex:Loc SalesInvoice}"/>
                             </TextBlock>
                         </CheckBox>
-
+                        <CheckBox x:Name="chkbudget" Style="{StaticResource input_checkbox}">
+                            <TextBlock Style="{StaticResource text_Label}">
+                                <Run Text="{lex:Loc Create}" />
+                                <Run Text="{lex:Loc SalesBudget}"/>
+                            </TextBlock>
+                        </CheckBox>
                         <Button Content="{lex:Loc Create}" Style="{StaticResource btn_green}" Click="Button_Click"/>
                     </StackPanel>
                 </StackPanel>

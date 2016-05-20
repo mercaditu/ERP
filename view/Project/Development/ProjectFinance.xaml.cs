@@ -185,6 +185,7 @@ namespace Cognitivo.Project
                 }
                 objSalesOrder.SalesOrderDB = SalesOrderDB;
                 objSalesOrder.Generate_Invoice =(bool)chkinvoice.IsChecked;
+                objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
                 crud_modal.Children.Add(objSalesOrder);
           
 

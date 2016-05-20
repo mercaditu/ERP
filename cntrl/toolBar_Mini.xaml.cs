@@ -143,11 +143,13 @@ namespace cntrl
             {
                 IsEditable = true;
                 Edit_IsEnabled = false;
+              
             }
             else
             {
                 IsEditable = false;
                 Edit_IsEnabled = true;
+                
             }
         }
         #endregion

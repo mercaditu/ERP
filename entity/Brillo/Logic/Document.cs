@@ -328,13 +328,17 @@ namespace entity.Brillo.Logic
 
         public void Document_PrintItemRequest(int document_id, item_transfer item_transfer)
         {
-            app_document app_document;
-            string PrinterName;
+            app_document app_document=null;
+            string PrinterName=string.Empty;
 
             using (db db = new db())
             {
-                app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
-                PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
+                if (db.app_document.Where(x => x.id_document == document_id).FirstOrDefault() != null)
+                {
+                    app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
+                    PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
+                }
+
             }
 
             if (app_document != null && PrinterName != string.Empty)

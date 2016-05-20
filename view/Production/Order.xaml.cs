@@ -656,6 +656,11 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in _production_order_detail)
             {
+                if (production_order_detail.parent != null)
+                {
+                    production_order_detail.parent.status = entity.Status.Project.Approved;
+                }
+                
                 production_order_detail.status = entity.Status.Project.Approved;
             }
 
@@ -668,6 +673,7 @@ namespace Cognitivo.Production
 
                 OrderDB.production_execution.Add(production_execution);
             }
+           
 
             OrderDB.SaveChanges();
             toolBar.msgDone("Yay!");

@@ -141,7 +141,7 @@ namespace Cognitivo.Project.Development
                 project_taskViewSource.View.Filter = null;
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
                 _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
-
+                string number = entity.Brillo.Logic.Range.calc_Range(_project_task.FirstOrDefault().app_document_range, true);
                 foreach (project_task project_task in _project_task)
                 {
                     project_task.project.code = Project_TaskApprove.code;
@@ -150,7 +150,7 @@ namespace Cognitivo.Project.Development
                         project_task.id_range = Project_TaskApprove.id_range;
 
                     }
-                    project_task.number = Project_TaskApprove.number;
+                    project_task.number = number;
                     if (project_task.status == Status.Project.Management_Approved)
                     {
                         if (project_task.status == Status.Project.Management_Approved || project_task.status == null)

@@ -201,7 +201,7 @@ namespace Cognitivo.Product
                 productiondesion.decisionqty = 0;
                 productiondesion.decisionState = state.added;
                 list_desion_production.Add(productiondesion);
-                item_request_decisionproductionDataGrid.ItemsSource = list_desion_purchase;
+                item_request_decisionproductionDataGrid.ItemsSource = list_desion_production;
             }
         }
 

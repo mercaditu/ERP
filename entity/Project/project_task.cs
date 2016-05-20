@@ -224,10 +224,11 @@ namespace entity
             {
                 if (_id_range != value)
                 {
-                    _id_range = value;
 
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                    _id_range = value;
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
                     {
+                        
                         using (db db = new db())
                         {
                             if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)

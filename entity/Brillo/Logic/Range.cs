@@ -47,7 +47,7 @@ namespace entity.Brillo.Logic
 
                         if (is_generated)
                         {
-                            //app_document_range.range_current += 1;
+                         //  app_document_range.range_current += 1;
                             //Save new number into database, as quick as possible.
                             db.SaveChangesAsync();
                             //Send new number back to original entity

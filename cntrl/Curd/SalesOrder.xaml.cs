@@ -59,7 +59,7 @@ namespace cntrl
         private project _project;
         public SalesOrderDB SalesOrderDB { get; set; }
         public Boolean Generate_Invoice { get; set; }
-       
+        public Boolean Generate_Budget { get; set; }
         public quantitymodes quantitymode { get; set; }
         
         public SalesOrder()
@@ -75,8 +75,77 @@ namespace cntrl
                 List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
 
                 sales_order sales_order = new entity.sales_order();
+                   sales_budget sales_budget = new entity.sales_budget();
+                if (Generate_Budget)
+                {
+                    SalesBudgetDB SalesBudgetDB = new SalesBudgetDB(); 
+                 
+                    sales_budget.id_contact = (int)project.id_contact;
+                    sales_budget.contact = SalesBudgetDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+                    sales_budget.id_project = project.id_project;
+                    sales_budget.id_condition = (int)cbxCondition.SelectedValue;
+                    sales_budget.id_contract = (int)cbxContract.SelectedValue;
+                    sales_budget.id_currencyfx = (int)cbxCurrency.SelectedValue;
+                    sales_budget.comment = "Project -> " + project.name;
+                    sales_budget.trans_date = DateTime.Now;
+                    sales_budget_detail sales_budget_detail = null;
+
+                    foreach (project_task _project_task in project_task)
+                    {
+                        //if (_project_task.items.id_item_type == item.item_type.Task)
+                        //{
+                        sales_budget_detail = new sales_budget_detail();
+                        sales_budget_detail.id_sales_budget = sales_budget.id_sales_budget;
+                        sales_budget_detail.sales_budget = sales_budget;
+                        sales_budget_detail.id_item = (int)_project_task.id_item;
+                        sales_budget_detail.item_description = _project_task.item_description;
+
+                        if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
+                        {
+                            sales_budget_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
+                        }
+                        else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
+                        {
+
+                            if (_project_task.production_execution_detail != null)
+                            {
+                                //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
+                                //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
+                                sales_budget_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
+                            }
+                        }
+                        if (_project_task.unit_price_vat != null)
+                        {
+                            sales_budget_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;
+
+                        }
+
+                        sales_budget_detail.id_project_task = _project_task.id_project_task;
+                        _project_task.IsSelected = false;
+
+                        //}
+                        //else
+                        //{
+                        //    if (sales_invoice_detail != null)
+                        //    {
+                        //        sales_invoice_detail.id_project_task = _project_task.id_project_task;
+                        //        _project_task.IsSelected = false;
+                        //    }
+                        //}
+                        sales_budget.sales_budget_detail.Add(sales_budget_detail);
+                    }
+
+                    sales_budget.State = EntityState.Added;
+                    sales_budget.IsSelected = true;
+                    SalesBudgetDB.sales_budget.Add(sales_budget);
+                    SalesBudgetDB.Approve();
+                }
 
 
+                if (Generate_Budget)
+                {
+                    sales_order.id_sales_budget = sales_budget.id_sales_budget;
+                }
                 if (SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault() != null)
                 {
                     sales_order.id_contact = (int)project.id_contact;
@@ -263,6 +332,7 @@ namespace cntrl
                         SalesOrderDB.crm_opportunity.Attach(crm_opportunity);
                         SalesOrderDB.sales_invoice.Add(sales_invoice);
                     }
+
                 }
                 SalesOrderDB.SaveChanges();
                 btnCancel_Click(null, null);

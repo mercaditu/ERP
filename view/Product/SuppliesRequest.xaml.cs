@@ -88,6 +88,7 @@ namespace Cognitivo.Product
             ItemDB.item_request.Add(item_request);
             item_requestViewSource = (CollectionViewSource)this.FindResource("item_requestViewSource");
             item_requestViewSource.Source = ItemDB.item_request.Local;
+            sbxItem.item_types = entity.item.item_type.Supplies;
         }
 
         

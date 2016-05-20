@@ -44,7 +44,7 @@ namespace cntrl.PanelAdv
             using(db db= new db())
             {
                 project_task project_task=db.project_task.FirstOrDefault();
-                project_task.State = System.Data.Entity.EntityState.Modified;
+             
                 project_task.id_range=id_range;
                 number = project_task.NumberWatermark;
                 RaisePropertyChanged("number");

@@ -91,7 +91,7 @@
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" 
-                                        Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
@@ -110,8 +110,9 @@
             </DataGrid>
         </StackPanel>
 
-        <cntrl:toolBar x:Name="toolBar" Grid.Row="0" Grid.ColumnSpan="2"
+        <cntrl:toolBar x:Name="toolBar" Grid.Row="0" Grid.ColumnSpan="2" btnEdit_Click="toolBar_btnEdit_Click"
                        btnSave_Click="toolBar_btnSave_Click"
-                       btnCancel_Click="toolBar_btnCancel_Click"/>
+                       btnCancel_Click="toolBar_btnCancel_Click"
+                          State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

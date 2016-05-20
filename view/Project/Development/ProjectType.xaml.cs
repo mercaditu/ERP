@@ -165,6 +165,7 @@ namespace Cognitivo.Project.Development
                 projectproject_template_detailViewSource.View.Filter = null;
 
                 filter_task();
+                treeProject.SelectedItem_ = n_project_template;
             }
             else
             {
@@ -177,8 +178,10 @@ namespace Cognitivo.Project.Development
                 projectproject_template_detailViewSource.View.Filter = null;
 
                 filter_task();
+                treeProject.SelectedItem_ = n_project_template;
             }
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
+            
         }
 
         private void btnAddParentTask_Click(object sender)
@@ -203,6 +206,7 @@ namespace Cognitivo.Project.Development
 
             filter_task();
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
+            treeProject.SelectedItem_ = n_project_template;
         }
 
         private void btnEditTask_Click(object sender)

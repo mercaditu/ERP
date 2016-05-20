@@ -76,7 +76,7 @@
                            
                             <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
                             <toolkit:RichTextBox x:Name="rtbxDetails" Margin="5" BorderBrush="Gray" Padding="4" MinHeight="128" Width="256"
-                                          Text="{Binding description,Source={StaticResource itemitem_capitalViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
+                                          Text="{Binding description,Source={StaticResource itemViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
                                           ScrollViewer.VerticalScrollBarVisibility="Auto" />
                         </StackPanel>
                         <StackPanel Margin="8,0" DataContext="{StaticResource itemitem_capitalViewSource}">

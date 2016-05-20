@@ -97,6 +97,7 @@ namespace entity
 
 
                 production_order production_order = new production_order();
+                production_order.types = entity.production_order.ProductionOrderTypes.Fraction;
                 production_order.status = Status.Production.InProcess;
                 production_order.name = item_request.name;
                 if (production_line.FirstOrDefault() != null)

@@ -43,7 +43,7 @@ namespace Cognitivo.Product
             //ItemDB.item_asset_maintainance.Load();
             //item_asset_maintainanceViewSource.Source = dbContext.db.item_asset_maintainance.Local;
 
-            cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.id_branch==CurrentSession.Id_Branch).OrderBy(b => b.name).ToList();
+            cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.id_company == CurrentSession.Id_Company && b.is_active).OrderBy(b => b.name).ToList();
 
             cbxassetGroup.ItemsSource = ItemDB.item_asset_group.Where(b => b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxType.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.MaintainanceTypes));

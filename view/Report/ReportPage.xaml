@@ -27,8 +27,8 @@
 
     <metro:MetroWindow.Flyouts>
         <metro:FlyoutsControl>
-            <metro:Flyout x:Name="flyFilter" Header="{lex:Loc Filter}"
-                          Width="{Binding ElementName=NavList, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Position="Left" IsOpen="True" Background="WhiteSmoke">
+            <metro:Flyout x:Name="flyFilter" Header="{lex:Loc Filter}" Position="Right" Background="WhiteSmoke"
+                          Width="{Binding ElementName=NavList, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center">
                     <StackPanel HorizontalAlignment="Center">
                         <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
@@ -94,16 +94,20 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Background="WhiteSmoke" Grid.Column="0" Height="32" 
-                    VerticalAlignment="Top">
-            <Button FontFamily="/Cognitivo;component/Resources/#cognitivo" Click="btnFilter_Click" FontSize="21" Content="" HorizontalAlignment="Left"
-                    Style="{DynamicResource MetroCircleButtonStyle}" Width="33"/>
+
+        <Frame Name="rptFrame" Grid.Column="1" Background="DimGray"/>
+
+        <StackPanel Orientation="Horizontal" Background="WhiteSmoke" 
+                    Grid.Column="0" Height="32" VerticalAlignment="Top">
+            <Button FontFamily="/Cognitivo;component/Resources/#cognitivo" Click="btnFilter_Click" 
+                    FontSize="21" Content="" HorizontalAlignment="Left" Width="33"
+                    Style="{DynamicResource MetroCircleButtonStyle}"/>
             <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Filter}" FontSize="16"/>
         </StackPanel>
         <ListBox Grid.Column="0" Margin="0,32,0,0" x:Name="NavList" Background="WhiteSmoke">
-            <ListBoxItem IsSelected="False" IsEnabled="False">
+            <ListBoxItem IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
-                    <Image Height="24" Source="/Cognitivo;component/Images/Menu/modSales.png" />
+                    <Image Height="24" Source="/;component/Images/Menu/modSales.png" />
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
             </ListBoxItem>
@@ -152,7 +156,7 @@
             <ListBoxItem Selected="ListBoxItemSales_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="U"/>
-                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Hechuka}"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesTXT}"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem IsSelected="False" IsEnabled="False">
@@ -234,8 +238,5 @@
                 </StackPanel>
             </ListBoxItem>
         </ListBox>
-
-        <Frame Name="rptFrame" Grid.Column="1" Background="DimGray"/>
-
     </Grid>
 </metro:MetroWindow>

@@ -139,7 +139,6 @@ namespace Cognitivo.Report
         }
         private string _tbxBrand;
 
-
         public ReportPage()
         {
             InitializeComponent();
@@ -147,17 +146,7 @@ namespace Cognitivo.Report
 
         private void btnGridSearch(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void btnFilter_Click(object sender, EventArgs e)
-        {
-            flyFilter.IsOpen = true;
-        }
-
-        private void list_Selected(object sender, RoutedEventArgs e)
-        {
-            ListBoxItem ListBoxItem = sender as ListBoxItem;
+            ListBoxItem ListBoxItem = NavList.SelectedItem as ListBoxItem;
 
             if (ListBoxItem != null)
             {
@@ -175,6 +164,16 @@ namespace Cognitivo.Report
                 }
                 catch { }
             }
+        }
+
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            flyFilter.IsOpen = true;
+        }
+
+        private void list_Selected(object sender, RoutedEventArgs e)
+        {
+            flyFilter.IsOpen = true;
         }
 
         private void ListBoxItemSales_Selected(object sender, RoutedEventArgs e)

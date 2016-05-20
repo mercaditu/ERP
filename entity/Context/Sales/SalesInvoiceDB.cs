@@ -161,6 +161,7 @@ namespace entity
                     {
                         payment_schedual.AddRange(payment_schedualList);
                     }
+
                     if (IsDiscountStock)
                     {
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();

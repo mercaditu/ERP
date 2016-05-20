@@ -183,6 +183,7 @@ namespace Cognitivo.Report
             path = path + "\\CogntivoERP";
             string SubFolder = "";
             SubFolder = "\\TemplateFiles";
+
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -193,6 +194,7 @@ namespace Cognitivo.Report
                 Directory.CreateDirectory(path + SubFolder);
 
             }
+
             var predicate = PredicateBuilder.True<entity.sales_invoice>();
 
             if (ConditionArray != null)
@@ -227,16 +229,20 @@ namespace Cognitivo.Report
             }
 
 
-            using (System.IO.StreamWriter file =
-           new System.IO.StreamWriter(@path + SubFolder + "\\SalesHechuka.txt", true))
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@path + SubFolder + "\\SalesHechuka.txt", true))
             {
 
                 List<sales_invoice> SaleInvoiceList = db.sales_invoice.Where(predicate).ToList();
                 foreach (sales_invoice sales_invoice in SaleInvoiceList)
                 {
-                    string Line = sales_invoice.contact.gov_code + "\t" + sales_invoice.contact.name + "\t" + sales_invoice.number + "\t" + sales_invoice.trans_date + "\t";
+                    string Line = sales_invoice.contact.gov_code 
+                        + "\t" + sales_invoice.contact.name 
+                        + "\t" + sales_invoice.number 
+                        + "\t" + sales_invoice.trans_date 
+                        + "\t";
                     file.WriteLine(Line);
                 }
+
                 var predicatePurchaseReturn = PredicateBuilder.True<entity.purchase_return>();
 
                 if (ConditionArray != null)
@@ -260,24 +266,30 @@ namespace Cognitivo.Report
                     predicatePurchaseReturn = predicatePurchaseReturn.And(x => x.trans_date >= start_Range);
 
                 }
+
                 if (end_Range != Convert.ToDateTime("1/1/0001"))
                 {
                     predicatePurchaseReturn = predicatePurchaseReturn.And(x => x.trans_date <= end_Range);
 
                 }
+
                 if (Contact != null)
                 {
                     predicatePurchaseReturn = predicatePurchaseReturn.And(x => x.contact == Contact);
                 }
+
                 List<purchase_return> PurchaseReturnList = db.purchase_return.Where(predicatePurchaseReturn).ToList();
                 foreach (purchase_return purchase_return in PurchaseReturnList)
                 {
-                    string Line = purchase_return.contact.gov_code + "\t" + purchase_return.contact.name + "\t" + purchase_return.number + "\t" + purchase_return.trans_date + "\t";
+                    string Line = purchase_return.contact.gov_code 
+                        + "\t" + purchase_return.contact.name 
+                        + "\t" + purchase_return.number 
+                        + "\t" + purchase_return.trans_date 
+                        + "\t";
                     file.WriteLine(Line);
                 }
                 
                 MessageBox.Show("Files Saved...");
-
             }
         }
 

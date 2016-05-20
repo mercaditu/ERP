@@ -28,7 +28,12 @@ namespace Cognitivo.Converters
         public object[] ConvertBack(object value, Type[] targetTypes,
                object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotSupportedException("Cannot convert back");
+           object[] a= new object[3];
+            a[0]=true;
+            a[1]=0;
+            a[2] = 0;
+            return a;
+            //throw new NotSupportedException("Cannot convert back");
         }
     }
 }

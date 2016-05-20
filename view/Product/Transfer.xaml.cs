@@ -153,10 +153,8 @@ namespace Cognitivo.Product
 
                 ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
 
-                if (ProductTransferDB.SaveChanges() == 1)
-                {
                     toolBar.msgSaved();
-                } 
+                 
             }
             catch (Exception ex)
             {
@@ -170,10 +168,9 @@ namespace Cognitivo.Product
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
             ProductTransferDB.ApproveDestination( (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
             
-            if (ProductTransferDB.SaveChanges() == 1)
-            {
+          
                 toolBar.msgSaved();
-            }
+           
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)

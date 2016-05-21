@@ -11,6 +11,8 @@ using System.Data;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using cntrl.Controls;
+using System.Linq.Expressions;
 
 namespace Cognitivo.Sales
 {
@@ -26,6 +28,122 @@ namespace Cognitivo.Sales
         cntrl.PanelAdv.pnlPacking pnlPacking;
         cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
+
+        public app_geography Geography { get; set; }
+        public contact Contact { get; set; }
+        public item Item { get; set; }
+
+        public DateTime start_Range
+        {
+            get { return _start_Range; }
+            set
+            {
+                if (_start_Range != value)
+                {
+                    _start_Range = value;
+                }
+            }
+        }
+        private DateTime _start_Range = DateTime.Now.AddMonths(-1);
+
+
+        public DateTime end_Range
+        {
+            get { return _end_Range; }
+            set
+            {
+                if (_end_Range != value)
+                {
+                    _end_Range = value;
+                }
+            }
+        }
+        private DateTime _end_Range = DateTime.Now;
+
+        /// <summary>
+        /// Condition KeyWord Array.
+        /// </summary>
+        public string[] ConditionArray { get; set; }
+        public string tbxCondition
+        {
+            get
+            {
+                return _tbxCondition;
+            }
+            set
+            {
+                if (_tbxCondition != value)
+                {
+                    _tbxCondition = value;
+                    ConditionArray = _tbxCondition.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxCondition;
+
+        /// <summary>
+        /// Contract KeyWord Array.
+        /// </summary>
+        public string[] ContractArray { get; set; }
+        public string tbxContract
+        {
+            get
+            {
+                return _tbxContract;
+            }
+            set
+            {
+                if (_tbxContract != value)
+                {
+                    _tbxContract = value;
+                    ContractArray = _tbxContract.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxContract;
+
+        /// <summary>
+        /// Tag KeyWord Array.
+        /// </summary>
+        public string[] TagArray { get; set; }
+        public string tbxTag
+        {
+            get
+            {
+                return _tbxTag;
+            }
+            set
+            {
+                if (_tbxTag != value)
+                {
+                    _tbxTag = value;
+                    TagArray = _tbxTag.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxTag;
+
+        /// <summary>
+        /// Brand KeyWord Array.
+        /// </summary>
+        public string[] BrandArray { get; set; }
+        public string tbxBrand
+        {
+            get
+            {
+                return _tbxBrand;
+            }
+            set
+            {
+                if (_tbxBrand != value)
+                {
+                    _tbxBrand = value;
+                    TagArray = _tbxBrand.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+        }
+        private string _tbxBrand;
+
         public Invoice()
         {
             InitializeComponent();
@@ -38,6 +156,54 @@ namespace Cognitivo.Sales
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+        private Expression<Func<entity.sales_invoice, bool>> QueryBuilder()
+        {
+            var predicate = PredicateBuilder.True<entity.sales_invoice>();
+            predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
+            predicate = predicate.And(x => x.is_head == true);
+
+            if (ConditionArray != null)
+            {
+                if (ConditionArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ConditionArray.Contains(x.app_condition.name));
+                }
+            }
+
+            if (ContractArray != null)
+            {
+                if (ContractArray.Count() > 0)
+                {
+                    predicate = predicate.And(x => ContractArray.Contains(x.app_contract.name));
+                }
+            }
+           
+           
+            if (start_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date >= start_Range.Date);
+
+            }
+            if (end_Range != Convert.ToDateTime("1/1/0001"))
+            {
+                predicate = predicate.And(x => x.trans_date <= end_Range.Date);
+
+            }
+        
+
+      
+          
+        
+            if (Contact != null)
+            {
+                predicate = predicate.And(x => x.contact == Contact);
+            }
+
+
+            return predicate;
+
+
         }
 
         void filter_sales()
@@ -70,17 +236,17 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
+            SalesInvoiceDB = new entity.SalesInvoiceDB();
             Settings SalesSettings = new Settings();
+            var predicate = QueryBuilder();
             if (SalesSettings.FilterByBranch)
             {
-                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_branch == CurrentSession.Id_Company
-                                               && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
 
             }
             else
             {
-                await SalesInvoiceDB.sales_invoice.Where(a => a.id_company == CurrentSession.Id_Company
-                                              && (a.is_head == true)).OrderByDescending(x => x.trans_date).LoadAsync();
+                await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
             }
 
 
@@ -94,14 +260,14 @@ namespace Cognitivo.Sales
         private async void load_SecondaryDataThread()
         {
             SalesInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            
-                cbxContract.ItemsSource = SalesInvoiceDB.app_contract.Local;
-           
+
+            cbxContract.ItemsSource = SalesInvoiceDB.app_contract.Local;
+
 
             SalesInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-           
-                cbxCondition.ItemsSource = SalesInvoiceDB.app_condition.Local;
-         
+
+            cbxCondition.ItemsSource = SalesInvoiceDB.app_condition.Local;
+
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
@@ -484,7 +650,7 @@ namespace Cognitivo.Sales
         private void sales_invoice_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             calculate_vat(sender, e);
-           
+
 
         }
 
@@ -689,7 +855,7 @@ namespace Cognitivo.Sales
 
         private void btnGridSearch(object sender, RoutedEventArgs e)
         {
-
+            load_PrimaryDataThread();
         }
     }
 }

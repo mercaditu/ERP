@@ -23,11 +23,12 @@ namespace Cognitivo.Report
     public partial class ReportPage : MetroWindow
     {
         public entity.App.Names Reports { get; set; }
+        db db = new db();
 
         public app_geography Geography { get; set; }
         public contact Contact { get; set; }
         public item Item { get; set; }
-        db db = new db();
+       
         public DateTime start_Range
         {
             get { return _start_Range; }

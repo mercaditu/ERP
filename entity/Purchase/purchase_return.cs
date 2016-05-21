@@ -124,20 +124,16 @@ namespace entity
                 _DiscountPercentage = value;
                 RaisePropertyChanged("DiscountPercentage");
 
+                decimal Discounted_GrandTotalValue = GrandTotal * DiscountPercentage;
 
-
-                decimal OriginalValue = GrandTotal * DiscountPercentage;
-                if (OriginalValue != 0)
+                if (Discounted_GrandTotalValue != 0 && GrandTotal > 0)
                 {
-                    decimal DifferenceValue = OriginalValue / purchase_return_detail.Count;
-                    foreach (var item in purchase_return_detail)
+                    foreach (purchase_return_detail detail in this.purchase_return_detail.Where(x => x.quantity > 0))
                     {
-                        DifferenceValue = DifferenceValue / item.quantity;
-                        item.discount = DifferenceValue;
-                        item.RaisePropertyChanged("discount");
+                        decimal WeightedAvg = detail.SubTotal_Vat / GrandTotal;
+                        detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
+                        detail.RaisePropertyChanged("DiscountVat");
                     }
-
-
                 }
             }
         }

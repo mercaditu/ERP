@@ -88,38 +88,19 @@ namespace entity
             get { return _DiscountPercentage; }
             set
             {
-                if (value <= 1)
+                _DiscountPercentage = value;
+                RaisePropertyChanged("DiscountPercentage");
+
+                decimal Discounted_GrandTotalValue = GrandTotal * DiscountPercentage;
+
+                if (Discounted_GrandTotalValue != 0 && GrandTotal > 0)
                 {
-                    _DiscountPercentage = value;
-                    RaisePropertyChanged("DiscountPercentage");
-
-                    decimal DiscountValue = GrandTotal * DiscountPercentage;
-                    if (DiscountValue != 0)
+                    foreach (sales_order_detail detail in this.sales_order_detail.Where(x => x.quantity > 0))
                     {
-                        decimal PerRawDiscount = DiscountValue / sales_order_detail.Where(x => x.quantity > 0).Count();
-                        foreach (var item in sales_order_detail.Where(x => x.quantity > 0))
-                        {
-
-                            item.DiscountVat = PerRawDiscount / item.quantity;
-                            item.RaisePropertyChanged("DiscountVat");
-                            RaisePropertyChanged("GrandTotal");
-                        }
+                        decimal WeightedAvg = detail.SubTotal_Vat / GrandTotal;
+                        detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
+                        detail.RaisePropertyChanged("DiscountVat");
                     }
-                    else
-                    {
-                        foreach (var item in sales_order_detail.Where(x => x.quantity > 0))
-                        {
-
-                            item.DiscountVat = 0;
-                            item.RaisePropertyChanged("DiscountVat");
-                            RaisePropertyChanged("GrandTotal");
-                        }
-                    }
-                }
-                else
-                {
-                    _DiscountPercentage = value;
-                    RaisePropertyChanged("DiscountPercentage");
                 }
             }
         }

@@ -32,20 +32,7 @@ namespace cntrl.Curd
 
         #region Properties
 
-        public bool IsCustomer 
-        {
-            get { return _IsCustomer; }
-            set
-            {
-                if (_IsCustomer != value)
-                {
-                    _IsCustomer = value;
-                    RaisePropertyChanged("IsCustomer");
-                }
-            }
-        }
-        private bool _IsCustomer;
-
+        public bool IsCustomer { get; set; }
         public bool IsSupplier { get; set; }
         public bool IsEmployee { get; set; }
 

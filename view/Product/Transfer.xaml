@@ -139,38 +139,38 @@
 
             <TabControl Grid.Row="1" Grid.ColumnSpan="2">
                 <TabItem Header="{lex:Loc Origin}">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel>
-                            <Grid HorizontalAlignment="Right" Width="256" DataContext="{Binding Source={StaticResource item_transferViewSource}}">
-                                <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status}"/>
-                            </Grid>
-                            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
-                            <control:SmartBox_Item x:Name="sbxItem" Width="256" HorizontalAlignment="Left" Select="SmartBox_Item_Select"/>
-                            <DataGrid x:Name="item_transfer_detailDataGrid" 
-                                      AutoGenerateColumns="False" Grid.ColumnSpan="2" 
-                                      EnableRowVirtualization="True" CanUserAddRows="False"
-                                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                      Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Cognitivo:local:Item}" Width="Auto" IsReadOnly="True"/>
-                                    <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                                        Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
-                                    <DataGridTemplateColumn Width="Auto" Header="">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Command="customcmd:CustomCommands.Delete"
-                                                    Style="{StaticResource btnDeleteChildStyle}"
-                                                    CommandParameter="{Binding}"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                    </ScrollViewer>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1" DataContext="{Binding Source={StaticResource item_transferViewSource}}" VerticalAlignment="Top">
+                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveOrigin_Click" Status="{Binding status}"/>
+                        </Grid>
+                        <control:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select" VerticalAlignment="Top"/>
+                        <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0"
+                                    AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
+                                    ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
+                                    RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Header="{lex:Loc Cognitivo:local:Item}" Width="*" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                                    Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete"
+                                                Style="{StaticResource btnDeleteChildStyle}"
+                                                CommandParameter="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </TabItem>
-                <TabItem Header="{lex:Loc Destination}" Margin="2,0,-2,0">
+                <TabItem Header="{lex:Loc Destination}">
                     <StackPanel>
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel>

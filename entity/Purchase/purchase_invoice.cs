@@ -112,7 +112,6 @@ namespace entity
         }
         private decimal _TotalVat;
 
-
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
         /// </summary>
@@ -125,24 +124,21 @@ namespace entity
                 _DiscountPercentage = value;
                 RaisePropertyChanged("DiscountPercentage");
 
-               
+                decimal Discounted_GrandTotalValue = GrandTotal * DiscountPercentage;
 
-                decimal OriginalValue =GrandTotal * DiscountPercentage ;
-                if (OriginalValue != 0)
+                if (Discounted_GrandTotalValue != 0 && GrandTotal > 0)
                 {
-                    decimal DifferenceValue = OriginalValue / purchase_invoice_detail.Count;
-                    foreach (var item in purchase_invoice_detail)
+                    foreach (purchase_invoice_detail detail in this.purchase_invoice_detail.Where(x => x.quantity > 0))
                     {
-                        DifferenceValue = DifferenceValue / item.quantity;
-                        item.discount = DifferenceValue;
-                        item.RaisePropertyChanged("discount");
+                        decimal WeightedAvg = detail.SubTotal_Vat / GrandTotal;
+                        detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
+                        detail.RaisePropertyChanged("DiscountVat");
                     }
-
-                    
                 }
             }
         }
         private decimal _DiscountPercentage;
+
         [NotMapped]
         public decimal DiscountWithoutPercentage
         {

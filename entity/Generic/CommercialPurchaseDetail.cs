@@ -338,8 +338,6 @@ namespace entity
             {
                 if (_Discount_SubTotal_Vat != value)
                 {
-                    // Calculate_UnitVatDiscount(value);
-
                     _Discount_SubTotal_Vat = value;
                     RaisePropertyChanged("Discount_SubTotal_Vat");
                 }

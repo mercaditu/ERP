@@ -363,6 +363,7 @@ namespace Cognitivo.Sales
             SalesInvoiceDB.SaveChanges();
             sales_invoiceViewSource.View.Refresh();
             toolBar.msgSaved();
+            sbxContact.Text = "";
         }
 
         private void toolBar_btnCancel_Click(object sender)

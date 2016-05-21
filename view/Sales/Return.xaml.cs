@@ -81,6 +81,7 @@ namespace Cognitivo.Sales
                     SalesReturnDB.sales_return.Remove((sales_return)sales_returnDataGrid.SelectedItem);
                     salesReturnViewSource.View.MoveCurrentToFirst();
                     toolBar_btnSave_Click(sender);
+                    sbxContact.Text = "";
                 }
             }
 

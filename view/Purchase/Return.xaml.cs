@@ -79,6 +79,7 @@ namespace Cognitivo.Purchase
         {
             dbContext.SaveChanges();
             toolBar.msgSaved();
+            sbxContact.Text = "";
         }
 
         private void toolBar_btnEdit_Click(object sender)

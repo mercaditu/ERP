@@ -176,6 +176,7 @@ namespace Cognitivo.Sales
                 dbContext.SaveChanges();
                 sales_orderViewSource.View.Refresh();
                 toolBar.msgSaved();
+                sbxContact.Text = "";
             }
             catch (DbEntityValidationException ex)
             {

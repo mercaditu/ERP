@@ -184,6 +184,7 @@ namespace Cognitivo.Purchase
             dbContext.SaveChangesAsync();
             purchase_orderViewSource.View.Refresh();
             toolBar.msgSaved();
+            sbxContact.Text = "";
         }
 
         private void toolBar_btnCancel_Click(object sender)

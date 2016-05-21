@@ -130,6 +130,7 @@ namespace Cognitivo.Sales
                 SalesBudgetDB.SaveChanges();
                 sales_budgetViewSource.View.Refresh();
                 toolBar.msgSaved();
+                sbxContact.Text = "";
         }
 
         private void toolBar_btnDelete_Click(object sender)

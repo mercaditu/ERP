@@ -123,6 +123,10 @@ namespace entity.Brillo.Logic
                     purchase_invoice_detail.id_location = FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
                     purchase_invoice_detail.app_location = db.app_location.Where(x => x.id_location == purchase_invoice_detail.id_location).FirstOrDefault();
 
+                    if (   purchase_invoice.app_currencyfx==null)
+                    {
+                         purchase_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault();
+                    }
 
                     //Improve Comment. More standarized.
                     item_movementList.Add(

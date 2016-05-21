@@ -670,7 +670,6 @@ namespace Cognitivo.Production
                 production_execution.production_order = production_order;
                 production_execution.id_production_line = production_order.id_production_line;
                 production_execution.trans_date = DateTime.Now;
-
                 OrderDB.production_execution.Add(production_execution);
             }
            

@@ -259,15 +259,27 @@ namespace entity
             get { return _discount; }
             set
             {
-                if (_discount != value && State >= 0)
+                if (_discount != value)
                 {
-                    ApplyDiscount_UnitCost(_discount, value, unit_cost);
+                    if (State > 0)
+                    {
+                        ApplyDiscount_UnitPrice(_discount, value, unit_cost);
 
-                    _discount = value;
-                    RaisePropertyChanged("discount");
+                        _discount = value;
+                        RaisePropertyChanged("discount");
 
-                    Calculate_UnitVatDiscount(_discount);
-                    Calculate_SubTotalDiscount(_discount);
+                        Calculate_UnitVatDiscount(_discount);
+                        Calculate_SubTotalDiscount(_discount);
+
+                    }
+                    else
+                    {
+                        _discount = value;
+                        RaisePropertyChanged("discount");
+
+                        Calculate_UnitVatDiscount(_discount);
+                        Calculate_SubTotalDiscount(_discount);
+                    }
                 }
             }
         }
@@ -306,7 +318,7 @@ namespace entity
             {
                 if (_Discount_SubTotal != value)
                 {
-                    Calculate_UnitDiscount(_Discount_SubTotal);
+                    //  Calculate_UnitDiscount(_Discount_SubTotal);
 
                     _Discount_SubTotal = value;
                     RaisePropertyChanged("Discount_SubTotal");
@@ -326,7 +338,7 @@ namespace entity
             {
                 if (_Discount_SubTotal_Vat != value)
                 {
-                    Calculate_UnitVatDiscount(_Discount_SubTotal_Vat);
+                    // Calculate_UnitVatDiscount(value);
 
                     _Discount_SubTotal_Vat = value;
                     RaisePropertyChanged("Discount_SubTotal_Vat");
@@ -341,7 +353,7 @@ namespace entity
         /// <param name="oldDiscount"></param>
         /// <param name="value"></param>
         /// <param name="unit_cost"></param>
-        public void ApplyDiscount_UnitCost(decimal oldDiscount, decimal value, decimal unit_cost)
+        public void ApplyDiscount_UnitPrice(decimal oldDiscount, decimal value, decimal unit_cost)
         {
             this.unit_cost = Discount.Calculate_Discount(oldDiscount, value, unit_cost);
             RaisePropertyChanged("unit_cost");
@@ -353,7 +365,10 @@ namespace entity
         /// <param name="discountvat"></param>
         public void Calculate_UnitDiscount(decimal discountvat)
         {
-            _discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat);
+            decimal calc_discount = Vat.return_ValueWithoutVAT((int)id_vat_group, discountvat); ;
+
+            ApplyDiscount_UnitPrice(_discount, calc_discount, unit_cost);
+            _discount = calc_discount;
             Calculate_SubTotalDiscount(_discount);
             RaisePropertyChanged("discount");
         }
@@ -364,7 +379,7 @@ namespace entity
         /// <param name="discount"></param>
         public void Calculate_UnitVatDiscount(decimal discount)
         {
-            DiscountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
+            _DiscountVat = Vat.return_ValueWithVAT((int)id_vat_group, discount);
             Calculate_SubTotalVatDiscount(_DiscountVat);
             RaisePropertyChanged("DiscountVat");
         }

@@ -191,8 +191,7 @@ namespace cntrl.Controls
         {
             using (entity.db db = new entity.db())
             {
-                db.Configuration.LazyLoadingEnabled = false;
-                db.Configuration.AutoDetectChangesEnabled = false;
+              
 
                 List<entity.item> results;
                 var predicate = PredicateBuilder.True<entity.item>();
@@ -208,15 +207,16 @@ namespace cntrl.Controls
                 {
                     predicate = predicate.And(x => x.id_item_type == item_types);
                 }
-                //if (Is_Stock)
-                //{
-                //    predicate = predicate.And(x => x.item_product.FirstOrDefault().stock > 0);
-                //}
 
-                results = db.items
-                           .Where(predicate)
-                           .OrderBy(x => x.name)
-                           .ToList();
+                results = db.items.Where(predicate).OrderBy(x => x.name).ToList();
+                if (Is_Stock)
+                {
+                    results = results.Where(x => (x.item_product.FirstOrDefault()!=null?x.item_product.FirstOrDefault().stock:0) > 0)
+
+                          .OrderBy(x => x.name)
+                          .ToList(); 
+                }
+              
 
 
                 Dispatcher.InvokeAsync(new Action(() =>

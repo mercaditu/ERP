@@ -70,7 +70,7 @@ namespace entity
         public purchase_invoice newer { get; set; }
 
         [NotMapped]
-        public new decimal GrandTotal
+        public decimal GrandTotal
         {
             get
             {
@@ -79,25 +79,14 @@ namespace entity
                 {
                     _GrandTotal += _purchase_invoice_detail.SubTotal_Vat;
                 }
+
+             
                 return Math.Round(_GrandTotal, 2);
             }
             set
             {
-                decimal OriginalValue = value - _GrandTotal;
-                if (OriginalValue != 0)
-                {
-                    decimal DifferenceValue = OriginalValue / purchase_invoice_detail.Count;
-                    foreach (var item in purchase_invoice_detail)
-                    {
-                        
-                        item.UnitCost_Vat =item.UnitCost_Vat+ DifferenceValue / item.quantity;
-                        item.RaisePropertyChanged("UnitCost_Vat");
-                    }
-
-
-                    _GrandTotal = value;
-                    RaisePropertyChanged("GrandTotal");
-                }
+                _GrandTotal = value;
+                RaisePropertyChanged("GrandTotal");
             }
         }
         private decimal _GrandTotal;
@@ -154,6 +143,41 @@ namespace entity
             }
         }
         private decimal _DiscountPercentage;
+        [NotMapped]
+        public decimal DiscountWithoutPercentage
+        {
+            get { return _DiscountWithoutPercentage; }
+            set
+            {
+                _DiscountWithoutPercentage = value;
+                RaisePropertyChanged("DiscountWithoutPercentage");
+
+                decimal DiscountValue = value;
+                if (DiscountValue != 0)
+                {
+                    decimal PerRawDiscount = DiscountValue / purchase_invoice_detail.Where(x => x.quantity > 0).Count();
+                    foreach (var item in purchase_invoice_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = PerRawDiscount / item.quantity;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+                else
+                {
+                    foreach (var item in purchase_invoice_detail.Where(x => x.quantity > 0))
+                    {
+
+                        item.DiscountVat = 0;
+                        item.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
+
+            }
+        }
+        private decimal _DiscountWithoutPercentage;
 
         #region "Navigation Properties"
         public virtual purchase_order purchase_order { get; set; }

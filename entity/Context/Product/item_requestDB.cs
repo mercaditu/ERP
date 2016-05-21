@@ -98,7 +98,7 @@ namespace entity
 
                 production_order production_order = new production_order();
                 production_order.types = entity.production_order.ProductionOrderTypes.Fraction;
-                production_order.status = Status.Production.InProcess;
+                production_order.status = Status.Production.Pending;
                 production_order.name = item_request.name;
                 if (production_line.FirstOrDefault() != null)
                 {
@@ -225,7 +225,7 @@ namespace entity
                             production_order_detail production_order_detail = new production_order_detail();
                             production_order_detail.name = item_request_detail.item.name;
                             production_order_detail.quantity = item.quantity;
-                            production_order_detail.status = Status.Project.InProcess;
+                            production_order_detail.status = Status.Project.Pending;
                             production_order_detail.is_input = false;
 
                             production_order_detail.id_item = item_request_detail.item.id_item;

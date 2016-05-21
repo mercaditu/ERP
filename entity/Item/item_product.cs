@@ -37,7 +37,7 @@ namespace entity
         {
             get
             {
-                _stock = item_movement.Sum(x => x.credit - x.credit);
+                _stock = item_movement.Sum(x => x.credit - x.debit);
                 RaisePropertyChanged("stock");
                 return _stock;
             }
@@ -45,7 +45,7 @@ namespace entity
         }
         public decimal _stock;
         public virtual item item { get; set; }
-        public virtual IEnumerable<item_movement> item_movement { get; set; }
+        public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual IEnumerable<item_inventory_detail> item_inventory_detail { get; set; }
         public virtual IEnumerable<item_transfer_detail> item_transfer_detail { get; set; }
         public virtual ICollection<item_conversion_factor> item_conversion_factor { get; set; }

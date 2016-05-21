@@ -78,7 +78,16 @@ namespace entity.Brillo
                     }
                     else
                     {
-                        if (app_currencyfx.app_currency.is_priority == false && app_currencyfxold.app_currency.is_priority == false)
+                        bool is_priority = true;
+                        if (app_currencyfxold != null)
+                        {
+
+                            if (app_currencyfxold.app_currency.is_priority)
+                            {
+                                is_priority = app_currencyfxold.app_currency.is_priority;
+                            }
+                        }
+                        if (app_currencyfx.app_currency.is_priority == false && is_priority==false)
                         {
                             app_currencyfx app_currencyfxprior = db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault();
                         }
@@ -172,12 +181,12 @@ namespace entity.Brillo
             decimal r = 0;
             using (db db = new db())
             {
-                if (application == App.Names.SalesOrder 
+                if (application == App.Names.SalesOrder
                     || application == App.Names.SalesInvoice)
                 {
                     r = db.app_currencyfx.Where(x => x.id_currency == id_currency && x.is_active == true).FirstOrDefault().buy_value;
-                } 
-                else if (application == App.Names.PurchaseOrder 
+                }
+                else if (application == App.Names.PurchaseOrder
                          || application == App.Names.PurchaseInvoice)
                 {
                     r = db.app_currencyfx.Where(x => x.id_currency == id_currency && x.is_active == true).FirstOrDefault().sell_value;

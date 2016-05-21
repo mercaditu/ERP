@@ -15,7 +15,6 @@ namespace cntrl
     public enum toolBarIcons { Basic, Filter, Admin, Impex, Project, Production }
     public partial class toolBarData
     {
-       
         DataTable dtIconList = new DataTable();
         public DataTable dtIconList_property { get { return dtIconList; } set { dtIconList = value; } }
         public toolBarData()

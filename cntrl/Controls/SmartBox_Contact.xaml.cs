@@ -282,13 +282,29 @@ namespace cntrl.Controls
             }
         }
 
-        private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void Add_PreviewMouseUp(object sender, EventArgs e)
         {
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
+            
             if(Sec.create)
             {
                 popCrud.IsOpen = true;
                 cntrl.Curd.contact contactCURD = new Curd.contact();
+                
+                if (Get_Customers)
+	            {
+                    contactCURD.IsCustomer = true;
+	            }
+                else if (Get_Suppliers)
+                {
+                    contactCURD.IsSupplier = true;
+                }
+                else if (Get_Employees)
+                {
+                    contactCURD.IsEmployee = true;
+                }
+                
+
                 stackCRUD.Children.Add(contactCURD);
                 popCrud.Visibility = Visibility.Visible;
             }

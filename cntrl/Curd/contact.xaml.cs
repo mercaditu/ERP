@@ -6,19 +6,46 @@ using System.Windows.Data;
 using entity;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace cntrl.Curd
 {
-    public partial class contact : UserControl
+    public partial class contact : UserControl, INotifyPropertyChanged
     {
         private entity.ContactDB ContactDB { get; set;}
         CollectionViewSource contactViewSource;
+
+        #region NotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+
+        #endregion
 
         entity.contact _contact = null;
 
         #region Properties
 
-        public bool IsCustomer { get; set; }
+        public bool IsCustomer 
+        {
+            get { return _IsCustomer; }
+            set
+            {
+                if (_IsCustomer != value)
+                {
+                    _IsCustomer = value;
+                    RaisePropertyChanged("IsCustomer");
+                }
+            }
+        }
+        private bool _IsCustomer;
+
         public bool IsSupplier { get; set; }
         public bool IsEmployee { get; set; }
 
@@ -30,8 +57,22 @@ namespace cntrl.Curd
 
         private void btnCancel_MouseDown(object sender, EventArgs e)
         {
-            StackPanel parentGrid = (StackPanel)this.Parent;
-            parentGrid.Children.RemoveAt(0);
+
+            if (this.Parent as StackPanel != null)
+            {
+                StackPanel parentGrid = this.Parent as StackPanel;
+                parentGrid.Children.RemoveAt(0);
+            }
+            else if (this.Parent as Grid != null)
+            {
+                Grid parentGrid = this.Parent as Grid;
+                parentGrid.Children.RemoveAt(0);
+            }
+            else if (this.Parent as System.Windows.Controls.Primitives.Popup != null)
+            {
+                System.Windows.Controls.Primitives.Popup parentPopUp = this.Parent as System.Windows.Controls.Primitives.Popup;
+                parentPopUp.IsOpen = false;
+            }
         }
 
         private void btnSave_MouseUp(object sender, RoutedEventArgs e)

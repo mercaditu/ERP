@@ -58,7 +58,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <cntrl:navPagination x:Name="navPagination" VerticalAlignment="Bottom" Grid.Row="1" btnSearch_Click="navPagination_btnSearch_Click" DisplayMode="Month"/>
         <Grid Grid.Column="1" Grid.Row="1" Background="White" IsEnabled="{Binding is_accounted, Converter={StaticResource TrueToFalse}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>

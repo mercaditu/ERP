@@ -38,7 +38,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
         <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -60,20 +60,7 @@
                 <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                 <Label Content="Dollar" Style="{StaticResource generic_Label}"/>
             </StackPanel>
-            
-            <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Margin="8">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{lex:Loc Number}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="{lex:Loc SalesInvoice}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="{lex:Loc PurchaseInvoice}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="{lex:Loc Condition}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="{lex:Loc Contract}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="{lex:Loc ExpiryDate}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="{lex:Loc Value}" IsReadOnly="True"/>
-                </DataGrid.Columns>
-            </DataGrid>
         </Grid>
-
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3"
 			           btnApprove_Click="toolBar_btnApprove_Click"
 			           btnAnull_Click="toolBar_btnAnull_Click"

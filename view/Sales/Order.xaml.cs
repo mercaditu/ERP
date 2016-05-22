@@ -480,25 +480,6 @@ namespace Cognitivo.Sales
             }
         }
 
-        private void navPagination_btnSearch_Click(object sender)
-        {
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Day)
-            {
-                List<sales_invoice> sales_invoiceList = dbContext.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
-                sales_orderViewSource.Source = sales_invoiceList;
-            }
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Month)
-            {
-                List<sales_invoice> sales_invoice = dbContext.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
-                sales_orderViewSource.Source = sales_invoice;
-            }
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Year)
-            {
-                List<sales_invoice> sales_invoice = dbContext.sales_invoice.Local.Where(x => x.id_company == CurrentSession.Id_Company && (x.trans_date >= navPagination.start_Date)).ToList();
-                sales_orderViewSource.Source = sales_invoice;
-            }
-        }
-
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
             sales_order sales_order = sales_orderDataGrid.SelectedItem as sales_order;

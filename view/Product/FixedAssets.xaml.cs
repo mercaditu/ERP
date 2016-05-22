@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using entity;
 using System.IO;
 using System.Data.Entity;
@@ -20,8 +12,7 @@ namespace Cognitivo.Product
 {
     public partial class FixedAssets : Page
     {
-        entity.ItemDB ItemDB = new entity.ItemDB();
-        dbContext dbContext = new dbContext();
+        ItemDB ItemDB = new ItemDB();
         CollectionViewSource 
             itemViewSource,
             itemitem_capitalViewSource, item_asset_maintainanceViewSource;
@@ -40,8 +31,6 @@ namespace Cognitivo.Product
             itemViewSource.Source = ItemDB.items.Local;
             
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
-            //ItemDB.item_asset_maintainance.Load();
-            //item_asset_maintainanceViewSource.Source = dbContext.db.item_asset_maintainance.Local;
 
             cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.id_company == CurrentSession.Id_Company && b.is_active).OrderBy(b => b.name).ToList();
 

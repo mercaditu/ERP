@@ -95,6 +95,8 @@ namespace entity
             Currency = 46,
             [LocalizedDescription("Currency")]
             Bank = 47,
+            [LocalizedDescription("PromissoryNote")]
+            PromissoryNote = 85,
 
             //Stock
             [LocalizedDescription("Item")]

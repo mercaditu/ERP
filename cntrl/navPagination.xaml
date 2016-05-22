@@ -7,40 +7,20 @@
         lex:LocalizeDictionary.DesignCulture="en-US"
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
-             mc:Ignorable="d" d:DesignHeight="32" d:DesignWidth="400">
+             mc:Ignorable="d" d:DesignHeight="32" d:DesignWidth="128">
     <Grid Background="{DynamicResource AccentColor_Brush}">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" UseLayoutRounding="False" Grid.ColumnSpan="2" Margin="46,3">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" UseLayoutRounding="False" Grid.ColumnSpan="2" Margin="3">
             <Label Content=""  Cursor="Hand" Opacity="0.64" FontFamily="/cntrl;component/Resources/#cognitivo" Foreground="Black"
-                       HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseDown="FRW_MouseDown"/>
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnFirstPage_Click"/>
             <Label Content="" Style="{StaticResource ico_Label}" Opacity="1" Cursor="Hand" FontFamily="/cntrl;component/Resources/#cognitivo"
-                       Foreground="Black" HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseDown="RW_MouseDown"/>
-            <StackPanel Orientation="Horizontal" Margin="16,0">
-                <TextBlock MouseDown="SpanSelect_MouseDown" VerticalAlignment="Center" FontWeight="Thin"
-                           Text="{Binding DisplayDate, ElementName=navPage, Mode=TwoWay, FallbackValue=|, UpdateSourceTrigger=PropertyChanged}" Foreground="Black" UseLayoutRounding="True"/>
-                <Popup x:Name="datepopup"  Placement="Top">
-                    <Calendar x:Name="caldate" SelectionMode="MultipleRange" SelectedDatesChanged="Calendar_SelectedDatesChanged"
-                              DisplayMode="{Binding DisplayMode, ElementName=navPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                              DisplayDate="{Binding start_Date, ElementName=navPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              
-                              BorderBrush="{x:Null}"/>
-                </Popup>
-            </StackPanel>
+                   Foreground="Black" HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnPreviousPage_Click"/>
+            <Label Name="lblPageIndex" Content="{Binding ElementName=root, Path=PageIndex, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+            <Label Content="-"/>
+            <Label Name="lblNumberOfPages" Content="{Binding ElementName=root, Path=NumberOfPages, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
             <Label Content="" Style="{StaticResource ico_Label}" Opacity="1"  Cursor="Hand" Foreground="Black" FontFamily="/cntrl;component/Resources/#cognitivo"
-                       HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseDown="F_MouseDown"/>
-            <Label Content="" Style="{StaticResource ico_Label}" Opacity="0.64"  Cursor="Hand" Foreground="Black" MouseDown="FF_MouseDown" FontFamily="/cntrl;component/Resources/#cognitivo"
-                       HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True"/>
-
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" MouseUp="btnNextPage_Click"/>
+            <Label Content="" Style="{StaticResource ico_Label}" Opacity="0.64"  Cursor="Hand" Foreground="Black" MouseUp="btnLastPage_Click" FontFamily="/cntrl;component/Resources/#cognitivo"
+                   HorizontalContentAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True"/>
         </StackPanel>
-        <TextBlock x:Name="txtsetting" Text="A" ToolTip="{lex:Loc Configuration}" Margin="4"
-                   FontSize="20" Cursor="Hand" MouseUp="tbCustomize_MouseUp"
-                   VerticalAlignment="Center" HorizontalAlignment="Right" 
-                   FontFamily="/cntrl;component/Resources/#cognitivo">
-            <TextBlock.Foreground>
-                <SolidColorBrush Color="Black" Opacity="0.32"/>
-            </TextBlock.Foreground>
-        </TextBlock>
-        <Popup x:Name="settingpopup" Placement="Top" PlacementTarget="{Binding ElementName=txtsetting}">
-            <ComboBox x:Name="cmbmode" SelectionChanged="cmbmode_SelectionChanged"/>
-        </Popup>
     </Grid>
 </UserControl>

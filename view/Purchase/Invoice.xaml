@@ -67,7 +67,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <cntrl:navPagination x:Name="navPagination" VerticalAlignment="Bottom" Grid.Row="2" btnSearch_Click="navPagination_btnSearch_Click" DisplayMode="Month"/>
 
         <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <Grid Background="White">

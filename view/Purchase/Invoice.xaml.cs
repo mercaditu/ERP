@@ -600,32 +600,6 @@ namespace Cognitivo.Purchase
 
         }
 
-        private void navPagination_btnSearch_Click(object sender)
-        {
-            dbContext entity = new dbContext();
-
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Day)
-            {
-                List<purchase_invoice> purchase_invoice = entity.db.purchase_invoice.Where(x => x.trans_date >= navPagination.start_Date).ToList();
-                purchase_invoiceViewSource.Source = purchase_invoice;
-            }
-
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Month)
-            {
-                List<purchase_invoice> purchase_invoice = entity.db.purchase_invoice.Where(x => x.trans_date >= navPagination.start_Date).ToList();
-                //List<purchase_invoice> purchase_invoice = entity.db.purchase_invoice.Where(x => x.trans_date.Month >= navPagination.start_Date.Month && x.trans_date.Month <= navPagination.end_Date.Month).ToList();
-                purchase_invoiceViewSource.Source = purchase_invoice;
-            }
-
-            if (navPagination.DisplayMode == cntrl.navPagination.DisplayModes.Year)
-            {
-                List<purchase_invoice> purchase_invoice = entity.db.purchase_invoice.Where(x => x.trans_date >= navPagination.start_Date).ToList();
-                //List<purchase_invoice> purchase_invoice = entity.db.purchase_invoice.Where(x => x.trans_date.Year >= navPagination.start_Date.Year && x.trans_date.Year <= navPagination.end_Date.Year).ToList();
-                purchase_invoiceViewSource.Source = purchase_invoice;
-            }
-        }
-        public string InvoiceNumber { get; set; }
-
         /// <summary>
         /// Open Purchase Order
         /// </summary>

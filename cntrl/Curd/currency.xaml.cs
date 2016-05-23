@@ -76,6 +76,7 @@ namespace cntrl
                 app_currencyfx app_currencyfx;
                 app_currencyfx = _app_currency.app_currencyfx.OrderBy(x => x.timestamp).FirstOrDefault();
                 app_currencyfx.is_active = true;
+                app_currencyfx.is_reverse = false;
             }
 
             entity.db.SaveChanges();
@@ -188,6 +189,31 @@ namespace cntrl
                 if (isCheckCtr > 1)
                 {
                     foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsActive"))
+                    {
+                        checkBox.IsChecked = false;
+                    }
+                    objIsActive.IsChecked = true;
+                }
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+        }
+        private void chkIsDivisble_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CheckBox objIsActive = sender as CheckBox;
+                int isCheckCtr = 0;
+                foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsDivisible"))
+                {
+                    if (checkBox.IsChecked == true)
+                        isCheckCtr++;
+                }
+                if (isCheckCtr > 1)
+                {
+                    foreach (CheckBox checkBox in Class.clsCommon.FindVisualChildren<CheckBox>(dataCurrencyfx, "chkIsDivisible"))
                     {
                         checkBox.IsChecked = false;
                     }

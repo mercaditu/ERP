@@ -152,12 +152,14 @@ namespace Cognitivo.Sales
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
-
-        private Expression<Func<sales_invoice, bool>> QueryBuilder()
+        private Expression<Func<entity.sales_invoice, bool>> QueryBuilder()
         {
-            var predicate = PredicateBuilder.True<sales_invoice>();
+            var predicate = PredicateBuilder.True<entity.sales_invoice>();
             predicate = predicate.And(x => x.id_company == CurrentSession.Id_Company);
             predicate = predicate.And(x => x.is_head == true);
 
@@ -181,19 +183,27 @@ namespace Cognitivo.Sales
             if (start_Range != Convert.ToDateTime("1/1/0001"))
             {
                 predicate = predicate.And(x => x.trans_date >= start_Range.Date);
-            }
 
+            }
             if (end_Range != Convert.ToDateTime("1/1/0001"))
             {
                 predicate = predicate.And(x => x.trans_date <= end_Range.Date);
+
             }
+        
+
+      
+          
         
             if (Contact != null)
             {
                 predicate = predicate.And(x => x.contact == Contact);
             }
 
+
             return predicate;
+
+
         }
 
         void filter_sales()
@@ -226,10 +236,9 @@ namespace Cognitivo.Sales
 
         private async void load_PrimaryDataThread()
         {
-            SalesInvoiceDB = new SalesInvoiceDB();
+            SalesInvoiceDB = new entity.SalesInvoiceDB();
             Settings SalesSettings = new Settings();
             var predicate = QueryBuilder();
-
             if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();

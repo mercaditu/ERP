@@ -233,13 +233,24 @@ namespace Cognitivo.Report
             {
 
                 List<sales_invoice> SaleInvoiceList = db.sales_invoice.Where(predicate).ToList();
+                string Line = "Contact gov code" + "\t" + "contact name" + "\t" + "number" + "\t" + "date";
+                foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                {
+                    Line += "\t" + app_vat_group.name;
+                }
+                file.WriteLine(Line);
                 foreach (sales_invoice sales_invoice in SaleInvoiceList)
                 {
-                    string Line = sales_invoice.contact.gov_code 
-                        + "\t" + sales_invoice.contact.name 
-                        + "\t" + sales_invoice.number 
-                        + "\t" + sales_invoice.trans_date 
-                        + "\t";
+                    Line = string.Empty;
+                    Line = sales_invoice.contact.gov_code
+                        + "\t" + sales_invoice.contact.name
+                        + "\t" + sales_invoice.number
+                        + "\t" + sales_invoice.trans_date + "\t" + sales_invoice.app_condition.name + "\t" + sales_invoice.app_contract.name;
+                      
+                    foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                    {
+                       Line += "\t" + sales_invoice.sales_invoice_detail.Where(x => x.id_vat_group == app_vat_group.id_vat_group).Sum(x => x.SubTotal_Vat - x.SubTotal);
+                    }
                     file.WriteLine(Line);
                 }
 
@@ -281,12 +292,19 @@ namespace Cognitivo.Report
                 List<purchase_return> PurchaseReturnList = db.purchase_return.Where(predicatePurchaseReturn).ToList();
                 foreach (purchase_return purchase_return in PurchaseReturnList)
                 {
-                    string Line = purchase_return.contact.gov_code 
+                    Line = string.Empty;
+                    Line = purchase_return.contact.gov_code 
                         + "\t" + purchase_return.contact.name 
-                        + "\t" + purchase_return.number 
-                        + "\t" + purchase_return.trans_date 
-                        + "\t";
-                    file.WriteLine(Line);
+                        + "\t" + purchase_return.number
+                        + "\t" + purchase_return.trans_date + "\t" + purchase_return.app_condition.name + "\t" + purchase_return.app_contract.name;
+                        
+
+                    foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                    {
+                        Line += "\t" + purchase_return.purchase_return_detail.Where(x => x.id_vat_group == app_vat_group.id_vat_group).Sum(x => x.SubTotal_Vat - x.SubTotal);
+                    }
+                                        file.WriteLine(Line);
+
                 }
                 
                 MessageBox.Show("Files Saved...");
@@ -348,9 +366,20 @@ namespace Cognitivo.Report
             {
 
                 List<purchase_invoice> purchase_invoiceList = db.purchase_invoice.Where(predicate).ToList();
+                string Line = "Contact gov code" + "\t" + "contact name" + "\t" + "number" + "\t" + "date";
+                foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                {
+                    Line += "\t" + app_vat_group.name;
+                }
                 foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
                 {
-                    string Line = purchase_invoice.contact.gov_code + "\t" + purchase_invoice.contact.name + "\t" + purchase_invoice.number + "\t" + purchase_invoice.trans_date + "\t";
+                    Line = string.Empty;
+                    Line = purchase_invoice.contact.gov_code + "\t" + purchase_invoice.contact.name + "\t" + purchase_invoice.number + "\t" + purchase_invoice.trans_date + "\t" + purchase_invoice.app_condition.name + "\t" + purchase_invoice.app_contract.name;
+
+                    foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                    {
+                        Line += "\t" + purchase_invoice.purchase_invoice_detail.Where(x => x.id_vat_group == app_vat_group.id_vat_group).Sum(x => x.SubTotal_Vat - x.SubTotal);
+                    }
                     file.WriteLine(Line);
                 }
                 var predicateSalesReturn = PredicateBuilder.True<entity.sales_return>();
@@ -388,8 +417,15 @@ namespace Cognitivo.Report
                 List<sales_return> sales_returnList = db.sales_return.Where(predicateSalesReturn).ToList();
                 foreach (sales_return sales_return in sales_returnList)
                 {
-                    string Line = sales_return.contact.gov_code + "\t" + sales_return.contact.name + "\t" + sales_return.number + "\t" + sales_return.trans_date + "\t";
+                    Line = string.Empty;
+                    Line = sales_return.contact.gov_code + "\t" + sales_return.contact.name + "\t" + sales_return.number + "\t" + sales_return.trans_date + "\t" + sales_return.app_condition.name + "\t" + sales_return.app_contract.name;
+                    foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                    {
+                        Line += "\t" + sales_return.sales_return_detail.Where(x => x.id_vat_group == app_vat_group.id_vat_group).Sum(x => x.SubTotal_Vat - x.SubTotal);
+                    }
                     file.WriteLine(Line);
+                    file.WriteLine(Line);
+
                 }
                 MessageBox.Show("Files Saved...");
             }

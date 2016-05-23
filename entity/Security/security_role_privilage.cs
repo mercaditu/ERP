@@ -1,4 +1,3 @@
-
 namespace entity
 {
     using System.ComponentModel.DataAnnotations;

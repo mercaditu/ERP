@@ -70,12 +70,12 @@ namespace entity
         {
             get
             {
-
                 return _Security_CurdList;
             }
             set { _Security_CurdList = value; }
         }
         static List<security_curd> _Security_CurdList = new List<security_curd>();
+
         public static List<security_role_privilage> Security_role_privilageList
         {
             get
@@ -95,6 +95,7 @@ namespace entity
         {
             Security_CurdList = new List<security_curd>();
             Security_role_privilageList = new List<security_role_privilage>();
+
             //Set the User
             User = db.security_user.Where(user => user.name == UserName
                                                && user.password == Password
@@ -137,6 +138,7 @@ namespace entity
                                     .FirstOrDefault().id_terminal;
                 }
 
+                //Setting Security, once CurrentSession Data is set.
                 Refresh_Security();
             }
         }
@@ -144,10 +146,16 @@ namespace entity
         public static void Refresh_Security()
         {
             _Security_CurdList.Clear();
+
+            //Curd
             security_user security_user = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault();
             _Security_CurdList = db.security_curd.Where(x => x.id_role == security_user.id_role).ToList();
+
+            //Privilage
             _Security_role_privilageList.Clear();
             _Security_role_privilageList = db.security_role_privilage.Where(x => x.id_role == security_user.id_role).ToList();
+
+
         }
     }
 }

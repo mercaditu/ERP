@@ -108,11 +108,19 @@ namespace entity.Brillo
                                 }
                             }
 
+                            if (app_currencyfx.is_reverse)
+                            {
+                                return originalValue * rate;
+                            }
                             return originalValue * (1 / rate);
                         }
                         else //Away from Default
                         {
                             Rate_Previous = rate;
+                            if (app_currencyfx.is_reverse)
+                            {
+                                return originalValue * (1 / rate);
+                            }
                             return originalValue * rate;
                         }
                     }

@@ -74,6 +74,13 @@
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Width="64" IsReadOnly="True" Binding="{Binding timestamp, StringFormat={}{0:d}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Buy}" Width="*" Binding="{Binding buy_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Sell}" Width="*" Binding="{Binding sell_value, StringFormat={}{0:N4}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    <DataGridTemplateColumn Header="Is Divisible" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="chkIsDivisible" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding is_reverse, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Checked="chkIsDivisble_Checked"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Active" Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

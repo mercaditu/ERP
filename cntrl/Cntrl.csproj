@@ -194,6 +194,8 @@
     <Compile Include="Controls\Totals.xaml.cs">
       <DependentUpon>Totals.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\Security2Decimal.cs" />
+    <Compile Include="Converters\Security2Boolean.cs" />
     <Compile Include="Converters\Expiry2ColorConverter.cs" />
     <Compile Include="Converters\sbxContact_CheckType.cs" />
     <Compile Include="Converters\Status2ColorConverter.cs" />

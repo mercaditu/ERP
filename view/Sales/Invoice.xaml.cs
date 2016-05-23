@@ -155,7 +155,7 @@ namespace Cognitivo.Sales
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+        }
         }
         private Expression<Func<entity.sales_invoice, bool>> QueryBuilder()
         {

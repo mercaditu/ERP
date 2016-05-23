@@ -37,10 +37,7 @@
                     }
                 }
             }
-            catch
-            {
-
-            }
+            catch { }
         }
 
         public bool SpecialSecurity_ReturnsBoolean(Privilage.Privilages Privilage)

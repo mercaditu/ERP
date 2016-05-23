@@ -53,7 +53,7 @@ namespace entity
                     }
 
                     //Update Cost based
-                    update_UnitCost();
+                    update_UnitCost(_CurrencyFX_ID);
                 }
             }
         }
@@ -416,13 +416,19 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        private void update_UnitCost()
+        private void update_UnitCost(int id_currecyfx)
         {
             if (State != System.Data.Entity.EntityState.Unchanged)
             {
                 if (item != null && item.unit_cost != null)
                 {
-                    unit_cost = (decimal)item.unit_cost;
+                    using (db db= new db())
+                    {
+                        app_currencyfx app_currencyfx = Currency.get_DefaultFX(db);
+                        unit_cost = Currency.convert_Values((decimal)item.unit_cost, app_currencyfx.id_currencyfx, id_currecyfx, App.Modules.Purchase);
+                    }
+                 
+           
                 }
             }
         }

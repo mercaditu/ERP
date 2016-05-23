@@ -28,39 +28,21 @@ namespace Cognitivo.Commercial
         CollectionViewSource payment_schedualViewSource, contactViewSource;
         PaymentDB PaymentDB = new entity.PaymentDB();
 
-        public DateTime FirstDate 
+        public DateTime AccountDate
         {
-            get
-            {
-                return _firstDate;
-            }
+            get { return _AccountDate; }
             set
             {
-                if (_firstDate != value)
-                {
-                    _firstDate = value;
-                    RaisePropertyChanged("FirstDate");
-                }
-            }
-        }
-        private DateTime _firstDate;
+                _AccountDate = value;
+                RaisePropertyChanged("AccountDate");
 
-        public DateTime EndDate
-        {
-            get
-            {
-                return _endDate;
-            }
-            set
-            {
-                if (_endDate != value)
-                {
-                    _endDate = value;
-                    RaisePropertyChanged("EndDate");
-                }
+                slider.Maximum = DateTime.DaysInMonth(_AccountDate.Year, _AccountDate.Month);
+                slider.Value = AccountDate.Day;
+                load_Schedual();
+
             }
         }
-        private DateTime _endDate;
+        DateTime _AccountDate = DateTime.Now;
 
         public AccountsRecievable()
         {
@@ -75,6 +57,41 @@ namespace Cognitivo.Commercial
         private void toolBar_btnAnull_Click(object sender)
         {
 
+        }
+        private void slider_ValueChanged(object sender, EventArgs e)
+        {
+            AccountDate = AccountDate.AddDays(slider.Value - AccountDate.Day);
+            load_Schedual();
+        }
+
+        private void RRMonth_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            AccountDate = AccountDate.AddMonths(-1);
+            load_Schedual();
+        }
+
+        private void RRDay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            AccountDate = AccountDate.AddDays(-1);
+            load_Schedual();
+        }
+
+        private void FFDay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            AccountDate = AccountDate.AddDays(1);
+            load_Schedual();
+        }
+
+        private void FFMonth_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            AccountDate = AccountDate.AddMonths(1);
+            load_Schedual();
+        }
+
+        private void Today_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            AccountDate = DateTime.Now;
+            load_Schedual();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -95,8 +112,7 @@ namespace Cognitivo.Commercial
                     }
                 };
 
-                FirstDate = PaymentDB.payment_schedual.Local.Where(x => x.id_contact == contact.id_contact).OrderBy(x => x.expire_date).FirstOrDefault().expire_date;
-                EndDate = PaymentDB.payment_schedual.Local.Where(x => x.id_contact == contact.id_contact).OrderByDescending(x => x.expire_date).FirstOrDefault().expire_date;
+               
             }
             else
             {
@@ -130,8 +146,9 @@ namespace Cognitivo.Commercial
             payment_schedualViewSource.Source = await PaymentDB.payment_schedual
                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
-                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0).OrderBy(x => x.expire_date)
-                    .ToListAsync();
+                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0 && x.expire_date<=AccountDate)
+                        .OrderBy(x => x.expire_date)
+                        .ToListAsync();
         }
 
         private void Payment_Click(object sender, RoutedEventArgs e)

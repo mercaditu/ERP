@@ -233,12 +233,17 @@ namespace Cognitivo.Report
             {
 
                 List<sales_invoice> SaleInvoiceList = db.sales_invoice.Where(predicate).ToList();
-                string Line = "Contact gov code" + "\t" + "contact name" + "\t" + "number" + "\t" + "date";
-                foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                string Line = string.Empty;
+                if (file.BaseStream.Length==0)
                 {
-                    Line += "\t" + app_vat_group.name;
+                     Line = "Contact gov code" + "\t" + "contact name" + "\t" + "number" + "\t" + "date";
+                    foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                    {
+                        Line += "\t" + app_vat_group.name;
+                    }
+                    file.WriteLine(Line);
                 }
-                file.WriteLine(Line);
+              
                 foreach (sales_invoice sales_invoice in SaleInvoiceList)
                 {
                     Line = string.Empty;
@@ -364,12 +369,18 @@ namespace Cognitivo.Report
             using (System.IO.StreamWriter file =
            new System.IO.StreamWriter(@path + SubFolder + "\\PurchaseHechuka.txt", true))
             {
+               
 
                 List<purchase_invoice> purchase_invoiceList = db.purchase_invoice.Where(predicate).ToList();
-                string Line = "Contact gov code" + "\t" + "contact name" + "\t" + "number" + "\t" + "date";
-                foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                string Line = string.Empty;
+                if (file.BaseStream.Length == 0)
                 {
-                    Line += "\t" + app_vat_group.name;
+                    Line = "Contact gov code" + "\t" + "contact name" + "\t" + "number" + "\t" + "date";
+                    foreach (app_vat_group app_vat_group in db.app_vat_group.ToList())
+                    {
+                        Line += "\t" + app_vat_group.name;
+                    }
+                    file.WriteLine(Line);
                 }
                 foreach (purchase_invoice purchase_invoice in purchase_invoiceList)
                 {

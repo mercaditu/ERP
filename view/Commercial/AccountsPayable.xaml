@@ -120,16 +120,28 @@
                        btnSearch_Click="toolBar_btnSearch_Click"/>
 
         <Grid Grid.Column="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Grid Grid.Column="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Label Content="{Binding FirstDate, ElementName=_AccountsPayable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>
-                    <Label Content="-" Style="{StaticResource generic_Label}"/>
-                    <Label Content="{Binding EndDate, ElementName=_AccountsPayable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding AccountDate, ElementName=_AccountsPayable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>
+                    <!--<Label Content="-" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding EndDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>-->
                 </StackPanel>
-            </StackPanel>
-            <metro:RangeSlider HorizontalAlignment="Stretch" Margin="64,2" 
-				VerticalAlignment="Bottom" MinRangeWidth="1" MoveWholeRange="True" IsMoveToPointEnabled="True" 
-				ExtendedMode="True" UpperValue="100"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Label Content="&#xE893;" Style="{StaticResource ico_Label}" Cursor="Hand"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="RRMonth_MouseDown"/>
+                    <Label Content="&#xE895;" Style="{StaticResource ico_Label}" Cursor="Hand"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="RRDay_MouseDown"/>
+
+                    <Slider x:Name="slider" Width="256" VerticalAlignment="Center" Minimum="1" Ticks="1"
+					Value="{Binding sliderValue, ElementName=_AccountsRecievable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					Focusable="False" SmallChange="1" ValueChanged="slider_ValueChanged"/>
+
+                    <Label Content="&#xE894;" Style="{StaticResource ico_Label}" Cursor="Hand"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="FFDay_MouseDown"/>
+                    <Label Content="&#xE892;" Style="{StaticResource ico_Label}" Cursor="Hand"  MouseDown="FFMonth_MouseDown"
+					HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

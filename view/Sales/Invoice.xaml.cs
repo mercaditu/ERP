@@ -310,6 +310,7 @@ namespace Cognitivo.Sales
             load_PrimaryData();
 
             filter_sales();
+           
         }
 
         #region "Action Events"
@@ -463,9 +464,10 @@ namespace Cognitivo.Sales
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-            sales_invoice.RaisePropertyChanged("GrandTotal");
+           
             if (sales_invoice != null)
             {
+                sales_invoice.RaisePropertyChanged("GrandTotal");
                 List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
                 if (sales_invoice_detail.Count > 0)
                 {
@@ -839,6 +841,7 @@ namespace Cognitivo.Sales
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
             }
+            calculate_vat(sender,e);
 
         }
 

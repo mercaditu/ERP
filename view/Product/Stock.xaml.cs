@@ -60,29 +60,29 @@ namespace Cognitivo.Product
 
                 var movement =
                 (from items in StockDB.items
-                    join item_product in StockDB.item_product on items.id_item equals item_product.id_item
-                        into its
-                    from p in its
-                    join item_movement in StockDB.item_movement on p.id_item_product equals item_movement.id_item_product
-                    into IMS
-                    from a in IMS
-                    join AM in StockDB.app_branch on a.app_location.id_branch equals AM.id_branch
-                    where a.status == Status.Stock.InStock
-                    && a.trans_date <= InventoryDate
-                    && a.app_location.id_branch == id_branch
-                    group a by new { a.item_product,a.app_location }
-                        into last
-                        select new
-                        {
-                            code = last.Key.item_product.item.code,
-                            name = last.Key.item_product.item.name,
-                            location = last.Key.app_location.name,
-                            itemid = last.Key.item_product.item.id_item,
-                            quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                            id_item_product = last.Key.item_product.id_item_product,
-                            measurement = last.Key.item_product.item.app_measurement.code_iso,
-                            id_location=last.Key.app_location.id_location
-                        }).ToList();
+                 join item_product in StockDB.item_product on items.id_item equals item_product.id_item
+                     into its
+                 from p in its
+                 join item_movement in StockDB.item_movement on p.id_item_product equals item_movement.id_item_product
+                 into IMS
+                 from a in IMS
+                 join AM in StockDB.app_branch on a.app_location.id_branch equals AM.id_branch
+                 where a.status == Status.Stock.InStock
+                 && a.trans_date <= InventoryDate
+                 && a.app_location.id_branch == id_branch
+                 group a by new { a.item_product, a.app_location }
+                     into last
+                     select new
+                     {
+                         code = last.Key.item_product.item.code,
+                         name = last.Key.item_product.item.name,
+                         location = last.Key.app_location.name,
+                         itemid = last.Key.item_product.item.id_item,
+                         quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                         id_item_product = last.Key.item_product.id_item_product,
+                         measurement = last.Key.item_product.item.app_measurement.code_iso,
+                         id_location = last.Key.app_location.id_location
+                     }).ToList();
 
                 inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
                 inventoryViewSource.Source = movement;
@@ -135,7 +135,7 @@ namespace Cognitivo.Product
 
         private async void item_movementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dynamic _item_movement = item_movementDataGrid.SelectedItem;
+            dynamic _item_movement = item_inventoryDataGrid.SelectedItem;
 
             if (_item_movement != null)
             {
@@ -154,6 +154,18 @@ namespace Cognitivo.Product
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
                                                         ).Take(25).AsNoTracking().ToListAsync();
+                    foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
+                    {
+                        foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                        {
+                            if (!(item_movement.comment.Contains(item_movement_dimension.app_dimension.name)))
+                            {
+                                item_movement.comment += " " + item_movement_dimension.app_dimension.name + " : " + item_movement_dimension.value + ",";
+                            }
+                            
+                        }
+                        
+                    }
                 }
             }
         }
@@ -176,6 +188,6 @@ namespace Cognitivo.Product
             }
         }
     }
-   
-   
+
+
 }

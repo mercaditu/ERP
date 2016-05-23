@@ -136,11 +136,13 @@ namespace entity
             }
             set
             {
+                _id_range = value;
                 if (State > 0)
                 {
+                   
                     if (_id_range != value)
                     {
-                        _id_range = value;
+                      
 
                         if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
                         {

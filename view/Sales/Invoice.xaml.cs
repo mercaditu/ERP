@@ -155,8 +155,9 @@ namespace Cognitivo.Sales
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
-        }
+
         private Expression<Func<entity.sales_invoice, bool>> QueryBuilder()
         {
             var predicate = PredicateBuilder.True<entity.sales_invoice>();
@@ -178,8 +179,6 @@ namespace Cognitivo.Sales
                     predicate = predicate.And(x => ContractArray.Contains(x.app_contract.name));
                 }
             }
-           
-           
             if (start_Range != Convert.ToDateTime("1/1/0001"))
             {
                 predicate = predicate.And(x => x.trans_date >= start_Range.Date);
@@ -190,20 +189,11 @@ namespace Cognitivo.Sales
                 predicate = predicate.And(x => x.trans_date <= end_Range.Date);
 
             }
-        
-
-      
-          
-        
             if (Contact != null)
             {
                 predicate = predicate.And(x => x.contact == Contact);
             }
-
-
             return predicate;
-
-
         }
 
         void filter_sales()

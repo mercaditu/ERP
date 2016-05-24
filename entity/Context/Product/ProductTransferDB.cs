@@ -146,7 +146,7 @@ namespace entity
         {
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
-            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.status != Status.Transfer.Approved))
+            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
             {
                 foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
                 {
@@ -214,6 +214,7 @@ namespace entity
                             base.item_movement.Add(item_movement_dest);
                         }
                         item_transfer_detail.status = Status.Documents_General.Approved;
+                        item_transfer_detail.RaisePropertyChanged("status");
                         item_transfer.status = Status.Transfer.Approved;
                         item_transfer.RaisePropertyChanged("status");
                     }

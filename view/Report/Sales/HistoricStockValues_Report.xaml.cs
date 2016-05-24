@@ -73,21 +73,21 @@ namespace Cognitivo.Report
             {
                 Directory.CreateDirectory(path);
                 Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockLevels.rdlc", path + SubFolder + "\\HistoricStockLevels.rdlc");
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockValue.rdlc", path + SubFolder + "\\HistoricStockValue.rdlc");
             }
             else if (!Directory.Exists(path + SubFolder))
             {
                 Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockLevels.rdlc", path + SubFolder + "\\HistoricStockLevels.rdlc");
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockValue.rdlc", path + SubFolder + "\\HistoricStockValue.rdlc");
 
             }
-            else if (!File.Exists(path + SubFolder + "\\HistoricStockLevels.rdlc"))
+            else if (!File.Exists(path + SubFolder + "\\HistoricStockValue.rdlc"))
             {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockLevels.rdlc", path + SubFolder + "\\HistoricStockLevels.rdlc");
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockValue.rdlc", path + SubFolder + "\\HistoricStockValue.rdlc");
             }
 
 
-            reportViewer.LocalReport.ReportPath = path + SubFolder + "\\HistoricStockLevels.rdlc"; // Path of the rdlc file
+            reportViewer.LocalReport.ReportPath = path + SubFolder + "\\HistoricStockValue.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();
 

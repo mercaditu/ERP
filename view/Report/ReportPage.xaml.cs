@@ -167,16 +167,6 @@ namespace Cognitivo.Report
             }
         }
 
-        private void btnFilter_Click(object sender, EventArgs e)
-        {
-            flyFilter.IsOpen = true;
-        }
-
-        private void list_Selected(object sender, RoutedEventArgs e)
-        {
-            flyFilter.IsOpen = true;
-        }
-
         private void ListBoxItemSales_Selected(object sender, RoutedEventArgs e)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

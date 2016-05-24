@@ -40,10 +40,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.98425in</Width>
+                  <Width>6.88008in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.98425in</Width>
+                  <Width>1.578in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -59,7 +59,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>item name</Value>
+                                  <Value>Producto</Value>
                                   <Style>
                                     <FontFamily>arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -68,7 +68,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -104,7 +104,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>value</Value>
+                                  <Value>Valor</Value>
                                   <Style>
                                     <FontFamily>arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -113,7 +113,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -138,6 +138,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -161,7 +162,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -380,7 +381,7 @@
             <Top>0.0511in</Top>
             <Left>0.13905in</Left>
             <Height>0.63622in</Height>
-            <Width>1.9685in</Width>
+            <Width>8.45808in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -401,39 +402,6 @@
           <Height>2.54cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Textbox Name="Textbox34">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>existencias de productos</Value>
-                      <Style>
-                        <FontSize>18pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox34</rd:DefaultName>
-              <Top>0.81786cm</Top>
-              <Left>0.35319cm</Left>
-              <Height>0.90427cm</Height>
-              <Width>8.90291cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-          </ReportItems>
           <Style>
             <Border>
               <Style>None</Style>

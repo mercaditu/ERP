@@ -95,7 +95,7 @@
                           ItemsSource="{Binding Source={StaticResource branch_originViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
                     </StackPanel>
-                    <Label Content="" Style="{StaticResource ico_Label}" VerticalAlignment="Center"/>
+                    <Label Content="" Style="{StaticResource ico_Label}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <StackPanel>
                         <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
                         <ComboBox x:Name="id_branch_destinComboBox" Grid.Column="1" DisplayMemberPath="name" Width="111"
@@ -202,9 +202,9 @@
                             <ToggleButton Content="Check All" Margin="8" Click="btnCheckDestination_Click"/>
                         </StackPanel>
                         <DataGrid AutoGenerateColumns="False" Grid.Column="0"
-                                          EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
-                                          ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                          Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+                                  EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
+                                  ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
+                                  Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"

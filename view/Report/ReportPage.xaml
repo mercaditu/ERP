@@ -10,138 +10,59 @@
           lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="700"
-	Title="{lex:Loc Reports}">
-    <metro:MetroWindow.RightWindowCommands>
-        <metro:WindowCommands>
-            <Button Click="btnFilter_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" />
-                    <TextBlock Margin="4 0 0 0"
-                               VerticalAlignment="Center"
-                               Text="{lex:Loc Filter}" />
-                </StackPanel>
-            </Button>
-        </metro:WindowCommands>
-    </metro:MetroWindow.RightWindowCommands>
-
-    <metro:MetroWindow.Flyouts>
-        <metro:FlyoutsControl>
-            <metro:Flyout x:Name="flyFilter" Header="{lex:Loc Filter}" Position="Right" Background="WhiteSmoke"
-                          Width="{Binding ElementName=NavList, Path=ActualWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
-                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
-
-                        <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
-                        <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True"/>
-
-                        <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
-                        <Controls:SmartBox_Geography x:Name="grid_sbxGeography" />
-
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Margin="4,0">
-                                <Label Style="{StaticResource input_label}">
-                                    <TextBlock>
-                                            <Run Text="{lex:Loc Range}"/>
-                                            <Run Text="{lex:Loc StartDate}"/>
-                                    </TextBlock>
-                                </Label>
-                                <DatePicker x:Name="grid_dateStart" Width="124" 
-                                            SelectedDate="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            </StackPanel>
-                            <StackPanel Margin="2,0">
-                                <Label Style="{StaticResource input_label}">
-                                    <TextBlock>
-                                            <Run Text="{lex:Loc Range}"/>
-                                            <Run Text="{lex:Loc EndDate}"/>
-                                    </TextBlock>
-                                </Label>
-                                <DatePicker x:Name="grid_dateEnd" Width="124"
-                                            SelectedDate="{Binding ElementName=_ReportPage, Path=end_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            </StackPanel>
-                        </StackPanel>
-
-                        <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
-                        <TextBox Text="{Binding tbxCondition, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-
-                        <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
-                        <TextBox Text="{Binding tbxContract, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-
-                        <Rectangle Style="{StaticResource line_Bar}"/>
-
-                        <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
-
-                        <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
-                        <Controls:SmartBox_Item x:Name="grid_sbxItem" />
-
-                        <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
-                        <TextBox Text="{Binding tbxBrand, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-
-                        <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
-                        <TextBox Text="{Binding tbxTag, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-
-                        <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo"
-                                    Style="{DynamicResource MetroCircleButtonStyle}" Click="btnGridSearch"
-                                    VerticalAlignment="Center" Height="32" Width="32" BorderBrush="RoyalBlue"/>
-                    </StackPanel>
-                </StackPanel>
-            </metro:Flyout>
-        </metro:FlyoutsControl>
-    </metro:MetroWindow.Flyouts>    
+      d:DesignHeight="500" d:DesignWidth="700" Title="{lex:Loc Reports}" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <Frame Name="rptFrame" Grid.Column="1" Background="DimGray"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        
+        <Frame Name="rptFrame" Grid.Column="1" Grid.RowSpan="3" Background="DimGray"/>
 
-        <StackPanel Orientation="Horizontal" Background="WhiteSmoke" 
-                    Grid.Column="0" Height="32" VerticalAlignment="Top">
-            <Button FontFamily="/Cognitivo;component/Resources/#cognitivo" Click="btnFilter_Click" 
-                    FontSize="21" Content="" HorizontalAlignment="Left" Width="33"
-                    Style="{DynamicResource MetroCircleButtonStyle}"/>
-            <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Filter}" FontSize="16"/>
-        </StackPanel>
-        <ListBox Grid.Column="0" Margin="0,32,0,0" x:Name="NavList" Background="WhiteSmoke">
+        <ListBox Grid.Column="0" x:Name="NavList" Background="WhiteSmoke">
             <ListBoxItem IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Height="24" Source="/;component/Images/Menu/modSales.png" />
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="Sales" Selected="list_Selected">
+            <ListBoxItem Tag="Sales">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="SalesDetail" Selected="list_Selected">
+            <ListBoxItem Tag="SalesDetail">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="C"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesDetails}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="SalesBySalesman" Selected="list_Selected">
+            <ListBoxItem Tag="SalesBySalesman">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbySalesman}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="SalesByItem" Selected="list_Selected">
+            <ListBoxItem Tag="SalesByItem">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbyItem}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="PendingDocument" Selected="list_Selected">
+            <ListBoxItem Tag="PendingDocument">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc PendingDocuments}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="PaymentReceived" Selected="list_Selected">
+            <ListBoxItem Tag="PaymentReceived">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="$" HorizontalContentAlignment="Center"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc PaymentsRecieved}"/>
@@ -225,18 +146,79 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Catalog}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="HistoricStockLevels" Selected="list_Selected">
+            <ListBoxItem Tag="HistoricStockLevels">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc HistoricStockLevels}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem  Tag="HistoricStockValues" Selected="list_Selected">
+            <ListBoxItem  Tag="HistoricStockValues">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc HistoricStockValues}"/>
                 </StackPanel>
             </ListBoxItem>
         </ListBox>
+        
+        <GridSplitter Background="Gray" HorizontalAlignment="Stretch" Grid.Row="1"/>
+
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2">
+            <StackPanel HorizontalAlignment="Center">
+                <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+
+                <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
+                <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True"/>
+
+                <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
+                <Controls:SmartBox_Geography x:Name="grid_sbxGeography" />
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="4,0">
+                        <Label Style="{StaticResource input_label}">
+                            <TextBlock>
+                                            <Run Text="{lex:Loc Range}"/>
+                                            <Run Text="{lex:Loc StartDate}"/>
+                            </TextBlock>
+                        </Label>
+                        <DatePicker x:Name="grid_dateStart" Width="124" 
+                                            SelectedDate="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <StackPanel Margin="2,0">
+                        <Label Style="{StaticResource input_label}">
+                            <TextBlock>
+                                            <Run Text="{lex:Loc Range}"/>
+                                            <Run Text="{lex:Loc EndDate}"/>
+                            </TextBlock>
+                        </Label>
+                        <DatePicker x:Name="grid_dateEnd" Width="124"
+                                            SelectedDate="{Binding ElementName=_ReportPage, Path=end_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
+                <TextBox Text="{Binding tbxCondition, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+
+                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
+                <TextBox Text="{Binding tbxContract, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+
+                <Rectangle Style="{StaticResource line_Bar}"/>
+
+                <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+
+                <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
+                <Controls:SmartBox_Item x:Name="grid_sbxItem" />
+
+                <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
+                <TextBox Text="{Binding tbxBrand, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+
+                <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
+                <TextBox Text="{Binding tbxTag, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" Margin="0,0,0,-24" Background="#FF00B2FF"
+                                    Style="{DynamicResource MetroCircleButtonStyle}" Click="btnGridSearch" FontSize="24" Foreground="White"
+                                    VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="45" Width="45" BorderThickness="4" BorderBrush="White"/>
+
     </Grid>
 </metro:MetroWindow>

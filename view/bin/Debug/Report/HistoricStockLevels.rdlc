@@ -40,10 +40,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.98425in</Width>
+                  <Width>6.72904in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.98425in</Width>
+                  <Width>1.73946in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -59,7 +59,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>item name</Value>
+                                  <Value>Producto</Value>
                                   <Style>
                                     <FontFamily>arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -68,7 +68,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -104,7 +104,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Stock</Value>
+                                  <Value>Valor</Value>
                                   <Style>
                                     <FontFamily>arial</FontFamily>
                                     <FontSize>8pt</FontSize>
@@ -113,7 +113,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -157,11 +157,12 @@
                                   <Value>=Fields!item_name.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -380,7 +381,7 @@
             <Top>0.0511in</Top>
             <Left>0.13905in</Left>
             <Height>0.63622in</Height>
-            <Width>1.9685in</Width>
+            <Width>8.4685in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -409,7 +410,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>existencias de productos</Value>
+                      <Value>Existencia de Productos [Historico]</Value>
                       <Style>
                         <FontSize>18pt</FontSize>
                       </Style>
@@ -422,7 +423,7 @@
               <Top>0.81786cm</Top>
               <Left>0.35319cm</Left>
               <Height>0.90427cm</Height>
-              <Width>8.90291cm</Width>
+              <Width>10.02739cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>

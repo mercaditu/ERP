@@ -73,6 +73,14 @@ namespace entity
             Rejected = 4
         }
 
+        public enum Transfer
+        {
+            Pending = 1,
+            Approved = 2,
+            Annulled = 3,
+            Transit = 4
+        }
+
         public enum Production
         {
             Pending = 1,

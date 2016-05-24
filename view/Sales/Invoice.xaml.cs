@@ -58,7 +58,7 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        private DateTime _end_Range = DateTime.Now;
+        private DateTime _end_Range = DateTime.Now.AddDays(+1);
 
         /// <summary>
         /// Condition KeyWord Array.

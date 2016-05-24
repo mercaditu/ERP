@@ -277,8 +277,8 @@ namespace Cognitivo.Accounting
             entity.Brillo.Seed_Data.ChartOfAccounts Charts = new entity.Brillo.Seed_Data.ChartOfAccounts();
             Charts.Paraguay((bool)chbxDelete.IsChecked);
 
-            accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
-
+            //accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
+            AccountingChartDB = new entity.AccountingChartDB();
             AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
 

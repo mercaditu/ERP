@@ -77,11 +77,7 @@
             <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}"  
                                         VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
                                         ScrollViewer.CanContentScroll="True"   >
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="{x:Type TreeViewItem}" >
-                        <Setter Property="IsExpanded" Value="True"/>
-                    </Style>
-                </TreeView.ItemContainerStyle>
+            
 
                 <TreeView.ItemsPanel>
                     <ItemsPanelTemplate >
@@ -321,8 +317,8 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-        
-        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top"
+
+        <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" DataContext="{Binding SelectedItem_, ElementName=treeProject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 			btnNew_Click="toolBar_btnNew_Click"
 			btnEdit_Click="toolBar_btnEdit_Click"
 			btnDelete_Click="toolBar_btnDelete_Click"

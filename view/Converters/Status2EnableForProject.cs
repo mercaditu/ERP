@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Cognitivo.Converters
 {
-    public class Status2EnableForProject : IValueConverter
+    public class Status2Enable : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -14,7 +14,7 @@ namespace Cognitivo.Converters
 
                 entity.Status.Project status = (entity.Status.Project)value;
 
-                if (status == entity.Status.Project.Approved)
+                if (status == entity.Status.Project.Management_Approved)
                 {
                     return true;
                 }

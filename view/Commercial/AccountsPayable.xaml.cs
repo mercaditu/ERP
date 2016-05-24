@@ -72,7 +72,10 @@ namespace Cognitivo.Commercial
         }
         private void slider_ValueChanged(object sender, EventArgs e)
         {
-            AccountDate = AccountDate.AddDays(slider.Value - AccountDate.Day);
+            if (AccountDate.Date != DateTime.Now.Date)
+            {
+                AccountDate = AccountDate.AddDays(slider.Value - AccountDate.Day);
+            }
             load_Schedual();
         }
 

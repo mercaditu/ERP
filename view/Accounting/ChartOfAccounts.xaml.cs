@@ -177,8 +177,7 @@ namespace Cognitivo.Accounting
                 accounting_chart.child.Add(n_accounting_chart);
                 AccountingChartDB.accounting_chart.Add(n_accounting_chart);
                 treeProject.SelectedItem_ = n_accounting_chart;
-                accounting_chartViewSource.View.Refresh();
-                accounting_chartViewSource.View.MoveCurrentTo(n_accounting_chart);
+              
 
             }
             else
@@ -191,8 +190,7 @@ namespace Cognitivo.Accounting
                 n_accounting_chart.State = EntityState.Added;
                 AccountingChartDB.accounting_chart.Add(n_accounting_chart);
                 treeProject.SelectedItem_ = n_accounting_chart;
-                accounting_chartViewSource.View.Refresh();
-                accounting_chartViewSource.View.MoveCurrentTo(n_accounting_chart);
+              
             }
           filter_chart();
            
@@ -206,8 +204,7 @@ namespace Cognitivo.Accounting
             accounting_chart.State = EntityState.Modified;
             accounting_chart.IsSelected = true;
             filter_chart();
-            accounting_chartViewSource.View.Refresh();
-            accounting_chartViewSource.View.MoveCurrentToLast();
+        
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -227,17 +224,18 @@ namespace Cognitivo.Accounting
                 };
             }
             filter_chart();
-            accounting_chartViewSource.View.MoveCurrentToLast();
+       
            
         }
 
         private void toolBar_btnSave_Click(object sender)
         {
             accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
-            accounting_chart.State = System.Data.Entity.EntityState.Unchanged;
+        
 
             if (accounting_chart != null)
             {
+                accounting_chart.State = System.Data.Entity.EntityState.Unchanged;
                 accounting_chart.chart_type = (accounting_chart.ChartType)cbxChartType.SelectedItem;
             }
 
@@ -254,7 +252,7 @@ namespace Cognitivo.Accounting
                 {
                     AccountingChartDB.SaveChanges();
                     toolBar.msgSaved();
-                    accounting_chartViewSource.View.MoveCurrentTo(accounting_chart);
+                  
                 }
                 filter_chart();
             }

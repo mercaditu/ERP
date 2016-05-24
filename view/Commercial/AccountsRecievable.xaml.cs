@@ -60,8 +60,12 @@ namespace Cognitivo.Commercial
         }
         private void slider_ValueChanged(object sender, EventArgs e)
         {
-            AccountDate = AccountDate.AddDays(slider.Value - AccountDate.Day);
-            load_Schedual();
+            if (AccountDate.Date !=DateTime.Now.Date)
+            {
+                AccountDate = AccountDate.AddDays(slider.Value - AccountDate.Day);
+                load_Schedual();
+            }
+           
         }
 
         private void RRMonth_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

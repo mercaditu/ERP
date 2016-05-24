@@ -19,6 +19,7 @@
     <Page.Resources>
         <loc:LevelToMarginConverter x:Key="ConvertToThickness" LeftMargin="12" OtherMargin="4" />
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+         <converter:Status2EnableForProject x:Key="Status2Enable"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
@@ -184,10 +185,10 @@
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnSearch_Click="toolBar_btnSearch_Click" appName="Project"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center">
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center"  DataContext="{Binding SelectedItem_, ElementName=treeProject}">
             <Label Content="{lex:Loc Customer}" VerticalAlignment="Center"/>
-            <cntrl:toolIcon x:Name="btnapprove" Click="Button_Click" imgSource="j" icoName="{lex:Loc Approve}" VerticalAlignment="Center"/>
+            <cntrl:toolIcon x:Name="btnapprove" Click="Button_Click" imgSource="j" icoName="{lex:Loc Approve}" VerticalAlignment="Center" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource Status2Enable}}"/>
             <cntrl:toolIcon x:Name="btnanull" Click="Button_Click_1" imgSource="k" icoName="Rechazar" VerticalAlignment="Center"/>
         </StackPanel>
         

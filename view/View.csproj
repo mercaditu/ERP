@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V429\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V431\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>433</ApplicationRevision>
+    <ApplicationRevision>435</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -504,11 +504,20 @@
     <Compile Include="Report\ReportSalesbyTag.xaml.cs">
       <DependentUpon>ReportSalesbyTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\Sales\PaymentReceived_Report.xaml.cs">
+      <DependentUpon>PaymentReceived_Report.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Report\Sales\SalesBySalesman_Report.xaml.cs">
+      <DependentUpon>SalesBySalesman_Report.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Report\Sales\SalesDetail_Report.xaml.cs">
       <DependentUpon>SalesDetail_Report.xaml</DependentUpon>
     </Compile>
     <Compile Include="Report\Sales\SalesByItem_Report.xaml.cs">
       <DependentUpon>SalesByItem_Report.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Report\Sales\PendingDocument_Report.xaml.cs">
+      <DependentUpon>PendingDocument_Report.xaml</DependentUpon>
     </Compile>
     <Compile Include="Report\Sales\Sales_Report.xaml.cs">
       <DependentUpon>Sales_Report.xaml</DependentUpon>
@@ -886,6 +895,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="bin\Debug\Report\SalesInvoiceReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Report\SalesInvoicebySalesMan.rdlc">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
@@ -1501,11 +1514,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Report\Sales\PaymentReceived_Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Report\Sales\SalesBySalesman_Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Report\Sales\SalesDetail_Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Report\Sales\SalesByItem_Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Report\Sales\PendingDocument_Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

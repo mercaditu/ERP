@@ -123,7 +123,7 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesDetails}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <ListBoxItem Tag="SalesBySalesman" Selected="list_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbySalesman}"/>
@@ -135,13 +135,13 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbyItem}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <ListBoxItem Tag="PendingDocument" Selected="list_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc PendingDocuments}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <ListBoxItem Tag="PaymentReceived" Selected="list_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="$" HorizontalContentAlignment="Center"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc PaymentsRecieved}"/>

@@ -158,15 +158,15 @@
                         <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                    RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0">
+                                    RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Label Content="">
+                                            <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" >
                                                 <Label.Style>
-                                                    <Style BasedOn="{StaticResource ico_Label}">
-                                                        <Setter Value="{Binding item_transfer.status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                                                    <Style TargetType="{x:Type Label}">
+                                                        <Setter Property="Foreground" Value="{Binding item_transfer.status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
                                                     </Style>
                                                 </Label.Style>
                                             </Label>
@@ -201,7 +201,7 @@
                             <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}"/>
                             <ToggleButton Content="Check All" Margin="8" Click="btnCheckDestination_Click"/>
                         </StackPanel>
-                        <DataGrid AutoGenerateColumns="False" Grid.Column="0" 
+                        <DataGrid AutoGenerateColumns="False" Grid.Column="0"
                                           EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
                                           ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
                                           Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
@@ -209,14 +209,21 @@
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" >
+                                                <Label.Style>
+                                                    <Style TargetType="{x:Type Label}">
+                                                        <Setter Property="Foreground" Value="{Binding item_transfer.status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                                                    </Style>
+                                                </Label.Style>
+                                            </Label>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                    Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="Auto">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Foreground" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
+                                                    Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

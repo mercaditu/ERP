@@ -17,6 +17,10 @@ namespace Cognitivo.Converters
             {
                 return new SolidColorBrush(Colors.Crimson);
             }
+            else if (value != null && value.ToString() == entity.Status.Transfer.Transit.ToString())
+            {
+                return new SolidColorBrush(Colors.Gold);
+            }
             else
             {
                 return new SolidColorBrush(Colors.Gainsboro);

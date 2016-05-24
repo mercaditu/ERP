@@ -215,7 +215,7 @@
                                             <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" >
                                                 <Label.Style>
                                                     <Style TargetType="{x:Type Label}">
-                                                        <Setter Property="Foreground" Value="{Binding item_transfer.status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                                                        <Setter Property="Foreground" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
                                                     </Style>
                                                 </Label.Style>
                                             </Label>

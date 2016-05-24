@@ -257,7 +257,7 @@ namespace entity.Brillo.Seed_Data
                 db.accounting_chart.Add(CreateChart("5.10.04", "COSTO DE VENTAS BAJO OTROS REGÍMENES ESPECIALES", db.accounting_chart.Local.Where(x => x.code == "5.10").FirstOrDefault()));
                 db.accounting_chart.Add(CreateChart("5.11", "COSTO DE VENTAS EXENTAS DEL IVA", db.accounting_chart.Local.Where(x => x.code == "5").FirstOrDefault()));
 
-                db.SaveChangesAsync();
+                db.SaveChanges();
             }											
         }
 

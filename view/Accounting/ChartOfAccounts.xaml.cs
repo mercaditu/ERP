@@ -90,48 +90,8 @@ namespace Cognitivo.Accounting
             treeProject.SelectedItem_ = accounting_chartViewSource.View.CurrentItem as accounting_chart;
         }
 
-        //public void filter_Parentchart()
-        //{
-        //    if (accounting_chartViewSource.View.CurrentItem != null)
-        //    {
-        //        if (treeProject.SelectedItem_ != null)
-        //        {
-
-
-
-        //            int id_chart = ((accounting_chart)treeProject.SelectedItem_).id_chart;
-
-        //            if (accounting_chartParentViewSource != null)
-        //            {
-        //                if (accounting_chartParentViewSource.View != null)
-        //                {
-        //                    accounting_chartParentViewSource.View.Filter = i =>
-        //                    {
-        //                        accounting_chart accounting_chart = i as accounting_chart;
-        //                        if (accounting_chart.id_chart != id_chart)
-        //                        {
-        //                            return true;
-        //                        }
-        //                        else
-        //                        {
-        //                            return false;
-        //                        }
-        //                    };
-        //                }
-
-
-        //            }
-        //            cbxParent.SelectedItem = ((accounting_chart)accounting_chartViewSource.View.CurrentItem).parent;
-        //        }
-        //    }
-        //}
         public void filter_chart()
         {
-
-
-
-
-
             if (accounting_chartViewSource != null)
             {
                 if (accounting_chartViewSource.View != null)
@@ -149,12 +109,7 @@ namespace Cognitivo.Accounting
                         }
                     };
                 }
-
-
             }
-
-
-
         }
         #region toolBar Events
 
@@ -292,50 +247,6 @@ namespace Cognitivo.Accounting
         }
         #endregion
 
-        //private void toolBar_btnSearch_Click(object sender, string query)
-        //{
-        //    try
-        //    {
-        //        if (!string.IsNullOrEmpty(query))
-        //        {
-        //            accounting_chartViewSource.View.Filter = i =>
-        //            {
-        //                accounting_chart accounting_chart = i as accounting_chart;
-        //                if (accounting_chart.name.ToLower().Contains(query.ToLower())
-        //                    || accounting_chart.code.ToLower().Contains(query.ToLower())
-        //                    )
-        //                {
-        //                    return true;
-        //                }
-        //                else
-        //                {
-        //                    return false;
-        //                }
-        //            };
-        //        }
-        //        else
-        //        {
-        //            accounting_chartViewSource.View.Filter = null;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        toolBar.msgError(ex);
-        //    }
-        //}
-
-        //private void chartdatagrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    filter_Parentchart();
-        //}
-
-        //private void btnClearParent_Click(object sender, RoutedEventArgs e)
-        //{
-        //    accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
-        //    accounting_chart.parent = null;
-        //    cbxParent.SelectedItem = null;
-        //}
-
         private void rbtnCash_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton rd = (RadioButton)sender;
@@ -359,8 +270,6 @@ namespace Cognitivo.Accounting
                     rd.IsChecked = true;
                 }
             }
-
-
         }
 
         private void btnParaguayChart_Click(object sender, RoutedEventArgs e)
@@ -369,16 +278,12 @@ namespace Cognitivo.Accounting
             Charts.Paraguay((bool)chbxDelete.IsChecked);
 
             accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
-         //   accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
 
             AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
-           // accounting_chartParentViewSource.Source = AccountingChartDB.accounting_chart.Local;
 
             accounting_chartViewSource.View.Refresh();
             filter_chart();
         }
-
-       
     }
 }

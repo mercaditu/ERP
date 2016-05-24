@@ -8,6 +8,7 @@
       xmlns:entity="clr-namespace:entity;assembly=entity" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:cls ="clr-namespace:Cognitivo.Class"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       mc:Ignorable="d" 
@@ -22,13 +23,12 @@
                         Executed="DeleteCommandBinding_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:Status2ColorConverter x:Key="Status2ColorConverter" />
+        <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferitem_transfer_detailViewSource" Source="{Binding item_transfer_detail, Source={StaticResource item_transferViewSource}}"/>
         <CollectionViewSource x:Key="branch_destViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="branch_originViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
-        <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
-        <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_product}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="transfercostViewSource" d:DesignSource="{d:DesignInstance {x:Type cls:transfercost}, CreateList=True}"/>
     </Page.Resources>
 
@@ -158,8 +158,21 @@
                         <DataGrid x:Name="item_transfer_detailDataGrid" Grid.Column="0"
                                     AutoGenerateColumns="False" EnableRowVirtualization="True" CanUserAddRows="False"
                                     ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
-                                    RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,32,0,0">
+                                    RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0">
                             <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="">
+                                                <Label.Style>
+                                                    <Style BasedOn="{StaticResource ico_Label}">
+                                                        <Setter Value="{Binding item_transfer.status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                                                    </Style>
+                                                </Label.Style>
+                                            </Label>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Item}" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
@@ -194,14 +207,20 @@
                                           Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                                                EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
+                                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                            Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="Auto"/>
+                                                    Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="Auto">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Foreground" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                                            Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
+                                                    Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                            Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Width="SizeToHeader"/>
+                                                    Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Width="SizeToHeader"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

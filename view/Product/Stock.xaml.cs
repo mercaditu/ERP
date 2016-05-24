@@ -144,9 +144,6 @@ namespace Cognitivo.Product
                 int id_location = _item_movement.id_location;
                 using (db db = new db())
                 {
-
-
-
                     item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
                     item_movementViewSource.Source = await db.item_movement.Where(x => x.id_company == entity.CurrentSession.Id_Company
                                                         && x.id_item_product == id_item_product

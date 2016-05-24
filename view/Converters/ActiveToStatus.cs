@@ -14,7 +14,6 @@ namespace Cognitivo.Converters
                 return entity.Status.Documents_General.Approved.ToString();
             else
                 return entity.Status.Documents_General.Annulled.ToString();
-            //throw new NotImplementedException();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -68,7 +68,7 @@
                                 <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Debit}" Width="128"/>
                                 <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128"/>
                             </DataGrid.Columns>
-                                                   </DataGrid>
+                        </DataGrid>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
             </DataGrid>

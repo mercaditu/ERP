@@ -148,9 +148,8 @@ namespace entity
 
             foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.status != Status.Transfer.Approved))
             {
-                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected))
+                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
                 {
-
                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
                     app_location app_location_dest = base.app_location.Where(x => x.id_branch == dest && x.is_default).FirstOrDefault();
 
@@ -214,6 +213,7 @@ namespace entity
                                             );
                             base.item_movement.Add(item_movement_dest);
                         }
+                        item_transfer_detail.status = Status.Documents_General.Approved;
                         item_transfer.status = Status.Transfer.Approved;
                         item_transfer.RaisePropertyChanged("status");
                     }

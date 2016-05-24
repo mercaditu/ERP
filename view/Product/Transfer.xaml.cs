@@ -170,9 +170,7 @@ namespace Cognitivo.Product
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
             ProductTransferDB.ApproveDestination( (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
             
-          
-                toolBar.msgSaved();
-           
+            toolBar.msgSaved();
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)

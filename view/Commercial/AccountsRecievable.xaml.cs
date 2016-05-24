@@ -28,21 +28,7 @@ namespace Cognitivo.Commercial
         CollectionViewSource payment_schedualViewSource, contactViewSource;
         PaymentDB PaymentDB = new entity.PaymentDB();
 
-        public DateTime AccountDate
-        {
-            get { return _AccountDate; }
-            set
-            {
-                _AccountDate = value;
-                RaisePropertyChanged("AccountDate");
-
-                slider.Maximum = DateTime.DaysInMonth(_AccountDate.Year, _AccountDate.Month);
-                slider.Value = AccountDate.Day;
-                load_Schedual();
-
-            }
-        }
-        DateTime _AccountDate = DateTime.Now;
+     
 
         public AccountsRecievable()
         {
@@ -58,45 +44,7 @@ namespace Cognitivo.Commercial
         {
 
         }
-        private void slider_ValueChanged(object sender, EventArgs e)
-        {
-            if (AccountDate.Date !=DateTime.Now.Date)
-            {
-                AccountDate = AccountDate.AddDays(slider.Value - AccountDate.Day);
-                load_Schedual();
-            }
-           
-        }
-
-        private void RRMonth_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddMonths(-1);
-            load_Schedual();
-        }
-
-        private void RRDay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddDays(-1);
-            load_Schedual();
-        }
-
-        private void FFDay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddDays(1);
-            load_Schedual();
-        }
-
-        private void FFMonth_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddMonths(1);
-            load_Schedual();
-        }
-
-        private void Today_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = DateTime.Now;
-            load_Schedual();
-        }
+     
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -150,7 +98,7 @@ namespace Cognitivo.Commercial
             payment_schedualViewSource.Source = await PaymentDB.payment_schedual
                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0)
-                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0 && x.expire_date<=AccountDate)
+                        && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
                         .OrderBy(x => x.expire_date)
                         .ToListAsync();
         }

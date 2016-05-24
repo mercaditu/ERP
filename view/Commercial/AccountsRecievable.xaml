@@ -98,7 +98,7 @@
                 <!--<Label Content="-" Style="{StaticResource generic_Label}"/>
                 <Label Content="{Binding EndDate, ElementName=_AccountsRecievable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="D" Style="{StaticResource generic_Label}"/>-->
             </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Label Content="&#xE893;" Style="{StaticResource ico_Label}" Cursor="Hand"
 					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="RRMonth_MouseDown"/>
                 <Label Content="&#xE895;" Style="{StaticResource ico_Label}" Cursor="Hand"
@@ -112,7 +112,7 @@
 					HorizontalContentAlignment="Center" VerticalAlignment="Center"  MouseDown="FFDay_MouseDown"/>
                 <Label Content="&#xE892;" Style="{StaticResource ico_Label}" Cursor="Hand"  MouseDown="FFMonth_MouseDown"
 					HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
-            </StackPanel>
+            </StackPanel>-->
         </Grid>
     </Grid>
 </Page>

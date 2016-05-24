@@ -35,21 +35,7 @@ namespace Cognitivo.Commercial
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
         cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
 
-        public DateTime AccountDate
-        {
-            get { return _AccountDate; }
-            set
-            {
-                _AccountDate = value;
-                RaisePropertyChanged("AccountDate");
-
-                slider.Maximum = DateTime.DaysInMonth(_AccountDate.Year, _AccountDate.Month);
-                slider.Value = AccountDate.Day;
-                load_Schedual();
-
-            }
-        }
-        DateTime _AccountDate = DateTime.Now;
+     
 
         public AccountsPayable()
         {
@@ -70,44 +56,7 @@ namespace Cognitivo.Commercial
         {
 
         }
-        private void slider_ValueChanged(object sender, EventArgs e)
-        {
-            if (AccountDate.Date != DateTime.Now.Date)
-            {
-                AccountDate = AccountDate.AddDays(slider.Value - AccountDate.Day);
-            }
-            load_Schedual();
-        }
 
-        private void RRMonth_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddMonths(-1);
-            load_Schedual();
-        }
-
-        private void RRDay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddDays(-1);
-            load_Schedual();
-        }
-
-        private void FFDay_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddDays(1);
-            load_Schedual();
-        }
-
-        private void FFMonth_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = AccountDate.AddMonths(1);
-            load_Schedual();
-        }
-
-        private void Today_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            AccountDate = DateTime.Now;
-            load_Schedual();
-        }
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
@@ -158,7 +107,7 @@ namespace Cognitivo.Commercial
             payment_schedualViewSource.Source = await PaymentDB.payment_schedual
                                                                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
                                                                        && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) 
-                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0 && x.expire_date<=AccountDate).OrderBy(x => x.expire_date)
+                                                                       && (x.credit -( x.child.Count()>0 ? x.child.Sum(y=>y.debit):0)) > 0).OrderBy(x => x.expire_date)
                                                                     .ToListAsync();
         }
 

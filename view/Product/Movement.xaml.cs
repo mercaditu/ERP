@@ -31,7 +31,7 @@ namespace Cognitivo.Product
                 item_transfer.State = EntityState.Added;
                 item_transfer.transfer_type = entity.item_transfer.Transfer_type.movemnent;
                 item_transfer.IsSelected = true;
-                item_transfer.status = Status.Documents_General.Pending;
+                item_transfer.status = Status.Transfer.Pending;
                 dbContext.Entry(item_transfer).State = EntityState.Added;
 
                 item_transferViewSource.View.MoveCurrentToLast();
@@ -158,7 +158,7 @@ namespace Cognitivo.Product
             }
             entity.Properties.Settings setting = new entity.Properties.Settings();
             item_transfer.user_given = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-            item_transfer.status = Status.Documents_General.Approved;
+            item_transfer.status = Status.Transfer.Approved;
             dbContext.SaveChanges();
             ProductMovementDB ProductMovementDB = new ProductMovementDB();
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
@@ -198,7 +198,7 @@ namespace Cognitivo.Product
                 entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
                 Document.Document_PrintItemRequest(item_transfer.app_document_range.id_document, item_transfer);
 
-                item_transfer.status = Status.Documents_General.Approved;
+                item_transfer.status = Status.Transfer.Approved;
                 ProductMovementDB.SaveChanges();
             }
         }

@@ -25,7 +25,7 @@ namespace entity
             item_transfer_detail = new List<item_transfer_detail>();
             trans_date = DateTime.Now;
             timestamp = DateTime.Now;
-            status = Status.Documents_General.Pending;
+            status = Status.Transfer.Pending;
         }
 
         [Key]

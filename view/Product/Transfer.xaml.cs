@@ -35,7 +35,7 @@ namespace Cognitivo.Product
             item_transfer.State = System.Data.Entity.EntityState.Added;
             item_transfer.transfer_type = entity.item_transfer.Transfer_type.transfer;
             item_transfer.IsSelected = true;
-            item_transfer.status = Status.Documents_General.Pending;
+            item_transfer.status = Status.Transfer.Pending;
             item_transfer.app_branch_origin = ProductTransferDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
             ProductTransferDB.Entry(item_transfer).State = EntityState.Added;
 
@@ -155,6 +155,7 @@ namespace Cognitivo.Product
                 ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
 
                     toolBar.msgSaved();
+                    item_transferViewSource.View.Refresh();
                  
             }
             catch (Exception ex)

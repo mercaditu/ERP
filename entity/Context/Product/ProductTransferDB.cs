@@ -65,7 +65,7 @@ namespace entity
 
             foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
             {
-                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status != Status.Documents_General.Approved))
+                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
                 {
                     if (item_transfer_detail.item_product != null)
                     {
@@ -120,7 +120,9 @@ namespace entity
                             base.item_movement.AddRange(item_movement_originList);
                         }
 
-                        item_transfer_detail.status = Status.Documents_General.Approved;
+                        //transit
+                        item_transfer.status = Status.Transfer.Transit;
+                        item_transfer.RaisePropertyChanged("status");
                     }
                 }
 
@@ -144,7 +146,7 @@ namespace entity
         {
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
-            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
+            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected && x.status != Status.Transfer.Approved))
             {
                 foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.IsSelected))
                 {
@@ -212,7 +214,8 @@ namespace entity
                                             );
                             base.item_movement.Add(item_movement_dest);
                         }
-                        item_transfer.status = Status.Documents_General.Approved;
+                        item_transfer.status = Status.Transfer.Approved;
+                        item_transfer.RaisePropertyChanged("status");
                     }
                 }
 

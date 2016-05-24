@@ -66,7 +66,7 @@ namespace entity
                 item_transfer item_transfer = new item_transfer();
 
 
-                item_transfer.status = Status.Documents_General.Pending;
+                item_transfer.status = Status.Transfer.Pending;
 
 
                 entity.Properties.Settings setting = new Properties.Settings();
@@ -116,7 +116,7 @@ namespace entity
                         {
                             ProductTransferDB ProductTransferDB = new entity.ProductTransferDB();
                             item_transfer _item_transfer = new entity.item_transfer();
-                            _item_transfer.status = Status.Documents_General.Pending;
+                            _item_transfer.status = Status.Transfer.Pending;
                             _item_transfer.IsSelected = true;
 
                             _item_transfer.State = EntityState.Added;

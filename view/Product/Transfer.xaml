@@ -67,10 +67,10 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="280"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="227"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+            <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="68,0" Width="264">
                 <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
                 <DatePicker Style="{StaticResource input_datepicker }"
                             SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
@@ -87,16 +87,23 @@
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
                              Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
-                <ComboBox x:Name="id_branch_originComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_branch" Grid.Row="2"  SelectedItem="{Binding app_branch_origin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
+                        <ComboBox x:Name="id_branch_originComboBox" Grid.Column="1" DisplayMemberPath="name" Width="111"
+                          SelectedValuePath="id_branch" SelectedItem="{Binding app_branch_origin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                           ItemsSource="{Binding Source={StaticResource branch_originViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
-                <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
-                <ComboBox x:Name="id_branch_destinComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_branch" Grid.Row="2" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
+                    </StackPanel>
+                    <Label Content="" Style="{StaticResource ico_Label}" VerticalAlignment="Center"/>
+                    <StackPanel>
+                        <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
+                        <ComboBox x:Name="id_branch_destinComboBox" Grid.Column="1" DisplayMemberPath="name" Width="111"
+                          SelectedValuePath="id_branch" SelectedItem="{Binding app_branch_destination,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                           ItemsSource="{Binding Source={StaticResource branch_destViewSource}}" 
                           Style="{StaticResource input_combobox}"/>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
@@ -171,41 +178,42 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Destination}">
-                    <StackPanel>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel>
-                                <Grid HorizontalAlignment="Right" Width="256" 
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="1"
                                       DataContext="{Binding Source={StaticResource item_transferViewSource}}" >
-                                    <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}"/>
-                                </Grid>
-                                <DataGrid AutoGenerateColumns="False" Grid.ColumnSpan="2" 
+                            <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}"/>
+                            <ToggleButton Content="Check All" Margin="8" Click="btnCheckDestination_Click"/>
+                        </StackPanel>
+                        <DataGrid AutoGenerateColumns="False" Grid.Column="0" 
                                           EnableRowVirtualization="True" CanUserDeleteRows="False" CanUserAddRows="False"
                                           ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" 
                                           Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
-                                    <DataGrid.Columns>
-                                        <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                                 EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-                                        <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                             Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="Auto"/>
-                                        <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                             Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
-                                        <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                             Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Width="SizeToHeader"/>
-                                        <DataGridTemplateColumn Width="Auto" Header="">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button Command="customcmd:CustomCommands.Delete"
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete"
                                                     Style="{StaticResource btnDeleteChildStyle}"
                                                     CommandParameter="{Binding}"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Cost}">
                     <StackPanel>

@@ -42,7 +42,22 @@ namespace entity
         public bool HasErrors { get; set; }
 
         [NotMapped]
-        public bool IsSelected { get; set; }
+        public bool IsSelected
+        {
+            get
+            {
+                return _IsSelected;
+            }
+            set
+            {
+                if (value != _IsSelected)
+                {
+                    _IsSelected = value;
+                    RaisePropertyChanged("IsSelected");
+                }
+            }
+        }
+        private bool _IsSelected;
 
         [NotMapped]
         public System.Data.Entity.EntityState State

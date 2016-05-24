@@ -599,7 +599,8 @@
                 + "R.U.C.   :" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
-                + "Apertura : " + OpenDate + "    Cierre: " + CloseDate
+                + "Apertura : " + OpenDate + "\n"
+                + "Cierre   : " + CloseDate
                 + "\n"
                 + "--------------------------------" + "\n"
                 + "Hora   Factura      / Valor    Moneda" + "\n"
@@ -609,11 +610,11 @@
 
             foreach (app_account_detail detail in app_account_session.app_account_detail.GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
             {
-                Detail += "Moneda : " + detail.app_currencyfx.app_currency.name;
+                Detail += "Moneda : " + detail.app_currencyfx.app_currency.name + "\n";
 
                 if (detail.tran_type == app_account_detail.tran_types.Open)
                 {
-                    Detail += "\n Balance de Apertura : " + Math.Round(detail.credit, 2);
+                    Detail += "Balance de Apertura : " + Math.Round(detail.credit, 2) + "\n";
 
                 }
                 foreach (app_account_detail d in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx).ToList())
@@ -656,10 +657,6 @@
                     }
 
                     decimal? value = d.credit - d.debit;
-
-                    //Detail = Detail
-                    //    + "\nFactura: " + InvoiceTime + " " + InvoiceNumber + "\n"
-                    //    + value.ToString() + "\t" + currency ;
                 }
 
                 var listvat = app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Transaction && x.id_currencyfx == detail.id_currencyfx)
@@ -672,17 +669,17 @@
                          id_payment_type = g.Key.id_payment_type,
                          value = g.Sum(a => a.credit)
                      }).ToList().OrderBy(x => x.id_currencyfx);
-                Detail += "\n Total de Ventas Neto :" + Math.Round(listvat.Sum(x => x.value), 2) + detail.app_currencyfx.app_currency.name + "\n";
+                Detail += "Total de Ventas Neto :" + Math.Round(listvat.Sum(x => x.value), 2) + "\n";
                 
                 foreach (dynamic item in listvat)
                 {
-                    Detail += item.paymentname + "\t" + Math.Round(item.value, 2) + detail.app_currencyfx.app_currency.name + "\n";
+                    Detail += item.paymentname + "\t" + Math.Round(item.value, 2) + "\n";
 
                 }
 
                 foreach (app_account_detail account_detail in app_account_session.app_account_detail.Where(x => x.tran_type == app_account_detail.tran_types.Close && x.id_currencyfx == detail.id_currencyfx).GroupBy(x => x.id_currencyfx).Select(x => x.FirstOrDefault()).ToList())
                 {
-                    Detail += "\n Balance de Cierre : " + Math.Round(account_detail.debit, 2);
+                    Detail += "Balance de Cierre : " + Math.Round(account_detail.debit, 2);
                     Detail += "\n--------------------------------" + "\n";
                 }
 
@@ -717,7 +714,7 @@
 
                 Detail += "Total de Ventas Neto :" + Math.Round(amount, 2) + "\n";
             }
-
+            Footer += "Cajero/a : " + UserName + "/n";
             Footer += "--------------------------------" + "\n";
 
             string Text = Header + Detail + Footer;

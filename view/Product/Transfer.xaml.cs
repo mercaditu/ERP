@@ -12,6 +12,7 @@ using System.Data;
 using System.Data.Entity.Validation;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
 
 namespace Cognitivo.Product
 {
@@ -219,7 +220,6 @@ namespace Cognitivo.Product
         {
             try
             {
-
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -233,6 +233,27 @@ namespace Cognitivo.Product
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
+            }
+        }
+
+        private void btnCheckDestination_Click(object sender, RoutedEventArgs e)
+        {
+            item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+            ToggleButton button = sender as ToggleButton;
+
+            if (item_transfer != null && button != null)
+            {
+                foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail)
+                {
+                    if ((bool)button.IsChecked)
+                    {
+                        item_transfer_detail.IsSelected = true;
+                    }
+                    else
+                    {
+                        item_transfer_detail.IsSelected = false;
+                    }
+                }
             }
         }
     }

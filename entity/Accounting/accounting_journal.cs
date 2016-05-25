@@ -74,7 +74,7 @@
                 {
                     total += detail.debit;
                 }
-                return total; 
+                return Math.Round(total,2); 
             }
             set
             {
@@ -97,7 +97,7 @@
                 {
                     total += detail.credit;
                 }
-                return total; 
+                return Math.Round(total,2); 
             }
             set
             {

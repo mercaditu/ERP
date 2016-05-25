@@ -144,7 +144,7 @@ namespace entity
                     }
                     else
                     {
-                        if (item_inventory_detail.value_counted != 0)
+                        if (item_inventory_detail.value_counted != 0 || item_inventory_detail.IsSelected)
                         {
 
 

@@ -18,7 +18,6 @@ namespace entity
             return base.SaveChangesAsync();
         }
 
-
         private void validate_Cycle()
         {
             foreach (accounting_chart accounting_chart in base.accounting_chart.Local)

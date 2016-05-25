@@ -54,6 +54,9 @@
         <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="hr_time_coefficientViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_time_coefficient}, CreateList=True}"/>
+        <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
     </Page.Resources>
     <Grid Background="White" DataContext="{StaticResource production_executionViewSource}">
         <Grid.ColumnDefinitions>
@@ -233,7 +236,27 @@
                             <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                         </Grid>
                         <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailRawViewSource}" IsEnabled="{Binding SelectedItem.item, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
+                            <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
+                                                      EnableRowVirtualization="True"  IsReadOnly="True" CanUserAddRows="False"
+                                                      ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
+                                                      RowDetailsVisibilityMode="VisibleWhenSelected">
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
+									                                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" 
+                                                                            DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                                                                        Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                                        Width="auto"/>
+                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+									                                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
+									                                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                                            Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
                             <StackPanel Orientation="Horizontal" Margin="0,4">
+                              
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
                                 <TextBox  x:Name="txtRaw" Width="64"  Margin="8,0" VerticalAlignment="Top" />
                                 <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>

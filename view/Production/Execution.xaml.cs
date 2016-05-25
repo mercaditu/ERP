@@ -18,6 +18,7 @@ namespace Cognitivo.Production
         //Production EXECUTION CollectionViewSource
         CollectionViewSource
             projectViewSource,
+              project_task_dimensionViewSource,
             production_executionViewSource,
             production_execution_detailProductViewSource,
             production_execution_detailRawViewSource,
@@ -54,7 +55,7 @@ namespace Cognitivo.Production
             item_dimensionViewSource.Source = ExecutionDB.item_dimension.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             production_executionViewSource = FindResource("production_executionViewSource") as CollectionViewSource;
-            ExecutionDB.production_execution.Where(a =>a.production_order.types!=production_order.ProductionOrderTypes.Fraction && a.id_company == CurrentSession.Id_Company).Include("production_execution_detail").Load();
+            ExecutionDB.production_execution.Where(a => a.production_order.types != production_order.ProductionOrderTypes.Fraction && a.id_company == CurrentSession.Id_Company).Include("production_execution_detail").Load();
             production_executionViewSource.Source = ExecutionDB.production_execution.Local;
 
             production_execution_detailProductViewSource = FindResource("production_execution_detailProductViewSource") as CollectionViewSource;
@@ -87,6 +88,12 @@ namespace Cognitivo.Production
             ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).Load();
             hr_time_coefficientViewSource.Source = ExecutionDB.hr_time_coefficient.Local;
 
+            CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+            app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+
+            CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+            app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+
             cmbcoefficient.SelectedIndex = -1;
 
             filter_order(production_order_detaillProductViewSource, item.item_type.Product);
@@ -95,7 +102,7 @@ namespace Cognitivo.Production
             filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
             filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
             filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
-           
+
 
             filter_execution(production_execution_detailProductViewSource, item.item_type.Product);
             filter_execution(production_execution_detailRawViewSource, item.item_type.RawMaterial);
@@ -182,7 +189,7 @@ namespace Cognitivo.Production
             }
 
         }
-     
+
 
         private void toolBar_btnSave_Click(object sender)
         {
@@ -371,7 +378,20 @@ namespace Cognitivo.Production
                 };
 
 
+
                 loadRawTotal(production_order_detail);
+
+
+
+                if (production_order_detail != null)
+                {
+                    if (production_order_detail.project_task != null)
+                    {
+                        int _id_task = production_order_detail.project_task.id_project_task;
+                        project_task_dimensionViewSource = (CollectionViewSource)FindResource("project_task_dimensionViewSource");
+                        project_task_dimensionViewSource.Source = ExecutionDB.project_task_dimension.Where(x => x.id_project_task == _id_task).ToList();
+                    }
+                }
 
             }
         }
@@ -923,7 +943,7 @@ namespace Cognitivo.Production
 
         }
 
-      
+
 
 
 

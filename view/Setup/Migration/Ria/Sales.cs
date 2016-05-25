@@ -239,7 +239,7 @@ namespace Cognitivo.Setup.Migration
                     + " dbo.VENTASDETALLE.COSTOULTIMO, " //5
                     + " dbo.VENTASDETALLE.IVA, " //6
                     + " dbo.VENTAS.COTIZACION1, " //7
-                    + " dbo.MONEDA.DESMONEDA " //7
+                    + " dbo.MONEDA.DESMONEDA " //8
                     + " FROM dbo.VENTAS LEFT OUTER JOIN"
                     + " dbo.MONEDA ON dbo.VENTAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
                     + " dbo.VENTASDETALLE ON dbo.VENTAS.CODVENTA = dbo.VENTASDETALLE.CODVENTA LEFT OUTER JOIN"
@@ -278,7 +278,6 @@ namespace Cognitivo.Setup.Migration
                             {
                                 sales_invoice_detail.id_vat_group = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault().id_vat_group;
                             }
-
                         }
 
                         decimal cotiz1 = Convert.ToDecimal((row["COTIZACION1"] is DBNull) ? 1 : Convert.ToDecimal(row["COTIZACION1"]));
@@ -289,21 +288,6 @@ namespace Cognitivo.Setup.Migration
                         sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
 
                         _desMoneda = row["DESMONEDA"].ToString();
-
-                        //if (_iva == "10.00")
-                        //{
-                        //    sales_invoice_vat sales_invoice_vat = new sales_invoice_vat();
-                        //    sales_invoice_vat.unit_value = sales_invoice_detail.unit_price * (decimal)0.1;
-                        //    sales_invoice_vat.id_vat = db.app_vat.Where(x => x.coefficient == 0.10M).FirstOrDefault().id_vat;
-                        //    sales_invoice_detail.sales_invoice_detail_vat.Add(sales_invoice_vat);
-                        //}
-                        //else if (_iva == "5.00")
-                        //{
-                        //    sales_invoice_vat sales_invoice_vat = new sales_invoice_vat();
-                        //    sales_invoice_vat.unit_value = sales_invoice_detail.unit_price * (decimal)0.05;
-                        //    sales_invoice_vat.id_vat = db.app_vat.Where(x => x.coefficient == (decimal)0.05).FirstOrDefault().id_vat;
-                        //    sales_invoice_detail.sales_invoice_detail_vat.Add(sales_invoice_vat);
-                        //}
                     }
 
 

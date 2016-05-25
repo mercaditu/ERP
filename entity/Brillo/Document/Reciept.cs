@@ -100,12 +100,36 @@
             string CompanyName = i.app_company.name;
             string TransNumber = i.number;
             DateTime TransDate = i.trans_date;
-            string BranchName = i.app_location_origin.app_branch.name;
+            string BranchName = string.Empty;
+            if (i.app_location_origin != null)
+            {
+                if (i.app_location_origin.app_branch != null)
+                {
+                    BranchName = i.app_location_origin.app_branch.name;
 
-            string UserGiven = i.user_given.name_full;
-            string DepartmentName = i.app_department.name;
-            string ProjectName = i.project.name;
-            string ProjectCode = i.project.code;
+                }
+            }
+
+            string UserGiven = string.Empty;
+            if (i.user_given != null)
+            {
+                UserGiven = i.user_given.name_full;
+            }
+
+            string DepartmentName = string.Empty;
+            if (i.app_department != null)
+            {
+                DepartmentName = i.app_department.name;
+
+            }
+            string ProjectName = string.Empty;
+            string ProjectCode = string.Empty;
+            if (i.project != null)
+            {
+                 ProjectName = i.project.name;
+                 ProjectCode = i.project.code;
+            }
+
 
             Header =
                 CompanyName + "\n"
@@ -121,27 +145,48 @@
 
             foreach (item_transfer_detail d in i.item_transfer_detail)
             {
-                Detail = "ACTIV. : " + d.project_task.parent.item_description + "\n";
-                //foreach (project_task project_task in d.project_task.child)
-                //{
-                string ItemName = d.project_task.items.name;
-                string ItemCode = d.project_task.code;
-                decimal? Qty = d.project_task.quantity_est;
-                string TaskName = d.project_task.item_description;
+                if (d.project_task != null)
+                {
+                    if (d.project_task.parent != null)
+                    {
+                        Detail = "ACTIV. : " + d.project_task.parent.item_description + "\n";
+                    }
 
-                Detail = Detail +
-                    ""
-                    + "Descripcion, Cantiad, Codigo" + "\n"
-                    + "-------------------------------" + "\n"
-                    + ItemName + "\n"
-                    + Qty.ToString() + "\t" + ItemCode + "\t" + TaskName + "\n";
-                //}
+                    //foreach (project_task project_task in d.project_task.child)
+                    //{
+                    string ItemName = string.Empty;
+                    if (d.project_task.items != null)
+                    {
+                        ItemName = d.project_task.items.name;
+                    }
+
+                    string ItemCode = d.project_task.code;
+                    decimal? Qty = d.project_task.quantity_est;
+                    string TaskName = d.project_task.item_description;
+
+                    Detail = Detail +
+                        ""
+                        + "Descripcion, Cantiad, Codigo" + "\n"
+                        + "-------------------------------" + "\n"
+                        + ItemName + "\n"
+                        + Qty.ToString() + "\t" + ItemCode + "\t" + TaskName + "\n";
+                    //}
+                }
+
 
             }
 
             Footer = "-------------------------------";
-            Footer += "RETIRADO: " + i.user_requested.name_full + "\n";
-            Footer += "APRORADO: " + i.user_given.name_full + "\n";
+            if (i.user_requested != null)
+            {
+                Footer += "RETIRADO: " + i.user_requested.name_full + "\n";
+            }
+            if (i.user_given != null)
+            {
+                Footer += "APRORADO: " + i.user_given.name_full + "\n";
+            }
+
+
             Footer += "-------------------------------";
 
             string Text = Header + Detail + Footer;
@@ -338,7 +383,7 @@
                 + "RUC:" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"
-                + "Timbrado    : " + sales_invoice.app_document_range.code + "\n" 
+                + "Timbrado    : " + sales_invoice.app_document_range.code + "\n"
                 + "Vencimiento : " + sales_invoice.app_document_range.expire_date + "\n"
                 + "--------------------------------"
                 + "Descripcion, Cantiad, Precio" + "\n"
@@ -430,7 +475,7 @@
             string Footer = string.Empty;
 
             string CompanyName = string.Empty;
-           
+
             app_company app_company = null;
 
             if (payment.app_company != null)
@@ -468,7 +513,7 @@
                 }
             }
 
-         
+
 
             string TransNumber = payment.number;
             DateTime TransDate = payment.trans_date;
@@ -645,7 +690,7 @@
                     payment_detail payment_detail = d.payment_detail as payment_detail;
                     foreach (payment_schedual payment_schedual in payment_detail.payment_schedual)
                     {
-                        if (payment_schedual.sales_invoice.number!=null)
+                        if (payment_schedual.sales_invoice.number != null)
                         {
                             if (!(InvoiceNumber.Contains(payment_schedual.sales_invoice.number)))
                             {
@@ -653,7 +698,7 @@
                                 InvoiceTime = payment_schedual.sales_invoice.trans_date.ToShortTimeString();
                             }
                         }
-                       
+
                     }
 
                     decimal? value = d.credit - d.debit;
@@ -670,7 +715,7 @@
                          value = g.Sum(a => a.credit)
                      }).ToList().OrderBy(x => x.id_currencyfx);
                 Detail += "Total de Ventas Neto :" + Math.Round(listvat.Sum(x => x.value), 2) + "\n";
-                
+
                 foreach (dynamic item in listvat)
                 {
                     Detail += item.paymentname + "\t" + Math.Round(item.value, 2) + "\n";
@@ -689,8 +734,8 @@
             using (db db = new db())
             {
                 decimal amount = 0M;
-                int[] id_schedual= new int[10];
-                int index=0;
+                int[] id_schedual = new int[10];
+                int index = 0;
 
                 foreach (app_account_detail account_detail in db.app_account_detail.Where(x => x.id_session == app_account_session.id_session && x.tran_type == app_account_detail.tran_types.Transaction).ToList())
                 {
@@ -708,7 +753,7 @@
                                 amount += payment_schedual.credit;
                             }
                         }
-                        
+
                     }
                 }
 

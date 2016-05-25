@@ -57,9 +57,10 @@ namespace entity
         }
         public void Approve()
         {
+            NumberOfRecords = 0;
+
             foreach (purchase_tender purchase_tender in base.purchase_tender.Local.Where(x => x.IsSelected == true))
             {
-
                 if (purchase_tender.id_purchase_tender == 0)
                 {
                     SaveChanges();
@@ -75,6 +76,7 @@ namespace entity
                         purchase_order.id_department = purchase_tender.id_department;
                         purchase_order.id_currencyfx = purchase_tender_contact.id_currencyfx;
                         purchase_order.recieve_date_est = purchase_tender_contact.recieve_date_est;
+                        
                         if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault() != null)
                         {
                             purchase_order.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault().id_range;
@@ -89,6 +91,7 @@ namespace entity
                         purchase_order.id_condition = purchase_tender_contact.id_condition;
                         purchase_order.id_project = purchase_tender.id_project;
                         purchase_order.project = purchase_tender.project;
+                        
                         foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x=>x.IsSelected))
                         {
                             purchase_order_detail purchase_order_detail = new purchase_order_detail();
@@ -97,6 +100,7 @@ namespace entity
                             purchase_order_detail.item = purchase_tender_detail.purchase_tender_item.item;
                             purchase_order_detail.id_item = purchase_tender_detail.purchase_tender_item.id_item;
                             purchase_order_detail.unit_cost = purchase_tender_detail.unit_cost;
+                            
                             if (purchase_tender_detail.item_description=="")
                             {
                                 purchase_order_detail.item_description = purchase_tender_detail.item_description;
@@ -106,6 +110,7 @@ namespace entity
                                 purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item.name;
                             }
                             purchase_order_detail.quantity = purchase_tender_detail.quantity;
+                            
                             if (base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault() != null)
                             {
                                 purchase_order_detail.id_vat_group = base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault().id_vat_group;
@@ -119,6 +124,8 @@ namespace entity
                             purchase_order.purchase_order_detail.Add(purchase_order_detail);
                             purchase_tender_detail.status = Status.Documents_General.Approved;
                         }
+
+                        NumberOfRecords += 1;
                         base.purchase_order.Add(purchase_order);
                     }
 
@@ -129,11 +136,10 @@ namespace entity
                         purchase_tender.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                         purchase_tender.RaisePropertyChanged("number");
                     }
+
                     purchase_tender.status = Status.Documents_General.Approved;
                     SaveChanges();
                 }
-
-
             }
         }
         public void Anull()

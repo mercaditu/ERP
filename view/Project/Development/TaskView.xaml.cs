@@ -303,7 +303,7 @@ namespace Cognitivo.Project.Development
         {
             if (ProjectTaskDB.SaveChanges() == 1)
             {
-                toolBar.msgSaved();
+                toolBar.msgSaved(ProjectTaskDB.NumberOfRecords);
                 stpcode.IsEnabled = false;
             }
         }
@@ -315,30 +315,36 @@ namespace Cognitivo.Project.Development
 
         private void btnApprove_Click(object sender)
         {
+            ProjectTaskDB.NumberOfRecords += 0;
+
             if (project_taskViewSource.View != null)
             {
                 project_taskViewSource.View.Filter = null;
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
                 _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
 
-
                 foreach (project_task project_task in _project_task)
                 {
                     if (project_task.status == Status.Project.Pending || project_task.status == null)
                     {
                         project_task.status = Status.Project.Management_Approved;
+                        ProjectTaskDB.NumberOfRecords += 1;
+                        project_task.IsSelected = false;
                     }
-
-                    project_task.IsSelected = false;
                 }
 
-                ProjectTaskDB.SaveChanges();
-                filter_task();
+                if (ProjectTaskDB.SaveChanges() == 1)
+                {
+                    toolBar.msgApproved(ProjectTaskDB.NumberOfRecords);
+                    filter_task();
+                }
             }
         }
 
         private void btnAnull_Click(object sender)
         {
+            ProjectTaskDB.NumberOfRecords += 0;
+
             if (project_taskViewSource.View != null)
             {
                 project_taskViewSource.View.Filter = null;
@@ -348,11 +354,16 @@ namespace Cognitivo.Project.Development
                 foreach (project_task project_task in project_taskLIST)
                 {
                     project_task.status = Status.Project.Rejected;
+                    ProjectTaskDB.NumberOfRecords += 1;
                     project_task.IsSelected = false;
                 }
 
-                ProjectTaskDB.SaveChanges();
-                toolBar.msgDone();
+                if (ProjectTaskDB.SaveChanges() == 1)
+                {
+                    toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
+                    filter_task();
+                }
+
                 filter_task();
             }
         }

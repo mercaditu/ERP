@@ -258,9 +258,12 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSave_Click(object sender)
         {
-            PurchaseTenderDB.SaveChanges();
-            purchase_tenderViewSource.View.Refresh();
-            toolBar.msgSaved();
+            if (PurchaseTenderDB.SaveChanges() == 1)
+            {
+                purchase_tenderViewSource.View.Refresh();
+                toolBar.msgSaved(PurchaseTenderDB.NumberOfRecords);    
+            }
+            
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)

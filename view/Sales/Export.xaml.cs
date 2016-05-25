@@ -118,41 +118,20 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnSave_Click(object sender)
         {
-            try
+            if (ImpexDB.SaveChanges() == 1)
             {
-                IEnumerable<DbEntityValidationResult> validationresult = ImpexDB.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    ImpexDB.SaveChanges();
-                    toolBar.msgSaved();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                toolBar.msgSaved(ImpexDB.NumberOfRecords);
             }
         }
 
-        //private void toolBar_btnApprove_Click(object sender)
-        //{
-        //    if (impexDataGrid.SelectedItem != null)
-        //    {
-        //        impex impex = impexDataGrid.SelectedItem as impex;
-        //        int id = impex.id_impex;
-        //        entity.Brillo.ImpexBrillo ImpexBrillo = new entity.Brillo.ImpexBrillo();
-        //        ImpexBrillo.Impex_Update((int)entity.App.Names.SalesInvoice, id);
-        //        toolBar.msgDone();
-        //    }
-        //}
         private void toolBar_btnApprove_Click(object sender)
         {
             try
             {
                 impex impex = impexDataGrid.SelectedItem as impex;
+                
                 if (impex.status != Status.Documents_General.Approved)
                 {
-
-
                     List<impex_expense> impex_expenses = impex.impex_expense.ToList();
                     List<Class.clsImpexImportDetails> ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_ExportDataGrid.ItemsSource;
                     if (ImpexImportDetails.Count > 0)
@@ -182,8 +161,6 @@ namespace Cognitivo.Sales
                                         item_movement_detail.id_currencyfx = sales_invoice.id_currencyfx;
                                         item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
                                         item_movement.item_movement_value.Add(item_movement_detail);
-
-
                                     }
                                 }
                             }

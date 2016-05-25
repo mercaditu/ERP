@@ -41,6 +41,8 @@ namespace entity
 
         private void validate_Item()
         {
+            NumberOfRecords = 0;
+
             foreach (item item in base.items.Local)
             {
                 if (item.IsSelected && item.Error == null)
@@ -57,6 +59,7 @@ namespace entity
                         item.State = EntityState.Unchanged;
                         Entry(item).State = EntityState.Modified;
                     }
+                    NumberOfRecords += 1;
                 }
                 else if (item.State > 0)
                 {

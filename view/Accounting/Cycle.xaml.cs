@@ -89,10 +89,11 @@ namespace Cognitivo.Accounting
 
         private void toolBar_btnSave_Click(object sender)
         {
-            dbContext.SaveChanges();
-            accounting_cycleViewSource.View.Refresh();
-            toolBar.msgSaved();
-
+            if (dbContext.SaveChanges() == 1)
+            {
+                accounting_cycleViewSource.View.Refresh();
+                toolBar.msgSaved(dbContext.NumberOfRecords);
+            }
         }
 
         private void toolBar_btnCancel_Click(object sender)

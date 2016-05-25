@@ -35,6 +35,8 @@ namespace entity
 
         private void validate_Order()
         {
+            NumberOfRecords = 0;
+
             List<sales_order> sales_orderLIST = base.sales_order.Local.ToList();
             foreach (sales_order sales_order in sales_orderLIST)
             {
@@ -60,6 +62,8 @@ namespace entity
                         sales_order.State = EntityState.Deleted;
                         Entry(sales_order).State = EntityState.Modified;
                     }
+
+                    NumberOfRecords += 1;
                 }
                 else if (sales_order.State > 0)
                 {
@@ -92,11 +96,13 @@ namespace entity
             }
         }
 
-        public void Approve()
+        public bool Approve()
         {
 
             foreach (sales_order sales_order in base.sales_order.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
+                NumberOfRecords = 0;
+
                 if (sales_order.status != Status.Documents_General.Approved &&
                     sales_order.IsSelected &&
                     sales_order.Error == null)
@@ -120,6 +126,7 @@ namespace entity
                         {
                             payment_schedual.AddRange(payment_schedualList);
                         }
+
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             item_movement.AddRange(item_movementList);
@@ -147,6 +154,9 @@ namespace entity
                             SaveChanges();
                         }
                     }
+
+                    NumberOfRecords += 1;
+                    sales_order.IsSelected = false;
                 }
 
                 if (sales_order.Error != null)
@@ -154,10 +164,13 @@ namespace entity
                     sales_order.HasErrors = true;
                 }
             }
+
+            return true;
         }
 
-        public void Annull()
+        public bool Annull()
         {
+            NumberOfRecords = 0;
             foreach (sales_order sales_order in base.sales_order.Local)
             {
                 if (sales_order.IsSelected && sales_order.Error == null)
@@ -191,8 +204,11 @@ namespace entity
                         }
                     }
                 }
+
+                NumberOfRecords += 1;
                 sales_order.IsSelected = false;
             }
+            return true;
         }
 
     }

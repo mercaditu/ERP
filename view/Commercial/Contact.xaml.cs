@@ -145,17 +145,10 @@ namespace Cognitivo.Commercial
         private void toolBar_btnSave_Click(object sender)
         {
             //Abhi> in Brillo, add logic to add for validations
-            try
+            if (ContactDB.SaveChanges() == 1)
             {
-                ContactDB.SaveChanges();
-
-
+                toolBar.msgSaved(ContactDB.NumberOfRecords);
                 contactViewSource.View.Refresh();
-                toolBar.msgSaved();
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
             }
         }
 
@@ -170,12 +163,16 @@ namespace Cognitivo.Commercial
             if (cbxContactRole.SelectedItem != null)
             {
                 contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
+                
                 if (contact_role.is_principal == true)
                 {
                     cbxRelation.IsEnabled = false;
                 }
                 else
+                {
                     cbxRelation.IsEnabled = true;
+                }
+                    
                 if (contact_role.can_transact == true)
                 {
                     tabFinance.Visibility = Visibility.Visible;
@@ -305,30 +302,6 @@ namespace Cognitivo.Commercial
             {
                 contactChildListViewSource.Source = ContactDB.contacts.Where(x => x.parent.id_contact == _contact.id_contact || x.id_contact == _contact.id_contact).ToList();
             }
-            //if (contactChildListViewSource != null)
-            //{
-               
-            //        if (contactChildListViewSource.View != null)
-            //        {
-                        
-            //            contactChildListViewSource.View.Filter = i =>
-            //            {
-            //                contact contact = (contact)i;
-            //                if (_contact != null)
-            //                {
-            //                    if (contact.parent == _contact || contact.id_contact == _contact.id_contact)
-            //                        return true;
-            //                    else
-            //                        return false;
-            //                }
-            //                else
-            //                    return false;
-            //            };
-
-            //        }
-               
-
-            //}
         }
 
         private void FilterSubscription()
@@ -338,14 +311,10 @@ namespace Cognitivo.Commercial
                 contact contact = contactViewSource.View.CurrentItem as contact;
                 if (contact != null)
                 {
-
-
                     if (contact_subscriptionViewSource != null)
                     {
-
                         if (contact_subscriptionViewSource.View != null)
                         {
-
                             contact_subscriptionViewSource.View.Filter = i =>
                             {
                                 contact_subscription _contact_subscription = (contact_subscription)i;
@@ -354,10 +323,7 @@ namespace Cognitivo.Commercial
                                 else
                                     return false;
                             };
-
                         }
-
-
                     }
                 }
             }
@@ -495,6 +461,7 @@ namespace Cognitivo.Commercial
         {
             Add_field();
         }
+
         private void Add_field()
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
@@ -510,8 +477,8 @@ namespace Cognitivo.Commercial
                         db.app_field.Add(app_field);
                         db.SaveChanges();
                     }
-                  
                 }
+
                 contact_field_value contact_field_value = new contact_field_value();
                 contact.contact_field_value.Add(contact_field_value);
                 contactViewSource.View.Refresh();

@@ -55,8 +55,10 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            db.db.SaveChanges();
-            toolBar.msgSaved();
+            if (db.db.SaveChanges() == 1)
+            {
+                toolBar.msgSaved(0);
+            }
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -95,10 +97,7 @@ namespace Cognitivo.Product
                 {
                     item_asset_maintainance.id_item_asset = item.item_asset.FirstOrDefault().id_item_asset;
                 }
-
             }
-
-
         }
 
         private void sbxitem_Select(object sender, RoutedEventArgs e)

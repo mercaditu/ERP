@@ -186,7 +186,6 @@ namespace Cognitivo.Accounting
         private void toolBar_btnSave_Click(object sender)
         {
             accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
-        
 
             if (accounting_chart != null)
             {
@@ -194,26 +193,10 @@ namespace Cognitivo.Accounting
                 accounting_chart.chart_type = (accounting_chart.ChartType)cbxChartType.SelectedItem;
             }
 
-
-            //if (cbxParent.SelectedItem != null)
-            //{
-            //    accounting_chart.parent = (accounting_chart)cbxParent.SelectedItem;
-            //}
-
-            try
+            if (AccountingChartDB.SaveChanges() == 1)
             {
-                IEnumerable<DbEntityValidationResult> validationresult = AccountingChartDB.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    AccountingChartDB.SaveChanges();
-                    toolBar.msgSaved();
-                  
-                }
+                toolBar.msgSaved(AccountingChartDB.NumberOfRecords);
                 filter_chart();
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
             }
         }
 
@@ -239,12 +222,12 @@ namespace Cognitivo.Accounting
                     default: break;
                 }
             }
+
             filter_chart();
             accounting_chartViewSource.View.Refresh();
             accounting_chartViewSource.View.MoveCurrentToLast();
-          
-
         }
+
         #endregion
 
         private void rbtnCash_Checked(object sender, RoutedEventArgs e)

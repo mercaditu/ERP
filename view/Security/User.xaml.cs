@@ -77,19 +77,23 @@ namespace Cognitivo.Security
         {
             security_user security_user = security_user_view_source.View.CurrentItem as security_user;
            
-            if (dbContext.security_user.Where(x => x.name == security_user.name).Any() && security_user.State==EntityState.Added)
+            if (dbContext.security_user.Where(x => x.name == security_user.name).Any() && security_user.State == EntityState.Added)
             {
                 toolBar.msgWarning("User Already Exists...");
             }
             else
             {
-                dbContext.SaveChanges();
-                if (CurrentSession.Id_User == 0)
+                if (dbContext.SaveChanges() == 1)
                 {
-                    CurrentSession.Id_User = security_user.id_user;
+                    toolBar.msgSaved(1);
+
+                    if (CurrentSession.Id_User == 0)
+                    {
+                        CurrentSession.Id_User = security_user.id_user;
+                    }
+
+                    security_user_view_source.View.Refresh();
                 }
-                security_user_view_source.View.Refresh();
-                toolBar.msgSaved();
             }
         }
 
@@ -99,9 +103,11 @@ namespace Cognitivo.Security
             if (res == MessageBoxResult.Yes)
             {
                 dbContext.security_user.Remove((security_user)security_userDataGrid.SelectedItem);
-                security_user_view_source.View.MoveCurrentToFirst();
-                toolBar_btnSave_Click(sender);
-                toolBar.msgDone();
+
+                if (dbContext.SaveChanges() == 1)
+                {
+                    security_user_view_source.View.MoveCurrentToFirst();
+                }
             }
         }
 

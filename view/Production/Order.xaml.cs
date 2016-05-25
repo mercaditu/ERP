@@ -151,8 +151,11 @@ namespace Cognitivo.Production
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order.status = Status.Production.Executed;
-            OrderDB.SaveChanges();
-            toolBar.msgDone();
+            if (OrderDB.SaveChanges() == 1)
+            {
+                toolBar.msgApproved(1);
+            }
+            
         }
 
         private void toolBar_btnAnull_Click(object sender)

@@ -21,6 +21,8 @@ namespace entity
 
         private void validate_Line()
         {
+            NumberOfRecords = 0;
+
             foreach (production_line production_line in base.production_line.Local)
             {
                 if (production_line.IsSelected && production_line.Error == null)
@@ -43,6 +45,8 @@ namespace entity
                         production_line.State = EntityState.Unchanged;
                         base.production_line.Remove(production_line);
                     }
+                    NumberOfRecords += 1;
+
                 }
                 else if (production_line.State > 0)
                 {

@@ -8,6 +8,8 @@ namespace entity
 {
     public partial class BaseDB : db
     {
+        public int NumberOfRecords { get; set; }
+
         public override int SaveChanges()
         {
             return base.SaveChanges();

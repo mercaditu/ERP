@@ -21,7 +21,6 @@ namespace Cognitivo.Configs
         
         DocumentDB dbcontext = new DocumentDB();
         CollectionViewSource app_documentViewSource;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public Document()
         {
@@ -30,15 +29,15 @@ namespace Cognitivo.Configs
 
         private void toolBar_btnSave_Click(object sender)
         {
-            dbcontext.SaveChanges();
-            app_documentViewSource.View.Refresh();
-            toolBar.msgSaved();
-              
+            if (dbcontext.SaveChanges() == 1)
+            {
+                app_documentViewSource.View.Refresh();
+                toolBar.msgSaved(dbcontext.NumberOfRecords);
+            }
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
-
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
@@ -78,10 +77,8 @@ namespace Cognitivo.Configs
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             app_documentViewSource = ((CollectionViewSource)(this.FindResource("app_documentViewSource")));
-            //db.app_document.Where(x => x.id_document == DocumentId).Load();
-            dbcontext.app_document.Where(a=>a.is_active == true && a.id_company == _entity.company_ID).OrderByDescending(a => a.is_active).Load();
+            dbcontext.app_document.Where(a=>a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderByDescending(a => a.is_active).Load();
             app_documentViewSource.Source = dbcontext.app_document.Local;
 
             cbxApplication.ItemsSource = Enum.GetValues(typeof(entity.App.Names));
@@ -95,7 +92,6 @@ namespace Cognitivo.Configs
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             PrintDialog pd = new PrintDialog();
             FlowDocument doc = new FlowDocument(new Paragraph(new Run(rtfheader.Text)));
             doc.Name = "FlowDoc";
@@ -112,7 +108,6 @@ namespace Cognitivo.Configs
                 {
                     lstfield.Items.Add("<<item>>");
                     lstfield.Items.Add("<<quantity>>");
-               
                 }
             }
         }

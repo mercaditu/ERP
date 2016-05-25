@@ -22,21 +22,12 @@ namespace entity
 
         private void validate_item_inventory()
         {
+            NumberOfRecords = 0;
+
             foreach (item_inventory item_inventory in base.item_inventory.Local)
             {
                 if (item_inventory.IsSelected)
                 {
-                    //foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail)
-                    //{
-                    //    if (item_inventory_detail.value_counted != 0 && item_inventory_detail.IsSelected)
-                    //    {
-                    //        validate_item_inventory_detail(item_inventory_detail);
-                    //    }
-                    //    else
-                    //    {
-                    //        Entry(item_inventory_detail).State = EntityState.Unchanged;
-                    //    }
-                    //}
                     if (item_inventory.State == EntityState.Added)
                     {
                         item_inventory.timestamp = DateTime.Now;
@@ -56,6 +47,9 @@ namespace entity
                         base.item_inventory.Remove(item_inventory);
                     }
 
+
+                    NumberOfRecords += 1;
+
                 }
                 else if (item_inventory.State > 0)
                 {
@@ -69,23 +63,31 @@ namespace entity
 
         private void validate_item_inventory_detail(item_inventory_detail item_inventory_detail)
         {
+            NumberOfRecords = 0;
+
             if (item_inventory_detail.State == EntityState.Added)
             {
                 item_inventory_detail.timestamp = DateTime.Now;
                 item_inventory_detail.State = EntityState.Unchanged;
                 Entry(item_inventory_detail).State = EntityState.Added;
+
+                NumberOfRecords += 1;
             }
             else if (item_inventory_detail.State == EntityState.Modified)
             {
                 item_inventory_detail.timestamp = DateTime.Now;
                 item_inventory_detail.State = EntityState.Unchanged;
                 Entry(item_inventory_detail).State = EntityState.Modified;
+
+                NumberOfRecords += 1;
             }
             else if (item_inventory_detail.State == EntityState.Deleted)
             {
                 item_inventory_detail.timestamp = DateTime.Now;
                 item_inventory_detail.State = EntityState.Unchanged;
                 base.item_inventory_detail.Remove(item_inventory_detail);
+
+                NumberOfRecords += 1;
             }
 
             if (item_inventory_detail.State != EntityState.Unchanged)
@@ -94,11 +96,11 @@ namespace entity
             }
         }
 
-        public void Approve()
+        public bool Approve()
         {
-            foreach (item_inventory item_inventory in base.item_inventory.Local.Where(x =>
-                                                                                      x.status != Status.Documents.Issued
-                                                                                   && x.IsSelected))
+            NumberOfRecords = 0;
+
+            foreach (item_inventory item_inventory in base.item_inventory.Local.Where(x => x.status != Status.Documents.Issued && x.IsSelected))
             {
                 if (item_inventory.id_inventory == 0)
                 {
@@ -122,7 +124,6 @@ namespace entity
                         item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
                         item_movement.timestamp = DateTime.Now;
 
-
                         if (item_inventory_detail.unit_value > 0 && item_inventory_detail.id_currencyfx > 0)
                         {
                             item_movement_value item_movement_value = new item_movement_value();
@@ -139,15 +140,15 @@ namespace entity
                             item_movement_dimension.id_dimension = item_inventory_dimension.id_dimension;
                             item_movement.item_movement_dimension.Add(item_movement_dimension);
                         }
+
                         item_movementLIST.Add(item_movement);
 
+                        NumberOfRecords += 1;
                     }
                     else
                     {
                         if (item_inventory_detail.value_counted != 0 || item_inventory_detail.IsSelected)
                         {
-
-
                             decimal delta = 0;
                             if (item_inventory_detail.value_system != item_inventory_detail.value_counted)
                             {
@@ -178,6 +179,8 @@ namespace entity
                                 }
 
                                 item_movementLIST.Add(item_movement);
+                                NumberOfRecords += 1;
+
                             }
                         }
                     }
@@ -188,6 +191,8 @@ namespace entity
                 item_inventory.status = Status.Documents.Issued;
                 SaveChanges();
             }
+
+            return true;
         }
     }
 }

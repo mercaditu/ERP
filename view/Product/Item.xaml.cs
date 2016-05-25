@@ -412,10 +412,9 @@ namespace Cognitivo.Product
 
                 if (ItemDB.SaveChanges() == 1)
                 {
-                    //Save Changes
+                    // Save Changes
                     itemViewSource.View.Refresh();
-
-                    toolBar.msgSaved();   
+                    toolBar.msgSaved(ItemDB.NumberOfRecords);
                 }
             }
         }

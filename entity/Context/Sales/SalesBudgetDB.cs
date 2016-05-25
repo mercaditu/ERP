@@ -34,45 +34,42 @@ namespace entity
 
         private void validate_Budget()
         {
-            try
+            NumberOfRecords = 0;
+
+            foreach (sales_budget sales_budget in base.sales_budget.Local)
             {
-                foreach (sales_budget sales_budget in base.sales_budget.Local)
+                if (sales_budget.IsSelected && sales_budget.Error == null)
                 {
-                    if (sales_budget.IsSelected && sales_budget.Error == null)
+                    if (sales_budget.State == EntityState.Added)
                     {
-                        if (sales_budget.State == EntityState.Added)
-                        {
-                            sales_budget.timestamp = DateTime.Now;
-                            sales_budget.State = EntityState.Unchanged;
-                            Entry(sales_budget).State = EntityState.Added;
-                            add_CRM(sales_budget);
-                        }
-                        else if (sales_budget.State == EntityState.Modified)
-                        {
-                            sales_budget.timestamp = DateTime.Now;
-                            sales_budget.State = EntityState.Unchanged;
-                            Entry(sales_budget).State = EntityState.Modified;
-                        }
-                        else if (sales_budget.State == EntityState.Deleted)
-                        {
-                            sales_budget.timestamp = DateTime.Now;
-                            sales_budget.is_head = false;
-                            sales_budget.State = EntityState.Deleted;
-                            Entry(sales_budget).State = EntityState.Modified;
-                        }
+                        sales_budget.timestamp = DateTime.Now;
+                        sales_budget.State = EntityState.Unchanged;
+                        Entry(sales_budget).State = EntityState.Added;
+                        add_CRM(sales_budget);
                     }
-                    else if (sales_budget.State > 0)
+                    else if (sales_budget.State == EntityState.Modified)
                     {
-                        if (sales_budget.State != EntityState.Unchanged)
-                        {
-                            Entry(sales_budget).State = EntityState.Unchanged;
-                        }
+                        sales_budget.timestamp = DateTime.Now;
+                        sales_budget.State = EntityState.Unchanged;
+                        Entry(sales_budget).State = EntityState.Modified;
+                    }
+                    else if (sales_budget.State == EntityState.Deleted)
+                    {
+                        sales_budget.timestamp = DateTime.Now;
+                        sales_budget.is_head = false;
+                        sales_budget.State = EntityState.Deleted;
+                        Entry(sales_budget).State = EntityState.Modified;
+                    }
+
+                    NumberOfRecords += 1;
+                }
+                else if (sales_budget.State > 0)
+                {
+                    if (sales_budget.State != EntityState.Unchanged)
+                    {
+                        Entry(sales_budget).State = EntityState.Unchanged;
                     }
                 }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
             }
         }
 
@@ -87,8 +84,9 @@ namespace entity
             base.crm_opportunity.Add(crm_opportunity);
         }
 
-        public void Approve()
+        public bool Approve()
         {
+            NumberOfRecords = 0;
             foreach (sales_budget sales_budget in base.sales_budget.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
                 if (sales_budget.status != Status.Documents_General.Approved &&
@@ -124,19 +122,24 @@ namespace entity
                             SaveChanges();
                         }
                     }
+
+                    NumberOfRecords += 1;
+                    sales_budget.IsSelected = false;
                 }
 
                 if (sales_budget.Error != null)
                 {
                     sales_budget.HasErrors = true;
                 }
-
-                sales_budget.IsSelected = false;
             }
+
+            return true;
         }
 
-        public void Anull()
+        public bool Anull()
         {
+            NumberOfRecords = 0;
+
             foreach (sales_budget budget in base.sales_budget.Local)
             {
                 if (budget.IsSelected && budget.Error == null)
@@ -146,9 +149,13 @@ namespace entity
                         budget.status = Status.Documents_General.Annulled;
                         SaveChanges();
                     }
+
+                    NumberOfRecords += 1;
                     budget.IsSelected = false;
                 }
             }
+
+            return true;
         }
     }
 }

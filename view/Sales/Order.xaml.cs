@@ -125,6 +125,7 @@ namespace Cognitivo.Sales
         }
 
         #region toolbar Events
+
         private void New_Click(object sender)
         {
             Settings SalesSettings = new Settings();
@@ -173,10 +174,12 @@ namespace Cognitivo.Sales
         {
             try
             {
-                dbContext.SaveChanges();
-                sales_orderViewSource.View.Refresh();
-                toolBar.msgSaved();
-                sbxContact.Text = "";
+                if (dbContext.SaveChanges() == 1)
+                {
+                    toolBar.msgSaved(dbContext.NumberOfRecords);
+                    sales_orderViewSource.View.Refresh();
+                    sbxContact.Text = "";
+                }
             }
             catch (DbEntityValidationException ex)
             {
@@ -191,19 +194,17 @@ namespace Cognitivo.Sales
 
         private void btnApprove_Click(object sender)
         {
-            dbContext.Approve();
-            foreach (sales_order sales_order in sales_orderViewSource.View.Cast<sales_order>().ToList())
+            if (dbContext.Approve())
             {
-                sales_order.IsSelected = false;
+                toolBar.msgApproved(dbContext.NumberOfRecords);
             }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            dbContext.Annull();
-            foreach (sales_order sales_order in sales_orderViewSource.View.Cast<sales_order>().ToList())
+            if (dbContext.Annull())
             {
-                sales_order.IsSelected = false;
+                toolBar.msgAnnulled(dbContext.NumberOfRecords);
             }
         }
         #endregion

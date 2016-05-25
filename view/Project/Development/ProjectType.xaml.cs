@@ -209,20 +209,11 @@ namespace Cognitivo.Project.Development
 
         private void btnSaveTask_Click(object sender)
         {
-
-            try
+            if (dbContext.SaveChanges() == 1)
             {
-
-                dbContext.SaveChanges();
-                toolBar.msgDone("Yay");
                 stpcode.IsEnabled = false;
-
+                toolBar.msgSaved(dbContext.NumberOfRecords);
             }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-
         }
 
         private void btnDeleteTask_Click(object sender)
@@ -243,7 +234,6 @@ namespace Cognitivo.Project.Development
                     }
                     db.SaveChanges();
                 }
-                toolBar.msgDone();
                 dbContext = new ProjectTemplateDB();
                 project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
                 dbContext.project_template.Where(a => a.id_company == _Setting.company_ID).Load();
@@ -254,11 +244,6 @@ namespace Cognitivo.Project.Development
         }
 
         #endregion
-
-        //private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    filter_task();
-        //}
 
         private void btnChild_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -321,23 +306,24 @@ namespace Cognitivo.Project.Development
             filter_task();
         }
 
-
-
-
-
-
-
         private void toolBar_btnApprove_Click(object sender, RoutedEventArgs e)
         {
-            dbContext.Approve();
-            project_templateViewSource.View.Refresh();
+            if (dbContext.Approve())
+            {
+                toolBar.msgApproved(dbContext.NumberOfRecords);
+                project_templateViewSource.View.Refresh();
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender, RoutedEventArgs e)
         {
-            dbContext.Anull();
-            project_templateViewSource.View.Refresh();
+            if (dbContext.Anull())
+            {
+                toolBar.msgAnnulled(dbContext.NumberOfRecords);
+                project_templateViewSource.View.Refresh();
+            }
         }
+
         private void item_Select(object sender, EventArgs e)
         {
             if (sbxItem.ItemID > 0)
@@ -350,11 +336,6 @@ namespace Cognitivo.Project.Development
 
             }
         }
-
-       
-        
-
-
 
     }
 }

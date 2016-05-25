@@ -24,7 +24,8 @@ namespace cntrl
 
         public enum msgType
         {
-            msgDone,
+            msgApproved,
+            msgAnnulled,
             msgError,
             msgQuestion,
             msgSaved,
@@ -80,18 +81,25 @@ namespace cntrl
             bool _btnYes = false;
             bool _btnNo = false;
 
-            if (_msgType == msgType.msgDone)
-            {
-                Status_Colour.Fill = Brushes.PaleGreen;
-                shortMessage = "Done";
-                _btnClose = true;
-                //OnClose_MsgBox();
-            }
-            else if (_msgType == msgType.msgError)
+            if (_msgType == msgType.msgError)
             {
                 Status_Colour.Fill = Brushes.Crimson;
                 shortMessage = "Error";
                 _btnClose = true;
+            }
+            else if (_msgType == msgType.msgApproved)
+            {
+                Status_Colour.Fill = Brushes.Green;
+                shortMessage = "Approve";
+                _btnYes = false;
+                _btnNo = false;
+            }
+            else if (_msgType == msgType.msgAnnulled)
+            {
+                Status_Colour.Fill = Brushes.Crimson;
+                shortMessage = "Annul";
+                _btnYes = false;
+                _btnNo = false;
             }
             else if (_msgType == msgType.msgQuestion)
             {

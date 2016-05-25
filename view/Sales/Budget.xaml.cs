@@ -127,10 +127,12 @@ namespace Cognitivo.Sales
 
         private void Save_Click(object sender)
         {
-                SalesBudgetDB.SaveChanges();
+            if (SalesBudgetDB.SaveChanges() == 1)
+            {
                 sales_budgetViewSource.View.Refresh();
-                toolBar.msgSaved();
-                sbxContact.Text = "";
+                toolBar.msgSaved(SalesBudgetDB.NumberOfRecords);
+                sbxContact.Text = "";   
+            }
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -230,19 +232,17 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            SalesBudgetDB.Approve();
-            foreach (sales_budget sales_budget in sales_budgetViewSource.View.Cast<sales_budget>().ToList())
-            {
-                sales_budget.IsSelected = false;
-            }
+            if (SalesBudgetDB.Approve())
+	        {
+                toolBar.msgApproved(SalesBudgetDB.NumberOfRecords);
+	        }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            SalesBudgetDB.Anull();
-            foreach (sales_budget sales_budget in sales_budgetViewSource.View.Cast<sales_budget>().ToList())
+            if (SalesBudgetDB.Anull())
             {
-                sales_budget.IsSelected = false;
+                toolBar.msgAnnulled(SalesBudgetDB.NumberOfRecords);
             }
         }
 

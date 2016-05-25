@@ -93,16 +93,18 @@ namespace Cognitivo.Production
 
         private void Save_Click(object sender)
         {
-            dbContext.SaveChanges();
-            production_lineViewSource.View.Refresh();
-            toolBar.msgSaved();
+            if (dbContext.SaveChanges() == 1)
+            {
+                production_lineViewSource.View.Refresh();
+                toolBar.msgSaved(dbContext.NumberOfRecords);   
+            }
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
             if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                production_line production_line = (production_line)production_lineViewSource.View.CurrentItem;
+                production_line production_line = production_lineViewSource.View.CurrentItem as production_line;
                 production_line.is_head = false;
                 production_line.State = EntityState.Deleted;
                 production_line.IsSelected = true;

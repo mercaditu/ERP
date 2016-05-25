@@ -96,7 +96,7 @@
                            Margin="12,0,8,3" TextWrapping="Wrap" Foreground="Gray" FontWeight="Thin"/>
             </StackPanel>
             <!-- Action Buttons -->
-            <Border Name="gridAction" Visibility="Collapsed" Background="WhiteSmoke" Opacity="0.9" CornerRadius="0,5,5,0" 
+            <Border Name="gridAction" Background="WhiteSmoke" Opacity="0.9" CornerRadius="0,5,5,0" 
                     HorizontalAlignment="Right" Width="100">
                 <Grid>
                     <StackPanel Name="stackQuestion" VerticalAlignment="Center" Margin="0,8"/>

@@ -172,29 +172,37 @@ namespace Cognitivo.Project.Development
             if (project_taskViewSource.View != null)
             {
                 project_taskViewSource.View.Filter = null;
+
                 List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
                 project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
+                
                 foreach (project_task project_task in project_taskLIST)
                 {
                     project_task.status = Status.Project.Rejected;
                     project_task.IsSelected = false;
                 }
-                ProjectTaskDB.SaveChanges();
-                toolBar.msgDone();
+
+                //Saving Changes
+                if (ProjectTaskDB.SaveChanges() == 1)
+                {
+                    toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
+                }
+                
                 filter_task();
             }
         }
+
         private void toolBar_btnNew_Click(object sender)
         {
             crud_modal.Visibility = Visibility.Visible;
             cntrl.Curd.project project = new cntrl.Curd.project();
             crud_modal.Children.Add(project);
-
         }
 
         private void toolBar_btnDelete_Click(object sender)
         {
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            
             if (res == MessageBoxResult.Yes)
             {
                 project projects = projectViewSource.View.CurrentItem as project;
@@ -218,6 +226,7 @@ namespace Cognitivo.Project.Development
             project.project_crud = (project)projectViewSource.View.CurrentItem;
             crud_modal.Children.Add(project);
         }
+
         #endregion
 
         #region Project Task Events
@@ -292,9 +301,11 @@ namespace Cognitivo.Project.Development
 
         private void btnSaveTask_Click(object sender)
         {
-            ProjectTaskDB.SaveChanges();
-            toolBar.msgSaved();
-            stpcode.IsEnabled = false;
+            if (ProjectTaskDB.SaveChanges() == 1)
+            {
+                toolBar.msgSaved();
+                stpcode.IsEnabled = false;
+            }
         }
 
         private void btnDeleteTask_Click(object sender)
@@ -359,11 +370,8 @@ namespace Cognitivo.Project.Development
 
             if (cbxItemType.SelectedItem != null)
             {
-
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
                 sbxItem.item_types = Item_Type;
-                // itemSearchViewSource.Source = _entity.items.Where(x =>x.id_company==_Setting.company_ID && x.id_item_type == Item_Type).ToList();
-
 
                 if (Item_Type == item.item_type.Task)
                 {

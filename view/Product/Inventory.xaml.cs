@@ -160,15 +160,10 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            try
+            if (InventoryDB.SaveChanges() == 1)
             {
-                InventoryDB.SaveChanges();
-                toolBar.msgSaved();
+                toolBar.msgSaved(InventoryDB.NumberOfRecords);
                 item_inventoryViewSource.View.Refresh();
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
             }
         }
 
@@ -186,14 +181,15 @@ namespace Cognitivo.Product
         {
             item_inventory item_inventory = (item_inventory)item_inventoryDataGrid.SelectedItem;
             item_inventory.id_branch = (int)cbxBranch.SelectedValue;
-            InventoryDB.Approve();
 
-            toolBar.msgDone();
+            if (InventoryDB.Approve())
+            {
+                toolBar.msgApproved(InventoryDB.NumberOfRecords);
+            }
         }
 
         private void CbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
 
         }
 
@@ -206,7 +202,6 @@ namespace Cognitivo.Product
                     if (app_branchapp_locationViewSource.View != null)
                     {
                        BindItemMovement();
-                   //   Task thread_SecondaryData = Task.Factory.StartNew(() => BindItemMovement());
                     }
                 }
             }

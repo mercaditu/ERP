@@ -49,7 +49,6 @@ namespace Cognitivo.HumanResource
             await dbContext.hr_talent.ToListAsync();
             hr_talentViewSource.Source = dbContext.hr_talent.Local;
 
-
             app_locationViewSource = (CollectionViewSource)FindResource("app_locationViewSource");
             await dbContext.app_location.ToListAsync();
             app_locationViewSource.Source = dbContext.app_location.Local;
@@ -57,7 +56,6 @@ namespace Cognitivo.HumanResource
             cbxBloodtype.ItemsSource = Enum.GetValues(typeof(contact.BloodTypes));
             cbxmaritialstatus.ItemsSource = Enum.GetValues(typeof(contact.CivilStatus));
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
-
         }
 
         #region Contract Buttons
@@ -107,14 +105,9 @@ namespace Cognitivo.HumanResource
 
         private void btnSave_Click(object sender)
         {
-            try
+            if (dbContext.SaveChanges() == 1)
             {
-                dbContext.SaveChanges();
-                toolBar.msgSaved();
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                toolBar.msgSaved(dbContext.NumberOfRecords);
             }
         }
 
@@ -181,6 +174,7 @@ namespace Cognitivo.HumanResource
                 employeeViewSource.View.Filter = null;
             }
         }
+
         private async void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
         {
             contact contact = (contact)employeeViewSource.View.CurrentItem;

@@ -351,10 +351,12 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender)
         {
-            SalesInvoiceDB.SaveChanges();
-            sales_invoiceViewSource.View.Refresh();
-            toolBar.msgSaved();
-            sbxContact.Text = "";
+            if (SalesInvoiceDB.SaveChanges() == 1)
+            {
+                sales_invoiceViewSource.View.Refresh();
+                toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
+                sbxContact.Text = "";
+            }
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -365,12 +367,11 @@ namespace Cognitivo.Sales
         private void btnApprove_Click(object sender)
         {
             Settings SalesSettings = new Settings();
-            SalesInvoiceDB.Approve(SalesSettings.DiscountStock);
-            foreach (sales_invoice sales_invoice in sales_invoiceViewSource.View.Cast<sales_invoice>().ToList())
+            if (SalesInvoiceDB.Approve(SalesSettings.DiscountStock))
             {
-                sales_invoice.IsSelected = false;
+
+                filter_sales();
             }
-            filter_sales();
         }
 
         private void toolBar_btnAnull_Click(object sender)

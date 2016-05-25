@@ -545,12 +545,12 @@ namespace cntrl
         /// </summary>
         /// <param name="msg">Optional Done Message</param>
         /// <remarks>Automatic shutdown of MessageBox after few seconds</remarks>
-        public void msgDone(string msg = null)
-        {
-            toolMessage popupMsg = new toolMessage(toolMessage.msgType.msgDone);
-            popupMsg.btnClose_Click += popupMsg.closeMsgBox;
-            add_Message(popupMsg);
-        }
+        //public void msgDone(string msg = null)
+        //{
+        //    toolMessage popupMsg = new toolMessage(toolMessage.msgType.msgDone);
+        //    popupMsg.btnClose_Click += popupMsg.closeMsgBox;
+        //    add_Message(popupMsg);
+        //}
 
         /// <summary>
         /// Error messages are used when you have a Fatal Error Message for the user. 
@@ -584,11 +584,28 @@ namespace cntrl
         /// </summary>
         /// <param name="msg">Optional Done Message for User</param>
         /// <remarks>Automatic shutdown of MessageBox after few seconds</remarks>
-        public void msgSaved(string msg = null)
+        public void msgSaved(int NumberOfRecords)
         {
-            toolMessage popupMsg = new toolMessage(toolMessage.msgType.msgSaved);
-            popupMsg.btnClose_Click += popupMsg.closeMsgBox;
-            add_Message(popupMsg);
+            toolMessage toolMessage = new toolMessage(toolMessage.msgType.msgSaved);
+            toolMessage.longMessage = NumberOfRecords + " number of records updated.";
+            toolMessage.btnClose_Click += toolMessage.closeMsgBox;
+            add_Message(toolMessage);
+        }
+
+        public void msgApproved(int NumberOfRecords)
+        {
+            toolMessage toolMessage = new toolMessage(toolMessage.msgType.msgApproved);
+            toolMessage.longMessage = NumberOfRecords + " number of records Approved.";
+            toolMessage.btnClose_Click += toolMessage.closeMsgBox;
+            add_Message(toolMessage);
+        }
+
+        public void msgAnnulled(int NumberOfRecords)
+        {
+            toolMessage toolMessage = new toolMessage(toolMessage.msgType.msgAnnulled);
+            toolMessage.longMessage = NumberOfRecords + " number of records Anulled.";
+            toolMessage.btnClose_Click += toolMessage.closeMsgBox;
+            add_Message(toolMessage);
         }
 
         /// <summary>

@@ -22,6 +22,8 @@ namespace entity
         
         private void validate_Template()
         {
+            NumberOfRecords = 0;
+
             foreach (project_template project_template in base.project_template.Local)
             {
                 if (project_template.IsSelected && project_template.Error == null)
@@ -44,6 +46,8 @@ namespace entity
                         project_template.State = EntityState.Unchanged;
                         base.project_template.Remove(project_template);
                     }
+
+                    NumberOfRecords += 1;
                 }
                 else if (project_template.State > 0)
                 {
@@ -55,34 +59,54 @@ namespace entity
             }
         }
 
-        public void Approve()
+        public bool Approve()
         {
+            NumberOfRecords = 0;
+
             foreach (project_template project_template in base.project_template.Local.Where(x => x.is_active != true))
             {
                 if (project_template.is_active != true &&
                     project_template.IsSelected &&
                     project_template.Error == null)
                 {
+                    NumberOfRecords += 1;
                     project_template.is_active = true;
-                   // project_template.status = Status.Documents_General.Approved;
                 }
             }
-            SaveChanges();
+
+            if (SaveChanges() == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public void Anull()
+        public bool Anull()
         {
+            NumberOfRecords = 0;
+
             foreach (project_template project_template in base.project_template.Local.Where(x => x.is_active == true))
             {
                 if (project_template.is_active == true &&
                     project_template.IsSelected &&
                     project_template.Error == null)
                 {
+                    NumberOfRecords += 1;
                     project_template.is_active = false;
-                 //   project_template.status = Status.Documents_General.Annulled;
                 }
             }
-            SaveChanges();
+
+            if (SaveChanges() == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

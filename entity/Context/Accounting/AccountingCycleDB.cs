@@ -24,6 +24,8 @@ namespace entity
 
         private void validate_Cycle()
         {
+            NumberOfRecords = 0;
+
             foreach (accounting_cycle accounting_cycle in base.accounting_cycle.Local)
             {
                 if (accounting_cycle.IsSelected)
@@ -46,6 +48,8 @@ namespace entity
                         accounting_cycle.State = EntityState.Unchanged;
                         base.accounting_cycle.Remove(accounting_cycle);
                     }
+
+                    NumberOfRecords += 1;
                 }
                 else if (accounting_cycle.State > 0)
                 {

@@ -35,6 +35,8 @@ namespace entity
 
         private void validate_Order()
         {
+            NumberOfRecords = 0;
+
             foreach (purchase_order purchase_order in base.purchase_order.Local)
             {
                 if (purchase_order.IsSelected && purchase_order.Error == null)
@@ -57,6 +59,9 @@ namespace entity
                         purchase_order.State = EntityState.Unchanged;
                         base.purchase_order.Remove(purchase_order);
                     }
+
+                    NumberOfRecords += 1;
+
                 }
                 else if (purchase_order.State > 0)
                 {
@@ -68,8 +73,10 @@ namespace entity
             }
         }
 
-        public void Approve()
+        public bool Approve()
         {
+            NumberOfRecords = 0;
+
             foreach (purchase_order purchase_order in base.purchase_order.Local.Where(x => x.IsSelected == true))
             {
                 if (purchase_order.Error == null)
@@ -122,16 +129,23 @@ namespace entity
                         app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_order.id_range).FirstOrDefault();
                         Brillo.Document.Start.Automatic(purchase_order, app_document_range);
                     }
+
+                    NumberOfRecords += 1;
+                    purchase_order.IsSelected = false;
+
                 }
                 else if (purchase_order.Error != null)
                 {
                     purchase_order.HasErrors = true;
                 }
             }
+
+            return true;
         }
 
-        public void Anull()
+        public bool Anull()
         {
+            NumberOfRecords = 0;
             foreach (purchase_order purchase_order in base.purchase_order.Local)
             {
                 if (purchase_order.IsSelected && purchase_order.Error == null)
@@ -150,6 +164,7 @@ namespace entity
                         {
                             base.payment_schedual.RemoveRange(payment_schedualList);
                         }
+
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             base.item_movement.RemoveRange(item_movementList);
@@ -157,10 +172,14 @@ namespace entity
 
                         purchase_order.status = Status.Documents_General.Annulled;
                         SaveChanges();
+
+                        //Clean Up
+                        purchase_order.IsSelected = false;
+                        NumberOfRecords += 1;
                     }
                 }
             }
-
+            return true;
         }
     }
 }

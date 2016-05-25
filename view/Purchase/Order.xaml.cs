@@ -181,10 +181,14 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
-            dbContext.SaveChangesAsync();
-            purchase_orderViewSource.View.Refresh();
-            toolBar.msgSaved();
-            sbxContact.Text = "";
+            if (dbContext.SaveChanges() == 1)
+            {
+                toolBar.msgSaved(dbContext.NumberOfRecords);
+
+                purchase_orderViewSource.View.Refresh();
+                sbxContact.Text = "";
+            }
+            
         }
 
         private void toolBar_btnCancel_Click(object sender)
@@ -194,19 +198,17 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            dbContext.Approve();
-            foreach (purchase_order purchase_order in purchase_orderViewSource.View.Cast<purchase_order>().ToList())
+            if (dbContext.Approve())
             {
-                purchase_order.IsSelected = false;
+                toolBar.msgApproved(dbContext.NumberOfRecords);   
             }
         }
 
         private void toolBar_btnAnull_Click(object sender)
         {
-            dbContext.Anull();
-            foreach (purchase_order purchase_order in purchase_orderViewSource.View.Cast<purchase_order>().ToList())
+            if (dbContext.Anull())
             {
-                purchase_order.IsSelected = false;
+                toolBar.msgAnnulled(dbContext.NumberOfRecords);
             }
         }
 

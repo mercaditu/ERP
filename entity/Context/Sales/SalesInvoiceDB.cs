@@ -132,8 +132,9 @@ namespace entity
             }
         }
 
-        public void Approve(bool IsDiscountStock)
+        public bool Approve(bool IsDiscountStock)
         {
+            NumberOfRecords = 0;
             foreach (sales_invoice invoice in sales_invoice.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null))
@@ -203,15 +204,12 @@ namespace entity
                         SaveChanges();
                     }
 
+                    NumberOfRecords += 1;
                     invoice.IsSelected = false;
-
-                    if (invoice.Error != null)
-                    {
-                        invoice.HasErrors = true;
-                    }
                 }
-
             }
+
+            return true;
         }
 
         public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)

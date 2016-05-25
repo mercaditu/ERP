@@ -505,10 +505,10 @@
     <Compile Include="Report\ReportSalesbyTag.xaml.cs">
       <DependentUpon>ReportSalesbyTag.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Report\Sales\HistoricStockValues_Report.xaml.cs">
+    <Compile Include="Report\Stock\HistoricStockValues_Report.xaml.cs">
       <DependentUpon>HistoricStockValues_Report.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Report\Sales\HistoricStockLevels_Report.xaml.cs">
+    <Compile Include="Report\Stock\HistoricStockLevels_Report.xaml.cs">
       <DependentUpon>HistoricStockLevels_Report.xaml</DependentUpon>
     </Compile>
     <Compile Include="Report\Sales\PaymentReceived_Report.xaml.cs">
@@ -1529,11 +1529,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Report\Sales\HistoricStockValues_Report.xaml">
+    <Page Include="Report\Stock\HistoricStockValues_Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Report\Sales\HistoricStockLevels_Report.xaml">
+    <Page Include="Report\Stock\HistoricStockLevels_Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

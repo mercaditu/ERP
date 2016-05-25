@@ -120,34 +120,10 @@ namespace Cognitivo.Report
                 HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
                 unit_price_discount = g.sid.discount != null ? g.sid.discount : 0,
             }).ToList();
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            path = path + "\\CogntivoERP";
-            string SubFolder = "";
-            SubFolder = "\\TemplateFiles";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-                Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoicebySalesMan.rdlc", path + SubFolder + "\\SalesInvoicebySalesMan.rdlc");
-            }
-            else if (!Directory.Exists(path + SubFolder))
-            {
-                Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoicebySalesMan.rdlc", path + SubFolder + "\\SalesInvoicebySalesMan.rdlc");
 
-            }
-            else if (!File.Exists(path + SubFolder + "\\SalesInvoicebySalesMan.rdlc"))
-            {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoicebySalesMan.rdlc", path + SubFolder + "\\SalesInvoicebySalesMan.rdlc");
-            }
-
-
-            reportViewer.LocalReport.ReportPath = path + SubFolder + "\\SalesInvoicebySalesMan.rdlc"; // Path of the rdlc file
+            reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoicebySalesMan.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();
-
-
-
         }   
     }
 }

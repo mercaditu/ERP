@@ -19,13 +19,13 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Report
 {
-    public partial class HistoricStockValues_Report : Page
+    public partial class HistoricStockLevels_Report : Page
     {
         ReportPage ReportPage = null; // Application.Current.Windows.OfType<ReportPage>() as ReportPage;
 
         db db = new db();
 
-        public HistoricStockValues_Report()
+        public HistoricStockLevels_Report()
         {
             InitializeComponent();
         }
@@ -41,19 +41,10 @@ namespace Cognitivo.Report
         {
             var predicate = PredicateBuilder.True<entity.item_movement>();
 
-          
-
-            if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
-
-            }
             if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
             {
                 predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
-
             }
-           
 
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
@@ -62,37 +53,13 @@ namespace Cognitivo.Report
                 .Select(g => new
             {
                 id_item_product = g.id_item_product,
-                item_name=g.item_product.item!=null?g.item_product.item.name:"",
-                value=(g.item_movement_value.Sum(x=>x.unit_value)),
+                item_name = g.item_product.item != null ? g.item_product.item.name : "",
+                Stock = (g.credit -g.debit),
             }).ToList();
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            path = path + "\\CogntivoERP";
-            string SubFolder = "";
-            SubFolder = "\\Reports";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-                Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockValue.rdlc", path + SubFolder + "\\HistoricStockValue.rdlc");
-            }
-            else if (!Directory.Exists(path + SubFolder))
-            {
-                Directory.CreateDirectory(path + SubFolder);
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockValue.rdlc", path + SubFolder + "\\HistoricStockValue.rdlc");
 
-            }
-            else if (!File.Exists(path + SubFolder + "\\HistoricStockValue.rdlc"))
-            {
-                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockValue.rdlc", path + SubFolder + "\\HistoricStockValue.rdlc");
-            }
-
-
-            reportViewer.LocalReport.ReportPath = path + SubFolder + "\\HistoricStockValue.rdlc"; // Path of the rdlc file
+            reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockLevels.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();
-
-
-
         }   
     }
 }

@@ -217,7 +217,7 @@ namespace entity
 
                     Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                     List<item_movement> item_movementList = new List<item_movement>();
-                    item_movementList = _Stock.revert_Stock(this, App.Names.SalesReturn, sales_return.id_sales_return);
+                    item_movementList = _Stock.revert_Stock(this, App.Names.SalesReturn, sales_return);
 
                     if (payment_schedualList != null && payment_schedualList.Count > 0)
                     {

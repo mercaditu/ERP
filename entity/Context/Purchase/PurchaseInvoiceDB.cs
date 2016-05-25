@@ -19,7 +19,7 @@ namespace entity
 
             purchase_invoice.State = EntityState.Added;
             purchase_invoice.IsSelected = true;
-
+            base.Entry(purchase_invoice).State = EntityState.Added;
             return purchase_invoice;
         }
 

@@ -124,8 +124,8 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            entity.Brillo.Logic.Stock stock = new entity.Brillo.Logic.Stock();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+            
             if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.app_document_range != null)
             {
                 entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
@@ -133,56 +133,62 @@ namespace Cognitivo.Product
                 entity.Brillo.Logic.Range.terminal_Code = String.Empty;
                 app_document_range app_document_range = item_transfer.app_document_range;
                 item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
-
             }
-            entity.Properties.Settings setting = new entity.Properties.Settings();
+            
             item_transfer.user_given = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
             item_transfer.status = Status.Transfer.Approved;
             dbContext.SaveChanges();
             ProductMovementDB ProductMovementDB = new ProductMovementDB();
+
             for (int i = 0; i < item_transfer_detailDataGrid.Items.Count; i++)
             {
-                item_transfer_detail item = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
+                entity.Brillo.Logic.Stock stock = new entity.Brillo.Logic.Stock();
+
+                item_transfer_detail item_transfer_detail = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
 
                 item_movement item_movement_origin = new item_movement();
-                item_movement_origin.debit =  item.quantity_origin;
+                item_movement_origin.debit = item_transfer_detail.quantity_origin;
                 item_movement_origin.credit = 0;
-                item_movement_origin.id_location = item.item_transfer.app_location_origin.id_location;
+                item_movement_origin.id_location = item_transfer_detail.item_transfer.app_location_origin.id_location;
                 item_movement_origin.status = Status.Stock.InStock;
-                item_movement_origin.trans_date = item.item_transfer.trans_date;
-              
-                item_movement_origin.comment = stock.comment_Generator(entity.App.Names.Transfer, item.item_transfer.number.ToString(), "");
-                
-                if (item.item_product.id_item_product != 0)
+                item_movement_origin.trans_date = item_transfer_detail.item_transfer.trans_date;
+
+                item_movement_origin.comment = stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number, "");
+
+                if (item_transfer_detail.item_product.id_item_product != 0)
                 {
-                    item_movement_origin.id_item_product = item.item_product.id_item_product;
+                    item_movement_origin.id_item_product = item_transfer_detail.item_product.id_item_product;
                 }
 
                 ProductMovementDB.item_movement.Add(item_movement_origin);
+
                 item_movement item_movement_dest = new item_movement();
                 item_movement_dest.debit = 0;
-                item_movement_dest.credit = item.quantity_destination;
-                item_movement_dest.id_location = item.item_transfer.app_location_destination.id_location;
+                item_movement_dest.credit = item_transfer_detail.quantity_destination;
+                item_movement_dest.id_location = item_transfer_detail.item_transfer.app_location_destination.id_location;
                 item_movement_dest.status = Status.Stock.InStock;
-                item_movement_dest.trans_date = item.item_transfer.trans_date;
-               
-                item_movement_dest.comment = stock.comment_Generator(entity.App.Names.Transfer, item.item_transfer.number.ToString(), "");
-                
-                if (item.item_product.id_item_product != 0)
+                item_movement_dest.trans_date = item_transfer_detail.item_transfer.trans_date;
+
+                item_movement_dest.comment = stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number, "");
+
+                if (item_transfer_detail.item_product.id_item_product != 0)
                 {
-                    item_movement_dest.id_item_product = item.item_product.id_item_product;
+                    item_movement_dest.id_item_product = item_transfer_detail.item_product.id_item_product;
                 }
 
                 ProductMovementDB.item_movement.Add(item_movement_dest);
+                item_transfer.status = Status.Transfer.Approved;
+            }
+
+            if (item_transfer.status == Status.Transfer.Approved)
+            {
                 entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
                 Document.Document_PrintItemRequest(item_transfer.app_document_range.id_document, item_transfer);
-
-                item_transfer.status = Status.Transfer.Approved;
 
                 if (ProductMovementDB.SaveChanges() > 0)
                 {
                     toolBar.msgSaved(ProductMovementDB.NumberOfRecords);
-                }
+                }   
             }
         }
 

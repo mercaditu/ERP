@@ -56,6 +56,7 @@ namespace Cognitivo.Product
         private void toolBar_btnSave_Click(object sender)
         {
             db.db.SaveChanges();
+            toolBar.msgSaved();
         }
 
         private void toolBar_btnCancel_Click(object sender)

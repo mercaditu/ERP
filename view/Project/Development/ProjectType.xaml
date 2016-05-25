@@ -130,6 +130,9 @@
                     <StackPanel HorizontalAlignment="Center" Margin="0,16">
 
                         <StackPanel x:Name="stpcode" IsEnabled="False" DataContext="{Binding SelectedItem_, ElementName=treeProject}">
+                            <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
+                            <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}" 
+                                SelectionChanged="cbxItemType_SelectionChanged"/>
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                             <TextBox Text="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>

@@ -102,9 +102,9 @@
                         <DataGrid Width="300" Margin="8" ItemsSource="{Binding}" AutoGenerateColumns="False"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                <DataGridTextColumn Binding="{Binding start_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                <DataGridTextColumn Binding="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <DataGridTextColumn Binding="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Status"/>
+                                <DataGridTextColumn Binding="{Binding start_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="start date"/>
+                                <DataGridTextColumn Binding="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="comment"/>
                             </DataGrid.Columns>
                         </DataGrid>
 

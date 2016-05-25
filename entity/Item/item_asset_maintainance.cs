@@ -28,7 +28,8 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             status = Status.Pending;
-
+            start_date = DateTime.Now;
+            end_date = DateTime.Now;
             item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
         }
 

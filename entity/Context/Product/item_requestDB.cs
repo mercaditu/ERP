@@ -104,6 +104,7 @@ namespace entity
                 {
                     production_order.id_production_line = production_line.FirstOrDefault().id_production_line;
                 }
+                production_execution production_execution = new production_execution();
 
 
                 foreach (item_request_detail item_request_detail in item_request.item_request_detail)
@@ -225,7 +226,7 @@ namespace entity
                             production_order_detail production_order_detail = new production_order_detail();
                             production_order_detail.name = item_request_detail.item.name;
                             production_order_detail.quantity = item.quantity;
-                            production_order_detail.status = Status.Project.Pending;
+                            production_order_detail.status = Status.Project.Approved;
                             production_order_detail.is_input = false;
 
                             production_order_detail.id_item = item_request_detail.item.id_item;
@@ -239,6 +240,10 @@ namespace entity
                             }
                             production_order.production_order_detail.Add(production_order_detail);
 
+                          
+                            production_execution.production_order = production_order;
+                            production_execution.id_production_line = production_order.id_production_line;
+                            production_execution.trans_date = DateTime.Now;
 
                         }
                         else
@@ -307,6 +312,7 @@ namespace entity
                 if (production_order.production_order_detail.Count() > 0)
                 {
                     base.production_order.Add(production_order);
+                    base.production_execution.Add(production_execution);
                 }
             }
             SaveChanges();

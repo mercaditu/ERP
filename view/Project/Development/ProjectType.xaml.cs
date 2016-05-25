@@ -52,6 +52,8 @@ namespace Cognitivo.Project.Development
             //Filter to remove all items that are not top level.
             projectproject_template_detailViewSource = ((CollectionViewSource)(FindResource("projectproject_template_detailViewSource")));
 
+            cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
+
             filter_task();
 
         }
@@ -169,16 +171,7 @@ namespace Cognitivo.Project.Development
             }
             else
             {
-                //Adding First Parent.
-                project_template_detail n_project_template = new project_template_detail();
-                n_project_template.id_project_template = project_template.id_project_template;
-                n_project_template.status = Status.Project.Pending;
-                dbContext.project_template_detail.Add(n_project_template);
-
-                projectproject_template_detailViewSource.View.Filter = null;
-
-                filter_task();
-                treeProject.SelectedItem_ = n_project_template;
+                toolBar.msgWarning("Please Select Task");
             }
             projectproject_template_detailViewSource.View.MoveCurrentToLast();
             
@@ -275,23 +268,11 @@ namespace Cognitivo.Project.Development
         private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cbxItemType = (ComboBox)sender;
-            if (itemSearchViewSource != null && cbxItemType.SelectedItem != null)
+            if ( cbxItemType.SelectedItem != null)
             {
                 item.item_type Item_Type = (item.item_type)cbxItemType.SelectedItem;
 
-                itemSearchViewSource.View.Filter = i =>
-                {
-                    item item = i as item;
-                    //item.item_type j = (item.item_type)cbxItemType.SelectedValue;
-                    if (item.id_item_type == Item_Type)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                };
+                sbxItem.item_types = Item_Type;
             }
         }
 

@@ -21,16 +21,6 @@ namespace entity
             return base.SaveChangesAsync();
         }
 
-        public static ICollection<T> ForEachAndAdd<T>(this IEnumerable<T> self, ICollection<T> other, Func<T, T, bool> predicate) where T : class
-        {
-            foreach (var h1 in self)
-            {
-                if (other.FirstOrDefault(h2 => predicate(h1, h2)) == null)
-                    other.Add(h1);
-            }
-            return other;
-        }
-
         /// <summary>
         /// Takes all Changes made to the Entity, and reverts it to the original state.
         /// </summary>

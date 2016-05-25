@@ -84,18 +84,6 @@ namespace Cognitivo.Setup.Migration
                     sales_invoice sales_invoice = db.New(0);
                     sales_invoice.id_company = id_company;
 
-                    //if ((reader[6] is DBNull))
-                    //{
-                    //    sales_invoice.is_accounted = false;
-                    //}
-                    //else
-                    //{
-                    //    sales_invoice.is_accounted = (Convert.ToByte(reader[23]) == 0) ? false : true;
-                    //}
-
-
-                    //sales_invoice.version = 1;
-
                     sales_invoice.number = (reader[1] is DBNull) ? null : reader[1].ToString();
                     sales_invoice.trans_date = Convert.ToDateTime(reader[2]);
 
@@ -104,14 +92,12 @@ namespace Cognitivo.Setup.Migration
                     {
                         string _customer = reader[26].ToString();
                         contact contact = db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
+                        
                         if (contact != null)
                         {
-
                             sales_invoice.id_contact = contact.id_contact;
                             sales_invoice.contact = contact;
                         }
-
-
                     }
 
                     //Condition (Cash or Credit)
@@ -328,7 +314,6 @@ namespace Cognitivo.Setup.Migration
                         sales_invoice.IsSelected = true;
                         db.sales_invoice.Add(sales_invoice);
 
-                        db.SaveChanges();
                         if (!(reader[10] is DBNull))
                         {
                             int status = Convert.ToInt32(reader[10]);
@@ -339,7 +324,7 @@ namespace Cognitivo.Setup.Migration
                                 {
                                     sales_invoice.comment = reader[11].ToString();
                                 }
-
+                                db.SaveChanges();
                             }
                             else if(status == 1)
                             {

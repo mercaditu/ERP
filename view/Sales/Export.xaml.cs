@@ -118,7 +118,7 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (ImpexDB.SaveChanges() == 1)
+            if (ImpexDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ImpexDB.NumberOfRecords);
             }

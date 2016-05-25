@@ -66,9 +66,9 @@ namespace entity
 
         private void validate_Invoice()
         {
-            IList<sales_invoice> sales_invoiceLIST = sales_invoice.Local.ToList();
+            NumberOfRecords = 0;
 
-            foreach (sales_invoice invoice in sales_invoiceLIST)
+            foreach (sales_invoice invoice in sales_invoice.Local.Where(x => x.IsSelected))
             {
                 if (invoice.Error == null)
                 {
@@ -82,8 +82,6 @@ namespace entity
                     else if (invoice.State == EntityState.Modified)
                     {
                         invoice.timestamp = DateTime.Now;
-                        //invoice.is_head = false;
-                        //sales_invoice.Local.Add(new_Version(invoice));
                         invoice.State = EntityState.Unchanged;
                         Entry(invoice).State = EntityState.Modified;
                     }
@@ -94,6 +92,7 @@ namespace entity
                         invoice.State = EntityState.Deleted;
                         Entry(invoice).State = EntityState.Modified;
                     }
+                    NumberOfRecords += 1;
                 }
                 else if (invoice.State > 0)
                 {
@@ -108,7 +107,6 @@ namespace entity
         private sales_invoice new_Version(sales_invoice old_invoice)
         {
             sales_invoice sales_invoice = new sales_invoice();
-
             return sales_invoice;
         }
 
@@ -246,15 +244,6 @@ namespace entity
                 sales_invoice_detail.quantity += 1;
                 return sales_invoice_detail;
             }
-
-       
-            //Dispatcher.BeginInvoke((Action)(() =>
-            //{
-
-            //    CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
-            //    sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            //    calculate_vat(null, null);
-            //}));
         }
 
         /// <summary>

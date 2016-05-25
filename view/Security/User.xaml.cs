@@ -83,7 +83,7 @@ namespace Cognitivo.Security
             }
             else
             {
-                if (dbContext.SaveChanges() == 1)
+                if (dbContext.SaveChanges() > 0)
                 {
                     toolBar.msgSaved(1);
 
@@ -104,7 +104,7 @@ namespace Cognitivo.Security
             {
                 dbContext.security_user.Remove((security_user)security_userDataGrid.SelectedItem);
 
-                if (dbContext.SaveChanges() == 1)
+                if (dbContext.SaveChanges() > 0)
                 {
                     security_user_view_source.View.MoveCurrentToFirst();
                 }

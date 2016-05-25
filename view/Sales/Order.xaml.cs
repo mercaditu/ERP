@@ -174,7 +174,7 @@ namespace Cognitivo.Sales
         {
             try
             {
-                if (dbContext.SaveChanges() == 1)
+                if (dbContext.SaveChanges() > 0)
                 {
                     toolBar.msgSaved(dbContext.NumberOfRecords);
                     sales_orderViewSource.View.Refresh();

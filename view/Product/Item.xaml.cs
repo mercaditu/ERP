@@ -410,7 +410,7 @@ namespace Cognitivo.Product
                     return;
                 }
 
-                if (ItemDB.SaveChanges() == 1)
+                if (ItemDB.SaveChanges() > 0)
                 {
                     // Save Changes
                     itemViewSource.View.Refresh();

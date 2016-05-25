@@ -193,7 +193,7 @@ namespace Cognitivo.Accounting
                 accounting_chart.chart_type = (accounting_chart.ChartType)cbxChartType.SelectedItem;
             }
 
-            if (AccountingChartDB.SaveChanges() == 1)
+            if (AccountingChartDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(AccountingChartDB.NumberOfRecords);
                 filter_chart();

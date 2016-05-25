@@ -79,7 +79,7 @@ namespace Cognitivo.Project
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (ProjectTemplateDB.SaveChanges() == 1)
+            if (ProjectTemplateDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ProjectTemplateDB.NumberOfRecords);
             }

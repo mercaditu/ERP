@@ -293,7 +293,6 @@ namespace Cognitivo.Setup.Migration
 
                     if (sales_invoice.Error == null)
                     {
-
                         sales_invoice.State = System.Data.Entity.EntityState.Added;
                         sales_invoice.IsSelected = true;
                         db.sales_invoice.Add(sales_invoice);
@@ -301,35 +300,41 @@ namespace Cognitivo.Setup.Migration
                         if (!(reader[10] is DBNull))
                         {
                             int status = Convert.ToInt32(reader[10]);
+                            
                             if (status == 0)
                             {
                                 sales_invoice.status = Status.Documents_General.Pending;
+                                
                                 if (!(reader[11] is DBNull))
                                 {
                                     sales_invoice.comment = reader[11].ToString();
                                 }
+
                                 db.SaveChanges();
                             }
                             else if(status == 1)
                             {
                                 sales_invoice.status = Status.Documents_General.Approved;
+                                
                                 if (!(reader[11] is DBNull))
                                 {
                                     sales_invoice.comment = reader[11].ToString();
                                 }
+
                                 db.Approve(true);
                             }
                             else if (status == 2)
                             {
                                 sales_invoice.status = Status.Documents_General.Annulled;
+                                
                                 if (!(reader[11] is DBNull))
                                 {
                                     sales_invoice.comment = reader[11].ToString();
                                 }
+
                                 db.Approve(true);
                                 db.Anull();
                             }
-
                         }
 
 
@@ -344,12 +349,8 @@ namespace Cognitivo.Setup.Migration
                     }
                 }
             }
-            // reader.Close();
-            //cmd.Dispose();
-            conn.Close();
 
-            //_customer_Current = _customer_Max;
+            conn.Close();
         }
-    
     }
 }

@@ -143,7 +143,7 @@ namespace Cognitivo.Project.PrintingPress
 
         private void ctrlToolBar_btnSave_Click(object sender)
         {
-            if (entity.SaveChanges() == 1)
+            if (entity.SaveChanges() > 0)
             {
                 stackMain.IsEnabled = false;
                 project_type_templateDataGrid.IsReadOnly = true;

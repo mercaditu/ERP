@@ -258,7 +258,7 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (PurchaseTenderDB.SaveChanges() == 1)
+            if (PurchaseTenderDB.SaveChanges() > 0)
             {
                 purchase_tenderViewSource.View.Refresh();
                 toolBar.msgSaved(PurchaseTenderDB.NumberOfRecords);    

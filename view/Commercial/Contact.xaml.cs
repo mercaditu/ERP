@@ -145,7 +145,7 @@ namespace Cognitivo.Commercial
         private void toolBar_btnSave_Click(object sender)
         {
             //Abhi> in Brillo, add logic to add for validations
-            if (ContactDB.SaveChanges() == 1)
+            if (ContactDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ContactDB.NumberOfRecords);
                 contactViewSource.View.Refresh();

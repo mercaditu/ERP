@@ -248,7 +248,7 @@ namespace Cognitivo.Project.Development
                     }
                     ProjectTaskDB.purchase_tender.Add(purchase_tender);
 
-                    if (ProjectTaskDB.SaveChanges() == 1)
+                    if (ProjectTaskDB.SaveChanges() > 0)
                     {
                         toolBar.msgSaved(ProjectTaskDB.NumberOfRecords);
                     }

@@ -93,7 +93,7 @@ namespace Cognitivo.Production
 
         private void Save_Click(object sender)
         {
-            if (dbContext.SaveChanges() == 1)
+            if (dbContext.SaveChanges() > 0)
             {
                 production_lineViewSource.View.Refresh();
                 toolBar.msgSaved(dbContext.NumberOfRecords);   

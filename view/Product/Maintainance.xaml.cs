@@ -55,7 +55,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (db.db.SaveChanges() == 1)
+            if (db.db.SaveChanges() > 0)
             {
                 toolBar.msgSaved(0);
             }

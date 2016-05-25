@@ -118,7 +118,7 @@ namespace Cognitivo.Accounting
 
         private void toolbar_btnSave_Click(object sender)
         {
-            if (AccountingJournalDB.SaveChanges() == 1)
+            if (AccountingJournalDB.SaveChanges() > 0)
             {
                 accounting_journalViewSource.View.Refresh();
                 accounting_journalViewSource.View.MoveCurrentToLast();

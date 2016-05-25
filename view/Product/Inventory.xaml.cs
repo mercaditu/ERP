@@ -160,7 +160,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (InventoryDB.SaveChanges() == 1)
+            if (InventoryDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(InventoryDB.NumberOfRecords);
                 item_inventoryViewSource.View.Refresh();

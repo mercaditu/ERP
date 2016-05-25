@@ -181,7 +181,7 @@ namespace Cognitivo.Purchase
 
         private void Save_Click(object sender)
         {
-            if (dbContext.SaveChanges() == 1)
+            if (dbContext.SaveChanges() > 0)
             {
                 toolBar.msgSaved(dbContext.NumberOfRecords);
 

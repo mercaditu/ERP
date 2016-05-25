@@ -91,7 +91,7 @@ namespace Cognitivo.Sales
         }
         private void toolBar_btnSave_Click(object sender)
         {
-            if (dbContext.SaveChanges() == 1)
+            if (dbContext.SaveChanges() > 0)
             {
                 sales_packingViewSource.View.Refresh();
                 toolBar.msgSaved(dbContext.NumberOfRecords);

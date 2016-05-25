@@ -183,7 +183,7 @@ namespace Cognitivo.Project.Development
                 }
 
                 //Saving Changes
-                if (ProjectTaskDB.SaveChanges() == 1)
+                if (ProjectTaskDB.SaveChanges() > 0)
                 {
                     toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
                 }
@@ -301,7 +301,7 @@ namespace Cognitivo.Project.Development
 
         private void btnSaveTask_Click(object sender)
         {
-            if (ProjectTaskDB.SaveChanges() == 1)
+            if (ProjectTaskDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ProjectTaskDB.NumberOfRecords);
                 stpcode.IsEnabled = false;
@@ -333,7 +333,7 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
-                if (ProjectTaskDB.SaveChanges() == 1)
+                if (ProjectTaskDB.SaveChanges() > 0)
                 {
                     toolBar.msgApproved(ProjectTaskDB.NumberOfRecords);
                     filter_task();
@@ -358,7 +358,7 @@ namespace Cognitivo.Project.Development
                     project_task.IsSelected = false;
                 }
 
-                if (ProjectTaskDB.SaveChanges() == 1)
+                if (ProjectTaskDB.SaveChanges() > 0)
                 {
                     toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
                     filter_task();

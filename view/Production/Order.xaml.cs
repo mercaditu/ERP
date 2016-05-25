@@ -151,7 +151,7 @@ namespace Cognitivo.Production
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order.status = Status.Production.Executed;
-            if (OrderDB.SaveChanges() == 1)
+            if (OrderDB.SaveChanges() > 0)
             {
                 toolBar.msgApproved(1);
             }
@@ -593,7 +593,7 @@ namespace Cognitivo.Production
 
         private void btnSaveTask_Click(object sender)
         {
-            if (OrderDB.SaveChanges() == 1)
+            if (OrderDB.SaveChanges() > 0)
             {
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 production_order.State = EntityState.Modified;
@@ -614,7 +614,7 @@ namespace Cognitivo.Production
                 production_order_detail.IsSelected = false;
             }
 
-            if (OrderDB.SaveChanges() == 1)
+            if (OrderDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(OrderDB.NumberOfRecords);
                 filter_task();
@@ -670,7 +670,7 @@ namespace Cognitivo.Production
                 OrderDB.production_execution.Add(production_execution);
             }
 
-            if (OrderDB.SaveChanges() == 1)
+            if (OrderDB.SaveChanges() > 0)
             {
                 filter_task();
                 toolBar.msgSaved(OrderDB.NumberOfRecords);

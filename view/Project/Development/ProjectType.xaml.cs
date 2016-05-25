@@ -209,7 +209,7 @@ namespace Cognitivo.Project.Development
 
         private void btnSaveTask_Click(object sender)
         {
-            if (dbContext.SaveChanges() == 1)
+            if (dbContext.SaveChanges() > 0)
             {
                 stpcode.IsEnabled = false;
                 toolBar.msgSaved(dbContext.NumberOfRecords);

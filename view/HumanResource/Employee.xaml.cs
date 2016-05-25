@@ -105,7 +105,7 @@ namespace Cognitivo.HumanResource
 
         private void btnSave_Click(object sender)
         {
-            if (dbContext.SaveChanges() == 1)
+            if (dbContext.SaveChanges() > 0)
             {
                 toolBar.msgSaved(dbContext.NumberOfRecords);
             }

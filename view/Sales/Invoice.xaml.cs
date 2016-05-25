@@ -351,11 +351,10 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender)
         {
-            if (SalesInvoiceDB.SaveChanges() == 1)
+            if (SalesInvoiceDB.SaveChanges() > 0)
             {
                 sales_invoiceViewSource.View.Refresh();
                 toolBar.msgSaved(SalesInvoiceDB.NumberOfRecords);
-                sbxContact.Text = "";
             }
         }
 
@@ -369,7 +368,6 @@ namespace Cognitivo.Sales
             Settings SalesSettings = new Settings();
             if (SalesInvoiceDB.Approve(SalesSettings.DiscountStock))
             {
-
                 filter_sales();
             }
         }
@@ -462,17 +460,6 @@ namespace Cognitivo.Sales
                 List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
                 if (sales_invoice_detail.Count > 0)
                 {
-                    //dgvVAT.ItemsSource = sales_invoice_detail
-                    //    .Join(SalesInvoiceDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                    //        , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
-                    //        .GroupBy(a => new { a.name, a.id_vat, a.ad })
-                    //.Select(g => new
-                    //{
-                    //    id_vat = g.Key.id_vat,
-                    //    name = g.Key.name,
-                    //    value = g.Sum(a => a.value * a.ad.quantity)
-                    //}).ToList();
-
                     var listvat = sales_invoice_detail
                            .Join(SalesInvoiceDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
                                , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })

@@ -128,7 +128,7 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (dbContext.SaveChanges() == 1)
+            if (dbContext.SaveChanges() > 0)
             {
                 impex_incotermViewSource.View.Refresh();
                 toolBar.msgSaved(dbContext.NumberOfRecords);

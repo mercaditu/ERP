@@ -43,7 +43,7 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (dbContext.SaveChanges() == 1)
+            if (dbContext.SaveChanges() > 0)
             {
                 toolBar.msgSaved(dbContext.NumberOfRecords);
             }
@@ -179,7 +179,7 @@ namespace Cognitivo.Product
 
                 item_transfer.status = Status.Transfer.Approved;
 
-                if (ProductMovementDB.SaveChanges() == 1)
+                if (ProductMovementDB.SaveChanges() > 0)
                 {
                     toolBar.msgSaved(ProductMovementDB.NumberOfRecords);
                 }

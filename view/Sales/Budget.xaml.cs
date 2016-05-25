@@ -127,7 +127,7 @@ namespace Cognitivo.Sales
 
         private void Save_Click(object sender)
         {
-            if (SalesBudgetDB.SaveChanges() == 1)
+            if (SalesBudgetDB.SaveChanges() > 0)
             {
                 sales_budgetViewSource.View.Refresh();
                 toolBar.msgSaved(SalesBudgetDB.NumberOfRecords);

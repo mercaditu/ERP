@@ -29,7 +29,7 @@ namespace Cognitivo.Configs
 
         private void toolBar_btnSave_Click(object sender)
         {
-            if (dbcontext.SaveChanges() == 1)
+            if (dbcontext.SaveChanges() > 0)
             {
                 app_documentViewSource.View.Refresh();
                 toolBar.msgSaved(dbcontext.NumberOfRecords);

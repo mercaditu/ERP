@@ -57,19 +57,10 @@ namespace Cognitivo.Sales
 
         private void toolBar_btnSave_Click(object sender)
         {
-            try
+            if (dbContext.SaveChanges() == 1)
             {
-                IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
-                 if (validationresult.Count() == 0)
-                 {
-                     dbContext.SaveChanges();
-                 }
                 sales_repViewSource.View.Refresh();
-                toolBar.msgSaved();
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                toolBar.msgSaved(dbContext.NumberOfRecords);
             }
         }
 

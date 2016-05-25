@@ -62,10 +62,11 @@ namespace Cognitivo.Project.Development
 
         private void btnSave_Click(object sender)
         {
-            ProjectDB.SaveChanges();
-            ProjectViewSource.View.Refresh();
-            toolBar.msgSaved();
-
+            if (ProjectDB.SaveChanges() == 1)
+            {
+                ProjectViewSource.View.Refresh();
+                toolBar.msgSaved(ProjectDB.NumberOfRecords);   
+            }
         }
 
         private void toolBar_btnEdit_Click(object sender)

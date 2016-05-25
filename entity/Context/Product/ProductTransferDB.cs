@@ -59,8 +59,10 @@ namespace entity
         /// <summary>
         /// Should only
         /// </summary>
-        public void ApproveOrigin(int origin, int dest, bool movebytruck)
+        public int ApproveOrigin(int origin, int dest, bool movebytruck)
         {
+            NumberOfRecords = 0;
+
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
             foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
@@ -121,6 +123,7 @@ namespace entity
                         }
 
                         //transit
+                        NumberOfRecords += 1;
                         item_transfer.status = Status.Transfer.Transit;
                         item_transfer.RaisePropertyChanged("status");
                     }
@@ -140,10 +143,14 @@ namespace entity
             {
                 throw ex;
             }
+
+            return NumberOfRecords;
         }
 
-        public void ApproveDestination(int origin, int dest, bool MoveByTruck)
+        public int ApproveDestination(int origin, int dest, bool MoveByTruck)
         {
+            NumberOfRecords = 0;
+
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
             foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
@@ -213,6 +220,9 @@ namespace entity
                                             );
                             base.item_movement.Add(item_movement_dest);
                         }
+
+                        NumberOfRecords += 1;
+
                         item_transfer_detail.status = Status.Documents_General.Approved;
                         item_transfer_detail.RaisePropertyChanged("status");
                         item_transfer.status = Status.Transfer.Approved;
@@ -252,6 +262,8 @@ namespace entity
             }
 
             base.SaveChanges();
+
+            return NumberOfRecords;
         }
     }
 }

@@ -37,6 +37,8 @@ namespace entity
 
         private void validate_Invoice()
         {
+            NumberOfRecords = 0;
+
             foreach (purchase_invoice purchase_invoice in base.purchase_invoice.Local)
             {
                 if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
@@ -59,6 +61,7 @@ namespace entity
                         purchase_invoice.State = EntityState.Unchanged;
                         base.purchase_invoice.Remove(purchase_invoice);
                     }
+                    NumberOfRecords += 1;
                 }
                 else if (purchase_invoice.State > 0)
                 {

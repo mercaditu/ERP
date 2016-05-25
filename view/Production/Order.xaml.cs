@@ -593,20 +593,12 @@ namespace Cognitivo.Production
 
         private void btnSaveTask_Click(object sender)
         {
-            try
+            if (OrderDB.SaveChanges() == 1)
             {
-                cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
-                OrderDB.SaveChanges();
-
                 production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
                 production_order.State = EntityState.Modified;
                 Update_request();
-                toolBar.msgDone("Yay!");
                 stpcode.IsEnabled = false;
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
             }
         }
 
@@ -622,9 +614,11 @@ namespace Cognitivo.Production
                 production_order_detail.IsSelected = false;
             }
 
-            OrderDB.SaveChanges();
-            toolBar.msgDone();
-            filter_task();
+            if (OrderDB.SaveChanges() == 1)
+            {
+                toolBar.msgSaved(OrderDB.NumberOfRecords);
+                filter_task();
+            }
         }
 
         private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -675,11 +669,12 @@ namespace Cognitivo.Production
                 production_execution.trans_date = DateTime.Now;
                 OrderDB.production_execution.Add(production_execution);
             }
-           
 
-            OrderDB.SaveChanges();
-            toolBar.msgDone("Yay!");
-            filter_task();
+            if (OrderDB.SaveChanges() == 1)
+            {
+                filter_task();
+                toolBar.msgSaved(OrderDB.NumberOfRecords);
+            }
         }
 
         private void toolIcon_Click_1(object sender)

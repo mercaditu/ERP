@@ -23,6 +23,8 @@ namespace entity
 
         private void validate_Order()
         {
+            NumberOfRecords = 0;
+
             foreach (purchase_tender purchase_tender in base.purchase_tender.Local)
             {
                 if (purchase_tender.IsSelected)
@@ -45,6 +47,8 @@ namespace entity
                         purchase_tender.State = EntityState.Unchanged;
                         base.purchase_tender.Remove(purchase_tender);
                     }
+
+                    NumberOfRecords += 1;
                 }
                 else if (purchase_tender.State > 0)
                 {
@@ -55,6 +59,7 @@ namespace entity
                 }
             }
         }
+
         public void Approve()
         {
             NumberOfRecords = 0;
@@ -109,6 +114,7 @@ namespace entity
                             {
                                 purchase_order_detail.item_description = purchase_tender_detail.purchase_tender_item.item.name;
                             }
+
                             purchase_order_detail.quantity = purchase_tender_detail.quantity;
                             
                             if (base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault() != null)
@@ -119,6 +125,7 @@ namespace entity
                             {
                                 purchase_order_detail.id_vat_group = base.app_vat_group.Where(x => x.is_active == true).FirstOrDefault().id_vat_group;
                             }
+                            
                             purchase_order_detail.id_cost_center = base.app_cost_center.Where(x => x.is_active == true).FirstOrDefault().id_cost_center;
 
                             purchase_order.purchase_order_detail.Add(purchase_order_detail);
@@ -143,6 +150,8 @@ namespace entity
             }
         }
         public void Anull()
-        { }
+        { 
+        
+        }
     }
 }

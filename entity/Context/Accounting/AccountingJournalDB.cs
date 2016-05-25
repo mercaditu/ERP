@@ -23,6 +23,8 @@ namespace entity
 
         private void validate_Journal()
         {
+            NumberOfRecords = 0;
+
             foreach (accounting_journal accounting_journal in base.accounting_journal.Local)
             {
                 if (accounting_journal.IsSelected && accounting_journal.Error == null)
@@ -45,6 +47,7 @@ namespace entity
                         accounting_journal.State = EntityState.Unchanged;
                         base.accounting_journal.Remove(accounting_journal);
                     }
+                    NumberOfRecords += 1;
                 }
                 else if (accounting_journal.State > 0)
                 {
@@ -56,10 +59,12 @@ namespace entity
             }
         }
 
-        public void Approve()
+        public bool Approve()
         {
             validate_Journal();
             SaveChanges();
+
+            return true;
         }
 
        

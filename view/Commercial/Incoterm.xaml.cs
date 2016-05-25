@@ -128,20 +128,10 @@ namespace Cognitivo.Commercial
 
         private void toolBar_btnSave_Click(object sender)
         {
-            try
+            if (dbContext.SaveChanges() == 1)
             {
-               
-                IEnumerable<DbEntityValidationResult> validationresult = dbContext.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    dbContext.SaveChanges();
-                    impex_incotermViewSource.View.Refresh();
-                    toolBar.msgSaved();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                impex_incotermViewSource.View.Refresh();
+                toolBar.msgSaved(dbContext.NumberOfRecords);
             }
         }
 

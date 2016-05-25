@@ -152,10 +152,9 @@ namespace Cognitivo.Product
 
                 TransferSetting TransferSetting = new Product.TransferSetting();
 
-                ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
-
-                    toolBar.msgSaved();
-                    item_transferViewSource.View.Refresh();
+                int NumberofRecords = ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
+                toolBar.msgSaved(NumberofRecords);
+                item_transferViewSource.View.Refresh();
                  
             }
             catch (Exception ex)
@@ -168,9 +167,11 @@ namespace Cognitivo.Product
         {
             TransferSetting TransferSetting = new Product.TransferSetting();
             clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
-            ProductTransferDB.ApproveDestination( (int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
-            
-            toolBar.msgSaved();
+            int NumberOfRecords = ProductTransferDB.ApproveDestination((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
+            if (NumberOfRecords > 0)
+            {
+                toolBar.msgSaved(NumberOfRecords);
+            }
         }
 
         private void tbCustomize_MouseUp(object sender, MouseButtonEventArgs e)

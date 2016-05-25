@@ -91,23 +91,18 @@ namespace Cognitivo.Sales
         }
         private void toolBar_btnSave_Click(object sender)
         {
-            try
+            if (dbContext.SaveChanges() == 1)
             {
-                 dbContext.SaveChanges();
                 sales_packingViewSource.View.Refresh();
-                toolBar.msgSaved();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                toolBar.msgError(ex);
+                toolBar.msgSaved(dbContext.NumberOfRecords);
             }
         }
+
         private void toolBar_btnCancel_Click(object sender)
         {
             sales_packinglist_detailDataGrid.CancelEdit();
             sales_packingViewSource.View.MoveCurrentToFirst();
             dbContext.CancelAllChanges();
-            //itemViewSource.View.Filter = null;
             if (sales_packingsales_packinglist_detailViewSource.View != null)
                 sales_packingsales_packinglist_detailViewSource.View.Refresh();
         }

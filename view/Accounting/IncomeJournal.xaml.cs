@@ -52,7 +52,6 @@ namespace Cognitivo.Accounting
 
         private void toolBar_btnApprove_Click(object sender)
         {
-
             foreach (accounting_journal item in Accounting_journalList)
             {
                 if (item.IsSelected)
@@ -60,19 +59,20 @@ namespace Cognitivo.Accounting
                     if (item.accounting_journal_detail.Sum(x => x.credit) != item.accounting_journal_detail.Sum(x => x.debit))
                     {
                         toolbar.msgWarning("Verify balance :-" + item.code);
-
                     }
                     else
                     {
                         AccountingJournalDB.accounting_journal.Add(item);
                     }
                 }
-               
             }
-            AccountingJournalDB.Approve();
-            accounting_journalViewSource.View.Refresh();
-            accounting_journalViewSource.View.MoveCurrentToLast();
-            toolbar.msgSaved();
+
+            if (AccountingJournalDB.Approve())
+            {
+                accounting_journalViewSource.View.Refresh();
+                accounting_journalViewSource.View.MoveCurrentToLast();
+                toolbar.msgSaved(AccountingJournalDB.NumberOfRecords);
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -118,15 +118,12 @@ namespace Cognitivo.Accounting
 
         private void toolbar_btnSave_Click(object sender)
         {
-
-
-
-            AccountingJournalDB.SaveChanges();
-
-            accounting_journalViewSource.View.Refresh();
-            accounting_journalViewSource.View.MoveCurrentToLast();
-            toolbar.msgSaved();
-
+            if (AccountingJournalDB.SaveChanges() == 1)
+            {
+                accounting_journalViewSource.View.Refresh();
+                accounting_journalViewSource.View.MoveCurrentToLast();
+                toolbar.msgApproved(AccountingJournalDB.NumberOfRecords);
+            }
         }
 
 

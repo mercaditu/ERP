@@ -109,18 +109,9 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSave_Click_1(object sender)
         {
-            try
+            if (ImpexDB.SaveChanges() == 1)
             {
-                IEnumerable<DbEntityValidationResult> validationresult = ImpexDB.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    ImpexDB.SaveChanges();
-                    toolBar.msgSaved();
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
+                toolBar.msgSaved(ImpexDB.NumberOfRecords);
             }
         }
 

@@ -247,80 +247,14 @@ namespace Cognitivo.Project.Development
 
                     }
                     ProjectTaskDB.purchase_tender.Add(purchase_tender);
-                    ProjectTaskDB.SaveChanges();
 
-                    toolBar.msgSaved();
+                    if (ProjectTaskDB.SaveChanges() == 1)
+                    {
+                        toolBar.msgSaved(ProjectTaskDB.NumberOfRecords);
+                    }
                 }
-
-
-
-
             }
         }
-
-
-        //public void item_request_Click(object sender)
-        //{
-        //    project project = ((project)projectViewSource.View.CurrentItem);
-        //    int id_project = ((project)projectViewSource.View.CurrentItem).id_project;
-
-        //    List<project_task> productlist = ProjectTaskDB.project_task.ToList();
-        //    productlist = productlist.Where(x => x.IsSelected == true).ToList();
-
-        //    item_request item_request = new item_request();
-        //    item_request.name = ItemRequest.name;
-        //    item_request.comment = ItemRequest.comment;
-        //    item_request.id_branch = project.id_branch;
-        //    item_request.id_department = ItemRequest.id_department;
-        //    item_request.id_project = id_project;
-        //    item_request.request_date = DateTime.Now;
-
-        //    foreach (project_task project_task in productlist)
-        //    {
-        //        item_request_detail item_request_detail = new entity.item_request_detail();
-        //        item_request_detail.date_needed_by = ItemRequest.neededDate;
-        //        item_request_detail.id_project_task = project_task.id_project_task;
-        //        item_request_detail.urgency = ItemRequest.Urgencies;
-        //        item_request_detail.comment = ItemRequest.comment;
-        //        int idItem = (int)project_task.id_item;
-        //        item item = ProjectTaskDB.items.Where(x => x.id_item == idItem).FirstOrDefault();
-        //        if (item != null)
-        //        {
-        //            item_request_detail.item = item;
-        //        }
-
-        //        item_request_detail.id_item = idItem;
-        //        item_request_detail.quantity = (int)project_task.quantity_est;
-        //        item_request_detail.comment = item_request_detail.item.name;
-
-        //        List<project_task_dimension> project_task_dimensionList = ProjectTaskDB.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList();
-        //        foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
-        //        {
-        //            item_request_dimension item_request_dimension = new item_request_dimension();
-        //            item_request_dimension.id_dimension = project_task_dimension.id_dimension;
-        //            item_request_dimension.id_measurement = project_task_dimension.id_measurement;
-        //            item_request_dimension.value = project_task_dimension.value;
-        //            string comment = item_request_detail.item.name;
-
-        //            comment += project_task_dimension.value.ToString();
-        //            comment += "X";
-
-
-
-        //            item_request_detail.comment = comment.Substring(0, comment.Length - 1);
-        //            item_request_detail.item_request_dimension.Add(item_request_dimension);
-        //        }
-
-
-        //        item_request.item_request_detail.Add(item_request_detail);
-
-        //    }
-        //    ProjectTaskDB.item_request.Add(item_request);
-        //    ProjectTaskDB.SaveChanges();
-
-        //    crud_modal.Children.Clear();
-        //    crud_modal.Visibility = System.Windows.Visibility.Collapsed;
-        //}
 
         #endregion
 

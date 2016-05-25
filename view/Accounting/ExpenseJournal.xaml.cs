@@ -66,50 +66,11 @@ namespace Cognitivo.Accounting
                 }
 
             }
-            AccountingJournalDB.Approve();
 
-            toolbar.msgSaved();
+            if (AccountingJournalDB.Approve())
+            {
+                toolbar.msgSaved(AccountingJournalDB.NumberOfRecords);   
+            }
         }
-
-       
-
-        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (cmbcycle.SelectedItem!=null)
-        //    {
-        //        accounting_cycle accounting_cycle = (accounting_cycle)cmbcycle.SelectedItem;
-        //        if (accounting_cycle != null)
-        //        {
-        //            filter_chart(accounting_cycle.id_cycle);
-        //        }
-        //    }
-        //}
-
-        //public void filter_chart(int id_cycle)
-        //{
-
-
-        //    if (accounting_journalViewSource != null)
-        //    {
-        //        if (accounting_journalViewSource.View != null)
-        //        {
-        //            accounting_journalViewSource.View.Filter = i =>
-        //            {
-        //                accounting_journal accounting_journal = i as accounting_journal;
-        //                if (accounting_journal.id_cycle == id_cycle)
-        //                {
-        //                    return true;
-        //                }
-        //                else
-        //                {
-        //                    return false;
-        //                }
-        //            };
-        //        }
-
-
-        //    }
-
-        //}
     }
 }

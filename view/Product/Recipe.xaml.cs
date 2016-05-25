@@ -111,10 +111,11 @@ namespace Cognitivo.Product
 
         private void btnSave_Click(object sender)
         {
-            ProductRecipeDB.SaveChanges();
-            item_recepieViewSource.View.Refresh();
-            toolBar.msgSaved();
-
+            if (ProductRecipeDB.SaveChanges() == 1)
+            {
+                item_recepieViewSource.View.Refresh();
+                toolBar.msgSaved(ProductRecipeDB.NumberOfRecords);
+            }
         }
 
         private void toolBar_btnEdit_Click(object sender)

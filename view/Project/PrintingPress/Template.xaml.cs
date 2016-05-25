@@ -23,7 +23,7 @@ namespace Cognitivo.Project.PrintingPress
     /// </summary>
     public partial class Template
     {
-        entity.dbContext entity = new entity.dbContext();
+        db entity = new db();
         CollectionViewSource project_templateViewSource = null;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
 
@@ -38,17 +38,17 @@ namespace Cognitivo.Project.PrintingPress
             try
             {
                 project_templateViewSource = (CollectionViewSource)this.FindResource("project_templateViewSource");
-                entity.db.project_template.Include("project_template_detail").Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
-                project_templateViewSource.Source = entity.db.project_template.Local;
+                entity.project_template.Include("project_template_detail").Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).Load();
+                project_templateViewSource.Source = entity.project_template.Local;
 
                 CollectionViewSource itemViewSource = (CollectionViewSource)this.FindResource("itemViewSource");
-                itemViewSource.Source = entity.db.items.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
+                itemViewSource.Source = entity.items.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource item_tagViewSource = (CollectionViewSource)this.FindResource("item_tagViewSource");
-                item_tagViewSource.Source = entity.db.item_tag.Where(a => a.id_company == _entity.company_ID && a.is_active == true).OrderBy(a => a.name).ToList();
+                item_tagViewSource.Source = entity.item_tag.Where(a => a.id_company == _entity.company_ID && a.is_active == true).OrderBy(a => a.name).ToList();
 
                 CollectionViewSource project_taskViewSource = (CollectionViewSource)this.FindResource("project_taskViewSource");
-                project_taskViewSource.Source = entity.db.project_task.Where(a=>a.id_company == _entity.company_ID).OrderBy(a => a.item_description).ToList();
+                project_taskViewSource.Source = entity.project_task.Where(a=>a.id_company == _entity.company_ID).OrderBy(a => a.item_description).ToList();
 
                 List<Class.clsLogic> list_cls_logic = new List<Class.clsLogic>();
                 Class.clsLogic objpaper = new Class.clsLogic();
@@ -109,7 +109,7 @@ namespace Cognitivo.Project.PrintingPress
         {
             project_type_templateDataGrid.CancelEdit();
             project_templateViewSource.View.MoveCurrentToFirst();
-            entity.CancelChanges_withQuestion();
+            
             stackMain.IsEnabled = false;
             project_type_templateDataGrid.IsReadOnly = true;
         }
@@ -120,7 +120,7 @@ namespace Cognitivo.Project.PrintingPress
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo,MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
-                entity.db.project_template.Remove((project_template)project_templateDataGrid.SelectedItem);
+                entity.project_template.Remove((project_template)project_templateDataGrid.SelectedItem);
                 project_templateViewSource.View.MoveCurrentToFirst();
                 ctrlToolBar_btnSave_Click(sender);
             }
@@ -137,26 +137,17 @@ namespace Cognitivo.Project.PrintingPress
             stackMain.IsEnabled = true;
             project_type_templateDataGrid.IsReadOnly = false;
             project_template objProjectTemp = new project_template();
-            entity.db.project_template.Add(objProjectTemp);
+            entity.project_template.Add(objProjectTemp);
             project_templateViewSource.View.MoveCurrentToLast();
         }
 
         private void ctrlToolBar_btnSave_Click(object sender)
         {
-            try
+            if (entity.SaveChanges() == 1)
             {
-                IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-                if (validationresult.Count() == 0)
-                {
-                    entity.SaveChanges();
-                    stackMain.IsEnabled = false;
-                    project_type_templateDataGrid.IsReadOnly = true;
-                    ctrlToolBar.msgSaved();
-                }
-            }
-            catch (Exception ex)
-            {
-                ctrlToolBar.msgError(ex);
+                stackMain.IsEnabled = false;
+                project_type_templateDataGrid.IsReadOnly = true;
+                ctrlToolBar.msgSaved(1);
             }
         }
         #endregion

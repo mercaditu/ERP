@@ -21,6 +21,7 @@ namespace entity
 
         private void validate_order()
         {
+            NumberOfRecords = 0;
             foreach (production_order production_order in base.production_order.Local)
             {
                 if (production_order.IsSelected && production_order.Error == null)
@@ -43,6 +44,7 @@ namespace entity
                         production_order.State = EntityState.Unchanged;
                         base.production_order.Remove(production_order);
                     }
+                    NumberOfRecords += 1;
                 }
                 else if (production_order.State > 0)
                 {

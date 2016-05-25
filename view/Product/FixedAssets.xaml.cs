@@ -93,10 +93,11 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            ItemDB.SaveChanges();
-                toolBar.msgSaved();
+            if (ItemDB.SaveChanges() == 1)
+            {
+                toolBar.msgSaved(ItemDB.NumberOfRecords);
                 itemViewSource.View.Refresh();
-           
+            }
         }
 
         private void toolBar_btnNew_Click(object sender)

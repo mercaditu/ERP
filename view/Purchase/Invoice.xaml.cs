@@ -171,10 +171,12 @@ namespace Cognitivo.Purchase
 
         private void toolBar_btnSave_Click(object sender)
         {
-            PurchaseInvoiceDB.SaveChanges();
-            purchase_invoiceViewSource.View.Refresh();
-            toolBar.msgSaved();
-            sbxContact.Text = "";
+            if (PurchaseInvoiceDB.SaveChanges() == 1)
+            {
+                purchase_invoiceViewSource.View.Refresh();
+                toolBar.msgSaved(PurchaseInvoiceDB.NumberOfRecords);
+                sbxContact.Text = "";
+            }
         }
 
         private void toolBar_btnCancel_Click(object sender)

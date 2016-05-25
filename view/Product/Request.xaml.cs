@@ -275,15 +275,10 @@ namespace Cognitivo.Product
 
         private void toolBar_btnSave_Click(object sender)
         {
-            try
+            if (dbContext.SaveChanges() == 1)
             {
-                dbContext.SaveChanges();
                 item_requestViewSource.View.Refresh();
-                toolBar.msgSaved();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.InnerException.ToString());
+                toolBar.msgSaved(dbContext.NumberOfRecords);
             }
         }
 

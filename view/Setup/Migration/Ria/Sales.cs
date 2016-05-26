@@ -11,7 +11,7 @@ namespace Cognitivo.Setup.Migration
     public partial class MigrationAssistant
     {
         public List<sales_invoice> SalesInvoice_ErrorList = new List<sales_invoice>();
-
+        
         public void sales()
         {
             string sql = " SELECT "
@@ -256,7 +256,8 @@ namespace Cognitivo.Setup.Migration
                     + " WHERE (dbo.VENTASDETALLE.CODVENTA = " + reader[0].ToString() + ")";
 
                     DataTable dt = exeDT(sqlDetail);
-                    app_vat_group app_vat_group10=null;
+
+                    app_vat_group app_vat_group10 = null;
                     if ( db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault()!=null)
                     {
                         app_vat_group10 = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault();

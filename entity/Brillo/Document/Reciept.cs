@@ -400,7 +400,7 @@
 
                 Detail = Detail
                     + ItemName + "\n"
-                    + Qty.ToString() + "\t" + ItemCode + "\t" + UnitPrice_Vat + "\n";
+                    + Qty.ToString() + "\t" + ItemCode + "\t" + (UnitPrice_Vat + d.DiscountVat) + "\n";
             }
 
             decimal DiscountTotal = sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);

@@ -11,6 +11,8 @@ namespace entity
         {
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
+            id_branch = CurrentSession.Id_Branch;
+            
             is_head = true;
             item_asset_maintainance = new List<item_asset_maintainance>();
         }

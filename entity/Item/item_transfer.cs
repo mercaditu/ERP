@@ -32,7 +32,24 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_transfer { get; set; }
         public int? id_weather { get; set; }
-        public Status.Transfer status { get; set; }
+
+        public Status.Transfer status 
+        { 
+            get
+            {
+                return _status;
+            } 
+            set
+            {
+                if (_status != value)
+	            {
+                    _status = value;
+                    RaisePropertyChanged("status");
+	            }
+            }
+        }
+        private Status.Transfer _status;
+
         public int? id_item_request { get; set; }
         public int? id_project { get; set; }
         public int? id_department { get; set; }

@@ -104,9 +104,13 @@ namespace Cognitivo.Product
         {
             item item = ItemDB.New();
             item.id_item_type = entity.item.item_type.FixedAssets;
-            item_asset _capital = new item_asset();
-            item.item_asset.Add(_capital);
+            
+            using(db db = new db())
+	        { item.id_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group; }
+            
+            item_asset item_asset = new item_asset();
 
+            item.item_asset.Add(item_asset);
             ItemDB.items.Add(item);
 
             itemViewSource.View.Refresh();
@@ -135,11 +139,8 @@ namespace Cognitivo.Product
                         return false;
                 };
             }
-
         }
 
-     
-       
         #endregion
 
         private void StackPanel_Drop(object sender, DragEventArgs e)
@@ -171,7 +172,5 @@ namespace Cognitivo.Product
                 return img;
             }
         }
-
-     
     }
 }

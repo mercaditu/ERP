@@ -181,9 +181,10 @@ namespace Cognitivo.Product
 
                 ProductMovementDB.item_movement.Add(item_movement_dest);
                 item_transfer.status = Status.Transfer.Approved;
+                
             }
 
-            if (item_transfer.status == Status.Transfer.Approved)
+            if (item_transfer.status == Status.Transfer.Approved && item_transfer.app_document_range != null)
             {
                 entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
                 Document.Document_PrintItemRequest(item_transfer.app_document_range.id_document, item_transfer);

@@ -64,74 +64,62 @@
         </ListBox>
 
         <Grid Grid.Column="1" Grid.Row="1" Margin="0" IsEnabled="{Binding State}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-                <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
-                <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
-                                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
-                                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                                  Style="{StaticResource input_combobox}"
-                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
-                <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
-                <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}" Text="{Binding work_number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
-                <ComboBox x:Name="cmbline"  Style="{DynamicResource input_combobox}" 
-					      DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					      SelectedValuePath="id_production_line"
-					      ItemsSource="{Binding Source={StaticResource production_lineViewSource}}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel/>
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
-                <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
-                <ComboBox x:Name="cmbtype"  Style="{DynamicResource input_combobox}" 
-					    SelectedValue="{Binding type, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
-					              
-                </ComboBox>
-                <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
-                <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
-            </StackPanel>
-            <StackPanel Grid.Column="1" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
-                <StackPanel Orientation="Horizontal" >
-                    <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-                    <Label Content="{Binding project.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <!--<Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
-                    <ComboBox Style="{DynamicResource ComboToLabelStyle}"
-					          DisplayMemberPath="name" SelectedValue="{Binding id_project, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					          SelectedValuePath="id_project"
-					          ItemsSource="{Binding Source={StaticResource projectViewSource}}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-                    <Button x:Name="btnpackingImport" Content="O" FontSize="12"
-                            FontFamily="/Cognitivo;component/Resources/#cognitivo"/>-->
-                </StackPanel>
-                <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel DataContext="{StaticResource production_orderViewSource}" HorizontalAlignment="Center"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
+                        <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
+                              metro:ControlsHelper.MouseOverBorderBrush="Silver"
+                              Style="{StaticResource input_combobox}"
+                              SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                        <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
+                        <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}" Text="{Binding work_number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
+                        <ComboBox x:Name="cmbline"  Style="{DynamicResource input_combobox}" 
+					          DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+					          SelectedValuePath="id_production_line"
+					          ItemsSource="{Binding Source={StaticResource production_lineViewSource}}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
+                        <ComboBox x:Name="cmbtype"  Style="{DynamicResource input_combobox}" 
+					              SelectedValue="{Binding types, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
+                        </ComboBox>
+                        <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
+                        <DatePicker SelectedDate="{Binding start_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
+                        <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
+                        <DatePicker SelectedDate="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource input_datepicker}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}" Margin="5"/>
+                        <StackPanel Orientation="Horizontal" >
+                            <Label Content="{lex:Loc Project}" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
+                            <Label Content="{Binding project.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
 
 
-                    <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc CostCenter}"/>
-                    <TextBlock Text="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}" Width="55"/>
-                </StackPanel>
-            </StackPanel>
-
-
+                            <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc CostCenter}"/>
+                            <TextBlock Text="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}" Width="55"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" 
                         Grid.Row="2" Grid.ColumnSpan="2" Margin="8">
                 <TabItem Header="{lex:Loc Order}">

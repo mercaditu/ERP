@@ -155,21 +155,27 @@
                     //foreach (project_task project_task in d.project_task.child)
                     //{
                     string ItemName = string.Empty;
+                    string ItemCode = string.Empty;
+
                     if (d.project_task.items != null)
                     {
                         ItemName = d.project_task.items.name;
+                        ItemCode = d.project_task.code;
                     }
 
-                    string ItemCode = d.project_task.code;
+                    
                     decimal? Qty = d.project_task.quantity_est;
                     string TaskName = d.project_task.item_description;
+                    string TaskCode = d.project_task.code;
 
                     Detail = Detail +
                         ""
                         + "Descripcion, Cantiad, Codigo" + "\n"
                         + "-------------------------------" + "\n"
-                        + ItemName + "\n"
-                        + Qty.ToString() + "\t" + ItemCode + "\t" + TaskName + "\n";
+                        + ItemCode + "\t" + ItemName + "\n"
+                        + TaskCode + "\t" + TaskName + "\n"
+                        + Qty.ToString() + "\n";
+                        
                     //}
                 }
 
@@ -177,9 +183,9 @@
             }
 
             Footer = "-------------------------------";
-            if (i.user_requested != null)
+            if (i.employee != null)
             {
-                Footer += "RETIRADO: " + i.user_requested.name_full + "\n";
+                Footer += "RETIRADO: " + i.employee.name + "\n";
             }
             if (i.user_given != null)
             {

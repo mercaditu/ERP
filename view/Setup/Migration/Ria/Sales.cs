@@ -270,10 +270,12 @@ namespace Cognitivo.Setup.Migration
                         sales_invoice.id_terminal = db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
                     }
                     app_currencyfx app_currencyfx = null;
+                    
                     if (db.app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
                     {
                         app_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
                     }
+
                     if (app_currencyfx != null)
                     {
                         sales_invoice.id_currencyfx = app_currencyfx.id_currencyfx;

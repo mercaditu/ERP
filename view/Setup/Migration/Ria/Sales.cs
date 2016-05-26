@@ -252,10 +252,12 @@ namespace Cognitivo.Setup.Migration
                     + " FROM dbo.VENTAS LEFT OUTER JOIN"
                     + " dbo.MONEDA ON dbo.VENTAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
                     + " dbo.VENTASDETALLE ON dbo.VENTAS.CODVENTA = dbo.VENTASDETALLE.CODVENTA LEFT OUTER JOIN"
-                    + " dbo.PRODUCTOS ON dbo.VENTASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO"
-                    + " WHERE (dbo.VENTASDETALLE.CODVENTA = " + reader[0].ToString() + ")";
+                    + " dbo.PRODUCTOS ON dbo.VENTASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO";
+                 
 
                     DataTable dt = exeDT(sqlDetail);
+                    dt = dt.Select("CODVENTAS=" + dt_sales.col
+[0][0].ToString());
 
                     app_vat_group app_vat_group10 = null;
                     if ( db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault()!=null)

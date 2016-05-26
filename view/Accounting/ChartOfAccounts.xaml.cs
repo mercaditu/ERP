@@ -99,7 +99,7 @@ namespace Cognitivo.Accounting
                     accounting_chartViewSource.View.Filter = i =>
                     {
                         accounting_chart accounting_chart = i as accounting_chart;
-                        if (accounting_chart.parent ==null)
+                        if (accounting_chart.parent == null)
                         {
                             return true;
                         }
@@ -158,8 +158,6 @@ namespace Cognitivo.Accounting
             accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
             accounting_chart.State = EntityState.Modified;
             accounting_chart.IsSelected = true;
-            filter_chart();
-        
         }
 
         private void toolBar_btnDelete_Click(object sender)
@@ -179,8 +177,6 @@ namespace Cognitivo.Accounting
                 };
             }
             filter_chart();
-       
-           
         }
 
         private void toolBar_btnSave_Click(object sender)

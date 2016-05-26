@@ -20,9 +20,47 @@ namespace cntrl.Controls
     /// </summary>
     public partial class Totals : UserControl
     {
+        public static readonly DependencyProperty GrandTotalProperty = DependencyProperty.Register("GrandTotal", typeof(decimal), typeof(Totals));
+        public decimal GrandTotal
+        {
+            get { return (decimal)GetValue(GrandTotalProperty); }
+            set { SetValue(GrandTotalProperty, value); }
+        }
+
+        public static readonly DependencyProperty DiscountPercentageProperty = DependencyProperty.Register("DiscountPercentage", typeof(decimal), typeof(Totals));
+        public decimal DiscountPercentage
+        {
+            get { return (decimal)GetValue(DiscountPercentageProperty); }
+            set { SetValue(DiscountPercentageProperty, value); }
+        }
+
+        public static readonly DependencyProperty DiscountValueProperty = DependencyProperty.Register("DiscountValue", typeof(decimal), typeof(Totals));
+        public decimal DiscountValue
+        {
+            get { return (decimal)GetValue(DiscountValueProperty); }
+            set { SetValue(DiscountValueProperty, value); }
+        }
+
+        public static readonly DependencyProperty CurrencyProperty = DependencyProperty.Register("Currency", typeof(string), typeof(Totals));
+        public string Currency
+        {
+            get { return (string)GetValue(CurrencyProperty); }
+            set { SetValue(CurrencyProperty, value); }
+        }
+
         public Totals()
         {
             InitializeComponent();
+        }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void lblInformation_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            popup.IsOpen = true;
         }
     }
 }

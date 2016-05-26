@@ -470,6 +470,7 @@ namespace Cognitivo.Sales
                            name = g.Key.name,
                            value = g.Sum(a => a.value * a.ad.quantity)
                        }).ToList();
+
                     dgvVAT.ItemsSource = listvat.GroupBy(x => x.id_vat).Select(g => new
                        {
                            id_vat = g.Max(y => y.id_vat),
@@ -631,8 +632,6 @@ namespace Cognitivo.Sales
         private void sales_invoice_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             calculate_vat(sender, e);
-
-
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -20,26 +20,11 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="ShowVAT">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="stackPanel">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="stackPanel">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
     </UserControl.Resources>
-    <UserControl.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource ShowVAT}"/>
-        </EventTrigger>
-    </UserControl.Triggers>
     <StackPanel Orientation="Horizontal">
         <Label Content="TOTAL" Style="{StaticResource generic_Label}" 
                    Foreground="{StaticResource AccentColor_Introvert}" VerticalAlignment="Center"/>
-        <Label Content="{Binding Total, FallbackValue=1000, StringFormat={}{0:N2}, ElementName=_Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+        <Label Content="{Binding GrandTotal, FallbackValue=1000, StringFormat={}{0:N}, ElementName=_Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                    Style="{StaticResource H2}" x:Name="lblTotal" VerticalAlignment="Center" ContentStringFormat="N2"
                    RenderTransformOrigin="0.5,0.5" Foreground="Black">
             <Label.RenderTransform>
@@ -51,29 +36,30 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label Content="{Binding CurrencyCode, FallbackValue=GUARANI, ElementName=_Total, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                   Style="{StaticResource H3}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+        <Label Content="{Binding Currency, FallbackValue=Currency, ElementName=_Total, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+               Style="{StaticResource H3}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
         <Label Content="i" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand" FontSize="14"
-               FontFamily="/cntrl;component/Resources/#cognitivo" VerticalAlignment="Center">
+               FontFamily="/cntrl;component/Resources/#cognitivo" VerticalAlignment="Center" MouseUp="lblInformation_MouseUp">
         </Label>
-        <Popup x:Name="popup">
-            <Border CornerRadius="0,10,10,10" Background="{StaticResource AccentColor_Introvert}">
+        <Popup x:Name="popup" StaysOpen="False" Placement="Top" HorizontalOffset="56" >
+            <Border CornerRadius="10,10,0,10" Width="150" Background="{StaticResource AccentColor_Introvert}">
                 <StackPanel>
-                    <Label Content="VAT" FontWeight="Medium" Margin="1" Foreground="{StaticResource AccentColor_Brush}"/>
-                    <StackPanel x:Name="stackPanel" RenderTransformOrigin="0.5,0.5">
-                        <StackPanel.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </StackPanel.RenderTransform>
-                        <DataGrid Margin="2" Height="100" Width="126">
-
-                        </DataGrid>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc VAT}" Foreground="White" HorizontalAlignment="Center"/>
+                    <DataGrid HeadersVisibility="None" Margin="2" Background="Transparent" RowBackground="Transparent" Foreground="White"/>
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+                    <Label Style="{StaticResource generic_Label}" Content="Discount" Foreground="White" HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
+                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}"/>
+                        <Label Content="%" Style="{StaticResource generic_Label}" Foreground="White" VerticalAlignment="Center"/>
                     </StackPanel>
-                    <Label Content="Update Total" FontWeight="Medium" Margin="1" Foreground="{StaticResource AccentColor_Brush}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
+                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}"/>
+                    </StackPanel>
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc QuickAction}" Foreground="White" HorizontalAlignment="Center"/>
+                    <Button Content="Remove Decimals" HorizontalAlignment="Center" Margin="2"/>
                 </StackPanel>
             </Border>
         </Popup>

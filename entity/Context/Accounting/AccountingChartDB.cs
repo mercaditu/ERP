@@ -20,6 +20,7 @@ namespace entity
 
         private void validate_Cycle()
         {
+            NumberOfRecords = 0;
             foreach (accounting_chart accounting_chart in base.accounting_chart.Local)
             {
                 if (accounting_chart.IsSelected)
@@ -42,6 +43,8 @@ namespace entity
                         accounting_chart.State = EntityState.Unchanged;
                         base.accounting_chart.Remove(accounting_chart);
                     }
+
+                    NumberOfRecords += 1;
                 }
                 else if (accounting_chart.State > 0)
                 {

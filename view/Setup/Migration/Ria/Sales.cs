@@ -74,6 +74,49 @@ namespace Cognitivo.Setup.Migration
             cmd.CommandType = CommandType.Text;
             //SqlDataReader reader = cmd.ExecuteReader();
             DataTable dt_sales = exeDT(sql);
+
+            //Sales Invoice Detail
+            string sqlDetail = "SELECT"
+            + " dbo.PRODUCTOS.DESPRODUCTO," //0
+            + " dbo.VENTASDETALLE.CANTIDADVENTA," //1
+            + " dbo.VENTASDETALLE.PRECIOVENTANETO, " //2
+            + " dbo.VENTASDETALLE.PRECIOVENTALISTA, " //3
+            + " dbo.VENTASDETALLE.COSTOPROMEDIO, " //4
+            + " dbo.VENTASDETALLE.COSTOULTIMO, " //5
+            + " dbo.VENTASDETALLE.IVA, " //6
+            + " dbo.VENTAS.COTIZACION1, " //7
+            + " dbo.MONEDA.DESMONEDA, " //8
+            + " dbo.VENTASDETALLE.CODVENTA"
+            + " FROM dbo.VENTAS LEFT OUTER JOIN"
+            + " dbo.MONEDA ON dbo.VENTAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
+            + " dbo.VENTASDETALLE ON dbo.VENTAS.CODVENTA = dbo.VENTASDETALLE.CODVENTA LEFT OUTER JOIN"
+            + " dbo.PRODUCTOS ON dbo.VENTASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO";
+
+            DataTable dt_detail = exeDT(sqlDetail);
+
+
+            app_vat_group app_vat_group10 = null;
+            app_vat_group app_vat_group5 = null;
+            app_vat_group app_vat_group0 = null;
+
+            using (db db = new db())
+            {
+                if (db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault() != null)
+                {
+                    app_vat_group10 = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault();
+                }
+
+                if (db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault() != null)
+                {
+                    app_vat_group5 = db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault();
+                }
+
+                if (db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
+                {
+                    app_vat_group0 = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault();
+                }   
+            }
+
             foreach (DataRow reader in dt_sales.Rows)
             {
                 using (SalesInvoiceDB db = new SalesInvoiceDB())
@@ -238,48 +281,15 @@ namespace Cognitivo.Setup.Migration
                     }
                     string _desMoneda = string.Empty;
 
-                    //Sales Invoice Detail
-                    string sqlDetail = "SELECT"
-                    + " dbo.PRODUCTOS.DESPRODUCTO," //0
-                    + " dbo.VENTASDETALLE.CANTIDADVENTA," //1
-                    + " dbo.VENTASDETALLE.PRECIOVENTANETO, " //2
-                    + " dbo.VENTASDETALLE.PRECIOVENTALISTA, " //3
-                    + " dbo.VENTASDETALLE.COSTOPROMEDIO, " //4
-                    + " dbo.VENTASDETALLE.COSTOULTIMO, " //5
-                    + " dbo.VENTASDETALLE.IVA, " //6
-                    + " dbo.VENTAS.COTIZACION1, " //7
-                    + " dbo.MONEDA.DESMONEDA " //8
-                    + " FROM dbo.VENTAS LEFT OUTER JOIN"
-                    + " dbo.MONEDA ON dbo.VENTAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
-                    + " dbo.VENTASDETALLE ON dbo.VENTAS.CODVENTA = dbo.VENTASDETALLE.CODVENTA LEFT OUTER JOIN"
-                    + " dbo.PRODUCTOS ON dbo.VENTASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO";
-                 
-
-                    DataTable dt = exeDT(sqlDetail);
-                    dt = dt.Select("CODVENTAS=" + dt_sales.col
-[0][0].ToString());
-
-                    app_vat_group app_vat_group10 = null;
-                    if ( db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault()!=null)
+                    DataTable dt_CurrentDetail = new DataTable();
+                    if (dt_detail.Select("CODVENTA =" + reader[0].ToString()).Count() > 0)
                     {
-                        app_vat_group10 = db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault();
-                    }
-                    app_vat_group app_vat_group5 = null;
-                    if (db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault() != null)
-                    {
-                        app_vat_group5 = db.app_vat_group.Where(x => x.name == "5%").FirstOrDefault();
-                    }
-                    app_vat_group app_vat_group0= null;
-                    if (db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault() != null)
-                    {
-                        app_vat_group0 = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault();
+                        dt_CurrentDetail = dt_detail.Select("CODVENTA =" + reader[0].ToString()).CopyToDataTable();
                     }
 
-                    foreach (DataRow row in dt.Rows)
+                    foreach (DataRow row in dt_CurrentDetail.Rows)
                     {
                         //db Related Insertion.
-                    
-                      
 
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 

@@ -371,7 +371,7 @@ namespace Cognitivo.Sales
                     {
                         sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                         payment payment = paymentViewSource.View.CurrentItem as payment;
-                        payment.GrandTotal = sales_invoice.GrandTotal;    
+                        payment.GrandTotal = sales_invoice.GrandTotal;
                     }
                 }
             }

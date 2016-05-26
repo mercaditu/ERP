@@ -92,7 +92,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,-6, 4, 0">
                 <Label x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"
                        TargetUpdated="lblGrandTotalsales_DataContextChanged"
-                       Content="{Binding GrandTotal, Mode=OneWay, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}">
+                       Content="{Binding GrandTotal, StringFormat={}{0:N}, Mode=OneWay, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}">
                     <Label.Effect>
                         <DropShadowEffect Color="White" ShadowDepth="0"/>
                     </Label.Effect>
@@ -455,9 +455,11 @@
                                 </Grid.Effect>
                                 <StackPanel Margin="8">
                                     <Label Content="Discount(%)" Style="{StaticResource input_label}"/>
-                                    <TextBox metro:TextBoxHelper.SelectAllOnFocus="True" Text="{Binding DiscountPercentage, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:P}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="128"/>
+                                    <TextBox metro:TextBoxHelper.SelectAllOnFocus="True" 
+                                             Text="{Binding DiscountPercentage, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:P}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Width="128"/>
                                     <Label Content="Discount" Style="{StaticResource input_label}"/>
-                                    <TextBox metro:TextBoxHelper.SelectAllOnFocus="True" Text="{Binding DiscountWithoutPercentage, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="128"/>
+                                    <TextBox metro:TextBoxHelper.SelectAllOnFocus="True" 
+                                             Text="{Binding DiscountWithoutPercentage, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="128"/>
                                 </StackPanel>
                                 <Polygon Margin="0,0,0,-10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Points="0,0 8,10, 16,0" Fill="{StaticResource AccentColor_Introvert}" />
                             </Grid>

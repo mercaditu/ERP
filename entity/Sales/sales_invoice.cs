@@ -97,7 +97,7 @@ namespace entity
 
 
         [NotMapped]
-        public decimal GrandTotal
+        public new decimal GrandTotal
         {
             get
             {
@@ -160,10 +160,12 @@ namespace entity
                         detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
                         detail.RaisePropertyChanged("DiscountVat");
                     }
+                    RaisePropertyChanged("GrandTotal");
                 }
             }
         }
         private decimal _DiscountPercentage;
+
         [NotMapped]
         public decimal DiscountWithoutPercentage
         {
@@ -179,21 +181,19 @@ namespace entity
                     decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x => x.quantity > 0).Count();
                     foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = PerRawDiscount / item.quantity;
                         item.RaisePropertyChanged("DiscountVat");
-                        RaisePropertyChanged("GrandTotal");
                     }
+                    RaisePropertyChanged("GrandTotal");
                 }
                 else
                 {
                     foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
                     {
-
                         item.DiscountVat = 0;
                         item.RaisePropertyChanged("DiscountVat");
-                        RaisePropertyChanged("GrandTotal");
                     }
+                    RaisePropertyChanged("GrandTotal");
                 }
 
             }

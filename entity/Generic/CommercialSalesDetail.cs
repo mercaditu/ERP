@@ -250,7 +250,6 @@ namespace entity
             {
                 _SubTotal_Vat = value;
                 RaisePropertyChanged("SubTotal_Vat");
-                RaisePropertyChanged("GrandTotal");
             }
         }
         private decimal _SubTotal_Vat;

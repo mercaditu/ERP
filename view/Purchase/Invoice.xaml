@@ -121,7 +121,7 @@
                 </AdornerDecorator>
                 <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                 <AdornerDecorator>
-                    <Controls:CurrencyBox x:Name="cbxCurrency" 
+                    <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseInvoice"
                                           SelectedValue="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"  
                                           LostFocus="cbxCurrency_LostFocus" />
                 </AdornerDecorator>

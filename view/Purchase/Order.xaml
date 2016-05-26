@@ -278,7 +278,7 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
                     <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                    <Controls:CurrencyBox x:Name="cbxCurrency" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus" MouseEnter="cbxCurrency_MouseEnter"/>
+                    <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseOrder" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus" MouseEnter="cbxCurrency_MouseEnter"/>
                 </StackPanel>
             </ScrollViewer>
             <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="4">

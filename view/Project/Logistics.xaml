@@ -78,7 +78,7 @@
                                   SelectedValuePath="id_contract" x:Name="cbxContract" 
                                   ItemsSource="{Binding Source={StaticResource contractViewSource}}"/>
                             <Label Content="{lex:Loc Currency}"  Style="{StaticResource input_label}"/>
-                            <Controls:CurrencyBox x:Name="cbxCurrency"/>
+                            <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseTender"/>
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                             <TextBox x:Name="txtComment" Style="{StaticResource input_textbox}"/>
                         </StackPanel>

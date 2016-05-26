@@ -153,7 +153,7 @@
                             </StackPanel>
                             <StackPanel Margin="0,4">
                                 <Label Content="{lex:Loc currency}" Style="{StaticResource input_label}"/>
-                                <Controls:CurrencyBox x:Name="cbxCurrency" LostFocus="cbxCurrency_LostFocus"
+                                <Controls:CurrencyBox x:Name="cbxCurrency" LostFocus="cbxCurrency_LostFocus" appName="EventManagement"
                                           SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                           />
                             </StackPanel>

@@ -88,7 +88,7 @@
                     <TextBox x:Name="numberTextBox" Style="{StaticResource input_textbox}"
                              Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label }" />
-                    <Controls:CurrencyBox x:Name="cbxCurrency" 
+                    <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseReturn"
                                           SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                           LostFocus="cbxCurrency_LostFocus" Width="256" HorizontalAlignment="Left" MouseEnter="cbxCurrency_MouseEnter" />
                     <Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource input_label}"/>

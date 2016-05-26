@@ -15,7 +15,7 @@ namespace cntrl.Controls
         public decimal Rate_Previous { get; set; }
         public decimal Rate_Current { get; set; }
         public int id_currency { get; set; }
-
+        public App.Names appName { get; set; }
         public int SelectedValue
         {
             get
@@ -84,7 +84,18 @@ namespace cntrl.Controls
                     if (app_currencyfx != null)
                     {
                         Rate_Previous = Rate_Current;
-                        Rate_Current = app_currencyfx.sell_value;
+                        if (appName!=null)
+                        {
+                            if (appName==App.Names.PurchaseInvoice ||appName==App.Names.PurchaseOrder ||appName==App.Names.PurchaseTender)
+                            {
+                                Rate_Current = app_currencyfx.sell_value;
+                            }
+                            else
+                            {
+                                Rate_Current = app_currencyfx.buy_value;
+                            }
+                        }
+                    
 
                         SetValue(SelectedValueProperty, app_currencyfx.id_currencyfx);
                         RaisePropertyChanged("Rate_Current");

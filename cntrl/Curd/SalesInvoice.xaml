@@ -71,7 +71,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-            <Controls:CurrencyBox x:Name="cbxCurrency" Width="256" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+            <Controls:CurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" Width="256" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
         </StackPanel>
         <Grid Background="WhiteSmoke">
             <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"

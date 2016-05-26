@@ -542,9 +542,9 @@ namespace Cognitivo.Sales
                         if (sales_invoice != null)
                         {
 
-                            if (sales_invoice.contact != null ? sales_invoice.contact.name.ToLower().Contains(query.ToLower()) : false
-                                || sales_invoice.number != null ? sales_invoice.number.Contains(query) : false
-                                || sales_invoice.trans_date != null ? sales_invoice.trans_date.ToString() == query : false)
+                            if ((sales_invoice.contact != null ? sales_invoice.contact.name.ToLower().Contains(query.ToLower()) : false)
+                                || sales_invoice.number.Contains(query)
+                                || (sales_invoice.trans_date != null ? sales_invoice.trans_date.ToString() == query : false))
                             {
                                 return true;
                             }

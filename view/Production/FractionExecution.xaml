@@ -22,6 +22,10 @@
         <CommandBinding Command="customcmd:CustomCommands.Delete" 
                         CanExecute="DeleteCommandBinding_CanExecute" 
                         Executed="DeleteCommandBinding_Executed"/>
+
+        <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
+                        CanExecute="EditCommand_CanExecute" 
+                        Executed="EditCommand_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
         <converter:TreeViewchildFilter x:Key="tree"/>
@@ -55,8 +59,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" 
-              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+        <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden"  Grid.Column="2"
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="projectDataGrid"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -103,7 +107,7 @@
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
                 </ComboBox>
-                <Label Content="{lex:Loc ProductionOrder}" Style="{StaticResource input_label}"/>
+                <!--<Label Content="{lex:Loc ProductionOrder}" Style="{StaticResource input_label}"/>
                 <ComboBox  Style="{DynamicResource input_combobox}" x:Name="cmborder"
 				    DisplayMemberPath="name" SelectedValue="{Binding id_production_order, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 					SelectedValuePath="id_production_order"
@@ -113,7 +117,7 @@
                             <VirtualizingStackPanel/>
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
-                </ComboBox>
+                </ComboBox>-->
             </StackPanel>
             <Grid Grid.Column="1">
                 <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
@@ -171,6 +175,15 @@
                                                         Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
                                                         Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.EditAll" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}"
+                                                    Style="{StaticResource btnEditChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Width="Auto" Header="">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

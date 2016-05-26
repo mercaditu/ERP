@@ -8,6 +8,7 @@ using entity;
 using System;
 using System.Windows.Input;
 using System.Windows.Media;
+using cntrl.Panels;
 
 namespace Cognitivo.Production
 {
@@ -27,7 +28,7 @@ namespace Cognitivo.Production
             production_orderViewSource,
             production_order_detaillRawViewSource,
             item_dimensionViewSource;
-
+        pnl_FractionExecustion objpnl_FractionExecustion;
         public FractionExecution()
         {
             InitializeComponent();
@@ -407,6 +408,55 @@ namespace Cognitivo.Production
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
             _production_execution_detail.is_input = false;
             _production_execution.production_execution_detail.Add(_production_execution_detail);
+            
+        }
+
+        private void EditCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as production_execution_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            crud_modal.Children.Clear();
+            crud_modal.Visibility = Visibility.Hidden;
+            production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
+            production_execution production_execution = (production_execution)production_executionViewSource.View.CurrentItem as production_execution;
+            if (production_execution_detail != null)
+            {
+                crud_modal.Visibility = System.Windows.Visibility.Visible;
+                objpnl_FractionExecustion = new cntrl.Panels.pnl_FractionExecustion();
+
+                foreach (production_execution_detail _production_execution_detail in production_execution_detailRawViewSource.View.OfType<production_execution_detail>().Where(x => x.id_item == production_execution_detail.id_item).ToList())
+                {
+                    if (_production_execution_detail.production_execution_dimension.Count() == 0)
+                    {
+
+
+                        if (ExecutionDB.project_task_dimension.Where(x => x.id_project_task == _production_execution_detail.id_project_task) != null)
+                        {
+                            List<project_task_dimension> project_task_dimensionList = ExecutionDB.project_task_dimension.Where(x => x.id_project_task == _production_execution_detail.id_project_task).ToList();
+                            foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
+                            {
+                                production_execution_dimension production_execution_dimension = new production_execution_dimension();
+                                production_execution_dimension.id_dimension = project_task_dimension.id_dimension;
+                                production_execution_dimension.value = project_task_dimension.value;
+                                production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
+                            }
+
+
+                        }
+                    }
+                    _production_execution_detail.IsSelected = true;
+                }
+
+                objpnl_FractionExecustion.productionExecustionList = production_execution_detailRawViewSource.View.OfType<production_execution_detail>().Where(x => x.id_item == production_execution_detail.id_item).ToList();
+                objpnl_FractionExecustion.ExecutionDB = ExecutionDB;
+                crud_modal.Children.Add(objpnl_FractionExecustion);
+            }
         }
     }
 }

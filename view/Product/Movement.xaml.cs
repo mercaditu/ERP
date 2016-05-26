@@ -134,7 +134,8 @@ namespace Cognitivo.Product
                 app_document_range app_document_range = item_transfer.app_document_range;
                 item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
             }
-            
+
+            item_transfer.user_requested = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
             item_transfer.user_given = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
             item_transfer.status = Status.Transfer.Approved;
             dbContext.SaveChanges();

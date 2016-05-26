@@ -100,6 +100,7 @@ namespace entity
                 production_order.types = entity.production_order.ProductionOrderTypes.Fraction;
                 production_order.status = Status.Production.Pending;
                 production_order.name = item_request.name;
+                production_order.id_project = item_request.id_project;
                 if (production_line.FirstOrDefault() != null)
                 {
                     production_order.id_production_line = production_line.FirstOrDefault().id_production_line;

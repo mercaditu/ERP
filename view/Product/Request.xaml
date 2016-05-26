@@ -55,7 +55,7 @@
                  ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding name}" 
+                    <cntrl:navList recordName="{Binding name}" recordCode="{Binding security_user.name}"
                                    recordSecondaryName="{Binding comment}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

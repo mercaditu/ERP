@@ -83,6 +83,7 @@ namespace Cognitivo.Product
             {
                 security_user = ItemDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                 item_request.request_user = security_user;
+                item_request.security_user = security_user;
                 item_request.id_department = security_user.security_role.id_department;
             }
 

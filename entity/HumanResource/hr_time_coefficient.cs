@@ -1,6 +1,7 @@
 ﻿namespace entity
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,6 +12,7 @@
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
         }
 
         [Key]
@@ -26,6 +28,8 @@
         public DateTime end_time { get; set; }
         
         public bool weekend_only { get; set; }
+
+        public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
 
     }
 }

@@ -26,7 +26,7 @@ namespace entity
         public string name { get; set; }
         public bool is_default { get; set; }
         public bool is_active { get; set; }
-
+        public decimal percentcost { get; set; }
         public virtual IEnumerable<item_price> item_price_rel { get; set; }
 
         public string Error

@@ -64,6 +64,7 @@ namespace entity
 
             contact_tag_detail = new List<contact_tag_detail>();
             contact_subscription = new List<contact_subscription>();
+            item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
         }
 
         [Key]
@@ -225,6 +226,8 @@ namespace entity
         public virtual ICollection<hr_family> hr_family { get; set; }
         public virtual ICollection<hr_talent_detail> hr_talent_detail { get; set; }
         public virtual IEnumerable<hr_timesheet> hr_timesheet { get; set; }
+        public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
+     
 
         #region Validation
 

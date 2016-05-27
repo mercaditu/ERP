@@ -20,6 +20,7 @@ namespace Cognitivo.Product
     {
         dbContext db = new dbContext();
         CollectionViewSource item_asset_maintainanceViewSource, app_currencyfxViewSource, item_asset_maintainanceitem_asset_maintainance_detailViewSource;
+        cntrl.Curd.ItemRequest ItemRequest;
         public Maintainance()
         {
             InitializeComponent();
@@ -118,6 +119,85 @@ namespace Cognitivo.Product
             }
             item_asset_maintainanceViewSource.View.Refresh();
             item_asset_maintainanceitem_asset_maintainance_detailViewSource.View.Refresh();
+        }
+        private void btnRequestResource_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgvMaintainceDetail.ItemsSource != null)
+            {
+                List<item_asset_maintainance_detail> item_asset_maintainance_detaillist = db.db.item_asset_maintainance_detail.ToList();
+                item_asset_maintainance_detaillist = item_asset_maintainance_detaillist.Where(x => x.IsSelected == true).ToList();
+
+                if (item_asset_maintainance_detaillist.Count() > 0)
+                {
+                    ItemRequest = new cntrl.Curd.ItemRequest();
+                    crud_modal_request.Visibility = Visibility.Visible;
+                    ItemRequest.listdepartment = db.db.app_department.ToList();
+                    ItemRequest.item_request_Click += item_request_Click;
+                    crud_modal_request.Children.Add(ItemRequest);
+                }
+                else
+                {
+                    toolBar.msgWarning("Select a Task");
+                }
+            }
+        }
+
+
+        public void item_request_Click(object sender)
+        {
+          
+            if (dgvMaintainceDetail.ItemsSource != null)
+            {
+                List<item_asset_maintainance_detail> item_asset_maintainance_detaillist = db.db.item_asset_maintainance_detail.ToList();
+                item_asset_maintainance_detaillist = item_asset_maintainance_detaillist.Where(x => x.IsSelected == true).ToList();
+
+                item_request item_request = new item_request();
+                item_request.name = ItemRequest.name;
+                item_request.comment = ItemRequest.comment;
+
+                item_request.id_department = ItemRequest.id_department;
+           
+
+                item_request.request_date = DateTime.Now;
+
+                foreach (item_asset_maintainance_detail data in item_asset_maintainance_detaillist)
+                {
+                    item_request_detail item_request_detail = new entity.item_request_detail();
+                    item_request_detail.date_needed_by = ItemRequest.neededDate;
+                    item_request_detail.id_maintainance_detail = data.id_maintainance_detail;
+                    item_request_detail.urgency = ItemRequest.Urgencies;
+                    int idItem = data.item.id_item;
+                    item_request_detail.id_item = idItem;
+                    item item = db.db.items.Where(x => x.id_item == idItem).FirstOrDefault();
+                    if (item != null)
+                    {
+                        item_request_detail.item = item;
+                        item_request_detail.comment = item_request_detail.item.name;
+                    }
+
+                 
+
+
+                    item_request_detail.quantity = data.quantity;
+
+                    item_request.item_request_detail.Add(item_request_detail);
+                }
+
+                db.db.item_request.Add(item_request);
+                db.db.SaveChanges();
+
+                //item_requestViewSource.View.Filter = i =>
+                //{
+                //    item_request _item_request = (item_request)i;
+                //    if (_item_request.id_production_order == id_production_order)
+                //        return true;
+                //    else
+                //        return false;
+                //};
+            }
+
+            crud_modal_request.Children.Clear();
+            crud_modal_request.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

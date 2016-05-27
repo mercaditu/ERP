@@ -4,6 +4,7 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public partial class item_asset_maintainance : Audit
     {
@@ -47,5 +48,21 @@ namespace entity
         //Nav Properties
         public virtual item_asset item_asset { get; set; }
         public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
+
+
+        [NotMapped]
+        public int SelectedCount { get; set; }
+        public void Update_SelectedCount()
+        {
+
+            int i = 0;
+            foreach (item_asset_maintainance_detail detail in item_asset_maintainance_detail.Where(x => x.IsSelected))
+            {
+                i += 1;
+            }
+
+            SelectedCount = i;
+            RaisePropertyChanged("SelectedCount");
+        }
     }
 }

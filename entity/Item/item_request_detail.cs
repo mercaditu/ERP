@@ -34,6 +34,7 @@ namespace entity
         public int? id_project_task { get; set; }
         public int? id_sales_order_detail { get; set; }
         public int? id_order_detail { get; set; }
+        public int? id_maintainance_detail { get; set; }
 
         public int id_item { get; set; }
         public decimal max_value { get; set; }
@@ -64,6 +65,7 @@ namespace entity
         public virtual sales_order_detail sales_order_detail { get; set; }
         public virtual project_task project_task { get; set; }
         public virtual production_order_detail production_order_detail { get; set; }
+        public virtual item_asset_maintainance_detail item_asset_maintainance_detail { get; set; }
 
         public int GetTotalDecision()
         {

@@ -301,6 +301,10 @@
     <Compile Include="Migrations\201605171343372_UpdateItemMaintaince.Designer.cs">
       <DependentUpon>201605171343372_UpdateItemMaintaince.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605271250378_Update_Maintanaince_Detail.cs" />
+    <Compile Include="Migrations\201605271250378_Update_Maintanaince_Detail.Designer.cs">
+      <DependentUpon>201605271250378_Update_Maintanaince_Detail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -987,6 +991,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605171343372_UpdateItemMaintaince.resx">
       <DependentUpon>201605171343372_UpdateItemMaintaince.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605271250378_Update_Maintanaince_Detail.resx">
+      <DependentUpon>201605271250378_Update_Maintanaince_Detail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

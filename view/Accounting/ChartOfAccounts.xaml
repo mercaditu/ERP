@@ -131,7 +131,7 @@
                             </StackPanel>
 
                             <!-- This is for Customers -->
-                            <RadioButton x:Name="rbtnAccReceivable" IsChecked="{Binding}" Content="{lex:Loc AccountsReceivable}" Style="{StaticResource input_radiobutton}" Margin="5" 
+                            <RadioButton x:Name="rbtnAccReceivable" Content="{lex:Loc AccountsReceivable}" Style="{StaticResource input_radiobutton}" Margin="5" 
                                  Tag="4" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                             <StackPanel Orientation="Horizontal" Margin="23,0" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnAccReceivable}" >
                                 <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"

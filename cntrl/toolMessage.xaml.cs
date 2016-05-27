@@ -91,6 +91,8 @@ namespace cntrl
             {
                 Status_Colour.Fill = Brushes.Green;
                 shortMessage = "Approve";
+                _btnClose = true;
+                //OnClose_MsgBox();
                 _btnYes = false;
                 _btnNo = false;
             }
@@ -98,6 +100,8 @@ namespace cntrl
             {
                 Status_Colour.Fill = Brushes.Crimson;
                 shortMessage = "Annul";
+                //OnClose_MsgBox();
+                _btnClose = true;
                 _btnYes = false;
                 _btnNo = false;
             }

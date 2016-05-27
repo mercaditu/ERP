@@ -74,11 +74,9 @@
                                           ChartName="{Binding name, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                 </HierarchicalDataTemplate>
             </Grid.Resources>
-            <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,70,0,0" ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}"  
+            <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}"  
                                         VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
                                         ScrollViewer.CanContentScroll="True"   >
-            
-
                 <TreeView.ItemsPanel>
                     <ItemsPanelTemplate >
                         <VirtualizingStackPanel />
@@ -92,13 +90,6 @@
             <TabItem Header="{lex:Loc ChartofAccount}">
                 <StackPanel Background="White" Grid.Column="1" Grid.Row="1" Margin="16" DataContext="{Binding SelectedItem_, ElementName=treeProject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding state, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Converter={StaticResource AccountingChart2BooleanConverter}}" >
-                    <!--<Label Content="{lex:Loc Parent}" Style="{StaticResource input_label}"/>-->
-                    <!--<StackPanel Orientation="Horizontal">
-                        <ComboBox Name="cbxParent" ItemsSource="{Binding Source={StaticResource accounting_chartParentViewSource}}"
-                          Grid.Column="1" Style="{StaticResource input_combobox}" SelectedValuePath="id_chart" DisplayMemberPath="name"
-                          IsSynchronizedWithCurrentItem="True" VerticalAlignment="Center"/>
-                        <Button Name="btnClearParent" Click="btnClearParent_Click" VerticalAlignment="Top" ToolTip="{lex:Loc Clear}" Content=" X "/>
-                    </StackPanel>-->
                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="txtName" TabIndex="0" Style="{StaticResource input_textbox}"
 					     Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -140,7 +131,7 @@
                             </StackPanel>
 
                             <!-- This is for Customers -->
-                            <RadioButton x:Name="rbtnAccReceivable" Content="{lex:Loc AccountsReceivable}" Style="{StaticResource input_radiobutton}" Margin="5" 
+                            <RadioButton x:Name="rbtnAccReceivable" IsChecked="{Binding}" Content="{lex:Loc AccountsReceivable}" Style="{StaticResource input_radiobutton}" Margin="5" 
                                  Tag="4" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                             <StackPanel Orientation="Horizontal" Margin="23,0" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnAccReceivable}" >
                                 <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"

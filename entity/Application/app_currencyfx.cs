@@ -10,6 +10,13 @@ namespace entity
 
     public partial class app_currencyfx : Audit, IDataErrorInfo
     {
+        public enum CurrencyFXTypes
+        {
+            Transaction,
+            Accounting,
+            Impex
+        }
+
         public app_currencyfx()
         {
             id_company = CurrentSession.Id_Company;
@@ -31,7 +38,9 @@ namespace entity
         [Required]
         public bool is_active { get; set; }
         public bool is_reverse { get; set; }
-    
+
+        public CurrencyFXTypes type { get; set; }
+
         public virtual app_currency app_currency { get; set; }
         public virtual IEnumerable<app_account_detail> app_account_detail { get; set; }
         public virtual IEnumerable<item_movement_value> item_movement_detail { get; set; }

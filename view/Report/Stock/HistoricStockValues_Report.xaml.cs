@@ -58,6 +58,8 @@ namespace Cognitivo.Report
             {
                 id_item_product = g.id_item_product,
                 item_name=g.item_product.item!=null?g.item_product.item.name:"",
+                id_branch = g.app_location != null ? g.app_location.id_branch : 0,
+                branch_name = g.app_location != null ? g.app_location.app_branch.name : "",
                 value=(g.item_movement_value.Sum(x=>x.unit_value)),
             }).ToList();
 

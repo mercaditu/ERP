@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -53,14 +54,15 @@ namespace cntrl.Controls
             InitializeComponent();
         }
 
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void lblInformation_MouseUp(object sender, MouseButtonEventArgs e)
         {
             popup.IsOpen = true;
+        }
+
+        private void lblTotal_TargetUpdated(object sender, DataTransferEventArgs e)
+        {
+            Storyboard Animate = (Storyboard)FindResource("TextChanged");
+            Animate.Begin(this); 
         }
     }
 }

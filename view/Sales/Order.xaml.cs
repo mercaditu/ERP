@@ -539,5 +539,16 @@ namespace Cognitivo.Sales
                 entity.Brillo.Document.Start.Automatic(sales_budget, sales_budget.app_document_range);
             }
         }
+
+        private void Totals_btnClean_Click(object sender)
+        {
+            sales_order sales_order = sales_orderViewSource.View.CurrentItem as sales_order;
+
+            if (sales_order != null)
+            {
+                decimal TrailingDecimals = sales_order.GrandTotal - Math.Floor(sales_order.GrandTotal);
+                sales_order.DiscountWithoutPercentage += TrailingDecimals;
+            }
+        }
     }
 }

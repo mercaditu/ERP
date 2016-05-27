@@ -57,7 +57,7 @@
                     </StackPanel>
                     <Rectangle Style="{StaticResource line_Bar}"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc QuickAction}" Foreground="White" HorizontalAlignment="Center"/>
-                    <Button Content="Clean Decimals" HorizontalAlignment="Center" Margin="2" Padding="8,0"/>
+                    <Button Content="Clean Decimals" Click="btnClean_btnClick" HorizontalAlignment="Center" Margin="2" Padding="8,0"/>
                 </StackPanel>
             </Border>
         </Popup>

@@ -112,7 +112,7 @@
                     <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=chbxAutomatic}">
                         <Label Content="{lex:Loc Integration}" Style="{StaticResource H2}"/>
                         <TextBlock Text="Select the data type that this account plan represents." Style="{StaticResource text_Instructions}" Margin="5,5,0,5"/>
-
+                        
                         <!-- Asset -->
 
                         <StackPanel Visibility="{Binding SelectedValue, Converter={StaticResource AccountChartGroupAsset}, ElementName=cbxChartType}">

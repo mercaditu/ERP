@@ -177,6 +177,7 @@ namespace entity
                 RaisePropertyChanged("DiscountWithoutPercentage");
 
                 decimal DiscountValue = value;
+
                 if (DiscountValue != 0)
                 {
                     decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x => x.quantity > 0).Count();

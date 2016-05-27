@@ -838,5 +838,16 @@ namespace Cognitivo.Sales
         {
             load_PrimaryDataThread();
         }
+
+        private void btnTotalClean_Click(object sender)
+        {
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+
+            if (sales_invoice != null)
+            {
+                decimal TrailingDecimals = sales_invoice.GrandTotal - Math.Floor(sales_invoice.GrandTotal);
+                sales_invoice.DiscountWithoutPercentage += TrailingDecimals;
+            }
+        }
     }
 }

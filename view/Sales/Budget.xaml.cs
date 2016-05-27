@@ -431,5 +431,16 @@ namespace Cognitivo.Sales
         {
 
         }
+
+        private void Totals_btnClean_Click(object sender)
+        {
+            sales_budget sales_budget = sales_budgetViewSource.View.CurrentItem as sales_budget;
+
+            if (sales_budget != null)
+            {
+                decimal TrailingDecimals = sales_budget.GrandTotal - Math.Floor(sales_budget.GrandTotal);
+                sales_budget.DiscountWithoutPercentage += TrailingDecimals;
+            }
+        }
     }
 }

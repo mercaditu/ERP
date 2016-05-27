@@ -90,6 +90,7 @@ namespace entity
                         _sales_invoice_detail.CurrencyFX_ID = _id_currencyfx;
                     }
                 }
+                RaisePropertyChanged("GrandTotal");
                 calc_credit(GrandTotal);
             }
         }

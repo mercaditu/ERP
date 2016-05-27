@@ -58,7 +58,9 @@ namespace entity
                         _purchase_invoice_detail.State = System.Data.Entity.EntityState.Modified;
                         _purchase_invoice_detail.CurrencyFX_ID = _id_currencyfx;
                     }
+                    RaisePropertyChanged("GrandTotal");
                 }
+
             }
         }
         private int _id_currencyfx;

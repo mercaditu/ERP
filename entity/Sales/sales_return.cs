@@ -60,6 +60,7 @@ namespace entity
                             _sales_return_detail.State = System.Data.Entity.EntityState.Modified;
                             _sales_return_detail.CurrencyFX_ID = _id_currencyfx;
                         }
+                        RaisePropertyChanged("GrandTotal");
                     }
                 }       
             }

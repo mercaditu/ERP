@@ -48,12 +48,12 @@
                     <Label Style="{StaticResource generic_Label}" Content="Discount" Foreground="White" HorizontalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
-                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}"/>
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountPercentage}" Style="{StaticResource TextToLabelStyle}"/>
                         <Label Content="%" Style="{StaticResource generic_Label}" Foreground="White" VerticalAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
-                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}"/>
+                        <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
+                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}" Text="{Binding ElementName=_Total,Path=DiscountValue}"/>
                     </StackPanel>
                     <Rectangle Style="{StaticResource line_Bar}"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc QuickAction}" Foreground="White" HorizontalAlignment="Center"/>

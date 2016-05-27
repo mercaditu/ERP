@@ -77,6 +77,7 @@ namespace Cognitivo.Accounting
             item_asset_groupViewSource.Source = AccountingChartDB.item_asset_group.ToList();
 
             cbxChartType.ItemsSource = Enum.GetValues(typeof(accounting_chart.ChartType));
+            cbxChartSubType.ItemsSource = Enum.GetValues(typeof(accounting_chart.ChartSubType));
 
             accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
            // accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
@@ -87,6 +88,7 @@ namespace Cognitivo.Accounting
 
             //filter_Parentchart();
             filter_chart();
+
             treeProject.SelectedItem_ = accounting_chartViewSource.View.CurrentItem as accounting_chart;
         }
 

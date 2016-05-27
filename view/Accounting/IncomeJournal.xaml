@@ -101,8 +101,8 @@
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,0">
                 <Label Content="{lex:Loc Total}" HorizontalContentAlignment="Right" Background="WhiteSmoke" Width="128" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding TotalDebit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Background="WhiteSmoke" HorizontalContentAlignment="Right" Width="128" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding TotalCredit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Background="WhiteSmoke" HorizontalContentAlignment="Right" Width="128" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding TotalDebit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ContentStringFormat="N2" Background="WhiteSmoke" HorizontalContentAlignment="Right" Width="128" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding TotalCredit, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ContentStringFormat="N2" Background="WhiteSmoke" HorizontalContentAlignment="Right" Width="128" Style="{StaticResource input_label}"/>
             </StackPanel>
         </StackPanel>
     

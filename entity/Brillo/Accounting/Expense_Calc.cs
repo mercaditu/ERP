@@ -127,7 +127,7 @@ namespace entity.Brillo.Accounting
                         accounting_journal_detail AR_accounting_journal_detail = new accounting_journal_detail();
                         AR_accounting_journal_detail.accounting_chart = AR_Chart;
                         AR_accounting_journal_detail.trans_date = purchase_invoice.trans_date;
-                        AR_accounting_journal_detail.debit = Math.Round(purchase_invoice.GrandTotal,2);
+                        AR_accounting_journal_detail.credit = Math.Round(purchase_invoice.GrandTotal,2);
                         AR_accounting_journal_detail.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
                         accounting_journal_detailList.Add(AR_accounting_journal_detail);
                     }

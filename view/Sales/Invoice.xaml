@@ -574,7 +574,7 @@
                                 <!--sidepanel-->
                             </Grid>
                         </ScrollViewer>
-                        <GridSplitter Grid.Row="2" Grid.ColumnSpan="2" Background="Red" Height="2"/>
+                        
                         <Grid Grid.ColumnSpan="2" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <Rectangle Height="0.7" Fill="Black" VerticalAlignment="Top" Margin="8,0"/>
                             <StackPanel VerticalAlignment="Top" Margin="8,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">

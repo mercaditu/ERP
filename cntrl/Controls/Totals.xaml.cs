@@ -54,15 +54,15 @@ namespace cntrl.Controls
             InitializeComponent();
         }
 
-        private void lblInformation_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            popup.IsOpen = true;
-        }
-
         private void lblTotal_TargetUpdated(object sender, DataTransferEventArgs e)
         {
             Storyboard Animate = (Storyboard)FindResource("TextChanged");
             Animate.Begin(this); 
+        }
+
+        private void btnInformation_Click(object sender, RoutedEventArgs e)
+        {
+            popup.IsOpen = true;
         }
     }
 }

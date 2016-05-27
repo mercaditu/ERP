@@ -12,11 +12,25 @@ namespace Cognitivo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value != null)
+            try
             {
-                return true;
+                if (value != null)
+                {
+                    entity.accounting_chart.ChartSubType Value_ChartSubType = (entity.accounting_chart.ChartSubType)value;
+                    entity.accounting_chart.ChartSubType Parameter_ChartSubType = (entity.accounting_chart.ChartSubType)System.Convert.ToInt32(parameter);
+
+                    if (Value_ChartSubType > 0 && Parameter_ChartSubType > 0)
+                    {
+                        if (Value_ChartSubType == Parameter_ChartSubType)
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
-            else { return false; }
+            catch { }
+
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -434,13 +434,15 @@ namespace entity
             {
                 if (_discount != value)
                 {
-                    ApplyDiscount_UnitPrice(_discount, value, unit_price);
-
                     _discount = value;
                     RaisePropertyChanged("discount");
 
-                    Calculate_UnitVatDiscount(_discount);
-                    Calculate_SubTotalDiscount(_discount);
+                    if (State > 0)
+                    {
+                        ApplyDiscount_UnitPrice(_discount, value, unit_price);
+                        Calculate_UnitVatDiscount(_discount);
+                        Calculate_SubTotalDiscount(_discount);
+                    }
                 }
             }
         }
@@ -457,12 +459,15 @@ namespace entity
             {
                 if (_DiscountVat != value)
                 {
-                    Calculate_UnitDiscount(value);
-
                     _DiscountVat = value;
                     RaisePropertyChanged("DiscountVat");
 
-                    Calculate_SubTotalVatDiscount(_DiscountVat);
+                    if (State > 0)
+                    {
+                        Calculate_UnitDiscount(value);
+                        Calculate_SubTotalVatDiscount(_DiscountVat);
+                    }
+
                 }
             }
         }

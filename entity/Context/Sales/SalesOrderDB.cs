@@ -143,6 +143,7 @@ namespace entity
 
                             //Save Changes before Printing, so that all fields show up.
                             sales_order.status = Status.Documents_General.Approved;
+                            sales_order.timestamp = DateTime.Now;
                             SaveChanges();
 
                             Brillo.Document.Start.Automatic(sales_order, app_document_range);
@@ -151,6 +152,7 @@ namespace entity
                         {
                             sales_order.is_issued = false;
                             sales_order.status = Status.Documents_General.Approved;
+                            sales_order.timestamp = DateTime.Now;
                             SaveChanges();
                         }
                     }

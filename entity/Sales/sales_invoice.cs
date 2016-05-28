@@ -147,18 +147,21 @@ namespace entity
                 _DiscountPercentage = value;
                 RaisePropertyChanged("DiscountPercentage");
 
-                decimal Discounted_GrandTotalValue = GrandTotal * DiscountPercentage;
-                decimal Fixed_GrandTotal = GrandTotal;
-
-                if (Discounted_GrandTotalValue >= 0 && Fixed_GrandTotal > 0)
+                if (State > 0)
                 {
-                    foreach (sales_invoice_detail detail in this.sales_invoice_detail.Where(x => x.quantity > 0))
+                    decimal Discounted_GrandTotalValue = GrandTotal * DiscountPercentage;
+                    decimal Fixed_GrandTotal = GrandTotal;
+
+                    if (Discounted_GrandTotalValue >= 0 && Fixed_GrandTotal > 0)
                     {
-                        decimal WeightedAvg = detail.SubTotal_Vat / Fixed_GrandTotal;
-                        detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
-                        detail.RaisePropertyChanged("DiscountVat");
+                        foreach (sales_invoice_detail detail in this.sales_invoice_detail.Where(x => x.quantity > 0))
+                        {
+                            decimal WeightedAvg = detail.SubTotal_Vat / Fixed_GrandTotal;
+                            detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
+                            detail.RaisePropertyChanged("DiscountVat");
+                        }
+                        RaisePropertyChanged("GrandTotal");
                     }
-                    RaisePropertyChanged("GrandTotal");
                 }
             }
         }
@@ -173,28 +176,31 @@ namespace entity
                 _DiscountWithoutPercentage = value;
                 RaisePropertyChanged("DiscountWithoutPercentage");
 
-                decimal DiscountValue = value;
-
-                if (DiscountValue >= 0)
+                if (State > 0)
                 {
-                    decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x => x.quantity > 0).Count();
-                    foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
-                    {
-                        item.DiscountVat = PerRawDiscount / item.quantity;
-                        item.RaisePropertyChanged("DiscountVat");
-                    }
-                    RaisePropertyChanged("GrandTotal");
-                }
-                else
-                {
-                    foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
-                    {
-                        item.DiscountVat = 0;
-                        item.RaisePropertyChanged("DiscountVat");
-                    }
-                    RaisePropertyChanged("GrandTotal");
-                }
 
+                    decimal DiscountValue = value;
+
+                    if (DiscountValue >= 0)
+                    {
+                        decimal PerRawDiscount = DiscountValue / sales_invoice_detail.Where(x => x.quantity > 0).Count();
+                        foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
+                        {
+                            item.DiscountVat = PerRawDiscount / item.quantity;
+                            item.RaisePropertyChanged("DiscountVat");
+                        }
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                    else
+                    {
+                        foreach (var item in sales_invoice_detail.Where(x => x.quantity > 0))
+                        {
+                            item.DiscountVat = 0;
+                            item.RaisePropertyChanged("DiscountVat");
+                        }
+                        RaisePropertyChanged("GrandTotal");
+                    }
+                }
             }
         }
         private decimal _DiscountWithoutPercentage;

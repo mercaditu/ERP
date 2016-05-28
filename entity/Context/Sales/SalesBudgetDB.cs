@@ -113,12 +113,14 @@ namespace entity
 
                             //Save Changes before Printing, so that all fields show up.
                             sales_budget.status = Status.Documents_General.Approved;
+                            sales_budget.timestamp = DateTime.Now;
                             SaveChanges();
                         }
                         else
                         {
                             sales_budget.is_issued = false;
                             sales_budget.status = Status.Documents_General.Approved;
+                            sales_budget.timestamp = DateTime.Now;
                             SaveChanges();
                         }
                     }

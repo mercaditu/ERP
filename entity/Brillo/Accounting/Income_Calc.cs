@@ -85,24 +85,24 @@ namespace entity.Brillo.Accounting
                     }
                 }
 
-                Asset.ValueAddedTax VAT = new Asset.ValueAddedTax();
+                
                 foreach (sales_invoice_detail sales_invoice_detail in sales_invoice.sales_invoice_detail.ToList())
                 {
-                    foreach (app_vat_group_details app_vat_group in sales_invoice_detail.app_vat_group.app_vat_group_details)
+                    foreach (app_vat_group_details app_vat_group_details in sales_invoice_detail.app_vat_group.app_vat_group_details)
                     {
-                        accounting_chart VAT_Chart = VAT.find_Chart(context, app_vat_group.app_vat);
+                        Asset.ValueAddedTax VAT = new Asset.ValueAddedTax();
+                        accounting_chart VAT_Chart = VAT.find_Chart(context, app_vat_group_details.app_vat);
                         if (VAT_Chart != null)
                         {
                             accounting_journal_detail VAT_accounting_journal = new accounting_journal_detail();
                             VAT_accounting_journal.trans_date = sales_invoice.trans_date;
                             VAT_accounting_journal.accounting_chart = VAT_Chart;
-                            VAT_accounting_journal.credit = Vat.calculate_Vat(sales_invoice_detail.unit_price, app_vat_group.app_vat.coefficient);
+                            VAT_accounting_journal.credit = Vat.calculate_Vat((sales_invoice_detail.unit_price * sales_invoice_detail.quantity), app_vat_group_details.app_vat.coefficient);
                             VAT_accounting_journal.id_currencyfx = sales_invoice.app_currencyfx.id_currencyfx;
                             accounting_journal_detailList.Add(VAT_accounting_journal);
                         }
                     }
                 }
-
 
                 app_contract_detail app_contract_detail;
                 app_contract_detail = context.app_contract_detail.Where(e => e.interval == 0).FirstOrDefault();

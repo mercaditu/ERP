@@ -35,7 +35,6 @@ namespace entity
                 if (value != _State)
                 {
                     _State = value;
-                    base.State = value;
                     RaisePropertyChanged("State");
 
                     foreach (sales_invoice_detail detail in sales_invoice_detail)
@@ -96,20 +95,18 @@ namespace entity
         }
         private int _id_currencyfx;
 
-
+        /// <summary>
+        /// Grand Total of the Sale including VAT.
+        /// </summary>
         [NotMapped]
         public new decimal GrandTotal
         {
             get
             {
-                _GrandTotal = 0;
-                foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
-                {
-                    _GrandTotal += _sales_invoice_detail.SubTotal_Vat;
-                }
+                _GrandTotal = sales_invoice_detail.Sum(x => x.SubTotal_Vat);
 
                 calc_credit(_GrandTotal);
-                return Math.Round(_GrandTotal, 2);
+                return _GrandTotal;
             }
             set
             {
@@ -119,16 +116,15 @@ namespace entity
         }
         private decimal _GrandTotal;
 
+        /// <summary>
+        /// Gets total value of VAT for each detail.
+        /// </summary>
         [NotMapped]
         public decimal TotalVat
         {
             get
             {
-                _TotalVat = 0;
-                foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice_detail)
-                {
-                    _TotalVat += _sales_invoice_detail.SubTotal_Vat - _sales_invoice_detail.SubTotal;
-                }
+                _TotalVat = sales_invoice_detail.Sum(x => x.SubTotal_Vat - x.SubTotal);
                 return Math.Round(_TotalVat, 2);
             }
             set
@@ -152,12 +148,13 @@ namespace entity
                 RaisePropertyChanged("DiscountPercentage");
 
                 decimal Discounted_GrandTotalValue = GrandTotal * DiscountPercentage;
+                decimal Fixed_GrandTotal = GrandTotal;
 
-                if (Discounted_GrandTotalValue != 0 && GrandTotal > 0)
+                if (Discounted_GrandTotalValue >= 0 && Fixed_GrandTotal > 0)
                 {
                     foreach (sales_invoice_detail detail in this.sales_invoice_detail.Where(x => x.quantity > 0))
                     {
-                        decimal WeightedAvg = detail.SubTotal_Vat / GrandTotal;
+                        decimal WeightedAvg = detail.SubTotal_Vat / Fixed_GrandTotal;
                         detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
                         detail.RaisePropertyChanged("DiscountVat");
                     }

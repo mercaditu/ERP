@@ -216,7 +216,7 @@ namespace Cognitivo.Sales
             {
                 tabPayment.IsSelected = true;
             }
-            else if (e.Key == Key.F4)
+            else if (e.Key == Key.F12)
             {
                 btnSave_Click(sender, e);
             }

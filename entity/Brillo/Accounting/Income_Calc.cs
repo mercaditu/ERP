@@ -93,12 +93,12 @@ namespace entity.Brillo.Accounting
                         accounting_chart VAT_Chart = VAT.find_Chart(context, app_vat_group.app_vat);
                         if (VAT_Chart != null)
                         {
-                            accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
-                            INV_accounting_journal.trans_date = sales_invoice.trans_date;
-                            INV_accounting_journal.accounting_chart = VAT_Chart;
-                            INV_accounting_journal.credit = Vat.calculate_Vat(sales_invoice_detail.unit_price, app_vat_group.app_vat.coefficient);
-                            INV_accounting_journal.id_currencyfx = sales_invoice.app_currencyfx.id_currencyfx;
-                            accounting_journal_detailList.Add(INV_accounting_journal);
+                            accounting_journal_detail VAT_accounting_journal = new accounting_journal_detail();
+                            VAT_accounting_journal.trans_date = sales_invoice.trans_date;
+                            VAT_accounting_journal.accounting_chart = VAT_Chart;
+                            VAT_accounting_journal.credit = Vat.calculate_Vat(sales_invoice_detail.unit_price, app_vat_group.app_vat.coefficient);
+                            VAT_accounting_journal.id_currencyfx = sales_invoice.app_currencyfx.id_currencyfx;
+                            accounting_journal_detailList.Add(VAT_accounting_journal);
                         }
                     }
                 }
@@ -149,6 +149,7 @@ namespace entity.Brillo.Accounting
                            
                         }
                 }
+
                 foreach (accounting_journal_detail accounting_journal_detail in accounting_journal_detailList)
                 {
                     int id_chart = accounting_journal_detail.accounting_chart.id_chart;

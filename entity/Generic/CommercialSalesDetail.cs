@@ -434,25 +434,13 @@ namespace entity
             {
                 if (_discount != value)
                 {
-                    if (State > 0)
-                    {
-                        ApplyDiscount_UnitPrice(_discount, value, unit_price);
+                    ApplyDiscount_UnitPrice(_discount, value, unit_price);
 
-                        _discount = value;
-                        RaisePropertyChanged("discount");
+                    _discount = value;
+                    RaisePropertyChanged("discount");
 
-                        Calculate_UnitVatDiscount(_discount);
-                        Calculate_SubTotalDiscount(_discount);
-
-                    }
-                    else
-                    {
-                        _discount = value;
-                        RaisePropertyChanged("discount");
-
-                        Calculate_UnitVatDiscount(_discount);
-                        Calculate_SubTotalDiscount(_discount);
-                    }
+                    Calculate_UnitVatDiscount(_discount);
+                    Calculate_SubTotalDiscount(_discount);
                 }
             }
         }

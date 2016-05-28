@@ -402,19 +402,18 @@
                 string ItemCode = d.item.code;
                 decimal? Qty = d.quantity;
                 string TaskName = d.item_description;
-                decimal? UnitPrice_Vat = Math.Round(d.UnitPrice_Vat, 2);
 
                 Detail = Detail
                     + ItemName + "\n"
-                    + Qty.ToString() + "\t" + ItemCode + "\t" + (UnitPrice_Vat + d.DiscountVat) + "\n";
+                    + Qty.ToString() + "\t" + ItemCode + "\t" + Math.Round((d.UnitPrice_Vat + d.DiscountVat), 2) + "\n";
             }
 
             decimal DiscountTotal = sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat);
 
             Footer = "--------------------------------" + "\n";
-            Footer += "Total Bruto       : " + (sales_invoice.GrandTotal + DiscountTotal) + "\n";
-            Footer += "Total Descuento   : -" + sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat) + "\n";
-            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + " : " + sales_invoice.GrandTotal + "\n";
+            Footer += "Total Bruto       : " + Math.Round((sales_invoice.GrandTotal + DiscountTotal), 2) + "\n";
+            Footer += "Total Descuento   : -" + Math.Round(sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat), 2) + "\n";
+            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + " : " + Math.Round(sales_invoice.GrandTotal,2) + "\n";
             Footer += "Fecha & Hora      : " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura : " + sales_invoice.number + "\n";
             Footer += "-------------------------------" + "\n";
@@ -424,7 +423,6 @@
                 List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
                 if (sales_invoice_detail.Count > 0)
                 {
-
                     using (db db = new db())
                     {
                         var listvat = sales_invoice_detail
@@ -468,7 +466,7 @@
                 Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";
             }
             Footer += "\n";
-            Footer += "Cajero/a   : " + UserGiven;
+            Footer += "Cajero/a : " + UserGiven;
 
             string Text = Header + Detail + Footer;
             return Text;
@@ -763,10 +761,10 @@
                     }
                 }
 
-                Detail += "Total de Ventas Neto :" + Math.Round(amount, 2) + "\n";
+                Detail += "Total de Ventas Neto : " + Math.Round(amount, 2) + " \n";
             }
-            Footer += "Cajero/a : " + UserName + "/n";
-            Footer += "--------------------------------" + "\n";
+            Footer += "Cajero/a : " + UserName + " /n";
+            Footer += "--------------------------------" + " \n";
 
             string Text = Header + Detail + Footer;
 

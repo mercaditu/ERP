@@ -91,8 +91,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="4,-6, 4, 0">
                 <Label x:Name="lblGrandTotalsales" FontSize="30" Foreground="White"
-                       TargetUpdated="lblGrandTotalsales_DataContextChanged"
-                       Content="{Binding GrandTotal, StringFormat={}{0:N}, Mode=OneWay, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}">
+                       TargetUpdated="lblGrandTotalsales_DataContextChanged" ContentStringFormat="N2"
+                       Content="{Binding GrandTotal, StringFormat={}{0:N2}, Mode=OneWay, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}}">
                     <Label.Effect>
                         <DropShadowEffect Color="White" ShadowDepth="0"/>
                     </Label.Effect>

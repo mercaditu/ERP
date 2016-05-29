@@ -569,23 +569,23 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void txtTotal_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                txtTotal.Background = Brushes.White;
-                purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-                BindingExpression binding = txtTotal.GetBindingExpression(TextBox.TextProperty);
-                binding.UpdateSource();
-            }
-            else
-            {
-                if(txtTotal.Background != Brushes.Beige)
-                {
-                    txtTotal.Background = Brushes.Beige;
-                }
-            }
-        }
+        //private void txtTotal_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        txtTotal.Background = Brushes.White;
+        //        purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+        //        BindingExpression binding = txtTotal.GetBindingExpression(TextBox.TextProperty);
+        //        binding.UpdateSource();
+        //    }
+        //    else
+        //    {
+        //        if(txtTotal.Background != Brushes.Beige)
+        //        {
+        //            txtTotal.Background = Brushes.Beige;
+        //        }
+        //    }
+        //}
 
         private void purchase_invoice_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -614,7 +614,6 @@ namespace Cognitivo.Purchase
                 contact contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 pnlPurchaseOrder._contact = contact;
             }
-           // pnlPurchaseOrder.contactViewSource = contactViewSource;
             pnlPurchaseOrder.PurchaseOrder_Click += PurchaseOrder_Click;
             crud_modal.Children.Add(pnlPurchaseOrder);
         }

@@ -108,7 +108,7 @@ namespace entity.Brillo.Accounting
                             accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
                             INV_accounting_journal.accounting_chart = VAT_Chart;
                             INV_accounting_journal.trans_date = purchase_invoice.trans_date;
-                            INV_accounting_journal.debit = Math.Round(Vat.calculate_Vat(purchase_invoice_detail.unit_cost, app_vat_group.app_vat.coefficient),2);
+                            INV_accounting_journal.debit = Math.Round(Vat.calculate_Vat((purchase_invoice_detail.unit_cost * purchase_invoice_detail.quantity), app_vat_group.app_vat.coefficient),2);
                             INV_accounting_journal.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
                             accounting_journal_detailList.Add(INV_accounting_journal);
                         }

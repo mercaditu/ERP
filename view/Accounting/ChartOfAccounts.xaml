@@ -113,8 +113,9 @@
                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                   UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     <Label Content="Sub Type" Style="{StaticResource input_label}"/>
-                    <ComboBox Name="cbxChartSubType"  Grid.Column="1" Style="{StaticResource input_combobox}" IsEnabled="False"
-                          SelectedValue="{Binding chartsub_type, Mode=TwoWay,
+                    <ComboBox Name="cbxChartSubType" Grid.Column="1" Style="{StaticResource input_combobox}" IsEnabled="False"
+                              SelectionChanged="cbxChartSubType_SelectionChanged"
+                              SelectedValue="{Binding chartsub_type, Mode=TwoWay,
                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                   UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 

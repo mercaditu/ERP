@@ -80,7 +80,7 @@ namespace Cognitivo.Accounting
             cbxChartSubType.ItemsSource = Enum.GetValues(typeof(accounting_chart.ChartSubType));
 
             accounting_chartViewSource = FindResource("accounting_chartViewSource") as CollectionViewSource;
-           // accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
+            //accounting_chartParentViewSource = FindResource("accounting_chartParentViewSource") as CollectionViewSource;
 
             AccountingChartDB.accounting_chart.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             accounting_chartViewSource.Source = AccountingChartDB.accounting_chart.Local;
@@ -265,6 +265,55 @@ namespace Cognitivo.Accounting
 
             accounting_chartViewSource.View.Refresh();
             filter_chart();
+        }
+
+        private void cbxChartSubType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
+            if (accounting_chart != null && accounting_chart.chartsub_type > 0)
+            {
+                chbxAutomatic.IsChecked = true;
+
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.AccountsPayable)
+                {
+                    rbtnAccPayable.IsChecked = true;
+                }
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.AccountsReceivable)
+                {
+                    rbtnAccReceivable.IsChecked = true;
+                }
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.AdministrationExpense)
+                {
+                    rbtnAdminExpenses.IsChecked = true;
+                }
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.Cash)
+                {
+                    rbtnCash.IsChecked = true;
+                }
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.FixedAsset)
+                {
+                    rbtnFixedAssets.IsChecked = true;
+                }
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.Inventory)
+                {
+                    rbtnInventory.IsChecked = true;
+                }
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.VAT)
+                {
+                    if (accounting_chart.chart_type == entity.accounting_chart.ChartType.Assets)
+                    {
+                        rbtnVATasset.IsChecked = true;
+                    }
+                    else
+                    {
+                        rbtnVAT.IsChecked = true;
+                    }
+                }
+            }
+            else
+            {
+                chbxAutomatic.IsChecked = false;
+            }
         }
     }
 }

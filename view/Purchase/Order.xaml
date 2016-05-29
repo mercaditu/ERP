@@ -292,22 +292,13 @@
 
                 <Rectangle Grid.Row="1" Fill="Silver" Height="1" Margin="32,0" VerticalAlignment="Top"/>
 
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" >
-                    <Label Content="Discount(%)" Style="{StaticResource input_label}" />
-                    <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" IsEnabled="{Binding ElementName=toolBar, Path=CanUserDiscountByPercent}"    Width="32"/>
-                    <Label Content="Discount" Style="{StaticResource input_label}"/>
-                    <TextBox Text="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=toolBar, Path=CanUserDiscountByValue}" Width="64"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="4,24"
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right"
                             Grid.Row="3" Grid.ColumnSpan="2">
-                    <Label Content="{lex:Loc Total}" FontWeight="Medium" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
-                    <TextBox x:Name="txtTotal" 
-                                 Text="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource purchase_orderViewSource}, StringFormat={}{0:N}}"
-                                 Style="{StaticResource H2Textbox}" KeyUp="txtTotal_KeyUp"/>
-                    <Label Content="{Binding app_currencyfx.app_currency.name}" Style="{StaticResource H3}" ContentStringFormat="{}{0:N}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />
-                    <Label x:Name="lblVAT" Foreground="RoyalBlue" Content="{lex:Loc VAT}" VerticalAlignment="Center"/>
-
+                    <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource purchase_orderViewSource}, StringFormat={}{0:N}}"
+                                             Currency="{Binding app_currencyfx.app_currency.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                             DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                             DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             VerticalAlignment="Top" HorizontalAlignment="Right"/>
                     <Popup x:Name="popupVAT" IsOpen="{Binding ElementName=lblVAT, Path=IsMouseOver, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                            Placement="Top">
                         <Grid Background="{StaticResource AccentColor_Introvert}">

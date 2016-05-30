@@ -15,19 +15,19 @@ namespace entity
             sales_invoice.State = EntityState.Added;
             sales_invoice.status = Status.Documents_General.Pending;
             sales_invoice.IsSelected = true;
-            sales_invoice.id_range = Brillo.GetDefault.Return_RangeID(App.Names.SalesInvoice);
             sales_invoice.trans_type = Status.TransactionTypes.Normal;
             sales_invoice.trans_date = DateTime.Now.AddDays(TransDate_OffSet);
-            sales_invoice.State = EntityState.Added;
+            sales_invoice.timestamp = DateTime.Now;
 
-            sales_invoice.IsSelected = true;
+            //Navigation Properties
+            sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+
             if (entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault()!=null)
             {
+                //Gets List of Ranges avaiable for this Document.
                 sales_invoice.id_range = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
-                
             }
-        
 
             if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault() != null)
             {
@@ -37,10 +37,6 @@ namespace entity
                     sales_invoice.app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
                 }
             }
-
-            sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
-                //} app_currency.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_priority).FirstOrDefault().app_currencyfx.Where(y => y.is_active).FirstOrDefault();
-                //} 
 
             return sales_invoice;
         }

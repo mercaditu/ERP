@@ -105,20 +105,14 @@ namespace entity
             get { return _id_vat_group; }
             set
             {
-
                 if (value != null)
                 {
-
-
                     if (_id_vat_group != value)
                     {
                         _id_vat_group = (int)value;
                         RaisePropertyChanged("id_vat_group");
 
-
                         update_UnitPriceVAT();
-
-                        //update_SubTotal();
                     }
                 }
             }
@@ -177,8 +171,6 @@ namespace entity
 
                     update_UnitPriceVAT();
                     update_SubTotal();
-
-
                 }
             }
         }
@@ -210,7 +202,6 @@ namespace entity
                         _UnitPrice_Vat = value;
                         RaisePropertyChanged("UnitPrice_Vat");
                         update_UnitPrice_WithoutVAT();
-                        //update_SubTotal();
                     }
                 }
             }

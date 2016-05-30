@@ -139,40 +139,8 @@ namespace entity
                 if (_id_range != value)
                 {
                     _id_range = value;
-
-                    //Abhi> removed this from IF, because this will cause dB to run for each sales invoice or purchase. || State == 0
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
-                    {
-                        using (db db = new db())
-                        {
-                            if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
-                            {
-                                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
-
-                                if (db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
-                                }
-                                if (db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
-                                }
-                                if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
-                                }
-                                if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
-                                {
-                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
-                                }
-
-                                NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
-                                RaisePropertyChanged("NumberWatermark");
-                            }
-                        }
-                    }
+                    RaisePropertyChanged("NumberWatermark");
                 }
-
             }
         }
         private int? _id_range;
@@ -221,7 +189,54 @@ namespace entity
         /// 
         /// </summary>
         [NotMapped]
-        public string NumberWatermark { get; set; }
+        public string NumberWatermark 
+        {
+            get
+            {
+                if ((_NumberWatermark == null || _NumberWatermark == string.Empty) && (number == null || number == string.Empty) && id_range > 0)
+                {
+                    //Abhi> removed this from IF, because this will cause dB to run for each sales invoice or purchase. || State == 0
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+                    {
+                        using (db db = new db())
+                        {
+                            if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
+                            {
+                                app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
+
+                                if (db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
+                                }
+                                if (db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
+                                }
+                                if (db.security_user.Where(x => x.id_user == id_user).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.user_Code = db.security_user.Where(x => x.id_user == id_user).FirstOrDefault().code;
+                                }
+                                if (db.projects.Where(x => x.id_project == id_project).FirstOrDefault() != null)
+                                {
+                                    Brillo.Logic.Range.project_Code = db.projects.Where(x => x.id_project == id_project).FirstOrDefault().code;
+                                }
+
+                                return Brillo.Logic.Range.calc_Range(_app_range, false);
+                            }
+                        }
+                    }
+                }
+                return _NumberWatermark;
+            }
+            set
+            {
+                if (_NumberWatermark != value)
+                {
+                    _NumberWatermark = value;
+                }
+            }
+        }
+        private string _NumberWatermark;
 
         /// <summary>
         /// 

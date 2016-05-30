@@ -149,7 +149,7 @@ namespace cntrl
                     }
 
                     app_currencyfx _app_currencyfx = new app_currencyfx();
-                    _app_currencyfx.is_active = true;
+                    _app_currencyfx.is_active = false;
                     _app_currencyfx.type = app_currencyfx.CurrencyFXTypes.Accounting;
                     _app_currencyfx.buy_value = 1;
                     _app_currencyfx.sell_value = 1;

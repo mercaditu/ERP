@@ -26,6 +26,7 @@ namespace cntrl.Curd
         public accounting_journal accounting_journal { get; set; }
         entity.Properties.Settings _setting = new entity.Properties.Settings();
         public db db { get; set; }
+        CollectionViewSource accounting_journalViewSource, accounting_journal_detailViewSource;
         public AccountingJournal()
         {
             InitializeComponent();
@@ -33,30 +34,28 @@ namespace cntrl.Curd
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CollectionViewSource accounting_journal_detailViewSource = ((CollectionViewSource)(FindResource("accounting_journal_detailViewSource")));
+            accounting_journalViewSource = ((CollectionViewSource)(FindResource("accounting_journalViewSource")));
+            accounting_journal_detailViewSource = ((CollectionViewSource)(FindResource("accounting_journal_detailViewSource")));
             if (accounting_journal != null)
             {
                 db.accounting_journal.Where(x => x.id_journal == accounting_journal.id_journal).Load();
-                accounting_journal_detailViewSource.Source = db.accounting_journal.Local;
-                if (accounting_journal_detailDataGrid != null)
-                {
-                    accounting_journal_detailDataGrid.ItemsSource = db.accounting_journal_detail.Where(x => x.id_journal == accounting_journal.id_journal).ToList();
-                }
+                accounting_journalViewSource.Source = db.accounting_journal.Local;
+                //if (accounting_journal_detailDataGrid != null)
+                //{
+                //    accounting_journal_detailDataGrid.ItemsSource = db.accounting_journal_detail.Where(x => x.id_journal == accounting_journal.id_journal).ToList();
+                //}
             }
             else
             {
                 accounting_journal = new accounting_journal();
                 accounting_journal.id_cycle = db.accounting_cycle.Where(x => x.id_company == _setting.company_ID && x.is_active == true).FirstOrDefault().id_cycle;
-                accounting_journal_detail accounting_journal_detail = new accounting_journal_detail();
-                accounting_journal_detail.accounting_journal = accounting_journal;
-                accounting_journal.accounting_journal_detail.Add(accounting_journal_detail);
                 db.accounting_journal.Add(accounting_journal);
 
-                accounting_journal_detailViewSource.Source = db.accounting_journal.Local;
-                if (accounting_journal_detailDataGrid != null)
-                {
-                    accounting_journal_detailDataGrid.ItemsSource = accounting_journal.accounting_journal_detail;
-                }
+                accounting_journalViewSource.Source = db.accounting_journal.Local;
+                //if (accounting_journal_detailDataGrid != null)
+                //{
+                //    accounting_journal_detailDataGrid.ItemsSource = accounting_journal.accounting_journal_detail;
+                //}
             }
 
 
@@ -125,32 +124,81 @@ namespace cntrl.Curd
             { throw ex; }
         }
 
-        private void accounting_journal_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        //private void accounting_journal_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        //{
+        //       accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.NewItem;
+        //    //    IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
+        //    //    accounting_journal accounting_journal;
+        //    //    if (validationresult.Count() == 0)
+        //    //    {
+        //    //        if (accounting_journal_detail.id_journal_detail == 0)
+        //    //        {
+        //    //            accounting_journal = new accounting_journal();
+        //    //            accounting_journal.id_cycle = db.accounting_cycle.Where(x => x.id_company == _setting.company_ID && x.is_active == true).FirstOrDefault().id_cycle; accounting_journal.comment = "entry from journal";
+        //    //            accounting_journal_detail.accounting_journal = accounting_journal;
+        //    //            accounting_journal.accounting_journal_detail.Add(accounting_journal_detail);
+        //    //           // db.accounting_journal.Add(accounting_journal);
+
+        //    //        }
+        //    //        else
+        //    //        {
+        //       accounting_journal_detail.accounting_journal = accounting_journal;
+        //    // }
+
+
+
+
+        //    // }
+
+        //}
+
+        private void cbxAccount_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-               accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.NewItem;
-            //    IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
-            //    accounting_journal accounting_journal;
-            //    if (validationresult.Count() == 0)
-            //    {
-            //        if (accounting_journal_detail.id_journal_detail == 0)
-            //        {
-            //            accounting_journal = new accounting_journal();
-            //            accounting_journal.id_cycle = db.accounting_cycle.Where(x => x.id_company == _setting.company_ID && x.is_active == true).FirstOrDefault().id_cycle; accounting_journal.comment = "entry from journal";
-            //            accounting_journal_detail.accounting_journal = accounting_journal;
-            //            accounting_journal.accounting_journal_detail.Add(accounting_journal_detail);
-            //           // db.accounting_journal.Add(accounting_journal);
+            if (e.Key == Key.Enter && cbxAccount.Data != null)
+            {
+                int id = Convert.ToInt32(((accounting_chart)cbxAccount.Data).id_chart);
+                if (id > 0)
+                {
+                    accounting_journal accounting_journal = accounting_journalViewSource.View.CurrentItem as accounting_journal;
+                    if (accounting_journal != null)
+                    {
+                        accounting_journal_detail _accounting_journal_detail = new entity.accounting_journal_detail();
+                        _accounting_journal_detail.accounting_journal = accounting_journal;
+                        _accounting_journal_detail.is_head = true;
+                        _accounting_journal_detail.accounting_chart = (accounting_chart)cbxAccount.Data;
+                        _accounting_journal_detail.id_chart = id;
+                        accounting_journal.accounting_journal_detail.Add(_accounting_journal_detail);
+                        accounting_journalViewSource.View.Refresh();
+                        accounting_journal_detailViewSource.View.Refresh();
+                    }
+                }
+            }
+        }
 
-            //        }
-            //        else
-            //        {
-               accounting_journal_detail.accounting_journal = accounting_journal;
-            // }
+        private void cbxAccount_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+            int id = Convert.ToInt32(((accounting_chart)cbxAccount.Data).id_chart);
+            if (id > 0)
+            {
+                accounting_journal accounting_journal = accounting_journalViewSource.View.CurrentItem as accounting_journal;
+                if (accounting_journal != null)
+                {
+
+                    accounting_journal_detail _accounting_journal_detail = new entity.accounting_journal_detail();
+                    _accounting_journal_detail.accounting_journal = accounting_journal;
+                    _accounting_journal_detail.is_head = true;
+                    _accounting_journal_detail.accounting_chart = (accounting_chart)cbxAccount.Data;
+                    _accounting_journal_detail.id_chart = id;
+                    accounting_journal.accounting_journal_detail.Add(_accounting_journal_detail);
 
 
+                    accounting_journalViewSource.View.Refresh();
+                    accounting_journal_detailViewSource.View.Refresh();
 
+                }
 
-            // }
-
+            }
         }
 
     }

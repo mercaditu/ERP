@@ -1,11 +1,12 @@
 ﻿<UserControl x:Class="cntrl.Curd.AccountingJournal"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+             xmlns:cntrl="clr-namespace:cntrl"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              xmlns:local="clr-namespace:Cognitivo.Converters"
              xmlns:converter="clr-namespace:cntrl.Converters"     
+             
             xmlns:lex="http://wpflocalizeextension.codeplex.com" 
             lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
             lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -42,21 +43,26 @@
             <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="240"
                         Style="{StaticResource input_textbox}" TextWrapping="Wrap" />
             <Label Content="{lex:Loc ChartOfAccount}" Style="{StaticResource input_label}"/>
-            <ComboBox Width="240"/>
+            <cntrl:SearchableTextbox x:Name="cbxAccount" HorizontalAlignment="Left" Width="256" Margin="8,4"
+            	                        focusGrid="True" Height="27" CollectionViewSource="{StaticResource accounting_chartViewSource}" 
+            	                        KeyDown="cbxAccount_KeyDown" MouseDoubleClick="cbxAccount_MouseDoubleClick">
+                <cntrl:SearchableTextbox.Columns>
+                    <cntrl:SmartBoxColumn Header="code" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
+                    <cntrl:SmartBoxColumn Header="name" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
+                </cntrl:SearchableTextbox.Columns>
+            </cntrl:SearchableTextbox>
 
-                        
-            <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" 
+
+            <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource accounting_journal_detailViewSource}}"
                               Margin="4" EnableRowVirtualization="True"  Grid.Column="1" MinHeight="128" MaxHeight="256"
-                              RowDetailsVisibilityMode="VisibleWhenSelected" InitializingNewItem="accounting_journal_detailDataGrid_InitializingNewItem"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" 
                               CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding"  >
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Code}" Width="auto" />
-                        <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
-						                                SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-						                                DisplayMemberPath="name" 
-						                                SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="128"/>
-                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding accounting_chart.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                        Header="{lex:Loc Cognitivo:local:Account}" Width="auto" />
+                    <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Debit}" Width="auto" />
                         <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Credit}" Width="auto"/>

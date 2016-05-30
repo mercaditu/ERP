@@ -11,7 +11,7 @@
             lex:ResxLocalizationProvider.DefaultDictionary="local"
             lex:LocalizeDictionary.DesignCulture="en-US"
             mc:Ignorable="d" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-            Width="500" VerticalAlignment="Center" Loaded="UserControl_Loaded">
+            Width="500" MaxHeight="700" VerticalAlignment="Center" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
@@ -25,60 +25,62 @@
     </UserControl.Effect>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="stackMainAc" Background="White">
-            <Grid>
-                <Border Background="WhiteSmoke" />
-                <Border Width="45" HorizontalAlignment="Left" Background="#0099ff">
-                    <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png" 
-                       Height="32" Opacity="0.64"/>
-                </Border>
-                <Label x:Name="lblTitle" Content="{lex:Loc AccountingJournal}" FontSize="25" Margin="50,0,0,0"/>
-                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+            <Grid Background="#0099ff">
+                <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png" 
+                       Height="32" Opacity="0.64" HorizontalAlignment="Left" Margin="6"/>
+                <Label Content="{lex:Loc AccountingJournal}" Foreground="White" FontSize="25" Margin="45,0,0,0"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
+                       HorizontalAlignment="Right" MouseUp="btnCancel_Click" Foreground="White"
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24"
+                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             </Grid>
-            
-            <TextBlock Style="{StaticResource text_Instructions}" Text=""/>
-            <StackPanel HorizontalAlignment="Center" Height="200" >
-               <StackPanel x:Name="stpsub">
-                    <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Column="1" 
-                              RowDetailsVisibilityMode="VisibleWhenSelected"  InitializingNewItem="accounting_journal_detailDataGrid_InitializingNewItem"
+            <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+            <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                Style="{StaticResource input_datepicker}" Width="240"/>
+            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+            <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="240"
+                        Style="{StaticResource input_textbox}" TextWrapping="Wrap" />
+            <Label Content="{lex:Loc ChartOfAccount}" Style="{StaticResource input_label}"/>
+            <ComboBox Width="240"/>
+
+                        
+            <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" 
+                              Margin="4" EnableRowVirtualization="True"  Grid.Column="1" MinHeight="128" MaxHeight="256"
+                              RowDetailsVisibilityMode="VisibleWhenSelected" InitializingNewItem="accounting_journal_detailDataGrid_InitializingNewItem"
                               CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding"  >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Code}" Width="auto" />
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
+                        <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
 						                                SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="name" 
 						                                SelectedValuePath="id_chart" Header="{lex:Loc Cognitivo:local:Account}" Width="128"/>
-                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
+                        <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Debit}" Width="auto" />
-                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
+                        <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Credit}" Width="auto"/>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
+                        <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
 						                                SelectedValueBinding="{Binding id_currencyfx,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="app_currency.name" 
 						                                SelectedValuePath="id_currencyfx" Header="{lex:Loc Cognitivo:local:Currency}" Width="auto"/>
-                            <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding trans_date, StringFormat=\{0:dd-MM-yyyy\},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn x:Name="commentColumn" Binding="{Binding accounting_journal.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Comment}" Width="auto"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </StackPanel>
-            </StackPanel>
+                        <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:Date}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding trans_date, StringFormat=\{0:dd-MM-yyyy\},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <DatePicker SelectedDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn x:Name="commentColumn" Binding="{Binding accounting_journal.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Comment}" Width="auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             <Grid Background="WhiteSmoke" >
-                <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
+            <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
                     FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
               
 

@@ -39,10 +39,8 @@
                        HorizontalAlignment="Right" MouseUp="btnCancel_Click" 
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
-            <TextBlock Style="{StaticResource text_Instructions}" 
-                       Text=""/>
-            <StackPanel HorizontalAlignment="Center" >
-                <Label Content="Template" Style="{StaticResource input_label}"/>
+            <StackPanel HorizontalAlignment="Center" Margin="4">
+                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                 <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
                      Text="{Binding name, Mode=TwoWay, 
                                     NotifyOnValidationError=true, ValidatesOnDataErrors=True,

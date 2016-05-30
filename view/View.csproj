@@ -322,6 +322,9 @@
     <Compile Include="Configs\CostCenter.xaml.cs">
       <DependentUpon>CostCenter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\AccountingCurrency.xaml.cs">
+      <DependentUpon>AccountingCurrency.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\Currency.xaml.cs">
       <DependentUpon>Currency.xaml</DependentUpon>
     </Compile>
@@ -1361,6 +1364,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\CostCenter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configs\AccountingCurrency.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

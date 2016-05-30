@@ -218,6 +218,9 @@
     <Compile Include="Curd\ContactTag.xaml.cs">
       <DependentUpon>ContactTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\accountingcurrency.xaml.cs">
+      <DependentUpon>accountingcurrency.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\ItemTemplate.xaml.cs">
       <DependentUpon>ItemTemplate.xaml</DependentUpon>
     </Compile>
@@ -646,6 +649,10 @@
     <Page Include="Curd\ContactTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Curd\accountingcurrency.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Curd\ItemTemplate.xaml">
       <SubType>Designer</SubType>

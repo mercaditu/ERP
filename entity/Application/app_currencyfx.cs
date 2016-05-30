@@ -7,7 +7,6 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     
-
     public partial class app_currencyfx : Audit, IDataErrorInfo
     {
         public enum CurrencyFXTypes

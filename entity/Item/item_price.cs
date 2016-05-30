@@ -16,6 +16,13 @@ namespace entity
             is_head = true;
 
             min_quantity = 1;
+
+            if (item.State > 0)
+            {
+                Brillo.General general = new Brillo.General();
+                id_currency = general.Get_Currency(CurrentSession.Id_Company);
+                id_price_list = general.get_price_list(CurrentSession.Id_Company);
+            }
         }
 
         [Key]

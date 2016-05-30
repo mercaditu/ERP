@@ -200,6 +200,7 @@
     <Compile Include="Context\Accounting\AccountingCycleDB.cs" />
     <Compile Include="Context\Accounting\AccountingJournalDB.cs" />
     <Compile Include="Context\BaseDB.cs" />
+    <Compile Include="Context\Commercial\PromissoryNoteDB.cs" />
     <Compile Include="Context\Commercial\PaymentDB.cs" />
     <Compile Include="Context\Commercial\StockDB.cs" />
     <Compile Include="Context\Commercial\IncotermDB.cs" />

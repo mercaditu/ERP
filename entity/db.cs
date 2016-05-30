@@ -105,6 +105,7 @@
         public virtual DbSet<item_template> item_template { get; set; }
         public virtual DbSet<item_template_detail> item_template_detail { get; set; }
         public virtual DbSet<payment> payments { get; set; }
+        public virtual DbSet<payment_promissory_note> payment_promissory_note { get; set; }
         public virtual DbSet<payment_detail> payment_detail { get; set; }
         public virtual DbSet<payment_type> payment_type { get; set; }
         public virtual DbSet<payment_type_detail> payment_type_detail { get; set; }

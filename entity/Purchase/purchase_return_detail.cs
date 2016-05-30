@@ -31,7 +31,7 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        public decimal discount
+        public new decimal discount
         {
             get { return _discount; }
             set
@@ -46,6 +46,7 @@ namespace entity
             }
         }
         private decimal _discount;
+
         /// <summary>
         /// Discounts based on percentage value inserted by user. Converts into value, and returns it to Discount Property.
         /// </summary>

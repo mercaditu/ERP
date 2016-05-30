@@ -76,9 +76,7 @@
             </Grid.Resources>
             <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}"  
                                         VirtualizingPanel.VirtualizationMode="Standard" VirtualizingPanel.IsVirtualizing="True" 
-                                        ScrollViewer.CanContentScroll="True"   >
-            
-
+                                        ScrollViewer.CanContentScroll="True">
                 <TreeView.ItemsPanel>
                     <ItemsPanelTemplate >
                         <VirtualizingStackPanel />
@@ -112,21 +110,21 @@
                           SelectedValue="{Binding chart_type, Mode=TwoWay,
                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                   UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    <Label Content="Sub Type" Style="{StaticResource input_label}"/>
-                    <ComboBox Name="cbxChartSubType" Grid.Column="1" Style="{StaticResource input_combobox}" IsEnabled="False"
-                              SelectionChanged="cbxChartSubType_SelectionChanged"
-                              SelectedValue="{Binding chartsub_type, Mode=TwoWay,
-                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
-                                                  UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-
                     <TextBlock Style="{StaticResource text_Instructions}"
 					       Text="Not all Accounts are used for Automatic Accounting, but those that are should be check to integrate those accounts to the movements that occur in the other areas of your company."/>
                     <CheckBox x:Name="chbxAutomatic" Style="{StaticResource input_checkbox}"
-					  Content="{lex:Loc AutomaticAccounting}" IsChecked="{Binding can_transact, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, FallbackValue=True}"/>
+					  Content="{lex:Loc AutomaticAccounting}" IsChecked="{Binding can_transact, FallbackValue=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                     <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=chbxAutomatic}">
                         <Label Content="{lex:Loc Integration}" Style="{StaticResource H2}"/>
                         <TextBlock Text="Select the data type that this account plan represents." Style="{StaticResource text_Instructions}" Margin="5,5,0,5"/>
+
+                        <Label Content="Sub Type" Style="{StaticResource input_label}"/>
+                        <ComboBox Name="cbxChartSubType" Grid.Column="1" Style="{StaticResource input_combobox}" IsEnabled="False"
+                              SelectionChanged="cbxChartSubType_SelectionChanged"
+                              SelectedValue="{Binding chartsub_type, Mode=TwoWay,
+                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                  UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                         <!-- Asset -->
 
@@ -307,7 +305,7 @@
                 </StackPanel>
 
             </TabItem>
-            <TabItem Header="{lex:Loc Import}">
+            <TabItem Header="{lex:Loc Imports}">
                 <StackPanel>
                     <TextBlock Style="{StaticResource text_Instructions}" 
                                Text="Checking this option will irreversably delete data from your system. Cognitivo is not responsible for any Data Loss."/>

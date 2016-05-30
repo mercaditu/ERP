@@ -16,7 +16,12 @@ namespace entity
             is_head = true;
             item_price_rel = new List<item_price>();
             is_active = true;
-            id_company = entity.Properties.Settings.Default.company_ID;
+        }
+
+        public enum PercentOverTypes
+        {
+            OverCost,
+            OverPriceList
         }
 
         [Key]
@@ -26,7 +31,11 @@ namespace entity
         public string name { get; set; }
         public bool is_default { get; set; }
         public bool is_active { get; set; }
-        public decimal percentcost { get; set; }
+
+        public PercentOverTypes percent_type { get; set; }
+        public decimal percent_over { get; set; }
+
+        public virtual item_price_list? ref_price_list { get; set; }
         public virtual IEnumerable<item_price> item_price_rel { get; set; }
 
         public string Error

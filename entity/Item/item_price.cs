@@ -13,13 +13,17 @@ namespace entity
 
         public item_price()
         {
-            Brillo.General general = new Brillo.General();
-
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            id_currency = general.Get_Currency(Properties.Settings.Default.company_ID);
-            id_price_list = general.get_price_list(Properties.Settings.Default.company_ID);
+            
+            if (State > 0)
+            {
+                Brillo.General general = new Brillo.General();
+                id_currency = general.Get_Currency(Properties.Settings.Default.company_ID);
+                id_price_list = general.get_price_list(Properties.Settings.Default.company_ID);   
+            }
+
             min_quantity = 1;
         }
 
@@ -120,9 +124,7 @@ namespace entity
 
         }
 
-
         public decimal min_quantity { get; set; }
-
        
         public virtual item_price_list item_price_list { get; set; }
 

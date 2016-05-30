@@ -9,20 +9,11 @@ namespace entity
 
     public partial class item_price : Audit, IDataErrorInfo
     {
-        //
-
         public item_price()
         {
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            
-            if (State > 0)
-            {
-                Brillo.General general = new Brillo.General();
-                id_currency = general.Get_Currency(Properties.Settings.Default.company_ID);
-                id_price_list = general.get_price_list(Properties.Settings.Default.company_ID);   
-            }
 
             min_quantity = 1;
         }

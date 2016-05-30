@@ -14,17 +14,26 @@ namespace entity
             item.IsSelected = true;
             item.unit_cost = 0;
 
-            if (item.State > 0)
+            using (db db = new db())
             {
-                using (db db = new db())
-                {
-                    if (db.app_vat_group.Where(x => x.is_default == true && x.id_company == Properties.Settings.Default.company_ID).FirstOrDefault() != null)
-                        item.id_vat_group = db.app_vat_group.Where(x => x.is_default == true && x.id_company == Properties.Settings.Default.company_ID).FirstOrDefault().id_vat_group;
-                    else
-                        item.id_vat_group = 0;
-                }
+                if (db.app_vat_group.Where(x => x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                    item.id_vat_group = db.app_vat_group.Where(x => x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
+                else
+                    item.id_vat_group = 0;
             }
+
+            item.item_price.Add(New_ItemPrice(item));
+
             return item;
+        }
+
+        public item_price New_ItemPrice(item item)
+        {
+            item_price item_price = new item_price();
+            Brillo.General general = new Brillo.General();
+            item_price.id_currency = general.Get_Currency(CurrentSession.Id_Company);
+            item_price.id_price_list = general.get_price_list(CurrentSession.Id_Company);
+            return item_price;
         }
 
         public override int SaveChanges()

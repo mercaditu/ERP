@@ -40,16 +40,14 @@
             </Grid>
             
             <TextBlock Style="{StaticResource text_Instructions}" Text=""/>
-            <StackPanel HorizontalAlignment="Center" >
+            <StackPanel HorizontalAlignment="Center" Height="200" >
                <StackPanel x:Name="stpsub">
                     <DataGrid Grid.Row="2" x:Name="accounting_journal_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Grid.Column="1" 
-                              RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" RowEditEnding="accounting_journal_detailDataGrid_RowEditEnding" 
+                              RowDetailsVisibilityMode="VisibleWhenSelected"  InitializingNewItem="accounting_journal_detailDataGrid_InitializingNewItem"
                               CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding"  >
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_journalViewSource}}" 
-						                                SelectedValueBinding="{Binding id_journal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-						                                DisplayMemberPath="code" 
-						                                SelectedValuePath="id_journal" Header="{lex:Loc Cognitivo:local:Code}" Width="auto"/>
+                            <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                        Header="{lex:Loc Cognitivo:local:Code}" Width="auto" />
                             <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource accounting_chartViewSource}}" 
 						                                SelectedValueBinding="{Binding id_chart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="name" 

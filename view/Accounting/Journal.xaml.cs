@@ -290,6 +290,10 @@ namespace Cognitivo.Accounting
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            entity = new dbContext();
+            accounting_journalViewSource = ((CollectionViewSource)(FindResource("accounting_journalViewSource")));
+            entity.db.accounting_journal.Where(x => x.id_company == _settings.company_ID).Load();
+            accounting_journalViewSource.Source = entity.db.accounting_journal.Local;
             accounting_journalViewSource.View.Refresh();
             filter_date();
         }
@@ -340,6 +344,19 @@ namespace Cognitivo.Accounting
 
                 toolbar.msgError(ex);
             }
+        }
+
+   
+
+        private void ManulEntry_click(object sender, RoutedEventArgs e)
+        {
+            crud_modal.Visibility = Visibility.Visible;
+            AccountingJournal = new cntrl.Curd.AccountingJournal();
+        
+            AccountingJournal.db = entity.db;
+
+            crud_modal.Children.Add(AccountingJournal);
+            
         }
 
        

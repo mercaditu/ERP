@@ -34,57 +34,55 @@ namespace cntrl.Curd
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource accounting_journal_detailViewSource = ((CollectionViewSource)(FindResource("accounting_journal_detailViewSource")));
-            db.accounting_journal.Where(x => x.id_journal == accounting_journal.id_journal).Load();
-            accounting_journal_detailViewSource.Source = db.accounting_journal.Local;
+            if (accounting_journal != null)
+            {
+                db.accounting_journal.Where(x => x.id_journal == accounting_journal.id_journal).Load();
+                accounting_journal_detailViewSource.Source = db.accounting_journal.Local;
+                if (accounting_journal_detailDataGrid != null)
+                {
+                    accounting_journal_detailDataGrid.ItemsSource = db.accounting_journal_detail.Where(x => x.id_journal == accounting_journal.id_journal).ToList();
+                }
+            }
+            else
+            {
+                accounting_journal = new accounting_journal();
+                accounting_journal.id_cycle = db.accounting_cycle.Where(x => x.id_company == _setting.company_ID && x.is_active == true).FirstOrDefault().id_cycle;
+                accounting_journal_detail accounting_journal_detail = new accounting_journal_detail();
+                accounting_journal_detail.accounting_journal = accounting_journal;
+                accounting_journal.accounting_journal_detail.Add(accounting_journal_detail);
+                db.accounting_journal.Add(accounting_journal);
+
+                accounting_journal_detailViewSource.Source = db.accounting_journal.Local;
+                if (accounting_journal_detailDataGrid != null)
+                {
+                    accounting_journal_detailDataGrid.ItemsSource = accounting_journal.accounting_journal_detail;
+                }
+            }
+
 
             CollectionViewSource accounting_chartViewSource = ((CollectionViewSource)(FindResource("accounting_chartViewSource")));
             accounting_chartViewSource.Source = db.accounting_chart.Where(x => x.id_company == _setting.company_ID).ToList();
 
             CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-           app_currencyfxViewSource.Source = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID).ToList();
+            app_currencyfxViewSource.Source = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active).ToList();
 
-           if (accounting_journal_detailDataGrid != null)
-           {
-               accounting_journal_detailDataGrid.ItemsSource = db.accounting_journal_detail.Where(x => x.id_journal == accounting_journal.id_journal).ToList();
-           }
+
         }
-        private void accounting_journal_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
-            IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
-            accounting_journal accounting_journal;
-            if (validationresult.Count() == 0)
-            {
-                if (accounting_journal_detail.id_journal_detail == 0)
-                {
-                    accounting_journal = new accounting_journal();
-                    accounting_journal.id_cycle = db.accounting_cycle.Where(x => x.id_company == _setting.company_ID && x.is_active == true).FirstOrDefault().id_cycle;                    accounting_journal.comment = "entry from journal";
-                    accounting_journal.accounting_journal_detail.Add(accounting_journal_detail);
-                    db.accounting_journal.Add(accounting_journal);
 
-                }
-                else
-                {
-                    accounting_journal = accounting_journal_detail.accounting_journal;
-                }
-
-               
-
-
-            }
-        }
 
         private void accounting_journal_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
-            int code = accounting_journal_detail.accounting_journal.code;
-            int id_chart = accounting_journal_detail.accounting_journal.id_cycle;
-            List<accounting_journal_detail> lst_accounting_journal_detail = db.accounting_journal_detail.Where(x => x.id_company == _setting.company_ID && x.accounting_journal.code == code && x.accounting_journal.id_cycle == id_chart).ToList();
             DataGridColumn column = e.Column;
-            int id = 0;
-            id = accounting_journal_detail.id_currencyfx;
             if (column.Header.ToString() == "Currency")
             {
+
+                accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.Row.Item;
+                int code = accounting_journal_detail.accounting_journal.code;
+                int id_chart = accounting_journal_detail.accounting_journal.id_cycle;
+                List<accounting_journal_detail> lst_accounting_journal_detail = db.accounting_journal_detail.Where(x => x.id_company == _setting.company_ID && x.accounting_journal.code == code && x.accounting_journal.id_cycle == id_chart).ToList();
+
+                int id = 0;
+                id = accounting_journal_detail.id_currencyfx;
                 if (db.app_currencyfx.Where(x => x.id_currencyfx == id).FirstOrDefault() != null)
                 {
                     accounting_journal_detail.app_currencyfx = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.id_currencyfx == id).FirstOrDefault();
@@ -118,7 +116,7 @@ namespace cntrl.Curd
         {
             try
             {
-               
+
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Hidden;
@@ -126,6 +124,34 @@ namespace cntrl.Curd
             catch (Exception ex)
             { throw ex; }
         }
-         
+
+        private void accounting_journal_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        {
+               accounting_journal_detail accounting_journal_detail = (accounting_journal_detail)e.NewItem;
+            //    IEnumerable<DbEntityValidationResult> validationresult = db.GetValidationErrors();
+            //    accounting_journal accounting_journal;
+            //    if (validationresult.Count() == 0)
+            //    {
+            //        if (accounting_journal_detail.id_journal_detail == 0)
+            //        {
+            //            accounting_journal = new accounting_journal();
+            //            accounting_journal.id_cycle = db.accounting_cycle.Where(x => x.id_company == _setting.company_ID && x.is_active == true).FirstOrDefault().id_cycle; accounting_journal.comment = "entry from journal";
+            //            accounting_journal_detail.accounting_journal = accounting_journal;
+            //            accounting_journal.accounting_journal_detail.Add(accounting_journal_detail);
+            //           // db.accounting_journal.Add(accounting_journal);
+
+            //        }
+            //        else
+            //        {
+               accounting_journal_detail.accounting_journal = accounting_journal;
+            // }
+
+
+
+
+            // }
+
+        }
+
     }
 }

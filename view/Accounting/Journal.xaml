@@ -57,6 +57,8 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Background="WhiteSmoke" Margin="0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+            <Label Foreground="{StaticResource Label_ImportantColor}" FontWeight="Medium" Content="{lex:Loc Journal}"/>
+            <Button Content="{lex:Loc Manual Entry}" Click="ManulEntry_click" Margin="8,4"/>
             <Label Foreground="{StaticResource Label_ImportantColor}" FontWeight="Medium" Content="{lex:Loc Template}"/>
             <Button Content="{lex:Loc Create}" Click="Button_Click" Margin="8,4"/>
             <Button Content="{lex:Loc Template}" Click="Button_Click_1" Margin="8,4"/>

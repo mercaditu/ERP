@@ -17,7 +17,7 @@ namespace entity
 
             min_quantity = 1;
 
-            if (item.State > 0)
+            if (item != null && item.State > 0)
             {
                 Brillo.General general = new Brillo.General();
                 id_currency = general.Get_Currency(CurrentSession.Id_Company);

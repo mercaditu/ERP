@@ -64,10 +64,23 @@ namespace entity
 
         public void Approve()
         {
-          
+            foreach (payment_promissory_note payment_promissory_note in base.payment_promissory_note.Local.Where(x =>
+                                                 x.status == Status.Documents.Pending
+                                                         && x.IsSelected && x.Error == null))
+            {
+                payment_promissory_note.status = Status.Documents.Issued;
+            }
+            base.SaveChanges();
         }
         public void Anull()
         {
+            foreach (payment_promissory_note payment_promissory_note in base.payment_promissory_note.Local.Where(x =>
+                                                 x.status == Status.Documents.Pending
+                                                         && x.IsSelected && x.Error == null))
+            {
+                payment_promissory_note.status = Status.Documents.Returned;
+            }
+            base.SaveChanges();
 
         }
      

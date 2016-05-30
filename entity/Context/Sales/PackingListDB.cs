@@ -88,6 +88,8 @@ namespace entity
 
         public void Approve(bool IsDiscountStock)
         {
+            NumberOfRecords = 0;
+
             foreach (sales_packing sales_packing in base.sales_packing.Local)
             {
                 if (sales_packing.IsSelected && sales_packing.Error == null)
@@ -130,6 +132,8 @@ namespace entity
                         sales_packing.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }
+
+                    NumberOfRecords += 1;
                 }
 
                 if (sales_packing.Error != null)

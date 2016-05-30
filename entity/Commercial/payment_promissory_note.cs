@@ -36,6 +36,9 @@ namespace entity
         public DateTime trans_date { get; set; }
         public DateTime expiry_date { get; set; }
 
+        [NotMapped]
+        public string NumberWatermark { get; set; }
+
         public virtual contact contact { get; set; }
         public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
 

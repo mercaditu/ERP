@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=entity" 
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -48,14 +49,17 @@
             </Grid.ColumnDefinitions>
             <StackPanel HorizontalAlignment="Center" Margin="8">
                 <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
-                <TextBox Style="{StaticResource input_textbox}"/>
+                <Controls:SmartBox_Contact Text="{Binding contacts.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                           Get_Customers="True" Get_Suppliers="True"/>
                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-                <DatePicker Style="{StaticResource input_datepicker}"/>
+                <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            Style="{StaticResource input_datepicker}"/>
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                 <ComboBox Style="{StaticResource input_combobox}"/>
                 <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-                <TextBox Style="{StaticResource input_textbox}" metro:TextBoxHelper.Watermark="{Binding }"/>
+                <TextBox Text="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" 
+                         metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Width="128">
@@ -67,6 +71,9 @@
                         <Label Content="{Binding payment_schedual.purchase_invoice.number, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
                     </StackPanel>
                 </StackPanel>
+                <Label Content="{lex:Loc ExpiryDate}" Style="{StaticResource input_label}"/>
+                <DatePicker SelectedDate="{Binding expiry_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            Style="{StaticResource input_datepicker}"/>
                 <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                 <Label Content="{Binding currencyfx.currency.name}" Style="{StaticResource generic_Label}"/>
                 <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>

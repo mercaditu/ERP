@@ -12,9 +12,9 @@ namespace entity
     {
         public enum CurrencyFXTypes
         {
-            Transaction,
-            Accounting,
-            Impex
+            Transaction = 0,
+            Accounting = 1,
+            Impex = 2
         }
 
         public app_currencyfx()

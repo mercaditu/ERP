@@ -136,14 +136,12 @@ namespace entity
             }
             set
             {
-
-
-
                 if (_id_range != value)
                 {
                     _id_range = value;
 
-                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
+                    //Abhi> removed this from IF, because this will cause dB to run for each sales invoice or purchase. || State == 0
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
                     {
                         using (db db = new db())
                         {

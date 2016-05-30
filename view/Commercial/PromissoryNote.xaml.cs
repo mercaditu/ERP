@@ -15,11 +15,10 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Commercial
 {
-    /// <summary>
-    /// Interaction logic for PromissoryNote.xaml
-    /// </summary>
     public partial class PromissoryNote : Page
     {
+        entity.db db = new entity.db();
+
         public PromissoryNote()
         {
             InitializeComponent();

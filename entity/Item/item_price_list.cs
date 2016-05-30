@@ -35,7 +35,7 @@ namespace entity
         public PercentOverTypes percent_type { get; set; }
         public decimal percent_over { get; set; }
 
-        public virtual item_price_list? ref_price_list { get; set; }
+        public virtual item_price_list ref_price_list { get; set; }
         public virtual IEnumerable<item_price> item_price_rel { get; set; }
 
         public string Error

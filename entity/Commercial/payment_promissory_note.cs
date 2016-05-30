@@ -81,8 +81,7 @@ namespace entity
         public virtual app_document_range app_document_range { get; set; }
         #endregion
 
-        [NotMapped]
-        public string NumberWatermark { get; set; }
+      
         public string note_number { get; set; }
 
         /// <summary>

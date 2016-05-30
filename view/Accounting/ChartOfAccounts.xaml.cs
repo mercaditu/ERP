@@ -298,6 +298,10 @@ namespace Cognitivo.Accounting
                 {
                     rbtnInventory.IsChecked = true;
                 }
+                if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.Revenue)
+                {
+                    rbtnRevenue.IsChecked = true;
+                }
                 if (accounting_chart.chartsub_type == entity.accounting_chart.ChartSubType.VAT)
                 {
                     if (accounting_chart.chart_type == entity.accounting_chart.ChartType.Assets)

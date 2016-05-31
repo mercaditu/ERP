@@ -174,7 +174,6 @@ namespace entity.Brillo.Accounting
                         PAYaccounting_journal_detail.debit = Math.Round(accounting_journal_detail.debit,2);
                         PAYaccounting_journal_detail.id_currencyfx = accounting_journal_detail.id_currencyfx;
                         accounting_journal.accounting_journal_detail.Add(PAYaccounting_journal_detail);
-                        
                     }
                     else
                     {

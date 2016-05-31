@@ -38,9 +38,9 @@
                 if (_id_currencyfx != value)
                 {
 
-                    debit = Currency.convert_Values(debit, _id_currencyfx, value, App.Modules.Sales);
+                    debit = entity.Brillo.Currency.convert_Values(debit, _id_currencyfx, value, App.Modules.Sales);
                     RaisePropertyChanged("debit");
-                    credit = Currency.convert_Values(credit, _id_currencyfx, value, App.Modules.Sales);
+                    credit = entity.Brillo.Currency.convert_Values(credit, _id_currencyfx, value, App.Modules.Sales);
                     RaisePropertyChanged("credit");
                    
                     _id_currencyfx = value;

@@ -113,7 +113,6 @@ namespace entity.Brillo.Accounting
                     }
                 }
 
-
                 List<payment_schedual> payment_schedualLIST = AccountingJournalDB.payment_schedual.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).ToList();
 
                 if (payment_schedualLIST != null)
@@ -160,7 +159,8 @@ namespace entity.Brillo.Accounting
                     }
                 }
 
-
+                ///Clean up Duplicate Accounts.
+                ///If Duplicate, will sum into first of the same chart it Finds.
                 foreach (accounting_journal_detail accounting_journal_detail in accounting_journal_detailList)
                 {
                     int id_chart=accounting_journal_detail.accounting_chart.id_chart;

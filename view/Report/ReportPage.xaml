@@ -181,59 +181,62 @@
         
         <GridSplitter Background="Gray" HorizontalAlignment="Stretch" Grid.Row="1"/>
 
-        <StackPanel Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2">
-            <StackPanel HorizontalAlignment="Center">
-                <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
-                <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
-                <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True" Select="grid_sbxContact_Select"/>
+        <ScrollViewer Grid.Column="0" Grid.Row="2">
+            <Grid HorizontalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center">
+                    <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
-                <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
-                <Controls:SmartBox_Geography x:Name="grid_sbxGeography" />
+                    <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
+                    <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True" Select="grid_sbxContact_Select"/>
 
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Margin="4,0">
-                        <Label Style="{StaticResource input_label}">
-                            <TextBlock>
+                    <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
+                    <Controls:SmartBox_Geography x:Name="grid_sbxGeography" />
+
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="4,0">
+                            <Label Style="{StaticResource input_label}">
+                                <TextBlock>
                                             <Run Text="{lex:Loc Range}"/>
                                             <Run Text="{lex:Loc StartDate}"/>
-                            </TextBlock>
-                        </Label>
-                        <DatePicker x:Name="grid_dateStart" Width="124" 
+                                </TextBlock>
+                            </Label>
+                            <DatePicker x:Name="grid_dateStart" Width="124" 
                                             SelectedDate="{Binding ElementName=_ReportPage, Path=start_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    </StackPanel>
-                    <StackPanel Margin="2,0">
-                        <Label Style="{StaticResource input_label}">
-                            <TextBlock>
+                        </StackPanel>
+                        <StackPanel Margin="2,0">
+                            <Label Style="{StaticResource input_label}">
+                                <TextBlock>
                                             <Run Text="{lex:Loc Range}"/>
                                             <Run Text="{lex:Loc EndDate}"/>
-                            </TextBlock>
-                        </Label>
-                        <DatePicker x:Name="grid_dateEnd" Width="124"
+                                </TextBlock>
+                            </Label>
+                            <DatePicker x:Name="grid_dateEnd" Width="124"
                                             SelectedDate="{Binding ElementName=_ReportPage, Path=end_Range, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        </StackPanel>
                     </StackPanel>
+
+                    <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding tbxCondition, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+
+                    <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding tbxContract, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+
+                    <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+
+                    <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
+                    <Controls:SmartBox_Item x:Name="grid_sbxItem" Select="grid_sbxItem_Select" />
+
+                    <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding tbxBrand, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+
+                    <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
+                    <TextBox Text="{Binding tbxTag, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                 </StackPanel>
-
-                <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
-                <TextBox Text="{Binding tbxCondition, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-
-                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
-                <TextBox Text="{Binding tbxContract, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-
-                <Rectangle Style="{StaticResource line_Bar}"/>
-
-                <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
-
-                <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
-                <Controls:SmartBox_Item x:Name="grid_sbxItem" Select="grid_sbxItem_Select" />
-
-                <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
-                <TextBox Text="{Binding tbxBrand, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-
-                <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
-                <TextBox Text="{Binding tbxTag, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-            </StackPanel>
-        </StackPanel>
+            </Grid>
+        </ScrollViewer>
 
         <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" Margin="0,0,0,-24" Background="#FF00B2FF"
                                     Style="{DynamicResource MetroCircleButtonStyle}" Click="btnGridSearch" FontSize="24" Foreground="White"

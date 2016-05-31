@@ -133,7 +133,7 @@ namespace Cognitivo.Accounting
                         accounting_journalViewSource.View.Filter = i =>
                         {
                             accounting_journal accounting_journal = (accounting_journal)i;
-                            if (accounting_journal.id_cycle == id && accounting_journal.trans_date<=AccountDate)
+                            if (accounting_journal.id_cycle == id && accounting_journal.trans_date.Date<=AccountDate.Date)
                                 return true;
                             else
                                 return false;
@@ -291,7 +291,7 @@ namespace Cognitivo.Accounting
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             entity = new dbContext();
-            accounting_journalViewSource = ((CollectionViewSource)(FindResource("accounting_journalViewSource")));
+          //  accounting_journalViewSource = ((CollectionViewSource)(FindResource("accounting_journalViewSource")));
             entity.db.accounting_journal.Where(x => x.id_company == _settings.company_ID).Load();
             accounting_journalViewSource.Source = entity.db.accounting_journal.Local;
             accounting_journalViewSource.View.Refresh();

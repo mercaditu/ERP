@@ -94,7 +94,7 @@ namespace Cognitivo.Report
                 currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,
                 quantity = g.sid.quantity,
                 sub_Total = g.sid.SubTotal,
-                sub_Total_vat = g.sid.SubTotal_Vat,
+                sub_Total_vat = g.sales_invoice.status == Status.Documents_General.Annulled ? 0 : g.sid.SubTotal_Vat,
                 sub_Total_Vat_Discount = g.sid.Discount_SubTotal_Vat,
                 unit_cost = g.sid.unit_cost,
                 unit_price = g.sid.unit_price,
@@ -121,6 +121,6 @@ namespace Cognitivo.Report
             reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoiceReport.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();
-        }   
+        }
     }
 }

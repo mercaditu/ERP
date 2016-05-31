@@ -118,6 +118,7 @@ namespace Cognitivo.Report
             }
         }
         private string _tbxTag;
+    
 
         /// <summary>
         /// Brand KeyWord Array.
@@ -429,6 +430,22 @@ namespace Cognitivo.Report
 
                 }
                 MessageBox.Show("Files Saved...");
+            }
+        }
+
+        private void grid_sbxContact_Select(object sender, RoutedEventArgs e)
+        {
+            if (grid_sbxContact.ContactID>0)
+            {
+                Contact = db.contacts.Where(x => x.id_contact == grid_sbxContact.ContactID).FirstOrDefault();
+            }
+        }
+
+        private void grid_sbxItem_Select(object sender, RoutedEventArgs e)
+        {
+            if (grid_sbxItem.ItemID > 0)
+            {
+                Item = db.items.Where(x => x.id_item == grid_sbxItem.ItemID).FirstOrDefault();
             }
         }
 

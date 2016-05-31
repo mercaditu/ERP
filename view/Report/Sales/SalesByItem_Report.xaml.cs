@@ -71,7 +71,7 @@ namespace Cognitivo.Report
             {
                 predicate = predicate.And(x => x.contact == ReportPage.Contact);
             }
-
+         
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_invoice> sales_invoiceList = db.sales_invoice.Where(predicate).ToList();

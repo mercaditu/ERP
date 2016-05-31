@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V444\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V445\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>449</ApplicationRevision>
+    <ApplicationRevision>450</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -517,6 +517,9 @@
     <Compile Include="Report\ReportSalesbyTag.xaml.cs">
       <DependentUpon>ReportSalesbyTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\Stock\StockByBrand_Report.xaml.cs">
+      <DependentUpon>StockByBrand_Report.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Report\Stock\HistoricStockValues_Report.xaml.cs">
       <DependentUpon>HistoricStockValues_Report.xaml</DependentUpon>
     </Compile>
@@ -932,6 +935,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="bin\Debug\Report\PurchaseInvoiceReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Report\StockByBrand.rdlc">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
@@ -1558,6 +1565,10 @@
     <Page Include="Report\ReportSalesbyTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Report\Stock\StockByBrand_Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Report\Stock\HistoricStockValues_Report.xaml">
       <Generator>MSBuild:Compile</Generator>

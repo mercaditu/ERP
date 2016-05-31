@@ -158,6 +158,12 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc HistoricStockValues}"/>
                 </StackPanel>
             </ListBoxItem>
+            <ListBoxItem Tag="StockByBrand">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StockByBrand}"/>
+                </StackPanel>
+            </ListBoxItem>
             <ListBoxItem IsSelected="False" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Height="24" Source="/Cognitivo;component/Images/Menu/modProduction.png" />
@@ -180,7 +186,7 @@
                 <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
                 <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
-                <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True"/>
+                <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True" Select="grid_sbxContact_Select"/>
 
                 <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}" />
                 <Controls:SmartBox_Geography x:Name="grid_sbxGeography" />
@@ -219,7 +225,7 @@
                 <Label Content="{lex:Loc Details}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
                 <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" />
-                <Controls:SmartBox_Item x:Name="grid_sbxItem" />
+                <Controls:SmartBox_Item x:Name="grid_sbxItem" Select="grid_sbxItem_Select" />
 
                 <Label Content="{lex:Loc Brand}" Style="{StaticResource input_label}" />
                 <TextBox Text="{Binding tbxBrand, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>

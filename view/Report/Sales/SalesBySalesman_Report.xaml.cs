@@ -71,6 +71,7 @@ namespace Cognitivo.Report
             {
                 predicate = predicate.And(x => x.contact == ReportPage.Contact);
             }
+           
             
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
@@ -120,6 +121,8 @@ namespace Cognitivo.Report
                 HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
                 unit_price_discount = g.sid.discount != null ? g.sid.discount : 0,
             }).ToList();
+
+         
 
             reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoicebySalesMan.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);

@@ -37,10 +37,10 @@
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
             </Grid>
             <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-            <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            <DatePicker SelectedDate="{Binding trans_date,Source={StaticResource accounting_journalViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                 Style="{StaticResource input_datepicker}" Width="240"/>
             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-            <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="240"
+            <TextBox Text="{Binding comment,Source={StaticResource accounting_journalViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="240"
                         Style="{StaticResource input_textbox}" TextWrapping="Wrap" />
             <Label Content="{lex:Loc ChartOfAccount}" Style="{StaticResource input_label}"/>
             <cntrl:SearchableTextbox x:Name="cbxAccount" HorizontalAlignment="Left" Width="256" Margin="8,4"
@@ -58,7 +58,7 @@
                               RowDetailsVisibilityMode="VisibleWhenSelected" 
                               CellEditEnding="accounting_journal_detailDataGrid_CellEditEnding"  >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
+                    <DataGridTextColumn Binding="{Binding accounting_chart.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Code}" Width="auto" />
                     <DataGridTextColumn Binding="{Binding accounting_chart.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                         Header="{lex:Loc Cognitivo:local:Account}" Width="auto" />

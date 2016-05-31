@@ -71,6 +71,15 @@ namespace Cognitivo.Report
             {
                 predicate = predicate.And(x => x.sales_invoice.contact == ReportPage.Contact);
             }
+            if (ReportPage.BrandArray != null)
+            {
+                predicate = predicate.And(x => ReportPage.BrandArray.Contains(x.item != null ? x.item.item_brand != null ? x.item.item_brand.name : "" : ""));
+            }
+            if (ReportPage.Item != null)
+            {
+                predicate = predicate.And(x => x.id_item == ReportPage.Item.id_item);
+            }
+
 
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc

@@ -56,6 +56,7 @@ namespace cntrl.Curd
                 //{
                 //    accounting_journal_detailDataGrid.ItemsSource = accounting_journal.accounting_journal_detail;
                 //}
+                accounting_journalViewSource.View.MoveCurrentTo(accounting_journal);
             }
 
 
@@ -164,6 +165,12 @@ namespace cntrl.Curd
                     {
                         accounting_journal_detail _accounting_journal_detail = new entity.accounting_journal_detail();
                         _accounting_journal_detail.accounting_journal = accounting_journal;
+                        if (db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active && x.app_currency.is_priority).FirstOrDefault()!=null)
+                        {
+                            _accounting_journal_detail.id_currencyfx = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active && x.app_currency.is_priority).FirstOrDefault().id_currencyfx;
+                            _accounting_journal_detail.app_currencyfx = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active && x.app_currency.is_priority).FirstOrDefault();          
+                        }
+                  
                         _accounting_journal_detail.is_head = true;
                         _accounting_journal_detail.accounting_chart = (accounting_chart)cbxAccount.Data;
                         _accounting_journal_detail.id_chart = id;
@@ -187,6 +194,11 @@ namespace cntrl.Curd
 
                     accounting_journal_detail _accounting_journal_detail = new entity.accounting_journal_detail();
                     _accounting_journal_detail.accounting_journal = accounting_journal;
+                    if (db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active && x.app_currency.is_priority).FirstOrDefault() != null)
+                    {
+                        _accounting_journal_detail.id_currencyfx = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active && x.app_currency.is_priority).FirstOrDefault().id_currencyfx;
+                        _accounting_journal_detail.app_currencyfx = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active && x.app_currency.is_priority).FirstOrDefault();
+                    }
                     _accounting_journal_detail.is_head = true;
                     _accounting_journal_detail.accounting_chart = (accounting_chart)cbxAccount.Data;
                     _accounting_journal_detail.id_chart = id;

@@ -30,30 +30,23 @@
             <RowDefinition Height="11*"/>
             <RowDefinition Height="17*"/>
         </Grid.RowDefinitions>
-        <!--<Grid Grid.Row="1" Grid.RowSpan="2" Background="{StaticResource AccentColor_Brush}">
-            <ComboBox x:Name="cmbcycle" DisplayMemberPath="name" 
-                      SelectedValuePath="id_accounting_cycle" Height="20" VerticalAlignment="Top" Margin="4"
-                      ItemsSource="{Binding Source={StaticResource accounting_cycleViewSource}}"
-                      SelectionChanged="ComboBox_SelectionChanged"/>
-        </Grid>-->
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="accounting_journalDataGrid"
                      ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.RowSpan="2"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="{StaticResource AccentColor_Brush}"
                      ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
                      ItemsSource="{Binding}" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <cntrl:navList recordCode="{Binding code}" 
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding code}" 
                                    recordSecondaryName="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    recordName="{Binding trans_date}"
                                           IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
-            <TabControl Grid.Row="1" Grid.Column="1" Background="White">
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TabControl Grid.Row="1" Grid.Column="1" Background="White">
             <TabItem Header="Automatic">
                 <ScrollViewer>
                     <Grid>
@@ -101,10 +94,10 @@
                        IsReadOnly="True" Margin="8,0" CanUserAddRows="False"
                        AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn  Binding="{Binding accounting_chart.code}" Header="Code" Width="128" IsReadOnly="True"/>
-                    <DataGridTextColumn  Binding="{Binding accounting_chart.name}" Header="Name" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn  Binding="{Binding debit, StringFormat={}{0:N2}}" Header="Debit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
-                    <DataGridTextColumn  Binding="{Binding credit, StringFormat={}{0:N2}}" Header="Credit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                    <DataGridTextColumn Binding="{Binding accounting_chart.code}" Header="{lex:Loc Cognitivo:local:Code}" Width="128" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding accounting_chart.name}" Header="{lex:Loc Cognitivo:local:Name}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Debit}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                    <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,0">

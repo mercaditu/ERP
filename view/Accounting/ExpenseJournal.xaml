@@ -88,10 +88,10 @@
             <DataGrid ItemsSource="{Binding Source={StaticResource accounting_journalaccounting_journal_detailViewSource}}" 
                       AutoGenerateColumns="False" Margin="8,0" CanUserAddRows="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn  Binding="{Binding accounting_chart.code}" Header="Code" Width="128" IsReadOnly="True"/>
-                    <DataGridTextColumn  Binding="{Binding accounting_chart.name}" Header="Name" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn  Binding="{Binding debit, StringFormat={}{0:N2}}" Header="Debit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
-                    <DataGridTextColumn  Binding="{Binding credit, StringFormat={}{0:N2}}" Header="Credit" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                    <DataGridTextColumn Binding="{Binding accounting_chart.code}" Header="{lex:Loc Cognitivo:local:Code}" Width="128" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding accounting_chart.name}" Header="{lex:Loc Cognitivo:local:Name}" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Debit}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                    <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="8,0">

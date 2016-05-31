@@ -71,7 +71,15 @@ namespace Cognitivo.Report
                 if (_tbxCondition != value)
                 {
                     _tbxCondition = value;
-                    ConditionArray = _tbxCondition.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (value=="")
+                    {
+                        Array.Clear(ConditionArray, 0, ConditionArray.Length);
+                    }
+                    else
+                    {
+                        ConditionArray = _tbxCondition.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                   
                 }
             }
         }
@@ -92,7 +100,16 @@ namespace Cognitivo.Report
                 if (_tbxContract != value)
                 {
                     _tbxContract = value;
-                    ContractArray = _tbxContract.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (value == "")
+                    {
+                        Array.Clear(ContractArray, 0, ConditionArray.Length);
+                    }
+                    else
+                    {
+                        ContractArray = _tbxContract.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                  
+                
                 }
             }
         }
@@ -135,7 +152,15 @@ namespace Cognitivo.Report
                 if (_tbxBrand != value)
                 {
                     _tbxBrand = value;
-                    BrandArray = _tbxBrand.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (value == "")
+                    {
+                        Array.Clear(BrandArray, 0, ConditionArray.Length);
+                    }
+                    else
+                    {
+                        BrandArray = _tbxBrand.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                
                 }
             }
         }

@@ -426,6 +426,7 @@ namespace entity
                     {
                         app_currencyfx app_currencyfx = Currency.get_DefaultFX(db);
                         unit_cost = Currency.convert_Values((decimal)item.unit_cost, app_currencyfx.id_currencyfx, id_currecyfx, App.Modules.Purchase);
+                        
                     }
                  
            

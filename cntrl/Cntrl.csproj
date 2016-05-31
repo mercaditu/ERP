@@ -166,6 +166,9 @@
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AccountingCurrencyBox.xaml.cs">
+      <DependentUpon>AccountingCurrencyBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
     </Compile>
@@ -605,6 +608,10 @@
     <Page Include="Controls\AttachmentViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AccountingCurrencyBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\NotificationButton.xaml">
       <SubType>Designer</SubType>

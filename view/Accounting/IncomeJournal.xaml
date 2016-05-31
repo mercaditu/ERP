@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" Title="{lex:Loc BookofIncomes}" 
+            xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="Cognitivo.Accounting.IncomeJournal"
       Background="White"
@@ -76,6 +77,9 @@
                     </StackPanel>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                     <TextBlock Text="{Binding comment}" />
+                    <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                    <Controls:AccountingCurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" TransDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                       />
                 </StackPanel>
             </TabItem>
         </TabControl>

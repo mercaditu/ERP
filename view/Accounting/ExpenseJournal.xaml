@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
       xmlns:entity="clr-namespace:entity;assembly=entity"
       Background="White"
           xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -24,7 +25,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="300"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <!--<Grid Grid.Row="1" Grid.RowSpan="2" Background="{StaticResource AccentColor_Brush}">
@@ -72,7 +73,11 @@
                     </StackPanel>
                     <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                     <TextBlock Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                    <Controls:AccountingCurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" TransDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                       />
                 </StackPanel>
+                
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="2" Grid.Column="1" IsEnabled="{Binding ElementName=toolbar,Path=IsEditable}">

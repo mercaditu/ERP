@@ -35,14 +35,16 @@
             set
             {
                 _id_currencyfx = value;
-                using(db db = new db())
+                if (_id_currencyfx != value)
                 {
-                    if (db.app_currencyfx.Where(x => x.id_currencyfx == value).FirstOrDefault() != null)
-                    {
-                        // app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == value).FirstOrDefault();
-                        RaisePropertyChanged("app_currencyfx");
-                    }
-                }             
+
+                    debit = Currency.convert_Values(debit, _id_currencyfx, value, App.Modules.Sales);
+                    RaisePropertyChanged("debit");
+                    credit = Currency.convert_Values(credit, _id_currencyfx, value, App.Modules.Sales);
+                    RaisePropertyChanged("credit");
+                   
+                    _id_currencyfx = value;
+                } 
             }
         }
         int _id_currencyfx;

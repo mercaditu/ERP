@@ -72,5 +72,10 @@ namespace Cognitivo.Accounting
                 toolbar.msgSaved(AccountingJournalDB.NumberOfRecords);   
             }
         }
+
+        private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

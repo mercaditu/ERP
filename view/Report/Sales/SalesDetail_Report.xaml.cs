@@ -84,7 +84,7 @@ namespace Cognitivo.Report
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_invoice_detail> sales_invoice_detail = db.sales_invoice_detail.Where(predicate).ToList();
-            reportDataSource.Value = sales_invoice_detail.Select(g => new
+           var sales_invoice_detaillist = sales_invoice_detail.Select(g => new
             {
                 geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",
                 id_sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
@@ -123,8 +123,15 @@ namespace Cognitivo.Report
                 sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
                 HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
                 unit_price_discount = g.discount != null ? g.discount : 0,
+                Tag = g.item != null ? ReportPage.GetTag(g.item.item_tag_detail.ToList()) : "",
             }).ToList();
 
+
+            if (ReportPage.TagArray != null)
+            {
+                sales_invoice_detaillist = sales_invoice_detaillist.Where(x => x.Tag.ToLower().Contains(ReportPage.TagArray.ToLower().ToString())).ToList();
+            }
+            reportDataSource.Value = sales_invoice_detaillist;
             reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoiceDetail.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();

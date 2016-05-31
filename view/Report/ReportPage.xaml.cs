@@ -101,7 +101,7 @@ namespace Cognitivo.Report
         /// <summary>
         /// Tag KeyWord Array.
         /// </summary>
-        public string[] TagArray { get; set; }
+        public string TagArray { get; set; }
         public string tbxTag
         {
             get
@@ -113,7 +113,7 @@ namespace Cognitivo.Report
                 if (_tbxTag != value)
                 {
                     _tbxTag = value;
-                    TagArray = _tbxTag.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    TagArray = _tbxTag;
                 }
             }
         }
@@ -135,7 +135,7 @@ namespace Cognitivo.Report
                 if (_tbxBrand != value)
                 {
                     _tbxBrand = value;
-                    TagArray = _tbxBrand.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+                    BrandArray = _tbxBrand.Split(new string[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
                 }
             }
         }
@@ -306,7 +306,23 @@ namespace Cognitivo.Report
                 MessageBox.Show("Files Saved...");
             }
         }
+        public string GetTag(List<item_tag_detail> item_tag_detail)
+        {
+            string TagList = "";
+            if (item_tag_detail.Count > 0)
+            {
+                foreach (item_tag_detail _item_tag_detail in item_tag_detail)
+                {
+                    if (!TagList.Contains(_item_tag_detail.item_tag.name))
+                    {
+                        TagList = TagList + "," + _item_tag_detail.item_tag.name;
+                    }
+                }
+                return TagList.Remove(0, 1);
+            }
 
+            return TagList;
+        }
         private void ListBoxItemPurchase_Selected(object sender, RoutedEventArgs e)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

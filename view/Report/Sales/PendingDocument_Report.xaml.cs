@@ -76,7 +76,7 @@ namespace Cognitivo.Report
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_invoice> sales_invoiceList = db.sales_invoice.Where(predicate).ToList();
-            reportDataSource.Value = sales_invoiceList
+            var salesinvoiceList = sales_invoiceList
                 .Join(db.sales_invoice_detail, u => u.id_sales_invoice, sid => sid.id_sales_invoice, (sales_invoice, sid) => new { sales_invoice, sid }).Select(g => new
             {
                 id_sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
@@ -117,7 +117,26 @@ namespace Cognitivo.Report
                 sales_order = g.sales_invoice != null ? g.sid.sales_order_detail != null ? g.sid.sales_order_detail.sales_order.number : "" : "",
                 HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
                 unit_price_discount = g.sid.discount != null ? g.sid.discount : 0,
+                Tag = g.sid.item != null ? ReportPage.GetTag(g.sid.item.item_tag_detail.ToList()) : "",
+                id_item = g.sid.id_item
             }).ToList();
+
+
+            if (ReportPage.TagArray != null)
+            {
+                salesinvoiceList = salesinvoiceList.Where(x => x.Tag.ToLower().Contains(ReportPage.TagArray.ToLower().ToString())).ToList();
+            }
+
+            if (ReportPage.BrandArray != null)
+            {
+                salesinvoiceList = salesinvoiceList.Where(x => x.Tag.ToLower().Contains(ReportPage.TagArray.ToLower().ToString())).ToList();
+            }
+            if (ReportPage.Item != null)
+            {
+                salesinvoiceList = salesinvoiceList.Where(x => x.id_item == ReportPage.Item.id_item).ToList();
+            }
+
+            reportDataSource.Value = salesinvoiceList;
 
             reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoiceReport.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);

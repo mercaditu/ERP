@@ -146,13 +146,13 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Catalog}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="HistoricStockLevels">
+            <ListBoxItem Tag="HistoricStockLevels" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc HistoricStockLevels}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem  Tag="HistoricStockValues">
+            <ListBoxItem  Tag="HistoricStockValues" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc HistoricStockValues}"/>

@@ -48,19 +48,21 @@ namespace entity
             }
             set
             {
-                _id_currencyfx = value;
-                RaisePropertyChanged("id_currencyfx");
-
-                if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                if (_id_currencyfx != value)
                 {
-                    foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail)
-                    {
-                        _purchase_invoice_detail.State = System.Data.Entity.EntityState.Modified;
-                        _purchase_invoice_detail.CurrencyFX_ID = _id_currencyfx;
-                    }
-                    RaisePropertyChanged("GrandTotal");
-                }
+                    _id_currencyfx = value;
+                    RaisePropertyChanged("id_currencyfx");
 
+                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                    {
+                        foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail)
+                        {
+                            _purchase_invoice_detail.State = System.Data.Entity.EntityState.Modified;
+                            _purchase_invoice_detail.CurrencyFX_ID = _id_currencyfx;
+                        }
+                        RaisePropertyChanged("GrandTotal");
+                    }   
+                }
             }
         }
         private int _id_currencyfx;

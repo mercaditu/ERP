@@ -39,7 +39,6 @@ namespace entity.Brillo.Accounting
             accounting_journal accounting_journal = new accounting_journal();
             if (purchase_invoice.accounting_journal == null)
             {
-                //accounting_journal accounting_journal = new accounting_journal();
                 accounting_journal.id_cycle = accounting_cycle.id_cycle;
                 accounting_journal.trans_date = purchase_invoice.trans_date;
                 accounting_journal.IsSelected = true;
@@ -47,7 +46,6 @@ namespace entity.Brillo.Accounting
                 accounting_journal.comment = purchase_invoice.comment;
 
                 List<accounting_journal_detail> accounting_journal_detailList = new List<accounting_journal_detail>();
-                //List<purchase_invoice_detail> purchase_invoice_detailList = purchase_invoice.purchase_invoice_detail.ToList();
                 foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail.ToList())
                 {
                     if (purchase_invoice_detail.app_cost_center.is_product && purchase_invoice_detail.item != null)
@@ -115,56 +113,53 @@ namespace entity.Brillo.Accounting
                     }
                 }
 
-                app_contract app_contract;
-                app_contract = AccountingJournalDB.app_contract.Where(x => x.app_contract_detail.Sum(y => y.interval) == 0
-                                                                        && x.is_active
-                                                                        && x.id_company == CurrentSession.Id_Company)
-                                                                        .FirstOrDefault();
 
-                if (app_contract.id_contract != purchase_invoice.app_contract.id_contract)
-                {
-                    Liability.AccountsPayable AccountsPayable = new Liability.AccountsPayable();
-                    accounting_chart AR_Chart = AccountsPayable.find_Chart(AccountingJournalDB, purchase_invoice.contact);
-                    if (AR_Chart != null)
-                    {
-                        accounting_journal_detail AR_accounting_journal_detail = new accounting_journal_detail();
-                        AR_accounting_journal_detail.accounting_chart = AR_Chart;
-                        AR_accounting_journal_detail.trans_date = purchase_invoice.trans_date;
-                        AR_accounting_journal_detail.credit = Math.Round(purchase_invoice.GrandTotal,2);
-                        AR_accounting_journal_detail.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
-                        accounting_journal_detailList.Add(AR_accounting_journal_detail);
-                    }
-                }
-                else
-                {
-                    //Cash Payments
-                    List<payment_schedual> payment_schedualLIST = AccountingJournalDB.payment_schedual.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).ToList();
-                    foreach (payment_schedual schedual in payment_schedualLIST)
-                    {
-                        accounting_chart AR_Chart = null;
+                List<payment_schedual> payment_schedualLIST = AccountingJournalDB.payment_schedual.Where(x => x.id_purchase_invoice == purchase_invoice.id_purchase_invoice).ToList();
 
-                        ///Only those payments that have accounts will go through. 
-                        if (schedual.payment_detail != null)
+                if (payment_schedualLIST != null)
+                {
+                    ///For Loop for each Payment Schedual.
+                    foreach (payment_schedual payment_schedual in payment_schedualLIST)
+                    {
+                        ///Example: 1000$ Invoice.
+                        ///Example: 600$ Paid & 400$ NotPaid.
+
+                        ///Payment Done -> Ex. 600$
+                        if (payment_schedual.payment_detail != null && payment_schedual.debit > 0)
                         {
-                            if(schedual.payment_detail.app_account != null)
+                            Asset.Cash CashAccount = new Asset.Cash();
+                            accounting_chart AR_Chart = CashAccount.find_Chart(AccountingJournalDB, payment_schedual.payment_detail.app_account);
+
+                            if (AR_Chart != null)
                             {
-                                app_account app_account = schedual.payment_detail.app_account;
-                                Asset.Cash CashAccount = new Asset.Cash();
-                                AR_Chart = CashAccount.find_Chart(AccountingJournalDB, app_account);
+                                accounting_journal_detail PAYaccounting_journal_detail = new accounting_journal_detail();
+                                PAYaccounting_journal_detail.accounting_chart = AR_Chart;
+                                PAYaccounting_journal_detail.trans_date = payment_schedual.trans_date;
+                                PAYaccounting_journal_detail.credit = payment_schedual.debit;
+                                PAYaccounting_journal_detail.id_currencyfx = payment_schedual.app_currencyfx.id_currencyfx;
+                                accounting_journal_detailList.Add(PAYaccounting_journal_detail);
                             }
-                        }    
-                            
-                        if (AR_Chart != null)
+                        }
+                        ///Payment Left -> Ex. 400$
+                        else if (payment_schedual.payment_detail == null && payment_schedual.credit > 0)
                         {
-                            accounting_journal_detail PAYaccounting_journal_detail = new accounting_journal_detail();
-                            PAYaccounting_journal_detail.accounting_chart = AR_Chart;
-                            PAYaccounting_journal_detail.trans_date = schedual.trans_date;
-                            PAYaccounting_journal_detail.credit = Math.Round(schedual.debit,2);
-                            PAYaccounting_journal_detail.id_currencyfx = schedual.app_currencyfx.id_currencyfx;
-                            accounting_journal_detailList.Add(PAYaccounting_journal_detail);
+                            //Credit Payment
+                            Asset.AccountsReceivable AccountsReceivable = new Asset.AccountsReceivable();
+                            accounting_chart AR_Chart = AccountsReceivable.find_Chart(AccountingJournalDB, purchase_invoice.contact);
+
+                            if (AR_Chart != null)
+                            {
+                                accounting_journal_detail AR_accounting_journal_detail = new accounting_journal_detail();
+                                AR_accounting_journal_detail.accounting_chart = AR_Chart;
+                                AR_accounting_journal_detail.trans_date = purchase_invoice.trans_date;
+                                AR_accounting_journal_detail.credit = payment_schedual.credit;
+                                AR_accounting_journal_detail.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
+                                accounting_journal_detailList.Add(AR_accounting_journal_detail);
+                            }
                         }
                     }
                 }
+
 
                 foreach (accounting_journal_detail accounting_journal_detail in accounting_journal_detailList)
                 {

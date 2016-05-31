@@ -293,21 +293,21 @@ namespace Cognitivo.Project
                 {
                     ICollection<project_event_variable> project_event_variableLIST = project_event.project_event_variable;
                     List<project_event_variable> Selectedlist = project_event_variableLIST.Where(x => x.is_included == true).ToList();
-                    CostForPerPersonServices = Selectedlist.Sum(x => ((x.adult_consumption) + (x.child_consumption)) * get_Price(contact, IDcurrencyfx, x.item, entity.App.Modules.Purchase));
+                    CostForPerPersonServices = Selectedlist.Sum(x => ((x.adult_consumption) + (x.child_consumption)) * get_Price(contact, IDcurrencyfx, x.item, entity.App.Modules.Sales));
                     foreach (project_event_variable item in Selectedlist)
                     {
                         Event Event = new Event();
                         Event.code = item.item.code;
                         Event.description = item.item.name;
                         Event.Quantity = item.adult_consumption + item.child_consumption;
-                        Event.UnitPrice = get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
-                        Event.SubTotal = (item.adult_consumption + item.child_consumption) * get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
+                        Event.UnitPrice = get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Sales);
+                        Event.SubTotal = (item.adult_consumption + item.child_consumption) * get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Sales);
                         EventList.Add(Event);
                     }
 
                     ICollection<project_event_fixed> project_event_fixedLIST = project_event.project_event_fixed;
                     List<project_event_fixed> Selectedeventlist = project_event_fixedLIST.Where(x => x.is_included == true).ToList();
-                    CostForPerEventServices = Selectedeventlist.Sum(x => x.consumption * get_Price(contact, IDcurrencyfx, x.item, entity.App.Modules.Purchase));
+                    CostForPerEventServices = Selectedeventlist.Sum(x => x.consumption * get_Price(contact, IDcurrencyfx, x.item, entity.App.Modules.Sales));
 
                     foreach (project_event_fixed item in Selectedeventlist)
                     {
@@ -315,13 +315,13 @@ namespace Cognitivo.Project
                         Event.code = item.item.code;
                         Event.description = item.item.name;
                         Event.Quantity = item.consumption;
-                        Event.UnitPrice = get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
-                        Event.SubTotal = item.consumption * get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Purchase);
+                        Event.UnitPrice = get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Sales);
+                        Event.SubTotal = item.consumption * get_Price(contact, IDcurrencyfx, item.item, entity.App.Modules.Sales);
                         EventList.Add(Event);
                     }
 
                     if (project_event.item != null)
-                        CostForHall = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Purchase);
+                        CostForHall = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Sales);
 
                     Event EventForHall = new Event();
                     if (project_event.item != null)
@@ -329,8 +329,8 @@ namespace Cognitivo.Project
                         EventForHall.code = project_event.item.code;
                         EventForHall.description = project_event.item.name;
                         EventForHall.Quantity = 1;
-                        EventForHall.UnitPrice = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Purchase);
-                        EventForHall.SubTotal = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Purchase);
+                        EventForHall.UnitPrice = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Sales);
+                        EventForHall.SubTotal = get_Price(contact, IDcurrencyfx, project_event.item, entity.App.Modules.Sales);
                         EventList.Add(EventForHall);
                     }
 
@@ -448,7 +448,7 @@ namespace Cognitivo.Project
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_variable.id_item).FirstOrDefault();
                             sales_budget_detail.id_item = project_event_variable.id_item;
                             sales_budget_detail.quantity = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                            sales_budget_detail.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Purchase);
+                            sales_budget_detail.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales);
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
 
@@ -459,7 +459,7 @@ namespace Cognitivo.Project
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
                             sales_budget_detail.id_item = project_event_fixed.id_item;
                             sales_budget_detail.quantity = project_event_fixed.consumption;
-                            sales_budget_detail.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Purchase);
+                            sales_budget_detail.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales);
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
 
@@ -468,7 +468,7 @@ namespace Cognitivo.Project
                         sales_budget_detail_hall.item = db.items.Where(a => a.id_item == project_costing.id_item).FirstOrDefault();
                         sales_budget_detail_hall.id_item = project_costing.id_item;
                         sales_budget_detail_hall.quantity = 1;
-                        sales_budget_detail_hall.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail_hall.item, entity.App.Modules.Purchase);
+                        sales_budget_detail_hall.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail_hall.item, entity.App.Modules.Sales);
                         sales_budget.sales_budget_detail.Add(sales_budget_detail_hall);
 
                         db.sales_budget.Add(sales_budget);
@@ -616,7 +616,7 @@ namespace Cognitivo.Project
                         project_task.item_description = project_event_variable.item.name;
                         project_task.code = project_event_variable.item.code;
                         project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Purchase);
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Sales);
 
 
                         foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
@@ -647,7 +647,7 @@ namespace Cognitivo.Project
                         project_task.item_description = project_event_variable.item.name;
                         project_task.code = project_event_variable.item.code;
                         project_task.quantity_est = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Purchase);
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Sales);
                         project.project_task.Add(project_task);
 
 
@@ -668,7 +668,7 @@ namespace Cognitivo.Project
                         project_task.item_description = per_event_service.item.name;
                         project_task.code = per_event_service.item.code;
                         project_task.quantity_est = per_event_service.consumption;
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Purchase);
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Sales);
 
 
                         foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
@@ -702,7 +702,7 @@ namespace Cognitivo.Project
                         project_task.item_description = per_event_service.item.name;
                         project_task.code = per_event_service.item.code;
                         project_task.quantity_est = per_event_service.consumption;
-                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Purchase);
+                        project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, per_event_service.item, entity.App.Modules.Sales);
                         project.project_task.Add(project_task);
 
 
@@ -721,7 +721,7 @@ namespace Cognitivo.Project
                     _project_task.item_description = project_costing.item.name;
                     _project_task.code = project_costing.item.code;
                     _project_task.quantity_est = 1;
-                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Purchase);
+                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Sales);
 
 
 
@@ -757,7 +757,7 @@ namespace Cognitivo.Project
                     _project_task.item_description = project_costing.item.name;
                     _project_task.code = project_costing.item.code;
                     _project_task.quantity_est = 1;
-                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Purchase);
+                    _project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_costing.item, entity.App.Modules.Sales);
                     project.project_task.Add(_project_task);
 
 

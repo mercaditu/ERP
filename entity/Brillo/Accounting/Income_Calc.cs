@@ -104,13 +104,33 @@ namespace entity.Brillo.Accounting
                     }
                 }
 
-                app_contract_detail app_contract_detail;
-                app_contract_detail = context.app_contract_detail.Where(e => e.interval == 0).FirstOrDefault();
+                List<payment_schedual> payment_schedualLIST = context.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
 
-                if (app_contract_detail.app_contract.id_contract != sales_invoice.app_contract.id_contract)
+                if (payment_schedualLIST != null)
                 {
+                    foreach (payment_schedual payment_schedual in payment_schedualLIST)
+                    {
+                        //Full Payment
+                        if (payment_schedual.payment_detail != null)
+                        {
+                            
+                        }
+                    }
+                }
+                 
+
+                app_contract app_contract;
+                app_contract = context.app_contract.Where(x => x.app_contract_detail.Sum(y => y.interval) == 0 
+                                                            && x.is_active 
+                                                            && x.id_company == CurrentSession.Id_Company)
+                                                            .FirstOrDefault();
+
+                if (app_contract.id_contract != sales_invoice.app_contract.id_contract)
+                {
+                    //Credit Payment
                     Asset.AccountsReceivable AccountsReceivable = new Asset.AccountsReceivable();
                     accounting_chart AR_Chart = AccountsReceivable.find_Chart(context, sales_invoice.contact);
+                    
                     if (AR_Chart != null)
                     {
                         accounting_journal_detail AR_accounting_journal_detail = new accounting_journal_detail();
@@ -124,16 +144,16 @@ namespace entity.Brillo.Accounting
                 else
                 {
                     //Cash Payments
-                    List<payment_schedual> payment_schedualLIST = context.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
+                    
                     foreach (payment_schedual schedual in payment_schedualLIST)
                     {
-                        Asset.Cash CashAccount = new Asset.Cash();
-
-                        if (schedual!=null)
+                        if (schedual != null)
                         {
-                            if (schedual.payment_detail!=null)
+                            if (schedual.payment_detail != null)
                             {
+                                Asset.Cash CashAccount = new Asset.Cash();
                                 accounting_chart AR_Chart = CashAccount.find_Chart(context, schedual.payment_detail.app_account);
+
                                 if (AR_Chart != null)
                                 {
                                     accounting_journal_detail PAYaccounting_journal_detail = new accounting_journal_detail();
@@ -143,13 +163,13 @@ namespace entity.Brillo.Accounting
                                     PAYaccounting_journal_detail.id_currencyfx = schedual.app_currencyfx.id_currencyfx;
                                     accounting_journal_detailList.Add(PAYaccounting_journal_detail);
                                 }
-                                }
-                           
-                            }
-                           
-                        }
+                            }  
+                        } 
+                    }
                 }
 
+
+                ///SUMMARIZE
                 foreach (accounting_journal_detail accounting_journal_detail in accounting_journal_detailList)
                 {
                     int id_chart = accounting_journal_detail.accounting_chart.id_chart;

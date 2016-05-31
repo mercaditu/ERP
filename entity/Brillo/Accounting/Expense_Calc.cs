@@ -115,10 +115,13 @@ namespace entity.Brillo.Accounting
                     }
                 }
 
-                app_contract_detail app_contract_detail;
-                app_contract_detail = AccountingJournalDB.app_contract_detail.Where(e => e.interval == 0 && e.app_contract.app_contract_detail.Count == 1).FirstOrDefault();
+                app_contract app_contract;
+                app_contract = AccountingJournalDB.app_contract.Where(x => x.app_contract_detail.Sum(y => y.interval) == 0
+                                                                        && x.is_active
+                                                                        && x.id_company == CurrentSession.Id_Company)
+                                                                        .FirstOrDefault();
 
-                if (app_contract_detail.app_contract.id_contract != purchase_invoice.app_contract.id_contract)
+                if (app_contract.id_contract != purchase_invoice.app_contract.id_contract)
                 {
                     Liability.AccountsPayable AccountsPayable = new Liability.AccountsPayable();
                     accounting_chart AR_Chart = AccountsPayable.find_Chart(AccountingJournalDB, purchase_invoice.contact);

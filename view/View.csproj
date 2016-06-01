@@ -547,6 +547,9 @@
     <Compile Include="Report\Sales\Sales_Report.xaml.cs">
       <DependentUpon>Sales_Report.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\Stock\Inventory_Report.xaml.cs">
+      <DependentUpon>Inventory_Report.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RowDef.cs" />
     <Compile Include="Sales\Budget.xaml.cs">
       <DependentUpon>Budget.xaml</DependentUpon>
@@ -945,6 +948,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="bin\Debug\Report\MatrixVat.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Report\MatrixInventory.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
@@ -1611,6 +1617,10 @@
     <Page Include="Report\Sales\Sales_Report.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Report\Stock\Inventory_Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>

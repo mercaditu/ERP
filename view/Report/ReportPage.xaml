@@ -170,6 +170,12 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StockByBrand}"/>
                 </StackPanel>
             </ListBoxItem>
+            <ListBoxItem Tag="Inventory">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Inventory}"/>
+                </StackPanel>
+            </ListBoxItem>
             <ListBoxItem IsSelected="False" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Height="24" Source="/Cognitivo;component/Images/Menu/modProduction.png" />

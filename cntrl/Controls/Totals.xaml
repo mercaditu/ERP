@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:cntrl.Controls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+               xmlns:converter="clr-namespace:Cognitivo.Converters"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
              mc:Ignorable="d">
     <UserControl.Resources>
+        <converter:SecurityConverter x:Key="SecurityConverter"/>
         <Storyboard x:Key="TextChanged">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="lblTotal">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.64"/>
@@ -48,12 +51,30 @@
                     <Label Style="{StaticResource generic_Label}" Content="Discount" Foreground="White" HorizontalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
-                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountPercentage}" Style="{StaticResource TextToLabelStyle}"/>
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountPercentage}" Style="{StaticResource TextToLabelStyle}">
+                            <TextBox.IsReadOnly>
+                                <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                 Converter="{StaticResource SecurityConverter}">
+                                    <Binding.ConverterParameter>
+                                        <sys:Int32>1</sys:Int32>
+                                    </Binding.ConverterParameter>
+                                </Binding>
+                            </TextBox.IsReadOnly>
+                        </TextBox>
                         <Label Content="%" Style="{StaticResource generic_Label}" Foreground="White" VerticalAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
-                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}" Text="{Binding ElementName=_Total,Path=DiscountValue}"/>
+                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}" Text="{Binding ElementName=_Total,Path=DiscountValue}">
+                            <TextBox.IsReadOnly>
+                                <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                 Converter="{StaticResource SecurityConverter}">
+                                    <Binding.ConverterParameter>
+                                        <sys:Int32>2</sys:Int32>
+                                    </Binding.ConverterParameter>
+                                </Binding>
+                            </TextBox.IsReadOnly>
+                        </TextBox>
                     </StackPanel>
                     <Rectangle Style="{StaticResource line_Bar}"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc QuickAction}" Foreground="White" HorizontalAlignment="Center"/>

@@ -49,6 +49,13 @@ namespace cntrl.Controls
             set { SetValue(CurrencyProperty, value); }
         }
 
+        public static readonly DependencyProperty AppNameProperty = DependencyProperty.Register("AppName", typeof(entity.App.Names), typeof(Totals));
+        public entity.App.Names AppName
+        {
+            get { return (entity.App.Names)GetValue(AppNameProperty); }
+            set { SetValue(AppNameProperty, value); }
+        }
+
         public Totals()
         {
             InitializeComponent();

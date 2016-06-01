@@ -48,8 +48,8 @@ namespace entity
             }
             set
             {
-                if (_id_currencyfx != value)
-                {
+                //if (_id_currencyfx != value)
+                //{
                     _id_currencyfx = value;
                     RaisePropertyChanged("id_currencyfx");
 
@@ -62,7 +62,7 @@ namespace entity
                         }
                         RaisePropertyChanged("GrandTotal");
                     }   
-                }
+                //}
             }
         }
         private int _id_currencyfx;
@@ -74,7 +74,7 @@ namespace entity
         public purchase_invoice newer { get; set; }
 
         [NotMapped]
-        public decimal GrandTotal
+        public new decimal GrandTotal
         {
             get
             {
@@ -83,14 +83,24 @@ namespace entity
                 {
                     _GrandTotal += _purchase_invoice_detail.SubTotal_Vat;
                 }
-
-             
                 return Math.Round(_GrandTotal, 2);
             }
             set
             {
-                _GrandTotal = value;
-                RaisePropertyChanged("GrandTotal");
+                decimal OriginalValue = value - _GrandTotal;
+                if (OriginalValue != 0)
+                {
+                    decimal DifferenceValue = OriginalValue / purchase_invoice_detail.Count;
+                    foreach (var item in purchase_invoice_detail)
+                    {
+
+                        item.UnitCost_Vat = item.UnitCost_Vat + DifferenceValue / item.quantity;
+                        item.RaisePropertyChanged("UnitCost_Vat");
+                    }
+
+                    _GrandTotal = value;
+                    RaisePropertyChanged("GrandTotal");
+                }
             }
         }
         private decimal _GrandTotal;

@@ -201,6 +201,7 @@
     <Compile Include="Converters\Security2Boolean.cs" />
     <Compile Include="Converters\Expiry2ColorConverter.cs" />
     <Compile Include="Converters\sbxContact_CheckType.cs" />
+    <Compile Include="Converters\SecurityConverter.cs" />
     <Compile Include="Converters\Status2ColorConverter.cs" />
     <Compile Include="Converters\State2IconConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />

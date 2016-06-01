@@ -14,7 +14,6 @@ namespace Cognitivo.Accounting
     {
         CollectionViewSource accounting_journalViewSource;
         AccountingJournalDB AccountingJournalDB = new AccountingJournalDB();
-        SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         List<accounting_journal> Accounting_journalList = new List<accounting_journal>();
 
         public IncomeJournal()
@@ -45,9 +44,6 @@ namespace Cognitivo.Accounting
                 accounting_journalViewSource.View.Refresh();
                 accounting_journalViewSource.View.MoveCurrentToLast();
             }
-
-            //CollectionViewSource accounting_cycleViewSource = (CollectionViewSource)FindResource("accounting_cycleViewSource");
-            //accounting_cycleViewSource.Source = Accounting_journalList.GroupBy(x => x.accounting_cycle).ToList();
         }
 
         private void toolBar_btnApprove_Click(object sender)

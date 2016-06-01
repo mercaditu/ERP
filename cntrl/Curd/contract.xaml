@@ -50,7 +50,7 @@
                      metro:TextBoxHelper.SelectAllOnFocus="True"
                      Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                 <CheckBox Content="{lex:Loc Default}" IsChecked="{Binding is_default, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
-                <CheckBox Content="{lex:Loc PromissoryNote}" IsChecked="{Binding promissorynote, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+                <CheckBox Content="{lex:Loc PromissoryNote}" IsChecked="{Binding is_promissory, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
             </StackPanel>
             <Rectangle Style="{StaticResource line_Bar}"/>
             <TextBlock Text="Controls payment intervals based on following credentials"

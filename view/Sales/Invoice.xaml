@@ -614,11 +614,13 @@
                                   RowEditEnding="sales_invoice_detailDataGrid_RowEditEnding" 
                                   CellEditEnding="sales_invoice_detailDataGrid_CellEditEnding">
                                 <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding id_sales_invoice_detail, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"
+                                                        Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True"/>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Location}"/>
                                     <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="False" Width="*"/>
+                                                        Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="False" MinWidth="128"/>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="50"
 					                                        ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
                                                             DisplayMemberPath="name" SelectedValuePath="id_vat_group" 

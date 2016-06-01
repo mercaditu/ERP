@@ -152,6 +152,13 @@ namespace entity
                     Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
                     payment_schedualList = _Payment.insert_Schedual(invoice);
 
+                    //Save Promisory Note first, because it is referenced in Payment Schedual
+                    if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
+                    {
+                        payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
+                    }
+
+                    //Payment Schedual
                     if (payment_schedualList != null && payment_schedualList.Count > 0)
                     {
                         payment_schedual.AddRange(payment_schedualList);

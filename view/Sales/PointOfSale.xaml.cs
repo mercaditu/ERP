@@ -101,7 +101,7 @@ namespace Cognitivo.Sales
                 SalesInvoiceDB.Approve(true);
 
                 payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
-                PaymentDB.Approve(payment_schedual.id_payment_schedual,(bool)chkreceipt.IsChecked);
+                PaymentDB.Approve(payment_schedual.id_payment_schedual, (bool)chkreceipt.IsChecked);
 
                 //Start New Sale
                 New_Sale_Payment();
@@ -125,7 +125,7 @@ namespace Cognitivo.Sales
             payment.id_currencyfx = sales_invoice.id_currencyfx;
             PaymentDB.payments.Add(payment);
 
-        
+
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
             paymentViewSource.Source = PaymentDB.payments.Local;
             paymentViewSource.View.MoveCurrentTo(payment);
@@ -183,22 +183,29 @@ namespace Cognitivo.Sales
 
             //await Dispatcher.InvokeAsync(new Action(() =>
             //{
-                cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList();
+            cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList();
 
-                CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-                payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
+            CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
+            payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
-                app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
-                app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
+            app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
+            app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Local;
 
-                if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+            if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+            {
+                if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
                 {
-                    if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
-                    {
-                        btnAccount_Click(sender,e);
-                        frmaccount.Refresh();
-                    }
+                    btnAccount_Click(sender, e);
+                    frmaccount.Refresh();
                 }
+            }
+
+            app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            if (app_branch != null)
+            {
+                cbxLocation.ItemsSource = app_branch.app_location.ToList();
+            }
+
             //}));
         }
 
@@ -262,10 +269,10 @@ namespace Cognitivo.Sales
             payment_detail.IsSelected = true;
             payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
             payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
-       
+
             payment_detail.id_payment = payment.id_payment;
             payment_detail.payment = payment;
-         
+
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -317,7 +324,7 @@ namespace Cognitivo.Sales
                 throw ex;
             }
         }
-        
+
         #endregion
 
         #region Discount

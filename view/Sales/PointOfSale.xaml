@@ -220,6 +220,8 @@
                                                 Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
                             <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="*"/>
+                            <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                            DisplayMemberPath="name" SelectedValuePath="id_location"/>
                             <DataGridTextColumn Binding="{Binding vat_group.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"
                                                 Header="{lex:Loc Cognitivo:local:VAT}" IsReadOnly="True" Width="*" Visibility="Hidden"/>
                             <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 

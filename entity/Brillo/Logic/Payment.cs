@@ -5,7 +5,18 @@ namespace entity.Brillo.Logic
 {
     public class Payment
     {
-        public List<payment_promissory_note> payment_promissory_noteLIST { get; set; }
+        public List<payment_promissory_note> payment_promissory_noteLIST 
+        {
+            get { return _payment_promissory_noteLIST; }
+            set
+            {
+                if (_payment_promissory_noteLIST != value)
+                {
+                    _payment_promissory_noteLIST = value;
+                }
+            }
+        }
+        private List<payment_promissory_note> _payment_promissory_noteLIST = new List<payment_promissory_note>();
 
         public List<payment_schedual> insert_Schedual(object obj_entity)
         {

@@ -36,7 +36,7 @@
         <DataGrid x:Name="purchase_orderDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails"
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected}" Header="" 
+                <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="" 
                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         Width="32"/>

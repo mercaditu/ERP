@@ -41,14 +41,14 @@ namespace Cognitivo.Report
         {
             var predicate = PredicateBuilder.True<entity.item_movement>();
 
-            if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
-            }
-            if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
-            }
+            //if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
+            //{
+            //    predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
+            //}
+            //if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
+            //{
+            //    predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
+            //}
 
             if (ReportPage.BrandArray != null)
             {
@@ -62,7 +62,7 @@ namespace Cognitivo.Report
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<item_movement> item_movementList = db.item_movement.Where(predicate).ToList();
-           var movementlist = item_movementList
+            var movementlist = item_movementList.Where(x => x.trans_date.Date >= ReportPage.start_Range && x.trans_date <= ReportPage.end_Range)
                  .Select(g => new
              {
                  id_item_product = g.id_item_product,

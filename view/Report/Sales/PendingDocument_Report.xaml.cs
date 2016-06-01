@@ -57,16 +57,16 @@ namespace Cognitivo.Report
                 }
             }
 
-            if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
+            //if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
+            //{
+            //    predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
 
-            }
-            if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
-            {
-                predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
+            //}
+            //if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
+            //{
+            //    predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
 
-            }
+            //}
             if (ReportPage.Contact != null)
             {
                 predicate = predicate.And(x => x.contact == ReportPage.Contact);
@@ -76,7 +76,7 @@ namespace Cognitivo.Report
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<sales_invoice> sales_invoiceList = db.sales_invoice.Where(predicate).ToList();
-            var salesinvoiceList = sales_invoiceList
+            var salesinvoiceList = sales_invoiceList.Where(x => x.trans_date.Date >= ReportPage.start_Range && x.trans_date <= ReportPage.end_Range)
                 .Join(db.sales_invoice_detail, u => u.id_sales_invoice, sid => sid.id_sales_invoice, (sales_invoice, sid) => new { sales_invoice, sid }).Select(g => new
             {
                 id_sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,

@@ -64,7 +64,7 @@ namespace Cognitivo.Report
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
             List<item_movement> item_movementList = db.item_movement.Where(predicate).ToList();
-            reportDataSource.Value = item_movementList
+            reportDataSource.Value = item_movementList.Where(x => x.trans_date.Date >= ReportPage.start_Range && x.trans_date <= ReportPage.end_Range)
                 .Select(g => new
             {
                 id_item_product = g.id_item_product,

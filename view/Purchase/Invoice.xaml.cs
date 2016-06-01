@@ -677,5 +677,7 @@ namespace Cognitivo.Purchase
                 Document.Document_PrintPurchaseOrder(0, purchase_order);
             }
         }
+
+     
     }
 }

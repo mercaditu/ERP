@@ -19,13 +19,13 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Report
 {
-    public partial class HistoricStockValues_Report : Page
+    public partial class VatMatrix_Report : Page
     {
         ReportPage ReportPage = null; // Application.Current.Windows.OfType<ReportPage>() as ReportPage;
 
         db db = new db();
 
-        public HistoricStockValues_Report()
+        public VatMatrix_Report()
         {
             InitializeComponent();
         }
@@ -39,42 +39,45 @@ namespace Cognitivo.Report
 
         private void QueryBuilder()
         {
-            var predicate = PredicateBuilder.True<entity.item_movement>();
+            var predicate = PredicateBuilder.True<entity.sales_invoice>();
+
+           
 
             //if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
             //{
             //    predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
+
             //}
             //if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
             //{
             //    predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
+
             //}
-            if (ReportPage.BrandArray != null)
-            {
-                predicate = predicate.And(x => ReportPage.BrandArray.Contains(x.item_product.item != null ? x.item_product.item.item_brand != null ? x.item_product.item.item_brand.name : "" : ""));
-            }
-            if (ReportPage.Item != null)
-            {
-                predicate = predicate.And(x => (x.item_product != null ? x.item_product.id_item : 0) == ReportPage.Item.id_item);
-            }
+         
 
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            List<item_movement> item_movementList = db.item_movement.Where(predicate).ToList();
-            reportDataSource.Value = item_movementList.Where(x => x.trans_date.Date >= ReportPage.start_Range && x.trans_date <= ReportPage.end_Range)
-                .Select(g => new
-            {
-                id_item_product = g.id_item_product,
-                item_name = g.item_product.item != null ? g.item_product.item.name : "",
-                id_branch = g.app_location != null ? g.app_location.id_branch : 0,
-                branch_name = g.app_location != null ? g.app_location.app_branch.name : "",
-                value = (g.item_movement_value.Sum(x => x.unit_value)) * (g.item_product.item != null ? g.item_product.item.unit_cost : 0),
-            }).ToList();
+            List<sales_invoice> sales_invoiceList = db.sales_invoice.Where(predicate).ToList();
+            var salesinvoiceList = sales_invoiceList.Where(x => x.trans_date.Date >= ReportPage.start_Range && x.trans_date <= ReportPage.end_Range)
+                  .Join(db.sales_invoice_detail, u => u.id_sales_invoice, sid => sid.id_sales_invoice, (sales_invoice, sid) => new { sales_invoice, sid }).Select(g => new
+              {
+                  id_branch = g.sales_invoice != null ? g.sales_invoice.id_branch : 0,
+                  branch_name = g.sales_invoice != null ? g.sales_invoice.app_branch.name : "",
+                  trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.ToString() : "",
+                  sales_number = g.sales_invoice != null ? g.sales_invoice.number : "",
+                  customer_contact_name = g.sales_invoice != null ? g.sales_invoice.contact.name : "",
+                  gov_id = g.sales_invoice != null ? g.sales_invoice.contact.gov_code : "",
+                  vat_group = g.sid.app_vat_group.name,
+                  value=g.sid.SubTotal_Vat-g.sid.SubTotal
+              }).ToList();
 
-            reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\HistoricStockValue.rdlc"; // Path of the rdlc file
+         
+
+            reportDataSource.Value = salesinvoiceList;
+            reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\MatrixVat.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();
-
         }
+   
     }
 }

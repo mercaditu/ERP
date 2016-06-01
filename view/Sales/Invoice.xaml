@@ -522,7 +522,7 @@
                                             <ComboBox Width="Auto" Margin="0" x:Name="cbxBranch" Style="{StaticResource ComboToLabelStyle}"
                                                       metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                                       metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                                                      DisplayMemberPath="name" SelectedValuePath="id_branch" 
+                                                      DisplayMemberPath="name" SelectedValuePath="id_branch"  SelectionChanged="cbxBranch_SelectionChanged"
 						                              SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource sales_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                                 <ComboBox.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -616,7 +616,8 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding id_sales_invoice_detail, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"
                                                         Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True"/>
-                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Location}"/>
+                                    <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                            DisplayMemberPath="name" SelectedValuePath="id_location"/>
                                     <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

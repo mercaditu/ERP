@@ -849,5 +849,15 @@ namespace Cognitivo.Sales
                 sales_invoice.DiscountWithoutPercentage += TrailingDecimals;
             }
         }
+
+        private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxBranch.SelectedItem!=null)
+            {
+                app_branch app_branch = cbxBranch.SelectedItem as app_branch;
+                cbxLocation.ItemsSource = app_branch.app_location.ToList();
+                
+            }
+        }
     }
 }

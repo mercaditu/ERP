@@ -14,7 +14,8 @@ namespace Cognitivo.Product
     public partial class Inventory : Page
     {
         InventoryDB InventoryDB = new InventoryDB();
-        CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, app_branchapp_locationViewSource, app_branchViewSource;
+        CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, 
+            app_branchapp_locationViewSource, app_branchViewSource;
 
         cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
 

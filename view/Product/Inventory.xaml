@@ -87,7 +87,7 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.ColumnSpan="2">
+            <Grid Grid.ColumnSpan="2" DataContext="{StaticResource item_inventoryViewSource}">
                 <StackPanel Margin="8" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged, FallbackValue=false}">
                     <Label Content="{lex:Loc Date}"/>
                     <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource item_inventoryViewSource}}"  Style="{StaticResource input_datepicker}"/>
@@ -97,7 +97,7 @@
             </Grid>
             
             <!-- Right Side Panel -->
-            <Grid Grid.Column="2">
+            <Grid Grid.Column="2" DataContext="{StaticResource item_inventoryViewSource}">
                 <StackPanel Margin="8">
                     <Label Content="{lex:Loc User}"/>
                     <Label Content="{Binding security_user.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Source={StaticResource item_inventoryViewSource}}" 

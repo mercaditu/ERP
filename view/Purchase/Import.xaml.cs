@@ -17,6 +17,7 @@ namespace Cognitivo.Purchase
         CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource = null;
         int company_ID = CurrentSession.Id_Company;
         cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
+
         public Import()
         {
             InitializeComponent();
@@ -196,7 +197,8 @@ namespace Cognitivo.Purchase
             {
                 TotalInvoiceAmount += (item.quantity * item.UnitCost_Vat);
             }
-            foreach (var item in purchase_invoice_detail)
+
+            foreach (var item in purchase_invoice_detail.Where(x => x.item.item_product != null))
             {
                 Class.clsImpexImportDetails ImpexImportDetails = new Class.clsImpexImportDetails();
                 ImpexImportDetails.number = item.purchase_invoice.number;

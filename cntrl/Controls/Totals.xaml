@@ -51,10 +51,10 @@
                     <Label Style="{StaticResource generic_Label}" Content="Discount" Foreground="White" HorizontalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
-                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountPercentage}" Style="{StaticResource TextToLabelStyle}">
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total, Path=DiscountPercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.IsReadOnly>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
-                 Converter="{StaticResource SecurityConverter}">
+                                         Converter="{StaticResource SecurityConverter}">
                                     <Binding.ConverterParameter>
                                         <sys:Int32>1</sys:Int32>
                                     </Binding.ConverterParameter>
@@ -65,10 +65,10 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
-                        <TextBox Width="64" Margin="2" Style="{StaticResource TextToLabelStyle}" Text="{Binding ElementName=_Total,Path=DiscountValue}">
+                        <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.IsReadOnly>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
-                 Converter="{StaticResource SecurityConverter}">
+                                         Converter="{StaticResource SecurityConverter}">
                                     <Binding.ConverterParameter>
                                         <sys:Int32>2</sys:Int32>
                                     </Binding.ConverterParameter>

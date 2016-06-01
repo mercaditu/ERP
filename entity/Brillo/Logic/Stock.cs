@@ -26,6 +26,7 @@ namespace entity.Brillo.Logic
                     .Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(detail.item);
+
                     detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
                     detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
                     sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();

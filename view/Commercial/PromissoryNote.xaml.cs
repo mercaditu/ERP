@@ -82,7 +82,7 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             payment_promissory_noteViewSource = ((CollectionViewSource)(FindResource("payment_promissory_noteViewSource")));
-            payment_promissory_noteViewSource.Source = PromissoryNoteDB.payment_promissory_note.Local;
+            payment_promissory_noteViewSource.Source = PromissoryNoteDB.payment_promissory_note.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
         }
 
         private void set_ContactPref(object sender, EventArgs e)
@@ -97,5 +97,20 @@ namespace Cognitivo.Commercial
 
         }
     }
+
+        private void toolbar_btnEdit_Click(object sender)
+        {
+
+        }
+
+        private void toolbar_btnSave_Click(object sender)
+        {
+
+        }
+
+        private void toolbar_btnCancel_Click(object sender)
+        {
+
+        }
 }
 }

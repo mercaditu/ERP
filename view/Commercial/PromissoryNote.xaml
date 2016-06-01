@@ -43,14 +43,14 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}">
+        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}" DataContext="{Binding Source={StaticResource payment_promissory_noteViewSource}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <StackPanel HorizontalAlignment="Center" Margin="8">
                 <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}"/>
-                <Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contacts.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                <Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                            Get_Customers="True" Get_Suppliers="True"/>
                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                 <DatePicker SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -69,24 +69,28 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Width="128">
                         <Label Content="{lex:Loc SalesInvoice}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding payment_schedual.sales_invoice.number, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
+                        <Label Content="{Binding payment_schedual.sales_invoice.number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                     </StackPanel>
                     <StackPanel Width="128">
                         <Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource input_label}"/>
-                        <Label Content="{Binding payment_schedual.purchase_invoice.number, Mode=OneWay}" Style="{StaticResource generic_Label}"/>
+                        <Label Content="{Binding payment_schedual.purchase_invoice.number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                     </StackPanel>
                 </StackPanel>
                 <Label Content="{lex:Loc ExpiryDate}" Style="{StaticResource input_label}"/>
                 <DatePicker SelectedDate="{Binding expiry_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             Style="{StaticResource input_datepicker}"/>
                 <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding app_currencyfx.app_currency.name}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding app_currencyfx.app_currency.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                 <Label Content="{lex:Loc Value}" Style="{StaticResource input_label}"/>
                 <TextBox Text="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
-                              
             </StackPanel>
         </Grid>
+        <!-- New at the moment will not be done. -->
         <cntrl:toolBar x:Name="toolbar" Grid.ColumnSpan="3"
+                       btnEdit_Click="toolbar_btnEdit_Click"
+                       btnSave_Click="toolbar_btnSave_Click"
+                       btnCancel_Click="toolbar_btnCancel_Click"
+                       
 			           btnApprove_Click="toolBar_btnApprove_Click"
 			           btnAnull_Click="toolBar_btnAnull_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"/>

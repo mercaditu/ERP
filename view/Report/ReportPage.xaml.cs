@@ -102,7 +102,7 @@ namespace Cognitivo.Report
                     _tbxContract = value;
                     if (value == "")
                     {
-                        Array.Clear(ContractArray, 0, ConditionArray.Length);
+                        Array.Clear(ContractArray, 0, ContractArray.Length);
                     }
                     else
                     {
@@ -154,7 +154,7 @@ namespace Cognitivo.Report
                     _tbxBrand = value;
                     if (value == "")
                     {
-                        Array.Clear(BrandArray, 0, ConditionArray.Length);
+                        Array.Clear(BrandArray, 0, BrandArray.Length);
                     }
                     else
                     {

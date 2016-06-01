@@ -38,6 +38,12 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
             </ListBoxItem>
+            <ListBoxItem Tag="VatMatrix">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="S"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Vat}"/>
+                </StackPanel>
+            </ListBoxItem>
             <ListBoxItem Tag="SalesDetail">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="C"/>

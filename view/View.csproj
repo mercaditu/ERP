@@ -517,6 +517,9 @@
     <Compile Include="Report\ReportSalesbyTag.xaml.cs">
       <DependentUpon>ReportSalesbyTag.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\Sales\VatMatrix_Report.xaml.cs">
+      <DependentUpon>VatMatrix_Report.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Report\Stock\StockByBrand_Report.xaml.cs">
       <DependentUpon>StockByBrand_Report.xaml</DependentUpon>
     </Compile>
@@ -939,6 +942,9 @@
     </Content>
     <Content Include="bin\Debug\Report\StockByBrand.rdlc">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Report\MatrixVat.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
@@ -1565,6 +1571,10 @@
     <Page Include="Report\ReportSalesbyTag.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Report\Sales\VatMatrix_Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Report\Stock\StockByBrand_Report.xaml">
       <Generator>MSBuild:Compile</Generator>

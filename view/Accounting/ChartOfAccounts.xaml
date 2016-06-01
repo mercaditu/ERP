@@ -90,13 +90,7 @@
             <TabItem Header="{lex:Loc ChartofAccount}">
                 <StackPanel Background="White" Grid.Column="1" Grid.Row="1" Margin="16" DataContext="{Binding SelectedItem_, ElementName=treeProject,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding state, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, Converter={StaticResource AccountingChart2BooleanConverter}}" >
-                    <!--<Label Content="{lex:Loc Parent}" Style="{StaticResource input_label}"/>-->
-                    <!--<StackPanel Orientation="Horizontal">
-                        <ComboBox Name="cbxParent" ItemsSource="{Binding Source={StaticResource accounting_chartParentViewSource}}"
-                          Grid.Column="1" Style="{StaticResource input_combobox}" SelectedValuePath="id_chart" DisplayMemberPath="name"
-                          IsSynchronizedWithCurrentItem="True" VerticalAlignment="Center"/>
-                        <Button Name="btnClearParent" Click="btnClearParent_Click" VerticalAlignment="Top" ToolTip="{lex:Loc Clear}" Content=" X "/>
-                    </StackPanel>-->
+
                     <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                     <TextBox x:Name="txtName" TabIndex="0" Style="{StaticResource input_textbox}"
 					     Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -131,7 +125,9 @@
                         <StackPanel Visibility="{Binding SelectedValue, Converter={StaticResource AccountChartGroupAsset}, ElementName=cbxChartType}">
                             <Label Content="{lex:Loc Assets}" Style="{StaticResource H3}"/>
                             <!-- All Accounts (Bank or Terminal) -->
-                            <RadioButton x:Name="rbtnCash" Content="{lex:Loc Accounts}" Style="{StaticResource input_radiobutton}" Margin="5" Tag="2" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
+                            <RadioButton x:Name="rbtnCash" Content="{lex:Loc Accounts}" Style="{StaticResource input_radiobutton}" Margin="5" 
+                                         Tag="2" 
+                                         Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                             <StackPanel Orientation="Horizontal" Margin="23,0" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnCash}" >
                                 <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center" 
                                       IsEnabled="{Binding Path=IsChecked, ElementName=chkGenericAccount, Converter={StaticResource TrueFalse}}"
@@ -145,17 +141,16 @@
 
                             <!-- This is for Customers -->
                             <RadioButton x:Name="rbtnAccReceivable" Content="{lex:Loc AccountsReceivable}" Style="{StaticResource input_radiobutton}" Margin="5" 
-                                 Tag="4" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
+                                         Tag="4" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                             <StackPanel Orientation="Horizontal" Margin="23,0" Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnAccReceivable}" >
                                 <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"
-                                      IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricReceivable, Converter={StaticResource TrueFalse}}"
-                                      ItemsSource="{Binding Source={StaticResource contactCustViewSource}}"
-                                      SelectedValuePath="id_contact" DisplayMemberPath="name"
-                                      SelectedValue="{Binding id_contact, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                          IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricReceivable, Converter={StaticResource TrueFalse}}"
+                                          ItemsSource="{Binding Source={StaticResource contactCustViewSource}}"
+                                          SelectedValuePath="id_contact" DisplayMemberPath="name"
+                                          SelectedValue="{Binding id_contact, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="or" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
                                 <CheckBox x:Name="chkGenricReceivable" Content="Generic" Style="{StaticResource input_checkbox}"
-                                      IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <!--<Button Content="{lex:Loc addCustomer}"/>-->
+                                          IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
 
                             <!-- Takes Sum of Inventory -->
@@ -192,7 +187,8 @@
                                           IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVATasset, Converter={StaticResource TrueFalse}}"
                                           ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
                                           SelectedValuePath="id_vat" DisplayMemberPath="name"
-                                          SelectedValue="{Binding id_vat,Source={StaticResource accounting_chartViewSource}, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                          SelectedValue="{Binding id_vat, Mode=TwoWay, 
+                                    ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="or" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
                                 <CheckBox x:Name="chkGenricVATasset" Content="{lex:Loc Generic}" Style="{StaticResource input_checkbox}"
                                           IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -222,12 +218,14 @@
                             <RadioButton x:Name="rbtnVAT" Content="{lex:Loc VAT}" Style="{StaticResource input_radiobutton}" Margin="5"  
                                         Tag="6" Checked="rbtnCash_Checked" Loaded="rbtnRevenue_Loaded"/>
                             <StackPanel Orientation="Horizontal" Margin="23,0" 
-						        Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnVAT}">
+						                Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnVAT}">
                                 <ComboBox Style="{StaticResource input_combobox}" VerticalAlignment="Center"
-                                  IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVAT, Converter={StaticResource TrueFalse}}"
-                                  ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
-                                  SelectedValuePath="id_vat" DisplayMemberPath="name"
-                                  SelectedValue="{Binding id_vat, Source={StaticResource accounting_chartViewSource}, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                          IsEnabled="{Binding Path=IsChecked, ElementName=chkGenricVAT, Converter={StaticResource TrueFalse}}"
+                                          ItemsSource="{Binding Source={StaticResource app_vatViewSource}}"
+                                          SelectedValuePath="id_vat" DisplayMemberPath="name"
+                                          SelectedValue="{Binding id_vat,
+                                                          Mode=TwoWay, ValidatesOnDataErrors=True, 
+                                                          UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <Label Content="or" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
                                 <CheckBox x:Name="chkGenricVAT" Content="{lex:Loc Generic}" Style="{StaticResource input_checkbox}"
@@ -242,11 +240,6 @@
                                 <Label Content="or" Style="{StaticResource input_label}" VerticalAlignment="Center"/>
                                 <CheckBox Content="Generic" Style="{StaticResource input_checkbox}"/>
                             </StackPanel>
-
-                            <!--<RadioButton x:Name="rbtnLongTermLoad" Content="{lex:Loc LongTermLoan}" Style="{StaticResource input_radiobutton}" Margin="5"
-                                         IsChecked="{Binding sub_type, Converter={StaticResource SelectedAccountConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ConverterParameter=14}"/>
-                            <RadioButton x:Name="rbtnShortTermLoad" Content="{lex:Loc ShortTermLoan}" Style="{StaticResource input_radiobutton}" Margin="5"
-                                         IsChecked="{Binding sub_type, Converter={StaticResource SelectedAccountConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ConverterParameter=14}"/>-->
                         </StackPanel>
 
                         <!-- Equity -->
@@ -262,7 +255,7 @@
                             <StackPanel Orientation="Horizontal" Margin="23,0" 
                                         Visibility="{Binding IsChecked, Converter={StaticResource Bool2Visibility}, ElementName=rbtnHR}" >
                                 <CheckBox x:Name="chkGenricHR" Content="Generic" Style="{StaticResource input_checkbox}"
-                                              IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                          IsChecked="{Binding is_generic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
 
                             <RadioButton x:Name="rbtnAdminExpenses" Content="{lex:Loc Administrative}" Style="{StaticResource input_radiobutton}" Margin="5" 

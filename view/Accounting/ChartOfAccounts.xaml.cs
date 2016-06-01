@@ -224,31 +224,6 @@ namespace Cognitivo.Accounting
 
         #endregion
 
-        private void rbtnCash_Checked(object sender, RoutedEventArgs e)
-        {
-            RadioButton rd = (RadioButton)sender;
-            int chartsubtype = Convert.ToInt32(rd.Tag);
-            if (rd.IsChecked == true)
-            {
-                accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
-                accounting_chart.chartsub_type = (accounting_chart.ChartSubType)chartsubtype;
-            }
-        }
-
-        private void rbtnRevenue_Loaded(object sender, RoutedEventArgs e)
-        {
-            accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
-            if (accounting_chart != null)
-            {
-                RadioButton rd = (RadioButton)sender;
-                int chartsubtype = Convert.ToInt32(accounting_chart.chartsub_type);
-                if (Convert.ToInt32(rd.Tag) == chartsubtype)
-                {
-                    rd.IsChecked = true;
-                }
-            }
-        }
-
         private void btnParaguayChart_Click(object sender, RoutedEventArgs e)
         {
             entity.Brillo.Seed_Data.ChartOfAccounts Charts = new entity.Brillo.Seed_Data.ChartOfAccounts();
@@ -314,5 +289,32 @@ namespace Cognitivo.Accounting
                 chbxAutomatic.IsChecked = false;
             }
         }
+
+
+        private void rbtnCash_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton rd = (RadioButton)sender;
+            int chartsubtype = Convert.ToInt32(rd.Tag);
+            if (rd.IsChecked == true)
+            {
+                accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
+                accounting_chart.chartsub_type = (accounting_chart.ChartSubType)chartsubtype;
+            }
+        }
+
+        private void rbtnRevenue_Loaded(object sender, RoutedEventArgs e)
+        {
+            accounting_chart accounting_chart = treeProject.SelectedItem_ as accounting_chart;
+            if (accounting_chart != null)
+            {
+                RadioButton rd = (RadioButton)sender;
+                int chartsubtype = Convert.ToInt32(accounting_chart.chartsub_type);
+                if (Convert.ToInt32(rd.Tag) == chartsubtype)
+                {
+                    rd.IsChecked = true;
+                }
+            }
+        }
+
     }
 }

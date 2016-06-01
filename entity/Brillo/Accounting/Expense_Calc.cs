@@ -143,15 +143,15 @@ namespace entity.Brillo.Accounting
                         else if (payment_schedual.payment_detail == null && payment_schedual.credit > 0)
                         {
                             //Credit Payment
-                            Asset.AccountsReceivable AccountsReceivable = new Asset.AccountsReceivable();
-                            accounting_chart AR_Chart = AccountsReceivable.find_Chart(AccountingJournalDB, purchase_invoice.contact);
+                            Liability.AccountsPayable AccountsPayable = new Liability.AccountsPayable();
+                            accounting_chart AR_Chart = AccountsPayable.find_Chart(AccountingJournalDB, purchase_invoice.contact);
 
                             if (AR_Chart != null)
                             {
                                 accounting_journal_detail AR_accounting_journal_detail = new accounting_journal_detail();
                                 AR_accounting_journal_detail.accounting_chart = AR_Chart;
                                 AR_accounting_journal_detail.trans_date = purchase_invoice.trans_date;
-                                AR_accounting_journal_detail.credit = payment_schedual.credit;
+                                AR_accounting_journal_detail.credit = payment_schedual.credit - payment_schedual.child.Sum(x => x.debit);
                                 AR_accounting_journal_detail.id_currencyfx = purchase_invoice.app_currencyfx.id_currencyfx;
                                 accounting_journal_detailList.Add(AR_accounting_journal_detail);
                             }

@@ -41,19 +41,21 @@ namespace Cognitivo.Report
         {
             var predicate = PredicateBuilder.True<entity.item_movement>();
 
-
             if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
             {
                 predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
             }
+            
             if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
             {
                 predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
             }
+
             if (ReportPage.BrandArray != null)
             {
                 predicate = predicate.And(x => ReportPage.BrandArray.Contains(x.item_product.item != null ? x.item_product.item.item_brand != null ? x.item_product.item.item_brand.name : "" : ""));
             }
+            
             if (ReportPage.Item != null)
             {
                 predicate = predicate.And(x => (x.item_product != null ? x.item_product.id_item : 0) == ReportPage.Item.id_item);

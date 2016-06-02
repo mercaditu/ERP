@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,6 +51,22 @@ namespace entity
                     {
                         Entry(item_movement).State = EntityState.Unchanged;
                     }
+                }
+            }
+        }
+
+         private void ReArrange_ProductMovement()
+        {
+            List<item_movement> item_movementcredit = base.item_movement.OrderBy(x => new { x.trans_date, x.credit }).Where(x=>x.credit>0).ToList();
+            List<item_movement> item_movementdebit = base.item_movement.OrderBy(x => new { x.trans_date, x.credit }).Where(x => x.debit > 0).ToList();
+            foreach (item_movement _item_movementdebit in item_movementdebit)
+            {
+                foreach (item_movement _item_movementcredit in item_movementcredit)
+                {
+                    //if (_item_movementdebit)
+                    //{
+                        
+                    //}
                 }
             }
         }

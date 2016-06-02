@@ -42,6 +42,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        
         <Grid Grid.Column="1" Grid.Row="1">
             <DataGrid x:Name="item_inventoryDataGrid"
                     VerticalScrollBarVisibility="Auto"
@@ -97,5 +98,7 @@
                        HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
+        
+        <Button Grid.Row="1" VerticalAlignment="Bottom" Content="Generate Parent/Child Rel" Click="btnGenerateParentChildRel_Click"/>
     </Grid>
 </Page>

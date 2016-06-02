@@ -491,13 +491,13 @@ namespace entity.Brillo.Document
                                   comments = g.comment,
                                   company_name = g.app_company != null ? g.app_company.name : "",
                                   amount = g.value,
-                                  contact_name = g.payment.contact != null ? g.payment.contact.name : "",
+                                  contact_name = g.payment.contact != null ? g.payment.contact.name : "Not Ref",
+                                  gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
                                   payment_name = g.payment_type != null ? g.payment_type.name : "",
                                   trans_date = g.trans_date,
                                   currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
                                   currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
-                                  receipt_number = g.payment.number,
-                                  gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
+                                  number = g.payment != null ? g.payment.number : "Not Ref",
                                   AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
                      // Text -> Words

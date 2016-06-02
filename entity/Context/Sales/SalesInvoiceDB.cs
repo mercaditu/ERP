@@ -166,11 +166,23 @@ namespace entity
 
                     if (IsDiscountStock)
                     {
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
+
+                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         item_movementList = _Stock.insert_Stock(this, invoice);
+                        
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
+                            foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product != null))
+                            {
+                                int id_item_product = item_product.Where(x => x.id_item == sales_detail.id_item).FirstOrDefault().id_item_product;
+                                item_movement _item_movement = item_movementList.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
+                                if (_item_movement.item_movement_value != null)
+                                {
+                                    sales_detail.unit_cost = _item_movement.item_movement_value.Average(x => x.unit_value);
+                                }
+                            }
+
                             item_movement.AddRange(item_movementList);
                         }
                     }

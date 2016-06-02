@@ -177,7 +177,7 @@ namespace Cognitivo.Sales
         private void btnApprove_Click(object sender)
         {
             Settings SalesSettings = new Settings();
-            dbContext.Approve(SalesSettings.DiscountStock);
+            dbContext.Approve(SalesSettings.DiscountStock_Packing);
         }
 
         private void cbxDocument_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -26,8 +26,12 @@ namespace entity.Brillo.Logic
                     .Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(detail.item);
-
-                    detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
+                    
+                    if (detail.id_location == 0)
+                    {
+                        detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
+                    }
+                    
                     detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
                     sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
                     List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
@@ -148,30 +152,32 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
+
+                ///SALES PACKING
             else if (obj_entity.GetType().BaseType == typeof(sales_packing) || obj_entity.GetType() == typeof(sales_packing))
             {
                 sales_packing sales_packing = (sales_packing)obj_entity;
 
-                foreach (sales_packing_detail detail in sales_packing.sales_packing_detail
-                    .Where(x => x.item.item_product.Count() > 0))
+                foreach (sales_packing_detail packing_detail in sales_packing.sales_packing_detail
+                    .Where(x => x.item.item_product != null))
                 {
-                    item_product item_product = FindNFix_ItemProduct(detail.item);
-                    detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_packing.app_branch);
-                    detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+                    item_product item_product = FindNFix_ItemProduct(packing_detail.item);
+                    packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
+                    packing_detail.app_location = db.app_location.Where(x => x.id_location == packing_detail.id_location).FirstOrDefault();
 
-                    List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
+                    List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == packing_detail.app_location.id_location
                                                                       && x.id_item_product == item_product.id_item_product
                                                                       && x.status == entity.Status.Stock.InStock
                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
                     item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                              App.Names.PackingList,
-                                             detail.id_sales_packing,
-                                             detail.id_sales_packing_detail,
+                                             packing_detail.id_sales_packing,
+                                             packing_detail.id_sales_packing_detail,
                                              null,
                                              item_product,
-                                             detail.app_location,
-                                             detail.quantity,
+                                             packing_detail.app_location,
+                                             packing_detail.quantity,
                                              sales_packing.trans_date,
                                              comment_Generator(App.Names.PackingList, sales_packing.number, sales_packing.contact.name)
                                              ));

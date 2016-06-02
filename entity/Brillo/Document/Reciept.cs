@@ -326,7 +326,6 @@
             string Header = string.Empty;
             string Detail = string.Empty;
             string Footer = string.Empty;
-            string CompanyName = string.Empty;
             string BranchName = string.Empty;
             string TerminalName = string.Empty;
 
@@ -334,7 +333,7 @@
 
             if (sales_invoice.app_company != null)
             {
-                CompanyName = sales_invoice.app_company.name;
+                app_company = sales_invoice.app_company;
             }
             else
             {
@@ -343,7 +342,6 @@
                     if (db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault() != null)
                     {
                         app_company = db.app_company.Where(x => x.id_company == sales_invoice.id_company).FirstOrDefault();
-                        CompanyName = app_company.name;
                     }
                 }
             }
@@ -385,7 +383,7 @@
             DateTime TransDate = sales_invoice.trans_date;
 
             Header =
-                CompanyName + "\n"
+                app_company.name + "\n"
                 + "RUC:" + app_company.gov_code + "\n"
                 + app_company.address + "\n"
                 + "***" + app_company.alias + "***" + "\n"

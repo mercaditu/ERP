@@ -77,7 +77,7 @@
                             <TextBlock Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                             <Controls:AccountingCurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" Width="256" HorizontalAlignment="Left"
-                                                    TransDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                             SelectedValue="{Binding id_currencyfx,Source={StaticResource accounting_journalaccounting_journal_detailViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" TransDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>

@@ -428,12 +428,12 @@ namespace entity
                     _discount = value;
                     RaisePropertyChanged("discount");
 
-                    if (State > 0)
-                    {
+                    //if (State > 0)
+                    //{
                         ApplyDiscount_UnitPrice(_discount, value, unit_price);
                         Calculate_UnitVatDiscount(_discount);
                         Calculate_SubTotalDiscount(_discount);
-                    }
+                    //}
                 }
             }
         }

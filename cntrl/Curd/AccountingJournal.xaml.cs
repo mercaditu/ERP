@@ -64,7 +64,9 @@ namespace cntrl.Curd
             accounting_chartViewSource.Source = db.accounting_chart.Where(x => x.id_company == _setting.company_ID).ToList();
 
             CollectionViewSource app_currencyfxViewSource = ((CollectionViewSource)(FindResource("app_currencyfxViewSource")));
-            app_currencyfxViewSource.Source = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active).ToList();
+            List<app_currencyfx> app_currencyfxList = db.app_currencyfx.Where(x => x.id_company == _setting.company_ID && x.is_active
+                && x.type == app_currencyfx.CurrencyFXTypes.Accounting).ToList();
+            app_currencyfxViewSource.Source = app_currencyfxList.Where(x =>x.timestamp.Date == accounting_journal.trans_date.Date).ToList();
 
 
         }

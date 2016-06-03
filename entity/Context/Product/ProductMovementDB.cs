@@ -121,11 +121,31 @@ namespace entity
                                 if (credit_movement.id_inventory_detail > 0 && Value_CreditMovement == 0)
                                 {
                                     //Check Value of other Inventory that does have value.
-                                    Value_CreditMovement = base.item_inventory_detail
+                                    if ( base.item_inventory_detail
                                         .Where(x => x.id_item_product == credit_movement.id_item_product && 
                                             x.status == Status.Documents.Issued && 
-                                            x.unit_value > 0).FirstOrDefault().unit_value;
-                                }
+                                            x.unit_value > 0).FirstOrDefault()!=null)
+                                    {
+                                        Value_CreditMovement = base.item_inventory_detail
+                                            .Where(x => x.id_item_product == credit_movement.id_item_product &&
+                                          x.status == Status.Documents.Issued &&
+                                          x.unit_value > 0).FirstOrDefault().unit_value;
+                                    }
+                                    else
+                                    {
+                                        if ( base.item_inventory_detail
+                                            .Where(x => x.id_inventory_detail == credit_movement.id_inventory_detail &&
+                                          x.unit_value > 0).FirstOrDefault()!=null)
+                                        {
+                                            Value_CreditMovement = base.item_inventory_detail
+                                            .Where(x => x.id_inventory_detail == credit_movement.id_inventory_detail &&
+                                          x.unit_value > 0).FirstOrDefault().unit_value;
+                                        }
+                                    }
+                                    
+                                        
+                                    }
+                               
 
                                 item_movement_value item_movement_value = new entity.item_movement_value
                                 {

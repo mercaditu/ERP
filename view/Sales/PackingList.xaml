@@ -138,7 +138,7 @@
                             Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <Label Content="" Style="{StaticResource ico_Label}"/>
                             <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}"/>
-                            <ComboBox DisplayMemberPath="name" SelectedValuePath="id_branch" Width="Auto" Margin="0" Style="{StaticResource ComboToLabelStyle}"
+                            <ComboBox x:Name="cbxBranch" DisplayMemberPath="name" SelectedValuePath="id_branch" Width="Auto" Margin="0" Style="{StaticResource ComboToLabelStyle}" SelectionChanged="cbxBranch_SelectionChanged"
                               ItemsSource="{Binding Source={StaticResource app_branchViewSource}}"
                               SelectedValue="{Binding id_branch, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
@@ -199,6 +199,8 @@
                           ItemsSource="{Binding Source={StaticResource sales_packingsales_packing_detailViewSource}}" 
                           RowDetailsVisibilityMode="VisibleWhenSelected">
                     <DataGrid.Columns>
+                        <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                            DisplayMemberPath="name" SelectedValuePath="id_location"/>
                         <DataGridTextColumn Binding="{Binding id_packinglist_detail, UpdateSourceTrigger=PropertyChanged}" Header="Id" IsReadOnly="True" Width="100" Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource Bool2Visibility}, UpdateSourceTrigger=PropertyChanged}"/>
                         <DataGridTextColumn Binding="{Binding item.name, UpdateSourceTrigger=PropertyChanged}" Header="Name" IsReadOnly="True" MinWidth="256" Width="Auto" />
                         <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}" MinWidth="128" Width="Auto"/>

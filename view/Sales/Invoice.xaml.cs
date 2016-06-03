@@ -706,6 +706,9 @@ namespace Cognitivo.Sales
                 crud_modal.Children.Clear();
                 crud_modal.Visibility = Visibility.Collapsed;
             }
+          
+            _sales_invoice.RaisePropertyChanged("GrandTotal");
+
         }
 
 
@@ -768,6 +771,7 @@ namespace Cognitivo.Sales
                 sales_invoiceViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
             }
+            _sales_invoice.RaisePropertyChanged("GrandTotal");
         }
 
         private void salesorder_PreviewMouseUp(object sender, MouseButtonEventArgs e)

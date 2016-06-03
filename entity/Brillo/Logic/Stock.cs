@@ -162,8 +162,13 @@ namespace entity.Brillo.Logic
                     .Where(x => x.item.item_product != null))
                 {
                     item_product item_product = FindNFix_ItemProduct(packing_detail.item);
-                    packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
-                    packing_detail.app_location = db.app_location.Where(x => x.id_location == packing_detail.id_location).FirstOrDefault();
+                    if (packing_detail.id_location != null && packing_detail.app_location!=null)
+                    {
+                        packing_detail.id_location = FindNFix_Location(item_product, packing_detail.app_location, sales_packing.app_branch);
+                        packing_detail.app_location = db.app_location.Where(x => x.id_location == packing_detail.id_location).FirstOrDefault();
+                        
+                    }
+                   
 
                     List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == packing_detail.app_location.id_location
                                                                       && x.id_item_product == item_product.id_item_product

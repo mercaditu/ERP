@@ -175,6 +175,24 @@
                         + ItemCode + "\t" + ItemName + "\n"
                         + TaskCode + "\t" + TaskName + "\n"
                         + Qty.ToString() + "\n";
+
+                    if (d.project_task.project_task_dimension.Count()>0)
+                    {
+                        Detail = Detail +
+                     ""
+                     + "Dimension, Value, Measurement" + "\n";
+                    }
+                    foreach (project_task_dimension project_task_dimension in d.project_task.project_task_dimension)
+                    {
+
+                        Detail = Detail +
+                       ""
+                       + "Dimension, Value, Measurement" + "\n"
+                       + "-------------------------------" + "\n"
+                       + project_task_dimension.app_dimension != null ? project_task_dimension.app_dimension.name : "" + "\t"
+                       + project_task_dimension.value + "\t" + project_task_dimension.app_measurement != null ? project_task_dimension.app_measurement.name : "" + "\t"
+                      + "\n";
+                    }
                         
                     //}
                 }

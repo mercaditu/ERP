@@ -121,14 +121,14 @@ namespace entity
                                 //if (credit_movement.id_inventory_detail > 0 && Value_CreditMovement == 0)
                                 //{
                                 //    //Check Value of other Inventory that does have value.
-                                   
+
                                 //        Value_CreditMovement = base.item_inventory_detail
                                 //            .Where(x => x.id_item_product == credit_movement.id_item_product &&
                                 //          x.status == Status.Documents.Issued &&
                                 //          x.unit_value > 0).FirstOrDefault().unit_value;
-                             
-                                    
-                                        
+
+
+
                                 //    }
 
 
@@ -144,9 +144,26 @@ namespace entity
                                     };
                                     new_debit_movement.item_movement_value.Add(item_movement_value);
                                 }
-                               
-                              
-                           
+                                else
+                                {
+                                    item_movement Parentitem_movement = base.item_movement.Where(x => x._parent.id_movement == credit_movement.id_movement).FirstOrDefault();
+                                    if (Parentitem_movement.item_movement_value.FirstOrDefault() != null)
+                                    {
+                                        item_movement_value item_movement_value = new entity.item_movement_value
+                                          {
+                                              unit_value = Parentitem_movement.item_movement_value.Sum(x => x.unit_value),
+                                              id_currencyfx = Parentitem_movement.item_movement_value.FirstOrDefault().id_currencyfx,
+                                              comment = "Base Cost",
+                                              timestamp = debit_movement.timestamp
+                                          };
+                                        new_debit_movement.item_movement_value.Add(item_movement_value);
+                                    }
+
+
+                                }
+
+
+
 
                                 ///This will add cost of the Value into Sales Invoice for quick calculations.
                                 if (new_debit_movement.sales_invoice_detail != null)

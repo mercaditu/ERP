@@ -163,9 +163,6 @@ namespace entity
                                     }
                                 }
 
-
-
-
                                 ///This will add cost of the Value into Sales Invoice for quick calculations.
                                 if (new_debit_movement.sales_invoice_detail != null)
                                 { new_debit_movement.sales_invoice_detail.unit_cost = Value_CreditMovement; }

@@ -59,7 +59,7 @@ namespace entity
         public virtual purchase_return_detail purchase_return_detail { get; set; }
         public virtual sales_invoice_detail sales_invoice_detail { get; set; }
         public virtual sales_return_detail sales_return_detail { get; set; }
-        public virtual item_inventory_detail item_inventory_detail { get; set; }
+        //public virtual item_inventory_detail item_inventory_detail { get; set; }
         public virtual ICollection<item_movement_value> item_movement_value { get; set; }
         public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
 

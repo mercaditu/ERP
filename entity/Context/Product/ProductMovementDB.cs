@@ -118,19 +118,6 @@ namespace entity
 
                             if (Value_CreditMovement >= 0)
                             {
-                                //if (credit_movement.id_inventory_detail > 0 && Value_CreditMovement == 0)
-                                //{
-                                //    //Check Value of other Inventory that does have value.
-
-                                //        Value_CreditMovement = base.item_inventory_detail
-                                //            .Where(x => x.id_item_product == credit_movement.id_item_product &&
-                                //          x.status == Status.Documents.Issued &&
-                                //          x.unit_value > 0).FirstOrDefault().unit_value;
-
-
-
-                                //    }
-
 
                                 if (credit_movement.item_movement_value.FirstOrDefault() != null)
                                 {

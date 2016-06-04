@@ -82,11 +82,12 @@ namespace Cognitivo.Product
                          id_item_product = last.Key.item_product.id_item_product,
                          measurement = last.Key.item_product.item.app_measurement.code_iso,
                          id_location = last.Key.app_location.id_location
-                     }).ToList();
+                     }).ToList().OrderBy(y => y.name);
 
                 inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
                 inventoryViewSource.Source = movement;
 
+                TextBox_TextChanged(null, null);
             }
         }
 
@@ -169,19 +170,22 @@ namespace Cognitivo.Product
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (inventoryViewSource != null)
+            if (txtsearch.Text != string.Empty)
             {
-                if (inventoryViewSource.View != null)
+                if (inventoryViewSource != null)
                 {
-                    inventoryViewSource.View.Filter = i =>
+                    if (inventoryViewSource.View != null)
                     {
-                        dynamic TmpInventory = (dynamic)i;
-                        if (TmpInventory.code.ToUpper().Contains(txtsearch.Text.ToUpper()) || TmpInventory.name.ToUpper().Contains(txtsearch.Text.ToUpper()))
-                            return true;
-                        else
-                            return false;
-                    };
-                }
+                        inventoryViewSource.View.Filter = i =>
+                        {
+                            dynamic TmpInventory = (dynamic)i;
+                            if (TmpInventory.code.ToUpper().Contains(txtsearch.Text.ToUpper()) || TmpInventory.name.ToUpper().Contains(txtsearch.Text.ToUpper()))
+                                return true;
+                            else
+                                return false;
+                        };
+                    }
+                }   
             }
         }
 

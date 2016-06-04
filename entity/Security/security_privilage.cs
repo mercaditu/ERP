@@ -31,6 +31,14 @@ namespace entity
             CanUserDiscountByValue=2,
             //[LocalizedDescription("CanUserUpdatePrice")]
             CanUserUpdatePrice=3,
+            CanDisplayProduct=4,
+            CanDisplayRawMaterial = 5,
+            CanDisplayService = 6,
+            CanDisplayFixedAssets = 7,
+            CanDisplayTask = 8,
+            CanDisplaySupplies= 9,
+            CanDisplayServiceContract = 10,
+
         }
     }
 }

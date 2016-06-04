@@ -391,6 +391,7 @@
     <Compile Include="Converters\AccountingChartGroupIncome.cs" />
     <Compile Include="Converters\Projectfinance.cs" />
     <Compile Include="Converters\AccountingChart2BooleanConverter.cs" />
+    <Compile Include="Converters\SecurityConverter.cs" />
     <Compile Include="Converters\Status2ColorConverter.cs" />
     <Compile Include="Converters\Status2EnableForProject.cs">
       <SubType>Code</SubType>

@@ -11,14 +11,18 @@
       xmlns:data="clr-namespace:entity;assembly=entity"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:cntrlConverter="clr-namespace:cntrl.Converters;assembly=cntrl"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US" 
       MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
+        <converter:SecurityConverter x:Key="SecurityConverter"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
+   
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
         <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
@@ -215,6 +219,14 @@
                         </Grid.ColumnDefinitions>
                         <TabControl metro:TabControlHelper.IsUnderlined="True"  Grid.Column="0" SelectionChanged="TabControl_SelectionChanged">
                             <TabItem Header="{lex:Loc Product}">
+                                <TabItem.IsEnabled>
+                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource SecurityConverter}">
+                                        <Binding.ConverterParameter>
+                                            <sys:Int32>4</sys:Int32>
+                                        </Binding.ConverterParameter>
+                                    </Binding>
+                                </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_ProductDataGrid" 
             				                  VerticalScrollBarVisibility="Auto"
             				                  AutoGenerateColumns="False" 
@@ -232,6 +244,14 @@
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="{lex:Loc RawMaterial}">
+                                <TabItem.IsEnabled>
+                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource SecurityConverter}">
+                                        <Binding.ConverterParameter>
+                                            <sys:Int32>5</sys:Int32>
+                                        </Binding.ConverterParameter>
+                                    </Binding>
+                                </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_RawDataGrid" 
             				                  VerticalScrollBarVisibility="Auto"
             				                  AutoGenerateColumns="False" 
@@ -247,6 +267,14 @@
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="{lex:Loc FixedAssets}">
+                                <TabItem.IsEnabled>
+                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource SecurityConverter}">
+                                        <Binding.ConverterParameter>
+                                            <sys:Int32>7</sys:Int32>
+                                        </Binding.ConverterParameter>
+                                    </Binding>
+                                </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_CapitalDataGrid" 
             				            VerticalScrollBarVisibility="Auto"
             				            AutoGenerateColumns="False" Grid.Column="1"
@@ -262,6 +290,14 @@
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="{lex:Loc Supplies}">
+                                <TabItem.IsEnabled>
+                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource SecurityConverter}">
+                                        <Binding.ConverterParameter>
+                                            <sys:Int32>9</sys:Int32>
+                                        </Binding.ConverterParameter>
+                                    </Binding>
+                                </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_SupplierDataGrid" 
             				                  VerticalScrollBarVisibility="Auto"
             				                  AutoGenerateColumns="False" Grid.Column="1"
@@ -276,6 +312,14 @@
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="{lex:Loc ServiceContract}">
+                                <TabItem.IsEnabled>
+                                    <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource SecurityConverter}">
+                                        <Binding.ConverterParameter>
+                                            <sys:Int32>10</sys:Int32>
+                                        </Binding.ConverterParameter>
+                                    </Binding>
+                                </TabItem.IsEnabled>
                                 <DataGrid x:Name="item_ServiceContractDataGrid" 
             				              VerticalScrollBarVisibility="Auto"
             				              AutoGenerateColumns="False" Grid.Column="1"

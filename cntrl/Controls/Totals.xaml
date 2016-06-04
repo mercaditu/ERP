@@ -52,28 +52,28 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}"/>
                         <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total, Path=DiscountPercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <TextBox.IsReadOnly>
+                            <TextBox.IsEnabled>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
                                          Converter="{StaticResource SecurityConverter}">
                                     <Binding.ConverterParameter>
                                         <sys:Int32>1</sys:Int32>
                                     </Binding.ConverterParameter>
                                 </Binding>
-                            </TextBox.IsReadOnly>
+                            </TextBox.IsEnabled>
                         </TextBox>
                         <Label Content="%" Style="{StaticResource generic_Label}" Foreground="White" VerticalAlignment="Center"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Discount" FontWeight="Medium" Margin="2" Foreground="{StaticResource AccentColor_Brush}" />
                         <TextBox Width="64" Margin="2" Text="{Binding ElementName=_Total,Path=DiscountValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <TextBox.IsReadOnly>
+                            <TextBox.IsEnabled>
                                 <Binding Path="AppName" ElementName="_Total" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
                                          Converter="{StaticResource SecurityConverter}">
                                     <Binding.ConverterParameter>
                                         <sys:Int32>2</sys:Int32>
                                     </Binding.ConverterParameter>
                                 </Binding>
-                            </TextBox.IsReadOnly>
+                            </TextBox.IsEnabled>
                         </TextBox>
                     </StackPanel>
                     <Rectangle Style="{StaticResource line_Bar}"/>

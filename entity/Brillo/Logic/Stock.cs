@@ -570,14 +570,11 @@ namespace entity.Brillo.Logic
                     if (app_currencyfx != null)
                     {
                         item_movement_value item_movement_value = new item_movement_value();
-
                         item_movement_value.unit_value = parent_Movement.GetValue_ByCurrency(app_currencyfx.app_currency);
                         item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
                         item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                         item_movement.item_movement_value.Add(item_movement_value);
-
                     }
-
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);
@@ -662,6 +659,7 @@ namespace entity.Brillo.Logic
                 item_movement.credit = Quantity;
                 item_movement.status = Status;
                 item_movement.id_location = app_location.id_location;
+
                 if (ApplicationID == App.Names.Transfer)
                 {
                     item_movement.id_transfer_detail = TransactionDetailID;
@@ -695,6 +693,7 @@ namespace entity.Brillo.Logic
 
                 //Logic for Value in case Parent does not Exist, we will take from 
                 item_movement_value item_movement_value = new item_movement_value();
+                
                 if (Cost != 0)
                 {
                     ///Bring Cost from Transaction.

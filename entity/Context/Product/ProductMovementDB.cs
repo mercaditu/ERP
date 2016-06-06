@@ -83,6 +83,21 @@ namespace entity
                     {
                         decimal credit = credit_movement.credit;
 
+                        if (credit_movement.id_transfer_detail != null || credit_movement.id_transfer_detail > 0)
+                        {
+                            //Credit Movement Parent.
+                            item_movement item_movement_parent = item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail).FirstOrDefault();
+                            item_movement_value item_movement_value_credit = new entity.item_movement_value
+                            {
+                                unit_value = item_movement_parent.item_movement_value.Sum(x => x.unit_value),
+                                id_currencyfx = item_movement_parent.item_movement_value.FirstOrDefault().id_currencyfx,
+                                comment = "Base Cost",
+                                timestamp = item_movement_parent.timestamp
+                            };
+                            credit_movement.item_movement_value.Add(item_movement_value_credit);
+                            item_movement_parent._child.Add(credit_movement);
+                        }
+
                         foreach (item_movement debit_movement in movement.Where(x => x.debit > 0 && x.is_read == false))
                         {
                             debit_movement.is_read = true;

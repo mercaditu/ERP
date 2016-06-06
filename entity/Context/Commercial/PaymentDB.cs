@@ -156,12 +156,12 @@ namespace entity
                 if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
                 {
                     ///If PaymentDetail Value is Negative.
-                    balance_payment_schedual.debit = Math.Abs(Convert.ToDecimal(payment_detail.value));
+                    balance_payment_schedual.debit = Math.Abs(Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Purchase));
                 }
                 else
                 {
                     ///If PaymentDetail Value is Positive.
-                    balance_payment_schedual.credit = Convert.ToDecimal(payment_detail.value);
+                    balance_payment_schedual.credit = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Sales);
                 }
 
                 balance_payment_schedual.parent = Parent_Schedual;

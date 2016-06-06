@@ -71,61 +71,77 @@ namespace entity
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-           // foreach (app_location location in app_locationList)
-           // {
-                foreach (item_product item in item_productList)
+            // foreach (app_location location in app_locationList)
+            // {
+            foreach (item_product item in item_productList)
+            {
+                List<item_movement> movement = item_movement
+                    .Where(x => x.id_company == CurrentSession.Id_Company && x.id_item_product == item.id_item_product)
+                    .OrderBy(x => new { x.trans_date, x.credit }).ToList();
+
+                foreach (item_movement credit_movement in movement.Where(x => x.credit > 0))
                 {
-                    List<item_movement> movement = item_movement
-                        .Where(x => x.id_company == CurrentSession.Id_Company && x.id_location == location.id_location && x.id_item_product == item.id_item_product)
-                        .OrderBy(x => x.trans_date).ToList();
+                    decimal credit = credit_movement.credit;
 
-                    foreach (item_movement credit_movement in movement.Where(x => x.credit > 0))
+                    if (credit_movement.id_transfer_detail != null || credit_movement.id_transfer_detail > 0)
                     {
-                        decimal credit = credit_movement.credit;
+                        //Credit Movement Parent.
+                        item_movement item_movement_parent = new entity.item_movement();
 
-                        if (credit_movement.id_transfer_detail != null || credit_movement.id_transfer_detail > 0)
+                        if (item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail
+                            && x.id_movement != credit_movement.id_movement)
+                            .FirstOrDefault() != null)
                         {
-                            //Credit Movement Parent.
-                            item_movement item_movement_parent = new entity.item_movement();
-
-                            if (item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail
-                                && x.id_movement != credit_movement.id_movement)
-                                .FirstOrDefault() != null)
-                            {
-                                //Bring Parent Transfer
-                                item_movement_parent = item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail
-                                && x.id_movement != credit_movement.id_movement)
+                            //Bring Parent Transfer
+                            item_movement_parent = item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail
+                            && x.id_movement != credit_movement.id_movement)
+                            .FirstOrDefault();
+                        }
+                        else
+                        {
+                            //Bring Parent Movement of same date.
+                            item_movement_parent =
+                                item_movement.Where(x =>
+                                    x.id_item_product == credit_movement.id_item_product &&
+                                    x.trans_date == credit_movement.trans_date)
                                 .FirstOrDefault();
-                            }
-                            else
-                            {
-                                //Bring Parent Movement of same date.
-                                item_movement_parent = 
-                                    item_movement.Where(x =>
-                                        x.id_item_product == credit_movement.id_item_product &&
-                                        x.trans_date == credit_movement.trans_date)
-                                    .FirstOrDefault();
-                            }
+                        }
 
-                            if (item_movement_parent.item_movement_value != null)
-                            {
-                                credit_movement.item_movement_value.Clear();
+                        if (item_movement_parent.item_movement_value != null)
+                        {
 
+                            credit_movement.item_movement_value.Clear();
+
+                            if (item_movement_parent.item_movement_value.FirstOrDefault() != null)
+                            {
                                 item_movement_value item_movement_value_credit = new entity.item_movement_value
                                 {
                                     unit_value = item_movement_parent.item_movement_value.Sum(x => x.unit_value),
                                     id_currencyfx = item_movement_parent.item_movement_value.FirstOrDefault().id_currencyfx,
                                     comment = "Base Cost",
                                     timestamp = item_movement_parent.timestamp
-                                };
 
+                                };
                                 credit_movement.item_movement_value.Add(item_movement_value_credit);
+
                             }
 
-                            item_movement_parent._child.Add(credit_movement);
+
+
                         }
 
-                        foreach (item_movement debit_movement in movement.Where(x => x.debit > 0 && x.is_read == false))
+                        item_movement_parent._child.Add(credit_movement);
+                    }
+                }
+                foreach (app_location location in app_locationList)
+                {
+                    List<item_movement> movementLocation = item_movement
+               .Where(x => x.id_company == CurrentSession.Id_Company && x.id_location == location.id_location && x.id_item_product == item.id_item_product)
+               .OrderBy(x => x.trans_date).ToList();
+                    foreach (item_movement credit_movement in movement.Where(x => x.credit > 0))
+                    {
+                        decimal credit = credit_movement.credit;
+                        foreach (item_movement debit_movement in movementLocation.Where(x => x.debit > 0 && x.is_read == false))
                         {
                             debit_movement.is_read = true;
 
@@ -192,9 +208,10 @@ namespace entity
                         }
                     }
                 }
-                //Saves Changes
-                SaveChanges();
             }
+            //Saves Changes
+            SaveChanges();
+            //}
         }
     }
 }

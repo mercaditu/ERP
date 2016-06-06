@@ -12,10 +12,10 @@ namespace Cognitivo.Security
     public partial class UserRole : Page
     {
         UserRoleDB dbContext = new UserRoleDB();
-        CollectionViewSource 
-            security_rolesecurity_curdViewSource, 
-            security_roleViewSource, 
-            security_privilageViewSource, 
+        CollectionViewSource
+            security_rolesecurity_curdViewSource,
+            security_roleViewSource,
+            security_privilageViewSource,
             security_rolesecurity_role_privilageViewSource;
 
         public UserRole()
@@ -37,12 +37,13 @@ namespace Cognitivo.Security
 
             security_rolesecurity_curdViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_curdViewSource");
             security_rolesecurity_role_privilageViewSource = (CollectionViewSource)this.FindResource("security_rolesecurity_role_privilageViewSource");
-            
+
             security_privilageViewSource = (CollectionViewSource)this.FindResource("security_privilageViewSource");
             security_privilageViewSource.Source = dbContext.security_privilage.OrderBy(a => a.name).ToList();
 
             CollectionViewSource app_departmentViewSource = (CollectionViewSource)this.FindResource("app_departmentViewSource");
             app_departmentViewSource.Source = dbContext.app_department.Where(x => x.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
+            add_Privallge();
         }
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -102,7 +103,28 @@ namespace Cognitivo.Security
                 toolBar.msgWarning("Please Select a record");
             }
         }
+        private void add_Privallge()
+        {
+            List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
+            List<entity.Privilage.Privilages> Privilages = Enum.GetValues(typeof(entity.Privilage.Privilages)).Cast<entity.Privilage.Privilages>().ToList();
+            foreach (entity.App.Names Names in Application)
+            {
+                foreach (entity.Privilage.Privilages Privilage in Privilages)
+                {
+                    if (dbContext.security_privilage.Where(x => x.name == Privilage).Count() == 0)
+                    {
+                        security_privilage security_privilage = new security_privilage();
+                        security_privilage.id_application = Names;
+                        security_privilage.name = Privilage;
 
+
+                        dbContext.security_privilage.Add(security_privilage);
+                    }
+                }
+            }
+            dbContext.SaveChanges();
+
+        }
         private void add_MissingRecords()
         {
             if (security_rolesecurity_curdViewSource.View != null)
@@ -125,7 +147,7 @@ namespace Cognitivo.Security
                 List<entity.App.Names> _DbApplication = security_curd.Select(x => x.id_application).ToList();
                 List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
                 List<entity.App.Names> finalapplicaiton = Enumerable.Except<entity.App.Names>(Application, (IEnumerable<entity.App.Names>)_DbApplication).ToList();
-                
+
                 foreach (entity.App.Names AppName in finalapplicaiton)
                 {
                     security_curd _security_curd = new security_curd();
@@ -136,10 +158,13 @@ namespace Cognitivo.Security
                     _security_curd.can_create = false;
                     _security_curd.can_approve = false;
                     _security_curd.can_annul = false;
-                   security_role.security_curd.Add(_security_curd);
+                    security_role.security_curd.Add(_security_curd);
                 }
                 security_rolesecurity_curdViewSource.View.Refresh();
                 security_rolesecurity_role_privilageViewSource.View.Refresh();
+
+
+             
             }
         }
     }

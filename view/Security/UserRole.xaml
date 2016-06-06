@@ -119,6 +119,10 @@
 						                                SelectedValueBinding="{Binding id_privilage, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						                                DisplayMemberPath="name" 
 						                                SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privilage}" Width="*"/>
+                            <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource security_privilageViewSource}}" 
+						                                SelectedValueBinding="{Binding id_privilage, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+						                                DisplayMemberPath="id_application" IsReadOnly="True" 
+						                                SelectedValuePath="id_privilage" Header="{lex:Loc Cognitivo:local:Privilage}" Width="*"/>
                             <DataGridCheckBoxColumn Binding="{Binding has_privilage}" Header="{lex:Loc Cognitivo:local:Allow}" Width="SizeToHeader"/>
                             <DataGridTextColumn Binding="{Binding value_max}" Header="{lex:Loc Cognitivo:local:Value}" Width="SizeToHeader"/>
                         </DataGrid.Columns>

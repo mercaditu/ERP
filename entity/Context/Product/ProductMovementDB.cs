@@ -71,8 +71,8 @@ namespace entity
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-            foreach (app_location location in app_locationList)
-            {
+           // foreach (app_location location in app_locationList)
+           // {
                 foreach (item_product item in item_productList)
                 {
                     List<item_movement> movement = item_movement
@@ -86,15 +86,42 @@ namespace entity
                         if (credit_movement.id_transfer_detail != null || credit_movement.id_transfer_detail > 0)
                         {
                             //Credit Movement Parent.
-                            item_movement item_movement_parent = item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail).FirstOrDefault();
-                            item_movement_value item_movement_value_credit = new entity.item_movement_value
+                            item_movement item_movement_parent = new entity.item_movement();
+
+                            if (item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail
+                                && x.id_movement != credit_movement.id_movement)
+                                .FirstOrDefault() != null)
                             {
-                                unit_value = item_movement_parent.item_movement_value.Sum(x => x.unit_value),
-                                id_currencyfx = item_movement_parent.item_movement_value.FirstOrDefault().id_currencyfx,
-                                comment = "Base Cost",
-                                timestamp = item_movement_parent.timestamp
-                            };
-                            credit_movement.item_movement_value.Add(item_movement_value_credit);
+                                //Bring Parent Transfer
+                                item_movement_parent = item_movement.Where(x => x.id_transfer_detail == credit_movement.id_transfer_detail
+                                && x.id_movement != credit_movement.id_movement)
+                                .FirstOrDefault();
+                            }
+                            else
+                            {
+                                //Bring Parent Movement of same date.
+                                item_movement_parent = 
+                                    item_movement.Where(x =>
+                                        x.id_item_product == credit_movement.id_item_product &&
+                                        x.trans_date == credit_movement.trans_date)
+                                    .FirstOrDefault();
+                            }
+
+                            if (item_movement_parent.item_movement_value != null)
+                            {
+                                credit_movement.item_movement_value.Clear();
+
+                                item_movement_value item_movement_value_credit = new entity.item_movement_value
+                                {
+                                    unit_value = item_movement_parent.item_movement_value.Sum(x => x.unit_value),
+                                    id_currencyfx = item_movement_parent.item_movement_value.FirstOrDefault().id_currencyfx,
+                                    comment = "Base Cost",
+                                    timestamp = item_movement_parent.timestamp
+                                };
+
+                                credit_movement.item_movement_value.Add(item_movement_value_credit);
+                            }
+
                             item_movement_parent._child.Add(credit_movement);
                         }
 
@@ -123,7 +150,9 @@ namespace entity
                                 id_sales_return_detail = debit_movement.sales_return_detail != null ? debit_movement.id_sales_return_detail : null,
                                 id_inventory_detail = debit_movement.id_inventory_detail != null ? debit_movement.id_inventory_detail : null,
                                 id_execution_detail = debit_movement.production_execution_detail != null ? debit_movement.id_execution_detail : null,
-                                is_read = debit_movement.is_read
+                                is_read = debit_movement.is_read,
+                                //Can This work?!?!?!
+                                _child = debit_movement._child
                             };
 
                             base.item_movement.Remove(debit_movement);
@@ -146,24 +175,6 @@ namespace entity
                                     };
                                     new_debit_movement.item_movement_value.Add(item_movement_value);
                                 }
-                                //else
-                                //{
-                                //    item_movement Parentitem_movement = base.item_movement.Where(x => x._parent.id_movement == credit_movement.id_movement).FirstOrDefault();
-                                //    if (Parentitem_movement != null)
-                                //    {
-                                //        if (Parentitem_movement.item_movement_value.FirstOrDefault() != null)
-                                //        {
-                                //            item_movement_value item_movement_value = new entity.item_movement_value
-                                //              {
-                                //                  unit_value = Parentitem_movement.item_movement_value.Sum(x => x.unit_value),
-                                //                  id_currencyfx = Parentitem_movement.item_movement_value.FirstOrDefault().id_currencyfx,
-                                //                  comment = "Base Cost",
-                                //                  timestamp = debit_movement.timestamp
-                                //              };
-                                //            new_debit_movement.item_movement_value.Add(item_movement_value);
-                                //        }
-                                //    }
-                                //}
 
                                 ///This will add cost of the Value into Sales Invoice for quick calculations.
                                 if (new_debit_movement.sales_invoice_detail != null)

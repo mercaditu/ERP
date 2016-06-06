@@ -55,17 +55,6 @@ namespace entity
             }
         }
 
-        //List<item_movement> item_movementcredit = base.item_movement.OrderBy(x => new { x.trans_date, x.credit }).Where(x=> x.credit > 0).ToList();
-        //List<item_movement> item_movementdebit = base.item_movement.OrderBy(x => new { x.trans_date, x.credit }).Where(x => x.debit > 0).ToList();
-
-        // foreach (item_movement _item_movementdebit in item_movementdebit)
-        //{
-        //    foreach (item_movement _item_movementcredit in item_movementcredit)
-        //    {
-
-        //    }
-        //}
-
         public void ReArrange_ProductMovement()
         {
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
@@ -212,6 +201,51 @@ namespace entity
             //Saves Changes
             SaveChanges();
             //}
+        }
+
+        public void Generate_ProductMovement()
+        {
+            //Delete all Movements.
+
+            ///Purchase
+            List<purchase_invoice> purchaseLIST = purchase_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
+            foreach (purchase_invoice purchase in purchaseLIST.OrderBy(y => y.trans_date))
+            {
+                foreach (purchase_invoice_detail detail in purchase.purchase_invoice_detail)
+                {
+                    //If Inventory is 
+                }
+            }
+
+            ///Inventory
+            List<item_inventory> item_inventoryLIST = item_inventory.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents.Issued).ToList();
+            foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
+            {
+                foreach (item_inventory_detail detail in inventory.item_inventory_detail)
+                {
+                    //If Inventory is 
+                }
+            }
+
+            ///Movement
+            List<item_transfer> item_transferLIST = item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).ToList();
+            foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
+            {
+                foreach (item_transfer_detail detail in transfer.item_transfer_detail)
+                {
+                    //If Inventory is 
+                }
+            }
+
+            //Sales
+            List<sales_invoice> sales_invoiceLIST = sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
+            foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
+            {
+                foreach (sales_invoice_detail detail in sales.sales_invoice_detail)
+                {
+                    //If Inventory is 
+                }
+            }
         }
     }
 }

@@ -1,28 +1,21 @@
 namespace entity
 {
     using entity.Class;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
     
-    public partial class security_demand
+    public partial class security_request:Audit
     {
-        enum modes
+        enum status
         {
             Pending,
-            Approved
+            Approved,
+            rejected
         }
-        public enum Privilages
-        {
-            //[LocalizedDescription("CanUserDiscountByPercent")]
-            CanUserDiscountByPercent = 1,
-            //[LocalizedDescription("CanUserDiscountByValue")]
-            CanUserDiscountByValue = 2,
-           
-           
 
-        }
-        public security_demand()
+        public security_request()
         {
           
         }
@@ -30,12 +23,14 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_privilage { get; set; }
-        public int id_user { get; set; }
+        public int id_user_requested { get; set; }
+        public int id_user_approval { get; set; }
         public App.Names id_application { get; set; }
-        public Privilages Privilage { get; set; }
-        public modes mode { get; set; }
-    
-      
+        public Privilage.Privilages privilage { get; set; }
+        public status mode { get; set; }
+        public decimal? value_max { get; set; }
+        public DateTime requested_date { get; set; }
+        public DateTime approval_date { get; set; }
     }
    
 

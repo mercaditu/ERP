@@ -133,8 +133,6 @@ namespace Cognitivo.Production
                         }
                         else { return false; }
                     };
-
-
                 }
             }
 

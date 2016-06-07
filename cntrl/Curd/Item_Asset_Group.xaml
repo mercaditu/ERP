@@ -29,7 +29,7 @@
                     <Image Source="/cntrl;component/Images/Outline_White/bank_filled-100.png" 
                        Height="32" Opacity="0.64"/>
                 </Border>
-                <Label x:Name="lblTitle" Content="{lex:Loc Item_Asset_Group}" FontSize="25" Margin="50,0,0,0"/>
+                <Label x:Name="lblTitle" Content="{lex:Loc FixedAssetGroup}" FontSize="25" Margin="50,0,0,0"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
@@ -42,18 +42,14 @@
                 <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                 <TextBox x:Name="txtName" Style="{StaticResource input_textbox}"
                      Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Term}" Style="{StaticResource input_label}"/>
+                <Label Content="{lex:Loc Terms}" Style="{StaticResource input_label}"/>
                 <TextBox Style="{StaticResource input_textbox}"
-                     Text="{Binding depreciation_rate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,StringFormat={}{0}%}"/>
-                <Label Content="{lex:Loc depreciationrun}" Style="{StaticResource input_label}"/>
-                <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding depreciation_run,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-               
+                     Text="{Binding depreciation_rate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, 
+                    UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=N1}"/>
             </StackPanel>
             <Grid Background="WhiteSmoke">
                 <Button Content="{lex:Loc Save}" Foreground="RoyalBlue" HorizontalAlignment="Right"
-                    FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
-                <!--<Button x:Name="btnDelete" Foreground="Crimson" Focusable="False" Background="Transparent" FontWeight="Normal" BorderThickness="0" Cursor="Hand" 
-                        Click="btnDelete_Click" HorizontalAlignment="Left" Content="{lex:Loc Delete}"/>-->
+                        FontWeight="Medium" BorderThickness="0" Cursor="Hand" Focusable="True" Click="btnSave_Click"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

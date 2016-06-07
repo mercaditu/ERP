@@ -22,7 +22,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_privilage { get; set; }
+        public int id_request { get; set; }
         public App.Names id_application { get; set; }
         public Privilage.Privilages id_privilage { get; set; }
         public States state { get; set; }

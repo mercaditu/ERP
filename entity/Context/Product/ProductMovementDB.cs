@@ -94,6 +94,7 @@ namespace entity
                                 .FirstOrDefault();
                         }
 
+
                         if (item_movement_parent.item_movement_value != null)
                         {
                             base.item_movement_value.RemoveRange(credit_movement.item_movement_value);
@@ -155,6 +156,14 @@ namespace entity
                                 id_sales_return_detail = debit_movement.sales_return_detail != null ? debit_movement.id_sales_return_detail : null,
                                 id_inventory_detail = debit_movement.id_inventory_detail != null ? debit_movement.id_inventory_detail : null,
                                 id_execution_detail = debit_movement.production_execution_detail != null ? debit_movement.id_execution_detail : null,
+                                item_transfer_detail = debit_movement.item_transfer_detail != null ? debit_movement.item_transfer_detail : null,
+                                purchase_invoice_detail = debit_movement.purchase_invoice_detail != null ? debit_movement.purchase_invoice_detail : null,
+                                purchase_return_detail = debit_movement.purchase_return_detail != null ? debit_movement.purchase_return_detail : null,
+                                sales_invoice_detail = debit_movement.sales_invoice_detail != null ? debit_movement.sales_invoice_detail : null,
+                                sales_packing_detail = debit_movement.sales_packing_detail != null ? debit_movement.sales_packing_detail : null,
+                                sales_return_detail = debit_movement.sales_return_detail != null ? debit_movement.sales_return_detail : null,
+
+                                production_execution_detail = debit_movement.production_execution_detail != null ? debit_movement.production_execution_detail : null,
                                 is_read = debit_movement.is_read,
                                 //Can This work?!?!?!
                                 _child = debit_movement._child

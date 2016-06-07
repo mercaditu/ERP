@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class security_request:Audit
     {
-        enum States
+        public enum States
         {
             Pending,
             Approved,

@@ -568,5 +568,25 @@ namespace Cognitivo.Project.Development
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
+
+        private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ToggleQuantity.IsChecked==true)
+            {
+               
+                stpexcustion.Visibility = System.Windows.Visibility.Visible;
+                stpestimate.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        private void ToggleQuantity_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (ToggleQuantity.IsChecked == false)
+            {
+             
+                stpestimate.Visibility = System.Windows.Visibility.Visible;
+                stpexcustion.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
     }
 }

@@ -23,7 +23,6 @@
         <converter:ActiveToStatus x:Key="ActiveToStatus"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
-        <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemSearchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="project_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_template}, CreateList=True}"/>
         <CollectionViewSource x:Key="projectproject_template_detailViewSource" Source="{Binding project_template_detail, Source={StaticResource project_templateViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:project_template_detail}, CreateList=True}"/>    
@@ -76,7 +75,7 @@
                                                 TaskName="{Binding item.name}" />
                         </HierarchicalDataTemplate>
                     </Grid.Resources>
-                    <cntrl:ExtendedTreeView x:Name="treeProject" Margin="0,55,0,0" ItemsSource="{Binding}"
+                    <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                         <TreeView.ItemsPanel>
                             <ItemsPanelTemplate>

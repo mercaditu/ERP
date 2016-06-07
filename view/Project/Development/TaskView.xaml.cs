@@ -310,7 +310,25 @@ namespace Cognitivo.Project.Development
 
         private void btnDeleteTask_Click(object sender)
         {
-            toolBar_btnAnull_Click(sender);
+            if (project_taskViewSource.View != null)
+            {
+                project_taskViewSource.View.Filter = null;
+                List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+
+                foreach (project_task project_task in _project_task.Where(x => x.IsSelected == true))
+                {
+                    if (project_task.status == Status.Project.Pending || project_task.status == null)
+                    {
+                        ProjectTaskDB.project_task.Remove(project_task);
+                        ProjectTaskDB.NumberOfRecords += 1;
+                        project_task.IsSelected = false;
+                    }
+                    else
+                    {
+                        toolBar_btnAnull_Click(sender);
+                    }
+                } 
+            }
         }
 
         private void btnApprove_Click(object sender)

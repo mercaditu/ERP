@@ -18,9 +18,9 @@ namespace entity
             sales_order_detail = new List<sales_order_detail>();
             production_execution_detail = new List<production_execution_detail>();
             production_order_detail = new List<production_order_detail>();
+            child = new List<project_task>();
 
             trans_date = DateTime.Now;
-            child = new List<project_task>();
             is_active = true;
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
@@ -48,7 +48,6 @@ namespace entity
                         {
                             name = db.items.Where(x => x.id_item == value).FirstOrDefault().name;      
                         }
-                      
                     }
 
                     if (project != null)
@@ -87,15 +86,11 @@ namespace entity
                     _quantity_est = value;
                     RaisePropertyChanged("quantity_est");
 
-                    //System.Threading.Tasks.Task task = System.Threading.Tasks.Task.Factory.StartNew(() =>
-                    //{
-                    //    Thread.Sleep(5000);
-                    //    CalcExecutedQty_TimerTaks();
-                    //});
-
                     if (parent != null && parent.items != null)
                     {
-                        if (!parent.items.is_autorecepie)
+                        //This stops the Recepie from Adding
+                        //Also stops the Rejecte Tasks from Adding
+                        if (!parent.items.is_autorecepie || this.status != Status.Project.Rejected)
                         {
                             parent.quantity_est = objclsproject.getsumquantity(parent.id_project_task, parent.child);
                             parent.RaisePropertyChanged("quantity_est");

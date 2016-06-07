@@ -60,8 +60,6 @@ namespace entity
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-            // foreach (app_location location in app_locationList)
-            // {
             foreach (item_product item in item_productList)
             {
                 List<item_movement> movement = item_movement
@@ -227,7 +225,7 @@ namespace entity
                 }
             }
 
-            ///Movement
+            ///Transfers & Movement
             List<item_transfer> item_transferLIST = item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).ToList();
             foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
             {

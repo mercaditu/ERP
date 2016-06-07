@@ -528,7 +528,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CurrentSession.cs" />
-    <Compile Include="Security\security_demand.cs" />
+    <Compile Include="Security\security_request.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="Application\app_field.cs" />
     <Compile Include="Application\app_location.cs" />

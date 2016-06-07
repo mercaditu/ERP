@@ -30,6 +30,7 @@ namespace entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_privilage { get; set; }
+        public int id_user { get; set; }
         public App.Names id_application { get; set; }
         public Privilages Privilage { get; set; }
         public modes mode { get; set; }

@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class security_request:Audit
     {
-        enum status
+        enum States
         {
             Pending,
             Approved,
@@ -25,7 +25,7 @@ using System.ComponentModel.DataAnnotations.Schema;
         public int id_privilage { get; set; }
         public App.Names id_application { get; set; }
         public Privilage.Privilages id_privilage { get; set; }
-        public status status { get; set; }
+        public States state { get; set; }
         public decimal? value { get; set; }
         public DateTime request_date { get; set; }
         public DateTime approve_date { get; set; }

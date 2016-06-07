@@ -23,17 +23,15 @@ using System.ComponentModel.DataAnnotations.Schema;
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_privilage { get; set; }
-        //public int id_user_requested { get; set; }
-        //public int id_user_approval { get; set; }
         public App.Names id_application { get; set; }
-        public Privilage.Privilages privilage { get; set; }
+        public Privilage.Privilages id_privilage { get; set; }
         public status status { get; set; }
         public decimal? value { get; set; }
-        public DateTime requested_date { get; set; }
-        public DateTime approval_date { get; set; }
+        public DateTime request_date { get; set; }
+        public DateTime approve_date { get; set; }
 
-        public virtual security_user requested_user { get; set; }
-        public virtual security_user approval_user { get; set; }
+        public virtual security_user request_user { get; set; }
+        public virtual security_user approve_user { get; set; }
     }
    
 

@@ -96,8 +96,9 @@ namespace entity
 
                         if (item_movement_parent.item_movement_value != null)
                         {
+                            base.item_movement_value.RemoveRange(credit_movement.item_movement_value);
 
-                            credit_movement.item_movement_value.Clear();
+                           // credit_movement.item_movement_value.Clear();
 
                             if (item_movement_parent.item_movement_value.FirstOrDefault() != null)
                             {
@@ -125,7 +126,7 @@ namespace entity
                     List<item_movement> movementLocation = item_movement
                .Where(x => x.id_company == CurrentSession.Id_Company && x.id_location == location.id_location && x.id_item_product == item.id_item_product)
                .OrderBy(x => x.trans_date).ToList();
-                    foreach (item_movement credit_movement in movement.Where(x => x.credit > 0))
+                    foreach (item_movement credit_movement in movementLocation.Where(x => x.credit > 0))
                     {
                         decimal credit = credit_movement.credit;
                         foreach (item_movement debit_movement in movementLocation.Where(x => x.debit > 0 && x.is_read == false))

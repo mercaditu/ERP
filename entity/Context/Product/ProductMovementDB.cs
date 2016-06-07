@@ -55,7 +55,7 @@ namespace entity
             }
         }
 
-        public void ReArrange_ProductMovementOld()
+        public void ReArrange_ProductMovement()
         {
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company).ToList();

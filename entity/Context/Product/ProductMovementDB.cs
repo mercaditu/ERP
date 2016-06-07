@@ -55,7 +55,7 @@ namespace entity
             }
         }
 
-        public void ReArrange_ProductMovement()
+        public void ReArrange_ProductMovementOld()
         {
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
@@ -123,6 +123,7 @@ namespace entity
                 }
                 foreach (app_location location in app_locationList)
                 {
+
                     List<item_movement> movementLocation = item_movement
                .Where(x => x.id_company == CurrentSession.Id_Company && x.id_location == location.id_location && x.id_item_product == item.id_item_product)
                .OrderBy(x => x.trans_date).ToList();
@@ -201,6 +202,7 @@ namespace entity
             SaveChanges();
             //}
         }
+       
 
         public void Generate_ProductMovement()
         {

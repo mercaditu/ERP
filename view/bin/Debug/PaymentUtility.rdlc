@@ -319,7 +319,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Fields!receipt_number.Value</Value>
+                  <Value>=Fields!number.Value</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -465,8 +465,8 @@
           <DataField>payment_name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="receipt_number">
-          <DataField>receipt_number</DataField>
+        <Field Name="number">
+          <DataField>number</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="gov_id">

@@ -52,7 +52,7 @@ namespace Cognitivo.Accounting
             {
                 if (item.IsSelected)
                 {
-                    if (item.accounting_journal_detail.Sum(x => x.credit) != item.accounting_journal_detail.Sum(x => x.debit))
+                    if (Math.Round(item.accounting_journal_detail.Sum(x => x.credit)) !=Math.Round(item.accounting_journal_detail.Sum(x => x.debit)))
                     {
                         toolbar.msgWarning("Verify balance :-" + item.code);
                     }

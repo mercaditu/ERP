@@ -179,7 +179,8 @@ namespace entity
                                 item_movement _item_movement = item_movementList.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
                                 if (_item_movement.item_movement_value != null)
                                 {
-                                    sales_detail.unit_cost = _item_movement.item_movement_value.Average(x => x.unit_value);
+                                    sales_detail.unit_cost =entity.Brillo.Currency.convert_Values(_item_movement.item_movement_value.Average(x => x.unit_value)
+                                                            , _item_movement.item_movement_value.FirstOrDefault().id_currencyfx,sales_detail.sales_invoice.id_currencyfx,App.Modules.Sales);
                                 }
                             }
 

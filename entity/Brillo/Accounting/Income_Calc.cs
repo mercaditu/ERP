@@ -78,7 +78,19 @@ namespace entity.Brillo.Accounting
                     {
                         accounting_journal_detail INV_accounting_journal = new accounting_journal_detail();
                         INV_accounting_journal.accounting_chart = INV_Chart;
-                        INV_accounting_journal.id_currencyfx = sales_invoice_detail.sales_invoice.id_currencyfx;
+                        if (context.app_currencyfx.Where(x=>x.type==app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                          x.id_currency == sales_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                         .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
+                        {
+                            INV_accounting_journal.id_currencyfx = context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                           x.id_currency == sales_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                         .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
+                        }
+                        else
+                        {
+                            INV_accounting_journal.id_currencyfx = sales_invoice_detail.sales_invoice.id_currencyfx;
+                        }
+                    
                         INV_accounting_journal.credit = sales_invoice_detail.SubTotal;
                         INV_accounting_journal.trans_date = sales_invoice.trans_date;
                         accounting_journal_detailList.Add(INV_accounting_journal);
@@ -98,7 +110,19 @@ namespace entity.Brillo.Accounting
                             VAT_accounting_journal.trans_date = sales_invoice.trans_date;
                             VAT_accounting_journal.accounting_chart = VAT_Chart;
                             VAT_accounting_journal.credit = Vat.calculate_Vat((sales_invoice_detail.unit_price * sales_invoice_detail.quantity), app_vat_group_details.app_vat.coefficient);
-                            VAT_accounting_journal.id_currencyfx = sales_invoice.app_currencyfx.id_currencyfx;
+                            if (context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                         x.id_currency == sales_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                        .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
+                            {
+                                VAT_accounting_journal.id_currencyfx = context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                             x.id_currency == sales_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                             .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
+                            }
+                            else
+                            {
+                                VAT_accounting_journal.id_currencyfx = sales_invoice_detail.sales_invoice.id_currencyfx;
+                            }
+                       
                             accounting_journal_detailList.Add(VAT_accounting_journal);
                         }
                     }
@@ -126,7 +150,19 @@ namespace entity.Brillo.Accounting
                                 PAYaccounting_journal_detail.accounting_chart = AR_Chart;
                                 PAYaccounting_journal_detail.trans_date = payment_schedual.trans_date;
                                 PAYaccounting_journal_detail.debit = payment_schedual.credit;
-                                PAYaccounting_journal_detail.id_currencyfx = payment_schedual.app_currencyfx.id_currencyfx;
+                                if (context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                       x.id_currency == payment_schedual.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                       .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
+                                {
+                                    PAYaccounting_journal_detail.id_currencyfx = context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                                  x.id_currencyfx == payment_schedual.id_currencyfx && x.timestamp <= DateTime.Now)
+                                                                 .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
+                                }
+                                else
+                                {
+                                    PAYaccounting_journal_detail.id_currencyfx = payment_schedual.id_currencyfx;
+                                }
+                             
                                 accounting_journal_detailList.Add(PAYaccounting_journal_detail);
                             }
                         }
@@ -143,7 +179,18 @@ namespace entity.Brillo.Accounting
                                 AR_accounting_journal_detail.accounting_chart = AR_Chart;
                                 AR_accounting_journal_detail.trans_date = sales_invoice.trans_date;
                                 AR_accounting_journal_detail.debit = payment_schedual.debit - payment_schedual.child.Sum(x => x.credit);
-                                AR_accounting_journal_detail.id_currencyfx = sales_invoice.app_currencyfx.id_currencyfx;
+                                if (context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                      x.id_currency == payment_schedual.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                       .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
+                                {
+                                    AR_accounting_journal_detail.id_currencyfx = context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                                 x.id_currency == payment_schedual.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                                 .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
+                                }
+                                else
+                                {
+                                    AR_accounting_journal_detail.id_currencyfx = payment_schedual.id_currencyfx;
+                                }
                                 accounting_journal_detailList.Add(AR_accounting_journal_detail);
                             }
                         }
@@ -163,7 +210,18 @@ namespace entity.Brillo.Accounting
                         PAYaccounting_journal_detail.trans_date = accounting_journal_detail.trans_date;
                         PAYaccounting_journal_detail.credit = accounting_journal_detail.credit;
                         PAYaccounting_journal_detail.debit = accounting_journal_detail.debit;
-                        PAYaccounting_journal_detail.id_currencyfx = accounting_journal_detail.id_currencyfx;
+                        if (context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                       x.id_currency == accounting_journal_detail.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                        .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
+                        {
+                            PAYaccounting_journal_detail.id_currencyfx = context.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                                         x.id_currency == accounting_journal_detail.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
+                                                         .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
+                        }
+                        else
+                        {
+                            PAYaccounting_journal_detail.id_currencyfx = accounting_journal_detail.id_currencyfx;
+                        }
                         accounting_journal.accounting_journal_detail.Add(PAYaccounting_journal_detail);
                         
                     }

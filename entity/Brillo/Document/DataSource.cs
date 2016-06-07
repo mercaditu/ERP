@@ -411,7 +411,7 @@ namespace entity.Brillo.Document
                         add1 = g.purchase_order.contact.address,
                         telephone = g.purchase_order.contact.telephone,
                         email = g.purchase_order.contact.email,
-                        company_name = g.app_company.name,
+                        company_name = g.app_company!=null?g.app_company.name:"",
                         item_code = g.item.code,
                         item_description = g.item.name,
                         Description = g.item.item_brand != null ? g.item.item_brand.name : "",

@@ -32,24 +32,24 @@ namespace entity
             {
                 //if (State > 0)
                 //{
-                    if (value > 0 && value != _id_item)
+                if (value > 0 && value != _id_item)
+                {
+                    _id_item = value;
+                    RaisePropertyChanged("id_item");
+
+                    using (db db = new db())
                     {
-                        _id_item = value;
-                        RaisePropertyChanged("id_item");
+                        item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
 
-                        using (db db = new db())
-                        {
-                            item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
-
-                            id_vat_group = Vat.getItemVat(_item);
-                            RaisePropertyChanged("id_vat_group");
-                            item_description = _item.name;
-                            RaisePropertyChanged("item_description");
-                        }
-
-                        update_UnitPrice();
-                        update_UnitCost();
+                        id_vat_group = Vat.getItemVat(_item);
+                        RaisePropertyChanged("id_vat_group");
+                        item_description = _item.name;
+                        RaisePropertyChanged("item_description");
                     }
+
+                    update_UnitPrice();
+                    update_UnitCost();
+                }
                 //}
             }
         }
@@ -141,8 +141,10 @@ namespace entity
                 {
                     if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
-                        unit_price = Currency.convert_Values(unit_price,_CurrencyFX_ID, value, App.Modules.Sales);
+                        unit_price = Currency.convert_Values(unit_price, _CurrencyFX_ID, value, App.Modules.Sales);
                         RaisePropertyChanged("unit_price");
+
+
                     }
                     _CurrencyFX_ID = value;
                 }
@@ -273,6 +275,13 @@ namespace entity
                 if (item != null && item.unit_cost != null)
                 {
                     unit_cost = (decimal)item.unit_cost;
+                    using (db db = new db())
+                    {
+                        unit_cost = Currency.convert_Values((decimal)item.unit_cost, Currency.get_DefaultFX(db).id_currencyfx, CurrencyFX_ID, App.Modules.Sales);
+                        RaisePropertyChanged("unit_cost");
+                    }
+
+
                 }
             }
         }
@@ -286,7 +295,7 @@ namespace entity
             {
                 unit_price = get_SalesPrice();
                 RaisePropertyChanged("unit_price");
-                
+
             }
         }
 
@@ -295,7 +304,7 @@ namespace entity
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
-            unit_price =Vat.return_ValueWithoutVAT((int)id_vat_group, UnitPrice_Vat);
+            unit_price = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitPrice_Vat);
             RaisePropertyChanged("unit_price");
         }
 
@@ -386,7 +395,7 @@ namespace entity
                             {
                                 item_price = db.item_price.Where(x => x.id_item == id_item && x.id_price_list == PriceList_ID).FirstOrDefault();
                                 app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
-                                return Currency.convert_Values(item_price.value, app_currencyfx.id_currencyfx,CurrencyFX_ID, App.Modules.Sales);
+                                return Currency.convert_Values(item_price.value, app_currencyfx.id_currencyfx, CurrencyFX_ID, App.Modules.Sales);
                             }
                             else if (db.item_price.Where(x => x.id_item == id_item && x.id_currency == app_currencyfx.id_currency).FirstOrDefault() != null)
                             {
@@ -430,9 +439,9 @@ namespace entity
 
                     //if (State > 0)
                     //{
-                        ApplyDiscount_UnitPrice(_discount, value, unit_price);
-                        Calculate_UnitVatDiscount(_discount);
-                        Calculate_SubTotalDiscount(_discount);
+                    ApplyDiscount_UnitPrice(_discount, value, unit_price);
+                    Calculate_UnitVatDiscount(_discount);
+                    Calculate_SubTotalDiscount(_discount);
                     //}
                 }
             }

@@ -448,7 +448,7 @@ namespace Cognitivo.Project
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_variable.id_item).FirstOrDefault();
                             sales_budget_detail.id_item = project_event_variable.id_item;
                             sales_budget_detail.quantity = ((project_event_variable.adult_consumption) + (project_event_variable.child_consumption));
-                            sales_budget_detail.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales);
+                            sales_budget_detail.UnitPrice_Vat = Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales));
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
 
@@ -459,7 +459,7 @@ namespace Cognitivo.Project
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
                             sales_budget_detail.id_item = project_event_fixed.id_item;
                             sales_budget_detail.quantity = project_event_fixed.consumption;
-                            sales_budget_detail.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales);
+                            sales_budget_detail.UnitPrice_Vat =  Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales));
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
 
@@ -468,7 +468,7 @@ namespace Cognitivo.Project
                         sales_budget_detail_hall.item = db.items.Where(a => a.id_item == project_costing.id_item).FirstOrDefault();
                         sales_budget_detail_hall.id_item = project_costing.id_item;
                         sales_budget_detail_hall.quantity = 1;
-                        sales_budget_detail_hall.UnitPrice_Vat = get_Price(contact, IDcurrencyfx, sales_budget_detail_hall.item, entity.App.Modules.Sales);
+                        sales_budget_detail_hall.UnitPrice_Vat =  Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail_hall.item, entity.App.Modules.Sales));
                         sales_budget.sales_budget_detail.Add(sales_budget_detail_hall);
 
                         db.sales_budget.Add(sales_budget);

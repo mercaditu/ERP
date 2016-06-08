@@ -251,6 +251,11 @@ namespace Cognitivo.Commercial
             ListBox_SelectionChanged(sender, null);
         }
 
+        private void Rearrange_Click(object sender, RoutedEventArgs e)
+        {
+            PaymentDB.Rearrange_Payment();
+        }
+
         
     }
 }

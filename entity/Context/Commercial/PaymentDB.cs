@@ -288,11 +288,29 @@ namespace entity
 
         public void Rearrange_Payment()
         {
-            List<payment_schedual> payment_schedualList = base.payment_schedual.Where(x => x.parent != null).ToList();
+            List<payment_schedual> payment_schedualList = base.payment_schedual.ToList();
             foreach (payment_schedual payment_schedual in payment_schedualList)
             {
-                base
+                foreach (payment_schedual _payment_schedual in payment_schedual.child)
+                {
+                    if (_payment_schedual.payment_detail!=null)
+                    {
+                        int id_currency = payment_schedual.app_currencyfx.id_currency;
+                        DateTime timestamp = _payment_schedual.payment_detail.app_currencyfx.timestamp;
+                        if (base.app_currencyfx.Where(x => x.type == entity.app_currencyfx.CurrencyFXTypes.Transaction &&
+                                                             x.id_currency == id_currency && x.timestamp <= timestamp)
+                                                            .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
+                        {
+                            app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.type == entity.app_currencyfx.CurrencyFXTypes.Transaction &&
+                                                             x.id_currency == id_currency && x.timestamp <= timestamp)
+                                                            .OrderByDescending(x => x.timestamp).FirstOrDefault();
+                            _payment_schedual.credit = Currency.convert_Values(_payment_schedual.payment_detail.value, _payment_schedual.payment_detail.id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Sales);
+                        }
+                    }
+                
+                }
             }
+            base.SaveChanges();
         }
     }
 }

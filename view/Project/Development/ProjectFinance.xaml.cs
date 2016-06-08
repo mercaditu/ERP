@@ -233,7 +233,7 @@ namespace Cognitivo.Project
                 {
                     foreach (project_task project_task in project.project_task)
                     {
-                        
+                        project_task.CalcExecutedQty_TimerTaks();
                     }
                 }
             }

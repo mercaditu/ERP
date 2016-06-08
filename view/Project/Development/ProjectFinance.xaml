@@ -141,15 +141,6 @@
             </Grid>
 
             <StackPanel Background="WhiteSmoke" Grid.Column="2">
-                <!--<Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Cost"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_cost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Total Paid"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding total_paid,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Content="Pending Payment"/>
-                <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
-                       Content="{Binding pending_payment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Source={StaticResource projectViewSource}, StringFormat={}{0:N}}"/>-->
                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                        Content="{Binding parent.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, FallbackValue=---}"/>
                 <TextBlock Text="{Binding name, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,-10,0,8"
@@ -197,12 +188,14 @@
                                     <Binding Path="quantity_exe"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
                                     <Binding Path="quantity_est"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
                                 </MultiBinding>
-                                <!--<Binding Path="quantity_est"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>-->
                             </TextBox.Text>
                         </TextBox>
-                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>
+                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" 
+                                            IsChecked="{Binding is_Executable, Source={StaticResource projectViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>
 
                         <Rectangle Style="{StaticResource line_Bar}" Margin="16"/>
+
                         <CheckBox x:Name="chkinvoice" Style="{StaticResource input_checkbox}">
                             <TextBlock Style="{StaticResource text_Label}">
                                 <Run Text="{lex:Loc Create}" />

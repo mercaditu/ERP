@@ -17,17 +17,8 @@ using System.Data.Entity;
 
 namespace cntrl
 {
-    /// <summary>
-    /// Interaction logic for SalesOrder.xaml
-    /// </summary>
     public partial class SalesOrder : UserControl
     {
-
-        public enum quantitymodes
-        {
-            BasedOnEstimate,
-            BasedOnExecustion
-        }
         public project project
         {
             get { return _project; }
@@ -60,7 +51,6 @@ namespace cntrl
         public SalesOrderDB SalesOrderDB { get; set; }
         public Boolean Generate_Invoice { get; set; }
         public Boolean Generate_Budget { get; set; }
-        public decimal quantity { get; set; }
         
         public SalesOrder()
         {
@@ -72,7 +62,7 @@ namespace cntrl
             if (project != null)
             {
                 toolBar toolBar = new cntrl.toolBar();
-                List<project_task> project_task = project.project_task.Where(x => x.IsSelected).ToList();
+                List<project_task> project_taskLIST = project.project_task.Where(x => x.IsSelected).ToList();
 
                 sales_order sales_order = new entity.sales_order();
                    sales_budget sales_budget = new entity.sales_budget();
@@ -90,49 +80,32 @@ namespace cntrl
                     sales_budget.trans_date = DateTime.Now;
                     sales_budget_detail sales_budget_detail = null;
 
-                    foreach (project_task _project_task in project_task)
+                    foreach (project_task _project_task in project_taskLIST)
                     {
-                        //if (_project_task.items.id_item_type == item.item_type.Task)
-                        //{
                         sales_budget_detail = new sales_budget_detail();
                         sales_budget_detail.id_sales_budget = sales_budget.id_sales_budget;
                         sales_budget_detail.sales_budget = sales_budget;
                         sales_budget_detail.id_item = (int)_project_task.id_item;
                         sales_budget_detail.item_description = _project_task.item_description;
 
-                        //if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
-                        //{
-                        //    sales_budget_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
-                        //}
-                        //else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
-                        //{
-
-                        //    if (_project_task.production_execution_detail != null)
-                        //    {
-                        //        //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                        //        //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
-                        //        sales_budget_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
-                        //    }
-                        //}
-                        sales_budget_detail.quantity = quantity;
+                        if (project.is_Executable)
+                        {
+                            sales_budget_detail.quantity = (decimal)_project_task.quantity_exe;
+                        }
+                        else
+                        {
+                            sales_budget_detail.quantity = (decimal)_project_task.quantity_est;
+                        }
+                        
+                        
                         if (_project_task.unit_price_vat != null)
                         {
                             sales_budget_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;
-
                         }
 
                         sales_budget_detail.id_project_task = _project_task.id_project_task;
                         _project_task.IsSelected = false;
 
-                        //}
-                        //else
-                        //{
-                        //    if (sales_invoice_detail != null)
-                        //    {
-                        //        sales_invoice_detail.id_project_task = _project_task.id_project_task;
-                        //        _project_task.IsSelected = false;
-                        //    }
-                        //}
                         sales_budget.sales_budget_detail.Add(sales_budget_detail);
                     }
 
@@ -206,7 +179,7 @@ namespace cntrl
 
                 sales_order_detail sales_order_detail = null;
 
-                foreach (project_task _project_task in project_task)
+                foreach (project_task _project_task in project_taskLIST)
                 {
                     if (_project_task.items.id_item_type == item.item_type.Task || _project_task.sales_detail == null)
                     {
@@ -219,19 +192,17 @@ namespace cntrl
                         }
 
                         sales_order_detail.item_description = _project_task.item_description;
-                        //if (quantitymode==SalesOrder.quantitymodes.BasedOnEstimate)
-                        //{
-                        //    sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);  
-                        //}
-                        //else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
-                        //{
-                        //    if (_project_task.production_execution_detail != null)
-                        //    {
-                        //        //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                        //        sales_order_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
-                        //    }
-                        //}
-                        sales_order_detail.quantity = quantity;
+
+                        if (project.is_Executable)
+                        {
+                            sales_order_detail.quantity = (decimal)_project_task.quantity_exe;
+                        }
+                        else
+                        {
+                            sales_order_detail.quantity = (decimal)_project_task.quantity_est;
+                        }
+
+
                         if (_project_task.unit_price_vat != null)
                         {
                             sales_order_detail.UnitPrice_Vat =(decimal) _project_task.unit_price_vat;
@@ -241,25 +212,15 @@ namespace cntrl
                         _project_task.IsSelected = false;
                         _project_task.sales_detail = sales_order_detail;
                     }
-                    //else
-                    //{
-                    //    if (sales_order_detail != null)
-                    //    {
-                    //        sales_order_detail.id_project_task = _project_task.id_project_task; ;
-                    //        _project_task.IsSelected = false;
-                    //    }
-                    //}
+
                     if (sales_order_detail != null)
                     {
                         sales_order.sales_order_detail.Add(sales_order_detail);
                     }
-
                 }
 
                 if (sales_order.sales_order_detail.Count() > 0)
                 {
-
-
                     sales_order.State = EntityState.Added;
                     sales_order.IsSelected = true;
 
@@ -281,31 +242,23 @@ namespace cntrl
                         sales_invoice.trans_date = DateTime.Now;
                         sales_invoice_detail sales_invoice_detail = null;
 
-                        foreach (project_task _project_task in project_task)
+                        foreach (project_task _project_task in project_taskLIST)
                         {
-                            //if (_project_task.items.id_item_type == item.item_type.Task)
-                            //{
                             sales_invoice_detail = new sales_invoice_detail();
                             sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
                             sales_invoice_detail.sales_invoice = sales_invoice;
                             sales_invoice_detail.id_item = (int)_project_task.id_item;
                             sales_invoice_detail.item_description = _project_task.item_description;
-                        
-                            //if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
-                            //{
-                            //    sales_invoice_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
-                            //}
-                            //else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
-                            //{
 
-                            //    if (_project_task.production_execution_detail != null)
-                            //    {
-                            //        //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                            //        //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
-                            //        sales_invoice_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
-                            //    }
-                            //}
-                            sales_invoice_detail.quantity = quantity;
+                            if (project.is_Executable)
+                            {
+                                sales_invoice_detail.quantity = (decimal)_project_task.quantity_exe;
+                            }
+                            else
+                            {
+                                sales_invoice_detail.quantity = (decimal)_project_task.quantity_est;
+                            }
+
                             if (_project_task.unit_price_vat!=null)
                             {
                                 sales_invoice_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;
@@ -315,15 +268,6 @@ namespace cntrl
                             sales_invoice_detail.id_project_task = _project_task.id_project_task;
                             _project_task.IsSelected = false;
 
-                            //}
-                            //else
-                            //{
-                            //    if (sales_invoice_detail != null)
-                            //    {
-                            //        sales_invoice_detail.id_project_task = _project_task.id_project_task;
-                            //        _project_task.IsSelected = false;
-                            //    }
-                            //}
                             sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                         }
 
@@ -349,8 +293,7 @@ namespace cntrl
                 parentGrid.Children.Clear();
                 parentGrid.Visibility = System.Windows.Visibility.Hidden;
             }
-            catch (Exception ex)
-            { throw ex; }
+            catch { }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -371,7 +314,6 @@ namespace cntrl
         {
             if (cbxCondition.SelectedItem != null)
             {
-
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 cbxContract.ItemsSource = SalesOrderDB.app_contract.Where(a => a.is_active == true
                                                                         && a.id_company == entity.Properties.Settings.Default.company_ID
@@ -384,7 +326,6 @@ namespace cntrl
         {
             if (cbxDocument.SelectedItem != null)
             {
-
                 app_document_range app_document_range = cbxDocument.SelectedItem as app_document_range;
                 app_document_range _app_range = SalesOrderDB.app_document_range.Where(x => x.id_range == app_document_range.id_range).FirstOrDefault();
 
@@ -392,10 +333,12 @@ namespace cntrl
                 {
                     entity.Brillo.Logic.Range.branch_Code = SalesOrderDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault().code;
                 }
+
                 if (SalesOrderDB.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault() != null)
                 {
                     entity.Brillo.Logic.Range.terminal_Code = SalesOrderDB.app_terminal.Where(x => x.id_terminal == CurrentSession.Id_Terminal).FirstOrDefault().code;
                 }
+
                 if (SalesOrderDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault() != null)
                 {
                     entity.Brillo.Logic.Range.user_Code = SalesOrderDB.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault().code;

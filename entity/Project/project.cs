@@ -34,14 +34,20 @@ namespace entity
             get { return _id_currency;}
             set
             {
-                _id_currency=value;
-                using (db db = new db())
+                if (_id_currency != value)
                 {
-                    if (db.app_currencyfx.Where(x => x.id_currency ==value && x.is_active).FirstOrDefault() != null)
-                    {
-                        CurrecyFx_ID = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
-                    }
+                    _id_currency = value;
 
+                    if (value != null)
+                    {
+                        using (db db = new db())
+                        {
+                            if (db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault() != null)
+                            {
+                                CurrecyFx_ID = db.app_currencyfx.Where(x => x.id_currency == value && x.is_active).FirstOrDefault().id_currencyfx;
+                            }
+                        }
+                    }   
                 }
             }
         }
@@ -59,18 +65,17 @@ namespace entity
         public int priority { get; set; }
         public bool is_active { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [NotMapped]
-        public int SelectedCount { get; set; }
 
         [NotMapped]
-        public decimal total_cost { get; set; }
+        public int SelectedCount { get; set; }
         [NotMapped]
-        public decimal total_paid { get; set; }
-        [NotMapped]
-        public decimal pending_payment { get; set; }
+        public bool is_Executable { get; set; }
+        //[NotMapped]
+        //public decimal total_cost { get; set; }
+        //[NotMapped]
+        //public decimal total_paid { get; set; }
+        //[NotMapped]
+        //public decimal pending_payment { get; set; }
 
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }
@@ -120,6 +125,7 @@ namespace entity
         public void Update_SelectedCount()
         {
             int i = 0;
+
             foreach (project_task detail in project_task.Where(x => x.IsSelected))
             {
                 i += 1;

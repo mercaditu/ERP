@@ -285,5 +285,14 @@ namespace entity
                 entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
             }
         }
+
+        public void Rearrange_Payment()
+        {
+            List<payment_schedual> payment_schedualList = base.payment_schedual.Where(x => x.parent != null).ToList();
+            foreach (payment_schedual payment_schedual in payment_schedualList)
+            {
+                base
+            }
+        }
     }
 }

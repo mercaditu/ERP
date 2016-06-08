@@ -223,6 +223,22 @@ namespace Cognitivo.Project
             }
         }
 
+        private void toggleQuantity_CheckedChange(object sender, EventArgs e)
+        {
+            project project = projectViewSource.View.CurrentItem as project;
+            
+            if (project != null)
+            {
+                if (ToggleQuantity.IsChecked == true)
+                {
+                    foreach (project_task project_task in project.project_task)
+                    {
+                        
+                    }
+                }
+            }
+        }
+
 
     }
 }

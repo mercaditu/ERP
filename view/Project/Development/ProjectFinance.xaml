@@ -191,6 +191,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" 
+                                            IsCheckedChanged="toggleQuantity_CheckedChange"
                                             IsChecked="{Binding is_Executable, Source={StaticResource projectViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>
 

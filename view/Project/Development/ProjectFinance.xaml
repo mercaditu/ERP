@@ -190,13 +190,12 @@
                         <Label Content="{lex:Loc Price}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtUnitCost" Text="{Binding unit_price_vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="tbxQuantity"  >
+                        <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource Projectfinance}">
-                                    <Binding Path="IsChecked" ElementName="ToggleQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
-                                    <Binding Path="quantity_exe" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"></Binding>
-                                    <Binding Path="quantity_est" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"> </Binding>
-                                    
+                                    <Binding Path="IsChecked" ElementName="ToggleQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="quantity_exe" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="quantity_est" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>

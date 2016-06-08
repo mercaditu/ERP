@@ -15,6 +15,7 @@ namespace entity
             is_active = true;
             trans_date = DateTime.Now;
             id_company = CurrentSession.Id_Company;
+
             project_event_fixed = new List<project_event_fixed>();
             project_event_variable = new List<project_event_variable>();
         }

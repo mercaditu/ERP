@@ -80,7 +80,9 @@
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding trans_date, StringFormat=d,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                    recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                                   recordSecondaryName="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                   recordSecondaryName="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                   State="{Binding State, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Status="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

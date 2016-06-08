@@ -73,8 +73,12 @@ namespace entity
                 if (_id_currencyfx != value)
                 {
 
-                    this.value = Currency.convert_Values(this.value, _id_currencyfx, value, App.Modules.Sales);
+                    if (_id_currencyfx>0)
+                    {
+                        this.value = Currency.convert_Values(this.value, _id_currencyfx, value, App.Modules.Sales);
                         RaisePropertyChanged("value");
+                    }
+               
                    
                     _id_currencyfx = value;
                 }

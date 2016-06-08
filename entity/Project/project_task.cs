@@ -117,7 +117,7 @@ namespace entity
         private decimal? _quantity_est;
 
         [NotMapped]
-        public decimal? quantity_exe
+        public decimal quantity_exe
         { get; set; }
 
         public decimal? unit_cost_est

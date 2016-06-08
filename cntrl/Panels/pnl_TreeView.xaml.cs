@@ -47,7 +47,9 @@ namespace cntrl.Panels
         public Status.Project Status
         {
             get { return (Status.Project)GetValue(StatusProperty); }
-            set { SetValue(StatusProperty, value); }
+            set { 
+                SetValue(StatusProperty, value);
+            }
         }
 
         public static readonly DependencyProperty StateProperty =

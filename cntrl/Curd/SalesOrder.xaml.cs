@@ -60,7 +60,7 @@ namespace cntrl
         public SalesOrderDB SalesOrderDB { get; set; }
         public Boolean Generate_Invoice { get; set; }
         public Boolean Generate_Budget { get; set; }
-        public quantitymodes quantitymode { get; set; }
+        public decimal quantity { get; set; }
         
         public SalesOrder()
         {
@@ -100,20 +100,21 @@ namespace cntrl
                         sales_budget_detail.id_item = (int)_project_task.id_item;
                         sales_budget_detail.item_description = _project_task.item_description;
 
-                        if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
-                        {
-                            sales_budget_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
-                        }
-                        else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
-                        {
+                        //if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
+                        //{
+                        //    sales_budget_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
+                        //}
+                        //else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
+                        //{
 
-                            if (_project_task.production_execution_detail != null)
-                            {
-                                //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                                //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
-                                sales_budget_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
-                            }
-                        }
+                        //    if (_project_task.production_execution_detail != null)
+                        //    {
+                        //        //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
+                        //        //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
+                        //        sales_budget_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
+                        //    }
+                        //}
+                        sales_budget_detail.quantity = quantity;
                         if (_project_task.unit_price_vat != null)
                         {
                             sales_budget_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;
@@ -218,19 +219,19 @@ namespace cntrl
                         }
 
                         sales_order_detail.item_description = _project_task.item_description;
-                        if (quantitymode==SalesOrder.quantitymodes.BasedOnEstimate)
-                        {
-                            sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);  
-                        }
-                        else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
-                        {
-                            if (_project_task.production_execution_detail != null)
-                            {
-                                //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                                sales_order_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
-                            }
-                        }
-
+                        //if (quantitymode==SalesOrder.quantitymodes.BasedOnEstimate)
+                        //{
+                        //    sales_order_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);  
+                        //}
+                        //else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
+                        //{
+                        //    if (_project_task.production_execution_detail != null)
+                        //    {
+                        //        //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
+                        //        sales_order_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
+                        //    }
+                        //}
+                        sales_order_detail.quantity = quantity;
                         if (_project_task.unit_price_vat != null)
                         {
                             sales_order_detail.UnitPrice_Vat =(decimal) _project_task.unit_price_vat;
@@ -290,20 +291,21 @@ namespace cntrl
                             sales_invoice_detail.id_item = (int)_project_task.id_item;
                             sales_invoice_detail.item_description = _project_task.item_description;
                         
-                            if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
-                            {
-                                sales_invoice_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
-                            }
-                            else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
-                            {
+                            //if (quantitymode == SalesOrder.quantitymodes.BasedOnEstimate)
+                            //{
+                            //    sales_invoice_detail.quantity = (decimal)(_project_task.quantity_est == null ? 1M : _project_task.quantity_est);
+                            //}
+                            //else if (quantitymode == SalesOrder.quantitymodes.BasedOnExecustion)
+                            //{
 
-                                if (_project_task.production_execution_detail != null)
-                                {
-                                    //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
-                                    //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
-                                    sales_invoice_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
-                                }
-                            }
+                            //    if (_project_task.production_execution_detail != null)
+                            //    {
+                            //        //production_execution_detail production_execution_detail = SalesOrderDB.production_execution_detail.Where(x => x.id_project_task == _project_task.id_project_task).FirstOrDefault();
+                            //        //sales_invoice_detail.quantity = (decimal)(production_execution_detail.quantity == 0 ? 1M : production_execution_detail.quantity);
+                            //        sales_invoice_detail.quantity = (decimal)(_project_task.production_execution_detail.Sum(x => x.quantity) == 0 ? 1M : _project_task.production_execution_detail.Sum(x => x.quantity));
+                            //    }
+                            //}
+                            sales_invoice_detail.quantity = quantity;
                             if (_project_task.unit_price_vat!=null)
                             {
                                 sales_invoice_detail.UnitPrice_Vat = (decimal)_project_task.unit_price_vat;

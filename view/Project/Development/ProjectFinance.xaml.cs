@@ -50,7 +50,7 @@ namespace Cognitivo.Project
                         {
                             project_task.unit_price_vat = project_task.sales_detail.UnitPrice_Vat;
                             project_task.RaisePropertyChanged("unit_price_vat");
-                           
+
 
                         }
                         if (project_task.production_execution_detail != null)
@@ -107,7 +107,7 @@ namespace Cognitivo.Project
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
-         
+
         }
 
 
@@ -115,9 +115,9 @@ namespace Cognitivo.Project
         {
             set_price();
             filter_task();
-          
-           calculate_total();
-            
+
+            calculate_total();
+
 
         }
         private void calculate_total()
@@ -154,9 +154,9 @@ namespace Cognitivo.Project
                             {
                                 project.total_paid = Convert.ToDecimal(project.total_paid + project_task.unit_price_vat);
                             }
-                            
+
                         }
-                        
+
                     }
 
                 }
@@ -169,31 +169,24 @@ namespace Cognitivo.Project
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-          
-                project project = projectViewSource.View.CurrentItem as project;
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
-                objSalesOrder.project = project;
-              
-                if (ToggleQuantity.IsChecked==true)
-                {
-                    objSalesOrder.quantitymode = cntrl.SalesOrder.quantitymodes.BasedOnEstimate;
-                }
-                else
-                {
-                    objSalesOrder.quantitymode = cntrl.SalesOrder.quantitymodes.BasedOnExecustion;
-                }
-                objSalesOrder.SalesOrderDB = SalesOrderDB;
-                objSalesOrder.Generate_Invoice =(bool)chkinvoice.IsChecked;
-                objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
-                crud_modal.Children.Add(objSalesOrder);
-          
 
-            
-            
+            project project = projectViewSource.View.CurrentItem as project;
+            crud_modal.Visibility = Visibility.Visible;
+            cntrl.SalesOrder objSalesOrder = new cntrl.SalesOrder();
+            objSalesOrder.project = project;
+
+            objSalesOrder.quantity = Convert.ToDecimal(tbxQuantity.Text);
+            objSalesOrder.SalesOrderDB = SalesOrderDB;
+            objSalesOrder.Generate_Invoice = (bool)chkinvoice.IsChecked;
+            objSalesOrder.Generate_Budget = (bool)chkbudget.IsChecked;
+            crud_modal.Children.Add(objSalesOrder);
+
+
+
+
         }
 
-       
+
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
@@ -240,5 +233,7 @@ namespace Cognitivo.Project
                 entity.Brillo.Document.Start.Automatic(sales_order, sales_order.app_document_range);
             }
         }
+
+
     }
 }

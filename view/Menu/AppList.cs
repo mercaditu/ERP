@@ -122,6 +122,7 @@ namespace Cognitivo.Menu
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Form, "Production.Line", entity.App.Names.Line, "");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder");
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.FractionOrder", entity.App.Names.ProductionOrder, "ProductionOrder");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.FractionExecution", entity.App.Names.ProductionExecution, "ProductionExecution");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transactions, "Production.QualityAssurance", "QualityAssurance", "");

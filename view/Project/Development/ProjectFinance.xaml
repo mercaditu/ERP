@@ -192,11 +192,12 @@
                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="tbxQuantity" Style="{StaticResource input_textbox}">
                             <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource Projectfinance}">
+                                <MultiBinding Converter="{StaticResource Projectfinance}" >
                                     <Binding Path="IsChecked" ElementName="ToggleQuantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                    <Binding Path="quantity_exe" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
-                                    <Binding Path="quantity_est" Source="{StaticResource project_taskViewSource}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="quantity_exe"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="quantity_est"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>
                                 </MultiBinding>
+                                <!--<Binding Path="quantity_est"  Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"/>-->
                             </TextBox.Text>
                         </TextBox>
                         <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc ActivityPlan}" OnLabel="{lex:Loc ProductionExecution}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}"/>

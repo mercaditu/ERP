@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Cognitivo.Production
 {
-    public partial class Order : Page
+    public partial class FractionOrder : Page
     {
         OrderDB OrderDB = new OrderDB();
 
@@ -23,7 +23,7 @@ namespace Cognitivo.Production
 
         cntrl.Curd.ItemRequest ItemRequest;
 
-        public Order()
+        public FractionOrder()
         {
             InitializeComponent();
         }
@@ -106,7 +106,7 @@ namespace Cognitivo.Production
             //item_requestViewSource.Source = OrderDB.item_request.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
-            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.types==production_order.ProductionOrderTypes.Production).Load();
+            OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.types==production_order.ProductionOrderTypes.Fraction).Load();
             production_orderViewSource.Source = OrderDB.production_order.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));

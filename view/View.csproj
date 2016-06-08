@@ -428,6 +428,9 @@
     <Compile Include="Production\FractionExecution.xaml.cs">
       <DependentUpon>FractionExecution.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Production\FractionOrder.xaml.cs">
+      <DependentUpon>FractionOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product\FixedAssets.xaml.cs">
       <DependentUpon>FixedAssets.xaml</DependentUpon>
     </Compile>
@@ -1480,6 +1483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Production\FractionExecution.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Production\FractionOrder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

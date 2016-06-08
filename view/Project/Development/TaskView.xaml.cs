@@ -76,6 +76,19 @@ namespace Cognitivo.Project.Development
             {
                 btnanull.IsEnabled = false;
             }
+
+            if (ToggleQuantity.IsChecked == true)
+            {
+
+                stpexcustion.Visibility = System.Windows.Visibility.Visible;
+                stpestimate.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                stpestimate.Visibility = System.Windows.Visibility.Visible;
+                stpexcustion.Visibility = System.Windows.Visibility.Collapsed;
+
+            }
         }
 
         public void filter_task()

@@ -14,11 +14,11 @@ namespace Cognitivo.Converters
         {
             if (System.Convert.ToBoolean(value[0])!=true)
             {
-                return value[2];
+                return value[2].ToString();
             }
             else
             {
-                return value[1];
+                return value[1].ToString();
             }
             
           

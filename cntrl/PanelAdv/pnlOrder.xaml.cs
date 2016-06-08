@@ -47,11 +47,24 @@ namespace cntrl.PanelAdv
 
             if (project_taskLIST.Count() > 0)
             {
-                //production_order production_order = new production_order();
                 production_order.id_project = project_taskLIST.FirstOrDefault().id_project;
+                
+                //Get Name.
                 production_order.name = project_taskLIST.FirstOrDefault().project.name;
+                production_order.RaisePropertyChanged("name");
 
-                foreach (var item in project_taskLIST)
+                //Date check. Get the range from task first, if blank get from Project.
+                production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).FirstOrDefault().start_date_est;
+                production_order.end_date_est = project_taskLIST.OrderByDescending(x => x.end_date_est).FirstOrDefault().end_date_est;
+                if (production_order.start_date_est == null || production_order.end_date_est == null)
+                {
+                    production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).FirstOrDefault().project.est_start_date;
+                    production_order.end_date_est = project_taskLIST.OrderByDescending(x => x.end_date_est).FirstOrDefault().project.est_end_date;
+                }
+                production_order.RaisePropertyChanged("start_date_est");
+                production_order.RaisePropertyChanged("end_date_est");
+
+                foreach (var item in project_taskLIST.Where(x => x.status == Status.Project.Approved))
                 {
                     project_task _project_task = (project_task)item;
                     production_order_detail production_order_detail = new production_order_detail();
@@ -87,13 +100,10 @@ namespace cntrl.PanelAdv
                     }
 
                     production_order.status = entity.Status.Production.Pending;
-                    production_order.name = _project_task.project.name;
                     production_order.production_order_detail.Add(production_order_detail);
                 }
 
                 shared_dbContext.db.production_order.Add(production_order);
-
-
                 production_orderViewSource.View.MoveCurrentToLast();
             }
         }

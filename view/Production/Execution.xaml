@@ -174,7 +174,7 @@
                         <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailProductViewSource}"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                <TextBox x:Name="txtProduct" Width="64" VerticalAlignment="Top" />
+                                <TextBox x:Name="txtProduct" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" />
                                 <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 
@@ -258,7 +258,7 @@
                             <StackPanel Orientation="Horizontal" Margin="0,4">
                               
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                <TextBox  x:Name="txtRaw" Width="64"  Margin="8,0" VerticalAlignment="Top" />
+                                <TextBox  x:Name="txtRaw" Width="64" KeyUp="btnInsert_KeyDown" Margin="8,0" VerticalAlignment="Top" />
                                 <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                             </StackPanel>
                             <DataGrid Margin="0" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailRawViewSource}}" SelectionChanged="dgRaw_SelectionChanged">
@@ -357,10 +357,10 @@
                                                     Binding="{Binding start_date, Mode=TwoWay, 
                                                                       UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:g}}" 
                                                                       Width="Auto"/>
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}" 
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:EndDate}"
                                                     Binding="{Binding end_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
                                                                       StringFormat={}{0:g}}" Width="Auto"/>
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantiity}" IsReadOnly="True"
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
                                                     Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto"/>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Hour}" IsReadOnly="True"
                                                     Binding="{Binding hours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" Width="Auto"/>
@@ -420,7 +420,7 @@
                             <StackPanel x:Name="stpquantity" Visibility="{Binding IsChecked,ElementName=rbtnHours,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}">
                                 <StackPanel Orientation="Horizontal" Margin="8">
                                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                    <TextBox x:Name="txtServicecontract" Width="64" VerticalAlignment="Top" />
+                                    <TextBox x:Name="txtServicecontract" KeyUp="btnInsert_KeyDown" Width="64" VerticalAlignment="Top" />
                                     <Button x:Name="btnInsert_ServiceContract" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                 </StackPanel>
                                 <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgServicecontract" AutoGenerateColumns="False" 
@@ -554,7 +554,7 @@
                                     IsEnabled="{Binding SelectedItem.item, ElementName=treeAsset, Converter={StaticResource Type2Enable}}">
                             <StackPanel Orientation="Horizontal" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" Margin="4"/>
-                                <TextBox  x:Name="txtAsset" Width="64" VerticalAlignment="Top" Margin="4"/>
+                                <TextBox  x:Name="txtAsset" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" Margin="4"/>
                                 <Button x:Name="btnInsert_FixedAsset" Content="{lex:Loc Insert}" VerticalAlignment="Center" Click="btnInsert_Click"/>
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgCapital"  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailAssetViewSource}}" SelectionChanged="dgCapital_SelectionChanged">
@@ -611,7 +611,7 @@
                                     IsEnabled="{Binding SelectedItem.item, ElementName=treeSupply, Converter={StaticResource Type2Enable}}">
                             <StackPanel Orientation="Horizontal" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                <TextBox x:Name="txtSupply" Width="64" VerticalAlignment="Top" KeyDown="txtsupplier_KeyDown"/>
+                                <TextBox x:Name="txtSupply" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" KeyDown="txtsupplier_KeyDown"/>
                                 <Button x:Name="btnInsert_Supplies" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgSupplier" AutoGenerateColumns="False" 

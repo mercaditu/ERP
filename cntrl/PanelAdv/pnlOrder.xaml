@@ -10,7 +10,7 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
-             lex:LocalizeDictionary.DesignCulture="en-US" Width="288"
+             lex:LocalizeDictionary.DesignCulture="en-US" Width="288" Height="512"
              mc:Ignorable="d" Background="Purple"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -30,8 +30,6 @@
         </Grid>
         <TextBlock Text="Create Production Order" Style="{StaticResource text_Instructions}"/>
         <StackPanel HorizontalAlignment="Center" DataContext="{StaticResource production_orderViewSource}">
-            <!--<Label Content="{lex:Loc Project}" Style="{StaticResource input_label}"/>
-            <Label Content="{Binding project.name}" Style="{StaticResource input_label}"/>-->
             <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
             <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
@@ -52,7 +50,7 @@
             <DatePicker Text="{Binding end_date_est, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
         </StackPanel>
         <DataGrid x:Name="production_order_detailDataGrid" AutoGenerateColumns="False" IsReadOnly="True" EnableRowVirtualization="True" 
-                  Height="164" ItemsSource="{Binding}" Margin="8" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
+                  Height="168" ItemsSource="{Binding}" Margin="8" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding item.name}" Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
                 <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>

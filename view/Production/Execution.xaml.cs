@@ -639,6 +639,16 @@ namespace Cognitivo.Production
 
         }
 
+        private void btnInsert_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Button btn = new Button();
+                btn.Name = (sender as TextBox).Name;
+                btnInsert_Click(btn, e);
+            }
+        }
+
         private void txtsupplier_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -647,7 +657,6 @@ namespace Cognitivo.Production
                 btn.Name = "Supp";
                 btnInsert_Click(btn, e);
             }
-
         }
 
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -664,6 +673,7 @@ namespace Cognitivo.Production
             {
                 DataGrid exexustiondetail = (DataGrid)e.Source;
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                
                 if (result == MessageBoxResult.Yes)
                 {
                     production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
@@ -671,7 +681,6 @@ namespace Cognitivo.Production
                     exexustiondetail.CancelEdit();
                     production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
                     production_execution_detail.State = EntityState.Deleted;
-                    //production_execution.production_execution_detail.Remove(production_execution_detail);
                     ExecutionDB.production_execution_detail.Remove(production_execution_detail);
                     production_execution_detailAssetViewSource.View.Refresh();
                     production_execution_detailProductViewSource.View.Refresh();
@@ -945,12 +954,5 @@ namespace Cognitivo.Production
         {
 
         }
-
-
-
-
-
-
-
     }
 }

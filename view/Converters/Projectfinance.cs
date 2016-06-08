@@ -12,17 +12,15 @@ namespace Cognitivo.Converters
     {
         public object Convert(object[] value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (System.Convert.ToBoolean(value[0])!=true)
+            if (System.Convert.ToBoolean(value[0]) != true)
             {
-                return value[2].ToString();
+                if (value[2] != null)
+                {
+                    return value[2].ToString();
+                }
             }
-            else
-            {
-                return value[1].ToString();
-            }
-            
-          
-            //throw new NotImplementedException();
+
+            return value[1].ToString();
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes,

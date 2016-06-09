@@ -170,7 +170,7 @@
                     
                     decimal? Qty = d.project_task.quantity_est;
                     string TaskName = d.project_task.item_description;
-                    string TaskCode = d.project_task.code;
+                    string TaskCode = d.project_task.items.code;
 
                     Detail = Detail +
                         ""
@@ -189,10 +189,11 @@
                     foreach (project_task_dimension project_task_dimension in d.project_task.project_task_dimension)
                     {
 
-                        string dimension= "-------------------------------" + "\n"
-                       + project_task_dimension.app_dimension != null ? project_task_dimension.app_dimension.name : "" + "\t"
-                       + project_task_dimension.value + "\t" + project_task_dimension.app_measurement != null ? project_task_dimension.app_measurement.name : "" + "\t"
-                      + "\n";
+                        decimal value = project_task_dimension.value;
+                        string name = project_task_dimension.app_dimension != null ? project_task_dimension.app_dimension.name : "";
+                        string measurement = project_task_dimension.app_measurement != null ? project_task_dimension.app_measurement.name : "";
+                        string dimension = "-------------------------------" + "\n"
+                       + name + "\t" + value + "\t" + measurement + "\n";
                         Detail = Detail + dimension + "\n";
                                              
                     }

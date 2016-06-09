@@ -69,8 +69,27 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Approve" Margin="715,564,10,10" Width="75" Click="btnApprove_Click"/>
-
+            <!-- Approve -->
+            <Viewbox Margin="8,45" StretchDirection="Both" Stretch="Uniform" Height="50" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <Grid Cursor="Hand" MouseDown="btnApprove_Click" TouchDown="btnApprove_Click" ToolTip="{lex:Loc Approve}">
+                    <Border CornerRadius="5,15,15,5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <Border.Background>
+                            <SolidColorBrush Color="#FF004867" Opacity="0.32"/>
+                        </Border.Background>
+                        <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
+                            <TextBlock Style="{StaticResource text_Label}" Foreground="WhiteSmoke">
+                                <Run Text="{lex:Loc Save}"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
+                            BorderBrush="White" BorderThickness="1">
+                        <Label Content="j" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center" 
+                               Foreground="White"/>
+                    </Border>
+                </Grid>
+            </Viewbox>
         </Grid>
     </Grid>
 </Page>

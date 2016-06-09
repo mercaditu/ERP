@@ -643,9 +643,13 @@ namespace Cognitivo.Production
         {
             if (e.Key == Key.Enter)
             {
+                TextBox tbx = sender as TextBox;
                 Button btn = new Button();
-                btn.Name = (sender as TextBox).Name;
+                btn.Name = tbx.Name;
                 btnInsert_Click(btn, e);
+
+                //This is to clean contents after enter.
+                tbx.Text = string.Empty;
             }
         }
 
@@ -864,9 +868,15 @@ namespace Cognitivo.Production
             _production_execution_detail.item = production_order_detail.item;
             _production_execution_detail.quantity = Quantity;
             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
-            _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
+            
+            if (production_order_detail.item.unit_cost != null)
+            {
+                _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
+            }
+
             _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
+
             if (production_order_detail.item.is_autorecepie)
             {
                 _production_execution_detail.is_input = false;

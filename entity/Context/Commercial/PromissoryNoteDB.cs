@@ -69,7 +69,10 @@ namespace entity
                                                          && x.IsSelected && x.Error == null))
             {
                 payment_promissory_note.status = Status.Documents.Issued;
+                entity.Brillo.Document.Start.Automatic(payment_promissory_note, payment_promissory_note.app_document_range);
+
             }
+
             base.SaveChanges();
         }
         public void Anull()

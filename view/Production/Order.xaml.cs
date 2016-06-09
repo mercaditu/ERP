@@ -385,7 +385,7 @@ namespace Cognitivo.Production
             
                 item_request.request_date = DateTime.Now;
 
-                foreach (production_order_detail data in production_order_detaillist)
+                foreach (production_order_detail data in production_order_detaillist.Where(x => x.IsSelected == true))
                 {
                     item_request_detail item_request_detail = new entity.item_request_detail();
                     item_request_detail.date_needed_by = ItemRequest.neededDate;
@@ -649,9 +649,8 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource.View.Filter = null;
 
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
-            _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true).ToList();
 
-            foreach (production_order_detail production_order_detail in _production_order_detail)
+            foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true))
             {
                 if (production_order_detail.parent != null)
                 {

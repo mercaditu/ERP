@@ -97,7 +97,11 @@
             string Detail = string.Empty;
             string Footer = string.Empty;
 
-            string CompanyName = i.app_company.name;
+            string CompanyName = string.Empty;
+            using(db db= new db())
+            {
+                 CompanyName = db.app_company.Where(x=>x.id_company==i.id_company).FirstOrDefault().name;
+            }
             string TransNumber = i.number;
             DateTime TransDate = i.trans_date;
             string BranchName = string.Empty;
@@ -185,13 +189,12 @@
                     foreach (project_task_dimension project_task_dimension in d.project_task.project_task_dimension)
                     {
 
-                        Detail = Detail +
-                       ""
-                       + "Dimension, Value, Measurement" + "\n"
-                       + "-------------------------------" + "\n"
+                        string dimension= "-------------------------------" + "\n"
                        + project_task_dimension.app_dimension != null ? project_task_dimension.app_dimension.name : "" + "\t"
                        + project_task_dimension.value + "\t" + project_task_dimension.app_measurement != null ? project_task_dimension.app_measurement.name : "" + "\t"
                       + "\n";
+                        Detail = Detail + dimension + "\n";
+                                             
                     }
                         
                     //}
@@ -200,7 +203,7 @@
 
             }
 
-            Footer = "-------------------------------";
+            Footer = "-------------------------------\n";
             if (i.employee != null)
             {
                 Footer += "RETIRADO: " + i.employee.name + "\n";

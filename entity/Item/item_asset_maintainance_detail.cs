@@ -29,8 +29,27 @@ namespace entity
         public int? id_currencyfx { get; set; }
         public int? id_time_coefficient { get; set; }
         public int? id_contact { get; set; }
-        
 
+        [NotMapped]
+        public new bool IsSelected
+        {
+            get { return _is_selected; }
+            set
+            {
+                if (value != _is_selected)
+                {
+                    _is_selected = value;
+                    RaisePropertyChanged("IsSelected");
+
+                    if (item_asset_maintainance != null)
+                    {
+                        item_asset_maintainance.Update_SelectedCount();
+                    }
+
+                }
+            }
+        }
+        private bool _is_selected;
         //Nav Properties
         public virtual item_asset_maintainance item_asset_maintainance { get; set; }
         public virtual item item { get; set; }

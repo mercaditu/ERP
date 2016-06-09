@@ -44,6 +44,7 @@ namespace entity
         public DateTime end_date { get; set; }
         public string comment { get; set; }
         public MaintainanceTypes maintainance_type { get; set; }
+       
         
         //Nav Properties
         public virtual item_asset item_asset { get; set; }

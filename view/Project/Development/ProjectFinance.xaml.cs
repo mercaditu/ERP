@@ -75,7 +75,7 @@ namespace Cognitivo.Project
                         project_taskViewSource.View.Filter = i =>
                         {
                             project_task _project_task = (project_task)i;
-                            if (_project_task.parent == null && _project_task.is_active == true)
+                            if (_project_task.parent == null && _project_task.is_active == true && _project_task.status!=Status.Project.Rejected)
                                 return true;
                             else
                                 return false;

@@ -67,7 +67,7 @@ namespace entity.Brillo.Document
                 project project = (project)Document;
                 return Project(project);
             }
-         
+
             return null;
         }
 
@@ -180,7 +180,7 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_price,
                         unit_price_vat = g.UnitPrice_Vat,
-                        sub_total_vat_discount=g.Discount_SubTotal_Vat,
+                        sub_total_vat_discount = g.Discount_SubTotal_Vat,
                         AmountWords = g.sales_order != null ? g.sales_order.app_currencyfx != null ? g.sales_order.app_currencyfx.app_currency != null ? g.sales_order.app_currencyfx.app_currency.has_rounding ?
 
                         // Text -> Words
@@ -390,6 +390,32 @@ namespace entity.Brillo.Document
         {
             using (db db = new db())
             {
+                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+                List<purchase_tender_detail> purchase_tender_detail = db.purchase_tender_detail.ToList();
+
+                reportDataSource.Value = purchase_tender_detail
+                    .Select(g => new
+                    {
+                        id_purchase_tender = g.purchase_tender_contact != null ? g.purchase_tender_contact.id_purchase_tender : 0,
+                        company_name = g.app_company != null ? g.app_company.name : "",
+                        item_code = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.code : "" : "",
+                        quantity = g.quantity,
+                        sub_Total = g.SubTotal,
+                        sub_Total_vat = g.SubTotal_Vat,
+                        unit_cost = g.unit_cost,
+                        unit_price = g.unit_cost,
+                        unit_price_vat = g.UnitCost_Vat,
+                        contact_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.name : "",
+                        number = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender.number : "",
+                        trans_date = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender.trans_date : DateTime.Now,
+                        id_company = g.id_company,
+                        add1 = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.address : "",
+                        telephone = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.telephone : "",
+                        email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.email : "",
+                        item_description = g.item_description
+
+                       
+                    }).ToList();
                 return reportDataSource;
             }
         }

@@ -73,7 +73,7 @@ namespace Cognitivo.Production
             production_order_detaillServiceContractViewSource = FindResource("production_order_detaillServiceContractViewSource") as CollectionViewSource;
 
             production_orderViewSource = FindResource("production_orderViewSource") as CollectionViewSource;
-            ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            ExecutionDB.production_order.Where(x => x.id_company == CurrentSession.Id_Company && x.types==production_order.ProductionOrderTypes.Production).Load();
             production_orderViewSource.Source = ExecutionDB.production_order.Local;
 
             projectViewSource = FindResource("projectViewSource") as CollectionViewSource;

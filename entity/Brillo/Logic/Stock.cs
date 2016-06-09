@@ -499,11 +499,11 @@ namespace entity.Brillo.Logic
 
             if (item_product.cogs_type == item_product.COGS_Types.LIFO && Items_InStockLIST != null)
             {
-                Items_InStockLIST = Items_InStockLIST.OrderBy(x => x.trans_date).ToList();
+                Items_InStockLIST = Items_InStockLIST.OrderByDescending(x => x.trans_date).ToList();
             }
             else if (Items_InStockLIST != null)
             {
-                Items_InStockLIST = Items_InStockLIST.OrderByDescending(x => x.trans_date).ToList();
+                Items_InStockLIST = Items_InStockLIST.OrderBy(x => x.trans_date).ToList();
             }
 
             decimal qty_SalesDetail = Quantity;

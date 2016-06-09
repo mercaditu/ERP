@@ -329,38 +329,35 @@ namespace Cognitivo.Project.Development
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
 
                 ProjectTaskDB.NumberOfRecords = 0;
-                using (db db = new db())
+                foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
                 {
-
-
-                    foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
+                    if (task.status == Status.Project.Pending || task.status == Status.Project.Management_Approved)
                     {
-                        if (task.status == Status.Project.Pending || task.status == Status.Project.Management_Approved)
+                        using (db db = new db())
                         {
-                            project_task project_task = db.project_task.Where(x => x.id_project_task == task.id_project_task).FirstOrDefault();
-                            if (project_task != null)
+                            if (task.id_project_task != 0)
+	                        {
+                                db.project_task.Remove(db.project_task.Where(x => x.id_project_task == task.id_project_task).FirstOrDefault());
+                                db.SaveChanges();
+	                        }
+                            else
                             {
-                                db.project_task.Remove(project_task);
-                                //ProjectTaskDB.Entry(task).State = EntityState.Deleted;
-                                ProjectTaskDB.NumberOfRecords += 1;
+                                ProjectTaskDB.Entry(task).State = EntityState.Detached;
                             }
+                        }
 
-                        }
-                        else
-                        {
-                            toolBar_btnAnull_Click(sender);
-                        }
+                        ProjectTaskDB.NumberOfRecords += 1;
                     }
-
-                    if (ProjectTaskDB.NumberOfRecords > 0)
+                    else
                     {
-                        db.SaveChanges();
-                        filter_task();
-                        //ProjectTaskDB = new ProjectTaskDB();
-                        //ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
-                        //projectViewSource.Source = ProjectTaskDB.projects.Local;
-
+                        //ProjectTaskDB.SaveChanges();
+                        toolBar_btnAnull_Click(sender);
                     }
+                }
+
+                if (ProjectTaskDB.NumberOfRecords > 0)
+                {
+                    filter_task();
                 }
             }
         }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace entity
 {
@@ -23,7 +25,9 @@ namespace entity
         {
             NumberOfRecords = 0;
 
-            foreach (project_task project_task in base.project_task.Local)
+            List<project_task> list = base.project_task.Local.ToList();
+
+            foreach (project_task project_task in list)
             {
                 if (project_task.State == EntityState.Added)
                 {
@@ -45,7 +49,7 @@ namespace entity
                 {
                     project_task.timestamp = DateTime.Now;
                     project_task.State = EntityState.Unchanged;
-                    base.project_task.Remove(project_task);
+                    Entry(project_task).State = EntityState.Deleted;
 
                     NumberOfRecords += 1;
                 }

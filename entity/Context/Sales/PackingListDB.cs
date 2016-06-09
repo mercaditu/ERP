@@ -149,20 +149,17 @@ namespace entity
             {
                 if (sales_packing.IsSelected && sales_packing.Error == null)
                 {
-                    //if (sales_packing.sales_packing_relation != null)
-                    //{
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.revert_Stock(this, App.Names.PackingList, sales_packing.id_sales_packing);
+                    Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                    List<item_movement> item_movementList = new List<item_movement>();
+                    item_movementList = _Stock.revert_Stock(this, App.Names.PackingList, sales_packing);
 
-                        if (item_movementList != null && item_movementList.Count > 0)
-                        {
-                            base.item_movement.RemoveRange(item_movementList);
-                        }
+                    if (item_movementList != null && item_movementList.Count > 0)
+                    {
+                        base.item_movement.RemoveRange(item_movementList);
+                    }
 
-                        sales_packing.status = Status.Documents_General.Annulled;
-                        SaveChanges();
-                    //}
+                    sales_packing.status = Status.Documents_General.Annulled;
+                    SaveChanges();
                 }
             }
         }

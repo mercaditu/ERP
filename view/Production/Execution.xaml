@@ -171,8 +171,9 @@
                             </Grid>
                             <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                         </Grid>
-                        <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailProductViewSource}"  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8">
+                        <StackPanel Grid.Column="1" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailProductViewSource}" 
+                                    IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="8" IsEnabled="{Binding SelectedItem, ElementName=treeProduct, Converter={StaticResource Type2Enable}}">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
                                 <TextBox x:Name="txtProduct" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" />
                                 <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
@@ -190,7 +191,8 @@
                                     <DataGridTemplateColumn Width="Auto" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                                <Button Command="customcmd:CustomCommands.Delete"
+                                                        CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -335,15 +337,6 @@
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
                                 <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
-                                <!--<cntrl:SearchableTextbox x:Name="itemserviceComboBox" Margin="4,0" focusGrid="True" Height="27" Width="235" HorizontalAlignment="Left"
-                                             CollectionViewSource="{StaticResource employeeViewSource}" 
-                                             KeyDown="itemserviceComboBox_KeyDown" MouseDoubleClick="itemserviceComboBox_MouseDoubleClick">
-                                    <cntrl:SearchableTextbox.Columns>
-                                        <cntrl:SmartBoxColumn Header="code" ForProperty="code" Binding="{Binding code, Mode=Default}"/>
-                                        <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}"/>
-                                        <cntrl:SmartBoxColumn Header="id_contact" ForProperty="id_contact" Binding="{Binding id_item, Mode=Default}"/>
-                                    </cntrl:SearchableTextbox.Columns>
-                                </cntrl:SearchableTextbox>-->
                             </StackPanel>
                         </WrapPanel>
                             <DataGrid x:Name="dgService" Grid.Column="1" 
@@ -396,7 +389,7 @@
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                               HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
+                                                                 TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
                                              Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
@@ -450,7 +443,8 @@
                                        Grid.Column="1" Content="Total"/>
                                 </StackPanel>
                             </StackPanel>
-                            <StackPanel x:Name="stphour" Visibility="{Binding IsChecked,ElementName=rbtnQuantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}" >
+                            <StackPanel x:Name="stphour" 
+                                        Visibility="{Binding IsChecked,ElementName=rbtnQuantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}" >
                                 <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
                                  DataContext="{StaticResource production_execution_detailServiceViewSource}">
 
@@ -475,20 +469,11 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
                                         <controls:SmartBox_Contact x:Name="CmbServicecontract" Get_Employees="True" Width="226" Select="CmbServicecontract_Select"/>
-                                        <!--<cntrl:SearchableTextbox x:Name="itemserviceComboBox" Margin="4,0" focusGrid="True" Height="27" Width="235" HorizontalAlignment="Left"
-                                             CollectionViewSource="{StaticResource employeeViewSource}" 
-                                             KeyDown="itemserviceComboBox_KeyDown" MouseDoubleClick="itemserviceComboBox_MouseDoubleClick">
-                                    <cntrl:SearchableTextbox.Columns>
-                                        <cntrl:SmartBoxColumn Header="code" ForProperty="code" Binding="{Binding code, Mode=Default}"/>
-                                        <cntrl:SmartBoxColumn Header="Name" ForProperty="name" Binding="{Binding name, Mode=Default}"/>
-                                        <cntrl:SmartBoxColumn Header="id_contact" ForProperty="id_contact" Binding="{Binding id_item, Mode=Default}"/>
-                                    </cntrl:SearchableTextbox.Columns>
-                                </cntrl:SearchableTextbox>-->
                                     </StackPanel>
                                 </WrapPanel>
                                 <DataGrid x:Name="dgServiceContracthour" Grid.Column="1" 
-                                      ItemsSource="{Binding Source={StaticResource production_execution_detailServiceContractViewSource}}" 
-                                      Margin="0,0,0,50" AutoGenerateColumns="False">
+                                          ItemsSource="{Binding Source={StaticResource production_execution_detailServiceContractViewSource}}" 
+                                          Margin="0,0,0,50" AutoGenerateColumns="False">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
                                                     Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -611,7 +596,7 @@
                                     IsEnabled="{Binding SelectedItem, ElementName=treeSupply, Converter={StaticResource Type2Enable}}">
                             <StackPanel Orientation="Horizontal" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                <TextBox x:Name="txtSupply" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" KeyDown="txtsupplier_KeyDown"/>
+                                <TextBox x:Name="txtSupply" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top"/>
                                 <Button x:Name="btnInsert_Supplies" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                             </StackPanel>
                             <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgSupplier" AutoGenerateColumns="False" 

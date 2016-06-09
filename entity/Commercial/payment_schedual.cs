@@ -100,10 +100,5 @@ namespace entity
         public virtual sales_return sales_return { get; set; }
         public virtual payment_promissory_note payment_promissory_note { get; set; }
         public virtual contact contact { get; set; }
-
-        //public  IQueryable<payment_schedual> AccountPayable_WithBalance_ToList(this IQueryable<payment_schedual> payment_schedual)
-        //{
-        //    return payment_schedual.Where(x => x.child.Sum(y => y.credit - y.debit)>0);
-        //}
     }
 }

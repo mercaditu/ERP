@@ -38,6 +38,7 @@ namespace cntrl.Curd
             payment payment = PaymentDB.New();
             PaymentDB.payments.Add(payment);
             paymentViewSource.Source = PaymentDB.payments.Local;
+            
             if (Mode == Modes.Recievable)
             {
                 payment.GrandTotal = payment_schedualList.Sum(x => x.AccountReceivableBalance);
@@ -45,9 +46,10 @@ namespace cntrl.Curd
             else
             {
                 payment.GrandTotal = payment_schedualList.Sum(x => x.AccountPayableBalance);
-
             }
+
             int id_contact = payment_schedualList.FirstOrDefault().id_contact;
+            
             if (PaymentDB.contacts.Where(x => x.id_contact == id_contact).FirstOrDefault() != null)
             {
                 payment.id_contact = id_contact;
@@ -59,7 +61,6 @@ namespace cntrl.Curd
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.payment = payment;
 
-
                 if (Mode == Modes.Recievable)
                 {
                     payment_detail.value = payment_schedual.AccountReceivableBalance;
@@ -70,6 +71,7 @@ namespace cntrl.Curd
                 }
 
                 int id_currencyfx = _payment_schedualList.FirstOrDefault().id_currencyfx;
+
                 if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
                 {
                     payment_detail.id_currencyfx = id_currencyfx;
@@ -79,13 +81,6 @@ namespace cntrl.Curd
                 payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
                 payment.payment_detail.Add(payment_detail);
             }
-
-
-
-
-
-
-
 
             paymentViewSource.View.MoveCurrentTo(payment);
             paymentpayment_detailViewSource.View.MoveCurrentToFirst();
@@ -101,17 +96,7 @@ namespace cntrl.Curd
             PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            //CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-            //List<payment_detail> payment_detailList = new List<payment_detail>();
-            //payment_detailList.Add(payment_detail);
-            //paymentpayment_detailViewSource.Source = payment_detailList;
-
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
-           // cbxPaymentSchedual.ItemsSource = payment_schedualList;
-            //paymentpayment_detailViewSource.View.Refresh();
-            //paymentpayment_detailViewSource.View.MoveCurrentToLast();
-
-
 
             paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();

@@ -95,6 +95,8 @@ namespace entity
         public virtual ICollection<purchase_tender_contact> purchase_tender_contact_detail { get; set; }
         public virtual ICollection<purchase_tender_item> purchase_tender_item_detail { get; set; }
         public virtual app_branch app_branch { get; set; }
+        public virtual app_terminal app_terminal { get; set; }
+        public virtual app_document_range app_document_range { get; set; }
         public virtual project project { get; set; }
     }
 }

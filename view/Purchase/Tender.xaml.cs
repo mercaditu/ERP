@@ -386,6 +386,21 @@ namespace Cognitivo.Purchase
             LblTotal.Content = purchase_tender_detailList.Sum(x => x.quantity * x.UnitCost_Vat);
         }
 
+        private void EditCommand_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as purchase_tender_contact != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void EditCommand_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)e.Parameter;
+
+            entity.Brillo.Document.Start.Automatic(e.Parameter as purchase_tender_contact, purchase_tender_contact.purchase_tender.app_document_range);
+        }
+
 
     }
 }

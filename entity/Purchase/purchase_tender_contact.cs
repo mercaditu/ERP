@@ -31,11 +31,34 @@ namespace entity
         public string comment { get; set; }
         public DateTime? recieve_date_est { get; set; }
 
+        [NotMapped]
+        public new decimal GrandTotal
+        {
+            get
+            {
+                _GrandTotal = 0;
+                foreach (purchase_tender_detail _purchase_tender_detail in purchase_tender_detail)
+                {
+                    _GrandTotal += _purchase_tender_detail.SubTotal_Vat;
+                }
+                return Math.Round(_GrandTotal, 2);
+            }
+            set
+            {
+                
+
+                    _GrandTotal = value;
+                    RaisePropertyChanged("GrandTotal");
+               
+            }
+        }
+        private decimal _GrandTotal;
         public virtual purchase_tender purchase_tender { get; set; }
         public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual contact contact { get; set; }
         public virtual app_condition app_condition { get; set; }
         public virtual app_contract app_contract { get; set; }
+      
         public virtual ICollection<purchase_tender_detail> purchase_tender_detail { get; set; }
 
 

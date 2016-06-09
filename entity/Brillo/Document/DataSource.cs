@@ -47,10 +47,10 @@ namespace entity.Brillo.Document
                 purchase_return purchase_return = (purchase_return)Document;
                 return PurchaseReturn(purchase_return);
             }
-            else if (Document.GetType().BaseType == typeof(purchase_tender))
+            else if (Document.GetType().BaseType == typeof(purchase_tender_contact))
             {
-                purchase_tender purchase_tender = (purchase_tender)Document;
-                return PurchaseTender(purchase_tender);
+                purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)Document;
+                return PurchaseTender(purchase_tender_contact);
             }
             else if (Document.GetType() == typeof(item_transfer) || Document.GetType().BaseType == typeof(item_transfer))
             {
@@ -386,35 +386,50 @@ namespace entity.Brillo.Document
         /// </summary>
         /// <param name="purchase_tender"></param>
         /// <returns></returns>
-        public ReportDataSource PurchaseTender(purchase_tender purchase_tender)
+        public ReportDataSource PurchaseTender(purchase_tender_contact purchase_tender_contact)
         {
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<purchase_tender_detail> purchase_tender_detail = db.purchase_tender_detail.ToList();
+                List<purchase_tender_detail> purchase_tender_detail = purchase_tender_contact.purchase_tender_detail.ToList();
 
                 reportDataSource.Value = purchase_tender_detail
                     .Select(g => new
                     {
-                        id_purchase_tender = g.purchase_tender_contact != null ? g.purchase_tender_contact.id_purchase_tender : 0,
+                        id_purchase_tender = g.purchase_tender_contact!=null?g.purchase_tender_contact.id_purchase_tender:0,
+                        id_purchase_tender_detail = g.id_purchase_tender_detail,
+                        id_company = g.id_company,
+                        add1 = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null? g.purchase_tender_contact.contact.address:"" : "",
+                        telephone = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null? g.purchase_tender_contact.contact.telephone:"" : "",
+                        email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null? g.purchase_tender_contact.contact.email :"": "",
                         company_name = g.app_company != null ? g.app_company.name : "",
-                        item_code = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.code : "" : "",
+                        item_code = g.purchase_tender_item.item != null ? g.purchase_tender_item.item.code : "",
+                        item_description = g.item_description,
+                        Brand = g.purchase_tender_item.item != null ? g.purchase_tender_item.item.item_brand != null ? g.purchase_tender_item.item.item_brand.name : "" : "",
                         quantity = g.quantity,
                         sub_Total = g.SubTotal,
                         sub_Total_vat = g.SubTotal_Vat,
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_cost,
                         unit_price_vat = g.UnitCost_Vat,
-                        contact_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.name : "",
-                        number = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender.number : "",
-                        trans_date = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender.trans_date : DateTime.Now,
-                        id_company = g.id_company,
-                        add1 = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.address : "",
-                        telephone = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.telephone : "",
-                        email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact.email : "",
-                        item_description = g.item_description
+                        terminal_name = g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_terminal!=null?g.purchase_tender_contact.purchase_tender.app_terminal.name:"" : "",
+                        Condition = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_condition!= null ?g.purchase_tender_contact.app_condition.name :"": "",
+                        Contract = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_contract!= null ?g.purchase_tender_contact.app_contract.name:"" : "",
+                        Currency = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.name : "" : "" : "",
+                        code = g.purchase_tender_contact.purchase_tender!= null ?g.purchase_tender_contact.purchase_tender.code.ToString():"",
+                        contact_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null?g.purchase_tender_contact.contact.name:"" : "",
+                        trans_date = g.purchase_tender_contact.purchase_tender.trans_date,
+                        id_vat_group = g.id_vat_group,
+                        gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null?g.purchase_tender_contact.contact.gov_code:"" : "",
+                        Number = g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number.ToString() : "",
+                        AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
 
-                       
+                     // Text -> Words
+                     NumToWords.IntToText(Convert.ToInt32(g.purchase_tender_contact != null ? g.purchase_tender_contact.GrandTotal : 0))
+                     :
+                     NumToWords.DecimalToText((Convert.ToDecimal(g.purchase_tender_contact != null ? g.purchase_tender_contact.GrandTotal : 0))) : "" : "" : "",
+
+                        HasRounding = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding : false : false : false : false
                     }).ToList();
                 return reportDataSource;
             }

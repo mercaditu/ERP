@@ -43,6 +43,7 @@ namespace entity
         public virtual IEnumerable<purchase_order> purchase_order { get; set; }
         public virtual IEnumerable<purchase_invoice> purchase_invoice { get; set; }
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }
+        public virtual IEnumerable<purchase_tender> purchase_tender { get; set; }
         public virtual IEnumerable<payment_promissory_note> payment_promissory_note { get; set; }
 
         public string Error

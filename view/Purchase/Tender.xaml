@@ -18,6 +18,10 @@
         <CommandBinding Command="customcmd:CustomCommands.Delete" 
                         CanExecute="DeleteCommandBinding_CanExecute" 
                         Executed="DeleteCommandBinding_Executed"/>
+        <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
+                        CanExecute="EditCommand_CanExecute" 
+                        Executed="EditCommand_Executed"/>
+
     </Page.CommandBindings>
     <Page.Resources>
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
@@ -250,7 +254,7 @@
                                 <DataGridTemplateColumn Width="Auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Style="{StaticResource btnDeleteChildStyle}" Content=""/>
+                                            <Button Command="customcmd:CustomCommands.EditAll" CommandParameter="{Binding}"  Style="{StaticResource btnDeleteChildStyle}" Content=""/>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>

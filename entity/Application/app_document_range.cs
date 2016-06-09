@@ -56,6 +56,7 @@ namespace entity
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerable<sales_return> sales_return { get; set; }
         public virtual IEnumerable<purchase_order> purchase_order { get; set; }
+        public virtual IEnumerable<purchase_tender> purchase_tender { get; set; }
         public virtual IEnumerable<payment_withholding_tax> payment_withholding_tax { get; set; }
         public virtual IEnumerable<payment> payment { get; set; }
         public virtual IEnumerable<payment_detail> payment_detail { get; set; }

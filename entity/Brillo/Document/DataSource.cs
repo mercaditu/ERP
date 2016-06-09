@@ -534,7 +534,6 @@ namespace entity.Brillo.Document
                                   CustomerGovID = g.contact != null ? g.contact.gov_code : "",
                                   CustomerAddress = g.contact != null ? g.contact.address : "",
                                   CustomerTelephone = g.contact != null ? g.contact.telephone : "",
-                                  
                                   Value = g.payment_promissory_note.value,
                                   Currency = g.app_currencyfx.app_currency.name,
                                   TransDate = g.payment_promissory_note.trans_date,

@@ -916,6 +916,9 @@
     <Content Include="bin\Debug\Transfer.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="bin\Debug\PaymentUtility.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

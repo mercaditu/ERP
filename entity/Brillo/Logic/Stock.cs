@@ -473,11 +473,8 @@ namespace entity.Brillo.Logic
                 sales_packing sales_packing = Transcation as sales_packing;
                 foreach (sales_packing_detail sales_packing_detail in sales_packing.sales_packing_detail)
                 {
-                    // item_movement.transaction_id = TransactionID;
-                    item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_return_detail == sales_packing_detail.id_sales_packing_detail)
-                                                                     .ToList());
+                    item_movementList.AddRange(db.item_movement.Where(x => x.id_sales_packing_detail == sales_packing_detail.id_sales_packing_detail).ToList());
                 }
-
             }
 
             if (item_movementList != null)

@@ -540,6 +540,9 @@ namespace entity.Brillo.Document
                                   TransDate = g.payment_promissory_note.trans_date,
                                   ExpiryDate = g.payment_promissory_note.expiry_date,
 
+                                  SalesInvoiceNumber = g.sales_invoice != null ? g.sales_invoice.number : "",
+                                  PurchaseInvoiceNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
+
                                   CompanyName = g.app_company.name,
                               }).ToList();
 

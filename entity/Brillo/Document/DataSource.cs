@@ -527,32 +527,20 @@ namespace entity.Brillo.Document
             using (db db = new db())
             {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<payment_schedual> payment_schedual = payment_promissory_note.payment_schedual.ToList();
-                reportDataSource.Value = payment_schedual
+                reportDataSource.Value = payment_promissory_note.payment_schedual
                               .Select(g => new
                               {
-                     //             total = g.payment.payment_detail.Sum(x => x.value),
-                     //             id_company = g.id_company,
-                     //             payment_type = g.payment_type != null ? g.payment_type.name : "",
-                     //             comments = g.comment,
-                     //             company_name = g.app_company != null ? g.app_company.name : "",
-                     //             amount = g.value,
-                     //             contact_name = g.payment.contact != null ? g.payment.contact.name : "Not Ref",
-                     //             gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
-                     //             payment_name = g.payment_type != null ? g.payment_type.name : "",
-                     //             trans_date = g.trans_date,
-                     //             currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
-                     //             currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
-                     //             number = g.payment != null ? g.payment.number : "Not Ref",
-                     //             AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                                  Customer = g.contact != null ? g.contact.name : "",
+                                  CustomerGovID = g.contact != null ? g.contact.gov_code : "",
+                                  CustomerAddress = g.contact != null ? g.contact.address : "",
+                                  CustomerTelephone = g.contact != null ? g.contact.telephone : "",
+                                  
+                                  Value = g.payment_promissory_note.value,
+                                  Currency = g.app_currencyfx.app_currency.name,
+                                  TransDate = g.payment_promissory_note.trans_date,
+                                  ExpiryDate = g.payment_promissory_note.expiry_date,
 
-                     //// Text -> Words
-                     //NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
-                     //:
-                     //NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
-
-                     //             HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false : false
-
+                                  CompanyName = g.app_company.name,
                               }).ToList();
 
                 return reportDataSource;

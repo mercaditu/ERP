@@ -151,7 +151,7 @@
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource tree}, ConverterParameter={StaticResource IntOne}}">
                                         <Panels:pnl_TreeView   StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                              HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -216,8 +216,8 @@
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                               ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntTwo}}">
-                                        <Panels:pnl_TreeView   StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
+                                        <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                               HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
@@ -235,7 +235,7 @@
                             </Grid>
                             <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                         </Grid>
-                        <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailRawViewSource}" IsEnabled="{Binding SelectedItem.item, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
+                        <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailRawViewSource}" IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
                             <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
                                                       EnableRowVirtualization="True"  IsReadOnly="True" CanUserAddRows="False"
                                                       ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
@@ -291,8 +291,8 @@
                                 <Grid.Resources>
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntThree}}">
-                                        <Panels:pnl_TreeView  StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
+                                        <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                                              HorizontalAlignment="Stretch"
                                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
@@ -311,7 +311,7 @@
                             <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                         </Grid>
                         
-                            <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem.item,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
+                            <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
                                  DataContext="{StaticResource production_execution_detailServiceViewSource}">
 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -392,8 +392,8 @@
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntSeven}}">
-                                        <Panels:pnl_TreeView  StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
+                                        <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                               HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                               TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
@@ -412,7 +412,7 @@
                         </Grid>
                         <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
                                     DataContext="{StaticResource production_execution_detailServiceContractViewSource}" 
-                                    IsEnabled="{Binding SelectedItem.item, ElementName=treeServicecontract, Converter={StaticResource Type2Enable}}">
+                                    IsEnabled="{Binding SelectedItem, ElementName=treeServicecontract, Converter={StaticResource Type2Enable}}">
                             <StackPanel Orientation="Horizontal">
                                 <RadioButton Content="Hours" IsChecked="True" x:Name="rbtnHours"/>
                                 <RadioButton Content="Quantity" x:Name="rbtnQuantity"/>
@@ -451,7 +451,7 @@
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel x:Name="stphour" Visibility="{Binding IsChecked,ElementName=rbtnQuantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}" >
-                                <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem.item,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
+                                <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
                                  DataContext="{StaticResource production_execution_detailServiceViewSource}">
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -532,8 +532,8 @@
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                             ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntFour}}">
-                                        <Panels:pnl_TreeView  StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item, Converter={StaticResource Type2Enable}}"
+                                        <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ., Converter={StaticResource Type2Enable}}"
                                             HorizontalAlignment="Stretch"
                                             Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                               TaskName="{Binding name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
@@ -551,7 +551,7 @@
                             </Grid>
                         </Grid>
                         <StackPanel Grid.Column="1" Background="WhiteSmoke"  DataContext="{StaticResource production_execution_detailAssetViewSource}" 
-                                    IsEnabled="{Binding SelectedItem.item, ElementName=treeAsset, Converter={StaticResource Type2Enable}}">
+                                    IsEnabled="{Binding SelectedItem, ElementName=treeAsset, Converter={StaticResource Type2Enable}}">
                             <StackPanel Orientation="Horizontal" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" Margin="4"/>
                                 <TextBox  x:Name="txtAsset" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" Margin="4"/>
@@ -587,8 +587,8 @@
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntSix}}">
-                                        <Panels:pnl_TreeView  StatusColor="{Binding production_order.status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding item,Converter={StaticResource Type2Enable}}"
+                                        <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                              HorizontalAlignment="Stretch"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
@@ -608,7 +608,7 @@
                         </Grid>
                         <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" 
                                     DataContext="{StaticResource production_execution_detailSupplyViewSource}" 
-                                    IsEnabled="{Binding SelectedItem.item, ElementName=treeSupply, Converter={StaticResource Type2Enable}}">
+                                    IsEnabled="{Binding SelectedItem, ElementName=treeSupply, Converter={StaticResource Type2Enable}}">
                             <StackPanel Orientation="Horizontal" Margin="8">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
                                 <TextBox x:Name="txtSupply" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" KeyDown="txtsupplier_KeyDown"/>

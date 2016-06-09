@@ -10,10 +10,10 @@ namespace Cognitivo.Converters
         {
             if (value != null)
             {
-                entity.item item = (entity.item)value;
-                entity.item.item_type status =item.id_item_type;
+                entity.production_order_detail production_order_detail = (entity.production_order_detail)value;
+                entity.item.item_type status =production_order_detail.item.id_item_type;
 
-                if (status != entity.item.item_type.Task)
+                if (status != entity.item.item_type.Task && production_order_detail.status==entity.Status.Project.Approved)
                 {
                     return true;
                 }

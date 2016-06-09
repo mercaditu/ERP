@@ -327,20 +327,27 @@ namespace Cognitivo.Project.Development
             {
                 project_taskViewSource.View.Filter = null;
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+                
+                ProjectTaskDB.NumberOfRecords = 0;
 
-                foreach (project_task project_task in _project_task.Where(x => x.IsSelected == true))
+                foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
                 {
-                    if (project_task.status == Status.Project.Pending || project_task.status == null)
+                    if (task.status == Status.Project.Pending || task.status == Status.Project.Management_Approved)
                     {
-                        ProjectTaskDB.project_task.Remove(project_task);
+                        //ProjectTaskDB.project_task.Remove(task);
+                        ProjectTaskDB.Entry(task).State = EntityState.Deleted;
                         ProjectTaskDB.NumberOfRecords += 1;
-                        project_task.IsSelected = false;
                     }
                     else
                     {
                         toolBar_btnAnull_Click(sender);
                     }
-                } 
+                }
+
+                if (ProjectTaskDB.NumberOfRecords > 0)
+                {
+                    ProjectTaskDB.SaveChanges();
+                }
             }
         }
 

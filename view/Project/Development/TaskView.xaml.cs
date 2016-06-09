@@ -188,7 +188,7 @@ namespace Cognitivo.Project.Development
 
                 List<project_task> project_taskLIST = treeProject.ItemsSource.Cast<project_task>().ToList();
                 project_taskLIST = project_taskLIST.Where(x => x.IsSelected == true).ToList();
-                
+
                 foreach (project_task project_task in project_taskLIST)
                 {
                     project_task.status = Status.Project.Rejected;
@@ -200,7 +200,7 @@ namespace Cognitivo.Project.Development
                 {
                     toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
                 }
-                
+
                 filter_task();
             }
         }
@@ -215,7 +215,7 @@ namespace Cognitivo.Project.Development
         private void toolBar_btnDelete_Click(object sender)
         {
             MessageBoxResult res = MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
+
             if (res == MessageBoxResult.Yes)
             {
                 project projects = projectViewSource.View.CurrentItem as project;
@@ -327,26 +327,40 @@ namespace Cognitivo.Project.Development
             {
                 project_taskViewSource.View.Filter = null;
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-                
+
                 ProjectTaskDB.NumberOfRecords = 0;
-
-                foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
+                using (db db = new db())
                 {
-                    if (task.status == Status.Project.Pending || task.status == Status.Project.Management_Approved)
-                    {
-                        //ProjectTaskDB.project_task.Remove(task);
-                        ProjectTaskDB.Entry(task).State = EntityState.Deleted;
-                        ProjectTaskDB.NumberOfRecords += 1;
-                    }
-                    else
-                    {
-                        toolBar_btnAnull_Click(sender);
-                    }
-                }
 
-                if (ProjectTaskDB.NumberOfRecords > 0)
-                {
-                    ProjectTaskDB.SaveChanges();
+
+                    foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
+                    {
+                        if (task.status == Status.Project.Pending || task.status == Status.Project.Management_Approved)
+                        {
+                            project_task project_task = db.project_task.Where(x => x.id_project_task == task.id_project_task).FirstOrDefault();
+                            if (project_task != null)
+                            {
+                                db.project_task.Remove(project_task);
+                                //ProjectTaskDB.Entry(task).State = EntityState.Deleted;
+                                ProjectTaskDB.NumberOfRecords += 1;
+                            }
+
+                        }
+                        else
+                        {
+                            toolBar_btnAnull_Click(sender);
+                        }
+                    }
+
+                    if (ProjectTaskDB.NumberOfRecords > 0)
+                    {
+                        db.SaveChanges();
+                        filter_task();
+                        //ProjectTaskDB = new ProjectTaskDB();
+                        //ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
+                        //projectViewSource.Source = ProjectTaskDB.projects.Local;
+
+                    }
                 }
             }
         }
@@ -609,9 +623,9 @@ namespace Cognitivo.Project.Development
 
         private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
         {
-            if (ToggleQuantity.IsChecked==true)
+            if (ToggleQuantity.IsChecked == true)
             {
-               
+
                 stpexcustion.Visibility = System.Windows.Visibility.Visible;
                 stpestimate.Visibility = System.Windows.Visibility.Collapsed;
             }
@@ -621,7 +635,7 @@ namespace Cognitivo.Project.Development
         {
             if (ToggleQuantity.IsChecked == false)
             {
-             
+
                 stpestimate.Visibility = System.Windows.Visibility.Visible;
                 stpexcustion.Visibility = System.Windows.Visibility.Collapsed;
             }

@@ -39,28 +39,33 @@ namespace entity
             get { return _id_item; }
             set
             {
-                if (_id_item != value)
+                if (value != null)
                 {
-                    _id_item = value;
-                    using(db db= new db())
-                    {
-                        if (db.items.Where(x => x.id_item == value).FirstOrDefault()!=null)
-                        {
-                            name = db.items.Where(x => x.id_item == value).FirstOrDefault().name;      
-                        }
-                    }
 
-                    if (project != null)
-                    {
 
-                        if (project.CurrecyFx_ID != null)
+                    if (_id_item != value)
+                    {
+                        _id_item = value;
+                        using (db db = new db())
                         {
-                            _unit_price_vat = get_SalesPrice((int)id_item, project.contact, (int)project.CurrecyFx_ID);
-                            RaisePropertyChanged("unit_price_vat");
+                            if (db.items.Where(x => x.id_item == value).FirstOrDefault() != null)
+                            {
+                                name = db.items.Where(x => x.id_item == value).FirstOrDefault().name;
+                            }
                         }
 
-                    }
+                        if (project != null)
+                        {
 
+                            if (project.CurrecyFx_ID != null)
+                            {
+                                _unit_price_vat = get_SalesPrice((int)_id_item, project.contact, (int)project.CurrecyFx_ID);
+                                RaisePropertyChanged("unit_price_vat");
+                            }
+
+                        }
+
+                    }
                 }
             }
         }

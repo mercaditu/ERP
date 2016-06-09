@@ -246,7 +246,16 @@
 					                                    SelectedValueBinding="{Binding id_currencyfx, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
                                                         UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                                 
-                            
+                                <!-- Button to View Document -->
+                                <DataGridTemplateColumn Width="Auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Style="{StaticResource btnDeleteChildStyle}" Content=""/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                
+                                <!-- Button to Delete Document -->
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

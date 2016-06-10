@@ -412,8 +412,8 @@
     <Compile Include="PanelAdv\Project_TaskApprove.xaml.cs">
       <DependentUpon>Project_TaskApprove.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Panels\pnl_FractionExecustion.xaml.cs">
-      <DependentUpon>pnl_FractionExecustion.xaml</DependentUpon>
+    <Compile Include="Panels\pnl_FractionOrder.xaml.cs">
+      <DependentUpon>pnl_FractionOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\pnl_ItemMovement.xaml.cs">
       <DependentUpon>pnl_ItemMovement.xaml</DependentUpon>
@@ -898,7 +898,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Panels\pnl_FractionExecustion.xaml">
+    <Page Include="Panels\pnl_FractionOrder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

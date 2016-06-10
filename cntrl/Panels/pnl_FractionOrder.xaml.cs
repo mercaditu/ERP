@@ -15,48 +15,48 @@ namespace cntrl.Panels
     /// <summary>
     /// Interaction logic for pnl_ItemMovement.xaml
     /// </summary>
-    public partial class pnl_FractionExecustion : UserControl
+    public partial class pnl_FractionOrder : UserControl
     {
-        CollectionViewSource production_execution_detailViewSource;
-        public ExecutionDB ExecutionDB { get; set; }
-     
-        public List<production_execution_detail> productionExecustionList { get; set; }
-        public pnl_FractionExecustion()
+        CollectionViewSource production_order_detailViewSource;
+        public OrderDB OrderDB { get; set; }
+
+        public List<production_order_detail> production_order_detailList { get; set; }
+        public pnl_FractionOrder()
         {
             InitializeComponent();
         }
 
         private void item_transfer_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
-            production_execution_detail production_execution_detail = e.NewItem as production_execution_detail;
-            add_item(production_execution_detail);
+            production_order_detail production_order_detail = e.NewItem as production_order_detail;
+            add_item(production_order_detail);
         }
 
-        public void add_item(production_execution_detail production_execution_detail)
+        public void add_item(production_order_detail production_order_detail)
         {
-        
-            production_execution_detail.quantity = productionExecustionList.FirstOrDefault().quantity;
-            production_execution_detail.id_item = productionExecustionList.FirstOrDefault().id_item;
-            production_execution_detail.item = productionExecustionList.FirstOrDefault().item;
-            
-            production_execution_detail.IsSelected = true;
-            production_execution_detail.State = EntityState.Added;
 
-            productionExecustionList.FirstOrDefault().production_execution.production_execution_detail.Add(production_execution_detail);
-            if (production_execution_detail.id_project_task > 0)
+            production_order_detail.quantity = production_order_detailList.FirstOrDefault().quantity;
+            production_order_detail.id_item = production_order_detailList.FirstOrDefault().id_item;
+            production_order_detail.item = production_order_detailList.FirstOrDefault().item;
+
+            production_order_detail.IsSelected = true;
+            production_order_detail.State = EntityState.Added;
+
+            production_order_detailList.FirstOrDefault().production_order.production_order_detail.Add(production_order_detail);
+            if (production_order_detail.id_project_task > 0)
             {
-                if (ExecutionDB.project_task.Where(x => x.id_project_task == production_execution_detail.id_project_task).FirstOrDefault() != null)
+                if (OrderDB.project_task.Where(x => x.id_project_task == production_order_detail.id_project_task).FirstOrDefault() != null)
                 {
-                    project_task project_task = ExecutionDB.project_task.Where(x => x.id_project_task == production_execution_detail.id_project_task).FirstOrDefault();
-                    if (ExecutionDB.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList() != null)
+                    project_task project_task = OrderDB.project_task.Where(x => x.id_project_task == production_order_detail.id_project_task).FirstOrDefault();
+                    if (OrderDB.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList() != null)
                     {
-                        List<project_task_dimension> project_task_dimensionList = ExecutionDB.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList();
+                        List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == project_task.id_project_task).ToList();
                         foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
                         {
-                            production_execution_dimension production_execution_dimension = new production_execution_dimension();
-                            production_execution_dimension.id_dimension = project_task_dimension.id_dimension;
-                            production_execution_dimension.value = project_task_dimension.value;
-                            production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
+                            production_order_dimension production_order_dimension = new production_order_dimension();
+                            production_order_dimension.id_dimension = project_task_dimension.id_dimension;
+                            production_order_dimension.value = project_task_dimension.value;
+                            production_order_detail.production_order_dimension.Add(production_order_dimension);
                         }
 
 
@@ -68,17 +68,17 @@ namespace cntrl.Panels
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
-            production_execution_detailViewSource = ((CollectionViewSource)(FindResource("production_execution_detailViewSource")));
+            production_order_detailViewSource = ((CollectionViewSource)(FindResource("production_order_detailViewSource")));
            // InventoryDB.item_inventory_detail.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            production_execution_detailViewSource.Source = productionExecustionList;
+            production_order_detailViewSource.Source = production_order_detailList;
 
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            app_dimensionViewSource.Source = ExecutionDB.app_dimension.Local;
+            OrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_dimensionViewSource.Source = OrderDB.app_dimension.Local;
 
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-            app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             //filter_detail();
 
@@ -132,7 +132,7 @@ namespace cntrl.Panels
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            productionExecustionList = production_execution_detailViewSource.View.OfType<production_execution_detail>().ToList();
+            production_order_detailList = production_order_detailViewSource.View.OfType<production_order_detail>().ToList();
           //  quantity = item_inventoryList.Sum(y => y.value_counted);
             //ProductMovementDB.SaveChanges();
             btnCancel_Click(sender, null);

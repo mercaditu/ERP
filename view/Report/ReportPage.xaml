@@ -32,31 +32,31 @@
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="Sales">
+            <!--<ListBoxItem Tag="Sales">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem Tag="VatMatrix">
+            </ListBoxItem>-->
+            <!--<ListBoxItem Tag="VatMatrix">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Vat}"/>
                 </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem Tag="SalesDetail">
+            </ListBoxItem>-->
+            <!--<ListBoxItem Tag="SalesDetail">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="C"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesDetails}"/>
                 </StackPanel>
-            </ListBoxItem>
+            </ListBoxItem>-->
             <ListBoxItem Tag="SalesBySalesman">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbySalesman}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="SalesByItem">
+            <!--<ListBoxItem Tag="SalesByItem">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbyItem}"/>
@@ -79,20 +79,20 @@
                     <Label Style="{StaticResource ico_Label}" Content="U"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc CustomerCurrentAccount}"/>
                 </StackPanel>
-            </ListBoxItem>
+            </ListBoxItem>-->
             <ListBoxItem Selected="ListBoxItemSales_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="U"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesTXT}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem IsSelected="False" IsEnabled="False">
+          <ListBoxItem IsSelected="False" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Height="24" Source="/Cognitivo;component/Images/Menu/modPurchase.png" />
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Purchase}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <!-- <ListBoxItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Purchase}"/>
@@ -127,7 +127,7 @@
                     <Label Style="{StaticResource ico_Label}" Content="U"/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SupplierCurrentAccount}"/>
                 </StackPanel>
-            </ListBoxItem>
+            </ListBoxItem>-->
             <ListBoxItem Selected="ListBoxItemPurchase_Selected">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="U"/>
@@ -140,36 +140,36 @@
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Stock}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <!--<ListBoxItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Item}"/>
                 </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem>
+            </ListBoxItem>-->
+            <!--<ListBoxItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Catalog}"/>
                 </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem Tag="HistoricStockLevels" Visibility="Collapsed">
+            </ListBoxItem>-->
+            <!--<ListBoxItem Tag="HistoricStockLevels" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc HistoricStockLevels}"/>
                 </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem  Tag="HistoricStockValues" Visibility="Collapsed">
+            </ListBoxItem>-->
+            <!--<ListBoxItem  Tag="HistoricStockValues" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc HistoricStockValues}"/>
                 </StackPanel>
-            </ListBoxItem>
-            <ListBoxItem Tag="StockByBrand">
+            </ListBoxItem>-->
+            <!--<ListBoxItem Tag="StockByBrand">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StockByBrand}"/>
                 </StackPanel>
-            </ListBoxItem>
+            </ListBoxItem>-->
             <ListBoxItem Tag="CostOfGoodSold">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
@@ -182,7 +182,7 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc CostOfInventory}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem IsSelected="False" IsEnabled="False">
+            <!--<ListBoxItem IsSelected="False" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Height="24" Source="/Cognitivo;component/Images/Menu/modProduction.png" />
                     <Label Style="{StaticResource H3}" Content="{lex:Loc DailyProduction}"/>
@@ -193,7 +193,7 @@
                     <Label Style="{StaticResource ico_Label}" Content=""/>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc DailyProduction}"/>
                 </StackPanel>
-            </ListBoxItem>
+            </ListBoxItem>-->
 
         </ListBox>
         

@@ -75,7 +75,7 @@ namespace Cognitivo.Report
             
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            List<sales_invoice_detail> sales_invoice_detaillist = db.sales_invoice_detail.ToList();
+            List<sales_invoice_detail> sales_invoice_detaillist = db.sales_invoice_detail.Where(x => x.sales_invoice.trans_date.Date >= ReportPage.start_Range && x.sales_invoice.trans_date <= ReportPage.end_Range).ToList();
             var sales_invoice_detailList = sales_invoice_detaillist.Select(g => new
             {
                 geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",

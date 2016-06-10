@@ -198,12 +198,35 @@ namespace Cognitivo.Purchase
                 TotalInvoiceAmount += (item.quantity * item.UnitCost_Vat);
             }
 
-            foreach (var item in purchase_invoice_detail.Where(x => x.item.item_product != null))
+            foreach (var item in purchase_invoice_detail.Where(x =>x.item!=null && x.item.item_product != null))
             {
                 Class.clsImpexImportDetails ImpexImportDetails = new Class.clsImpexImportDetails();
                 ImpexImportDetails.number = item.purchase_invoice.number;
                 ImpexImportDetails.id_item = (int)item.id_item;
                 ImpexImportDetails.item = ImpexDB.items.Where(a => a.id_item == item.id_item).FirstOrDefault().name;
+                ImpexImportDetails.quantity = item.quantity;
+                ImpexImportDetails.unit_cost = item.UnitCost_Vat;
+                ImpexImportDetails.id_invoice = item.id_purchase_invoice;
+                ImpexImportDetails.id_invoice_detail = item.id_purchase_invoice_detail;
+
+                if (totalExpence > 0)
+                {
+                    //  ImpexImportDetails.prorated_cost = Math.Round(item.unit_cost + (ImpexImportDetails.unit_cost / TotalInvoiceAmount) * totalExpence, 2);
+                    ImpexImportDetails.prorated_cost = Math.Round(item.UnitCost_Vat + (totalExpence / ImpexImportDetails.quantity), 2);
+                }
+                else
+                {
+                    ImpexImportDetails.prorated_cost = 0;
+                }
+                decimal SubTotal = (item.quantity * ImpexImportDetails.prorated_cost);
+                ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
+                clsImpexImportDetails.Add(ImpexImportDetails);
+            }
+            foreach (var item in purchase_invoice_detail.Where(x => x.item == null))
+            {
+                Class.clsImpexImportDetails ImpexImportDetails = new Class.clsImpexImportDetails();
+                ImpexImportDetails.number = item.purchase_invoice.number;
+                ImpexImportDetails.item = item.item_description;
                 ImpexImportDetails.quantity = item.quantity;
                 ImpexImportDetails.unit_cost = item.UnitCost_Vat;
                 ImpexImportDetails.id_invoice = item.id_purchase_invoice;

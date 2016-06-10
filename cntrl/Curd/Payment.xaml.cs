@@ -61,6 +61,13 @@ namespace cntrl.Curd
                 payment_detail payment_detail = new payment_detail();
                 payment_detail.payment = payment;
 
+                int id_currencyfx = _payment_schedualList.FirstOrDefault().id_currencyfx;
+
+                if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
+                {
+                    payment_detail.id_currencyfx = id_currencyfx;
+                    payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
+                }
                 if (Mode == Modes.Recievable)
                 {
                     payment_detail.value = payment_schedual.AccountReceivableBalance;
@@ -70,13 +77,7 @@ namespace cntrl.Curd
                     payment_detail.value = payment_schedual.AccountPayableBalance;
                 }
 
-                int id_currencyfx = _payment_schedualList.FirstOrDefault().id_currencyfx;
-
-                if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
-                {
-                    payment_detail.id_currencyfx = id_currencyfx;
-                    payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
-                }
+               
 
                 payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
                 payment.payment_detail.Add(payment_detail);

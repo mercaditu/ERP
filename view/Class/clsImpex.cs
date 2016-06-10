@@ -10,7 +10,7 @@ namespace Cognitivo.Class
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string number { get; set; }
-        public int id_item { get; set; }
+        public int? id_item { get; set; }
         public int id_invoice { get; set; }
         public int id_invoice_detail { get; set; }
         public string item { get; set; }

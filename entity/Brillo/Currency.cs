@@ -59,12 +59,18 @@ namespace entity.Brillo
                 New_CurrencyFX = db.app_currencyfx.Where(x => x.id_currencyfx == New_CurrencyID).FirstOrDefault();
                 Old_CurrencyFX = db.app_currencyfx.Where(x => x.id_currencyfx == Old_CurrencyID).FirstOrDefault();
 
+
+
+
+
                 //Ignore entire code if there is no new currencyID.
                 if (New_CurrencyFX != null)
                 {
+
                     decimal New_Rate = 0;
                     decimal Old_Rate = 0;
-
+                    bool oldis_reverse = false;
+                    int oldid_currency = New_CurrencyFX.id_currency;
                     //Check which value to take, Sales = Buy Rate. Purchase = Sell Rate.
                     if (Modules == App.Modules.Sales)
                     {
@@ -85,6 +91,8 @@ namespace entity.Brillo
                         {
                             Old_Rate = Old_CurrencyFX.sell_value;
                         }
+                        oldis_reverse = Old_CurrencyFX.is_reverse;
+                        oldid_currency = Old_CurrencyFX.id_currency;
                     }
 
                     if (Old_CurrencyFX == null)
@@ -98,35 +106,44 @@ namespace entity.Brillo
                         return OriginalValue * New_Rate;
                     }
                     else
-                    {
-                        //Get Priority
-                        bool New_Priority = New_CurrencyFX.app_currency.is_priority;
-                        bool Old_Priority = true;
+                    { //if currency is same then no need to convert
 
-                        //This is incase there is no OldCurrency.
-                        if (Old_CurrencyFX != null)
+                        if (New_CurrencyFX.app_currency.id_currency != oldid_currency)
                         {
-                            Old_Priority = Old_CurrencyFX.app_currency.is_priority;
-                        }
+                            //Get Priority
+                            bool New_Priority = New_CurrencyFX.app_currency.is_priority;
+                            bool Old_Priority = true;
 
-                        //Neither currency is priority
-                        if (New_Priority == false && Old_Priority == false) 
-                        {
-                            //Convert Towards Defualt
-                            decimal Value_InPriority = TowardsDefault(Old_Rate, OriginalValue, New_CurrencyFX.is_reverse);
+                            //This is incase there is no OldCurrency.
+                            if (Old_CurrencyFX != null)
+                            {
+                                Old_Priority = Old_CurrencyFX.app_currency.is_priority;
+                            }
 
-                            //Convert Away from Default
-                            return AwayFromDefault(New_Rate, Value_InPriority, Old_CurrencyFX.is_reverse);
-                        }   
-                        else if (New_CurrencyFX.app_currency.is_priority == true)
-                        { //Towards Default
-                            return TowardsDefault(Old_Rate, OriginalValue, New_CurrencyFX.is_reverse);
+                            //Neither currency is priority
+                            if (New_Priority == false && Old_Priority == false)
+                            {
+                                //Convert Towards Defualt
+                                decimal Value_InPriority = TowardsDefault(Old_Rate, OriginalValue, New_CurrencyFX.is_reverse);
+
+                                //Convert Away from Default
+                                return AwayFromDefault(New_Rate, Value_InPriority, oldis_reverse);
+                            }
+                            else if (New_CurrencyFX.app_currency.is_priority == true)
+                            { //Towards Default
+                                return TowardsDefault(New_Rate, OriginalValue, New_CurrencyFX.is_reverse);
+                            }
+                            else
+                            { //Away from Default
+                                return AwayFromDefault(Old_Rate, OriginalValue, oldis_reverse);
+                            }
                         }
                         else
-                        { //Away from Default
-                            return AwayFromDefault(New_Rate, OriginalValue, Old_CurrencyFX.is_reverse);
+                        {
+                            return OriginalValue;
                         }
                     }
+
                 }
             }
             return 0;

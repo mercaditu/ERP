@@ -73,14 +73,27 @@ namespace entity
             {
                 if (_id_currencyfx != value)
                 {
+                    int old_currencyfx = 0;
+                    old_currencyfx = _id_currencyfx;
+                    _id_currencyfx = value;
 
                     if (_id_currencyfx>0)
                     {
-                        this.value = Currency.convert_Values(this.value, _id_currencyfx, value, App.Modules.Sales);
-                        RaisePropertyChanged("value");
+                        if (this.value > 0)
+                        {
+
+                          
+
+                            this.value = Currency.convert_Values(this.value, old_currencyfx, _id_currencyfx, App.Modules.Sales);
+                            RaisePropertyChanged("value");
+                            if (payment != null)
+                            {
+                                payment.id_currencyfx = _id_currencyfx;
+                            }
+                        }
                     }
 
-                    _id_currencyfx = value;
+                  
                 }
                 //Method to update value
             }

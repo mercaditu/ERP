@@ -524,6 +524,9 @@
     <Compile Include="Report\Sales\VatMatrix_Report.xaml.cs">
       <DependentUpon>VatMatrix_Report.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\Stock\CostOfGoodSold_Report.xaml.cs">
+      <DependentUpon>CostOfGoodSold_Report.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Report\Stock\StockByBrand_Report.xaml.cs">
       <DependentUpon>StockByBrand_Report.xaml</DependentUpon>
     </Compile>
@@ -551,8 +554,8 @@
     <Compile Include="Report\Sales\Sales_Report.xaml.cs">
       <DependentUpon>Sales_Report.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Report\Stock\Inventory_Report.xaml.cs">
-      <DependentUpon>Inventory_Report.xaml</DependentUpon>
+    <Compile Include="Report\Stock\CostOfInventory_Report.xaml.cs">
+      <DependentUpon>CostOfInventory_Report.xaml</DependentUpon>
     </Compile>
     <Compile Include="RowDef.cs" />
     <Compile Include="Sales\Budget.xaml.cs">
@@ -953,6 +956,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="bin\Debug\PurchaseTender.rdlc" />
+    <Content Include="bin\Debug\Report\CostOfGoodSold.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
     <EmbeddedResource Include="bin\Debug\PurchaseOrder.rdlc" />
     <Content Include="bin\Debug\PackingList.rdlc">
@@ -1586,6 +1592,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Report\Stock\CostOfGoodSold_Report.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Report\Stock\StockByBrand_Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1622,7 +1632,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Report\Stock\Inventory_Report.xaml">
+    <Page Include="Report\Stock\CostOfInventory_Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

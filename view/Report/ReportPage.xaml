@@ -170,10 +170,16 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StockByBrand}"/>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem Tag="Inventory">
+            <ListBoxItem Tag="CostOfGoodSold">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>
-                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Inventory}"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc CostOfGoodSold}"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem Tag="CostOfInventory">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc CostOfInventory}"/>
                 </StackPanel>
             </ListBoxItem>
             <ListBoxItem IsSelected="False" IsEnabled="False">

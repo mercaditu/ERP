@@ -75,68 +75,61 @@ namespace Cognitivo.Report
             
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            List<sales_invoice> sales_invoiceList = db.sales_invoice.Where(predicate).ToList();
-            var salesinvoiceList = sales_invoiceList.Where(x => x.trans_date.Date >= ReportPage.start_Range && x.trans_date <= ReportPage.end_Range)
-            .Join(db.sales_invoice_detail, u => u.id_sales_invoice, sid => sid.id_sales_invoice, (sales_invoice, sid) => new { sales_invoice, sid }).Select(g => new
+            List<sales_invoice_detail> sales_invoice_detaillist = db.sales_invoice_detail.ToList();
+            var sales_invoice_detailList = sales_invoice_detaillist.Select(g => new
             {
-                id_sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
                 geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",
                 sales_invoice = g.sales_invoice != null ? g.sales_invoice.id_sales_invoice : 0,
-                id_company = g.sid.id_company,
+                id_company = g.id_company,
                 add1 = g.sales_invoice != null ? g.sales_invoice.contact.address != null ? g.sales_invoice.contact.address : "" : "",
                 telephone = g.sales_invoice != null ? g.sales_invoice.contact.telephone != null ? g.sales_invoice.contact.telephone : "" : "",
                 email = g.sales_invoice != null ? g.sales_invoice.contact.email != null ? g.sales_invoice.contact.email : "" : "",
                 company_name = g.sales_invoice != null ? g.sales_invoice.app_company != null ? g.sales_invoice.app_company.name : "" : "",
-                item_code = g.sid.item != null ? g.sid.item.code : "",
-                item_name = g.sid.item != null ? g.sid.item.name : "",
-                item_description = g.sid.item_description,
-                id_item = g.sid.id_item,
-                item_type = g.sid.item != null ? g.sid.item.id_item_type.ToString() : "",
-                Description = g.sid.item != null ? g.sid.item.item_brand != null ? g.sid.item.item_brand.name : "" : "",
+                item_code = g.item != null ? g.item.code : "",
+                item_name = g.item != null ? g.item.name : "",
+                item_description = g.item_description,
+                Description = g.item != null ? g.item.item_brand != null ? g.item.item_brand.name : "" : "",
                 currency = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.app_currency.name : "",
                 currencyfx_rate = g.sales_invoice != null ? g.sales_invoice.app_currencyfx.sell_value : 0,
-                quantity = g.sid.quantity,
-                sub_Total = g.sid.SubTotal,
-                sub_Total_vat = g.sid.SubTotal_Vat,
-                sub_Total_Vat_Discount = g.sid.Discount_SubTotal_Vat,
-                unit_cost = g.sid.unit_cost,
-                unit_price = g.sid.unit_price,
-                unit_price_vat = g.sid.UnitPrice_Vat,
+                quantity = g.quantity,
+                sub_Total = g.SubTotal,
+                sub_Total_vat = g.SubTotal_Vat,
+                sub_Total_Vat_Discount = g.Discount_SubTotal_Vat,
+                unit_cost = g.unit_cost,
+                unit_price = g.unit_price,
+                unit_price_vat = g.UnitPrice_Vat,
                 terminal_name = g.sales_invoice != null ? g.sales_invoice.app_terminal != null ? g.sales_invoice.app_terminal.name : "" : "",
                 code = g.sales_invoice != null ? g.sales_invoice.code != null ? g.sales_invoice.code : "" : "",
                 customer_contact_name = g.sales_invoice != null ? g.sales_invoice.contact.name : "",
                 customer_code = g.sales_invoice != null ? g.sales_invoice.contact.code : "",
                 customer_alias = g.sales_invoice != null ? g.sales_invoice.contact.alias : "",
                 project_name = g.sales_invoice != null ? g.sales_invoice.project != null ? g.sales_invoice.project.name : "" : "",
-                id_sales_rep = g.sales_invoice != null ? g.sales_invoice.id_sales_rep != null ? g.sales_invoice.id_sales_rep : 0 : 0,
                 sales_invoice_rep_name = g.sales_invoice != null ? g.sales_invoice.sales_rep != null ? g.sales_invoice.sales_rep.name : "" : "",
                 trans_date = g.sales_invoice != null ? g.sales_invoice.trans_date.ToString() : "",
-                id_vat_group = g.sid.id_vat_group,
+                id_vat_group = g.id_vat_group,
                 gov_id = g.sales_invoice != null ? g.sales_invoice.contact.gov_code : "",
                 sales_invoice_contract = g.sales_invoice != null ? g.sales_invoice.app_contract.name : "",
                 sales_invoice_condition = g.sales_invoice != null ? g.sales_invoice.app_contract.app_condition.name : "",
                 sales_number = g.sales_invoice != null ? g.sales_invoice.number : "",
                 sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment : "",
-                sales_order = g.sales_invoice != null ? g.sid.sales_order_detail != null ? g.sid.sales_order_detail.sales_order.number : "" : "",
-                HasRounding = g.sales_invoice != null ? g.sales_invoice.app_currencyfx != null ? g.sales_invoice.app_currencyfx.app_currency != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding != null ? g.sales_invoice.app_currencyfx.app_currency.has_rounding : false : false : false : false,
-                unit_price_discount = g.sid.discount != null ? g.sid.discount : 0,
-                Tag = g.sid.item != null ? ReportPage.GetTag(g.sid.item.item_tag_detail.ToList()) : "",
+                sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
+                unit_price_discount = g.discount != null ? g.discount : 0,
             }).ToList();
 
-            if (ReportPage.TagArray != null)
-            {
-                salesinvoiceList = salesinvoiceList.Where(x => x.Tag.ToLower().Contains(ReportPage.TagArray.ToLower().ToString())).ToList();
-            }
+            //if (ReportPage.TagArray != null)
+            //{
+            //    salesinvoiceList = salesinvoiceList.Where(x => x.Tag.ToLower().Contains(ReportPage.TagArray.ToLower().ToString())).ToList();
+            //}
 
-            if (ReportPage.BrandArray != null)
-            {
-                salesinvoiceList = salesinvoiceList.Where(x => x.Tag.ToLower().Contains(ReportPage.TagArray.ToLower().ToString())).ToList();
-            }
-            if (ReportPage.Item != null)
-            {
-                salesinvoiceList = salesinvoiceList.Where(x => x.id_item == ReportPage.Item.id_item).ToList();
-            }
-            reportDataSource.Value = salesinvoiceList;
+            //if (ReportPage.BrandArray != null)
+            //{
+            //    salesinvoiceList = salesinvoiceList.Where(x => x.Tag.ToLower().Contains(ReportPage.TagArray.ToLower().ToString())).ToList();
+            //}
+            //if (ReportPage.Item != null)
+            //{
+            //    salesinvoiceList = salesinvoiceList.Where(x => x.id_item == ReportPage.Item.id_item).ToList();
+            //}
+            reportDataSource.Value = sales_invoice_detailList;
             reportViewer.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Report\\SalesInvoicebySalesMan.rdlc"; // Path of the rdlc file
             reportViewer.LocalReport.DataSources.Add(reportDataSource);
             reportViewer.RefreshReport();

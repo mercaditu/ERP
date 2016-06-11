@@ -123,6 +123,14 @@ namespace Cognitivo.Purchase
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = PurchaseTenderDB.app_vat_group.Local;
 
+            CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+            PurchaseTenderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_dimensionViewSource.Source = PurchaseTenderDB.app_dimension.Local;
+
+            CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+            PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
+
         }
 
 
@@ -399,6 +407,26 @@ namespace Cognitivo.Purchase
             purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)e.Parameter;
 
             entity.Brillo.Document.Start.Automatic(e.Parameter as purchase_tender_contact, purchase_tender_contact.purchase_tender.app_document_range);
+        }
+
+        private void purchase_tender_item_detailDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
+        {
+            if (purchase_tenderpurchase_tender_item_detailViewSource != null)
+            {
+                if (purchase_tenderpurchase_tender_item_detailViewSource.View != null)
+                {
+                    purchase_tender_detail purchase_tender_detail = (purchase_tender_detail)purchase_tenderpurchase_tender_item_detailViewSource.View.CurrentItem;
+                    CollectionViewSource purchase_tender_dimensionViewSource = ((CollectionViewSource)(FindResource("purchase_tender_dimensionViewSource")));
+                    if (purchase_tender_detail != null)
+                    {
+                        if (purchase_tender_detail.id_purchase_tender_item > 0)
+                        {
+                            purchase_tender_dimensionViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_detail.id_purchase_tender_item).ToList();
+                        }
+                    }
+                }
+            }
+      
         }
 
 

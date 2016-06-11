@@ -38,7 +38,7 @@ namespace cntrl.Panels
             production_order_detail.quantity = production_order_detailList.FirstOrDefault().quantity;
             production_order_detail.id_item = production_order_detailList.FirstOrDefault().id_item;
             production_order_detail.item = production_order_detailList.FirstOrDefault().item;
-
+            production_order_detail.parent = production_order_detailList.FirstOrDefault().parent;
             production_order_detail.IsSelected = true;
             production_order_detail.State = EntityState.Added;
 

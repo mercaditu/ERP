@@ -128,24 +128,26 @@ namespace cntrl.Curd
                     payment_schedual.credit = payment_schedual.credit;
                     payment_schedual.debit = 0;
                     payment_schedual.AccountPayableBalance = payment_schedual.credit;
-                    payment_schedual.id_currencyfx = Firstpayment_schedual.purchase_invoice.id_currencyfx;
+
                     payment_schedual.app_currencyfx = Firstpayment_schedual.purchase_invoice.app_currencyfx;
                     payment_schedual.RaisePropertyChanged("app_currencyfx");
                     payment_schedual.purchase_invoice = Firstpayment_schedual.purchase_invoice;
                     payment_schedual.id_purchase_invoice = Firstpayment_schedual.purchase_invoice.id_purchase_invoice;
                     payment_schedual.trans_date = Firstpayment_schedual.purchase_invoice.trans_date;
                     payment_schedual.status = entity.Status.Documents_General.Pending;
+                    payment_schedual.id_currencyfx = Firstpayment_schedual.id_currencyfx;
                     payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
                     payment_schedual.id_contact = Firstpayment_schedual.purchase_invoice.id_contact;
                     payment_schedual.contact = Firstpayment_schedual.purchase_invoice.contact;
-                    lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
+                 
+                   
                 }
                 else
                 {
                     payment_schedual.credit = 0;
                     payment_schedual.debit = payment_schedual.debit;
                     payment_schedual.AccountReceivableBalance = payment_schedual.debit;
-                    payment_schedual.id_currencyfx = Firstpayment_schedual.sales_invoice.id_currencyfx;
+
                     payment_schedual.app_currencyfx = Firstpayment_schedual.sales_invoice.app_currencyfx;
                     payment_schedual.RaisePropertyChanged("app_currencyfx");
                     payment_schedual.sales_invoice = Firstpayment_schedual.sales_invoice;
@@ -153,16 +155,25 @@ namespace cntrl.Curd
                     payment_schedual.trans_date = Firstpayment_schedual.sales_invoice.trans_date;
                     payment_schedual.status = entity.Status.Documents_General.Pending;
                     payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
+                    payment_schedual.id_currencyfx = Firstpayment_schedual.id_currencyfx;
                     payment_schedual.id_contact = Firstpayment_schedual.sales_invoice.id_contact;
                     payment_schedual.contact = Firstpayment_schedual.sales_invoice.contact;
-                    lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit);
+
+                  
                 }
-             
-              
+
+ 
              
                 payment_schedual.RaisePropertyChanged("contact");
             }
-           
+            if (WindowsMode == Mode.AccountPayable)
+            {
+                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
+            }
+            else
+            { 
+                lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit); 
+            }
         
             
         

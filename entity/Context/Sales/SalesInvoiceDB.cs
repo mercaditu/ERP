@@ -358,7 +358,7 @@ namespace entity
             {
                 if (sales_invoice.IsSelected && sales_invoice.Error == null)
                 {
-                    if (sales_invoice.sales_invoice_detail.Where(x => x.sales_return_detail == null).Count() == 0 
+                    if (sales_invoice.sales_invoice_detail.Where(x => x.sales_return_detail == null).Count() > 0 
                         &&
                         sales_invoice.accounting_journal == null)
                     {

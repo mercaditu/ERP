@@ -39,43 +39,44 @@ namespace Cognitivo.Report
 
         private void QueryBuilder()
         {
-            var predicate = PredicateBuilder.True<entity.sales_invoice>();
+            //var predicate = PredicateBuilder.True<entity.sales_invoice>();
 
-            if (ReportPage.ConditionArray != null)
-            {
-                if (ReportPage.ConditionArray.Count() > 0)
-                {
-                    predicate = predicate.And(x => ReportPage.ConditionArray.Contains(x.app_condition.name));
-                }
-            }
-
-            if (ReportPage.ContractArray != null)
-            {
-                if (ReportPage.ContractArray.Count() > 0)
-                {
-                    predicate = predicate.And(x => ReportPage.ContractArray.Contains(x.app_contract.name));
-                }
-            }
-
-            //if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
+            //if (ReportPage.ConditionArray != null)
             //{
-            //    predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
-
+            //    if (ReportPage.ConditionArray.Count() > 0)
+            //    {
+            //        predicate = predicate.And(x => ReportPage.ConditionArray.Contains(x.app_condition.name));
+            //    }
             //}
-            //if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
+
+            //if (ReportPage.ContractArray != null)
             //{
-            //    predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
-
+            //    if (ReportPage.ContractArray.Count() > 0)
+            //    {
+            //        predicate = predicate.And(x => ReportPage.ContractArray.Contains(x.app_contract.name));
+            //    }
             //}
-            if (ReportPage.Contact != null)
-            {
-                predicate = predicate.And(x => x.contact == ReportPage.Contact);
-            }
+
+            ////if (ReportPage.start_Range != Convert.ToDateTime("1/1/0001"))
+            ////{
+            ////    predicate = predicate.And(x => x.trans_date >= ReportPage.start_Range);
+
+            ////}
+            ////if (ReportPage.end_Range != Convert.ToDateTime("1/1/0001"))
+            ////{
+            ////    predicate = predicate.And(x => x.trans_date <= ReportPage.end_Range);
+
+            ////}
+            //if (ReportPage.Contact != null)
+            //{
+            //    predicate = predicate.And(x => x.contact == ReportPage.Contact);
+            //}
            
             
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-            List<sales_invoice_detail> sales_invoice_detaillist = db.sales_invoice_detail.Where(x => x.sales_invoice.trans_date.Date >= ReportPage.start_Range && x.sales_invoice.trans_date <= ReportPage.end_Range).ToList();
+            List<sales_invoice_detail> sales_invoice_detaillist = db.sales_invoice_detail.ToList();
+          //  sales_invoice_detaillist = sales_invoice_detaillist.Where(x => x.sales_invoice.trans_date.Date >= ReportPage.start_Range && x.sales_invoice.trans_date <= ReportPage.end_Range).ToList();
             var sales_invoice_detailList = sales_invoice_detaillist.Select(g => new
             {
                 geo_name = g.sales_invoice != null ? g.sales_invoice.contact.app_geography != null ? g.sales_invoice.contact.app_geography.name : "" : "",

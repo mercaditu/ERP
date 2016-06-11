@@ -406,7 +406,7 @@ namespace entity.Brillo.Document
                         email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null? g.purchase_tender_contact.contact.email :"": "",
                         company_name = g.app_company != null ? g.app_company.name : "",
                         item_code = g.purchase_tender_item.item != null ? g.purchase_tender_item.item.code : "",
-                        item_description = g.item_description,
+                        item_description = g.purchase_tender_item.item != null ? g.purchase_tender_item.item.description : "",
                         Brand = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.item_brand != null ? g.purchase_tender_item.item.item_brand.name : "" : "" : "",
                         quantity = g.quantity,
                         sub_Total = g.SubTotal,
@@ -423,7 +423,7 @@ namespace entity.Brillo.Document
                         trans_date = g.purchase_tender_contact.purchase_tender.trans_date,
                         id_vat_group = g.id_vat_group,
                         gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null?g.purchase_tender_contact.contact.gov_code:"" : "",
-                        Number = g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number.ToString() : "",
+                        Number = g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number!=null?g.purchase_tender_contact.purchase_tender.number.ToString():"" : "",
                         AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
 
                      // Text -> Words

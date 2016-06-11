@@ -72,6 +72,11 @@ namespace cntrl
                  
                     sales_budget.id_contact = (int)project.id_contact;
                     sales_budget.contact = SalesBudgetDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
+                    if (SalesBudgetDB.app_document_range.Where(x => x.app_document.id_application == App.Names.SalesBudget).FirstOrDefault()!=null)
+                    {
+                        sales_budget.id_range = SalesBudgetDB.app_document_range.Where(x => x.app_document.id_application == App.Names.SalesBudget).FirstOrDefault().id_range;    
+                    }
+                    
                     sales_budget.id_project = project.id_project;
                     sales_budget.id_condition = (int)cbxCondition.SelectedValue;
                     sales_budget.id_contract = (int)cbxContract.SelectedValue;
@@ -231,6 +236,10 @@ namespace cntrl
                     {
                         SalesOrderDB.Approve();
                         sales_invoice sales_invoice = new entity.sales_invoice();
+                        if (SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == App.Names.SalesBudget).FirstOrDefault() != null)
+                        {
+                            sales_invoice.id_range = SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == App.Names.SalesInvoice).FirstOrDefault().id_range;
+                        }
                         sales_invoice.id_contact = (int)project.id_contact;
                         sales_invoice.contact = SalesOrderDB.contacts.Where(x => x.id_contact == (int)project.id_contact).FirstOrDefault();
                         sales_invoice.sales_order = sales_order;

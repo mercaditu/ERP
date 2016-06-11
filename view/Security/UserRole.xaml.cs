@@ -82,6 +82,7 @@ namespace Cognitivo.Security
             dbContext.security_role.Add(security_role);
 
             add_MissingRecords();
+            add_Privallge();
 
             security_roleViewSource.View.Refresh();
             security_roleViewSource.View.MoveCurrentToLast();
@@ -97,6 +98,7 @@ namespace Cognitivo.Security
                 dbContext.Entry(security_role).State = EntityState.Modified;
 
                 add_MissingRecords();
+                add_Privallge();
             }
             else
             {

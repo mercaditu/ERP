@@ -25,6 +25,8 @@
     </Page.CommandBindings>
     <Page.Resources>
         <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
+        <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_contact_detailViewSource" Source="{Binding purchase_tender_contact_detail, Source={StaticResource purchase_tenderViewSource}}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_item_detailViewSource" Source="{Binding purchase_tender_detail, Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}"/>
@@ -272,7 +274,7 @@
                         <DataGrid x:Name="purchase_tender_item_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="1"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4" 
                                   RowEditEnding="purchase_tender_item_detailDataGrid_RowEditEnding"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="purchase_tender_item_detailDataGrid_LoadingRowDetails"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -307,6 +309,26 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
+                            <DataGrid.RowDetailsTemplate>
+                                <DataTemplate>
+                                    <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
+                        		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		ItemsSource="{Binding Source={StaticResource purchase_tender_dimensionViewSource}}"
+                        		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                        <DataGrid.Columns>
+                                            <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
+									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
+                                            <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
+									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
+
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DataTemplate>
+                            </DataGrid.RowDetailsTemplate>
                         </DataGrid>
                         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                             <Label Content="Total"/>

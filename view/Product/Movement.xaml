@@ -21,11 +21,14 @@
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferitem_transfer_detailViewSource" Source="{Binding item_transfer_detail, Source={StaticResource item_transferViewSource}}"/>
+        <CollectionViewSource x:Key="item_transferitem_transfer_detailitem_transfer_dimensionViewSource" Source="{Binding item_transfer_dimension, Source={StaticResource item_transferitem_transfer_detailViewSource}}"/>
         <CollectionViewSource x:Key="location_destViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_location}, CreateList=True}"/>
         <CollectionViewSource x:Key="location_originViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_location}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_statusViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:Status}, CreateList=True}"/>
         <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
-        
+        <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
+
     </Page.Resources>
 
     <Grid DataContext="{StaticResource item_transferViewSource}">
@@ -216,6 +219,26 @@
                         <DataGridTextColumn Binding="{Binding item_product.item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding quantity_origin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="Auto"/>
                     </DataGrid.Columns>
+                    <!--<DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
+                        		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailitem_transfer_dimensionViewSource}}"
+                        		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
+									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
+                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
+									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>-->
                 </DataGrid>
             </StackPanel>
 

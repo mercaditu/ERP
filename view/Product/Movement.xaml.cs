@@ -110,6 +110,14 @@ namespace Cognitivo.Product
             dbContext.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
 
             cbxBranch.ItemsSource = dbContext.app_branch.Local;
+
+            CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
+            dbContext.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_dimensionViewSource.Source = dbContext.app_dimension.Local;
+
+            CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+            dbContext.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            app_measurementViewSource.Source = dbContext.app_measurement.Local;
         }
 
         private void set_ContactPref(object sender, EventArgs e)
@@ -162,7 +170,7 @@ namespace Cognitivo.Product
                 {
                     item_movement_origin.id_item_product = item_transfer_detail.item_product.id_item_product;
                 }
-
+               
                 ProductMovementDB.item_movement.Add(item_movement_origin);
 
                 item_movement item_movement_dest = new item_movement();

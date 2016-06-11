@@ -101,6 +101,7 @@ namespace entity
                         decimal WeightedAvg = detail.SubTotal_Vat / GrandTotal;
                         detail.DiscountVat = (WeightedAvg * Discounted_GrandTotalValue) / detail.quantity;
                         detail.RaisePropertyChanged("DiscountVat");
+                        RaisePropertyChanged("GrandTotal");
                     }
                 }
             }

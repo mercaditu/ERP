@@ -406,7 +406,8 @@ namespace Cognitivo.Production
             _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
             _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-            _production_execution_detail.is_input = false;
+            _production_execution_detail.is_input =  production_order_detail.is_input;
+            _production_execution_detail.movement_id = production_order_detail.movement_id;
             _production_execution.production_execution_detail.Add(_production_execution_detail);
 
         }
@@ -457,6 +458,8 @@ namespace Cognitivo.Production
             //    objpnl_FractionExecustion.ExecutionDB = ExecutionDB;
             //    crud_modal.Children.Add(objpnl_FractionExecustion);
         }
+
+       
     }
 }
 

@@ -20,7 +20,9 @@ namespace Cognitivo.Production
             projectViewSource,
             production_orderViewSource,
             production_lineViewSource,
-            production_orderproduction_order_detailViewSource;
+            production_orderproduction_order_detailViewSource,
+            item_movementViewSource,
+            item_movementitem_movement_dimensionViewSource;
 
         cntrl.Curd.ItemRequest ItemRequest;
 
@@ -129,6 +131,9 @@ namespace Cognitivo.Production
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().ToList();
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+
+            item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+
         }
 
         public void filter_task()
@@ -543,41 +548,41 @@ namespace Cognitivo.Production
                         production_order_detail_output.production_order = production_order;
                         production_order_detail_output.id_production_order = production_order.id_production_order;
 
-                        crud_modal.Children.Clear();
-                        crud_modal.Visibility = Visibility.Hidden;
-                       
+                        //crud_modal.Children.Clear();
+                        //crud_modal.Visibility = Visibility.Hidden;
 
 
-                        crud_modal.Visibility = System.Windows.Visibility.Visible;
-                        objpnl_FractionOrder = new cntrl.Panels.pnl_FractionOrder();
 
-                        List<production_order_detail> production_order_detaillist = production_order.production_order_detail.Where(x => x.id_item == production_order_detail_output.id_item).ToList();
-                        foreach (production_order_detail _production_order_detail in production_order_detaillist)
-                        {
-                            if (_production_order_detail.production_order_dimension.Count() == 0)
-                            {
+                        //crud_modal.Visibility = System.Windows.Visibility.Visible;
+                        //objpnl_FractionOrder = new cntrl.Panels.pnl_FractionOrder();
 
-
-                                if (OrderDB.project_task_dimension.Where(x => x.id_project_task == _production_order_detail.id_project_task) != null)
-                                {
-                                    List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == _production_order_detail.id_project_task).ToList();
-                                    foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
-                                    {
-                                        production_order_dimension production_order_dimension = new production_order_dimension();
-                                        production_order_dimension.id_dimension = project_task_dimension.id_dimension;
-                                        production_order_dimension.value = project_task_dimension.value;
-                                        production_order_detail_output.production_order_dimension.Add(production_order_dimension);
-                                    }
+                        //List<production_order_detail> production_order_detaillist = production_order.production_order_detail.Where(x => x.id_item == production_order_detail_output.id_item).ToList();
+                        //foreach (production_order_detail _production_order_detail in production_order_detaillist)
+                        //{
+                        //    if (_production_order_detail.production_order_dimension.Count() == 0)
+                        //    {
 
 
-                                }
-                            }
-                            _production_order_detail.IsSelected = true;
-                        }
+                        //        if (OrderDB.project_task_dimension.Where(x => x.id_project_task == _production_order_detail.id_project_task) != null)
+                        //        {
+                        //            List<project_task_dimension> project_task_dimensionList = OrderDB.project_task_dimension.Where(x => x.id_project_task == _production_order_detail.id_project_task).ToList();
+                        //            foreach (project_task_dimension project_task_dimension in project_task_dimensionList)
+                        //            {
+                        //                production_order_dimension production_order_dimension = new production_order_dimension();
+                        //                production_order_dimension.id_dimension = project_task_dimension.id_dimension;
+                        //                production_order_dimension.value = project_task_dimension.value;
+                        //                production_order_detail_output.production_order_dimension.Add(production_order_dimension);
+                        //            }
 
-                        objpnl_FractionOrder.production_order_detailList = production_order.production_order_detail.Where(x => x.id_item == production_order_detail_output.id_item).ToList();
-                        objpnl_FractionOrder.OrderDB = OrderDB;
-                        crud_modal.Children.Add(objpnl_FractionOrder);
+
+                        //        }
+                        //    }
+                        //    _production_order_detail.IsSelected = true;
+                        //}
+
+                        //objpnl_FractionOrder.production_order_detailList = production_order.production_order_detail.Where(x => x.id_item == production_order_detail_output.id_item).ToList();
+                        //objpnl_FractionOrder.OrderDB = OrderDB;
+                        //crud_modal.Children.Add(objpnl_FractionOrder);
 
                     }
                 }
@@ -765,6 +770,35 @@ namespace Cognitivo.Production
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Update_request();
+        }
+
+        private void treeProject_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+                List<item_movement> Items_InStockLIST = OrderDB.item_movement.Where(x =>
+                                                                  x.item_product.id_item == production_order_detail.id_item
+                                                                  && x.status == entity.Status.Stock.InStock
+                                                                  && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                item_movementViewSource.Source = Items_InStockLIST;
+            }
+
+
+        }
+
+        private void item_movement_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            item_movement item_movement = item_movementViewSource.View.CurrentItem as item_movement;
+            production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+                if (item_movement != null)
+                {
+                    production_order_detail.movement_id = (int)item_movement.id_movement;
+                }
+
+            }
         }
 
 

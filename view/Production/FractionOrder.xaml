@@ -34,6 +34,8 @@
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_movementitem_movement_dimensionViewSource" Source="{Binding item_movement_dimension, Source={StaticResource item_movementViewSource}}"/>
     </Page.Resources>
     <Grid Background="White" DataContext="{StaticResource production_orderViewSource}">
         <Grid.ColumnDefinitions>
@@ -150,7 +152,7 @@
                                 <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"   
                                                         VirtualizingPanel.VirtualizationMode="Recycling" 
                                                         VirtualizingPanel.IsVirtualizing="True" 
-                                                        ScrollViewer.CanContentScroll="True">
+                                                        ScrollViewer.CanContentScroll="True" SelectedItemChanged="treeProject_SelectedItemChanged">
                                     <TreeView.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <VirtualizingStackPanel/>
@@ -207,6 +209,37 @@
                                         <TextBox x:Name="txtqty" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
                                              Text="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" Style="{StaticResource input_textbox}"/>
                                     </StackPanel>
+                                    <DataGrid Height="Auto" x:Name="item_movement_detailDataGrid" Width="340" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
+                              AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
+                              EnableRowVirtualization="True" 
+                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding item_product.item.name, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Name}" Width="100" IsReadOnly="True"/>
+                                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}" 
+                        		Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*"/>
+                                        </DataGrid.Columns>
+                                        <DataGrid.RowDetailsTemplate>
+                                            <DataTemplate>
+                                                <Grid Background="{StaticResource AccentColor_Introvert}">
+                                                    <DataGrid x:Name="item_inventory_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" Margin="4" IsReadOnly="True"
+                            			EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource item_movementitem_movement_dimensionViewSource}}"
+                            			RowDetailsVisibilityMode="VisibleWhenSelected" CanUserDeleteRows="False">
+                                                        <DataGrid.Columns>
+                                                            <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto" 
+                            					ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
+                            					SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ElementStyle="{StaticResource RightAlignStyle}" Header="value" Width="auto"/>
+                                                            <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+                            					DisplayMemberPath="name" SelectedValuePath="id_measurement"  
+                            					ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+                            					SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            					Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGrid.RowDetailsTemplate>
+                                    </DataGrid>
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>

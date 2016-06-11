@@ -109,6 +109,7 @@ namespace Cognitivo.Security
         {
             List<entity.App.Names> Application = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<entity.Privilage.Privilages> Privilages = Enum.GetValues(typeof(entity.Privilage.Privilages)).Cast<entity.Privilage.Privilages>().ToList();
+            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             foreach (entity.App.Names Names in Application)
             {
                 foreach (entity.Privilage.Privilages Privilage in Privilages)
@@ -123,6 +124,20 @@ namespace Cognitivo.Security
                         dbContext.security_privilage.Add(security_privilage);
                     }
                 }
+            }
+            List<security_privilage> security_privilageList = dbContext.security_privilage.ToList();
+            foreach (security_privilage security_privilage in security_privilageList)
+            {
+                if (dbContext.security_role_privilage.Where(x => x.security_privilage.name == security_privilage.name && x.security_privilage.id_application == security_privilage.id_application).Count() == 0)
+                {
+                    security_role_privilage security_role_privilage = new security_role_privilage();
+                    security_role_privilage.id_privilage = security_privilage.id_privilage;
+                    security_role_privilage.id_role = security_role.id_role;
+
+
+                    dbContext.security_role_privilage.Add(security_role_privilage);
+                }
+                
             }
             dbContext.SaveChanges();
 

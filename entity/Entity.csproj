@@ -315,6 +315,10 @@
     <Compile Include="Migrations\201606091205296_updatepurchasetender.Designer.cs">
       <DependentUpon>201606091205296_updatepurchasetender.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606111135436_Changesin_productionorder.cs" />
+    <Compile Include="Migrations\201606111135436_Changesin_productionorder.Designer.cs">
+      <DependentUpon>201606111135436_Changesin_productionorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -1011,6 +1015,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606091205296_updatepurchasetender.resx">
       <DependentUpon>201606091205296_updatepurchasetender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606111135436_Changesin_productionorder.resx">
+      <DependentUpon>201606111135436_Changesin_productionorder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

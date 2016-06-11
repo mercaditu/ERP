@@ -38,6 +38,7 @@ namespace entity
         public int id_production_order { get; set; }
         public int? id_project_task { get; set; }
         public int? id_item { get; set; }
+        public int? movement_id { get; set; }
         public string name { get; set; }
         public decimal quantity
         {

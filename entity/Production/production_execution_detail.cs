@@ -32,6 +32,7 @@ namespace entity
         public int? id_time_coefficient { get; set; }
         public int? id_contact { get; set; }
         public int? id_item { get; set; }
+        public int? movement_id { get; set; }
         public string name { get; set; }
 
         [Required]

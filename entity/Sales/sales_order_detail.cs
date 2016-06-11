@@ -24,6 +24,7 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_order_detail { get; set; }
         public int id_sales_order { get; set; }
+        public int? movement_id { get; set; }
         public int? id_sales_budget_detail { get; set; }
         [NotMapped]
         public decimal balance

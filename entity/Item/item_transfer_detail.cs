@@ -58,5 +58,6 @@ namespace entity
         public virtual item_product item_product { get; set; }
         public virtual project_task project_task { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
+   
     }
 }

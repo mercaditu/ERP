@@ -30,6 +30,7 @@ namespace Reports
         {
 
         }
+        #region Sales
 
         public void CostOfGoodsSold()
         {
@@ -38,8 +39,8 @@ namespace Reports
                             " I.CODE, " +
                             " B.NAME AS BRANCH," +
                             " SUM(SD.quantity) AS QUANTITY," +
-                            " SUM(IMV.UNIT_VALUE) AS COST," +
-                            " ROUND(SUM(SD.quantity) * SUM(IMV.UNIT_VALUE),4) AS SUBTOTAL" +
+                            " IMV.UNIT_VALUE AS COST," +
+                            " (SUM(SD.quantity) * IMV.UNIT_VALUE) AS SUBTOTAL " +
                                 " FROM sales_invoice_detail AS SD" +
                                 " INNER JOIN item_movement AS IM" +
                                 " ON IM.ID_SALES_INVOICE_DETAIL = SD.ID_SALES_INVOICE_DETAIL" +
@@ -85,6 +86,15 @@ namespace Reports
             RunReport(ReportPath, reportDataSource);
         }
 
+        public void PendingDocuments()
+        {
+
+        }
+
+        #endregion
+
+        #region Inventory
+
         public void InventoryFIFO()
         {
             ReportDataSource reportDataSource = new ReportDataSource();
@@ -96,6 +106,8 @@ namespace Reports
 
             RunReport(ReportPath, reportDataSource);
         }
+
+        #endregion
 
         private void RunReport(string ReportPath, ReportDataSource reportDataSource)
         {

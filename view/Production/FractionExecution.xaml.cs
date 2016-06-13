@@ -128,7 +128,7 @@ namespace Cognitivo.Production
                 List<production_order_detail> _production_order_detail =
                     ExecutionDB.production_order_detail.Where(a =>
                            a.status == Status.Project.Approved
-                        && (a.item.id_item_type == item_type || a.item.id_item_type == item.item_type.RawMaterial)
+                        && (a.item.id_item_type == item_type || a.item.id_item_type == item.item_type.Task)
                         && a.id_production_order == id_production_order)
                          .ToList();
 
@@ -148,16 +148,20 @@ namespace Cognitivo.Production
                 {
                     CollectionViewSource.View.Filter = i =>
                     {
+
                         production_order_detail production_order_detail = (production_order_detail)i;
                         if (production_order_detail.parent == null)
                         {
+
                             return true;
+
                         }
                         else { return false; }
 
                     };
                 }
             }
+
         }
 
         private void toolBar_btnSave_Click(object sender)
@@ -263,7 +267,7 @@ namespace Cognitivo.Production
 
         private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem_;
+            production_order_detail production_order_detail = (production_order_detail)treeRaw.SelectedItem_;
             if (production_order_detail != null)
             {
                 production_execution_detailRawViewSource.View.Filter = i =>
@@ -366,34 +370,38 @@ namespace Cognitivo.Production
             Button btn = sender as Button;
             decimal Quantity = 0M;
 
-            if (btn.Name.Contains("Prod"))
+            if (txtProduct.Text!="")
             {
-                Quantity = Convert.ToDecimal(txtProduct.Text);
-                production_order_detail = treeProduct.SelectedItem_ as production_order_detail;
-            }
-
-            try
-            {
-
-                if (production_order_detail != null && Quantity > 0)
+                if (btn.Name.Contains("Prod"))
                 {
-                    Insert_IntoDetail(production_order_detail, Quantity);
+                    Quantity = Convert.ToDecimal(txtProduct.Text);
+                    production_order_detail = treeRaw.SelectedItem_ as production_order_detail;
+                }
 
-                    production_execution_detailRawViewSource.View.Refresh();
-                    production_execution_detailRawViewSource.View.MoveCurrentToLast();
+                try
+                {
 
-
-
-                    if (btn.Name.Contains("Prod"))
+                    if (production_order_detail != null && Quantity > 0)
                     {
-                        loadProductTotal(production_order_detail);
+                        Insert_IntoDetail(production_order_detail, Quantity);
+
+                        production_execution_detailRawViewSource.View.Refresh();
+                        production_execution_detailRawViewSource.View.MoveCurrentToLast();
+
+
+
+                        if (btn.Name.Contains("Prod"))
+                        {
+                            loadProductTotal(production_order_detail);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    toolBar.msgError(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+           
         }
         public void loadProductTotal(production_order_detail production_order_detail)
         {
@@ -571,6 +579,8 @@ namespace Cognitivo.Production
 
             }
         }
+
+      
 
     
     }

@@ -39,6 +39,10 @@ namespace entity
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         Entry(production_execution).State = EntityState.Added;
+                        foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
+                        {
+                            production_execution_detail.State = EntityState.Unchanged;
+                        }
                         
                     }
                     else if (production_execution.State == EntityState.Modified)
@@ -54,7 +58,10 @@ namespace entity
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         Entry(production_execution).State = EntityState.Modified;
-                      
+                        foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
+                        {
+                            production_execution_detail.State = EntityState.Unchanged;
+                        }
                       
                     }
                     else if (production_execution.State == EntityState.Deleted)

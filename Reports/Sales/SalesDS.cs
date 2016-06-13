@@ -7,3 +7,10 @@
         }
     }
 }
+
+namespace Reports.SalesDSTableAdapters {
+    
+    
+    public partial class CostGoodsSoldTableAdapter {
+    }
+}

@@ -89,7 +89,7 @@
       <DependentUpon>SalesDS.xsd</DependentUpon>
     </Compile>
     <Compile Include="Viewer.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Viewer.Designer.cs">
       <DependentUpon>Viewer.cs</DependentUpon>
@@ -149,10 +149,6 @@
     <ProjectReference Include="..\entity\Entity.csproj">
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\view\View.csproj">
-      <Project>{1531d596-d0fa-46ce-99d9-6483eb40624a}</Project>
-      <Name>View</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

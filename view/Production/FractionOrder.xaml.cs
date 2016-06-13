@@ -783,7 +783,14 @@ namespace Cognitivo.Production
                                                                   && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                 item_movementViewSource.Source = Items_InStockLIST;
             }
-
+            if (production_order_detail.movement_id>0)
+            {
+                if (OrderDB.item_movement.Where(x => x.id_movement == production_order_detail.movement_id).FirstOrDefault()!=null)
+                {
+                    item_movement_detailDataGrid.SelectedItem = OrderDB.item_movement.Where(x => x.id_movement == production_order_detail.movement_id).FirstOrDefault();  
+                }
+            
+            }
 
         }
 
@@ -797,6 +804,30 @@ namespace Cognitivo.Production
                 {
                     production_order_detail.movement_id = (int)item_movement.id_movement;
                 }
+
+            }
+        }
+
+        private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
+        {
+            production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+               
+                    production_order_detail.is_input = false;
+               
+
+            }
+        }
+
+        private void ToggleQuantity_Unchecked(object sender, RoutedEventArgs e)
+        {
+            production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+
+                production_order_detail.is_input = true;
+
 
             }
         }

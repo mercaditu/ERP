@@ -49,12 +49,12 @@
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0 Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dataset\InventoryDS.Designer.cs">
+    <Compile Include="Inventory\InventoryDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Dataset\SalesDS.Designer.cs">
+    <Compile Include="Sales\SalesDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SalesDS.xsd</DependentUpon>
@@ -82,26 +82,26 @@
       <DependentUpon>Viewer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
-    <None Include="Dataset\InventoryDS.xsc">
+    <None Include="Inventory\InventoryDS.xsc">
       <DependentUpon>InventoryDS.xsd</DependentUpon>
     </None>
-    <None Include="Dataset\InventoryDS.xsd">
+    <None Include="Inventory\InventoryDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>InventoryDS.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Dataset\InventoryDS.xss">
+    <None Include="Inventory\InventoryDS.xss">
       <DependentUpon>InventoryDS.xsd</DependentUpon>
     </None>
-    <None Include="Dataset\SalesDS.xsc">
+    <None Include="Sales\SalesDS.xsc">
       <DependentUpon>SalesDS.xsd</DependentUpon>
     </None>
-    <None Include="Dataset\SalesDS.xsd">
+    <None Include="Sales\SalesDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>SalesDS.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Dataset\SalesDS.xss">
+    <None Include="Sales\SalesDS.xss">
       <DependentUpon>SalesDS.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">

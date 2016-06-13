@@ -182,22 +182,20 @@ namespace Cognitivo.Report
                 try
                 {
                     Viewer Viewer = new global::Reports.Viewer();
+                    Viewer.connectionstring = Cognitivo.Properties.Settings.Default.MySQLconnString;
+                    rptFrame.Child = Viewer;
+
                     if (ListBoxItem.Tag.ToString()=="CostOfGoodSold")
                     {
-                        Viewer.Form = global::Reports.Viewer.Forms.Sales;
+                        Viewer.CostOfGoodsSold();
                     }
                     else
                     {
-                        Viewer.Form = global::Reports.Viewer.Forms.Inventory;
+                        Viewer.InventoryFIFO();
                     }
-                   
-                    Viewer.connectionstring = Cognitivo.Properties.Settings.Default.MySQLconnString;
-                    rptFrame.Child = Viewer;
+                  
                 }
-                catch(Exception ex) 
-                {
-                    throw ex;
-                    }
+                catch { }
             }
         }
 

@@ -64,16 +64,16 @@ namespace Reports
             RunReport(ReportPath, reportDataSource);
         }
 
-        private void QueryBuilderInventory()
+        public void InventoryFIFO()
         {
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "InventoryCost"; // Name of the DataSet we set in .rdlc
             DataTable dt = exeDT("call INVENTORY");
             reportDataSource.Value = dt;
      
-            reportViewer1.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Inventory\\InventoryCost.rdlc";
-            reportViewer1.LocalReport.DataSources.Add(reportDataSource);
-            reportViewer1.RefreshReport();
+            string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Inventory\\InventoryCost.rdlc";
+
+            RunReport(ReportPath, reportDataSource);
         }
 
         private void RunReport(string ReportPath, ReportDataSource reportDataSource)

@@ -108,7 +108,9 @@
                         <TextRuns>
                           <TextRun>
                             <Value>ITEM</Value>
-                            <Style />
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -875,7 +877,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>0.89062in</Size>
+                <Size>1.06771in</Size>
                 <CellContents>
                   <Textbox Name="CODE">
                     <CanGrow>true</CanGrow>
@@ -918,7 +920,9 @@
                             <TextRuns>
                               <TextRun>
                                 <Value>=Fields!ITEM.Value</Value>
-                                <Style />
+                                <Style>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
                               </TextRun>
                             </TextRuns>
                             <Style />
@@ -946,7 +950,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>0.89062in</Size>
+                <Size>1.06771in</Size>
                 <CellContents>
                   <Textbox Name="Textbox13">
                     <CanGrow>true</CanGrow>
@@ -1019,7 +1023,7 @@
         </TablixRowHierarchy>
         <DataSetName>CostOfGoodsSold</DataSetName>
         <Height>1in</Height>
-        <Width>9.18229in</Width>
+        <Width>9.35937in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1030,7 +1034,7 @@
     <Height>1in</Height>
     <Style />
   </Body>
-  <Width>9.18229in</Width>
+  <Width>9.35937in</Width>
   <Page>
     <PageHeader>
       <Height>0.85417in</Height>

@@ -29,33 +29,33 @@ namespace Cognitivo.Report
         //public app_geography Geography { get; set; }
         //public contact Contact { get; set; }
         //public item Item { get; set; }
-       
-        //public DateTime start_Range
-        //{
-        //    get { return _start_Range; }
-        //    set
-        //    {
-        //        if (_start_Range != value)
-        //        {
-        //            _start_Range = value;
-        //        }
-        //    }
-        //}
-        //private DateTime _start_Range = DateTime.Now.AddMonths(-1);
+
+        public DateTime start_Range
+        {
+            get { return _start_Range; }
+            set
+            {
+                if (_start_Range != value)
+                {
+                    _start_Range = value;
+                }
+            }
+        }
+        private DateTime _start_Range = DateTime.Now.AddMonths(-1);
 
 
-        //public DateTime end_Range
-        //{
-        //    get { return _end_Range; }
-        //    set
-        //    {
-        //        if (_end_Range != value)
-        //        {
-        //            _end_Range = value;
-        //        }
-        //    }
-        //}
-        //private DateTime _end_Range = DateTime.Now;
+        public DateTime end_Range
+        {
+            get { return _end_Range; }
+            set
+            {
+                if (_end_Range != value)
+                {
+                    _end_Range = value;
+                }
+            }
+        }
+        private DateTime _end_Range = DateTime.Now;
 
         ///// <summary>
         ///// Condition KeyWord Array.
@@ -183,6 +183,8 @@ namespace Cognitivo.Report
                 {
                     Viewer Viewer = new global::Reports.Viewer();
                     Viewer.connectionstring = Cognitivo.Properties.Settings.Default.MySQLconnString;
+                    Viewer.start_date = start_Range;
+                    Viewer.end_date = end_Range;
                     rptFrame.Child = Viewer;
 
                     if (ListBoxItem.Tag.ToString()=="CostOfGoodSold")

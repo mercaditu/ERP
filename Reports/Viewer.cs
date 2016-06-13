@@ -43,6 +43,7 @@ namespace Reports
                                 " FROM sales_invoice_detail AS SD" +
                                 " INNER JOIN item_movement AS IM" +
                                 " ON IM.ID_SALES_INVOICE_DETAIL = SD.ID_SALES_INVOICE_DETAIL" +
+                                " inner join sales_invoice as SI on SD.id_sales_invoice = SI.id_sales_invoice" +
                                 " INNER JOIN item_movement_value AS IMV" +
                                 " ON IM.ID_MOVEMENT = IMV.ID_MOVEMENT" +
                                 " LEFT JOIN ITEMS AS I" +
@@ -50,9 +51,29 @@ namespace Reports
                                 " LEFT JOIN APP_LOCATION AS L" +
                                 " ON L.ID_LOCATION = IM.ID_LOCATION" +
                                 " LEFT JOIN APP_BRANCH AS B" +
-                                " ON B.ID_BRANCH = L.ID_BRANCH" +
-                                " GROUP BY I.CODE,B.CODE" +
-                                " ORDER BY I.NAME";
+                                " ON B.ID_BRANCH = L.ID_BRANCH";
+
+            if (start_date != null || end_date != null)
+            {
+                query = query + " WHERE ";
+            }
+
+            if (start_date != null)
+            {
+                query = query + " SI.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
+            }
+
+            if (end_date != null)
+            {
+                if (start_date != null)
+                {
+                    query = query + " AND";
+                }
+
+                query = query + " SI.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
+            }
+
+            query = query + " GROUP BY I.CODE,B.CODE ORDER BY I.NAME";
 
             DataTable dt = exeDT(query);
 

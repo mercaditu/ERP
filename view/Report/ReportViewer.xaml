@@ -203,8 +203,11 @@
       <ScrollViewer Grid.Column="0" Grid.Row="2">
             <Grid HorizontalAlignment="Center">
                 <StackPanel HorizontalAlignment="Center">
-                    <!-- <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
+                    <DatePicker SelectedDate="{Binding ElementName=_ReportPage, Path=start_Range, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}" Width="128"/>
+                    <DatePicker SelectedDate="{Binding ElementName=_ReportPage, Path=end_Range, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}" Width="128"/>
+
+                    <!-- <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
                     <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
                     <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True" Select="grid_sbxContact_Select"/>
 

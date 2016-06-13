@@ -108,7 +108,9 @@
                         <TextRuns>
                           <TextRun>
                             <Value>ITEM</Value>
-                            <Style />
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -166,7 +168,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -196,7 +200,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -226,7 +232,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -256,7 +264,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -287,7 +297,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -318,7 +330,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -354,7 +368,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -385,7 +401,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -416,7 +434,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -447,7 +467,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!QUANTITY.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -478,7 +500,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -509,7 +533,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!SUBTOTAL.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -558,7 +584,9 @@
                         <TextRuns>
                           <TextRun>
                             <Value>=Fields!BRANCH.Value</Value>
-                            <Style />
+                            <Style>
+                              <FontWeight>Medium</FontWeight>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -594,7 +622,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox3</rd:DefaultName>
@@ -630,7 +660,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
@@ -663,7 +695,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox8</rd:DefaultName>
@@ -732,7 +766,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox18</rd:DefaultName>
@@ -766,7 +802,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox22</rd:DefaultName>
@@ -800,7 +838,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox26</rd:DefaultName>
@@ -837,7 +877,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>1.06771in</Size>
                 <CellContents>
                   <Textbox Name="CODE">
                     <CanGrow>true</CanGrow>
@@ -870,7 +910,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.48958in</Size>
+                    <Size>2.29166in</Size>
                     <CellContents>
                       <Textbox Name="ITEM">
                         <CanGrow>true</CanGrow>
@@ -880,7 +920,9 @@
                             <TextRuns>
                               <TextRun>
                                 <Value>=Fields!ITEM.Value</Value>
-                                <Style />
+                                <Style>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
                               </TextRun>
                             </TextRuns>
                             <Style />
@@ -908,7 +950,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>1.06771in</Size>
                 <CellContents>
                   <Textbox Name="Textbox13">
                     <CanGrow>true</CanGrow>
@@ -942,7 +984,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.48958in</Size>
+                    <Size>2.29166in</Size>
                     <CellContents>
                       <Textbox Name="Textbox32">
                         <CanGrow>true</CanGrow>
@@ -981,7 +1023,7 @@
         </TablixRowHierarchy>
         <DataSetName>CostOfGoodsSold</DataSetName>
         <Height>1in</Height>
-        <Width>8.48958in</Width>
+        <Width>9.35937in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -992,7 +1034,7 @@
     <Height>1in</Height>
     <Style />
   </Body>
-  <Width>8.48958in</Width>
+  <Width>9.35937in</Width>
   <Page>
     <PageHeader>
       <Height>0.85417in</Height>

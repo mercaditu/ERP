@@ -108,7 +108,9 @@
                         <TextRuns>
                           <TextRun>
                             <Value>ITEM</Value>
-                            <Style />
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -160,10 +162,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Quantity.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Quantity</rd:DefaultName>
@@ -190,10 +196,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>COST</rd:DefaultName>
@@ -220,10 +230,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Quantity.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox15</rd:DefaultName>
@@ -251,10 +265,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox19</rd:DefaultName>
@@ -287,10 +305,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Quantity.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox11</rd:DefaultName>
@@ -318,10 +340,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox12</rd:DefaultName>
@@ -349,10 +375,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Quantity.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox16</rd:DefaultName>
@@ -380,10 +410,14 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!COST.Value)</Value>
-                              <Style />
+                              <Style>
+                                <Format>N2</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox20</rd:DefaultName>
@@ -429,10 +463,14 @@
                         <TextRuns>
                           <TextRun>
                             <Value>=Fields!DEPOSITO.Value</Value>
-                            <Style />
+                            <Style>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
                           </TextRun>
                         </TextRuns>
-                        <Style />
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>DEPOSITO</rd:DefaultName>
@@ -465,7 +503,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox3</rd:DefaultName>
@@ -501,7 +541,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox5</rd:DefaultName>
@@ -536,7 +578,9 @@
                             <Style />
                           </TextRun>
                         </TextRuns>
-                        <Style />
+                        <Style>
+                          <TextAlign>Center</TextAlign>
+                        </Style>
                       </Paragraph>
                     </Paragraphs>
                     <rd:DefaultName>Textbox13</rd:DefaultName>
@@ -570,7 +614,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox14</rd:DefaultName>
@@ -604,7 +650,9 @@
                                 <Style />
                               </TextRun>
                             </TextRuns>
-                            <Style />
+                            <Style>
+                              <TextAlign>Right</TextAlign>
+                            </Style>
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox18</rd:DefaultName>
@@ -684,7 +732,9 @@
                             <TextRuns>
                               <TextRun>
                                 <Value>=Fields!ITEM.Value</Value>
-                                <Style />
+                                <Style>
+                                  <FontWeight>Bold</FontWeight>
+                                </Style>
                               </TextRun>
                             </TextRuns>
                             <Style />

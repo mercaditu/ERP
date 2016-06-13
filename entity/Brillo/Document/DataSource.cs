@@ -472,6 +472,7 @@ namespace entity.Brillo.Document
                         contact_name = g.purchase_order != null ? g.purchase_order.contact.name : "",
                         trans_date = g.purchase_order.trans_date,
                         id_vat_group = g.id_vat_group,
+                        vat_group_name = g.app_vat_group != null ? g.app_vat_group.name : "",
                         gov_id = g.purchase_order.contact.gov_code,
                         Number = g.purchase_order.number,
                         AmountWords = g.purchase_order != null ? g.purchase_order.app_currencyfx != null ? g.purchase_order.app_currencyfx.app_currency != null ? g.purchase_order.app_currencyfx.app_currency.has_rounding ?

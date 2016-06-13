@@ -28,6 +28,8 @@ namespace Reports
 	}
         public string connectionstring { get; set; }
         public Forms Form { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime end_date { get; set; }
         private void Form1_Load(object sender, EventArgs e)
         {
             if (Form==Viewer.Forms.Inventory)
@@ -42,6 +44,7 @@ namespace Reports
         }
         private void QueryBuilderInventory()
         {
+           
 
 
 
@@ -49,7 +52,9 @@ namespace Reports
             reportDataSource.Name = "InventoryCost"; // Name of the DataSet we set in .rdlc
             DataTable dt = exeDT("call INVENTORY");
             reportDataSource.Value = dt;
-            reportViewer1.LocalReport.ReportPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"../../../")) + "Reports\\Inventory\\InventoryCost.rdlc"; // Path of the rdlc file
+     
+           // reportViewer1.LocalReport.ReportPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"../../../")) + "Reports\\Inventory\\InventoryCost.rdlc"; // Path of the rdlc file
+            reportViewer1.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Inventory\\InventoryCost.rdlc";
             reportViewer1.LocalReport.DataSources.Add(reportDataSource);
             reportViewer1.RefreshReport();
         }
@@ -82,7 +87,8 @@ namespace Reports
 " ORDER BY I.NAME";
             DataTable dt = exeDT(query);
             reportDataSource.Value = dt;
-            reportViewer1.LocalReport.ReportPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"../../../")) + "Reports\\Sales\\CostOfGoodsSold.rdlc"; // Path of the rdlc file
+           // reportViewer1.LocalReport.ReportPath = Path.GetFullPath(Path.Combine(Application.StartupPath, @"../../../")) + "Reports\\Sales\\CostOfGoodsSold.rdlc"; // Path of the rdlc file
+            reportViewer1.LocalReport.ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\SAles\\CostOfGoodsSold.rdlc";
             reportViewer1.LocalReport.DataSources.Add(reportDataSource);
             reportViewer1.RefreshReport();
         }

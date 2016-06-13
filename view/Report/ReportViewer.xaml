@@ -200,10 +200,10 @@
         <GridSplitter Background="Gray" HorizontalAlignment="Stretch" Grid.Row="1"/>
 
 
-        <!--<ScrollViewer Grid.Column="0" Grid.Row="2">
+      <ScrollViewer Grid.Column="0" Grid.Row="2">
             <Grid HorizontalAlignment="Center">
                 <StackPanel HorizontalAlignment="Center">
-                    <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+                    <!-- <Label Content="{lex:Loc Header}" Style="{StaticResource generic_Label}" HorizontalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
 
                     <Label Content="{lex:Loc Contact}" Style="{StaticResource input_label}" />
                     <Controls:SmartBox_Contact x:Name="grid_sbxContact" Get_Customers="True" Get_Suppliers="True" Select="grid_sbxContact_Select"/>
@@ -234,7 +234,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
+        <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}" />
                     <TextBox Text="{Binding tbxCondition, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
 
                     <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
@@ -252,9 +252,10 @@
 
                     <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}" />
                     <TextBox Text="{Binding tbxTag, ElementName=_ReportPage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                    -->
                 </StackPanel>
             </Grid>
-        </ScrollViewer>-->
+        </ScrollViewer>
 
         <Button Content="L" FontFamily="/Cognitivo;component/Resources/#cognitivo" Margin="0,0,0,-24" Background="#FF00B2FF"
                                     Style="{DynamicResource MetroCircleButtonStyle}" Click="btnGridSearch" FontSize="24" Foreground="White"

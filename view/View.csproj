@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V470\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V479\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>474</ApplicationRevision>
+    <ApplicationRevision>482</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -916,6 +916,9 @@
     <Content Include="bin\Debug\Transfer.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="bin\Debug\Inventory\InventoryCost.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -966,6 +969,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="bin\Debug\Movement.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Debug\Sales\CostOfGoodsSold.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Project\PrintingPress\Reports\PrintingPress.rdlc" />

@@ -26,7 +26,8 @@ namespace Reports.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;database=cognitivogolden")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;database=cognitivogolden;persistsecur" +
+            "ityinfo=True")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

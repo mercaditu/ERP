@@ -54,6 +54,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Dataset\SalesDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalesDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Viewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,9 +77,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Inventory\InventoryCost.rdlc" />
+    <EmbeddedResource Include="Sales\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Viewer.resx">
       <DependentUpon>Viewer.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Dataset\InventoryDS.xsc">
       <DependentUpon>InventoryDS.xsd</DependentUpon>
     </None>
@@ -86,6 +93,17 @@
     <None Include="Dataset\InventoryDS.xss">
       <DependentUpon>InventoryDS.xsd</DependentUpon>
     </None>
+    <None Include="Dataset\SalesDS.xsc">
+      <DependentUpon>SalesDS.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset\SalesDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SalesDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Dataset\SalesDS.xss">
+      <DependentUpon>SalesDS.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -95,9 +113,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\entity\Entity.csproj">

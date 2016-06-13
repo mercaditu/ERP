@@ -515,14 +515,14 @@
     <Compile Include="Report\ReportSalesbyProduct.xaml.cs">
       <DependentUpon>ReportSalesbyProduct.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Report\ReportViewer.xaml.cs">
+      <DependentUpon>ReportViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Report\Sales\VatMatrix_Report.xaml.cs">
       <DependentUpon>VatMatrix_Report.xaml</DependentUpon>
     </Compile>
     <Compile Include="Report\Stock\CostOfGoodSold_Report.xaml.cs">
       <DependentUpon>CostOfGoodSold_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\ReportViewer.xaml.cs">
-      <DependentUpon>ReportViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Report\Stock\StockByBrand_Report.xaml.cs">
       <DependentUpon>StockByBrand_Report.xaml</DependentUpon>
@@ -1585,15 +1585,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Report\ReportViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Report\Sales\VatMatrix_Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Report\Stock\CostOfGoodSold_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\ReportViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

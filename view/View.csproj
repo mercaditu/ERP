@@ -107,9 +107,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="De.TorstenMandelkow.MetroChart">
-      <HintPath>..\packages\De.TorstenMandelkow.MetroChart.dll</HintPath>
-    </Reference>
     <Reference Include="DSoft.RDLC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RDLCPrinter.1.2.0\lib\net45\DSoft.RDLC.dll</HintPath>
       <Private>True</Private>
@@ -1269,6 +1266,10 @@
     <ProjectReference Include="..\entity\Entity.csproj">
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reports\Reports.csproj">
+      <Project>{566fdf6c-0308-423d-8898-1e8fa2aade55}</Project>
+      <Name>Reports</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

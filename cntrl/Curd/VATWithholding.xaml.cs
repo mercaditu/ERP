@@ -44,18 +44,18 @@ namespace cntrl
                     stackMain.DataContext = invoiceViewSource;
                     DtpTransdate.SelectedDate = DateTime.Now;
 
-                  
-                   
-                    if (_invoiceList.FirstOrDefault().GetType().BaseType==typeof(sales_invoice))
+
+
+                    if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
                     {
                         sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
-                        if (sales_invoice.GrandTotal>0)
+                        if (sales_invoice.GrandTotal > 0)
                         {
-                            lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);    
+                            lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
                         }
-                        
-                      
-                        
+
+
+
                     }
                     else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
                     {
@@ -65,7 +65,7 @@ namespace cntrl
                             lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
                         }
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -81,33 +81,33 @@ namespace cntrl
                 payment_withholding_tax payment_withholding_tax = new payment_withholding_tax();
                 payment_withholding_tax.status = Status.Documents_General.Pending;
                 payment_withholding_tax.id_contact = ((dynamic)_invoiceList.FirstOrDefault()).id_contact;
-                if (cbxDocument.SelectedValue!=null)
+                if (cbxDocument.SelectedValue != null)
                 {
                     payment_withholding_tax.id_range = (int)cbxDocument.SelectedValue;
                 }
-               
+
                 payment_withholding_tax.id_currencyfx = ((dynamic)_invoiceList.FirstOrDefault()).id_currencyfx;
                 payment_withholding_tax.withholding_number = txtnumber.Text;
                 payment_withholding_tax.value = (decimal)lbltotalvat.Content;
-                payment_withholding_tax.trans_date =(DateTime) DtpTransdate.SelectedDate;
+                payment_withholding_tax.trans_date = (DateTime)DtpTransdate.SelectedDate;
                 payment_withholding_tax.expire_date = (DateTime)DtpTransdate.SelectedDate;
 
-              
-                    payment_withholding_details payment_withholding_details = new payment_withholding_details();
-                    if (_invoiceList.FirstOrDefault().GetType() == typeof(sales_invoice))
-                    {
-                        sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
-                        payment_withholding_details.id_purchase_invoice = sales_invoice.id_sales_invoice;
-                    }
-                    else if (_invoiceList.FirstOrDefault().GetType() == typeof(purchase_invoice))
-                    {
-                        purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
-                        payment_withholding_details.id_purchase_invoice = purchase_invoice.id_purchase_invoice;
 
-                    }
-                   
-                    payment_withholding_tax.payment_withholding_details.Add(payment_withholding_details);
-             
+                payment_withholding_details payment_withholding_details = new payment_withholding_details();
+                if (_invoiceList.FirstOrDefault().GetType() == typeof(sales_invoice))
+                {
+                    sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
+                    payment_withholding_details.id_purchase_invoice = sales_invoice.id_sales_invoice;
+                }
+                else if (_invoiceList.FirstOrDefault().GetType() == typeof(purchase_invoice))
+                {
+                    purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
+                    payment_withholding_details.id_purchase_invoice = purchase_invoice.id_purchase_invoice;
+
+                }
+
+                payment_withholding_tax.payment_withholding_details.Add(payment_withholding_details);
+
                 objEntity.payment_withholding_tax.Add(payment_withholding_tax);
                 payment_schedual _payment_schedual = new payment_schedual();
 
@@ -120,7 +120,7 @@ namespace cntrl
                     _payment_schedual.debit = Convert.ToDecimal(lbltotalvat.Content);
 
                 }
-               
+
                 _payment_schedual.parent = payment_schedual;
                 _payment_schedual.expire_date = payment_schedual.expire_date;
                 _payment_schedual.status = payment_schedual.status;
@@ -175,29 +175,43 @@ namespace cntrl
             if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
             {
                 sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
-                if (sales_invoice.vatwithholdingpercentage > 0)
+                if (sales_invoice.GrandTotal > 0)
                 {
-                    percentage = sales_invoice.vatwithholdingpercentage;
-                    if (percentage <=1)
+
+
+                    if (sales_invoice.vatwithholdingpercentage > 0)
                     {
-                        lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)) * percentage, 4);
+                        percentage = sales_invoice.vatwithholdingpercentage;
+                        if (percentage <= 1)
+                        {
+                            if (sales_invoice.GrandTotal > 0)
+                            {
+                                lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)) * percentage, 4);
+                            }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("not Exceed to Hundred %");
+                            lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
+                        }
+
                     }
                     else
                     {
-                        MessageBox.Show("not Exceed to Hundred %");
                         lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
                     }
-                    
-                }
-                else
-                {
-                    lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
                 }
             }
             else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
             {
+
+
                 purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
-                lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
+                if (purchase_invoice.GrandTotal > 0)
+                {
+                    lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
+                }
 
             }
         }

@@ -22,7 +22,7 @@
         <converter:SecurityConverter x:Key="SecurityConverter"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
-   
+
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
         <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
@@ -135,17 +135,17 @@
                         </Grid.ColumnDefinitions>
                         <Grid>
                             <Grid.Resources>
-                                    <HierarchicalDataTemplate DataType="{x:Type entity:production_order_detail}" 
+                                <HierarchicalDataTemplate DataType="{x:Type entity:production_order_detail}" 
             							                      ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                        <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             								                 IsChecked="{Binding IsSelected,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             								                 HorizontalAlignment="Stretch"
             								                 Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                              TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
             								                 QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                              Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </HierarchicalDataTemplate>
-                                </Grid.Resources>
+                                </HierarchicalDataTemplate>
+                            </Grid.Resources>
                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                 <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"   
                                                         VirtualizingPanel.VirtualizationMode="Recycling" 
@@ -336,6 +336,10 @@
                         </TabControl>
                         <Grid Grid.Column="1">
                             <StackPanel Grid.Row="0" Margin="0,10,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Total Requested Quntity :"/>
+                                    <Label x:Name="lblTotalRequest"/>
+                                </StackPanel>
                                 <Controls:NotificationButton Text="{lex:Loc RequestResource}" 
                                                              Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              Icon="" Click="btnRequestResource_Click" 

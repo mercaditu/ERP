@@ -125,6 +125,7 @@ namespace Cognitivo.Security
                     }
                 }
             }
+            dbContext.SaveChanges();
             List<security_privilage> security_privilageList = dbContext.security_privilage.ToList();
             foreach (security_privilage security_privilage in security_privilageList)
             {

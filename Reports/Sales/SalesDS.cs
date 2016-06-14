@@ -11,6 +11,9 @@
 
 namespace Reports.Sales.SalesDSTableAdapters
 {
+    partial class DataTable1TableAdapter
+    {
+    }
     
     
     public partial class CostGoodsSoldTableAdapter {

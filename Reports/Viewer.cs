@@ -30,7 +30,74 @@ namespace Reports
         {
 
         }
+
+        #region Finance
+
+        #endregion
+
         #region Sales
+
+        public void PendingDocuments_Sales()
+        {
+            String query = "SELECT" +
+	                        " c.code, " +
+                            " c.name," +
+                            " c.alias," +
+                            " c.address," +
+                            " c.telephone," +
+                            " ps.trans_date as fecha," +
+                            " if(ps.id_sales_invoice is not null,'Venta'," +
+	                        " 	if(ps.id_sales_return is not null,'Nota de credito','Nothing')) as detalle," +
+                            " s.number, " +
+	                        " case when ps.id_sales_invoice is not null then ps.debit " +
+                            " when ps.id_sales_return is not null then ps.credit" +
+                            " END as monto," +
+                            " ps.debit - ifnull((SELECT sum(ifnull(credit,0)) as credit " +
+                            " FROM payment_schedual as ps2" +
+                            " WHERE ps2.id_sales_invoice = s.id_sales_invoice " +
+                            " and ps2.parent_id_payment_schedual = ps.id_payment_schedual),0) as pendiente" +
+                            " FROM sales_invoice as s  " +
+                            " INNER JOIN payment_schedual as ps" +
+                            " ON ps.id_sales_invoice = s.id_sales_invoice and ps.debit != 0" +
+                            " LEFT JOIN sales_return as sr" +
+                            " ON sr.id_sales_return = ps.id_sales_return" +
+                            " LEFT JOIN contacts as c" +
+                            " ON c.id_contact = s.id_contact" +
+                            " WHERE s.status = 2" +
+                            " having pendiente != 0" +
+                            " order by c.name, ps.trans_date,s.number";
+
+            if (start_date != null || end_date != null)
+            {
+                query = query + " WHERE ";
+            }
+
+            if (start_date != null)
+            {
+                query = query + " SI.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
+            }
+
+            if (end_date != null)
+            {
+                if (start_date != null)
+                {
+                    query = query + " AND";
+                }
+
+                query = query + " SI.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
+            }
+
+            query = query + " GROUP BY I.CODE,B.CODE ORDER BY I.NAME";
+
+            DataTable dt = exeDT(query);
+
+            string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales\\CostOfGoodsSold.rdlc";
+            ReportDataSource reportDataSource = new ReportDataSource();
+            reportDataSource.Name = "CostOfGoodsSold";
+            reportDataSource.Value = dt;
+
+            RunReport(ReportPath, reportDataSource);
+        }
 
         public void CostOfGoodsSold()
         {

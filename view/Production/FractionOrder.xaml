@@ -22,13 +22,15 @@
         <converter:SecurityConverter x:Key="SecurityConverter"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <converter:ProjectPending2BooleanConverter x:Key="ProjectPending2Bool"/>
-   
+        <converter:NotConverter x:Key="NotConverter"/>
+        <converter:Bool2Collapsed x:Key="Bool2Collapsed"/>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="production_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_order}, CreateList=True}"/>
         <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
         <CollectionViewSource x:Key="production_lineViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:production_line}, CreateList=True}"/>
         <!--<CollectionViewSource x:Key="projectpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource projectViewSource}}"/>-->
         <CollectionViewSource x:Key="production_orderproduction_order_detailViewSource" Source="{Binding production_order_detail, Source={StaticResource production_orderViewSource}}" d:DesignSource="{d:DesignInstance {x:Type entity:production_order_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="production_order_dimensionViewSource" Source="{Binding production_order_dimension, Source={StaticResource production_orderproduction_order_detailViewSource}}"/>
         <!--<CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>-->
         <!--<CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
@@ -217,6 +219,7 @@
                                         <TextBox x:Name="txtqty" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
                                              Text="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" Style="{StaticResource input_textbox}"/>
                                     </StackPanel>
+                                    <StackPanel Visibility="{Binding ElementName=ToggleQuantity,Path=IsChecked,Converter={StaticResource Bool2Collapsed}}">
                                     <DataGrid Height="Auto" x:Name="item_movement_detailDataGrid" Width="340" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
                               AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
                               EnableRowVirtualization="True" 
@@ -248,6 +251,25 @@
                                             </DataTemplate>
                                         </DataGrid.RowDetailsTemplate>
                                     </DataGrid>
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ElementName=ToggleQuantity,Path=IsChecked,Converter={StaticResource NotConverter}}">
+                                        <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
+                                                      EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
+                                                      ItemsSource="{Binding Source={StaticResource production_order_dimensionViewSource}}" 
+                                                      RowDetailsVisibilityMode="VisibleWhenSelected">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn x:Name="dimension" Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                                                                        Header="{lex:Loc Cognitivo:local:Dimension}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                                        Width="auto"/>
+                                                <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                                                                        Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                                        Width="auto"/>
+                                                <DataGridTextColumn x:Name="measurement" Binding="{Binding app_measurement.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
+                                                                        Header="{lex:Loc Cognitivo:local:Measurement}" ElementStyle="{StaticResource RightAlignStyle}"
+                                                                        Width="auto"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>

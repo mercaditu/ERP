@@ -380,6 +380,7 @@
       <DependentUpon>VATGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Class\DataGrid.cs" />
+    <Compile Include="Converters\NotConverter .cs" />
     <Compile Include="Converters\AccountChartSubType2BooleanConverter.cs" />
     <Compile Include="Converters\AccountChartGroupAsset.cs" />
     <Compile Include="Converters\AccountChartGroupEquity.cs" />

@@ -13,6 +13,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             item_movement = new List<item_movement>();
+            item_transfer_dimension = new List<item_transfer_dimension>();
         }
 
         [Key]
@@ -58,6 +59,7 @@ namespace entity
         public virtual item_product item_product { get; set; }
         public virtual project_task project_task { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
+        public virtual ICollection<item_transfer_dimension> item_transfer_dimension { get; set; }
    
     }
 }

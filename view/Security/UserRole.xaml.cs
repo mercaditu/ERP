@@ -76,13 +76,13 @@ namespace Cognitivo.Security
 
         private void New_Click(object sender)
         {
+            add_Privallge();
             security_role security_role = new security_role();
             security_role.State = EntityState.Added;
             security_role.IsSelected = true;
             dbContext.security_role.Add(security_role);
-
             add_MissingRecords();
-            add_Privallge();
+          
 
             security_roleViewSource.View.Refresh();
             security_roleViewSource.View.MoveCurrentToLast();
@@ -92,13 +92,14 @@ namespace Cognitivo.Security
         {
             if (security_roleDataGrid.SelectedItem != null)
             {
+
+
+                add_Privallge();
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
                 security_role.IsSelected = true;
                 security_role.State = EntityState.Modified;
                 dbContext.Entry(security_role).State = EntityState.Modified;
-
                 add_MissingRecords();
-                add_Privallge();
             }
             else
             {

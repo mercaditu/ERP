@@ -96,6 +96,9 @@ namespace Cognitivo.Configs
             conStringBuilder.IntegratedSecurity = false;
             conStringBuilder.UserID = tbxUser.Text;
             conStringBuilder.Password = tbxPassword.Password.ToString();
+            conStringBuilder.ConnectionTimeout = 128;
+            conStringBuilder.DefaultCommandTimeout = 128;
+
             node.Attributes["connectionString"].Value = conStringBuilder.ConnectionString;
             if (isNew)
             {

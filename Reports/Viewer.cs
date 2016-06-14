@@ -166,7 +166,7 @@ namespace Reports
         {
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "InventoryCost"; // Name of the DataSet we set in .rdlc
-            DataTable dt = exeDT("call INVENTORY");
+            DataTable dt = exeDT("call INVENTORY('" + end_date.ToString("yyyy-MM-dd") + "')");
             reportDataSource.Value = dt;
      
             string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Inventory\\InventoryCost.rdlc";
@@ -199,9 +199,9 @@ namespace Reports
                 da.Fill(dt);
                 sqlConn.Close();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Unable to Connect to Database. Please Check your credentials.");
+                MessageBox.Show("Unable to Connect to Database. Please Check your credentials: " + ex.Message);
             }
             return dt;
         }

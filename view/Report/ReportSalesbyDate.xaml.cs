@@ -55,9 +55,9 @@ namespace Cognitivo.Report
                 da.Fill(dt);
                 sqlConn.Close();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Unable to Connect to Database. Please Check your credentials.");
+                MessageBox.Show("Unable to Connect to Database. Please Check your credentials: " + ex.Message);
             }
             return dt;
         }

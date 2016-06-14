@@ -37,7 +37,9 @@
                     <cntrl:navList recordCode="{Binding expiry_date}"
                                    recordSecondaryName="{Binding contact.gov_code}" 
                                    recordName="{Binding contact.name}" 
-                                   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                   IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                     </cntrl:navList>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -93,6 +95,8 @@
                        
 			           btnApprove_Click="toolBar_btnApprove_Click"
 			           btnAnull_Click="toolBar_btnAnull_Click"
-                       btnSearch_Click="toolBar_btnSearch_Click"/>
+                       btnSearch_Click="toolBar_btnSearch_Click"
+                        State="{Binding State,Source={StaticResource payment_promissory_noteViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding status,Source={StaticResource payment_promissory_noteViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

@@ -183,6 +183,14 @@
                                                     btnParent_Click="btnAddParentTask_Click"/>
                                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
                                     <StackPanel x:Name="stpcode" IsEnabled="False">
+                                        <StackPanel Orientation="Horizontal">
+                                        <Label Content="{lex:Loc Parent}" Style="{StaticResource input_label}"/>
+                                        <ComboBox x:Name="cbxParent" Style="{StaticResource input_combobox}" 
+                                                  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
+                                                  SelectedItem="{Binding parent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+							                        DisplayMemberPath="name" SelectedValuePath="id_order_detail"    />
+                                        <cntrl:toolIcon x:Name="btnanull" Click="Button_Click_1" imgSource="k" icoName="Clear" VerticalAlignment="Center"/>
+                                        </StackPanel>
                                         <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
                                         <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}" 
                                                   IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 

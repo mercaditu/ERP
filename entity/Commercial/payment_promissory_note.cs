@@ -117,6 +117,7 @@ namespace entity
         public string NumberWatermark { get; set; }
 
         public virtual contact contact { get; set; }
+        public virtual app_currencyfx app_currencyfx { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
 
         public string Error

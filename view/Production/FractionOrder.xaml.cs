@@ -133,6 +133,7 @@ namespace Cognitivo.Production
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+            cbxParent.ItemsSource = production_orderproduction_order_detailViewSource.View.OfType<production_order_detail>().ToList();
 
         }
 
@@ -782,16 +783,26 @@ namespace Cognitivo.Production
                                                                   && x.status == entity.Status.Stock.InStock
                                                                   && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                 item_movementViewSource.Source = Items_InStockLIST;
-            }
-            if (production_order_detail.movement_id>0)
-            {
-                if (OrderDB.item_movement.Where(x => x.id_movement == production_order_detail.movement_id).FirstOrDefault()!=null)
+                if (production_order_detail.movement_id > 0)
                 {
-                    item_movement_detailDataGrid.SelectedItem = OrderDB.item_movement.Where(x => x.id_movement == production_order_detail.movement_id).FirstOrDefault();  
-                }
-            
-            }
+                    if (OrderDB.item_movement.Where(x => x.id_movement == production_order_detail.movement_id).FirstOrDefault() != null)
+                    {
+                        item_movement_detailDataGrid.SelectedItem = OrderDB.item_movement.Where(x => x.id_movement == production_order_detail.movement_id).FirstOrDefault();
+                    }
 
+                }
+                if (production_order_detail.is_input)
+                {
+                    ToggleQuantity.IsChecked = false;
+                }
+                else
+                {
+                    ToggleQuantity.IsChecked = true;
+                }
+                List<production_order_detail> production_order_detailList = OrderDB.production_order_detail.ToList();
+                cbxParent.ItemsSource = production_order_detailList.Where(x => x.id_production_order == production_order_detail.id_production_order && x != production_order_detail).ToList().ToList();
+            }
+          
         }
 
         private void item_movement_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -813,9 +824,9 @@ namespace Cognitivo.Production
             production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
             if (production_order_detail != null)
             {
-               
-                    production_order_detail.is_input = false;
-               
+
+                production_order_detail.is_input = false;
+
 
             }
         }
@@ -829,6 +840,18 @@ namespace Cognitivo.Production
                 production_order_detail.is_input = true;
 
 
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
+            if (production_order_detail != null)
+            {
+
+                production_order_detail.parent = null;
+
+                production_orderproduction_order_detailViewSource.View.Refresh();
             }
         }
 

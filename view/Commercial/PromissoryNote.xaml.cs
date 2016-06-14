@@ -100,12 +100,21 @@ namespace Cognitivo.Commercial
 
         private void toolbar_btnEdit_Click(object sender)
         {
-
+            payment_promissory_note payment_promissory_note = (payment_promissory_note)payment_promissory_noteViewSource.View.CurrentItem;
+            if (payment_promissory_note!=null)
+            {
+                payment_promissory_note.State = System.Data.Entity.EntityState.Modified;
+            }
         }
 
         private void toolbar_btnSave_Click(object sender)
         {
-
+            PromissoryNoteDB.SaveChanges();
+            payment_promissory_note payment_promissory_note = (payment_promissory_note)payment_promissory_noteViewSource.View.CurrentItem;
+            if (payment_promissory_note != null)
+            {
+                payment_promissory_note.State = System.Data.Entity.EntityState.Unchanged;
+            }
         }
 
         private void toolbar_btnCancel_Click(object sender)

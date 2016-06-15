@@ -539,7 +539,7 @@ namespace entity.Brillo.Document
                                   Currency = g.app_currencyfx.app_currency.name,
                                   TransDate = g.payment_promissory_note.trans_date,
                                   ExpiryDate = g.payment_promissory_note.expiry_date,
-
+                                  Relation=g.contact!=null?GetRelation(g.contact.child.ToList()):"",
                                   SalesInvoiceNumber = g.sales_invoice != null ? g.sales_invoice.number : "",
                                   PurchaseInvoiceNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
 
@@ -549,6 +549,7 @@ namespace entity.Brillo.Document
                 return reportDataSource;
             }
         }
+       
         public ReportDataSource Payment(payment payment)
         {
             using (db db = new db())
@@ -630,6 +631,23 @@ namespace entity.Brillo.Document
             }
 
             return TagList;
+        }
+          private string GetRelation(List<contact> contact)
+        {
+            string ContactList = "";
+            if (contact.Count > 0)
+            {
+                foreach (contact _contact in contact)
+                {
+                    if (!ContactList.Contains(_contact.name))
+                    {
+                        ContactList = ContactList + ", " + _contact.name + "role:" + _contact.contact_role.name;
+                    }
+                }
+                return ContactList.Remove(0, 1);
+            }
+
+            return ContactList;
         }
 
 

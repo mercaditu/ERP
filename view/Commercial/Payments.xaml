@@ -7,21 +7,30 @@
       mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="700"
 	Title="Payments">
     <Grid Background="WhiteSmoke">
-        <TabControl Margin="0,40,0,0" Background="WhiteSmoke">
-            <TabItem Header="PaymentMade">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        
+        <ListView Style="{StaticResource nav_List}">
+            
+        </ListView>
+        
+        <TabControl Margin="0,40,0,0" Background="WhiteSmoke" Grid.Column="1">
+            <TabItem Header="Payments Made">
                 <DataGrid Margin="8">
                     <DataGrid.Columns>
                         <DataGridTextColumn />
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="PaymentRecieved">
+            <TabItem Header="Payments Recieved">
                 <DataGrid Margin="8">
                     
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <Grid VerticalAlignment="Top" Height="40" Background="White">
+        <Grid VerticalAlignment="Top" Height="40" Grid.ColumnSpan="2" Background="White">
             
         </Grid>
     </Grid>

@@ -137,7 +137,7 @@ namespace Cognitivo.Production
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-            cbxParent.ItemsSource = production_orderproduction_order_detailViewSource.View.OfType<production_order_detail>().ToList();
+            //cbxParent.ItemsSource = production_orderproduction_order_detailViewSource.View.OfType<production_order_detail>().ToList();
 
             if (production_orderproduction_order_detailViewSource.View != null)
             {

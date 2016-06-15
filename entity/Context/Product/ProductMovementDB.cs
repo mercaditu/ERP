@@ -98,9 +98,8 @@ namespace entity
                         if (item_movement_parent.item_movement_value != null)
                         {
                             base.item_movement_value.RemoveRange(credit_movement.item_movement_value);
-
-                           // credit_movement.item_movement_value.Clear();
-
+                            
+                            //credit_movement.item_movement_value.Clear();
                             if (item_movement_parent.item_movement_value.FirstOrDefault() != null)
                             {
                                 item_movement_value item_movement_value_credit = new entity.item_movement_value
@@ -109,25 +108,23 @@ namespace entity
                                     id_currencyfx = item_movement_parent.item_movement_value.FirstOrDefault().id_currencyfx,
                                     comment = "Base Cost",
                                     timestamp = item_movement_parent.timestamp
-
                                 };
                                 credit_movement.item_movement_value.Add(item_movement_value_credit);
-
                             }
-
-
-
                         }
-
                         item_movement_parent._child.Add(credit_movement);
                     }
                 }
+
                 foreach (app_location location in app_locationList)
                 {
 
                     List<item_movement> movementLocation = item_movement
-               .Where(x => x.id_company == CurrentSession.Id_Company && x.id_location == location.id_location && x.id_item_product == item.id_item_product)
-               .OrderBy(x => x.trans_date).ToList();
+                                               .Where(x => 
+                                                   x.id_company == CurrentSession.Id_Company && 
+                                                   x.id_location == location.id_location && 
+                                                   x.id_item_product == item.id_item_product)
+                                               .OrderBy(x => x.trans_date).ToList();
                     foreach (item_movement credit_movement in movementLocation.Where(x => x.credit > 0))
                     {
                         decimal credit = credit_movement.credit;
@@ -176,7 +173,6 @@ namespace entity
 
                             if (Value_CreditMovement >= 0)
                             {
-
                                 if (credit_movement.item_movement_value.FirstOrDefault() != null)
                                 {
                                     //Insert Cost into DebitMovement
@@ -187,9 +183,9 @@ namespace entity
                                         comment = "Base Cost",
                                         timestamp = debit_movement.timestamp
                                     };
+
                                     new_debit_movement.item_movement_value.Add(item_movement_value);
                                 }
-
                                 ///This will add cost of the Value into Sales Invoice for quick calculations.
                                 if (new_debit_movement.sales_invoice_detail != null)
                                 { new_debit_movement.sales_invoice_detail.unit_cost = Value_CreditMovement; }

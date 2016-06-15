@@ -58,7 +58,7 @@ namespace entity
         public void ReArrange_ProductMovement()
         {
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.id_item_product==507).ToList();
 
             foreach (item_product item in item_productList)
             {
@@ -66,7 +66,7 @@ namespace entity
                     .Where(x => x.id_company == CurrentSession.Id_Company && x.id_item_product == item.id_item_product)
                     .OrderBy(x => new { x.trans_date, x.credit }).ToList();
 
-                foreach (item_movement credit_movement in movement.Where(x => x.credit > 0))
+                foreach (item_movement credit_movement in movement.Where(x => x.credit > 0 ))
                 {
                     decimal credit = credit_movement.credit;
 
@@ -128,7 +128,7 @@ namespace entity
                     foreach (item_movement credit_movement in movementLocation.Where(x => x.credit > 0))
                     {
                         decimal credit = credit_movement.credit;
-                        foreach (item_movement debit_movement in movementLocation.Where(x => x.debit > 0 && x.is_read == false))
+                        foreach (item_movement debit_movement in movementLocation.Where(x => x.debit > 0 ))
                         {
                             debit_movement.is_read = true;
 

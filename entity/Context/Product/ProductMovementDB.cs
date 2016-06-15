@@ -211,45 +211,62 @@ namespace entity
 
         public void Generate_ProductMovement()
         {
-            //Delete all Movements.
+            ///Delete all Movements.
+            if (base.item_movement.Where(x => x.id_company == CurrentSession.Id_Company).Count() > 0)
+            {
+                base.item_movement.RemoveRange(base.item_movement.Where(x => x.id_company == CurrentSession.Id_Company).ToList());
+                base.SaveChanges();
+            }
 
             ///Purchase
-            List<purchase_invoice> purchaseLIST = purchase_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
+            List<purchase_invoice> purchaseLIST = purchase_invoice
+                .Where(x => 
+                    x.id_company == CurrentSession.Id_Company && 
+                    x.status == Status.Documents_General.Approved
+                    ).ToList();
+
             foreach (purchase_invoice purchase in purchaseLIST.OrderBy(y => y.trans_date))
             {
-                foreach (purchase_invoice_detail detail in purchase.purchase_invoice_detail)
+                using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
                 {
-                    //If Inventory is 
+                    PurchaseDB.Anull();
+                    PurchaseDB.Approve();
                 }
             }
 
             ///Inventory
-            List<item_inventory> item_inventoryLIST = item_inventory.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents.Issued).ToList();
-            foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
+            using (InventoryDB InventoryDB = new InventoryDB())
             {
-                foreach (item_inventory_detail detail in inventory.item_inventory_detail)
+                List<item_inventory> item_inventoryLIST = item_inventory.Where(
+                    x => 
+                        x.id_company == CurrentSession.Id_Company && 
+                        x.status == Status.Documents.Issued).ToList();
+                foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
                 {
-                    //If Inventory is 
+                    InventoryDB.Approve();
                 }
             }
 
             ///Transfers & Movement
-            List<item_transfer> item_transferLIST = item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).ToList();
-            foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
+            using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
             {
-                foreach (item_transfer_detail detail in transfer.item_transfer_detail)
+                List<item_transfer> item_transferLIST = item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).ToList();
+                foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
                 {
-                    //If Inventory is 
+
+                    //ProductTransferDB.ApproveOrigin();
+                    //ProductTransferDB.ApproveDestination();
                 }
             }
 
-            //Sales
-            List<sales_invoice> sales_invoiceLIST = sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
-            foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
+            ///Sales
+            using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
             {
-                foreach (sales_invoice_detail detail in sales.sales_invoice_detail)
+                List<sales_invoice> sales_invoiceLIST = SalesInvoiceDB.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
+                foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
                 {
-                    //If Inventory is 
+                    SalesInvoiceDB.Insert_Items_2_Movement(sales);
+                    SalesInvoiceDB.SaveChanges();
                 }
             }
         }

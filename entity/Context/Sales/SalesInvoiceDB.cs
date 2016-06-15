@@ -166,26 +166,7 @@ namespace entity
 
                     if (IsDiscountStock)
                     {
-                        List<item_movement> item_movementList = new List<item_movement>();
-
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        item_movementList = _Stock.insert_Stock(this, invoice);
-                        
-                        if (item_movementList != null && item_movementList.Count > 0)
-                        {
-                            foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product != null))
-                            {
-                                int id_item_product = item_product.Where(x => x.id_item == sales_detail.id_item).FirstOrDefault().id_item_product;
-                                item_movement _item_movement = item_movementList.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
-                                if (_item_movement.item_movement_value != null)
-                                {
-                                    sales_detail.unit_cost =entity.Brillo.Currency.convert_Values(_item_movement.item_movement_value.Average(x => x.unit_value)
-                                                            , _item_movement.item_movement_value.FirstOrDefault().id_currencyfx,sales_detail.sales_invoice.id_currencyfx,App.Modules.Sales);
-                                }
-                            }
-
-                            item_movement.AddRange(item_movementList);
-                        }
+                        Insert_Items_2_Movement(invoice);
                     }
 
                     if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range > 0)
@@ -227,11 +208,43 @@ namespace entity
             return true;
         }
 
+
+        /// <summary>
+        /// Executes code that will insert Invoiced Items into Movement.
+        /// </summary>
+        /// <param name="invoice"></param>
+        public void Insert_Items_2_Movement(sales_invoice invoice)
+        {
+            List<item_movement> item_movementList = new List<item_movement>();
+
+            Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+            item_movementList = _Stock.insert_Stock(this, invoice);
+
+            if (item_movementList != null && item_movementList.Count > 0)
+            {
+                foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product != null))
+                {
+                    int id_item_product = item_product.Where(x => x.id_item == sales_detail.id_item).FirstOrDefault().id_item_product;
+                    item_movement _item_movement = item_movementList.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
+
+                    if (_item_movement.item_movement_value != null)
+                    {
+                        sales_detail.unit_cost = entity.Brillo.Currency.convert_Values(_item_movement.item_movement_value.Average(x => x.unit_value)
+                                                , _item_movement.item_movement_value.FirstOrDefault().id_currencyfx, sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                    }
+                }
+
+                if (item_movementList.Count() > 0)
+                {
+                    item_movement.AddRange(item_movementList);
+                }
+            }
+        }
+
         public sales_invoice_detail Select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-               // Task Thread = Task.Factory.StartNew(() => select_Item(sales_invoice, item, AllowDuplicateItem));
                return  select_Item(ref sales_invoice, item, AllowDuplicateItem);
             }
             return null;
@@ -374,6 +387,7 @@ namespace entity
                         {
                             payment_schedual.RemoveRange(payment_schedualList);
                         }
+
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             item_movement.RemoveRange(item_movementList);

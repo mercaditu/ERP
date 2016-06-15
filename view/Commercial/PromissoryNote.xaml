@@ -63,9 +63,9 @@
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
                                   metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                   Style="{StaticResource input_combobox}"
-                                  SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                                  SelectedValue="{Binding id_range,Source={StaticResource payment_promissory_noteViewSource}, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                 <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding note_number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" 
+                <TextBox Text="{Binding note_number,Source={StaticResource payment_promissory_noteViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" 
                          metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 <StackPanel Orientation="Horizontal">

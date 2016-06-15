@@ -198,7 +198,7 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
-                <TabItem Header="{lex:Loc Service}">
+                <TabItem Header="{lex:Loc Service}" HorizontalAlignment="Right" Width="95">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>

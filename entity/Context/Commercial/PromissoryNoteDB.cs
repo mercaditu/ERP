@@ -69,6 +69,9 @@ namespace entity
                                                          && x.IsSelected && x.Error == null))
             {
                 payment_promissory_note.status = Status.Documents.Issued;
+                app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == payment_promissory_note.id_range).FirstOrDefault();
+                payment_promissory_note.note_number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+                payment_promissory_note.RaisePropertyChanged("note_number");
                 entity.Brillo.Document.Start.Automatic(payment_promissory_note, payment_promissory_note.app_document_range);
 
             }
@@ -78,7 +81,7 @@ namespace entity
         public void Anull()
         {
             foreach (payment_promissory_note payment_promissory_note in base.payment_promissory_note.Local.Where(x =>
-                                                 x.status == Status.Documents.Pending
+                                                 x.status == Status.Documents.Issued
                                                          && x.IsSelected && x.Error == null))
             {
                 payment_promissory_note.status = Status.Documents.Returned;

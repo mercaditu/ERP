@@ -230,7 +230,7 @@ namespace entity
                 using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
                 {
                     PurchaseDB.Insert_Items_2_Movement(purchase);
-                    //PurchaseDB.SaveChanges();
+                    PurchaseDB.SaveChanges();
                 }
             }
 
@@ -249,23 +249,28 @@ namespace entity
             ///Transfers & Movement
             using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
             {
-                List<item_transfer> item_transferLIST = item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).ToList();
+                List<item_transfer> item_transferLIST = ProductTransferDB.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Transfer.Approved).ToList();
                 foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
                 {
+                    transfer.IsSelected = true;
 
-                    //ProductTransferDB.ApproveOrigin();
-                    //ProductTransferDB.ApproveDestination();
+                    ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+                    ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+
+                    transfer.IsSelected = false;
                 }
             }
 
-            ///Sales
-            using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
+            List<sales_invoice> sales_invoiceLIST = base.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
+            foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
             {
-                List<sales_invoice> sales_invoiceLIST = SalesInvoiceDB.sales_invoice.Where(x => x.id_company == CurrentSession.Id_Company && x.status == Status.Documents_General.Approved).ToList();
-                foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
+                ///Sales
+                using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
                 {
-                    SalesInvoiceDB.Insert_Items_2_Movement(sales);
-                    //SalesInvoiceDB.SaveChanges();
+                    sales_invoice sales_invoice = SalesInvoiceDB.sales_invoice.Where(x => x.id_sales_invoice == sales.id_sales_invoice).FirstOrDefault();
+
+                    SalesInvoiceDB.Insert_Items_2_Movement(sales_invoice);
+                    SalesInvoiceDB.SaveChanges();
                 }
             }
         }

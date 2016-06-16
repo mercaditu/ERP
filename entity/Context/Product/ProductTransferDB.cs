@@ -59,7 +59,7 @@ namespace entity
         /// <summary>
         /// Should only
         /// </summary>
-        public int ApproveOrigin(int origin, int dest, bool movebytruck)
+        public int ApproveOrigin(int ID_BranchOrigin, int ID_BranchDestination, bool movebytruck)
         {
             NumberOfRecords = 0;
 
@@ -74,7 +74,7 @@ namespace entity
                         if (movebytruck)
                         {
                             app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                            app_location app_location = base.app_location.Where(x => x.id_branch == origin && x.is_default).FirstOrDefault();
+                            app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
                             List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
                                                                     && x.id_item_product == item_transfer_detail.id_item_product
                                                                     && x.status == entity.Status.Stock.InStock
@@ -88,7 +88,7 @@ namespace entity
 
                             item_movement item_movement_Dest;
                             app_currencyfx app_currencyfxdest = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                            app_location app_locationdest = base.app_location.Where(x => x.id_branch == dest && x.is_default).FirstOrDefault();
+                            app_location app_locationdest = base.app_location.Where(x => x.id_branch == ID_BranchDestination && x.is_default).FirstOrDefault();
 
                             item_movement_Dest = stock.CreditOnly_Movement(
                                 Status.Stock.InStock,
@@ -108,7 +108,7 @@ namespace entity
                         else
                         {
                             app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
-                            app_location app_location = base.app_location.Where(x => x.id_branch == origin && x.is_default).FirstOrDefault();
+                            app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
 
                             List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
                                                                     && x.id_item_product == item_transfer_detail.id_item_product

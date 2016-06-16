@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource3 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -50,6 +50,7 @@
             this.button1.TabIndex = 14;
             this.button1.Text = "Load";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dateTimePicker2
             // 
@@ -78,9 +79,9 @@
             this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            reportDataSource1.Name = "SalesByItem";
-            reportDataSource1.Value = this.salesByItemBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            reportDataSource3.Name = "SalesByItem";
+            reportDataSource3.Value = this.salesByItemBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource3);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "Reporting.Reports.SalesByItem.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(-2, 69);
             this.reportViewer1.Margin = new System.Windows.Forms.Padding(0);
@@ -113,6 +114,7 @@
             this.Controls.Add(this.reportViewer1);
             this.Name = "SalesByItem";
             this.Text = "SalesByItem";
+            this.Load += new System.EventHandler(this.SalesByItem_Load);
             ((System.ComponentModel.ISupportInitialize)(this.salesDB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesByItemBindingSource)).EndInit();
             this.ResumeLayout(false);

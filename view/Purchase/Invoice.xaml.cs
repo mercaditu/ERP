@@ -461,7 +461,7 @@ namespace Cognitivo.Purchase
             {
                 purchase_invoice_detail.id_vat_group = PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
             }
-
+        
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
@@ -655,6 +655,13 @@ namespace Cognitivo.Purchase
                                                                                      .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
                                                                                      .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(); ;
                         purchase_invoice_detail.unit_cost = _purchase_order_detail.unit_cost;
+                        foreach (purchase_order_dimension purchase_order_dimension in _purchase_order_detail.purchase_order_dimension)
+                        {
+                            purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
+                            purchase_invoice_dimension.id_dimension = purchase_order_dimension.id_dimension;
+                            purchase_invoice_dimension.value = purchase_order_dimension.value;
+                            purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
+                        }
                         _purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                     }
 

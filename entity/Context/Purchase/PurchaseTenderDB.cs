@@ -128,6 +128,15 @@ namespace entity
                             
                             purchase_order_detail.id_cost_center = base.app_cost_center.Where(x => x.is_active == true).FirstOrDefault().id_cost_center;
 
+                            
+                           
+                            foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
+                            {
+                                purchase_order_dimension purchase_order_dimension = new purchase_order_dimension();
+                                purchase_order_dimension.id_dimension = purchase_tender_dimension.id_dimension;
+                                purchase_order_dimension.value = purchase_tender_dimension.value;
+                                purchase_order_detail.purchase_order_dimension.Add(purchase_order_dimension);
+                            }
                             purchase_order.purchase_order_detail.Add(purchase_order_detail);
                             purchase_tender_detail.status = Status.Documents_General.Approved;
                         }

@@ -17,7 +17,7 @@ namespace Reporting.Views
             InitializeComponent();
 
             dateTimePicker1.Value = DateTime.Now.AddMonths(-1);
-            dateTimePicker2.Value = DateTime.Now();
+            dateTimePicker2.Value = DateTime.Now;
         }
 
         private void SalesByTag_Load(object sender, EventArgs e)

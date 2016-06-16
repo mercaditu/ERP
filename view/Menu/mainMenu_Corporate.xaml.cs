@@ -92,19 +92,9 @@ namespace Cognitivo.Menu
 
             if (name.Contains("Reporting"))
             {
-                //Window objPage = default(Window);
-
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    Assembly Reporting = Assembly.LoadFrom("Reporting.exe");
-                    var form = (System.Windows.Forms.Form)Activator.CreateInstance(Reporting.GetType(name));
-                    form.Show();
-
-                    //Type Type = Reporting.GetType(name, true, true);
-                    //objPage = (Window)Activator.CreateInstance(Type);
-                    //objPage.Show();
-                    //Cursor = Cursors.Arrow;
-                }));
+                Assembly Reporting = Assembly.LoadFrom("Reporting.exe");
+                var form = (System.Windows.Forms.Form)Activator.CreateInstance(Reporting.GetType(name));
+                form.Show();
 
                 return;
             }

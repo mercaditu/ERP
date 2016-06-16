@@ -200,6 +200,7 @@ namespace Cognitivo.Menu
             
             cntrl.applicationIcon appIcon = new cntrl.applicationIcon();
 
+            ///AssemblyCheck. If reporting exists, don't add Cognitivo.
             if (_app.Contains("Reporting") == false)
             {
                 appIcon.Tag = "Cognitivo." + _app;
@@ -209,6 +210,7 @@ namespace Cognitivo.Menu
                 appIcon.Tag = _app;
             }
 
+            ///Security Check.
             try
             {
                 entity.Brillo.Security security = new entity.Brillo.Security((entity.App.Names)Enum.Parse(typeof(entity.App.Names), _name, true));

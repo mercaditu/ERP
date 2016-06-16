@@ -15,6 +15,9 @@ namespace Reporting.Views
         public SalesByDate()
         {
             InitializeComponent();
+
+            dateTimePicker1.Value = DateTime.Now.AddMonths(-1);
+            dateTimePicker2.Value = DateTime.Now();
         }
 
         private void SalesByDate_Load(object sender, EventArgs e)

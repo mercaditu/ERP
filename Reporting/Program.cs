@@ -16,7 +16,7 @@ namespace Reporting
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new SalesByDate());
+			Application.Run(new Views.SalesByDate());
 		}
 	}
 }

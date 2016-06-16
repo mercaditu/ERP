@@ -1268,6 +1268,10 @@
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Reporting\Reporting.csproj">
+      <Project>{065aea1b-0ef2-4cd2-a5d7-7af4bf5d8413}</Project>
+      <Name>Reporting</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Accounting\Reports.xaml">

@@ -9,6 +9,7 @@ using WPFLocalizeExtension.Extensions;
 using System.Threading.Tasks;
 using System.Windows.Media.Effects;
 using System.Windows.Media;
+using System.Reflection;
 
 namespace Cognitivo.Menu
 {
@@ -91,15 +92,19 @@ namespace Cognitivo.Menu
 
             if (name.Contains("Reporting"))
             {
-                Window objPage = default(Window);
-                Type PageInstanceType = null;
+                //Window objPage = default(Window);
 
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    PageInstanceType = Type.GetType(name, true, true);
-                    objPage = (Window)Activator.CreateInstance(PageInstanceType);
-                    objPage.Show();
-                    Cursor = Cursors.Arrow;
+                    Assembly Reporting = Assembly.LoadFrom("Reporting.exe");
+
+                    var form = (System.Windows.Forms.Form)Activator.CreateInstance(Reporting.GetType(name));
+                    form.Show();
+
+                    //Type Type = Reporting.GetType(name, true, true);
+                    //objPage = (Window)Activator.CreateInstance(Type);
+                    //objPage.Show();
+                    //Cursor = Cursors.Arrow;
                 }));
 
                 return;

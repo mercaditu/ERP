@@ -202,6 +202,10 @@ namespace entity
             {
                 //Credit Destination.
                 item_movement item_movement_dest;
+                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_item_product == item_transfer_detail.id_item_product
+                                                      && x.status == entity.Status.Stock.InStock && x.id_transfer_detail == item_transfer_detail.id_transfer_detail
+                                                      && x.debit > 0).ToList();
+
                 item_movement_dest =
                             stock.CreditOnly_Movement(
                                 Status.Stock.InStock,
@@ -213,9 +217,10 @@ namespace entity
                                 app_location_dest,
                                 item_transfer_detail.quantity_destination,
                                 item_transfer_detail.item_transfer.trans_date,
-                                0,
+                                Items_InStockLIST.Sum(x=>x.item_movement_value.Sum(y=>y.unit_value)),
                                 stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", "")
                                 );
+                item_movement_dest._parent = Items_InStockLIST.FirstOrDefault();
                 base.item_movement.Add(item_movement_dest);
             }
         }

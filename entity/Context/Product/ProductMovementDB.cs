@@ -58,7 +58,7 @@ namespace entity
         public void ReArrange_ProductMovement()
         {
             List<app_location> app_locationList = app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-            List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.id_item_product==507).ToList();
+            List<item_product> item_productList = item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.id_item_product == 507).ToList();
 
             foreach (item_product item in item_productList)
             {
@@ -66,7 +66,7 @@ namespace entity
                     .Where(x => x.id_company == CurrentSession.Id_Company && x.id_item_product == item.id_item_product)
                     .OrderBy(x => new { x.trans_date, x.credit }).ToList();
 
-                foreach (item_movement credit_movement in movement.Where(x => x.credit > 0 ))
+                foreach (item_movement credit_movement in movement.Where(x => x.credit > 0))
                 {
                     decimal credit = credit_movement.credit;
 
@@ -98,7 +98,7 @@ namespace entity
                         if (item_movement_parent.item_movement_value != null)
                         {
                             base.item_movement_value.RemoveRange(credit_movement.item_movement_value);
-                            
+
                             //credit_movement.item_movement_value.Clear();
                             if (item_movement_parent.item_movement_value.FirstOrDefault() != null)
                             {
@@ -120,15 +120,15 @@ namespace entity
                 {
 
                     List<item_movement> movementLocation = item_movement
-                                               .Where(x => 
-                                                   x.id_company == CurrentSession.Id_Company && 
-                                                   x.id_location == location.id_location && 
+                                               .Where(x =>
+                                                   x.id_company == CurrentSession.Id_Company &&
+                                                   x.id_location == location.id_location &&
                                                    x.id_item_product == item.id_item_product)
                                                .OrderBy(x => x.trans_date).ToList();
                     foreach (item_movement credit_movement in movementLocation.Where(x => x.credit > 0))
                     {
                         decimal credit = credit_movement.credit;
-                        foreach (item_movement debit_movement in movementLocation.Where(x => x.debit > 0 ))
+                        foreach (item_movement debit_movement in movementLocation.Where(x => x.debit > 0))
                         {
                             debit_movement.is_read = true;
 
@@ -207,7 +207,7 @@ namespace entity
             SaveChanges();
             //}
         }
-       
+
 
         public void Generate_ProductMovement()
         {
@@ -220,8 +220,8 @@ namespace entity
 
             ///Purchase
             List<purchase_invoice> purchaseLIST = purchase_invoice
-                .Where(x => 
-                    x.id_company == CurrentSession.Id_Company && 
+                .Where(x =>
+                    x.id_company == CurrentSession.Id_Company &&
                     x.status == Status.Documents_General.Approved
                     ).ToList();
 
@@ -237,8 +237,8 @@ namespace entity
             ///Inventory
             using (InventoryDB InventoryDB = new InventoryDB())
             {
-                List<item_inventory> item_inventoryLIST = item_inventory.Where(x => 
-                        x.id_company == CurrentSession.Id_Company && 
+                List<item_inventory> item_inventoryLIST = item_inventory.Where(x =>
+                        x.id_company == CurrentSession.Id_Company &&
                         x.status == Status.Documents.Issued).ToList();
                 foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
                 {
@@ -254,11 +254,13 @@ namespace entity
                 {
                     transfer.IsSelected = true;
                     foreach (item_transfer_detail detail in transfer.item_transfer_detail)
-	{
-		 
-	}
-                    ProductTransferDB.Discount_Items_Origin(detail, ID_BranchOrigin, ID_BranchDestination)
+                    {
+                        detail.status = Status.Documents_General.Pending;
+                        detail.IsSelected = true;
+                       // ProductTransferDB.Discount_Items_Origin(detail, transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+                    }
 
+                    ProductTransferDB.SaveChanges();
                     ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
                     ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
 

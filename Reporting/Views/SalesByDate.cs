@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Reporting
+namespace Reporting.Views
 {
     public partial class SalesByDate : Form
     {
@@ -17,7 +17,7 @@ namespace Reporting
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void SalesByDate_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'salesDB.SalesByDate' table. You can move, or remove it, as needed.
             this.salesByDateTableAdapter.Fill(this.salesDB.SalesByDate, dateTimePicker1.Value, dateTimePicker2.Value);
@@ -29,6 +29,5 @@ namespace Reporting
             this.salesByDateTableAdapter.Fill(this.salesDB.SalesByDate, dateTimePicker1.Value, dateTimePicker2.Value);
             this.reportViewer1.RefreshReport();
         }
-
     }
 }

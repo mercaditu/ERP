@@ -1,11 +1,11 @@
-﻿namespace Reporting
+﻿namespace Reporting.Views
 {
     partial class SalesByDate
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components;
+        private System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource3 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.salesDB = new Reporting.Data.SalesDB();
             this.salesDBBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.salesByDateBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.salesByDateTableAdapter = new Reporting.Data.SalesDBTableAdapters.SalesByDateTableAdapter();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.salesDB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesDBBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesByDateBindingSource)).BeginInit();
@@ -45,16 +45,14 @@
             // 
             // reportViewer1
             // 
-            this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            reportDataSource2.Name = "SalesByDate";
-            reportDataSource2.Value = this.salesByDateBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource2);
+            this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            reportDataSource3.Name = "SalesByDate";
+            reportDataSource3.Value = this.salesByDateBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource3);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "Reporting.Reports.SalesByDate.rdlc";
-            this.reportViewer1.Location = new System.Drawing.Point(0, 73);
-            this.reportViewer1.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.reportViewer1.Location = new System.Drawing.Point(0, 83);
             this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.Size = new System.Drawing.Size(2159, 1025);
+            this.reportViewer1.Size = new System.Drawing.Size(1234, 495);
             this.reportViewer1.TabIndex = 0;
             // 
             // salesDB
@@ -76,51 +74,49 @@
             // 
             this.salesByDateTableAdapter.ClearBeforeFill = true;
             // 
-            // dateTimePicker1
+            // button1
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(14, 13);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(256, 47);
-            this.dateTimePicker1.TabIndex = 1;
+            this.button1.Location = new System.Drawing.Point(531, 22);
+            this.button1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(191, 47);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Load";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dateTimePicker2
             // 
             this.dateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(280, 13);
+            this.dateTimePicker2.Location = new System.Drawing.Point(277, 22);
             this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(244, 47);
-            this.dateTimePicker2.TabIndex = 2;
+            this.dateTimePicker2.TabIndex = 5;
             // 
-            // button1
+            // dateTimePicker1
             // 
-            this.button1.Location = new System.Drawing.Point(534, 13);
-            this.button1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(191, 47);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Load";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker1.Location = new System.Drawing.Point(11, 22);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(256, 47);
+            this.dateTimePicker1.TabIndex = 4;
             // 
-            // Form1
+            // SalesByDate
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 37F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2160, 1098);
+            this.ClientSize = new System.Drawing.Size(1234, 578);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.reportViewer1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
-            this.Name = "Form1";
-            this.Text = "Sales by Date";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Name = "SalesByDate";
+            this.Text = "SalesByDate";
+            this.Load += new System.EventHandler(this.SalesByDate_Load);
             ((System.ComponentModel.ISupportInitialize)(this.salesDB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesDBBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesByDateBindingSource)).EndInit();
@@ -135,9 +131,8 @@
         private System.Windows.Forms.BindingSource salesDBBindingSource;
         private Data.SalesDB salesDB;
         private Data.SalesDBTableAdapters.SalesByDateTableAdapter salesByDateTableAdapter;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
-

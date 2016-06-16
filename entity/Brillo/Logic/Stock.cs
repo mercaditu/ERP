@@ -763,6 +763,7 @@ namespace entity.Brillo.Logic
                         decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, app_currencyfx.id_currencyfx, ID_CurrencyFX_Default, null);
 
                         item_movement_value.unit_value = DefaultCurrency_Cost;
+                        
                     }
                 }
                 else
@@ -772,6 +773,7 @@ namespace entity.Brillo.Logic
                     ///Also we are assuming item.unit_cost is in default currency. But if this transaction is in a different currency
                     ///we can have mis-guided information.
                     item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                   
                 }
 
                 item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;

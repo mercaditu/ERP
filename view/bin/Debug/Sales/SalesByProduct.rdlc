@@ -398,6 +398,8 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
         <DataSetName>SalesByProduct</DataSetName>
         <Height>0.5in</Height>
         <Width>6.5in</Width>
@@ -414,7 +416,7 @@
   <Width>6.5in</Width>
   <Page>
     <PageHeader>
-      <Height>1in</Height>
+      <Height>0.36458in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -435,7 +437,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox13</rd:DefaultName>
-          <Top>0.32292in</Top>
           <Left>0.23437in</Left>
           <Height>0.35417in</Height>
           <Width>2.91667in</Width>
@@ -457,7 +458,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1in</Height>
+      <Height>0.64583in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -465,7 +466,7 @@
           <Source>Embedded</Source>
           <Value>Cognitivo64</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.25in</Top>
+          <Top>0.06944in</Top>
           <Left>3in</Left>
           <Height>0.5in</Height>
           <Width>0.5in</Width>

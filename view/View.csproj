@@ -975,9 +975,6 @@
     <Content Include="bin\Debug\Sales\CostOfGoodsSold.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\Sales\SalesByDate.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="bin\Debug\Sales\SalesByProduct.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1021,6 +1021,8 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
         <DataSetName>CostOfGoodsSold</DataSetName>
         <Height>1in</Height>
         <Width>9.35937in</Width>
@@ -1037,7 +1039,7 @@
   <Width>9.35937in</Width>
   <Page>
     <PageHeader>
-      <Height>0.85417in</Height>
+      <Height>0.34896in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1058,7 +1060,6 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox33</rd:DefaultName>
-          <Top>0.28521in</Top>
           <Left>0.23312in</Left>
           <Height>0.34375in</Height>
           <Width>2.25646in</Width>
@@ -1080,7 +1081,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.99354in</Height>
+      <Height>0.67062in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1088,7 +1089,7 @@
           <Source>Embedded</Source>
           <Value>CognitivoLogo</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.25396in</Top>
+          <Top>0.06944in</Top>
           <Left>3.98958in</Left>
           <Height>0.5in</Height>
           <Width>0.5in</Width>

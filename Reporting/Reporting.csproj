@@ -82,6 +82,7 @@
     <EmbeddedResource Include="Views\SalesByDate.resx">
       <DependentUpon>SalesByDate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\SalesByItem.rdlc" />
     <EmbeddedResource Include="Views\SalesByTag.resx">
       <DependentUpon>SalesByTag.cs</DependentUpon>
     </EmbeddedResource>

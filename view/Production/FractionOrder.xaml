@@ -154,7 +154,7 @@
             </ScrollViewer>
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" 
                         Grid.Row="2" Grid.ColumnSpan="2" Margin="8">
-                <TabItem Header="{lex:Loc RawMaterial}" Height="42" VerticalAlignment="Bottom">
+                <TabItem Header="{lex:Loc Order}" Height="42" VerticalAlignment="Bottom">
                     <Grid Grid.Row="1"  Background="White" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                               DataContext="{StaticResource production_orderproduction_order_detailViewSource}">
                         <Grid.ColumnDefinitions>
@@ -208,7 +208,7 @@
                                                     btnAnull_Click="toolIcon_Click_1"
                                                     btnParent_Click="btnAddParentTask_Click"/>
                                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
-                                    <StackPanel x:Name="stpcode" IsEnabled="False">
+                                    <!--<StackPanel x:Name="stpcode" IsEnabled="False">
                                         <StackPanel Orientation="Horizontal">
                                         <Label Content="{lex:Loc Parent}" Style="{StaticResource input_label}"/>
                                         <ComboBox x:Name="cbxParent" Style="{StaticResource input_combobox}" 
@@ -225,9 +225,9 @@
                                         <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
                                         <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" />
                                         <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc Input}" OnLabel="{lex:Loc Output}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked"/>
-                                    </StackPanel>
+                                    </StackPanel>-->
 
-                                    <StackPanel x:Name="stpdate" Visibility="Collapsed">
+                                    <!--<StackPanel x:Name="stpdate" Visibility="Collapsed">
                                         <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}" />
                                         <DatePicker Style="{StaticResource input_datepicker}"
                                                     IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
@@ -236,9 +236,15 @@
                                         <DatePicker Style="{StaticResource input_datepicker}"
                                                     IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
                                                     SelectedDate="{Binding end_date_est, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                    </StackPanel>
+                                    </StackPanel>-->
 
-                                    <StackPanel x:Name="stpitem" Visibility="Collapsed">
+                                    <StackPanel x:Name="stpcode">
+                                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc Input}" OnLabel="{lex:Loc Output}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked"/>
+                                        <Label Content="{lex:Loc Parent}" Style="{StaticResource input_label}"/>
+                                        <ComboBox x:Name="cbxParent" Style="{StaticResource input_combobox}" 
+                                                  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
+                                                  SelectedItem="{Binding parent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+							                        DisplayMemberPath="name" SelectedValuePath="id_order_detail"    />
                                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
                                         <TextBox x:Name="txtqty" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
                                              Text="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" Style="{StaticResource input_textbox}"/>
@@ -247,7 +253,7 @@
                                     <StackPanel>
                                         <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
                                                       EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
-                                                      ItemsSource="{Binding Source={StaticResource production_order_dimensionViewSource}}" 
+                                                     
                                                       RowDetailsVisibilityMode="VisibleWhenSelected">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn x:Name="dimension" Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 

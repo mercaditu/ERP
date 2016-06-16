@@ -30,9 +30,12 @@
         <CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}"/>
         
         <CollectionViewSource x:Key="purchase_orderpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource purchase_orderViewSource}}"/>
+        <CollectionViewSource x:Key="purchase_order_detailpurchase_order_dimensionViewSource" Source="{Binding purchase_order_dimension, Source={StaticResource purchase_orderpurchase_order_detailViewSource}}"/>
        
         <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+        
     </Page.Resources>
     <Grid DataContext="{StaticResource purchase_orderViewSource}">
         <Grid.ColumnDefinitions>
@@ -376,7 +379,24 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                      
                     </DataGrid.Columns>
+                    <DataGrid.RowDetailsTemplate>
+                        <DataTemplate>
+                            <DataGrid x:Name="dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Width="256"
+                                  ItemsSource="{Binding Source={StaticResource purchase_order_detailpurchase_order_dimensionViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected" 
+                                  CanUserAddRows="True"
+                                 >
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
+									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
+                                  
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DataTemplate>
+                    </DataGrid.RowDetailsTemplate>
                 </DataGrid>
             </Grid>
 

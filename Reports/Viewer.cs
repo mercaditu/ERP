@@ -98,7 +98,7 @@ namespace Reports
         {
             String query =
                 " select " +
-    " s.trans_date, contact.name, s.number, sum(sd.quantity) as quantity," +
+    " DATE(s.trans_date) as trans_date, contact.name, s.number, sum(sd.quantity) as quantity," +
    "  round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as total," +
     " (sum(discount)*-1) as discount" +
 " from sales_invoice as s" +

@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 84
+            /// Last Used : 86
             /// </summary>
 
             //Sales
@@ -219,12 +219,13 @@ namespace entity
             Type = 76,
             [LocalizedDescription("CostCenter")]
             CostCenter = 77,
-            //[LocalizedDescription("ReportSalesbyTag")]
-            Reports = 79,
+
             //[LocalizedDescription("ReportSalesbyProduct")]
-            ReportSalesbyProduct = 82,
+            SalesbyProduct = 82,
             //[LocalizedDescription("ReportSalesbyDate")]
-            ReportSalesbyDate = 83,
+            SalesbyDate = 83,
+            SalesByTag = 86,
+
             SuppliesRequest=84
         }
     }

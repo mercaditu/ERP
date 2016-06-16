@@ -62,6 +62,12 @@
     <Compile Include="Views\SalesByDate.Designer.cs">
       <DependentUpon>SalesByDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SalesByTag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SalesByTag.Designer.cs">
+      <DependentUpon>SalesByTag.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -72,8 +78,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Reports\SalesByDate.rdlc" />
+    <EmbeddedResource Include="Reports\SalesByTag.rdlc" />
     <EmbeddedResource Include="Views\SalesByDate.resx">
       <DependentUpon>SalesByDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SalesByTag.resx">
+      <DependentUpon>SalesByTag.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Data\SalesDB.xsc">
       <DependentUpon>SalesDB.xsd</DependentUpon>

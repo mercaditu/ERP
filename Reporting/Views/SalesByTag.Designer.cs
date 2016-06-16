@@ -1,6 +1,6 @@
 ﻿namespace Reporting.Views
 {
-    partial class SalesByDate
+    partial class SalesByTag
     {
         /// <summary>
         /// Required designer variable.
@@ -30,47 +30,25 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesByDate));
-            this.salesByDateBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesByTag));
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.salesDBBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.salesDB = new Reporting.Data.SalesDB();
-            this.salesByDateTableAdapter = new Reporting.Data.SalesDBTableAdapters.SalesByDateTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.salesByDateBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.salesDBBindingSource)).BeginInit();
+            this.salesByTagBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.salesByTagTableAdapter = new Reporting.Data.SalesDBTableAdapters.SalesByTagTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.salesDB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.salesByTagBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // salesByDateBindingSource
-            // 
-            this.salesByDateBindingSource.DataMember = "SalesByDate";
-            this.salesByDateBindingSource.DataSource = this.salesDBBindingSource;
-            // 
-            // reportViewer1
-            // 
-            this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            reportDataSource1.Name = "SalesByDate";
-            reportDataSource1.Value = this.salesByDateBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer1.LocalReport.ReportEmbeddedResource = "Reporting.Reports.SalesByDate.rdlc";
-            this.reportViewer1.Location = new System.Drawing.Point(0, 70);
-            this.reportViewer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.Size = new System.Drawing.Size(773, 461);
-            this.reportViewer1.TabIndex = 0;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(541, 14);
+            this.button1.Location = new System.Drawing.Point(538, 14);
             this.button1.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(271, 47);
-            this.button1.TabIndex = 6;
+            this.button1.Size = new System.Drawing.Size(220, 47);
+            this.button1.TabIndex = 10;
             this.button1.Text = "Load";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -80,11 +58,11 @@
             this.dateTimePicker2.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.dateTimePicker2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker2.Location = new System.Drawing.Point(283, 14);
+            this.dateTimePicker2.Location = new System.Drawing.Point(276, 14);
             this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(244, 47);
-            this.dateTimePicker2.TabIndex = 5;
+            this.dateTimePicker2.Size = new System.Drawing.Size(248, 47);
+            this.dateTimePicker2.TabIndex = 9;
             // 
             // dateTimePicker1
             // 
@@ -94,54 +72,65 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(16, 14);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(7, 5, 7, 5);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(253, 47);
-            this.dateTimePicker1.TabIndex = 4;
+            this.dateTimePicker1.Size = new System.Drawing.Size(246, 47);
+            this.dateTimePicker1.TabIndex = 8;
             // 
-            // salesDBBindingSource
+            // reportViewer1
             // 
-            this.salesDBBindingSource.DataSource = this.salesDB;
-            this.salesDBBindingSource.Position = 0;
+            this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            reportDataSource1.Name = "SalesByTag";
+            reportDataSource1.Value = this.salesByTagBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer1.LocalReport.ReportEmbeddedResource = "Reporting.Reports.SalesByTag.rdlc";
+            this.reportViewer1.Location = new System.Drawing.Point(-3, 78);
+            this.reportViewer1.Margin = new System.Windows.Forms.Padding(0);
+            this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.Size = new System.Drawing.Size(779, 454);
+            this.reportViewer1.TabIndex = 7;
             // 
             // salesDB
             // 
             this.salesDB.DataSetName = "SalesDB";
             this.salesDB.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // salesByDateTableAdapter
+            // salesByTagBindingSource
             // 
-            this.salesByDateTableAdapter.ClearBeforeFill = true;
+            this.salesByTagBindingSource.DataMember = "SalesByTag";
+            this.salesByTagBindingSource.DataSource = this.salesDB;
             // 
-            // SalesByDate
+            // salesByTagTableAdapter
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(17F, 33F);
+            this.salesByTagTableAdapter.ClearBeforeFill = true;
+            // 
+            // SalesByTag
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 529);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.reportViewer1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "SalesByDate";
-            this.Text = "Sales By Date";
-            this.Load += new System.EventHandler(this.SalesByDate_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.salesByDateBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.salesDBBindingSource)).EndInit();
+            this.Name = "SalesByTag";
+            this.Text = "Sales By Tag";
+            this.Load += new System.EventHandler(this.SalesByTag_Load);
             ((System.ComponentModel.ISupportInitialize)(this.salesDB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.salesByTagBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
-        private System.Windows.Forms.BindingSource salesByDateBindingSource;
-        private System.Windows.Forms.BindingSource salesDBBindingSource;
-        private Data.SalesDB salesDB;
-        private Data.SalesDBTableAdapters.SalesByDateTableAdapter salesByDateTableAdapter;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.BindingSource salesByTagBindingSource;
+        private Data.SalesDB salesDB;
+        private Data.SalesDBTableAdapters.SalesByTagTableAdapter salesByTagTableAdapter;
     }
 }

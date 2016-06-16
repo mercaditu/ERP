@@ -97,7 +97,6 @@ namespace Cognitivo.Menu
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     Assembly Reporting = Assembly.LoadFrom("Reporting.exe");
-
                     var form = (System.Windows.Forms.Form)Activator.CreateInstance(Reporting.GetType(name));
                     form.Show();
 

@@ -187,9 +187,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Project_Dev, "Project.ProjectTag", "ProjectTag", "Project");
 
             dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByDate", "SalesByDate", "");
-            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByDate", "SalesByDate", "");
-            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByDate", "SalesByDate", "");
-            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByDate", "SalesByDate", "");
+            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByTag", "SalesByTag", "");
         }
 
         public cntrl.applicationIcon get_AppIcon(DataRow app)
@@ -210,7 +208,6 @@ namespace Cognitivo.Menu
             {
                 appIcon.Tag = _app;
             }
-            
 
             try
             {

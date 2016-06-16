@@ -98,22 +98,22 @@ namespace Reports
         {
             String query =
                 " select " +
-    " DATE(s.trans_date) as trans_date, contact.name, s.number, sum(sd.quantity) as quantity," +
-   "  round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as total," +
-    " (sum(discount)*-1) as discount" +
-" from sales_invoice as s" +
-" inner join contacts as contact" +
-" on s.id_contact = contact.id_contact" +
-" inner join sales_invoice_detail as sd" +
-" on s.id_sales_invoice = sd.id_sales_invoice" +
-" left join items as i" +
-" on i.id_item = sd.id_item" +
-" LEFT JOIN" +
-" 	(SELECT app_vat_group.id_vat_group, (SUM(app_vat.coefficient) + 1) as coef" +
-"     FROM app_vat_group " +
-" 	LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group" +
-" 	LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco" +
-" ON vatco.id_vat_group = sd.id_vat_group";
+                " DATE(s.trans_date) as trans_date, contact.name, s.number, sum(sd.quantity) as quantity," +
+                " round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as total," +
+                " (sum(discount)*-1) as discount" +
+                " from sales_invoice as s" +
+                " inner join contacts as contact" +
+                " on s.id_contact = contact.id_contact" +
+                " inner join sales_invoice_detail as sd" +
+                " on s.id_sales_invoice = sd.id_sales_invoice" +
+                " left join items as i" +
+                " on i.id_item = sd.id_item" +
+                " LEFT JOIN" +
+                " 	(SELECT app_vat_group.id_vat_group, (SUM(app_vat.coefficient) + 1) as coef" +
+                "     FROM app_vat_group " +
+                " 	LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group" +
+                " 	LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco" +
+                " ON vatco.id_vat_group = sd.id_vat_group";
 
             if (start_date != null || end_date != null)
             {

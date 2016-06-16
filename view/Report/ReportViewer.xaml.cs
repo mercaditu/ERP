@@ -187,13 +187,25 @@ namespace Cognitivo.Report
                     Viewer.end_date = end_Range;
                     rptFrame.Child = Viewer;
 
-                    if (ListBoxItem.Tag.ToString()=="CostOfGoodSold")
+                    if (ListBoxItem.Tag.ToString()==Viewer.Reports.CostOfGoodsSold.ToString())
                     {
                         Viewer.CostOfGoodsSold();
                     }
-                    else
+                    else if (ListBoxItem.Tag.ToString() == Viewer.Reports.InventoryFIFO.ToString())
                     {
                         Viewer.InventoryFIFO();
+                    }
+                    else if (ListBoxItem.Tag.ToString() == Viewer.Reports.SalesByDate.ToString())
+                    {
+                        Viewer.SalesByDate();
+                    }
+                    else if (ListBoxItem.Tag.ToString() == Viewer.Reports.SalesByProduct.ToString())
+                    {
+                        Viewer.SalesByProduct();
+                    }
+                    else if (ListBoxItem.Tag.ToString() == Viewer.Reports.SalesByTag.ToString())
+                    {
+                        Viewer.SalesByTag();
                     }
                   
                 }

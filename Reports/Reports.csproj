@@ -114,9 +114,15 @@
     <Content Include="Sales\CostOfGoodsSold.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Sales\SalesByDate.rdlc" />
-    <EmbeddedResource Include="Sales\SalesByProduct.rdlc" />
-    <EmbeddedResource Include="Sales\SalesByTag.rdlc" />
+    <Content Include="Sales\SalesByDate.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sales\SalesByProduct.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sales\SalesByTag.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Viewer.resx">
       <DependentUpon>Viewer.cs</DependentUpon>
     </EmbeddedResource>

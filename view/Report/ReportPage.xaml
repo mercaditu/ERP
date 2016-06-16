@@ -56,6 +56,12 @@
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbySalesman}"/>
                 </StackPanel>
             </ListBoxItem>
+            <ListBoxItem Tag="SalesBySalesman">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content="S"/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesbySalesman}"/>
+                </StackPanel>
+            </ListBoxItem>
             <!--<ListBoxItem Tag="SalesByItem">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content=""/>

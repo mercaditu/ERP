@@ -26,12 +26,30 @@
         <WindowsFormsHost Name="rptFrame" Grid.Column="1" Grid.RowSpan="3" Background="DimGray"/>
 
         <ListBox Grid.Column="0" x:Name="NavList" Background="WhiteSmoke">
-            <!--<ListBoxItem IsEnabled="False">
+            <ListBoxItem IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Height="24" Source="/;component/Images/Menu/modSales.png" />
                     <Label Style="{StaticResource H3}" Content="{lex:Loc Sales}"/>
                 </StackPanel>
-            </ListBoxItem>-->
+            </ListBoxItem>
+            <ListBoxItem Tag="SalesByDate">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesByDate}"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem Tag="SalesByProduct">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesByProduct}"/>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem Tag="SalesByTag">
+                <StackPanel Orientation="Horizontal">
+                    <Label Style="{StaticResource ico_Label}" Content=""/>
+                    <Label Style="{StaticResource generic_Label}" Content="{lex:Loc SalesByTag}"/>
+                </StackPanel>
+            </ListBoxItem>
             <!--<ListBoxItem Tag="Sales">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource ico_Label}" Content="S"/>

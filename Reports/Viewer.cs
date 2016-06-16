@@ -21,11 +21,21 @@ namespace Reports
         {
             InitializeComponent();
         }
+        public enum Reports
+        {
+            SalesByProduct,
+            SalesByDate,
+            SalesByTag,
+            InventoryFIFO,
+            CostOfGoodsSold
+
+
+        }
 
         public string connectionstring { get; set; }
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
-
+        public Reports Report { get; set; }
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -44,12 +54,12 @@ namespace Reports
             "	i.code as Code, i.name as Item, sum(sd.quantity) as Quantity," +
             "    round(sum(sd.quantity *sd.unit_price * vatco.coef),4) as Total," +
             "    round(sum(sd.quantity *sd.discount * vatco.coef),4) as Discount" +
-            "from sales_invoice as s" +
-            "inner join sales_invoice_detail as sd" +
-            "on s.id_sales_invoice = sd.id_sales_invoice" +
-            "left join items as i" +
-            "on i.id_item = sd.id_item" +
-            "LEFT JOIN" +
+            " from sales_invoice as s" +
+            " inner join sales_invoice_detail as sd" +
+            " on s.id_sales_invoice = sd.id_sales_invoice" +
+            " left join items as i" +
+            " on i.id_item = sd.id_item" +
+            " LEFT JOIN" +
             "	(SELECT app_vat_group.id_vat_group,SUM(app_vat.coefficient) + 1 as coef" +
             "    FROM app_vat_group " +
             "	LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group" +
@@ -63,19 +73,20 @@ namespace Reports
 
             if (start_date != null)
             {
-                query = query + "AND s.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
+                query = query + " AND s.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
             }
 
             if (end_date != null)
             {
-                query = query + "AND s.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
+                query = query + " AND s.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
             }
 
             query = query + " GROUP BY i.id_item";
 
             DataTable dt = exeDT(query);
 
-            string ReportPath = "Sales\SalesByProduct.rdlc";
+               string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales\\SalesByProduct.rdlc";
+          
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "SalesByProduct";
             reportDataSource.Value = dt;
@@ -111,19 +122,19 @@ namespace Reports
 
             if (start_date != null)
             {
-                query = query + "and s.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
+                query = query + " and s.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
             }
 
             if (end_date != null)
             {
-                query = query + "and s.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
+                query = query + " and s.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
             }
 
             query = query + " GROUP BY s.id_sales_invoice";
 
             DataTable dt = exeDT(query);
 
-            string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales\\CostOfGoodsSold.rdlc";
+            string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales\\SalesByDate.rdlc";
             ReportDataSource reportDataSource = new ReportDataSource();
             reportDataSource.Name = "SalesByDate";
             reportDataSource.Value = dt;
@@ -155,21 +166,21 @@ namespace Reports
 
             if (start_date != null)
             {
-                query = query + "and s.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
+                query = query + " and s.trans_date >= '" + start_date.ToString("yyyy-MM-dd") + "'";
             }
 
             if (end_date != null)
             {
-                query = query + "and s.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
+                query = query + " and s.trans_date <= '" + end_date.ToString("yyyy-MM-dd") + "'";
             }
 
             query = query + " GROUP BY it.id_tag";
 
             DataTable dt = exeDT(query);
 
-            string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales\\CostOfGoodsSold.rdlc";
+            string ReportPath = AppDomain.CurrentDomain.BaseDirectory + "\\bin\\debug\\Sales\\SalesByTag.rdlc";
             ReportDataSource reportDataSource = new ReportDataSource();
-            reportDataSource.Name = "SalesByTag";
+            reportDataSource.Name = "DataSet1";
             reportDataSource.Value = dt;
 
             RunReport(ReportPath, reportDataSource);

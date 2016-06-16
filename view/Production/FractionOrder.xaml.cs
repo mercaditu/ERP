@@ -167,6 +167,11 @@ namespace Cognitivo.Production
 
 
             #region execustion
+
+            CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
+            OrderDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).Load();
+            hr_time_coefficientViewSource.Source = OrderDB.hr_time_coefficient.Local;
+
             production_execution_detailProductViewSource = FindResource("production_execution_detailProductViewSource") as CollectionViewSource;
             production_execution_detailRawViewSource = FindResource("production_execution_detailRawViewSource") as CollectionViewSource;
             production_execution_detailServiceViewSource = FindResource("production_execution_detailServiceViewSource") as CollectionViewSource;

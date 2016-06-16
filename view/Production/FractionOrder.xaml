@@ -319,7 +319,7 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <TabItem Header="{lex:Loc ProductionExecution}">
+                <!--<TabItem Header="{lex:Loc ProductionExecution}">
                     <TabControl Grid.ColumnSpan="2" Grid.Row="1">
                         <TabItem Header="{lex:Loc Product}">
                             <Grid>
@@ -421,7 +421,7 @@
                                     <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                                 </Grid>
                                 <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailRawViewSource}" IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
-                                    <!--<DataGrid x:Name="Production_execution_detailRaw_dimensionDataGrid" AutoGenerateColumns="False" 
+                                    --><!--<DataGrid x:Name="Production_execution_detailRaw_dimensionDataGrid" AutoGenerateColumns="False" 
                                                       EnableRowVirtualization="True"  IsReadOnly="True" CanUserAddRows="False"
                                                    
                                                       RowDetailsVisibilityMode="VisibleWhenSelected">
@@ -439,7 +439,7 @@
 									                                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                                             Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
                                         </DataGrid.Columns>
-                                    </DataGrid>-->
+                                    </DataGrid>--><!--
                                     <StackPanel Orientation="Horizontal" Margin="0,4">
 
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
@@ -812,7 +812,8 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                </TabItem>
+                </TabItem>-->
+                
                 <!--<TabItem Header="{lex:Loc Service}">
                     <Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Grid.ColumnDefinitions>
@@ -1052,7 +1053,7 @@
                 </TabItem>
             </TabControl>-->
         </Grid>
-
+      
         <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar"
                        btnNew_Click="toolBar_btnNew_Click"
                        btnDelete_Click="toolBar_btnDelete_Click"
@@ -1065,5 +1066,10 @@
                        appName="ProductionOrder"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                       Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,120,8" >
+            <Label Content="{lex:Loc Execustion}" VerticalAlignment="Center"/>
+            <cntrl:toolIcon x:Name="btnapprove" Click="btnapprove_Click" imgSource="j" icoName="{lex:Loc Approve}" VerticalAlignment="Center" />
+            <cntrl:toolIcon x:Name="btnanull" Click="btnanull_Click" imgSource="k" icoName="Rechazar" VerticalAlignment="Center"/>
+        </StackPanel>-->
     </Grid>
 </Page>

@@ -12,7 +12,7 @@ using cntrl.Panels;
 
 namespace Cognitivo.Production
 {
-    public partial class FractionExecution : Page
+    public partial class FractionExecutionold : Page
     {
         ExecutionDB ExecutionDB = new ExecutionDB();
 
@@ -31,7 +31,7 @@ namespace Cognitivo.Production
                 production_order_detaillServiceViewSource,
             item_dimensionViewSource;
         //   pnl_FractionExecustion objpnl_FractionExecustion;
-        public FractionExecution()
+        public FractionExecutionold()
         {
             InitializeComponent();
         }

@@ -426,6 +426,9 @@
     <Compile Include="Production\FractionExecution.xaml.cs">
       <DependentUpon>FractionExecution.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Production\FractionExecutionold.xaml.cs">
+      <DependentUpon>FractionExecutionold.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Production\FractionOrder.xaml.cs">
       <DependentUpon>FractionOrder.xaml</DependentUpon>
     </Compile>
@@ -981,6 +984,9 @@
     <Content Include="bin\Debug\Sales\SalesByTag.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Compile Include="bin\Debug\Sales\SalesByDate.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <EmbeddedResource Include="Project\PrintingPress\Reports\PrintingPress.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1499,6 +1505,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Production\FractionExecution.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Production\FractionExecutionold.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

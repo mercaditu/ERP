@@ -50,6 +50,7 @@ namespace Cognitivo.Menu
                 {
 
                     string _namespace = app["namespace"].ToString();
+                    
                     if (arrNamespace.Contains(_namespace))
                     {
                         cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
@@ -88,10 +89,8 @@ namespace Cognitivo.Menu
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
             string name = appName.Tag.ToString();
 
-            if (name.Contains("RPT"))
+            if (name.Contains("Reporting"))
             {
-                name = name.Replace("RPT", "");
-
                 Window objPage = default(Window);
                 Type PageInstanceType = null;
 
@@ -102,6 +101,8 @@ namespace Cognitivo.Menu
                     objPage.Show();
                     Cursor = Cursors.Arrow;
                 }));
+
+                return;
             }
 
             if (Cognitivo.Properties.Settings.Default.open_Window)

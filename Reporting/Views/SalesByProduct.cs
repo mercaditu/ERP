@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Reporting
+namespace Reporting.Views
 {
-    public partial class Form1 : Form
+    public partial class SalesByProduct : Form
     {
-        public Form1()
+        public SalesByProduct()
         {
             InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            this.reportViewer1.RefreshReport();
         }
     }
 }

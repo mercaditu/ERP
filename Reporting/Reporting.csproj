@@ -49,15 +49,28 @@
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0 Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Data\SalesDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SalesByDate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="SalesByDate.Designer.cs">
+      <DependentUpon>SalesByDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Report1.rdlc" />
+    <Compile Include="Views\SalesByProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SalesByProduct.Designer.cs">
+      <DependentUpon>SalesByProduct.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="SalesByDate.resx">
+      <DependentUpon>SalesByDate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -67,6 +80,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Reports\SalesByDate.rdlc" />
+    <EmbeddedResource Include="Views\SalesByProduct.resx">
+      <DependentUpon>SalesByProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Data\SalesDB.xsc">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
+    <None Include="Data\SalesDB.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SalesDB.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\SalesDB.xss">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

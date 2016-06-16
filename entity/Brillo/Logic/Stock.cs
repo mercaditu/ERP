@@ -756,7 +756,14 @@ namespace entity.Brillo.Logic
                 if (Cost != 0)
                 {
                     ///Bring Cost from Transaction.
-                    item_movement_value.unit_value = Cost;
+
+                    using (db db = new db())
+                    {
+                        int ID_CurrencyFX_Default = Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
+                        decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, app_currencyfx.id_currencyfx, ID_CurrencyFX_Default, null);
+
+                        item_movement_value.unit_value = DefaultCurrency_Cost;
+                    }
                 }
                 else
                 {
@@ -768,6 +775,7 @@ namespace entity.Brillo.Logic
                 }
 
                 item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+
                 item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
 
                 //Adding Value into Movement
@@ -797,86 +805,6 @@ namespace entity.Brillo.Logic
 
             return null;
         }
-
-        //public List<item_movement> DebitCredit_MovementList(db db, entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
-        //                                      app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
-        //                                      decimal Quantity, DateTime TransDate, string Comment)
-        //{
-        //    List<item_movement> Final_ItemMovementLIST = new List<item_movement>();
-
-        //    //Bring Debit Function form above. IT should handle child and parent values.
-        //    List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == app_location.id_location
-        //                                                            && x.id_item_product == item_product.id_item_product
-        //                                                            && x.status == entity.Status.Stock.InStock
-        //                                                            && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-
-        //    List<item_movement> debit_movementLIST = new List<item_movement>();
-        //    debit_movementLIST = DebitOnly_MovementLIST(Items_InStockLIST, Status, ApplicationID, TransactionID, app_currencyfx,
-        //                                            item_product, app_location, Quantity, TransDate, Comment);
-
-        //    List<item_movement> credit_movementLIST = new List<item_movement>();
-        //    foreach (item_movement debit_movement in debit_movementLIST)
-        //    {
-        //        item_movement credit_movement = new item_movement();
-        //        credit_movement = 
-        //            CreditOnly_Movement(Status, ApplicationID, TransactionID, app_currencyfx,
-        //                                      item_product, app_location, debit_movement.debit, TransDate, 
-        //                                      // Pankeel -> Add cost of parent movement. Change currency to default or current currency selected.
-        //                                      debit_movement.item_movement_value.Sum(x => x.unit_value),
-        //                                      Comment);
-
-        //        credit_movement._parent = debit_movement;
-        //        credit_movementLIST.Add(credit_movement);
-        //    }
-
-        //    if (credit_movementLIST.Count > 0)
-        //    {
-        //        Final_ItemMovementLIST.AddRange(credit_movementLIST);
-        //    }
-
-        //    return Final_ItemMovementLIST;
-        //}
-
-        //public item_movement Debit_Movement(entity.Status.Stock Status, App.Names ApplicationID, int TransactionID,
-        //                                     item_product item_product, app_location app_location, decimal Quantity,
-        //                                     DateTime TransDate, string Comment)
-        //{
-        //    item_movement item_movement = new item_movement();
-        //    item_movement.comment = Comment;
-        //    item_movement.id_item_product = item_product.id_item_product;
-        //    item_movement.debit = Quantity;
-        //    item_movement.credit = 0;
-        //    item_movement.status = Status;
-        //    item_movement.id_location = app_location.id_location;
-        //    item_movement.id_application = ApplicationID;
-        //    item_movement.transaction_id = TransactionID;
-        //    item_movement.trans_date = TransDate;
-        //    return item_movement;
-        //}
-
-
-        //public item_movement credit_Movement(
-        //  entity.Status.Stock Status,
-        //  App.Names ApplicationID,
-        //  int TransactionID,
-        //  int Item_ProductID,
-        //  int LocationID,
-        //  decimal Quantity,
-        //  DateTime TransDate,
-        //  string Comment)
-        //{
-        //    item_movement item_movement = new item_movement();
-        //    item_movement.comment = Comment;
-        //    item_movement.id_item_product = Item_ProductID;
-        //    item_movement.debit = 0;
-        //    item_movement.credit = Quantity;
-        //    item_movement.status = Status;
-        //    item_movement.id_location = LocationID;
-        //    item_movement.id_application = ApplicationID;
-        //    item_movement.transaction_id = TransactionID;
-        //    item_movement.trans_date = TransDate;
-        //    return item_movement;
-        //}
 
         #region Helpers
 

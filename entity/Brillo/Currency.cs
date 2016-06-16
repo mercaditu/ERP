@@ -13,7 +13,7 @@ namespace entity.Brillo
         /// Gets Default Currency for Company in Session.
         /// </summary>
         /// <param name="db"></param>
-        /// <returns></returns>
+        /// <returns>Currency Entity</returns>
         public static app_currency get_Default(db db)
         {
             if (CurrentSession.Id_Company > 0)
@@ -42,95 +42,13 @@ namespace entity.Brillo
         }
 
         /// <summary>
-        /// 
+        /// Convert values from one currency to another.
         /// </summary>
         /// <param name="OriginalValue"></param>
         /// <param name="Old_CurrencyID"></param>
         /// <param name="id_app_currencyfx"></param>
         /// <param name="Modules"></param>
         /// <returns></returns>
-        //public static decimal convert_Values(decimal OriginalValue, int Old_CurrencyID, int New_CurrencyID, App.Modules? Modules)
-        //{
-        //    app_currencyfx New_CurrencyFX = null;
-        //    app_currencyfx Old_CurrencyFX = null;
-
-        //    using (db db = new db())
-        //    {
-        //        New_CurrencyFX = db.app_currencyfx.Where(x => x.id_currencyfx == New_CurrencyID).FirstOrDefault();
-        //        Old_CurrencyFX = db.app_currencyfx.Where(x => x.id_currencyfx == Old_CurrencyID).FirstOrDefault();
-
-        //        //Ignore entire code if there is no new currencyID.
-        //        if (New_CurrencyFX != null)
-        //        {
-        //            decimal New_Rate = 0;
-        //            decimal Old_Rate = 0;
-
-        //            //Check which value to take, Sales = Buy Rate. Purchase = Sell Rate.
-        //            if (Modules == App.Modules.Sales)
-        //            {
-        //                New_Rate = New_CurrencyFX.buy_value;
-        //            }
-        //            else //Purchase Rates
-        //            {
-        //                New_Rate = New_CurrencyFX.sell_value;
-        //            }
-
-        //            if (Old_CurrencyFX != null)
-        //            {
-        //                if (Modules == App.Modules.Sales)
-        //                {
-        //                    Old_Rate = Old_CurrencyFX.buy_value;
-        //                }
-        //                else //Purchase Rates
-        //                {
-        //                    Old_Rate = Old_CurrencyFX.sell_value;
-        //                }
-        //            }
-
-        //            if (Old_CurrencyFX == null)
-        //            {
-        //                Old_Rate = New_Rate;
-        //            }
-
-        //            if (New_CurrencyFX.app_currency == null)
-        //            {
-        //                Rate_Previous = New_Rate;
-        //                return OriginalValue * New_Rate;
-        //            }
-        //            else
-        //            {
-        //                //Get Priority
-        //                bool New_Priority = New_CurrencyFX.app_currency.is_priority;
-        //                bool Old_Priority = true;
-
-        //                //This is incase there is no OldCurrency.
-        //                if (Old_CurrencyFX != null)
-        //                {
-        //                    Old_Priority = Old_CurrencyFX.app_currency.is_priority;
-        //                }
-
-        //                //Neither currency is priority
-        //                if (New_Priority == false && Old_Priority == false) 
-        //                {
-        //                    //Convert Towards Defualt
-        //                    decimal Value_InPriority = TowardsDefault(Old_Rate, OriginalValue, Old_Priority);
-
-        //                    //Convert Away from Default
-        //                    return AwayFromDefault(New_Rate, Value_InPriority, New_CurrencyFX.is_reverse);
-        //                }   
-        //                else if (New_CurrencyFX.app_currency.is_priority == true)
-        //                { //Towards Default
-        //                    return TowardsDefault(Old_Rate, OriginalValue, Old_Priority);
-        //                }
-        //                else
-        //                { //Away from Default
-        //                    return AwayFromDefault(New_Rate, OriginalValue, New_CurrencyFX.is_reverse);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return 0;
-        //}
         public static decimal convert_Values(decimal originalValue, int old_app_currencyfx, int id_app_currencyfx, App.Modules? Modules)
         {
             decimal rate = 0;
@@ -183,11 +101,6 @@ namespace entity.Brillo
                                 //Convert Away from Default
                                 return convert_Values(Value_InPriority, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, id_app_currencyfx, App.Modules.Sales);
                             }
-
-
-
-
-
 
                         }
                         else if (app_currencyfx.app_currency.is_priority == true) //Towards Default

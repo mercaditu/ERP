@@ -114,6 +114,9 @@
     <Content Include="Sales\CostOfGoodsSold.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Sales\SalesByDate.rdlc" />
+    <EmbeddedResource Include="Sales\SalesByProduct.rdlc" />
+    <EmbeddedResource Include="Sales\SalesByTag.rdlc" />
     <EmbeddedResource Include="Viewer.resx">
       <DependentUpon>Viewer.cs</DependentUpon>
     </EmbeddedResource>

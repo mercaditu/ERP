@@ -242,6 +242,12 @@ namespace entity
                         x.status == Status.Documents.Issued).ToList();
                 foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
                 {
+                    if (inventory.status == Status.Documents.Issued)
+                    {
+                        inventory.status = Status.Documents.Pending;
+                        inventory.IsSelected = true;
+                    }
+
                     InventoryDB.Approve();
                 }
             }

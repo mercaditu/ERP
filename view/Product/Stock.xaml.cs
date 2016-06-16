@@ -192,7 +192,9 @@ namespace Cognitivo.Product
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
-            ProductMovementDB.ReArrange_ProductMovement();
+            ProductMovementDB.Generate_ProductMovement();
+
+            System.Windows.MessageBox.Show("Done");
         }
     }
 }

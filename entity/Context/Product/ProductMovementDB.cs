@@ -230,7 +230,7 @@ namespace entity
                 using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
                 {
                     PurchaseDB.Insert_Items_2_Movement(purchase);
-                    PurchaseDB.SaveChanges();
+                    //PurchaseDB.SaveChanges();
                 }
             }
 
@@ -265,7 +265,7 @@ namespace entity
                 foreach (sales_invoice sales in sales_invoiceLIST.OrderBy(y => y.trans_date))
                 {
                     SalesInvoiceDB.Insert_Items_2_Movement(sales);
-                    SalesInvoiceDB.SaveChanges();
+                    //SalesInvoiceDB.SaveChanges();
                 }
             }
         }

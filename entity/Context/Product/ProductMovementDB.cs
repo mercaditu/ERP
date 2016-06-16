@@ -237,7 +237,7 @@ namespace entity
             ///Inventory
             using (InventoryDB InventoryDB = new InventoryDB())
             {
-                List<item_inventory> item_inventoryLIST = item_inventory.Where(x =>
+                List<item_inventory> item_inventoryLIST = InventoryDB.item_inventory.Where(x =>
                         x.id_company == CurrentSession.Id_Company &&
                         x.status == Status.Documents.Issued).ToList();
                 foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))

@@ -134,7 +134,7 @@ namespace Reports
         public void SalesByTag()
         {
             String query = 
-                "select "
+                "select " +
 	" it.name,sum(sd.quantity) as Quantity," +
     " sum(sd.quantity * sd.unit_price) as SubTotal," +
     " sum(sd.quantity * discount) as Discount" +

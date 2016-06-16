@@ -72,7 +72,23 @@ namespace entity
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Executes code that will insert Invoiced Items into Movement.
+        /// </summary>
+        /// <param name="invoice"></param>
+        public void Insert_Items_2_Movement(purchase_invoice invoice)
+        {
+            Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+            List<item_movement> item_movementList = new List<item_movement>();
+            item_movementList = _Stock.insert_Stock(this, invoice);
+
+            if (item_movementList != null && item_movementList.Count > 0)
+            {
+                item_movement.AddRange(item_movementList);
+            }
+        }
+
         public void Approve()
         {
             foreach (purchase_invoice invoice in base.purchase_invoice.Local.Where(x => x.IsSelected == true))
@@ -91,19 +107,12 @@ namespace entity
                         ///Insert Payment Schedual Logic
                         payment_schedualList = _Payment.insert_Schedual(invoice);
 
+                        //Insert into Stock.
+                        Insert_Items_2_Movement(invoice);
+
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
                             payment_schedual.AddRange(payment_schedualList);
-                        }
-
-                        Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        List<item_movement> item_movementList = new List<item_movement>();
-                        ///Insert Stock Logic
-                        item_movementList = _Stock.insert_Stock(this, invoice);
-
-                        if (item_movementList != null && item_movementList.Count > 0)
-                        {
-                            item_movement.AddRange(item_movementList);
                         }
 
                         invoice.status = Status.Documents_General.Approved;

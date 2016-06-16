@@ -253,6 +253,11 @@ namespace entity
                 foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
                 {
                     transfer.IsSelected = true;
+                    foreach (item_transfer_detail detail in transfer.item_transfer_detail)
+	{
+		 
+	}
+                    ProductTransferDB.Discount_Items_Origin(detail, ID_BranchOrigin, ID_BranchDestination)
 
                     ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
                     ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);

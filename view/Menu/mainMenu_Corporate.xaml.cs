@@ -88,6 +88,22 @@ namespace Cognitivo.Menu
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
             string name = appName.Tag.ToString();
 
+            if (name.Contains("RPT"))
+            {
+                name = name.Replace("RPT", "");
+
+                Window objPage = default(Window);
+                Type PageInstanceType = null;
+
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    PageInstanceType = Type.GetType(name, true, true);
+                    objPage = (Window)Activator.CreateInstance(PageInstanceType);
+                    objPage.Show();
+                    Cursor = Cursors.Arrow;
+                }));
+            }
+
             if (Cognitivo.Properties.Settings.Default.open_Window)
             {
                 ApplicationWindow appWindow = new ApplicationWindow();

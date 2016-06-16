@@ -169,7 +169,6 @@ namespace entity
                                 item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
                                 item_movement.timestamp = DateTime.Now;
 
-
                                 if (item_inventory_detail.unit_value > 0 && item_inventory_detail.id_currencyfx > 0)
                                 {
                                     item_movement_value item_movement_value = new item_movement_value();

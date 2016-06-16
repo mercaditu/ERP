@@ -423,9 +423,6 @@
     <Compile Include="HumanResource\Talent.xaml.cs">
       <DependentUpon>Talent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Production\FractionExecution.xaml.cs">
-      <DependentUpon>FractionExecution.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Production\FractionExecutionold.xaml.cs">
       <DependentUpon>FractionExecutionold.xaml</DependentUpon>
     </Compile>
@@ -920,9 +917,6 @@
     <Content Include="bin\Debug\Transfer.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\Inventory\InventoryCost.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -975,18 +969,6 @@
     <Content Include="bin\Debug\Movement.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\Sales\CostOfGoodsSold.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Sales\SalesByProduct.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Sales\SalesByTag.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Compile Include="bin\Debug\Sales\SalesByDate.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <EmbeddedResource Include="Project\PrintingPress\Reports\PrintingPress.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1286,10 +1268,6 @@
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Reports\Reports.csproj">
-      <Project>{566fdf6c-0308-423d-8898-1e8fa2aade55}</Project>
-      <Name>Reports</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Accounting\Reports.xaml">
@@ -1503,10 +1481,6 @@
     <Page Include="HumanResource\Talent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Production\FractionExecution.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Production\FractionExecutionold.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -2023,6 +1997,8 @@
     <Resource Include="Images\Menu\modImpex.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Debug\Inventory\" />
+    <Folder Include="bin\Debug\Sales\" />
     <Folder Include="Promotion\" />
   </ItemGroup>
   <ItemGroup>

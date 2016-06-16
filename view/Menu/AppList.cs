@@ -186,7 +186,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Sales, "Configs.ItemAssetGroup", "ItemAssetGroup", "ItemAssetGroup");
             dtApp.Rows.Add(entity.App.Modules.Configuration, entity.App.Modules.Project_Dev, "Project.ProjectTag", "ProjectTag", "Project");
 
-            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Report.ReportViewer", "Reports", "");
+            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.SalesByDateRPT", "Reports", "");
             dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Report.ReportSalesbyProduct", "ReportSalesbyProduct", "");
             dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Report.ReportSalesbyDate", "ReportSalesbyDate", "");
             
@@ -201,7 +201,16 @@ namespace Cognitivo.Menu
             string _description = "desc_" + app["name"].ToString();
             
             cntrl.applicationIcon appIcon = new cntrl.applicationIcon();
-            appIcon.Tag = "Cognitivo." + _app;
+
+            if (_name.Contains("RPT") != false)
+            {
+                appIcon.Tag = "Cognitivo." + _app;
+            }
+            else
+            {
+                appIcon.Tag = _app;
+            }
+            
 
             try
             {

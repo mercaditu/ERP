@@ -90,15 +90,6 @@ namespace Cognitivo.Menu
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
             string name = appName.Tag.ToString();
 
-            if (name.Contains("Reporting"))
-            {
-                Assembly Reporting = Assembly.LoadFrom("Reporting.exe");
-                var form = (System.Windows.Forms.Form)Activator.CreateInstance(Reporting.GetType(name));
-                form.Show();
-
-                return;
-            }
-
             if (Cognitivo.Properties.Settings.Default.open_Window)
             {
                 ApplicationWindow appWindow = new ApplicationWindow();

@@ -29,45 +29,26 @@ namespace Cognitivo.Menu
         {
             Dispatcher.BeginInvoke((Action)(() => this.Cursor = Cursors.AppStarting));
 
-            if (appName.Contains("Report"))
+            try
             {
-                Window objWindow = default(Window);
-                Type WindowInstanceType = null;
+                Page objPage = default(Page);
+                Type PageInstanceType = null;
 
                 Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        WindowInstanceType = Type.GetType(appName, true, true);
-                        objWindow = (Window)Activator.CreateInstance(WindowInstanceType);
-                        objWindow.Show();
-                        objWindow.Tag = apptag;
-                        Cursor = Cursors.Arrow;
-                        this.Close();
-                    }
-                    ));
-            }
-            else
-            {
-                try
                 {
-                    Page objPage = default(Page);
-                    Type PageInstanceType = null;
+                    PageInstanceType = Type.GetType(appName, true, true);
+                    objPage = (Page)Activator.CreateInstance(PageInstanceType);
+                    objPage.Tag = apptag;
+                    mainFrame.Navigate(objPage);
+                    Cursor = Cursors.Arrow;
 
-                    Dispatcher.BeginInvoke((Action)(() =>
+                    if (objPage.Title != null)
                     {
-                        PageInstanceType = Type.GetType(appName, true, true);
-                        objPage = (Page)Activator.CreateInstance(PageInstanceType);
-                        objPage.Tag = apptag;
-                        mainFrame.Navigate(objPage);
-                        Cursor = Cursors.Arrow;
-
-                        if (objPage.Title != null)
-                        {
-                            Title = objPage.Title;
-                        }
-                    }));
-                }
-                catch { }
+                        Title = objPage.Title;
+                    }
+                }));
             }
+            catch { }
         }
 
         private void mainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)

@@ -203,14 +203,7 @@ namespace Cognitivo.Menu
             cntrl.applicationIcon appIcon = new cntrl.applicationIcon();
 
             ///AssemblyCheck. If reporting exists, don't add Cognitivo.
-            if (_app.Contains("Reporting") == false)
-            {
-                appIcon.Tag = "Cognitivo." + _app;
-            }
-            else
-            {
-                appIcon.Tag = _app;
-            }
+            appIcon.Tag = "Cognitivo." + _app;
 
             ///Security Check.
             try

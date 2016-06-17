@@ -539,9 +539,16 @@ namespace entity.Brillo.Document
                                   Currency = g.app_currencyfx.app_currency.name,
                                   TransDate = g.payment_promissory_note.trans_date,
                                   ExpiryDate = g.payment_promissory_note.expiry_date,
-                                  Relation=g.contact!=null?GetRelation(g.contact.child.ToList()):"",
+                                  Relation = g.contact != null ? GetRelation(g.contact.child.ToList()) : "",
                                   SalesInvoiceNumber = g.sales_invoice != null ? g.sales_invoice.number : "",
                                   PurchaseInvoiceNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
+                                  Number = g.payment_promissory_note.note_number,
+
+                                  AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                                        // Text -> Words
+                                        NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment_promissory_note.value : 0))
+                                        :
+                                        NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment_promissory_note.value : 0))) : "" : "" : "",
 
                                   CompanyName = g.app_company.name,
                               }).ToList();

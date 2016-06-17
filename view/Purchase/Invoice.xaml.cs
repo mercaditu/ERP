@@ -685,6 +685,22 @@ namespace Cognitivo.Purchase
             }
         }
 
+        private void dgvRow_ShowRowDetail(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            DataGridRow Row = btn.Parent as DataGridRow;
+            if (Row != null)
+            {
+                if (Row.DetailsVisibility == System.Windows.Visibility.Collapsed)
+                {
+                    Row.DetailsVisibility = System.Windows.Visibility.Visible;
+                }
+                else
+                {
+                    Row.DetailsVisibility = System.Windows.Visibility.Collapsed;
+                }   
+            }
+        }
      
     }
 }

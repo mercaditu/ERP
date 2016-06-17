@@ -323,7 +323,7 @@
                           IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
 				          EnableRowVirtualization="True"
                           ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
-                          RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
+                          RowDetailsVisibilityMode="Collapsed" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
                           InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
                           CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding">
                 <DataGrid.Resources>
@@ -402,6 +402,13 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="" Style="{StaticResource btnDeleteChildStyle}" Click="dgvRow_ShowRowDetail"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

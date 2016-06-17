@@ -69,7 +69,7 @@ namespace entity.Brillo.Logic
             {
                 payment.id_contact = payment_schedual.contact.id_contact;
 
-                if (id_range != null)
+                if (id_range > 0)
                 {
                     payment.id_range = id_range;
                     if (_entity.db.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)

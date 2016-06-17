@@ -43,13 +43,6 @@ namespace entity
             payment_detail.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
             payment.payment_detail.Add(payment_detail);
 
-            // payment_detail payment_detail = e.NewItem as payment_detail;
-            // payment_detail.id_currencyfx = sales_invoice.id_currencyfx;
-            // payment_detail.id_currency = sales_invoice.app_currencyfx.id_currency;
-            // payment_detail.app_currencyfx = sales_invoice.app_currencyfx;
-            // payment_detail.id_payment = payment.id_payment;
-            // payment_detail.payment = payment;
-
             return payment_detail;
         }
 
@@ -121,9 +114,8 @@ namespace entity
 
         public void MakePayment(payment_schedual Parent_Schedual, payment payment, bool RequirePrint)
         {
-            foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
-            {
-                Parent_Schedual = base.payment_schedual.Where(x => x.id_payment_schedual == payment_detail.id_payment_schedual).FirstOrDefault();
+            foreach (payment_detail payment_detail in payment.payment_detail)
+            {                
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 payment_schedual balance_payment_schedual = new payment_schedual();
@@ -296,15 +288,12 @@ namespace entity
                 //pankeel
             }
 
-            if (payment.payment_detail.Where(x => x.IsSelected).Count() > 0)
-            {
-                payment.status = Status.Documents_General.Approved;
-                base.SaveChanges();
+            payment.status = Status.Documents_General.Approved;
+            base.SaveChanges();
 
-                if (RequirePrint)
-                {
-                    entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
-                }
+            if (RequirePrint)
+            {
+                entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
             }
 
         }

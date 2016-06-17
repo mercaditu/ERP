@@ -124,9 +124,9 @@ namespace cntrl.Controls
                     app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == SelectedValue).FirstOrDefault();
 
                     decimal rate=0;
-                     if (appName!=null)
+                     if (appName != null)
                         {
-                            if (appName==App.Names.PurchaseInvoice ||appName==App.Names.PurchaseOrder ||appName==App.Names.PurchaseTender)
+                            if (appName == App.Names.PurchaseInvoice || appName == App.Names.PurchaseOrder ||appName==App.Names.PurchaseTender)
                             {
                                 rate = app_currencyfx.sell_value;
                             }

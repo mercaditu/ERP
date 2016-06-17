@@ -119,10 +119,11 @@ namespace entity
             }
         }
 
-        public void MakePayment(payment_schedual Parent_Schedual,payment payment, bool RequirePrint)
+        public void MakePayment(payment_schedual Parent_Schedual, payment payment, bool RequirePrint)
         {
-            foreach (payment_detail payment_detail in payment.payment_detail)
+            foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
             {
+                Parent_Schedual = base.payment_schedual.Where(x => x.id_payment_schedual == payment_detail.id_payment_schedual).FirstOrDefault();
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 payment_schedual balance_payment_schedual = new payment_schedual();
@@ -156,12 +157,30 @@ namespace entity
                 if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
                 {
                     ///If PaymentDetail Value is Negative.
-                    balance_payment_schedual.debit = Math.Abs(Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Purchase));
+                    ///
+                    if (payment_detail.app_currencyfx.id_currency != Parent_Schedual.app_currencyfx.id_currency)
+                    {
+                        balance_payment_schedual.debit = Math.Abs(Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Purchase));
+                    }
+                    else
+                    {
+                        balance_payment_schedual.debit = Math.Abs(payment_detail.value);
+                    }
                 }
                 else
                 {
                     ///If PaymentDetail Value is Positive.
-                    balance_payment_schedual.credit = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Sales);
+                    if (payment_detail.app_currencyfx.id_currency!=Parent_Schedual.app_currencyfx.id_currency)
+                    {
+
+                        balance_payment_schedual.credit = Currency.convert_Values(payment_detail.value, payment_detail.id_currencyfx, Parent_Schedual.id_currencyfx, App.Modules.Sales);
+                    }
+                    else
+                    {
+                        balance_payment_schedual.credit = payment_detail.value;
+                    }
+                 
+                   
                 }
 
                 balance_payment_schedual.parent = Parent_Schedual;
@@ -256,8 +275,8 @@ namespace entity
                     string number = "";
                     if (Parent_Schedual.id_purchase_invoice > 0 || Parent_Schedual.id_purchase_order > 0 || Parent_Schedual.id_sales_return > 0)
                     {
-                        
-                        if (Parent_Schedual.purchase_invoice!=null)
+
+                        if (Parent_Schedual.purchase_invoice != null)
                         {
                             number = Parent_Schedual.purchase_invoice.number;
                         }
@@ -277,13 +296,17 @@ namespace entity
                 //pankeel
             }
 
-            payment.status = Status.Documents_General.Approved;
-            base.SaveChanges();
-
-            if (RequirePrint)
+            if (payment.payment_detail.Where(x => x.IsSelected).Count() > 0)
             {
-                entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
+                payment.status = Status.Documents_General.Approved;
+                base.SaveChanges();
+
+                if (RequirePrint)
+                {
+                    entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
+                }
             }
+
         }
 
         public void Rearrange_Payment()
@@ -293,7 +316,7 @@ namespace entity
             {
                 foreach (payment_schedual _payment_schedual in payment_schedual.child)
                 {
-                    if (_payment_schedual.payment_detail!=null)
+                    if (_payment_schedual.payment_detail != null)
                     {
                         int id_currency = payment_schedual.app_currencyfx.id_currency;
                         DateTime timestamp = _payment_schedual.payment_detail.app_currencyfx.timestamp;
@@ -307,7 +330,7 @@ namespace entity
                             _payment_schedual.credit = Currency.convert_Values(_payment_schedual.payment_detail.value, _payment_schedual.payment_detail.id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Sales);
                         }
                     }
-                
+
                 }
             }
             base.SaveChanges();

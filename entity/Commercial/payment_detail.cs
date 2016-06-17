@@ -86,10 +86,10 @@ namespace entity
 
                             this.value = Currency.convert_Values(this.value, old_currencyfx, _id_currencyfx, App.Modules.Sales);
                             RaisePropertyChanged("value");
-                            if (payment != null)
-                            {
-                                payment.id_currencyfx = _id_currencyfx;
-                            }
+                            //if (payment != null)
+                            //{
+                            //    payment.id_currencyfx = _id_currencyfx;
+                            //}
                         }
                     }
 

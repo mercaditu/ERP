@@ -189,6 +189,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByDate", "SalesByDate", "");
             dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByTag", "SalesByTag", "");
             dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.SalesByItem", "SalesByItem", "");
+            dtApp.Rows.Add(entity.App.Modules.Report, entity.App.Modules.Report, "Reporting.Views.CostOfGoodsSold", "CostOfGoodsSold", "");
         }
 
         public cntrl.applicationIcon get_AppIcon(DataRow app)

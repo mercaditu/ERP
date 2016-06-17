@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V483\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V484\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>492</ApplicationRevision>
+    <ApplicationRevision>494</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -80,7 +80,7 @@
     <ManifestKeyFile>View_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -424,11 +424,6 @@
     <Compile Include="Converters\TreeViewchildFilter.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
     <Compile Include="Converters\ValueToEnumConverter.cs" />
-    <Compile Include="Data\SalesDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SalesDB.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DocumentViewer.xaml.cs">
       <DependentUpon>DocumentViewer.xaml</DependentUpon>
     </Compile>
@@ -510,65 +505,28 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Project\PrintingPress\Class\Cut.cs" />
+    <Compile Include="Reporting\Data\SalesDB.Designer.cs">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reporting\Views\CostOfGoodsSold.xaml.cs">
+      <DependentUpon>CostOfGoodsSold.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
+      <DependentUpon>SalesByDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\SalesByItem.xaml.cs">
+      <DependentUpon>SalesByItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\SalesByTag.xaml.cs">
+      <DependentUpon>SalesByTag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReportViewer.xaml.cs">
       <DependentUpon>ReportViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportViewerAccounting.xaml.cs">
       <DependentUpon>ReportViewerAccounting.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Production\DailyProduction_Report.xaml.cs">
-      <DependentUpon>DailyProduction_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Purchase\Purchase_Report.xaml.cs">
-      <DependentUpon>Purchase_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\ReportPage.xaml.cs">
-      <DependentUpon>ReportPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\ReportSalesbyDate.xaml.cs">
-      <DependentUpon>ReportSalesbyDate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\ReportSalesbyProduct.xaml.cs">
-      <DependentUpon>ReportSalesbyProduct.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\ReportViewer.xaml.cs">
-      <DependentUpon>ReportViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Sales\VatMatrix_Report.xaml.cs">
-      <DependentUpon>VatMatrix_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Stock\CostOfGoodSold_Report.xaml.cs">
-      <DependentUpon>CostOfGoodSold_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Stock\StockByBrand_Report.xaml.cs">
-      <DependentUpon>StockByBrand_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Stock\HistoricStockValues_Report.xaml.cs">
-      <DependentUpon>HistoricStockValues_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Stock\HistoricStockLevels_Report.xaml.cs">
-      <DependentUpon>HistoricStockLevels_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Sales\PaymentReceived_Report.xaml.cs">
-      <DependentUpon>PaymentReceived_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Sales\SalesBySalesman_Report.xaml.cs">
-      <DependentUpon>SalesBySalesman_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Sales\SalesDetail_Report.xaml.cs">
-      <DependentUpon>SalesDetail_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Sales\SalesByItem_Report.xaml.cs">
-      <DependentUpon>SalesByItem_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Sales\PendingDocument_Report.xaml.cs">
-      <DependentUpon>PendingDocument_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Sales\Sales_Report.xaml.cs">
-      <DependentUpon>Sales_Report.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Report\Stock\CostOfInventory_Report.xaml.cs">
-      <DependentUpon>CostOfInventory_Report.xaml</DependentUpon>
     </Compile>
     <Compile Include="RowDef.cs" />
     <Compile Include="Sales\Budget.xaml.cs">
@@ -989,6 +947,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesByTag.rdlc" />
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1038,17 +1000,6 @@
       <LastGenOutput>PaymentSetting.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Converters\NumberFormat.cs" />
-    <None Include="Data\SalesDB.xsc">
-      <DependentUpon>SalesDB.xsd</DependentUpon>
-    </None>
-    <None Include="Data\SalesDB.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SalesDB.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Data\SalesDB.xss">
-      <DependentUpon>SalesDB.xsd</DependentUpon>
-    </None>
     <None Include="GestureSettings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>GestureSettings.Designer.cs</LastGenOutput>
@@ -1276,6 +1227,17 @@
     </None>
     <Resource Include="Resources\cognitivo.ttf" />
     <Resource Include="Resources\Entypo.ttf" />
+    <None Include="Reporting\Data\SalesDB.xsc">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\SalesDB.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SalesDB.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reporting\Data\SalesDB.xss">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
     <None Include="Sales\ReturnSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>ReturnSetting.Designer.cs</LastGenOutput>
@@ -1581,6 +1543,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Reporting\Views\CostOfGoodsSold.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reporting\Views\SalesByDate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reporting\Views\SalesByItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reporting\Views\SalesByTag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ReportViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1588,78 +1566,6 @@
     <Page Include="ReportViewerAccounting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Report\Production\DailyProduction_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Purchase\Purchase_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\ReportPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Report\ReportSalesbyDate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\ReportSalesbyProduct.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\ReportViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Sales\VatMatrix_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Stock\CostOfGoodSold_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Stock\StockByBrand_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Stock\HistoricStockValues_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Stock\HistoricStockLevels_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Sales\PaymentReceived_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Sales\SalesBySalesman_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Sales\SalesDetail_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Sales\SalesByItem_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Sales\PendingDocument_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Report\Sales\Sales_Report.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Report\Stock\CostOfInventory_Report.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>

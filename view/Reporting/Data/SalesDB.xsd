@@ -180,7 +180,7 @@ ORDER BY I.NAME</CommandText>
   <xs:element name="SalesDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="SalesDB" msprop:Generator_UserDSName="SalesDB">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="SalesByDate" msprop:Generator_TableClassName="SalesByDateDataTable" msprop:Generator_TableVarName="tableSalesByDate" msprop:Generator_TablePropName="SalesByDate" msprop:Generator_RowDeletingName="SalesByDateRowDeleting" msprop:Generator_RowChangingName="SalesByDateRowChanging" msprop:Generator_RowEvHandlerName="SalesByDateRowChangeEventHandler" msprop:Generator_RowDeletedName="SalesByDateRowDeleted" msprop:Generator_UserTableName="SalesByDate" msprop:Generator_RowChangedName="SalesByDateRowChanged" msprop:Generator_RowEvArgName="SalesByDateRowChangeEvent" msprop:Generator_RowClassName="SalesByDateRow">
+        <xs:element name="SalesByDate" msprop:Generator_TableClassName="SalesByDateDataTable" msprop:Generator_TableVarName="tableSalesByDate" msprop:Generator_RowChangedName="SalesByDateRowChanged" msprop:Generator_TablePropName="SalesByDate" msprop:Generator_RowDeletingName="SalesByDateRowDeleting" msprop:Generator_RowChangingName="SalesByDateRowChanging" msprop:Generator_RowEvHandlerName="SalesByDateRowChangeEventHandler" msprop:Generator_RowDeletedName="SalesByDateRowDeleted" msprop:Generator_RowClassName="SalesByDateRow" msprop:Generator_UserTableName="SalesByDate" msprop:Generator_RowEvArgName="SalesByDateRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="trans_date" msprop:Generator_ColumnVarNameInTable="columntrans_date" msprop:Generator_ColumnPropNameInRow="trans_date" msprop:Generator_ColumnPropNameInTable="trans_dateColumn" msprop:Generator_UserColumnName="trans_date" type="xs:dateTime" />
@@ -192,7 +192,7 @@ ORDER BY I.NAME</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="SalesByItem" msprop:Generator_TableClassName="SalesByItemDataTable" msprop:Generator_TableVarName="tableSalesByItem" msprop:Generator_TablePropName="SalesByItem" msprop:Generator_RowDeletingName="SalesByItemRowDeleting" msprop:Generator_RowChangingName="SalesByItemRowChanging" msprop:Generator_RowEvHandlerName="SalesByItemRowChangeEventHandler" msprop:Generator_RowDeletedName="SalesByItemRowDeleted" msprop:Generator_UserTableName="SalesByItem" msprop:Generator_RowChangedName="SalesByItemRowChanged" msprop:Generator_RowEvArgName="SalesByItemRowChangeEvent" msprop:Generator_RowClassName="SalesByItemRow">
+        <xs:element name="SalesByItem" msprop:Generator_TableClassName="SalesByItemDataTable" msprop:Generator_TableVarName="tableSalesByItem" msprop:Generator_RowChangedName="SalesByItemRowChanged" msprop:Generator_TablePropName="SalesByItem" msprop:Generator_RowDeletingName="SalesByItemRowDeleting" msprop:Generator_RowChangingName="SalesByItemRowChanging" msprop:Generator_RowEvHandlerName="SalesByItemRowChangeEventHandler" msprop:Generator_RowDeletedName="SalesByItemRowDeleted" msprop:Generator_RowClassName="SalesByItemRow" msprop:Generator_UserTableName="SalesByItem" msprop:Generator_RowEvArgName="SalesByItemRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Code" msprop:Generator_ColumnVarNameInTable="columnCode" msprop:Generator_ColumnPropNameInRow="Code" msprop:Generator_ColumnPropNameInTable="CodeColumn" msprop:Generator_UserColumnName="Code" type="xs:string" minOccurs="0" />
@@ -203,7 +203,7 @@ ORDER BY I.NAME</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="SalesByTag" msprop:Generator_TableClassName="SalesByTagDataTable" msprop:Generator_TableVarName="tableSalesByTag" msprop:Generator_TablePropName="SalesByTag" msprop:Generator_RowDeletingName="SalesByTagRowDeleting" msprop:Generator_RowChangingName="SalesByTagRowChanging" msprop:Generator_RowEvHandlerName="SalesByTagRowChangeEventHandler" msprop:Generator_RowDeletedName="SalesByTagRowDeleted" msprop:Generator_UserTableName="SalesByTag" msprop:Generator_RowChangedName="SalesByTagRowChanged" msprop:Generator_RowEvArgName="SalesByTagRowChangeEvent" msprop:Generator_RowClassName="SalesByTagRow">
+        <xs:element name="SalesByTag" msprop:Generator_TableClassName="SalesByTagDataTable" msprop:Generator_TableVarName="tableSalesByTag" msprop:Generator_RowChangedName="SalesByTagRowChanged" msprop:Generator_TablePropName="SalesByTag" msprop:Generator_RowDeletingName="SalesByTagRowDeleting" msprop:Generator_RowChangingName="SalesByTagRowChanging" msprop:Generator_RowEvHandlerName="SalesByTagRowChangeEventHandler" msprop:Generator_RowDeletedName="SalesByTagRowDeleted" msprop:Generator_RowClassName="SalesByTagRow" msprop:Generator_UserTableName="SalesByTag" msprop:Generator_RowEvArgName="SalesByTagRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Tag" msprop:Generator_ColumnVarNameInTable="columnTag" msprop:Generator_ColumnPropNameInRow="Tag" msprop:Generator_ColumnPropNameInTable="TagColumn" msprop:Generator_UserColumnName="Tag" type="xs:string" minOccurs="0" />
@@ -213,7 +213,7 @@ ORDER BY I.NAME</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="CostOfGoodsSold" msprop:Generator_TableClassName="CostOfGoodsSoldDataTable" msprop:Generator_TableVarName="tableCostOfGoodsSold" msprop:Generator_RowChangedName="CostOfGoodsSoldRowChanged" msprop:Generator_TablePropName="CostOfGoodsSold" msprop:Generator_RowDeletingName="CostOfGoodsSoldRowDeleting" msprop:Generator_RowChangingName="CostOfGoodsSoldRowChanging" msprop:Generator_RowEvHandlerName="CostOfGoodsSoldRowChangeEventHandler" msprop:Generator_RowDeletedName="CostOfGoodsSoldRowDeleted" msprop:Generator_RowClassName="CostOfGoodsSoldRow" msprop:Generator_UserTableName="CostOfGoodsSold" msprop:Generator_RowEvArgName="CostOfGoodsSoldRowChangeEvent">
+        <xs:element name="CostOfGoodsSold" msprop:Generator_TableClassName="CostOfGoodsSoldDataTable" msprop:Generator_TableVarName="tableCostOfGoodsSold" msprop:Generator_TablePropName="CostOfGoodsSold" msprop:Generator_RowDeletingName="CostOfGoodsSoldRowDeleting" msprop:Generator_RowChangingName="CostOfGoodsSoldRowChanging" msprop:Generator_RowEvHandlerName="CostOfGoodsSoldRowChangeEventHandler" msprop:Generator_RowDeletedName="CostOfGoodsSoldRowDeleted" msprop:Generator_UserTableName="CostOfGoodsSold" msprop:Generator_RowChangedName="CostOfGoodsSoldRowChanged" msprop:Generator_RowEvArgName="CostOfGoodsSoldRowChangeEvent" msprop:Generator_RowClassName="CostOfGoodsSoldRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ITEM" msprop:Generator_ColumnVarNameInTable="columnITEM" msprop:Generator_ColumnPropNameInRow="ITEM" msprop:Generator_ColumnPropNameInTable="ITEMColumn" msprop:Generator_UserColumnName="ITEM" type="xs:string" minOccurs="0" />

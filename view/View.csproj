@@ -423,8 +423,8 @@
     <Compile Include="HumanResource\Talent.xaml.cs">
       <DependentUpon>Talent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Production\FractionExecutionold.xaml.cs">
-      <DependentUpon>FractionExecutionold.xaml</DependentUpon>
+    <Compile Include="Production\FractionExecution.xaml.cs">
+      <DependentUpon>FractionExecution.xaml</DependentUpon>
     </Compile>
     <Compile Include="Production\FractionOrder.xaml.cs">
       <DependentUpon>FractionOrder.xaml</DependentUpon>
@@ -1486,7 +1486,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Production\FractionExecutionold.xaml">
+    <Page Include="Production\FractionExecution.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

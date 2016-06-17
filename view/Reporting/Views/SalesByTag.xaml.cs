@@ -20,9 +20,48 @@ namespace Cognitivo.Reporting.Views
     /// </summary>
     public partial class SalesByTag : Page
     {
+        public DateTime StartDate 
+        {
+            get { return _StartDate; }
+            set { _StartDate = value; }
+        }
+        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
+        public DateTime EndDate 
+        {
+            get { return _EndDate; }
+            set { _EndDate = value; }
+        }
+        private DateTime _EndDate = DateTime.Now.AddDays(+1);
+
         public SalesByTag()
         {
             InitializeComponent();
+
+            Fill(null, null);
+        }
+
+        public void Fill(object sender, EventArgs e)
+        {
+            this.reportViewer.Reset();
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Data.SalesDB SalesDB = new Data.SalesDB();
+
+            SalesDB.BeginInit();
+
+            reportDataSource1.Name = "SalesByTag"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = SalesDB.SalesByTag;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByTag.rdlc";
+
+            SalesDB.EndInit();
+
+            //fill data
+            Data.SalesDBTableAdapters.SalesByTagTableAdapter SalesByTagTableAdapter = new Data.SalesDBTableAdapters.SalesByTagTableAdapter();
+            SalesByTagTableAdapter.ClearBeforeFill = true;
+            SalesByTagTableAdapter.Fill(SalesDB.SalesByTag, StartDate, EndDate);
+
+            this.reportViewer.RefreshReport();
         }
     }
 }

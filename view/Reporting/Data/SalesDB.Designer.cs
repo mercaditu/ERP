@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace Cognitivo.Data {
+namespace Cognitivo.Reporting.Data {
     
     
     /// <summary>
@@ -2386,7 +2386,7 @@ namespace Cognitivo.Data {
         }
     }
 }
-namespace Cognitivo.Data.SalesDBTableAdapters {
+namespace Cognitivo.Reporting.Data.SalesDBTableAdapters {
     
     
     /// <summary>

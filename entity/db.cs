@@ -14,7 +14,6 @@
         {
             // TODO:Define mapping
             modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(20, 4));
-
         }
         
         public virtual DbSet<accounting_cycle> accounting_cycle { get; set; }

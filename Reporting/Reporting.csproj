@@ -49,6 +49,11 @@
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0 Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Inventory.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Inventory.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Data\SalesDB.cs">
       <DependentUpon>SalesDB.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -60,6 +65,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Views\SalesByDate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,17 @@
     <EmbeddedResource Include="Views\SalesByTag.resx">
       <DependentUpon>SalesByTag.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Data\Inventory.xsc">
+      <DependentUpon>Inventory.xsd</DependentUpon>
+    </None>
+    <None Include="Data\Inventory.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Inventory.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\Inventory.xss">
+      <DependentUpon>Inventory.xsd</DependentUpon>
+    </None>
     <None Include="Data\SalesDB.xsc">
       <DependentUpon>SalesDB.xsd</DependentUpon>
     </None>
@@ -122,6 +139,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\entity\Entity.csproj">
+      <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

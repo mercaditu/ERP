@@ -247,7 +247,11 @@ namespace entity
                         inventory.status = Status.Documents.Pending;
                         inventory.IsSelected = true;
                     }
-
+                    foreach (item_inventory_detail item_inventory_detail in inventory.item_inventory_detail)
+                    {
+                        item_inventory_detail.IsSelected = true;   
+                    }
+                    InventoryDB.SaveChanges();
                     InventoryDB.Approve();
                 }
             }

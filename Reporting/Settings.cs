@@ -11,8 +11,8 @@ namespace Reporting.Properties {
         
         public Settings() 
         {
-            entity.Properties.Settings.Default.
-            // // To add event handlers for saving and changing settings, uncomment the lines below:
+            // entity.Properties.Settings.Default.
+           // // To add event handlers for saving and changing settings, uncomment the lines below:
             //
             // this.SettingChanging += this.SettingChangingEventHandler;
             //

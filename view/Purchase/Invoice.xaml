@@ -205,7 +205,15 @@
                         <Label Content="" Style="{StaticResource btn_Label}"/>
                         <TextBlock VerticalAlignment="Center"><Hyperlink PreviewMouseUp="btnDuplicateInvoice_PreviewMouseUp"><Run Text="{lex:Loc Duplicate}"/></Hyperlink></TextBlock>
                     </StackPanel>
-                </StackPanel>
+                        <!--<StackPanel Orientation="Horizontal" >
+                            <Label Content="" Style="{StaticResource btn_Label}"/>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                    <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+                                        <Run Text="{lex:Loc Document}"/>
+                                    </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>-->
+                    </StackPanel>
                 <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"

@@ -206,7 +206,7 @@
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
                             <StackPanel DataContext="{Binding SelectedItem_, ElementName=treeProject}">
                                 <Button Content="{lex:Loc Fraction}" Click="Button_Click" Style="{StaticResource btn_green}" Margin="16"/>
-                                <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                <!--<cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                                     Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                     btnNew_Click="btnNewTask_Click"
                                                     btnEdit_Click="btnEditTask_Click"
@@ -214,7 +214,16 @@
                                                     btnDelete_Click="btnDeleteTask_Click"
                                                     btnApprove_Click="toolIcon_Click"
                                                     btnAnull_Click="toolIcon_Click_1"
-                                                    btnParent_Click="btnAddParentTask_Click"/>
+                                                    btnParent_Click="btnAddParentTask_Click"/>-->
+                                <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                
+                                                    btnEdit_Click="btnEditTask_Click"
+                                                    btnSave_Click="btnSaveTask_Click"
+                                                    btnDelete_Click="btnDeleteTask_Click"
+                                                    btnApprove_Click="toolIcon_Click"
+                                                    btnAnull_Click="toolIcon_Click_1"
+                                                 />
                                 <StackPanel HorizontalAlignment="Center" Margin="0,16">
                                     <!--<StackPanel x:Name="stpcode" IsEnabled="False">
                                         <StackPanel Orientation="Horizontal">
@@ -263,6 +272,7 @@
                                     </StackPanel>
                                    
                                     <StackPanel>
+                                        <Label Content="Product Dimension"/>
                                         <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
                                                       EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
                                                      
@@ -281,7 +291,8 @@
                                         </DataGrid>
                                         
                                     </StackPanel>
-                                    <StackPanel x:Name="StpMovement" Visibility="Collapsed">
+                                    <StackPanel x:Name="StpMovement" >
+                                        <Label Content="Stock Dimension"/>
                                         <DataGrid Height="Auto" x:Name="item_movement_detailDataGrid" Width="340" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
                               AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
                               EnableRowVirtualization="True" 

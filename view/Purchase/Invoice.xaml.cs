@@ -702,6 +702,19 @@ namespace Cognitivo.Purchase
                 }   
             }
         }
+
+        //private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
+        //{
+        //    purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
+        //    if (purchase_invoice != null)
+        //    {
+        //        entity.Brillo.Document.Start.Manual(purchase_invoice, purchase_invoice.app_document_range);
+        //    }
+        //    else
+        //    {
+        //        toolBar.msgWarning("Please select");
+        //    }
+        //}
      
     }
 }

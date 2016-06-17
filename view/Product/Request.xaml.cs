@@ -413,5 +413,20 @@ namespace Cognitivo.Product
             item_request_detailitem_request_decisionViewSource.View.Refresh();
             toolBar_btnEdit_Click(sender);
         }
+
+        private void toolBar_btnCancel_Click(object sender)
+        {
+            if (item_requestDataGrid.SelectedItem != null)
+            {
+                item_request item_request_old = (item_request)item_requestDataGrid.SelectedItem;
+            
+                item_request_old.State = EntityState.Unchanged;
+                dbContext.Entry(item_request_old).State = EntityState.Unchanged;
+            }
+            else
+            {
+                toolBar.msgWarning("Please Select an Item");
+            }
+        }
     }
 }

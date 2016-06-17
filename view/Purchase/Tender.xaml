@@ -314,7 +314,7 @@
                                     <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
                         		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
                         		ItemsSource="{Binding Source={StaticResource purchase_tender_dimensionViewSource}}"
-                        		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                        		RowDetailsVisibilityMode="VisibleWhenSelected" >
                                         <DataGrid.Columns>
                                             <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"

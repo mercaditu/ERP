@@ -71,7 +71,10 @@ namespace Cognitivo.Security
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            dbContext.CancelAllChanges();
+            security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
+            security_role.IsSelected = false;
+            security_role.State = EntityState.Unchanged;
+            dbContext.Entry(security_role).State = EntityState.Unchanged;
         }
 
         private void New_Click(object sender)

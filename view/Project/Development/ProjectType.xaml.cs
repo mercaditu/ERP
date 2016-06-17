@@ -27,7 +27,7 @@ namespace Cognitivo.Project.Development
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             project_templateViewSource = ((CollectionViewSource)(FindResource("project_templateViewSource")));
-            ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active).Load();
+            ProjectTemplateDB.project_template.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
 
             projectproject_template_detailViewSource = ((CollectionViewSource)(FindResource("projectproject_template_detailViewSource")));

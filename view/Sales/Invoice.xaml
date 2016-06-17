@@ -400,6 +400,7 @@
                                             <!-- render each bound item using a TextBlock-->
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
+                                                   
                                                     <StackPanel>
                                                         <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
                                                             <Hyperlink PreviewMouseUp="salesorder_PreviewMouseUp" Tag="{Binding sales_order_detail.sales_order}">

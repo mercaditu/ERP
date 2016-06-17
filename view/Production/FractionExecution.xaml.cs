@@ -873,7 +873,7 @@ namespace Cognitivo.Production
             {
                 _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
             }
-
+            _production_execution_detail.movement_id = production_order_detail.movement_id;
             _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
 
@@ -964,5 +964,9 @@ namespace Cognitivo.Production
         {
 
         }
+
+       
+
+      
     }
 }

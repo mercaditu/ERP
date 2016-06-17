@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Cognitivo.Data;
 
 namespace Reporting.Views
 {
@@ -23,14 +24,15 @@ namespace Reporting.Views
         private void SalesByDate_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'salesDB.SalesByDate' table. You can move, or remove it, as needed.
-            this.salesByDateTableAdapter.Fill(this.salesDB.SalesByDate, dateTimePicker1.Value, dateTimePicker2.Value);
+            Cognitivo.Data.SalesDBTableAdapters.Fill(, dateTimePicker1.Value, dateTimePicker2.Value);
             this.reportViewer1.RefreshReport();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.salesByDateTableAdapter.Fill(this.salesDB.SalesByDate, dateTimePicker1.Value, dateTimePicker2.Value);
-            this.reportViewer1.RefreshReport();
+
+            Cognitivo.Data.salesByDateTableAdapter.Fill(this.salesDB.SalesByDate, dateTimePicker1.Value, dateTimePicker2.Value);
+            Cognitivo.Data.reportViewer1.RefreshReport();
         }
     }
 }

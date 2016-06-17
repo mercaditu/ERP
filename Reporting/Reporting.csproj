@@ -49,9 +49,24 @@
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0 Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data_Ref\SalesDB.cs">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Data_Ref\SalesDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Views\CostOfGoodsSold.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CostOfGoodsSold.Designer.cs">
+      <DependentUpon>CostOfGoodsSold.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\SalesByDate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,8 +94,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reports\SalesByDate.rdlc" />
     <EmbeddedResource Include="Reports\SalesByTag.rdlc" />
+    <EmbeddedResource Include="Views\CostOfGoodsSold.resx">
+      <DependentUpon>CostOfGoodsSold.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SalesByDate.resx">
       <DependentUpon>SalesByDate.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +111,17 @@
       <DependentUpon>SalesByTag.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Data_Ref\SalesDB.xsc">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
+    <None Include="Data_Ref\SalesDB.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SalesDB.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data_Ref\SalesDB.xss">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

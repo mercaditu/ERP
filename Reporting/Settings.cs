@@ -1,5 +1,4 @@
-﻿using entity;
-
+﻿
 namespace Reporting.Properties {
 
     // This class allows you to handle specific events on the settings class:
@@ -12,12 +11,13 @@ namespace Reporting.Properties {
         public Settings() 
         {
             // entity.Properties.Settings.Default.
-           // // To add event handlers for saving and changing settings, uncomment the lines below:
+            // To add event handlers for saving and changing settings, uncomment the lines below:
             //
             // this.SettingChanging += this.SettingChangingEventHandler;
             //
             // this.SettingsSaving += this.SettingsSavingEventHandler;
             //
+            //connString = Cognitivo.Properties.Settings.Default.MySQLconnString;
         }
 
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {

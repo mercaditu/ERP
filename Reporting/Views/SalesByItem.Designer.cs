@@ -29,17 +29,26 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource3 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.salesByItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.salesDB = new Cognitivo.Data.SalesDB();
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.salesDB = new Reporting.Data.SalesDB();
-            this.salesByItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.salesByItemTableAdapter = new Reporting.Data.SalesDBTableAdapters.SalesByItemTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.salesDB)).BeginInit();
+            this.salesByItemTableAdapter = new Cognitivo.Data.SalesDBTableAdapters.SalesByItemTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.salesByItemBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.salesDB)).BeginInit();
             this.SuspendLayout();
+            // 
+            // salesByItemBindingSource
+            // 
+            this.salesByItemBindingSource.DataMember = "SalesByItem";
+            this.salesByItemBindingSource.DataSource = this.salesDB;
+            // 
+            // salesDB
+            // 
+            this.salesDB.DataSetName = "SalesDB";
+            this.salesDB.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // button1
             // 
@@ -79,25 +88,12 @@
             this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            reportDataSource3.Name = "SalesByItem";
-            reportDataSource3.Value = this.salesByItemBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource3);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "Reporting.Reports.SalesByItem.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(-2, 69);
             this.reportViewer1.Margin = new System.Windows.Forms.Padding(0);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(779, 454);
             this.reportViewer1.TabIndex = 11;
-            // 
-            // salesDB
-            // 
-            this.salesDB.DataSetName = "SalesDB";
-            this.salesDB.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // salesByItemBindingSource
-            // 
-            this.salesByItemBindingSource.DataMember = "SalesByItem";
-            this.salesByItemBindingSource.DataSource = this.salesDB;
             // 
             // salesByItemTableAdapter
             // 
@@ -115,8 +111,8 @@
             this.Name = "SalesByItem";
             this.Text = "SalesByItem";
             this.Load += new System.EventHandler(this.SalesByItem_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.salesDB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesByItemBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.salesDB)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -128,7 +124,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
         private System.Windows.Forms.BindingSource salesByItemBindingSource;
-        private Data.SalesDB salesDB;
-        private Data.SalesDBTableAdapters.SalesByItemTableAdapter salesByItemTableAdapter;
+        private Cognitivo.Data.SalesDB salesDB;
+        private Cognitivo.Data.SalesDBTableAdapters.SalesByItemTableAdapter salesByItemTableAdapter;
     }
 }

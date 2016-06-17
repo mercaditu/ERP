@@ -29,16 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesByDate));
             this.salesByDateBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.salesDBBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.salesDB = new Cognitivo.Data.SalesDB();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.button1 = new System.Windows.Forms.Button();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.salesDBBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.salesDB = new Reporting.Data.SalesDB();
-            this.salesByDateTableAdapter = new Reporting.Data.SalesDBTableAdapters.SalesByDateTableAdapter();
+            this.salesByDateTableAdapter = new Cognitivo.Data.SalesDBTableAdapters.SalesByDateTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.salesByDateBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesDBBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.salesDB)).BeginInit();
@@ -49,17 +48,24 @@
             this.salesByDateBindingSource.DataMember = "SalesByDate";
             this.salesByDateBindingSource.DataSource = this.salesDBBindingSource;
             // 
+            // salesDBBindingSource
+            // 
+            this.salesDBBindingSource.DataSource = this.salesDB;
+            this.salesDBBindingSource.Position = 0;
+            // 
+            // salesDB
+            // 
+            this.salesDB.DataSetName = "SalesDB";
+            this.salesDB.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // reportViewer1
             // 
             this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            reportDataSource1.Name = "SalesByDate";
-            reportDataSource1.Value = this.salesByDateBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "Reporting.Reports.SalesByDate.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(0, 70);
-            this.reportViewer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.reportViewer1.Margin = new System.Windows.Forms.Padding(4);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(773, 461);
             this.reportViewer1.TabIndex = 0;
@@ -97,16 +103,6 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(253, 47);
             this.dateTimePicker1.TabIndex = 4;
             // 
-            // salesDBBindingSource
-            // 
-            this.salesDBBindingSource.DataSource = this.salesDB;
-            this.salesDBBindingSource.Position = 0;
-            // 
-            // salesDB
-            // 
-            this.salesDB.DataSetName = "SalesDB";
-            this.salesDB.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // salesByDateTableAdapter
             // 
             this.salesByDateTableAdapter.ClearBeforeFill = true;
@@ -122,7 +118,7 @@
             this.Controls.Add(this.reportViewer1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SalesByDate";
             this.Text = "Sales By Date";
             this.Load += new System.EventHandler(this.SalesByDate_Load);
@@ -138,8 +134,8 @@
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
         private System.Windows.Forms.BindingSource salesByDateBindingSource;
         private System.Windows.Forms.BindingSource salesDBBindingSource;
-        private Data.SalesDB salesDB;
-        private Data.SalesDBTableAdapters.SalesByDateTableAdapter salesByDateTableAdapter;
+        private Cognitivo.Data.SalesDB salesDB;
+        private Cognitivo.Data.SalesDBTableAdapters.SalesByDateTableAdapter salesByDateTableAdapter;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;

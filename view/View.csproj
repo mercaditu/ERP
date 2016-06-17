@@ -80,7 +80,7 @@
     <ManifestKeyFile>View_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -105,6 +105,12 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DSoft.RDLC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -152,6 +158,10 @@
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Reporting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reporting\bin\Debug\Reporting.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -414,6 +424,11 @@
     <Compile Include="Converters\TreeViewchildFilter.cs" />
     <Compile Include="Converters\TrueToFalseConverter.cs" />
     <Compile Include="Converters\ValueToEnumConverter.cs" />
+    <Compile Include="Data\SalesDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DocumentViewer.xaml.cs">
       <DependentUpon>DocumentViewer.xaml</DependentUpon>
     </Compile>
@@ -1023,6 +1038,17 @@
       <LastGenOutput>PaymentSetting.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Converters\NumberFormat.cs" />
+    <None Include="Data\SalesDB.xsc">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
+    <None Include="Data\SalesDB.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SalesDB.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Data\SalesDB.xss">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+    </None>
     <None Include="GestureSettings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>GestureSettings.Designer.cs</LastGenOutput>
@@ -1044,6 +1070,7 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Costing.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\Cognitivo.Project.PrintingPress.Accessory.datasource">
       <SubType>Designer</SubType>
     </None>
@@ -1267,10 +1294,6 @@
     <ProjectReference Include="..\entity\Entity.csproj">
       <Project>{770c9a34-4228-4e1d-8aa2-694af7f108f3}</Project>
       <Name>Entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reporting\Reporting.csproj">
-      <Project>{065aea1b-0ef2-4cd2-a5d7-7af4bf5d8413}</Project>
-      <Name>Reporting</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

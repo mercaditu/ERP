@@ -11,16 +11,9 @@ namespace Cognitivo.Menu
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
-        public entity.dbContext _entity = new entity.dbContext();
         bool _is_LoggedIn = false;
-
-
         public List<entity.security_curd> security_curdList { get; set; }
 
-
-        //List<entity.errors> _PredefinedErrors = new List<entity.errors>();
-        //public List<entity.errors> PredefinedErrors { get { return _PredefinedErrors; } set { _PredefinedErrors = value; } }
-        
         public bool is_LoggedIn
         {
             get { return _is_LoggedIn; }
@@ -136,6 +129,18 @@ namespace Cognitivo.Menu
             if (mainFrame.CanGoBack)
             {
                 mainFrame.GoBack();
+            }
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (mainFrame.Content.ToString().Contains("Corporate"))
+            {
+                if (e.Key != Key.Enter)
+                {
+                    mainMenu_Corporate mainMenu = mainFrame.Content as mainMenu_Corporate;
+                    mainMenu.SearchMode = true;
+                }
             }
         }
     }

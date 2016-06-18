@@ -10,7 +10,7 @@
         lex:LocalizeDictionary.DesignCulture="en" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
-        WindowState="Maximized" GlowBrush="Black"
+        WindowState="Maximized" GlowBrush="Black" KeyUp="Window_KeyUp"
         Style="{DynamicResource MyCleanWindowStyle}">
 
     <Controls:MetroWindow.Resources>

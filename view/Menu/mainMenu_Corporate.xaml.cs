@@ -17,7 +17,16 @@ namespace Cognitivo.Menu
         AppList appList = new AppList();
         MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
 
-        public string StringSearch { get; set; }
+        public bool SearchMode 
+        {
+            get { return _SearchMode; }
+            set
+            {
+                tbxSearch.Focus();
+                _SearchMode = value; 
+            }
+        }
+        private bool _SearchMode;
 
         public mainMenu_Corporate()
         {
@@ -36,6 +45,8 @@ namespace Cognitivo.Menu
             {
                 wrapApps.Children.Clear();
             }
+
+            e.Handled = true;
         }
 
         private void get_Apps(object sender, EventArgs e)

@@ -147,13 +147,19 @@ namespace entity
                     }
                     else
                     {
-                        if (item_inventory_detail.value_counted != 0 || item_inventory_detail.IsSelected)
+                        if (item_inventory_detail.value_counted != 0 && item_inventory_detail.IsSelected)
                         {
                             decimal delta = 0;
+
                             if (item_inventory_detail.value_system != item_inventory_detail.value_counted)
                             {
                                 //Negative
                                 delta = item_inventory_detail.value_counted - item_inventory_detail.value_system;
+                            }
+
+                            if (item_inventory_detail.item_product.item.name.Contains("Kinder Bue"))
+                            {
+                                
                             }
 
                             if (delta != 0)

@@ -326,14 +326,14 @@
                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
             </StackPanel>
             <DataGrid x:Name="dgvPurchaseDetail" Margin="8,57,8,8"
-                          VerticalScrollBarVisibility="Auto" Height="Auto"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-				          EnableRowVirtualization="True"
-                          ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
-                          RowDetailsVisibilityMode="Collapsed" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
-                          InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
-                          CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding">
+                        VerticalScrollBarVisibility="Auto" Height="Auto"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+                        EnableRowVirtualization="True"
+                        ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
+                        RowDetailsVisibilityMode="Collapsed" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
+                        InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
+                        CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding">
                 <DataGrid.Resources>
                     <!-- the non-editing cell -->
                     <DataTemplate x:Key="CellTemplate">
@@ -352,10 +352,10 @@
                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:CostCenter}" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource app_cost_centerViewSource}}"
                                             DisplayMemberPath="name" SelectedValuePath="id_cost_center" SelectedValueBinding="{Binding id_cost_center, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                     
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" 
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" MinWidth="64"
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" 
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" MinWidth="128"
                                         Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     
                     <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpDate}" Width="Auto" Visibility="Collapsed">

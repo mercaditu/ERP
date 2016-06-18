@@ -75,7 +75,8 @@ namespace entity.Brillo.Logic
                                              sales_return_detail.quantity,
                                              sales_return.trans_date,
                                              sales_return_detail.unit_cost,
-                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name)
+                                             comment_Generator(App.Names.SalesReturn, sales_return.number, sales_return.contact.name), 
+                                             null
                                              ));
                 }
                 //Return List so we can save into context.
@@ -136,9 +137,13 @@ namespace entity.Brillo.Logic
                     List<item_movement_dimension> item_movement_dimensionLIST = null;
                     if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)
                     {
+                        item_movement_dimensionLIST = new List<item_movement_dimension>();
                         foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
                         {
-                            item_movement_dimension = new List<item_movement_dimension>();
+                            item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
+                            item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
+                            item_movement_dimension.value = purchase_invoice_dimension.value;
+                            item_movement_dimensionLIST.Add(item_movement_dimension);
                         }   
                     }
 
@@ -155,7 +160,7 @@ namespace entity.Brillo.Logic
                             purchase_invoice_detail.quantity,
                             purchase_invoice.trans_date,
                             purchase_invoice_detail.unit_cost,
-                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), null
+                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), item_movement_dimensionLIST
                             ));
                 }
                 //Return List so we can save into context.
@@ -793,22 +798,27 @@ namespace entity.Brillo.Logic
                 item_movement.item_movement_value.Add(item_movement_value);
 
 
-                if (id_movement > 0)
+                if (DimensionList != null)
                 {
-                    using (db db = new db())
-                    {
-                        if (db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault() != null)
-                        {
-                            item_movement Execustionitem_movement = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
-                            foreach (item_movement_dimension item_movement_dimension in Execustionitem_movement.item_movement_dimension)
-                            {
-                                item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                                _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                                _item_movement_dimension.value = item_movement_dimension.id_dimension;
-                                item_movement.item_movement_dimension.Add(_item_movement_dimension);
-                            }
-                        }
-                    }
+                    foreach (item_movement_dimension item_movement_dimension in DimensionList)
+	                {
+		                item_movement.item_movement_dimension.Add(item_movement_dimension);
+	                }
+                    
+                    //using (db db = new db())
+                    //{
+                    //    if (db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault() != null)
+                    //    {
+                    //        item_movement Execustionitem_movement = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
+                    //        foreach (item_movement_dimension item_movement_dimension in Execustionitem_movement.item_movement_dimension)
+                    //        {
+                    //            item_movement_dimension _item_movement_dimension = new item_movement_dimension();
+                    //            _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
+                    //            _item_movement_dimension.value = item_movement_dimension.id_dimension;
+                    //            item_movement.item_movement_dimension.Add(_item_movement_dimension);
+                    //        }
+                    //    }
+                    //}
                 }
 
                 return item_movement;

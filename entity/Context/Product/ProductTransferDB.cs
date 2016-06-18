@@ -192,7 +192,8 @@ namespace entity
                         item_transfer_detail.quantity_destination,
                         item_transfer_detail.item_transfer.trans_date,
                         0,
-                        stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", "")
+                        stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
+                        null
                         );
 
 
@@ -243,7 +244,8 @@ namespace entity
                                 item_transfer_detail.quantity_destination,
                                 item_transfer_detail.item_transfer.trans_date,
                                 Items_InStockLIST.Sum(x => x.item_movement_value.Sum(y => y.unit_value)),
-                                stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", "")
+                                stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
+                                null
                                 );
                 item_movement_dest._parent = Items_InStockLIST.FirstOrDefault();
                 base.item_movement.Add(item_movement_dest);
@@ -290,7 +292,8 @@ namespace entity
                             item_transfer_detail.quantity_origin,
                             item_transfer_detail.item_transfer.trans_date,
                             0,
-                            stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
+                            stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
+                            null);
 
                     base.item_movement.Add(item_movement_Dest);
                 }

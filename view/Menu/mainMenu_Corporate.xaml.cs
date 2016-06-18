@@ -122,5 +122,10 @@ namespace Cognitivo.Menu
                 this.Cursor = Cursors.Arrow;
             }));
         }
+
+        private void Page_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

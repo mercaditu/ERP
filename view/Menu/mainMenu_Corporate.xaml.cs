@@ -9,7 +9,6 @@ using WPFLocalizeExtension.Extensions;
 using System.Threading.Tasks;
 using System.Windows.Media.Effects;
 using System.Windows.Media;
-using System.Reflection;
 
 namespace Cognitivo.Menu
 {
@@ -23,10 +22,6 @@ namespace Cognitivo.Menu
         public mainMenu_Corporate()
         {
             InitializeComponent();
-            if (rootWindow.mainFrame.CanGoBack)
-            {
-                rootWindow.mainFrame.RemoveBackEntry();
-            }
         }
 
         private void get_Apps(object sender, EventArgs e)
@@ -92,7 +87,7 @@ namespace Cognitivo.Menu
             cntrl.applicationIcon appName = (sender as cntrl.applicationIcon);
             string name = appName.Tag.ToString();
 
-            if (Cognitivo.Properties.Settings.Default.open_Window)
+            if (Properties.Settings.Default.open_Window)
             {
                 ApplicationWindow appWindow = new ApplicationWindow();
                 appWindow.appName = name;
@@ -121,11 +116,6 @@ namespace Cognitivo.Menu
                 rootWindow.mainFrame.Navigate(objPage);
                 this.Cursor = Cursors.Arrow;
             }));
-        }
-
-        private void Page_KeyDown(object sender, KeyEventArgs e)
-        {
-
         }
     }
 }

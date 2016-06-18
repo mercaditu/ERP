@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data;
 using entity;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Cognitivo.Product
 {
@@ -191,10 +192,20 @@ namespace Cognitivo.Product
 
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
+
+        }
+
+        private void GenerateParentChildRel_Thread()
+        {
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
+
             entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
             ProductMovementDB.Generate_ProductMovement();
 
-            System.Windows.MessageBox.Show("Done");
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
+
+            
         }
     }
 }

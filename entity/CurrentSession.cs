@@ -87,9 +87,9 @@ namespace entity
         }
         static List<security_role_privilage> _Security_role_privilageList = new List<security_role_privilage>();
 
-        public static security_user User { get; set; }
+        public static db db = new db();
 
-        private static db db = new db();
+        public static security_user User { get; set; }
 
         public static void Start(string UserName, string Password)
         {
@@ -97,17 +97,18 @@ namespace entity
             Security_role_privilageList = new List<security_role_privilage>();
 
             //Set the User
-            User = db.security_user.Where(user => user.name == UserName
-                                               && user.password == Password
-                                               && user.id_company == Properties.Settings.Default.company_ID)
+            User = db.security_user.Where(x => x.name == UserName
+                                               && x.password == Password
+                                               && x.id_company == Id_Company)
                                    .FirstOrDefault();
+
             if (User != null)
             {
                 //Set the User
                 Id_User = User.id_user;
 
-                entity.Properties.Settings.Default.user_Name = User.name_full;
-                entity.Properties.Settings.Default.Save();
+                Properties.Settings.Default.user_Name = User.name_full;
+                Properties.Settings.Default.Save();
 
                 //Set the Company
                 Id_Company = User.app_company.id_company;
@@ -138,6 +139,7 @@ namespace entity
                                     .FirstOrDefault().id_terminal;
                 }
 
+
                 //Setting Security, once CurrentSession Data is set.
                 Refresh_Security();
             }
@@ -147,15 +149,13 @@ namespace entity
         {
             _Security_CurdList.Clear();
 
-            //Curd
-            security_user security_user = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault();
-            _Security_CurdList = db.security_curd.Where(x => x.id_role == security_user.id_role).ToList();
+                //Curd
+                security_user security_user = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault();
+                _Security_CurdList = db.security_curd.Where(x => x.id_role == security_user.id_role).ToList();
 
-            //Privilage
-            _Security_role_privilageList.Clear();
-            _Security_role_privilageList = db.security_role_privilage.Where(x => x.id_role == security_user.id_role).ToList();
-
-
+                //Privilage
+                _Security_role_privilageList.Clear();
+                _Security_role_privilageList = db.security_role_privilage.Where(x => x.id_role == security_user.id_role).ToList();
         }
     }
 }

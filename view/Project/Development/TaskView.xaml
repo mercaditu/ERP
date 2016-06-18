@@ -53,7 +53,7 @@
 			     ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="ListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <cntrl:navList recordCode="{Binding est_start_date, StringFormat=d}" 
+                    <cntrl:navList recordCode="{Binding code}" 
 						recordSecondaryName="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 						recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

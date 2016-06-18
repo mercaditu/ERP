@@ -9,7 +9,6 @@ namespace entity
   
     public partial class app_contract : Audit, IDataErrorInfo
     {
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_contract { get; set; } 

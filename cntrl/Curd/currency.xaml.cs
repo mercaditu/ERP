@@ -64,7 +64,7 @@ namespace cntrl
 
             if (_app_currency.is_priority == true)
             {
-                List<app_currency> list_app_currency = entity.db.app_currency.Where(a => a.id_currency != _app_currency.id_currency).ToList();
+                List<app_currency> list_app_currency = entity.db.app_currency.Where(a => a.id_currency != _app_currency.id_currency && a.id_company == CurrentSession.Id_Company).ToList();
                 foreach (var item in list_app_currency)
                 {
                     item.is_priority = false;
@@ -124,6 +124,7 @@ namespace cntrl
                     listapp_currencyfx = new List<app_currencyfx>();
                     if (_app_currency.app_currencyfx.Count > 0)
                         listapp_currencyfx = _app_currency.app_currencyfx.ToList();
+
                     foreach (var item in listapp_currencyfx)
                     {
                         entity.db.app_currencyfx.Remove(item);

@@ -98,7 +98,12 @@
                        HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        
-        <Button Grid.Row="1" VerticalAlignment="Bottom" Content="Generate Parent/Child Rel" Click="btnGenerateParentChildRel_Click"/>
+        <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent" 
+                BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
+                <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>
+                <Label Content="Parent / Child Rel" FontSize="18" HorizontalContentAlignment="Center"/>
+            </Grid>
+        </Button>
     </Grid>
 </Page>

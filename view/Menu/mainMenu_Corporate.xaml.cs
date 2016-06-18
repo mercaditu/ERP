@@ -18,6 +18,8 @@ namespace Cognitivo.Menu
         AppList appList = new AppList();
         MainWindow rootWindow = Application.Current.MainWindow as MainWindow;
 
+        public string StringSearch { get; set; }
+
         public mainMenu_Corporate()
         {
             InitializeComponent();
@@ -120,7 +122,5 @@ namespace Cognitivo.Menu
                 this.Cursor = Cursors.Arrow;
             }));
         }
-
-      
     }
 }

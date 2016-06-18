@@ -10,7 +10,7 @@
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-      MinWidth="800" MinHeight="600" >
+      MinWidth="800" MinHeight="600" KeyDown="Page_KeyDown">
     <Grid>
         <Grid VerticalAlignment="Top">
             <Grid.Background>
@@ -91,8 +91,8 @@
         </Grid>
 
         <Grid Margin="0,42,0,0">
-            <Label x:Name="lblModuleName" Style="{StaticResource H1}" HorizontalAlignment="Center" 
-                   FontWeight="Normal" Foreground="White">
+            <Label x:Name="lblModuleName" Style="{StaticResource EditableLabelStyle}" VerticalAlignment="Top" HorizontalAlignment="Center" 
+                   FontWeight="Normal" Foreground="White" FontSize="32">
                 <Label.Effect>
                     <DropShadowEffect ShadowDepth="0" BlurRadius="2" />
                 </Label.Effect>

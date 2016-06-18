@@ -124,6 +124,8 @@ namespace entity
                 {
                     invoice.HasErrors = true;
                 }
+
+                invoice.IsSelected = false;
             }
         }
 

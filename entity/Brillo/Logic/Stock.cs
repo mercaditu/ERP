@@ -133,6 +133,15 @@ namespace entity.Brillo.Logic
                         purchase_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault();
                     }
 
+                    List<item_movement_dimension> item_movement_dimensionLIST = null;
+                    if (purchase_invoice_detail.purchase_invoice_dimension.Count > 0)
+                    {
+                        foreach (purchase_invoice_dimension purchase_invoice_dimension in purchase_invoice_detail.purchase_invoice_dimension)
+                        {
+                            item_movement_dimension = new List<item_movement_dimension>();
+                        }   
+                    }
+
                     //Improve Comment. More standarized.
                     item_movementList.Add(
                         CreditOnly_Movement(
@@ -146,7 +155,7 @@ namespace entity.Brillo.Logic
                             purchase_invoice_detail.quantity,
                             purchase_invoice.trans_date,
                             purchase_invoice_detail.unit_cost,
-                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name)
+                            comment_Generator(App.Names.PurchaseInvoice, purchase_invoice.number != null ? purchase_invoice.number : "", purchase_invoice.contact.name), null
                             ));
                 }
                 //Return List so we can save into context.
@@ -242,8 +251,8 @@ namespace entity.Brillo.Logic
                                            detail.quantity,
                                            production_execution.trans_date,
                                            0,
-                                           comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
-                                       ));
+                                           comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), ""), null)
+                                       );
 
                             }
                         }
@@ -355,8 +364,8 @@ namespace entity.Brillo.Logic
                                                         production_execution.trans_date,
                                     //Pankeel -> this needs to be fixed. I need the sum of all child.
                                                         Convert.ToDecimal(item_movementinput.Sum(x => x.item_movement_value.Sum(y => y.unit_value))),
-                                                        comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
-                                                        )
+                                                        comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), ""),
+                                                        null)
                                                     );
                             }
                             else
@@ -698,7 +707,7 @@ namespace entity.Brillo.Logic
 
         public item_movement CreditOnly_Movement(entity.Status.Stock Status, App.Names ApplicationID, int TransactionID, int TransactionDetailID,
                                               app_currencyfx app_currencyfx, item_product item_product, app_location app_location,
-                                              decimal Quantity, DateTime TransDate, decimal Cost, string Comment)
+                                              decimal Quantity, DateTime TransDate, decimal Cost, string Comment, List<item_movement_dimension> DimensionList)
         {
             int id_movement = 0;
             if (Quantity > 0)

@@ -624,36 +624,37 @@ namespace Cognitivo.Purchase
         public void PurchaseOrder_Click(object sender)
         {
             CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource = FindResource("purchase_invoicepurchase_invoice_detailViewSource") as CollectionViewSource;
-            purchase_invoice _purchase_invoice = (purchase_invoice)purchase_invoiceViewSource.View.CurrentItem;
+            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceViewSource.View.CurrentItem;
 
             foreach (purchase_order purchase_order in pnlPurchaseOrder.selected_purchase_order)
             {
-                _purchase_invoice.contact = purchase_order.contact;
-                _purchase_invoice.id_contact = purchase_order.id_contact;
+                purchase_invoice.contact = purchase_order.contact;
+                purchase_invoice.id_contact = purchase_order.id_contact;
 
-                _purchase_invoice.app_department = purchase_order.app_department;
-                _purchase_invoice.id_department = purchase_order.id_department;
+                purchase_invoice.app_department = purchase_order.app_department;
+                purchase_invoice.id_department = purchase_order.id_department;
 
-                _purchase_invoice.app_condition = purchase_order.app_condition;
-                _purchase_invoice.id_condition = purchase_order.id_condition;
+                purchase_invoice.app_condition = purchase_order.app_condition;
+                purchase_invoice.id_condition = purchase_order.id_condition;
 
-                _purchase_invoice.app_contract = purchase_order.app_contract;
-                _purchase_invoice.id_contract = purchase_order.id_contract;
+                purchase_invoice.app_contract = purchase_order.app_contract;
+                purchase_invoice.id_contract = purchase_order.id_contract;
 
                 foreach (purchase_order_detail _purchase_order_detail in purchase_order.purchase_order_detail)
                 {
-                    if (_purchase_invoice.purchase_invoice_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)
+                    if (purchase_invoice.purchase_invoice_detail.Where(x => x.id_item == _purchase_order_detail.id_item).Count() == 0)
                     {
                         purchase_invoice_detail purchase_invoice_detail = new purchase_invoice_detail();
-                        _purchase_invoice.State = EntityState.Modified;
-                        purchase_invoice_detail.purchase_invoice = _purchase_invoice;
+                        purchase_invoice.State = EntityState.Modified;
+                        purchase_invoice_detail.purchase_invoice = purchase_invoice;
+                        purchase_invoice_detail.id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail;
                         purchase_invoice_detail.app_cost_center = _purchase_order_detail.app_cost_center;
                         purchase_invoice_detail.id_cost_center = _purchase_order_detail.id_cost_center;
                         purchase_invoice_detail.item = _purchase_order_detail.item;
                         purchase_invoice_detail.id_item = _purchase_order_detail.id_item;
                         purchase_invoice_detail.quantity = _purchase_order_detail.quantity - PurchaseInvoiceDB.purchase_invoice_detail
-                                                                                     .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
-                                                                                     .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(); ;
+                                                                    .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
+                                                                    .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(); ;
                         purchase_invoice_detail.unit_cost = _purchase_order_detail.unit_cost;
 
                         foreach (purchase_order_dimension purchase_order_dimension in _purchase_order_detail.purchase_order_dimension)
@@ -661,15 +662,17 @@ namespace Cognitivo.Purchase
                             purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
                             purchase_invoice_dimension.id_dimension = purchase_order_dimension.id_dimension;
                             purchase_invoice_dimension.value = purchase_order_dimension.value;
+
+                            //Add Dimension to Detail
                             purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
                         }
-                        _purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
+                        //Add Detail to Header
+                        purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                     }
-
                 }
             }
 
-            PurchaseInvoiceDB.Entry(_purchase_invoice).Entity.State = EntityState.Added;
+            PurchaseInvoiceDB.Entry(purchase_invoice).Entity.State = EntityState.Added;
             purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
             crud_modal.Children.Clear();
             crud_modal.Visibility = Visibility.Collapsed;

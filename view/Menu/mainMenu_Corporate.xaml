@@ -84,6 +84,13 @@
                                         VerticalAlignment="Center" HorizontalAlignment="Center" 
                                         FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
             </StackPanel>
+            <TextBox HorizontalContentAlignment="Center" FontSize="26" 
+                     Visibility="{Binding}" TextChanged="tbxSearch_TextChanged"
+                     Controls:TextBoxHelper.ClearTextButton="True" Controls:TextBoxHelper.Watermark="{lex:Loc Search}" Controls:TextBoxHelper.SelectAllOnFocus="True">
+                <TextBox.Background>
+                    <SolidColorBrush Color="White" Opacity="0.83"/>
+                </TextBox.Background>
+            </TextBox>
         </Grid>
 
         <Grid Margin="0,42,0,0">

@@ -12,9 +12,7 @@ namespace cntrl
 {
     public partial class contract : UserControl
     {
-        entity.dbContext mydb = new entity.dbContext();
         CollectionViewSource myViewSource = new CollectionViewSource();
-        public bool isExternalCall { get; set; }
 
         CollectionViewSource _MainViewSource = null;
         public CollectionViewSource MainViewSource { get { return _MainViewSource; } set { _MainViewSource = value; } }
@@ -30,8 +28,6 @@ namespace cntrl
         private entity.app_contract _app_contractobject = null;
         public entity.app_contract app_contractobject { get { return _app_contractobject; } set { _app_contractobject = value; } }
 
-        entity.Properties.Settings _settings = new entity.Properties.Settings();
-
         public contract()
         {
             InitializeComponent();
@@ -42,33 +38,31 @@ namespace cntrl
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 CollectionViewSource app_conditionViewSource = (System.Windows.Data.CollectionViewSource)this.FindResource("app_conditionViewSource");
-                app_conditionViewSource.Source = entity.db.app_condition.Where(a => a.is_active == true && a.id_company == _settings.company_ID).OrderBy(a => a.name).ToList();
+                app_conditionViewSource.Source = entity.db.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
-                if (!isExternalCall)
-                {
-                    stackMain.DataContext = _app_contractViewSource;
-                }
-                else
-                {
-                    MainViewSource.View.MoveCurrentTo(curObject);
-                    if (operationMode == Class.clsCommon.Mode.Add)
-                    {
-
-
-                        entity.app_contract newContract = new entity.app_contract();
-                        mydb.db.app_contract.Add(newContract);
-                        myViewSource.Source = mydb.db.app_contract.Local;
-                        myViewSource.View.Refresh();
-                        myViewSource.View.MoveCurrentTo(newContract);
-                        stackMain.DataContext = myViewSource;
-                        btnDelete.Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                    else if (operationMode == Class.clsCommon.Mode.Edit)
-                    {
-                        app_contractViewSource.View.MoveCurrentTo(app_contractobject);
-                        stackMain.DataContext = app_contractViewSource;
-                    }
-                }
+                //if (!isExternalCall)
+                //{
+                stackMain.DataContext = _app_contractViewSource;
+                //}
+                //else
+                //{
+                //    MainViewSource.View.MoveCurrentTo(curObject);
+                //    if (operationMode == Class.clsCommon.Mode.Add)
+                //    {
+                //        entity.app_contract newContract = new entity.app_contract();
+                //        mydb.db.app_contract.Add(newContract);
+                //        myViewSource.Source = mydb.db.app_contract.Local;
+                //        myViewSource.View.Refresh();
+                //        myViewSource.View.MoveCurrentTo(newContract);
+                //        stackMain.DataContext = myViewSource;
+                //        btnDelete.Visibility = System.Windows.Visibility.Collapsed;
+                //    }
+                //    else if (operationMode == Class.clsCommon.Mode.Edit)
+                //    {
+                //        app_contractViewSource.View.MoveCurrentTo(app_contractobject);
+                //        stackMain.DataContext = app_contractViewSource;
+                //    }
+                //}
 
             }
         }
@@ -77,37 +71,24 @@ namespace cntrl
         {
             try
             {
-                if (!isExternalCall)
+                IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
+                if (validationresult.Count() == 0)
                 {
-                    IEnumerable<DbEntityValidationResult> validationresult = entity.db.GetValidationErrors();
-                    if (validationresult.Count() == 0)
+
+                    app_contract app_contract = app_contractViewSource.View.CurrentItem as app_contract;
+
+                    if (app_contract.is_default == true)
                     {
-                        entity.db.SaveChanges();
-                        btnCancel_Click(sender, e);
-                    }
-                }
-                else
-                {
-                    IEnumerable<DbEntityValidationResult> validationresult = mydb.db.GetValidationErrors();
-                    if (validationresult.Count() == 0)
-                    {
-                        if (operationMode == Class.clsCommon.Mode.Add)
+                        //Checks if any other Contract within same company has the same Default.
+                        List<app_contract> list_app_contract = entity.db.app_contract.Where(a => a.id_contract != app_contract.id_contract && a.id_company == CurrentSession.Id_Company).ToList();
+                        foreach (var item in list_app_contract)
                         {
-                            mydb.SaveChanges();
-                            entity.app_contract app_contract = myViewSource.View.CurrentItem as entity.app_contract;
-                            mydb.db.Entry(app_contract).State = EntityState.Detached;
-                            _entity.db.app_contract.Attach(app_contract);
-                            app_contractViewSource.View.Refresh();
-                            app_contractViewSource.View.MoveCurrentTo(app_contract);
-                            MainViewSource.View.Refresh();
-                            MainViewSource.View.MoveCurrentTo(curObject);
-                            btnCancel_Click(sender, e);
-                        }
-                        else if (operationMode == Class.clsCommon.Mode.Edit)
-                        {
-                            btnCancel_Click(sender, e);
+                            item.is_default = false;
                         }
                     }
+
+                    entity.db.SaveChanges();
+                    btnCancel_Click(sender, e);
                 }
             }
             catch (Exception ex)
@@ -119,16 +100,8 @@ namespace cntrl
         {
             try
             {
-                if (!isExternalCall)
-                {
-                    entity.CancelChanges();
-                    app_contractViewSource.View.Refresh();
-                }
-                else
-                {
-                    if (operationMode == Class.clsCommon.Mode.Add)
-                        mydb.CancelChanges();
-                }
+                entity.CancelChanges();
+                app_contractViewSource.View.Refresh();
 
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();

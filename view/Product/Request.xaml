@@ -127,10 +127,10 @@
                           ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"/>
 
             </StackPanel>
-            <StackPanel Grid.Row="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
-                <Label Content="{lex:Loc RequestResource}" Style="{StaticResource H2}"/>
+            <Grid Grid.Row="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
+                <Label Content="{lex:Loc RequestResource}" Style="{StaticResource H2}" VerticalAlignment="Top"/>
                 <DataGrid x:Name="item_request_detailMovementDataGrid" SelectionChanged="item_request_detailMovementDataGrid_SelectionChanged" 
-                          AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="6,0" CanUserAddRows="False"
+                          AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="0,44,0,0" CanUserAddRows="False"
                           ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailViewSource}}" 
                           RowDetailsVisibilityMode="VisibleWhenSelected" LoadingRowDetails="item_request_detailMovementDataGrid_LoadingRowDetails">
                     <DataGrid.Columns>
@@ -169,7 +169,7 @@
                         </DataTemplate>
                     </DataGrid.RowDetailsTemplate>
                 </DataGrid>
-            </StackPanel>
+            </Grid>
 
             <TabControl Grid.Column="1" Grid.Row="1" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                 <TabItem>
@@ -180,8 +180,8 @@
                                 VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,-5,0"/>
                         </Grid>
                     </TabItem.Header>
-                    <DataGrid x:Name="item_request_detailDataGrid" AutoGenerateColumns="False" 
-                              ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}"   >
+                    <DataGrid x:Name="item_request_detailDataGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                              ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item_request_detail.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Item}" Width="Auto"/>

@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V484\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V507\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>494</ApplicationRevision>
+    <ApplicationRevision>496</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -155,13 +155,10 @@
       <HintPath>..\packages\MySql.Data.Entity.6.9.8\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Reporting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Reporting\bin\Debug\Reporting.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -505,6 +502,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Project\PrintingPress\Class\Cut.cs" />
+    <Compile Include="Reporting\Data\FinanceDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinanceDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Data\SalesDB.cs">
+      <DependentUpon>SalesDB.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reporting\Data\SalesDB.Designer.cs">
       <DependentUpon>SalesDB.xsd</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -948,6 +954,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByTag.rdlc" />
@@ -1227,6 +1234,17 @@
     </None>
     <Resource Include="Resources\cognitivo.ttf" />
     <Resource Include="Resources\Entypo.ttf" />
+    <None Include="Reporting\Data\FinanceDS.xsc">
+      <DependentUpon>FinanceDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\FinanceDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FinanceDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporting\Data\FinanceDS.xss">
+      <DependentUpon>FinanceDS.xsd</DependentUpon>
+    </None>
     <None Include="Reporting\Data\SalesDB.xsc">
       <DependentUpon>SalesDB.xsd</DependentUpon>
     </None>

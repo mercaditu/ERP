@@ -18,7 +18,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="wallpaper_Image" Type="System.String" Scope="User">
-      <Value Profile="(Default)">/Images/Wallpaper/wpCerro.jpg</Value>
+      <Value Profile="(Default)">/Images/Wallpaper/MatternHorn.jpg</Value>
     </Setting>
     <Setting Name="Continue_OnException" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -26,10 +26,10 @@
     <Setting Name="MySQLconnString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;server=localhost;user id=root;password=root;database=golden;persistsecurityinfo=True&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;server=localhost;user id=root;password=root;database=cognitivogolden&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;MySql.Data.MySqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">server=localhost;user id=root;password=root;database=golden;persistsecurityinfo=True</Value>
+      <Value Profile="(Default)">server=localhost;user id=root;password=root;database=cognitivogolden</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -366,6 +366,9 @@
   <data name="CostCenter" xml:space="preserve">
     <value>Centro De Costo</value>
   </data>
+  <data name="CostofGoodsSold" xml:space="preserve">
+    <value>Costo De Los Bienes Vendidos</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>País</value>
   </data>
@@ -742,7 +745,7 @@
     <value>Emitido</value>
   </data>
   <data name="Item" xml:space="preserve">
-    <value>Ítem</value>
+    <value>Ít.</value>
   </data>
   <data name="ItemDefect" xml:space="preserve">
     <value>Defecto Del Artículo</value>
@@ -811,7 +814,7 @@
     <value>Longitud</value>
   </data>
   <data name="LotNumber" xml:space="preserve">
-    <value>Número De Lote</value>
+    <value>Numero De Lote</value>
   </data>
   <data name="Maintainance" xml:space="preserve">
     <value>Mantenimiento De Equipos</value>
@@ -967,7 +970,7 @@
     <value>Ejecución Del Proyecto</value>
   </data>
   <data name="ProjectFinance" xml:space="preserve">
-    <value>Financiación De Proyectos</value>
+    <value>Financiamiento De Proyectos</value>
   </data>
   <data name="PromissoryNote" xml:space="preserve">
     <value>Pagaré</value>
@@ -1098,11 +1101,17 @@
   <data name="SalesBudget" xml:space="preserve">
     <value>Presupuesto De Ventas</value>
   </data>
+  <data name="SalesbyDate" xml:space="preserve">
+    <value>Ventas Por Fecha</value>
+  </data>
   <data name="SalesbyItem" xml:space="preserve">
     <value>Ventas Por Artículo</value>
   </data>
   <data name="SalesbySalesman" xml:space="preserve">
     <value>Ventas Por Vendedor</value>
+  </data>
+  <data name="SalesbyTag" xml:space="preserve">
+    <value>Ventas Por Tag</value>
   </data>
   <data name="SalesDetails" xml:space="preserve">
     <value>Detalles De Ventas</value>

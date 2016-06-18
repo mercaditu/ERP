@@ -366,6 +366,9 @@
   <data name="CostCenter" xml:space="preserve">
     <value>Cost Center</value>
   </data>
+  <data name="CostofGoodsSold" xml:space="preserve">
+    <value>Cost of Goods Sold</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>Country</value>
   </data>
@@ -1098,11 +1101,17 @@
   <data name="SalesBudget" xml:space="preserve">
     <value>Sales Budget</value>
   </data>
+  <data name="SalesbyDate" xml:space="preserve">
+    <value>Sales by Date</value>
+  </data>
   <data name="SalesbyItem" xml:space="preserve">
     <value>Sales by Item</value>
   </data>
   <data name="SalesbySalesman" xml:space="preserve">
     <value>Sales by Salesman</value>
+  </data>
+  <data name="SalesbyTag" xml:space="preserve">
+    <value>Sales by Tag</value>
   </data>
   <data name="SalesDetails" xml:space="preserve">
     <value>Sales Details</value>

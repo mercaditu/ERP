@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FinanceDS" targetNamespace="http://tempuri.org/FinanceDS.xsd" xmlns:mstns="http://tempuri.org/FinanceDS.xsd" xmlns="http://tempuri.org/FinanceDS.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="MySQLconnString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MySQLconnString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Cognitivo.Properties.Settings.GlobalReference.Default.MySQLconnString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AccountsRecievableTableAdapter" GeneratorDataComponentClassName="AccountsRecievableTableAdapter" Name="AccountsRecievable" UserDataComponentName="AccountsRecievableTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select 
+	ps.id_contact,
+	c.name as cliente,
+	c.gov_code as RUC,
+    year(trans_date),
+    month(trans_date),
+    sum(ps.debit)-sum(crddolar.credit) as valordolar
+from payment_schedual as ps
+left join contacts as c
+on c.id_contact = ps.id_contact
+left join(select ps.id_payment_schedual,IFNULL ((ps.credit/fx.buy_value),0) as credit from 
+			payment_schedual as ps left join 
+            payment_detail as pd on pd.id_payment_detail = ps.id_payment_detail left join
+            app_currencyfx fx on fx.id_currencyfx = pd.id_currencyfx) as crddolar
+            on crddolar.id_payment_schedual = ps.id_payment_schedual
+group by ps.id_contact,month(trans_date),year(trans_date)
+order by c.name</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="id_contact" DataSetColumn="id_contact" />
+              <Mapping SourceColumn="cliente" DataSetColumn="cliente" />
+              <Mapping SourceColumn="RUC" DataSetColumn="RUC" />
+              <Mapping SourceColumn="year(trans_date)" DataSetColumn="year(trans_date)" />
+              <Mapping SourceColumn="month(trans_date)" DataSetColumn="month(trans_date)" />
+              <Mapping SourceColumn="valordolar" DataSetColumn="valordolar" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FinanceDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FinanceDS" msprop:Generator_UserDSName="FinanceDS">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AccountsRecievable" msprop:Generator_TableClassName="AccountsRecievableDataTable" msprop:Generator_TableVarName="tableAccountsRecievable" msprop:Generator_TablePropName="AccountsRecievable" msprop:Generator_RowDeletingName="AccountsRecievableRowDeleting" msprop:Generator_RowChangingName="AccountsRecievableRowChanging" msprop:Generator_RowEvHandlerName="AccountsRecievableRowChangeEventHandler" msprop:Generator_RowDeletedName="AccountsRecievableRowDeleted" msprop:Generator_UserTableName="AccountsRecievable" msprop:Generator_RowChangedName="AccountsRecievableRowChanged" msprop:Generator_RowEvArgName="AccountsRecievableRowChangeEvent" msprop:Generator_RowClassName="AccountsRecievableRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id_contact" msprop:Generator_ColumnVarNameInTable="columnid_contact" msprop:Generator_ColumnPropNameInRow="id_contact" msprop:Generator_ColumnPropNameInTable="id_contactColumn" msprop:Generator_UserColumnName="id_contact" type="xs:int" />
+              <xs:element name="cliente" msprop:Generator_ColumnVarNameInTable="columncliente" msprop:Generator_ColumnPropNameInRow="cliente" msprop:Generator_ColumnPropNameInTable="clienteColumn" msprop:Generator_UserColumnName="cliente" type="xs:string" minOccurs="0" />
+              <xs:element name="RUC" msprop:Generator_ColumnVarNameInTable="columnRUC" msprop:Generator_ColumnPropNameInRow="RUC" msprop:Generator_ColumnPropNameInTable="RUCColumn" msprop:Generator_UserColumnName="RUC" type="xs:string" minOccurs="0" />
+              <xs:element name="year_x0028_trans_date_x0029_" msprop:Generator_ColumnVarNameInTable="_columnyear_trans_date_" msprop:Generator_ColumnPropNameInRow="_year_trans_date_" msprop:Generator_ColumnPropNameInTable="_year_trans_date_Column" msprop:Generator_UserColumnName="year(trans_date)" type="xs:long" minOccurs="0" />
+              <xs:element name="month_x0028_trans_date_x0029_" msprop:Generator_ColumnVarNameInTable="_columnmonth_trans_date_" msprop:Generator_ColumnPropNameInRow="_month_trans_date_" msprop:Generator_ColumnPropNameInTable="_month_trans_date_Column" msprop:Generator_UserColumnName="month(trans_date)" type="xs:long" minOccurs="0" />
+              <xs:element name="valordolar" msprop:Generator_ColumnVarNameInTable="columnvalordolar" msprop:Generator_ColumnPropNameInRow="valordolar" msprop:Generator_ColumnPropNameInTable="valordolarColumn" msprop:Generator_UserColumnName="valordolar" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

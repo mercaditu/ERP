@@ -85,7 +85,7 @@ namespace Cognitivo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/Images/Wallpaper/wpCerro.jpg")]
+        [global::System.Configuration.DefaultSettingValueAttribute("/Images/Wallpaper/MatternHorn.jpg")]
         public string wallpaper_Image {
             get {
                 return ((string)(this["wallpaper_Image"]));
@@ -110,8 +110,7 @@ namespace Cognitivo.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;database=golden;persistsecurityinfo=T" +
-            "rue")]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;database=cognitivogolden")]
         public string MySQLconnString {
             get {
                 return ((string)(this["MySQLconnString"]));

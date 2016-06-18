@@ -808,6 +808,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @CostofGoodsSold.
+        /// </summary>
+        public static string CostofGoodsSold {
+            get {
+                return ResourceManager.GetString("CostofGoodsSold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Country.
         /// </summary>
         public static string Country {
@@ -1996,15 +2005,6 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @Key.
-        /// </summary>
-        public static string Key {
-            get {
-                return ResourceManager.GetString("Key", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @KeyboardShortcuts.
         /// </summary>
         public static string KeyboardShortcuts {
@@ -3013,6 +3013,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SalesbyDate.
+        /// </summary>
+        public static string SalesbyDate {
+            get {
+                return ResourceManager.GetString("SalesbyDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @SalesbyItem.
         /// </summary>
         public static string SalesbyItem {
@@ -3027,6 +3036,15 @@ namespace Cognitivo.Resources {
         public static string SalesbySalesman {
             get {
                 return ResourceManager.GetString("SalesbySalesman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SalesbyTag.
+        /// </summary>
+        public static string SalesbyTag {
+            get {
+                return ResourceManager.GetString("SalesbyTag", resourceCulture);
             }
         }
         

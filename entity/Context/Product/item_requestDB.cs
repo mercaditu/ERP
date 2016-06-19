@@ -227,9 +227,6 @@ namespace entity
                                 item_transfertrans.app_branch_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
                             }
 
-
-
-
                             item_transfer_detail item_transfer_detail = new item_transfer_detail();
                             item_transfer_detail.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
                             item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
@@ -247,8 +244,15 @@ namespace entity
                             production_order_detail.quantity = item.quantity;
                             production_order_detail.status = Status.Project.Approved;
                             production_order_detail.is_input = true;
-
                             production_order_detail.id_item = item_request_detail.item.id_item;
+
+                            if (item.item_request_detail.project_task != null)
+                            {
+                                production_order_detail.id_project_task = item.item_request_detail.id_project_task;
+                                production_order_detail.production_order.name = item.item_request_detail.item_request.project.name;
+                                production_order_detail.production_order.work_number = item.item_request_detail.item_request.project.name;
+                            }
+
                             foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
                             {
                                 production_order_dimension production_order_dimension = new production_order_dimension();
@@ -257,13 +261,12 @@ namespace entity
                                 production_order_dimension.value = item_request_dimension.value;
                                 production_order_detail.production_order_dimension.Add(production_order_dimension);
                             }
+                            
                             production_order.production_order_detail.Add(production_order_detail);
 
-                          
                             production_execution.production_order = production_order;
                             production_execution.id_production_line = production_order.id_production_line;
                             production_execution.trans_date = DateTime.Now;
-
                         }
                         else
                         {

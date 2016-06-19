@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Cognitivo.Reporting.Views
 {
-    /// <summary>
-    /// Interaction logic for CostOfGoodsSold.xaml
-    /// </summary>
     public partial class CostOfGoodsSold : Page
     {
         public DateTime StartDate 

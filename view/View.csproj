@@ -506,12 +506,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FinanceDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Data\SalesDB.cs">
-      <DependentUpon>SalesDB.xsd</DependentUpon>
+    <Compile Include="Reporting\Data\ProductDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PurchaseDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Data\SalesDS.cs">
+      <DependentUpon>SalesDS.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reporting\Data\SalesDB.Designer.cs">
-      <DependentUpon>SalesDB.xsd</DependentUpon>
+    <Compile Include="Reporting\Data\SalesDS.Designer.cs">
+      <DependentUpon>SalesDS.xsd</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -1244,16 +1254,38 @@
     <None Include="Reporting\Data\FinanceDS.xss">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
     </None>
-    <None Include="Reporting\Data\SalesDB.xsc">
-      <DependentUpon>SalesDB.xsd</DependentUpon>
+    <None Include="Reporting\Data\ProductDS.xsc">
+      <DependentUpon>ProductDS.xsd</DependentUpon>
     </None>
-    <None Include="Reporting\Data\SalesDB.xsd">
+    <None Include="Reporting\Data\ProductDS.xsd">
+      <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SalesDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>ProductDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporting\Data\ProductDS.xss">
+      <DependentUpon>ProductDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\PurchaseDS.xsc">
+      <DependentUpon>PurchaseDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\PurchaseDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PurchaseDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporting\Data\PurchaseDS.xss">
+      <DependentUpon>PurchaseDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\SalesDS.xsc">
+      <DependentUpon>SalesDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\SalesDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SalesDS.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Reporting\Data\SalesDB.xss">
-      <DependentUpon>SalesDB.xsd</DependentUpon>
+    <None Include="Reporting\Data\SalesDS.xss">
+      <DependentUpon>SalesDS.xsd</DependentUpon>
     </None>
     <None Include="Sales\ReturnSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

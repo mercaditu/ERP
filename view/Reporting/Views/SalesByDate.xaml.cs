@@ -45,11 +45,11 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.SalesDB SalesDB = new Data.SalesDB();
+            Data.SalesDS SalesDB = new Data.SalesDS();
 
             SalesDB.BeginInit();
 
-            Data.SalesDBTableAdapters.SalesByDateTableAdapter SalesByDateTableAdapter = new Data.SalesDBTableAdapters.SalesByDateTableAdapter();
+            Data.SalesDSTableAdapters.SalesByDateTableAdapter SalesByDateTableAdapter = new Data.SalesDSTableAdapters.SalesByDateTableAdapter();
             DataTable dt = SalesByDateTableAdapter.GetData(StartDate, EndDate);
 
             reportDataSource1.Name = "SalesByDate"; //Name of the report dataset in our .RDLC file
@@ -58,10 +58,6 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByDate.rdlc";
 
             SalesDB.EndInit();
-
-            //fill data
-            //SalesByDateTableAdapter.ClearBeforeFill = true;
-            //SalesByDateTableAdapter.Fill(SalesDB.SalesByDate, StartDate, EndDate);
 
             this.reportViewer.Refresh();
             this.reportViewer.RefreshReport();

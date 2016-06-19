@@ -45,7 +45,7 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.SalesDB SalesDB = new Data.SalesDB();
+            Data.SalesDS SalesDB = new Data.SalesDS();
 
                 SalesDB.BeginInit();
 
@@ -57,7 +57,7 @@ namespace Cognitivo.Reporting.Views
                 SalesDB.EndInit();
 
                 //fill data
-                Data.SalesDBTableAdapters.SalesByItemTableAdapter SalesByItemTableAdapter = new Data.SalesDBTableAdapters.SalesByItemTableAdapter();
+                Data.SalesDSTableAdapters.SalesByItemTableAdapter SalesByItemTableAdapter = new Data.SalesDSTableAdapters.SalesByItemTableAdapter();
                 SalesByItemTableAdapter.ClearBeforeFill = true;
                 SalesByItemTableAdapter.Fill(SalesDB.SalesByItem, StartDate, EndDate);
 

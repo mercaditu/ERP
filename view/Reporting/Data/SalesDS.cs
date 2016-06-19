@@ -1,11 +1,11 @@
 ﻿namespace Cognitivo.Reporting.Data {
     
     
-    public partial class SalesDB {
+    public partial class SalesDS {
     }
 }
 
-namespace Cognitivo.Reporting.Data.SalesDBTableAdapters
+namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
 {
     
     

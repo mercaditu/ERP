@@ -245,6 +245,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Accounting\DebeHaberLogIn.xaml.cs">
+      <DependentUpon>DebeHaberLogIn.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Accounting\DebeHaberSync.xaml.cs">
+      <DependentUpon>DebeHaberSync.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Accounting\Reports.xaml.cs">
       <DependentUpon>Reports.xaml</DependentUpon>
     </Compile>
@@ -1308,6 +1314,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Accounting\DebeHaberLogIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Accounting\DebeHaberSync.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Accounting\Reports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

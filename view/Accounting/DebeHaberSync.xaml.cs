@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Web.Script.Serialization;
 
 namespace Cognitivo.Accounting
 {
@@ -99,7 +100,61 @@ namespace Cognitivo.Accounting
 
                 SalesInvoiceLIST.Add(Invoice);
 
-                ///Serealize SalesInvoiceLIST into Json and send it to Server Address specified.
+                ///Serealize SalesInvoiceLIST into Json
+                var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
+
+                //Send Sales_Json send it to Server Address specified.
+            }
+        }
+
+        private void PurchaseInvoice_Sync()
+        {
+            List<entity.DebeHaber.Commercial_Invoice> PurchaseInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
+
+            foreach (entity.purchase_invoice invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
+            {
+                entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
+
+                Invoice.Reference_ID = invoice.id_purchase_invoice;
+                Invoice.Type = entity.DebeHaber.TransactionTypes.Purchase;
+                Invoice.BranchCode = invoice.app_branch.code;
+                Invoice.BranchName = invoice.app_branch.name;
+                Invoice.Comment = invoice.comment;
+                Invoice.Contact_GovCode = invoice.contact.gov_code;
+                Invoice.CurrencyISO_Code = invoice.app_currencyfx.app_currency.name;
+                Invoice.GrandTotal = invoice.GrandTotal;
+                Invoice.PaymentCondition = invoice.app_contract.app_contract_detail.Sum(x => x.interval);
+
+                Invoice.InvoiceCode = invoice.code;
+                //Invoice.InvoiceCode_ExpDate = //invoice. Here we need to add new field in database
+
+                Invoice.InvoiceNumber = invoice.number;
+                Invoice.InvoiceDate = invoice.trans_date;
+
+                ///Loop through details.
+                foreach (entity.purchase_invoice_detail Detail in invoice.purchase_invoice_detail)
+                {
+                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+                    CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
+                    CommercialInvoice_Detail.Comment = Detail.item_description;
+
+                    Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+                }
+
+                //Loop through payments made.
+                foreach (entity.payment_schedual schedual in invoice.payment_schedual.Where(x => x.id_payment_detail > 0))
+                {
+                    entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                    Invoice.Payments.Add(Payments);
+                }
+
+                PurchaseInvoiceLIST.Add(Invoice);
+
+                ///Serealize SalesInvoiceLIST into Json
+                var Purchase_Json = new JavaScriptSerializer().Serialize(PurchaseInvoiceLIST);
+
+                //Send Sales_Json send it to Server Address specified.
             }
         }
     }

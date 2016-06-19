@@ -43,12 +43,24 @@ namespace Cognitivo.Accounting
         private void btnData_Refresh(object sender, RoutedEventArgs e)
         {
             Get_SalesInvoice();
+            Get_PurchaseInvoice();
+
         }
 
         public void Get_SalesInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            sales_invoiceViewSource.Source = db.sales_invoice.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_head).ToList();
+            sales_invoiceViewSource.Source = db.sales_invoice.Where(x => 
+                x.id_company == entity.CurrentSession.Id_Company && 
+                x.status == entity.Status.Documents_General.Approved).ToList();
+        }
+
+        public void Get_PurchaseInvoice()
+        {
+            //x.Is Head replace with Is_Accounted = True.
+            purchase_invoiceViewSource.Source = db.purchase_invoice.Where(x =>
+                x.id_company == entity.CurrentSession.Id_Company &&
+                x.status == entity.Status.Documents_General.Approved).ToList();
         }
 
         private void btnData_Sync(object sender, RoutedEventArgs e)

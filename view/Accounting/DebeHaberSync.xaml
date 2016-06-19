@@ -68,6 +68,34 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
+            <TabItem Header="{lex:Loc PurchaseReturn}">
+                <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
+                    <DataGrid Margin="0,32,0,0">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{lex:Loc Payment}">
+                <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
+                    <DataGrid Margin="0,32,0,0">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
         </TabControl>
         
         <!--<WrapPanel HorizontalAlignment="Center" Margin="0,64">

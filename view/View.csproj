@@ -862,6 +862,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\DebeHaber_Logo.png" />
     <Resource Include="Images\space_invaders.png" />
     <Resource Include="bin\Debug\Data.xml" />
     <EmbeddedResource Include="bin\Debug\Accounting\DiarioGlobal.rdlc">

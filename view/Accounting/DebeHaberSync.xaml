@@ -19,6 +19,8 @@
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
     </Page.Resources>
     <Grid>
+        <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
+               VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4">
             <Button Content="Refresh Data" Margin="4" Click="btnData_Refresh"/>
             <Button Content="Syncronize" Margin="4" Click="btnData_Sync" Style="{StaticResource btn_green}"/>

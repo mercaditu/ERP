@@ -229,6 +229,7 @@ namespace Cognitivo.Sales
             SalesInvoiceDB = new entity.SalesInvoiceDB();
             Settings SalesSettings = new Settings();
             var predicate = QueryBuilder();
+
             if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();

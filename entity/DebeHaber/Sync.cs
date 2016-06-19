@@ -21,13 +21,13 @@ namespace entity.DebeHaber
         public string BranchCode { get; set; }
 
         public DateTime InvoiceDate { get; set; }
-        public decimal InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public string InvoiceCode { get; set; }
         public DateTime InvoiceCode_ExpDate { get; set; }
         public decimal GrandTotal { get; set; }
         public int PaymentCondition { get; set; }
 
-        public decimal Comment { get; set; }
+        public string Comment { get; set; }
 
         public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
@@ -39,7 +39,7 @@ namespace entity.DebeHaber
 
         public decimal VAT_Coeficient { get; set; }
         public decimal Value { get; set; }
-        public decimal Comment { get; set; }
+        public string Comment { get; set; }
         public virtual Commercial_Invoice Commercial_Invoice { get; set; }
     }
 
@@ -70,7 +70,7 @@ namespace entity.DebeHaber
         public decimal GrandTotal { get; set; }
         public int PaymentCondition { get; set; }
 
-        public decimal Comment { get; set; }
+        public string Comment { get; set; }
     }
 
     public class Payments

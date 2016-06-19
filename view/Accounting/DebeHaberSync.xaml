@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:entity="clr-namespace:entity;assembly=entity"
       mc:Ignorable="d" 
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -11,15 +12,21 @@
       d:DesignHeight="600" d:DesignWidth="800" Background="{StaticResource AccentColor_Brush}"
 	Title="DebeHaberSync">
     <Page.Resources>
-        <CollectionViewSource x:Key="salesViewSource" />
+        <CollectionViewSource x:Key="sales_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_invoice}, CreateList=True}" />
+        <CollectionViewSource x:Key="sales_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_return}, CreateList=True}" />
+        <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
+        <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
+        <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
     </Page.Resources>
     <Grid>
-        <TabControl>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4">
+            <Button Content="Refresh Data" Margin="4" Click="btnData_Refresh"/>
+            <Button Content="Syncronize" Margin="4" Click="btnData_Sync" Style="{StaticResource btn_green}"/>
+        </StackPanel>
+        <TabControl Margin="0,38,0,0">
             <TabItem Header="{lex:Loc SalesInvoice}">
-                <Grid Background="White" DataContext="{StaticResource salesViewSource}">
+                <Grid Background="White" DataContext="{StaticResource sales_invoiceViewSource}">
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
-                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="Syncronize"
-                            Style="{StaticResource btn_green}" Margin="4"/>
                     <DataGrid Margin="0,32,0,0">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn />
@@ -32,10 +39,8 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc SalesReturn}">
-                <Grid Background="White" DataContext="{StaticResource salesViewSource}">
+                <Grid Background="White" DataContext="{StaticResource sales_returnViewSource}">
                     <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
-                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" Content="Syncronize"
-                            Style="{StaticResource btn_green}" Margin="4"/>
                     <DataGrid Margin="0,32,0,0">
                         <DataGrid.Columns>
                             <DataGridCheckBoxColumn />
@@ -48,8 +53,17 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc PurchaseInvoice}">
-                <Grid Background="White">
-
+                <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
+                    <DataGrid Margin="0,32,0,0">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn />
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
         </TabControl>

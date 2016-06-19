@@ -331,7 +331,7 @@ namespace Cognitivo.Project.Development
                 ProjectTaskDB.NumberOfRecords = 0;
                 foreach (project_task task in _project_task.Where(x => x.IsSelected == true))
                 {
-                    if (task.status == Status.Project.Pending || task.status == Status.Project.Management_Approved)
+                    if (task.status == Status.Project.Pending)
                     {
                         using (db db = new db())
                         {

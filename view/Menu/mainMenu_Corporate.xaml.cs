@@ -46,7 +46,7 @@ namespace Cognitivo.Menu
                 wrapApps.Children.Clear();
             }
 
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         private void get_Apps(object sender, EventArgs e)

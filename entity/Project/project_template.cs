@@ -25,7 +25,19 @@ namespace entity
         public int id_item_output { get; set; }
         public string name { get; set; }
         public string code { get; set; }
-        public bool is_active { get; set; }
+        public bool is_active 
+        {
+            get { return _is_active; }
+            set
+            {
+                if (_is_active != value)
+                {
+                    _is_active = value;
+                    RaisePropertyChanged("is_active");
+                }
+            }
+        }
+        private bool _is_active;
 
         public virtual IEnumerable<project> project { get; set; }
         public virtual ICollection<project_template_detail> project_template_detail { get; set; }

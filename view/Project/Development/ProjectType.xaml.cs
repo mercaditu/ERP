@@ -17,7 +17,7 @@ namespace Cognitivo.Project.Development
 
         CollectionViewSource projectproject_template_detailViewSource;
         CollectionViewSource project_templateViewSource;
-        CollectionViewSource itemSearchViewSource;
+        //CollectionViewSource itemSearchViewSource;
 
         public ProjectType()
         {
@@ -31,7 +31,7 @@ namespace Cognitivo.Project.Development
             project_templateViewSource.Source = ProjectTemplateDB.project_template.Local;
 
             projectproject_template_detailViewSource = ((CollectionViewSource)(FindResource("projectproject_template_detailViewSource")));
-            itemSearchViewSource = ((CollectionViewSource)(FindResource("itemSearchViewSource")));
+            //itemSearchViewSource = ((CollectionViewSource)(FindResource("itemSearchViewSource")));
 
             cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type));
 

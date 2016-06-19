@@ -71,6 +71,7 @@ namespace entity
                 {
                     NumberOfRecords += 1;
                     project_template.is_active = true;
+                    project_template.IsSelected = false;
                 }
             }
 
@@ -96,6 +97,7 @@ namespace entity
                 {
                     NumberOfRecords += 1;
                     project_template.is_active = false;
+                    project_template.IsSelected = false;
                 }
             }
 

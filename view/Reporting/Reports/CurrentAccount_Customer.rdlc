@@ -891,9 +891,11 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
         <DataSetName>CurrentAccount_Customer</DataSetName>
         <Height>1in</Height>
-        <Width>7.28124in</Width>
+        <Width>7.28125in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -904,7 +906,7 @@
     <Height>1in</Height>
     <Style />
   </Body>
-  <Width>7.28124in</Width>
+  <Width>7.28125in</Width>
   <Page>
     <PageHeader>
       <Height>0.39583in</Height>

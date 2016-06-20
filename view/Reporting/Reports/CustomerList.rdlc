@@ -471,6 +471,8 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
         <DataSetName>CustomerList</DataSetName>
         <Height>0.5in</Height>
         <Width>7.95833in</Width>

@@ -878,6 +878,8 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
+        <RepeatColumnHeaders>true</RepeatColumnHeaders>
+        <FixedColumnHeaders>true</FixedColumnHeaders>
         <DataSetName>CostOfGoodsSold</DataSetName>
         <Height>1in</Height>
         <Width>7.67188in</Width>

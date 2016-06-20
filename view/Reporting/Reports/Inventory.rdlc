@@ -77,7 +77,7 @@
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>Code</Value>
+                            <Value>Codigo</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
                               <FontSize>11pt</FontSize>
@@ -146,16 +146,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.78646in</Width>
+              <Width>1.0625in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.76042in</Width>
+              <Width>0.95313in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.77083in</Width>
+              <Width>1.03646in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.76042in</Width>
+              <Width>0.89062in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -164,14 +164,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Quantity">
+                    <Textbox Name="quantity">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value>=Sum(Fields!quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <Format>N2</Format>
@@ -184,7 +184,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Quantity</rd:DefaultName>
+                      <rd:DefaultName>quantity</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#e5e5e5</Color>
@@ -200,14 +200,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="COST">
+                    <Textbox Name="cost">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!COST.Value)</Value>
+                              <Value>=Sum(Fields!cost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <Format>N2</Format>
@@ -220,7 +220,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>COST</rd:DefaultName>
+                      <rd:DefaultName>cost</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#e5e5e5</Color>
@@ -243,7 +243,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value>=Sum(Fields!quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -281,7 +281,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!COST.Value)</Value>
+                              <Value>=Sum(Fields!cost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -324,7 +324,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value>=Sum(Fields!quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -362,7 +362,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!COST.Value)</Value>
+                              <Value>=Sum(Fields!cost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -400,7 +400,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Quantity.Value)</Value>
+                              <Value>=Sum(Fields!quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -438,7 +438,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!COST.Value)</Value>
+                              <Value>=Sum(Fields!cost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -474,27 +474,27 @@
         <TablixColumnHierarchy>
           <TablixMembers>
             <TablixMember>
-              <Group Name="DEPOSITO">
+              <Group Name="depositio">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!DEPOSITO.Value</GroupExpression>
+                  <GroupExpression>=Fields!depositio.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!DEPOSITO.Value</Value>
+                  <Value>=Fields!depositio.Value</Value>
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
                 <Size>0.25in</Size>
                 <CellContents>
-                  <Textbox Name="DEPOSITO">
+                  <Textbox Name="depositio">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!DEPOSITO.Value</Value>
+                            <Value>=Fields!depositio.Value</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
                               <FontWeight>Bold</FontWeight>
@@ -507,7 +507,7 @@
                         </Style>
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>DEPOSITO</rd:DefaultName>
+                    <rd:DefaultName>depositio</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>#c6daf8</Color>
@@ -539,7 +539,6 @@
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontSize>11pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
-                                  <Format>N2</Format>
                                   <Color>White</Color>
                                 </Style>
                               </TextRun>
@@ -584,7 +583,6 @@
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontSize>11pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
-                                  <Format>N2</Format>
                                   <Color>White</Color>
                                 </Style>
                               </TextRun>
@@ -668,7 +666,6 @@
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontSize>11pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
-                                  <Format>N2</Format>
                                   <Color>White</Color>
                                 </Style>
                               </TextRun>
@@ -710,7 +707,6 @@
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontSize>11pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
-                                  <Format>N2</Format>
                                   <Color>White</Color>
                                 </Style>
                               </TextRun>
@@ -743,27 +739,27 @@
         <TablixRowHierarchy>
           <TablixMembers>
             <TablixMember>
-              <Group Name="ITEM">
+              <Group Name="producto">
                 <GroupExpressions>
-                  <GroupExpression>=Fields!ITEM.Value</GroupExpression>
+                  <GroupExpression>=Fields!producto.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!ITEM.Value</Value>
+                  <Value>=Fields!producto.Value</Value>
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.30729in</Size>
+                <Size>1.19792in</Size>
                 <CellContents>
-                  <Textbox Name="CODIGO">
+                  <Textbox Name="codigo">
                     <CanGrow>true</CanGrow>
                     <KeepTogether>true</KeepTogether>
                     <Paragraphs>
                       <Paragraph>
                         <TextRuns>
                           <TextRun>
-                            <Value>=Fields!CODIGO.Value</Value>
+                            <Value>=Fields!codigo.Value</Value>
                             <Style>
                               <FontFamily>Tahoma</FontFamily>
                               <FontWeight>Bold</FontWeight>
@@ -774,7 +770,7 @@
                         <Style />
                       </Paragraph>
                     </Paragraphs>
-                    <rd:DefaultName>CODIGO</rd:DefaultName>
+                    <rd:DefaultName>codigo</rd:DefaultName>
                     <Style>
                       <Border>
                         <Color>#c6daf8</Color>
@@ -792,16 +788,16 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>2.70312in</Size>
+                    <Size>2.25521in</Size>
                     <CellContents>
-                      <Textbox Name="ITEM">
+                      <Textbox Name="producto">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!ITEM.Value</Value>
+                                <Value>=Fields!producto.Value</Value>
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
                                   <FontWeight>Bold</FontWeight>
@@ -812,7 +808,7 @@
                             <Style />
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>ITEM</rd:DefaultName>
+                        <rd:DefaultName>producto</rd:DefaultName>
                         <Style>
                           <Border>
                             <Color>#c6daf8</Color>
@@ -835,7 +831,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1.30729in</Size>
+                <Size>1.19792in</Size>
                 <CellContents>
                   <Textbox Name="Textbox24">
                     <CanGrow>true</CanGrow>
@@ -873,7 +869,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>2.70312in</Size>
+                    <Size>2.25521in</Size>
                     <CellContents>
                       <Textbox Name="Textbox10">
                         <CanGrow>true</CanGrow>
@@ -916,7 +912,7 @@
         </TablixRowHierarchy>
         <DataSetName>Inventory</DataSetName>
         <Height>1in</Height>
-        <Width>7.08854in</Width>
+        <Width>7.39583in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -927,10 +923,10 @@
     <Height>1in</Height>
     <Style />
   </Body>
-  <Width>7.40104in</Width>
+  <Width>7.39583in</Width>
   <Page>
     <PageHeader>
-      <Height>0.42708in</Height>
+      <Height>0.45833in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <Style>
@@ -940,7 +936,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.4375in</Height>
+      <Height>0.46875in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <Style>
@@ -962,7 +958,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>d3c4b3ab-a1f7-48d0-9384-125e10af1759</rd:DataSourceID>
+      <rd:DataSourceID>cf55845d-0c0e-4e8b-b8c7-baa5f1f94274</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -972,24 +968,24 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="DEPOSITO">
-          <DataField>DEPOSITO</DataField>
+        <Field Name="depositio">
+          <DataField>depositio</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CODIGO">
-          <DataField>CODIGO</DataField>
+        <Field Name="codigo">
+          <DataField>codigo</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Quantity">
-          <DataField>Quantity</DataField>
+        <Field Name="producto">
+          <DataField>producto</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="quantity">
+          <DataField>quantity</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="ITEM">
-          <DataField>ITEM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="COST">
-          <DataField>COST</DataField>
+        <Field Name="cost">
+          <DataField>cost</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -1004,5 +1000,5 @@
     </DataSet>
   </DataSets>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>40f36bc9-3e72-4805-999a-063f5d6872ce</rd:ReportID>
+  <rd:ReportID>c5d793f7-5cea-46bd-b097-ce58cceca62f</rd:ReportID>
 </Report>

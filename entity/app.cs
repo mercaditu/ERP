@@ -224,7 +224,7 @@ namespace entity
             SalesbyProduct = 82,
             //[LocalizedDescription("ReportSalesbyDate")]
             SalesbyDate = 83,
-            SalesByTag = 86,
+            CurrentAccount_Customer = 86,
             SalesByItem = 86,
             CostOfGoodsSold = 87,
             CostOfInventory = 89,

@@ -165,7 +165,7 @@
     <Compile Include="Accounting\accounting_journal.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="Application\app_account_session.cs" />
     <Compile Include="Application\app_branch_walkin.cs" />
     <Compile Include="Application\app_configuration.cs" />

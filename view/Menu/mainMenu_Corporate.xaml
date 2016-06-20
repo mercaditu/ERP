@@ -119,7 +119,7 @@
             
             <TextBox HorizontalContentAlignment="Center" FontSize="26" x:Name="tbxSearch" TextChanged="tbxSearch_TextChanged"
                      Controls:TextBoxHelper.ClearTextButton="True" Visibility="Collapsed"
-                     Controls:TextBoxHelper.Watermark="{lex:Loc Search}" 
+                     Controls:TextBoxHelper.Watermark="{lex:Loc Search}"
                      Controls:TextBoxHelper.SelectAllOnFocus="True">
                 <TextBox.Background>
                     <SolidColorBrush Color="White" Opacity="0.96"/>

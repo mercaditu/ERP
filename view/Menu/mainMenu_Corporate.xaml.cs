@@ -57,14 +57,17 @@ namespace Cognitivo.Menu
             { _modName = (sender as cntrl.moduleIcon).Tag.ToString(); }
             else
             { _modName = (sender as TextBlock).Tag.ToString(); }
-            
-            if (sender is cntrl.moduleIcon)
-            {                
+
+            if (sender as cntrl.moduleIcon != null)
+            {
                 //Check to see if other icon (not module) has been clicked.
-                rootWindow.Nav_Frame(_modName);
                 lblModuleName.Content = (sender as cntrl.moduleIcon).ModuleName.ToString();
                 //Get Icons
                 ListApps(_modName, true);
+            }
+            else
+            {
+                rootWindow.Nav_Frame(_modName);
             }
         }
 

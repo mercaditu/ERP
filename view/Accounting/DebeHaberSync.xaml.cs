@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Web.Script.Serialization;
 using System.IO;
+using System.Net;
 
 namespace Cognitivo.Accounting
 {
@@ -124,30 +125,13 @@ namespace Cognitivo.Accounting
                 Invoice.InvoiceNumber = payment.number;
                 Invoice.InvoiceDate = payment.trans_date;
 
-                ///Loop through details.
-                //foreach (entity.payment_detail Detail in payment.payment_detail)
-                //{
-                //    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                //    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-                //    CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
-                //    CommercialInvoice_Detail.Comment = Detail.item_description;
-
-                //    Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
-                //}
-
-                //Loop through payments made.
-                //foreach (entity.payment_schedual schedual in payment.payment_schedual.Where(x => x.id_payment_detail > 0))
-                //{
-                //    entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
-                //    Invoice.Payments.Add(Payments);
-                //}
-
                 PaymentLIST.Add(Invoice);
 
                 ///Serealize SalesInvoiceLIST into Json
                 var Payment_Json = new JavaScriptSerializer().Serialize(PaymentLIST);
 
-                file_create(Payment_Json as string, "Payment");
+                Send2API(Payment_Json);
+                //file_create(Payment_Json as string, "Payment");
                 //Send Sales_Json send it to Server Address specified.
             }
         }
@@ -165,7 +149,12 @@ namespace Cognitivo.Accounting
                 Invoice.BranchName = sales_invoice.app_branch.name;
                 Invoice.Comment = sales_invoice.comment;
                 Invoice.Contact_GovCode = sales_invoice.contact.gov_code;
-                Invoice.CurrencyISO_Code = sales_invoice.app_currencyfx.app_currency.name;
+                using (entity.db dbContext = new entity.db())
+                {
+                    Invoice.CurrencyISO_Code = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault()
+                        .app_currency.name;
+                }
+                
                 Invoice.InvoiceTotal = sales_invoice.GrandTotal;
                 Invoice.PaymentCondition = sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval);
 
@@ -198,7 +187,8 @@ namespace Cognitivo.Accounting
                 ///Serealize SalesInvoiceLIST into Json
                 var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
 
-                file_create(Sales_Json as string,"sales_invoice");
+                Send2API(Sales_Json);
+                //file_create(Sales_Json as string,"sales_invoice");
                 //Send Sales_Json send it to Server Address specified.
             }
         }
@@ -249,7 +239,8 @@ namespace Cognitivo.Accounting
                 ///Serealize SalesInvoiceLIST into Json
                 var Sales_return_Json = new JavaScriptSerializer().Serialize(SalesReturnLIST);
 
-                file_create(Sales_return_Json as string, "sales_return");
+                Send2API(Sales_return_Json);
+                //file_create(Sales_return_Json as string, "sales_return");
                 //Send Sales_Json send it to Server Address specified.
             }
         }
@@ -300,7 +291,10 @@ namespace Cognitivo.Accounting
 
                 ///Serealize SalesInvoiceLIST into Json
                 var Purchase_Json = new JavaScriptSerializer().Serialize(PurchaseInvoiceLIST);
-                file_create(Purchase_Json as string, "purchase_invoice");
+
+
+                Send2API(Purchase_Json);
+                //file_create(Purchase_Json as string, "purchase_invoice");
                 //Send Sales_Json send it to Server Address specified.
             }
         }
@@ -351,7 +345,9 @@ namespace Cognitivo.Accounting
 
                 ///Serealize SalesInvoiceLIST into Json
                 var PurchaseReturn_Json = new JavaScriptSerializer().Serialize(PurchaseReturnLIST);
-                file_create(PurchaseReturn_Json as string, "Purcahse_return");
+                Send2API(PurchaseReturn_Json);
+
+                //file_create(PurchaseReturn_Json as string, "Purcahse_return");
                 //Send Sales_Json send it to Server Address specified.
             }
         }
@@ -485,6 +481,23 @@ namespace Cognitivo.Accounting
                 paymentViewSource.View.Refresh();
             }
         }
+
+        private void Send2API(string Json)
+        {
+            var webAddr = "104.131.70.188/api_transactions";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                //string json = "{\"x\":\"true\"}";
+
+                streamWriter.Write(Json);
+                streamWriter.Flush();
+            }
+        }
+
         public void file_create(String Data,String filename)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename + ".json";

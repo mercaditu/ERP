@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,23 +38,20 @@ namespace Cognitivo.Reporting.Views
         public void Fill(object sender, EventArgs e)
         {
             this.reportViewer.Reset();
-            //
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.ProductDS ProductDS = new Data.ProductDS();
 
-            ProductDS.BeginInit();
+            MySqlConnection con = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
+            con.Open();
+            string query = "Call Inventory('" + EndDate.ToString("s") + "')";
+            MySqlDataAdapter adpt = new MySqlDataAdapter(query, con);
+            DataTable dt = new DataTable();
+            adpt.Fill(dt);
+
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
             reportDataSource1.Name = "Inventory"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = ProductDS.INVENTORY;
+            reportDataSource1.Value = dt;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.Inventory.rdlc";
-
-            ProductDS.EndInit();
-
-            //fill data
-            Data.ProductDSTableAdapters.INVENTORYTableAdapter INVENTORYTableAdapter = new Data.ProductDSTableAdapters.INVENTORYTableAdapter();
-            INVENTORYTableAdapter.ClearBeforeFill = true;
-            INVENTORYTableAdapter.Fill(ProductDS.INVENTORY, EndDate);
 
             this.reportViewer.RefreshReport();
         }

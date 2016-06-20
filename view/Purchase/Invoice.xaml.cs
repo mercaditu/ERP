@@ -688,6 +688,7 @@ namespace Cognitivo.Purchase
         private void dgvRow_ShowRowDetail(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
+            
             DataGridRow Row = btn.Parent as DataGridRow;
             if (Row != null)
             {

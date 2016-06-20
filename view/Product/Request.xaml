@@ -28,6 +28,7 @@
         <converter:AddTwoValue x:Key="converter"/>
         <CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_requestitem_request_detailViewSource" Source="{Binding item_request_detail, Source={StaticResource item_requestViewSource}}"/>
+        <CollectionViewSource x:Key="item_requestitem_request_detailDimensionViewSource" Source="{Binding item_request_dimension, Source={StaticResource item_requestitem_request_detailViewSource}}"/>
         <CollectionViewSource x:Key="item_request_detailitem_request_decisionViewSource" Source="{Binding item_request_decision, Source={StaticResource item_requestitem_request_detailViewSource}}"/>
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}"/>
@@ -154,7 +155,7 @@
                         <DataTemplate>
                             <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
                         		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
-                        		ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}"
+                        		ItemsSource="{Binding Source={StaticResource item_requestitem_request_detailDimensionViewSource}}"
                         		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

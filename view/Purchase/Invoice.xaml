@@ -331,7 +331,7 @@
                         IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
                         EnableRowVirtualization="True"
                         ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
-                        RowDetailsVisibilityMode="Collapsed" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
+                        RowDetailsVisibilityMode="VisibleWhenSelected" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
                         InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
                         CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding">
                 <DataGrid.Resources>

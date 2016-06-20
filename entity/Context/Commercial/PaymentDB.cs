@@ -308,7 +308,7 @@ namespace entity
                     if (_payment_schedual.payment_detail != null)
                     {
                         int id_currency = payment_schedual.app_currencyfx.id_currency;
-                        DateTime timestamp = _payment_schedual.payment_detail.app_currencyfx.timestamp;
+                        DateTime timestamp = _payment_schedual.payment_detail.trans_date;
                         if (base.app_currencyfx.Where(x => x.type == entity.app_currencyfx.CurrencyFXTypes.Transaction &&
                                                              x.id_currency == id_currency && x.timestamp <= timestamp)
                                                             .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)

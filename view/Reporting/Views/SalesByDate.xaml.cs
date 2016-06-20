@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
+using entity;
 
 namespace Cognitivo.Reporting.Views
 {
@@ -37,30 +38,41 @@ namespace Cognitivo.Reporting.Views
         {
             InitializeComponent();
             
+            using(db db = new db())
+	        {
+                db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
+                cbxBranch.ItemsSource = db.app_branch.Local;
+	        }
+            
             Fill(null, null);
         }
 
         public void Fill(object sender, EventArgs e)
         {
-            this.reportViewer.Reset();
+            app_branch app_branch = cbxBranch.SelectedItem as app_branch;
 
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.SalesDS SalesDB = new Data.SalesDS();
+            if (app_branch != null)
+            {
+                this.reportViewer.Reset();
 
-            SalesDB.BeginInit();
+                Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+                Data.SalesDS SalesDB = new Data.SalesDS();
 
-            Data.SalesDSTableAdapters.SalesByDateTableAdapter SalesByDateTableAdapter = new Data.SalesDSTableAdapters.SalesByDateTableAdapter();
-            DataTable dt = SalesByDateTableAdapter.GetData(StartDate, EndDate);
+                SalesDB.BeginInit();
 
-            reportDataSource1.Name = "SalesByDate"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByDate.rdlc";
+                Data.SalesDSTableAdapters.SalesByDateTableAdapter SalesByDateTableAdapter = new Data.SalesDSTableAdapters.SalesByDateTableAdapter();
+                DataTable dt = SalesByDateTableAdapter.GetData(StartDate, EndDate, app_branch.id_branch);
 
-            SalesDB.EndInit();
+                reportDataSource1.Name = "SalesByDate"; //Name of the report dataset in our .RDLC file
+                reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+                this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByDate.rdlc";
 
-            this.reportViewer.Refresh();
-            this.reportViewer.RefreshReport();
+                SalesDB.EndInit();
+
+                this.reportViewer.Refresh();
+                this.reportViewer.RefreshReport();   
+            }
         }
     }
 }

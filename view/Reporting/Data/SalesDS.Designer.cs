@@ -396,6 +396,8 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columndiscount;
             
+            private global::System.Data.DataColumn columnid_branch;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SalesByDateDataTable() {
@@ -479,6 +481,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn id_branchColumn {
+                get {
+                    return this.columnid_branch;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -514,7 +524,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRow AddSalesByDateRow(System.DateTime trans_date, string name, string number, decimal quantity, decimal total, decimal discount) {
+            public SalesByDateRow AddSalesByDateRow(System.DateTime trans_date, string name, string number, decimal quantity, decimal total, decimal discount, int id_branch) {
                 SalesByDateRow rowSalesByDateRow = ((SalesByDateRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         trans_date,
@@ -522,7 +532,8 @@ namespace Cognitivo.Reporting.Data {
                         number,
                         quantity,
                         total,
-                        discount};
+                        discount,
+                        id_branch};
                 rowSalesByDateRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSalesByDateRow);
                 return rowSalesByDateRow;
@@ -551,6 +562,7 @@ namespace Cognitivo.Reporting.Data {
                 this.columnquantity = base.Columns["quantity"];
                 this.columntotal = base.Columns["total"];
                 this.columndiscount = base.Columns["discount"];
+                this.columnid_branch = base.Columns["id_branch"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -568,8 +580,11 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columntotal);
                 this.columndiscount = new global::System.Data.DataColumn("discount", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columndiscount);
+                this.columnid_branch = new global::System.Data.DataColumn("id_branch", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid_branch);
                 this.columntrans_date.AllowDBNull = false;
                 this.columnname.AllowDBNull = false;
+                this.columnid_branch.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1755,6 +1770,17 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int id_branch {
+                get {
+                    return ((int)(this[this.tableSalesByDate.id_branchColumn]));
+                }
+                set {
+                    this[this.tableSalesByDate.id_branchColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsnumberNull() {
                 return this.IsNull(this.tableSalesByDate.numberColumn);
             }
@@ -2584,6 +2610,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             tableMapping.ColumnMappings.Add("quantity", "quantity");
             tableMapping.ColumnMappings.Add("total", "total");
             tableMapping.ColumnMappings.Add("discount", "discount");
+            tableMapping.ColumnMappings.Add("id_branch", "id_branch");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -2600,7 +2627,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT s.trans_date, contact.name, s.number, SUM(sd.quantity) AS quantity, ROUND(SUM(sd.quantity * sd.unit_price * vatco.coef), 4) AS total, SUM(sd.discount) * - 1 AS discount
+            this._commandCollection[0].CommandText = @"SELECT s.trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, ROUND(SUM(sd.quantity * sd.unit_price * vatco.coef), 4) AS total, SUM(sd.discount) * - 1 AS discount
 FROM  sales_invoice s INNER JOIN
          contacts contact ON s.id_contact = contact.id_contact INNER JOIN
          sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice LEFT OUTER JOIN
@@ -2610,7 +2637,7 @@ FROM  sales_invoice s INNER JOIN
                      app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN
                      app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
             GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group
-WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate)
+WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) AND s.id_branch = @BranchID
 GROUP BY s.id_sales_invoice, s.trans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -2627,16 +2654,24 @@ GROUP BY s.id_sales_invoice, s.trans_date";
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@BranchID";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_branch";
+            this._commandCollection[0].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(SalesDS.SalesByDateDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int Fill(SalesDS.SalesByDateDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -2648,10 +2683,11 @@ GROUP BY s.id_sales_invoice, s.trans_date";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.SalesByDateDataTable GetData(System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual SalesDS.SalesByDateDataTable GetData(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
             SalesDS.SalesByDateDataTable dataTable = new SalesDS.SalesByDateDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

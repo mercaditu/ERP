@@ -183,14 +183,14 @@ namespace Cognitivo.Accounting
                 }
 
                 SalesInvoiceLIST.Add(Invoice);
-
-                ///Serealize SalesInvoiceLIST into Json
-                var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
-
-                Send2API(Sales_Json);
-                //file_create(Sales_Json as string,"sales_invoice");
-                //Send Sales_Json send it to Server Address specified.
             }
+
+            ///Serealize SalesInvoiceLIST into Json
+            var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
+
+            Send2API(Sales_Json);
+            //file_create(Sales_Json as string,"sales_invoice");
+            //Send Sales_Json send it to Server Address specified.
         }
         private void SalesReturn_Sync()
         {
@@ -235,14 +235,15 @@ namespace Cognitivo.Accounting
                 }
 
                 SalesReturnLIST.Add(Invoice);
-
-                ///Serealize SalesInvoiceLIST into Json
-                var Sales_return_Json = new JavaScriptSerializer().Serialize(SalesReturnLIST);
-
-                Send2API(Sales_return_Json);
-                //file_create(Sales_return_Json as string, "sales_return");
-                //Send Sales_Json send it to Server Address specified.
             }
+
+
+            ///Serealize SalesInvoiceLIST into Json
+            var Sales_return_Json = new JavaScriptSerializer().Serialize(SalesReturnLIST);
+
+            Send2API(Sales_return_Json);
+            //file_create(Sales_return_Json as string, "sales_return");
+            //Send Sales_Json send it to Server Address specified.
         }
 
         private void PurchaseInvoice_Sync()
@@ -288,15 +289,14 @@ namespace Cognitivo.Accounting
                 }
 
                 PurchaseInvoiceLIST.Add(Invoice);
-
-                ///Serealize SalesInvoiceLIST into Json
-                var Purchase_Json = new JavaScriptSerializer().Serialize(PurchaseInvoiceLIST);
-
-
-                Send2API(Purchase_Json);
-                //file_create(Purchase_Json as string, "purchase_invoice");
-                //Send Sales_Json send it to Server Address specified.
             }
+
+            ///Serealize SalesInvoiceLIST into Json
+            var Purchase_Json = new JavaScriptSerializer().Serialize(PurchaseInvoiceLIST);
+
+            Send2API(Purchase_Json);
+            //file_create(Purchase_Json as string, "purchase_invoice");
+            //Send Sales_Json send it to Server Address specified.
         }
 
         private void PurchaseReturn_Sync()
@@ -342,14 +342,14 @@ namespace Cognitivo.Accounting
                 }
 
                 PurchaseReturnLIST.Add(Invoice);
-
-                ///Serealize SalesInvoiceLIST into Json
-                var PurchaseReturn_Json = new JavaScriptSerializer().Serialize(PurchaseReturnLIST);
-                Send2API(PurchaseReturn_Json);
-
-                //file_create(PurchaseReturn_Json as string, "Purcahse_return");
-                //Send Sales_Json send it to Server Address specified.
             }
+
+            ///Serealize SalesInvoiceLIST into Json
+            var PurchaseReturn_Json = new JavaScriptSerializer().Serialize(PurchaseReturnLIST);
+            Send2API(PurchaseReturn_Json);
+
+            //file_create(PurchaseReturn_Json as string, "Purcahse_return");
+            //Send Sales_Json send it to Server Address specified.
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -484,7 +484,7 @@ namespace Cognitivo.Accounting
 
         private void Send2API(string Json)
         {
-            var webAddr = "104.131.70.188/api_transactions";
+            var webAddr = "http://104.131.70.188/api_transactions";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";

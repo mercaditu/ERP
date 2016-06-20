@@ -143,6 +143,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.Journal", entity.App.Names.AccountingJournal, "AccountingTransaction");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.ExpenseJournal", entity.App.Names.BookofExpenses, "ExpenseBook");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.IncomeJournal", entity.App.Names.BookofIncomes, "IncomeBook");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberSync", entity.App.Names.DebeHaberSync, "");
 
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Preferences, "Configs.Language", "Language", "Language");

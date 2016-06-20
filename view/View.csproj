@@ -507,6 +507,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Project\PrintingPress\Class\Cut.cs" />
+    <Compile Include="Reporting\Data\FinanceDS.cs">
+      <DependentUpon>FinanceDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reporting\Data\FinanceDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -531,23 +535,23 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Reporting\Views\Inventory.xaml.cs">
-      <DependentUpon>Inventory.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\Contacts.xaml.cs">
+      <DependentUpon>Contacts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\CostOfGoodsSold.xaml.cs">
+      <DependentUpon>CostOfGoodsSold.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\CurrentAccount_Customer.xaml.cs">
       <DependentUpon>CurrentAccount_Customer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\CostOfGoodsSold.xaml.cs">
-      <DependentUpon>CostOfGoodsSold.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\Inventory.xaml.cs">
+      <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesByItem.xaml.cs">
       <DependentUpon>SalesByItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Reporting\Views\Contacts.xaml.cs">
-      <DependentUpon>Contacts.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportViewer.xaml.cs">
       <DependentUpon>ReportViewer.xaml</DependentUpon>
@@ -1616,17 +1620,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Reporting\Views\Inventory.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\CurrentAccount_Customer.xaml">
+    <Page Include="Reporting\Views\Contacts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\CostOfGoodsSold.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reporting\Views\CurrentAccount_Customer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\Inventory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\SalesByDate.xaml">
       <SubType>Designer</SubType>
@@ -1635,10 +1643,6 @@
     <Page Include="Reporting\Views\SalesByItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Reporting\Views\Contacts.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="ReportViewer.xaml">
       <Generator>MSBuild:Compile</Generator>

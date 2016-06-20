@@ -46,7 +46,7 @@ order by c.name</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CurrentAccount_CustomerTableAdapter" GeneratorDataComponentClassName="CurrentAccount_CustomerTableAdapter" Name="CurrentAccount_Customer" UserDataComponentName="CurrentAccount_CustomerTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT contacts.code ,contacts.name, contacts.address,venta.number,
@@ -55,7 +55,7 @@ ps.id_sales_invoice,(ps.debit) as DEBITO,sub.credit
 from payment_schedual as ps 
 inner join contacts on contacts.id_contact=ps.id_contact
 inner join sales_invoice as venta on venta.id_sales_invoice = ps.id_sales_invoice
-inner join(select ps.id_payment_schedual,IFNULL ((ps.credit/fx.buy_value),0) as credit from 
+inner join(select ps.id_payment_schedual,IFNULL ((ps.credit),0) as credit from 
 			payment_schedual as ps left join 
             payment_detail as pd on pd.id_payment_detail = ps.id_payment_detail left join
             app_currencyfx fx on fx.id_currencyfx = pd.id_currencyfx) as sub

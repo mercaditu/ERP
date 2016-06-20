@@ -182,6 +182,17 @@ namespace entity
                                     item_movement_value.id_currencyfx = item_inventory_detail.id_currencyfx;
                                     item_movement.item_movement_value.Add(item_movement_value);
                                 }
+                                else
+                                {
+                                    item_inventory_detail parent_inventory = base.item_inventory_detail.Where(x => x.id_item_product == item_inventory_detail.id_item_product && x.id_location == item_inventory_detail.id_location && x.unit_value > 0).FirstOrDefault();
+                                    if (parent_inventory!=null)
+                                    {
+                                        item_movement_value item_movement_value = new item_movement_value();
+                                    item_movement_value.unit_value = parent_inventory.unit_value;
+                                    item_movement_value.id_currencyfx = parent_inventory.id_currencyfx;
+                                    item_movement.item_movement_value.Add(item_movement_value);
+                                    }
+                                }
 
                                 item_movementLIST.Add(item_movement);
                                 NumberOfRecords += 1;

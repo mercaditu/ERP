@@ -11,6 +11,11 @@ namespace entity.DebeHaber
 
     public class Commercial_Invoice
     {
+        public Commercial_Invoice()
+        {
+            CommercialInvoice_Detail = new List<CommercialInvoice_Detail>();
+            Payments = new List<Payments>();
+        }
         public int ID { get; set; }
         public TransactionTypes Type { get; set; }
         public string CurrencyISO_Code { get; set; }

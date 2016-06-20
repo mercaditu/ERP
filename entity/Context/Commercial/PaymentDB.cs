@@ -316,7 +316,7 @@ namespace entity
                             app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.type == entity.app_currencyfx.CurrencyFXTypes.Transaction &&
                                                              x.id_currency == id_currency && x.timestamp <= timestamp)
                                                             .OrderByDescending(x => x.timestamp).FirstOrDefault();
-                            _payment_schedual.credit = Currency.convert_Values(_payment_schedual.payment_detail.value, _payment_schedual.payment_detail.id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Sales);
+                            _payment_schedual.credit = Currency.convert_Values(_payment_schedual.payment_detail.value, _payment_schedual.id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Sales);
                         }
                     }
 

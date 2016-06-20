@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Data.Entity;
 using entity;
 using System.Data.Entity.Validation;
+using entity.Brillo;
 
 namespace Cognitivo.Purchase
 {
@@ -302,9 +303,19 @@ namespace Cognitivo.Purchase
                                         //Coeficient is used to get prorated cost of one item
                                         decimal coeficient = condition_value / itemTotal;
                                         item_movement_value item_movement_detail = new item_movement_value();
-                                        item_movement_detail.unit_value = detail.unit_cost * coeficient;
+                                        decimal Cost = detail.unit_cost * coeficient; 
+                                        //item_movement_detail.unit_value = 
                                         //Improve this in future. For now take from Purchase
-                                        item_movement_detail.id_currencyfx = purchase_invoice.id_currencyfx;
+                                        using (db db = new db())
+                                        {
+                                            int ID_CurrencyFX_Default = Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
+                                            decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+
+                                            item_movement_detail.unit_value = DefaultCurrency_Cost;
+                                            item_movement_detail.id_currencyfx = ID_CurrencyFX_Default;
+
+                                        }
+                                        
                                         item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
                                         item_movement.item_movement_value.Add(item_movement_detail);
                                     }

@@ -1728,7 +1728,7 @@ ps.id_sales_invoice,(ps.debit) as DEBITO,sub.credit
 from payment_schedual as ps 
 inner join contacts on contacts.id_contact=ps.id_contact
 inner join sales_invoice as venta on venta.id_sales_invoice = ps.id_sales_invoice
-inner join(select ps.id_payment_schedual,IFNULL ((ps.credit/fx.buy_value),0) as credit from 
+inner join(select ps.id_payment_schedual,IFNULL ((ps.credit),0) as credit from 
 			payment_schedual as ps left join 
             payment_detail as pd on pd.id_payment_detail = ps.id_payment_detail left join
             app_currencyfx fx on fx.id_currencyfx = pd.id_currencyfx) as sub

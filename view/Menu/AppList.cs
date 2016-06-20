@@ -51,9 +51,10 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Inventory, "Sales.PackingList", entity.App.Names.PackingList, "ProductSend");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Inventory, "Sales.Packing", entity.App.Names.PackingList, "");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByDate", entity.App.Names.SalesbyDate, "Reports");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByTag", entity.App.Names.SalesByTag, "Reports");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByItem", entity.App.Names.SalesByItem, "Reports");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.CostOfGoodsSold", entity.App.Names.CostOfGoodsSold, "Reports");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.Contacts", entity.App.Names.Contact, "Reports");
+
 
             //Purchase        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact");

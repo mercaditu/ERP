@@ -11,7 +11,7 @@ namespace entity.DebeHaber
 
     public class Commercial_Invoice
     {
-        public int Reference_ID { get; set; }
+        public int ID { get; set; }
         public TransactionTypes Type { get; set; }
         public string CurrencyISO_Code { get; set; }
 
@@ -24,7 +24,7 @@ namespace entity.DebeHaber
         public string InvoiceNumber { get; set; }
         public string InvoiceCode { get; set; }
         public DateTime InvoiceCode_ExpDate { get; set; }
-        public decimal GrandTotal { get; set; }
+        public decimal InvoiceTotal { get; set; }
         public int PaymentCondition { get; set; }
 
         public string Comment { get; set; }
@@ -67,7 +67,7 @@ namespace entity.DebeHaber
         public decimal ReturnNumber { get; set; }
         public string ReturnCode { get; set; }
         public DateTime ReturnCodeDate { get; set; }
-        public decimal GrandTotal { get; set; }
+        public decimal ReturnTotal { get; set; }
         public int PaymentCondition { get; set; }
 
         public string Comment { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,18 +50,20 @@ namespace Cognitivo.Reporting.Views
 
                 SalesDB.BeginInit();
 
+                Data.SalesDSTableAdapters.SalesByItemTableAdapter SalesByItemTableAdapter = new Data.SalesDSTableAdapters.SalesByItemTableAdapter();
+            
+                //fill data
+                SalesByItemTableAdapter.ClearBeforeFill = true;
+                DataTable dt = SalesByItemTableAdapter.GetData(StartDate, EndDate);
+
                 reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
-                reportDataSource1.Value = SalesDB.SalesByItem;
+                reportDataSource1.Value = dt;
                 this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
                 this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByItem.rdlc";
 
                 SalesDB.EndInit();
 
-                //fill data
-                Data.SalesDSTableAdapters.SalesByItemTableAdapter SalesByItemTableAdapter = new Data.SalesDSTableAdapters.SalesByItemTableAdapter();
-                SalesByItemTableAdapter.ClearBeforeFill = true;
-                SalesByItemTableAdapter.Fill(SalesDB.SalesByItem, StartDate, EndDate);
-
+                this.reportViewer.Refresh();
                 this.reportViewer.RefreshReport();
         }
     }

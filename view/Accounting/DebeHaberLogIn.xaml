@@ -23,7 +23,7 @@
             <Label x:Name="tbxServer" Content="104.131.70.188" HorizontalContentAlignment="Center" FontSize="14" Style="{StaticResource EditableLabelStyle}"/>
         </StackPanel>
 
-        <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="64" Margin="0,-128,0,0"
+        <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="54" Margin="0,-128,0,0"
                VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </Grid>
 </Page>

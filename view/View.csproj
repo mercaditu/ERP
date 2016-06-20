@@ -540,8 +540,8 @@
     <Compile Include="Reporting\Views\SalesByItem.xaml.cs">
       <DependentUpon>SalesByItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\SalesByTag.xaml.cs">
-      <DependentUpon>SalesByTag.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\Contacts.xaml.cs">
+      <DependentUpon>Contacts.xaml</DependentUpon>
     </Compile>
     <Compile Include="ReportViewer.xaml.cs">
       <DependentUpon>ReportViewer.xaml</DependentUpon>
@@ -972,8 +972,9 @@
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\SalesByTag.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1619,9 +1620,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Reporting\Views\SalesByTag.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Reporting\Views\Contacts.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ReportViewer.xaml">
       <Generator>MSBuild:Compile</Generator>

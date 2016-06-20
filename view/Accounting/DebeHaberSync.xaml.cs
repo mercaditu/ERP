@@ -76,14 +76,14 @@ namespace Cognitivo.Accounting
             {
                 entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.Reference_ID = sales_invoice.id_sales_invoice;
+                Invoice.ID = sales_invoice.id_sales_invoice;
                 Invoice.Type = entity.DebeHaber.TransactionTypes.Sales;
                 Invoice.BranchCode = sales_invoice.app_branch.code;
                 Invoice.BranchName = sales_invoice.app_branch.name;
                 Invoice.Comment = sales_invoice.comment;
                 Invoice.Contact_GovCode = sales_invoice.contact.gov_code;
                 Invoice.CurrencyISO_Code = sales_invoice.app_currencyfx.app_currency.name;
-                Invoice.GrandTotal = sales_invoice.GrandTotal;
+                Invoice.InvoiceTotal = sales_invoice.GrandTotal;
                 Invoice.PaymentCondition = sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval);
                 
                 Invoice.InvoiceCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
@@ -127,14 +127,14 @@ namespace Cognitivo.Accounting
             {
                 entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.Reference_ID = invoice.id_purchase_invoice;
+                Invoice.ID = invoice.id_purchase_invoice;
                 Invoice.Type = entity.DebeHaber.TransactionTypes.Purchase;
                 Invoice.BranchCode = invoice.app_branch.code;
                 Invoice.BranchName = invoice.app_branch.name;
                 Invoice.Comment = invoice.comment;
                 Invoice.Contact_GovCode = invoice.contact.gov_code;
                 Invoice.CurrencyISO_Code = invoice.app_currencyfx.app_currency.name;
-                Invoice.GrandTotal = invoice.GrandTotal;
+                Invoice.InvoiceTotal = invoice.GrandTotal;
                 Invoice.PaymentCondition = invoice.app_contract.app_contract_detail.Sum(x => x.interval);
 
                 Invoice.InvoiceCode = invoice.code;

@@ -144,7 +144,7 @@
             </Border>
         </StackPanel>
         <TabControl x:Name="postab"  Margin="10,150,10,10">
-            <!-- Account-->
+            <!-- ACCOUNT-->
             <TabItem x:Name="tabAccount">
                 <Frame x:Name="frmaccount" NavigationUIVisibility="Hidden" Content="AccountActive" Source="/Cognitivo;component/Configs/AccountActive.xaml"/>
             </TabItem>
@@ -191,7 +191,7 @@
                     </Popup>
                 </StackPanel>
             </TabItem>
-            <!-- VENTAS -->
+            <!-- SALES -->
             <TabItem x:Name="tabSales">
                 <Grid>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="16" VerticalAlignment="Top">
@@ -372,12 +372,12 @@
                                 <Run Text="{lex:Loc Payment}"/>
                             </TextBlock>
                             <Label Content=" "/>
-                            <!--<TextBlock FontSize="30" Foreground="White"
+                            <TextBlock FontSize="30" Foreground="White"
                                        Text="{Binding GrandTotalDetail, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource paymentViewSource}}">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="White" ShadowDepth="0"/>
                                 </TextBlock.Effect>
-                            </TextBlock>-->
+                            </TextBlock>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

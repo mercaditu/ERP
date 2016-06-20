@@ -109,6 +109,10 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{lex:Loc Total}" VerticalContentAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
+                                <Label Content="{Binding GrandTotalDetail, StringFormat=N2, FallbackValue=0, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Style="{StaticResource H3}"/>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="stppaymentdetail" >
                             <!--<Label Content="{lex:Loc SalesInvoice}" Style="{DynamicResource input_label}"/>

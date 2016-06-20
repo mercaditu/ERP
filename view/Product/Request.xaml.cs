@@ -53,8 +53,6 @@ namespace Cognitivo.Product
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
             app_departmentViewSource.Source = dbContext.app_department.ToList();
             cmburgency.ItemsSource = Enum.GetValues(typeof(entity.item_request_detail.Urgencies));
-
-
         }
 
 
@@ -416,17 +414,18 @@ namespace Cognitivo.Product
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            if (item_requestDataGrid.SelectedItem != null)
-            {
-                item_request item_request_old = (item_request)item_requestDataGrid.SelectedItem;
+            dbContext.CancelAllChanges();
+            //if (item_requestDataGrid.SelectedItem != null)
+            //{
+            //    item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
             
-                item_request_old.State = EntityState.Unchanged;
-                dbContext.Entry(item_request_old).State = EntityState.Unchanged;
-            }
-            else
-            {
-                toolBar.msgWarning("Please Select an Item");
-            }
+            //    item_request.State = EntityState.Unchanged;
+            //    dbContext.Entry(item_request).State = EntityState.Unchanged;
+            //}
+            //else
+            //{
+            //    toolBar.msgWarning("Please Select an Item");
+            //}
         }
     }
 }

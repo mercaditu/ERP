@@ -28,70 +28,70 @@
         <TabControl Margin="0,38,0,0">
             <TabItem Header="{lex:Loc SalesInvoice}">
                 <Grid Background="White" DataContext="{StaticResource sales_invoiceViewSource}">
-                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
-                    <DataGrid Margin="0,32,0,0">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc SalesReturn}">
                 <Grid Background="White" DataContext="{StaticResource sales_returnViewSource}">
-                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
-                    <DataGrid Margin="0,32,0,0">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="SalesReturn_Checked" Unchecked="SalesReturn_Unchecked"/>
+                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc PurchaseInvoice}">
                 <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}">
-                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
-                    <DataGrid Margin="0,32,0,0">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="Purchase_Checked" Unchecked="Purchase_UnChecked"/>
+                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc PurchaseReturn}">
-                <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}">
-                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
-                    <DataGrid Margin="0,32,0,0">
+                <Grid Background="White" DataContext="{StaticResource purchase_returnViewSource}">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="PurchaseRetuen_Checked" Unchecked="PurchaseReturn_Unchecked"/>
+                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc Payment}">
-                <Grid Background="White" DataContext="{StaticResource purchase_invoiceViewSource}">
-                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All"/>
-                    <DataGrid Margin="0,32,0,0">
+                <Grid Background="White" DataContext="{StaticResource paymentViewSource}">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="Payment_Checked" Unchecked="Payment_UnChecked"/>
+                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn />
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}"/>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

@@ -155,6 +155,42 @@ namespace entity
                             sales_order.timestamp = DateTime.Now;
                             SaveChanges();
                         }
+
+
+                        item_request item_request = new item_request();
+                        item_request.name = sales_order.contact.name;
+                        item_request.comment = sales_order.comment;
+
+                    
+                        item_request.id_sales_order = sales_order.id_sales_order;
+                        item_request.id_branch = sales_order.id_branch;
+
+
+                        item_request.request_date =(DateTime)sales_order.delivery_date;
+
+                        foreach (sales_order_detail data in sales_order.sales_order_detail.Where(x=>x.IsSelected))
+                        {
+                            item_request_detail item_request_detail = new entity.item_request_detail();
+                            item_request_detail.date_needed_by = (DateTime)sales_order.delivery_date;
+                            item_request_detail.id_sales_order_detail = data.id_sales_order_detail;
+                            item_request_detail.urgency =entity.item_request_detail.Urgencies.Medium;
+                            int idItem = data.item.id_item;
+                            item_request_detail.id_item = idItem;
+                            item item = base.items.Where(x => x.id_item == idItem).FirstOrDefault();
+                            if (item != null)
+                            {
+                                item_request_detail.item = item;
+                                item_request_detail.comment = item_request_detail.item.name;
+                            }
+
+
+                            item_request_detail.quantity = data.quantity;
+
+                            item_request.item_request_detail.Add(item_request_detail);
+                       
+                        }
+                        base.item_request.Add(item_request);
+                        SaveChanges();
                     }
 
                     NumberOfRecords += 1;

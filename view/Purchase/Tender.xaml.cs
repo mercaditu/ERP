@@ -149,7 +149,18 @@ namespace Cognitivo.Purchase
                     purchase_tender_item.id_item = item.id_item;
                     purchase_tender_item.item_description = item.name;
                     purchase_tender_item.quantity = 1;
+                    foreach (item_dimension item_dimension in item.item_dimension)
+                    {
+                        purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
+                        purchase_tender_dimension.id_dimension = item_dimension.id_app_dimension;
+                        purchase_tender_dimension.id_measurement = item_dimension.id_measurement;
+                        purchase_tender_dimension.app_dimension = item_dimension.app_dimension;
+                        purchase_tender_dimension.app_measurement = item_dimension.app_measurement;
+                        purchase_tender_dimension.value = item_dimension.value;
+                        purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
+                    }
                     purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
+
                     purchase_tenderViewSource.View.Refresh();
                     purchase_tenderpurchase_tender_itemViewSource.View.Refresh();
                 }
@@ -344,7 +355,7 @@ namespace Cognitivo.Purchase
                     {
                         if (purchase_tender_item.id_item > 0)
                         {
-                            purchase_tender_dimensionViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).ToList();
+                            purchase_tender_dimensionViewSource.Source = purchase_tender_item.purchase_tender_dimension.ToList();
                         }
                     }
                 }   

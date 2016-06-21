@@ -2861,7 +2861,7 @@ on itd.id_item = i.id_item
 
 right join item_tag as tag 
 on tag.id_tag = itd.id_tag 
-where s.status = 2 and s.trans_date >= @StartDate and s.trans_date <= @EndDate 
+where s.status = 2 and s.trans_date >= @StartDate and s.trans_date <= @EndDate and s.id_branch = @BranchID 
 Group by i.id_item";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -2878,16 +2878,24 @@ Group by i.id_item";
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@BranchID";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_branch";
+            this._commandCollection[0].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(SalesDS.SalesByItemDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int Fill(SalesDS.SalesByItemDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -2899,10 +2907,11 @@ Group by i.id_item";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.SalesByItemDataTable GetData(System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual SalesDS.SalesByItemDataTable GetData(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
             SalesDS.SalesByItemDataTable dataTable = new SalesDS.SalesByItemDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

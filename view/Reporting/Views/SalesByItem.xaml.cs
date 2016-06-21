@@ -1,4 +1,5 @@
-﻿using System;
+﻿using entity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -38,23 +39,33 @@ namespace Cognitivo.Reporting.Views
         {
             InitializeComponent();
 
+            using (db db = new db())
+            {
+                db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
+                cbxBranch.ItemsSource = db.app_branch.Local;
+            }
+
             Fill(null, null);
         }
 
         public void Fill(object sender, EventArgs e)
         {
-            this.reportViewer.Reset();
+            app_branch app_branch = cbxBranch.SelectedItem as app_branch;
 
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.SalesDS SalesDB = new Data.SalesDS();
+            if (app_branch != null)
+            {
+                this.reportViewer.Reset();
+
+                Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+                Data.SalesDS SalesDB = new Data.SalesDS();
 
                 SalesDB.BeginInit();
 
                 Data.SalesDSTableAdapters.SalesByItemTableAdapter SalesByItemTableAdapter = new Data.SalesDSTableAdapters.SalesByItemTableAdapter();
-            
+
                 //fill data
                 SalesByItemTableAdapter.ClearBeforeFill = true;
-                DataTable dt = SalesByItemTableAdapter.GetData(StartDate, EndDate);
+                DataTable dt = SalesByItemTableAdapter.GetData(StartDate, EndDate, app_branch.id_branch);
 
                 reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
                 reportDataSource1.Value = dt;
@@ -64,7 +75,8 @@ namespace Cognitivo.Reporting.Views
                 SalesDB.EndInit();
 
                 this.reportViewer.Refresh();
-                this.reportViewer.RefreshReport();
+                this.reportViewer.RefreshReport();   
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Cognitivo.Reporting.Views
 
             MySqlConnection con = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
             con.Open();
-            string query = "Call Inventory('" + EndDate.ToString("s") + "')";
+            string query = "call inventory('" + EndDate.ToString("s") + "')";
             MySqlDataAdapter adpt = new MySqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adpt.Fill(dt);

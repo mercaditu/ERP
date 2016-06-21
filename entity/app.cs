@@ -229,6 +229,7 @@ namespace entity
             SalesByItem = 86,
             CostOfGoodsSold = 87,
             CostOfInventory = 89,
+            PendingSalesDocs = 90,
 
             SuppliesRequest = 84
         }

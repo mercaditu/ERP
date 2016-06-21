@@ -694,20 +694,20 @@ namespace Cognitivo.Sales
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
-                CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
-                if (sales_invoicesales_invoice_detailViewSource.View.CurrentItem != null)
-                {
-                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = (sales_invoicesales_invoice_detailViewSource.View.CurrentItem as sales_invoice_detail).sales_packing_relation;
-                }
-                else
-                {
-                    sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
-
-                }
-                crud_modal.Children.Clear();
-                crud_modal.Visibility = Visibility.Collapsed;
+               
             }
-          
+            CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
+            if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
+            {
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Local.Where(x => x.sales_invoice_detail.id_sales_invoice == _sales_invoice.id_sales_invoice).ToList();
+            }
+            else
+            {
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
+
+            }
+            crud_modal.Children.Clear();
+            crud_modal.Visibility = Visibility.Collapsed;
             _sales_invoice.RaisePropertyChanged("GrandTotal");
 
         }
@@ -811,17 +811,16 @@ namespace Cognitivo.Sales
 
         private void sales_invoiceDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
+            sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
-
-            if (sales_invoicesales_invoice_detailViewSource.View != null)
+            if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
             {
-                sales_invoicesales_invoice_detailViewSource.View.Refresh();
-                sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
+                sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = SalesInvoiceDB.sales_packing_relation.Where(x => x.sales_invoice_detail.id_sales_invoice == sales_invoice.id_sales_invoice).ToList();
             }
             else
             {
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
+
             }
             calculate_vat(sender,e);
 
@@ -864,6 +863,8 @@ namespace Cognitivo.Sales
                 
             }
         }
+
+      
 
       
 

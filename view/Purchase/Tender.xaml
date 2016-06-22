@@ -300,13 +300,11 @@
                                 <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Cost}" Width="auto"/>
                                 <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                            Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" 
-                                          />
+                                            Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
                                 <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
                                             ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
-                                            
                                             Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -319,9 +317,9 @@
                             <DataGrid.RowDetailsTemplate>
                                 <DataTemplate>
                                     <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
-                        		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
-                        		ItemsSource="{Binding Source={StaticResource purchase_tender_dimensionOrderViewSource}}"
-                        		RowDetailsVisibilityMode="VisibleWhenSelected" >
+                        		                EnableRowVirtualization="True" Height="Auto" Margin="8,4"
+                        		                ItemsSource="{Binding Source={StaticResource purchase_tender_dimensionOrderViewSource}}"
+                        		                RowDetailsVisibilityMode="VisibleWhenSelected" >
                                         <DataGrid.Columns>
                                             <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"

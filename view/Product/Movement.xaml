@@ -188,61 +188,31 @@
                     <Label Content="{project}" Style="{StaticResource input_label}"/>
                 </StackPanel>-->
             </StackPanel>
-            <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
+            <Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
                 <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
-
-
-                <cntrl:SearchableTextbox x:Name="cbxItem" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256"
-                                                 CollectionViewSource="{StaticResource itemViewSource}" Height="26"  
-                                                 KeyDown="cbxItem_KeyDown" MouseDoubleClick="cbxItem_MouseDoubleClick"
-                                                 IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" >
+                <cntrl:SearchableTextbox x:Name="cbxItem" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"
+                                         CollectionViewSource="{StaticResource itemViewSource}" Height="26"  
+                                         KeyDown="cbxItem_KeyDown" MouseDoubleClick="cbxItem_MouseDoubleClick"
+                                         IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <cntrl:SearchableTextbox.Columns>
                         <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Code}" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
                         <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Product}" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
                         <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:ID}" ForProperty="id_item" Binding="{Binding id_item, Mode=Default}" Hide="True" EnableSearch="False"/>
                     </cntrl:SearchableTextbox.Columns>
                 </cntrl:SearchableTextbox>
-                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,36,0,0">
                     <DataGrid  x:Name="item_transfer_detailDataGrid" 
                       AutoGenerateColumns="False" 
                       EnableRowVirtualization="True" 
                       IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
-                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" Width="300"
-                     >
+                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" Width="300">
                         <DataGrid.Columns>
-                            <!--<DataGridTextColumn Binding="{Binding code}" Header="code" Width="SizeToHeader"/>-->
-                            <!--<DataGridTextColumn Binding="{Binding product}" Header="product" Width="200"/>-->
-                            <!--<DataGridComboBoxColumn 
-                        ItemsSource="{Binding Source={StaticResource item_productViewSource}}" 
-                        SelectedValueBinding="{Binding id_item_product,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                        DisplayMemberPath="item.name"  SelectedValuePath="id_item_product" 
-                        Header="Product" Width="200"/>-->
-                            <DataGridTextColumn Binding="{Binding item_product.item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="Auto"/>
-                            <DataGridTextColumn Binding="{Binding quantity_origin,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="quantity" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Item}" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                         </DataGrid.Columns>
-                        <!--<DataGrid.RowDetailsTemplate>
-                        <DataTemplate>
-                            <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
-                        		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
-                        		ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailitem_transfer_dimensionViewSource}}"
-                        		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
-                                <DataGrid.Columns>
-                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
-									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
-									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
-                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
-									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
-
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </DataTemplate>
-                    </DataGrid.RowDetailsTemplate>-->
                     </DataGrid>
                     <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
-                                                      EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
+                                                      EnableRowVirtualization="True" IsReadOnly="True" CanUserAddRows="False"
                                                       ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailitem_transfer_dimensionViewSource}}" 
                                                       RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
@@ -257,7 +227,7 @@
                     </DataGrid>
                 </StackPanel>
                
-            </StackPanel>
+            </Grid>
 
 
 

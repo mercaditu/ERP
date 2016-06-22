@@ -90,7 +90,7 @@ namespace cntrl.Curd
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-            PaymentDB.payment_type.Where(a => a.is_active).Load();
+            PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");

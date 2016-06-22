@@ -95,20 +95,13 @@ namespace Cognitivo.Product
 
             cbxDocument.ItemsSource = dbContext.app_document_range.Local;
 
-
-
             dbContext.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
-
             cbxDepartment.ItemsSource = dbContext.app_department.Local;
 
-
             dbContext.projects.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
-
             cbxProject.ItemsSource = dbContext.projects.Local;
 
-
             dbContext.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
-
             cbxBranch.ItemsSource = dbContext.app_branch.Local;
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));

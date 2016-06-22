@@ -35,13 +35,9 @@ namespace cntrl.PanelAdv
             // Do not load your data at design time.
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                //Load your data here and assign the result to the CollectionViewSource.
-              
-              
+
                 if (_contact != null)
                 {
-
-                   
                     purchase_orderViewSource = (CollectionViewSource)Resources["purchase_orderViewSource"];
                     purchase_orderViewSource.Source = _entity.purchase_order.Where(x => x.id_contact == _contact.id_contact).ToList();
                 }

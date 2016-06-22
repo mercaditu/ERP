@@ -50,7 +50,7 @@
                     <Grid Background="{StaticResource AccentColor_Introvert}">
                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" Margin="4" ItemsSource="{Binding}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding balance, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
+                                <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Item}" Width="SizeToHeader" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="SizeToHeader" IsReadOnly="True"/>

@@ -212,7 +212,6 @@
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2" Margin="0,42,0,0" Background="WhiteSmoke" HorizontalAlignment="Right">
             <StackPanel  Grid.Column="3" >
-                <CheckBox x:Name="chkqtyneeded" Content="Available Quantity From Movement" Checked="chkqtyneeded_Checked" Unchecked="chkqtyneeded_Unchecked"/>
                 <Controls:NotificationButton Text="{lex:Loc RequestResource}" Margin="0,8"
                                              Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Icon="" Click="btnRequestResource_Click" 
@@ -253,6 +252,9 @@
                     </DataGrid.RowDetailsTemplate>
                 </DataGrid>
             </StackPanel>
+            <metro:ToggleSwitch x:Name="chkqtyneeded" Checked="chkqtyneeded_Checked" Unchecked="chkqtyneeded_Unchecked" 
+                                OnLabel="Quantity in Stock" OffLabel="Quantity in Tender"
+                                VerticalAlignment="Bottom"/>
         </Grid>
 
         <cntrl:toolBar Grid.ColumnSpan="2" x:Name="toolBar" appName="Logistics"

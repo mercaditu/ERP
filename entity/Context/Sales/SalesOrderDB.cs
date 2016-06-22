@@ -186,6 +186,17 @@ namespace entity
 
                             item_request_detail.quantity = data.quantity;
 
+                            foreach (item_dimension item_dimension in item.item_dimension)
+                            {
+                                item_request_dimension item_request_dimension = new item_request_dimension();
+                                item_request_dimension.id_dimension = item_dimension.id_app_dimension;
+                                item_request_dimension.app_dimension = item_dimension.app_dimension;
+                                item_request_dimension.id_measurement = item_dimension.id_measurement;
+                                item_request_dimension.app_measurement = item_dimension.app_measurement;
+                                item_request_dimension.value = item_dimension.value;
+                                item_request_detail.item_request_dimension.Add(item_request_dimension);
+                            }
+
                             item_request.item_request_detail.Add(item_request_detail);
                        
                         }

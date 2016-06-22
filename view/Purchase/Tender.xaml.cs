@@ -426,19 +426,41 @@ namespace Cognitivo.Purchase
             {
                 if (purchase_tenderpurchase_tender_item_detailViewSource.View != null)
                 {
-                    purchase_tender_detail purchase_tender_detail = (purchase_tender_detail)purchase_tenderpurchase_tender_item_detailViewSource.View.CurrentItem;
+                    purchase_tender_item purchase_tender_item = (purchase_tender_item)purchase_tenderpurchase_tender_itemViewSource.View.CurrentItem;
                     CollectionViewSource purchase_tender_dimensionViewSource = ((CollectionViewSource)(FindResource("purchase_tender_dimensionViewSource")));
-                    if (purchase_tender_detail != null)
+                    if (purchase_tender_item != null)
                     {
-                        if (purchase_tender_detail.id_purchase_tender_item > 0)
+                        if (purchase_tender_item.id_purchase_tender_item > 0)
                         {
-                            purchase_tender_dimensionViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_detail.id_purchase_tender_item).ToList();
+                            purchase_tender_dimensionViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_item.id_purchase_tender_item).ToList();
                         }
                     }
                 }
             }
+          
+        }
+
+        private void purchase_tender_item_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //if (purchase_tenderpurchase_tender_item_detailViewSource != null)
+            //{
+            //    if (purchase_tenderpurchase_tender_item_detailViewSource.View != null)
+            //    {
+            //        purchase_tender_detail purchase_tender_detail = (purchase_tender_detail)purchase_tenderpurchase_tender_item_detailViewSource.View.CurrentItem;
+            //        CollectionViewSource purchase_tender_dimensionOrderViewSource = ((CollectionViewSource)(FindResource("purchase_tender_dimensionOrderViewSource")));
+            //        if (purchase_tender_detail != null)
+            //        {
+            //            if (purchase_tender_detail.id_purchase_tender_item > 0)
+            //            {
+            //                purchase_tender_dimensionOrderViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_detail.id_purchase_tender_item).ToList();
+            //            }
+            //        }
+            //    }
+            //}
       
         }
+
+      
 
 
     }

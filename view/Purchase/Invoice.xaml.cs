@@ -457,6 +457,16 @@ namespace Cognitivo.Purchase
             {
                 purchase_invoice_detail.id_vat_group = PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
             }
+
+            foreach (item_dimension item_dimension in item.item_dimension)
+            {
+                purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
+                purchase_invoice_dimension.id_dimension = item_dimension.id_app_dimension;
+                purchase_invoice_dimension.app_dimension = item_dimension.app_dimension;
+                purchase_invoice_dimension.value = item_dimension.value;
+                purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
+
+            }
         
             Dispatcher.BeginInvoke((Action)(() =>
             {
@@ -702,6 +712,8 @@ namespace Cognitivo.Purchase
                 }   
             }
         }
+
+    
 
         //private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         //{

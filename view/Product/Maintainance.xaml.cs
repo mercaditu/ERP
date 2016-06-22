@@ -199,5 +199,13 @@ namespace Cognitivo.Product
             crud_modal_request.Children.Clear();
             crud_modal_request.Visibility = System.Windows.Visibility.Collapsed;
         }
+
+        private void toolBar_btnApprove_Click(object sender)
+        {
+            foreach (item_asset_maintainance item_asset_maintainance in item_asset_maintainanceViewSource.View.OfType<item_asset_maintainance>().ToList())
+            {
+                item_asset_maintainance.status = entity.item_asset_maintainance.Status.Done;
+            }
+        }
     }
 }

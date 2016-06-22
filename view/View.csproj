@@ -544,9 +544,6 @@
     <Compile Include="Reporting\Views\CurrentAccount_Customer.xaml.cs">
       <DependentUpon>CurrentAccount_Customer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\PendingSalesDocs.xaml.cs">
-      <DependentUpon>PendingSalesDocs.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Views\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
@@ -1633,10 +1630,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\CurrentAccount_Customer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\PendingSalesDocs.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

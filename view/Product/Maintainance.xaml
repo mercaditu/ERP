@@ -122,6 +122,8 @@
         <cntrl:toolBar x:Name="toolBar" Grid.Row="0" Grid.ColumnSpan="2" btnEdit_Click="toolBar_btnEdit_Click"
                        btnSave_Click="toolBar_btnSave_Click"
                        btnCancel_Click="toolBar_btnCancel_Click"
+                       btnApprove_Click="toolBar_btnApprove_Click"
+                       Status="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                           State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

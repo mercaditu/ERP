@@ -326,7 +326,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Sum(Fields!ExpiryDate.Value, "DataSet1")</Value>
+                    <Value>=Fields!ExpiryDate.Value</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -420,7 +420,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Sum(Fields!Customer.Value, "DataSet1")</Value>
+                    <Value>=Fields!Customer.Value</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -868,7 +868,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Sum(Fields!ExpiryDate.Value, "DataSet1")</Value>
+                      <Value>=Fields!ExpiryDate.Value</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -928,7 +928,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Sum(Fields!SalesInvoiceNumber.Value, "DataSet1")</Value>
+                      <Value>=Fields!SalesInvoiceNumber.Value</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1108,7 +1108,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Sum(Fields!TransDate.Value, "DataSet1")</Value>
+                      <Value>=Fields!TransDate.Value</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>

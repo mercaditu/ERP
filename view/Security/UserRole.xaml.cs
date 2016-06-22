@@ -57,6 +57,8 @@ namespace Cognitivo.Security
             {
                 dbContext.SaveChanges();
                 entity.CurrentSession.Refresh_Security();
+                security_roleViewSource.View.Refresh();
+                security_roleViewSource.View.MoveCurrentToLast();
             }
             catch (Exception ex)
             {
@@ -79,16 +81,18 @@ namespace Cognitivo.Security
 
         private void New_Click(object sender)
         {
-            add_Privallge();
+          
             security_role security_role = new security_role();
             security_role.State = EntityState.Added;
             security_role.IsSelected = true;
             dbContext.security_role.Add(security_role);
-            add_MissingRecords();
+           
           
 
             security_roleViewSource.View.Refresh();
             security_roleViewSource.View.MoveCurrentToLast();
+            add_Privallge();
+            add_MissingRecords();
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -155,7 +159,7 @@ namespace Cognitivo.Security
         {
             if (security_rolesecurity_curdViewSource.View != null)
             {
-                security_role security_role = (security_role)security_roleViewSource.View.CurrentItem;
+                security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
 
                 List<security_role_privilage> security_role_privilageList = dbContext.security_role_privilage.Where(x => x.id_role == security_role.id_role).ToList();
                 List<security_role_privilage> privalage = dbContext.security_role_privilage.ToList();

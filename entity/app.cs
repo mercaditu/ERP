@@ -221,8 +221,6 @@ namespace entity
             [LocalizedDescription("CostCenter")]
             CostCenter = 77,
 
-            [LocalizedDescription("SalesbyProduct")]
-            SalesbyProduct = 82,
             [LocalizedDescription("SalesbyDate")]
             SalesbyDate = 83,
             [LocalizedDescription("CurrentAccount_Customer")]
@@ -236,7 +234,9 @@ namespace entity
             [LocalizedDescription("PendingSalesDocs")]
             PendingSalesDocs = 90,
             [LocalizedDescription("SuppliesRequest")]
-            SuppliesRequest = 84
+            SuppliesRequest = 84,
+            [LocalizedDescription("AccountsRecievableAnalisys")]
+            AccountsRecievableAnalisys = 91
         }
     }
 }

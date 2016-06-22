@@ -122,17 +122,22 @@
                                 EnableRowVirtualization="True" Height="Auto" Margin="4"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="64"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" Binding="{Binding item}"/>
-                            <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" 
+                            <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="100"/>
+                            
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="128" Binding="{Binding item}"/>
+
+                            <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" Width="SizeToHeader"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"/>
-                            <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N2}}" 
-                                                Header="{lex:Loc Cognitivo:local:UnitCost}" ElementStyle="{StaticResource RightAlignStyle}"/>
+                            
+                            <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N2}}" Width="SizeToHeader"
+                                                Header="Unit Cost" ElementStyle="{StaticResource RightAlignStyle}"/>
+
+                            <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="SizeToHeader"
+                                                Header="Landed" ElementStyle="{StaticResource RightAlignStyle}"/>
+                            
                             <DataGridTextColumn Binding="{Binding sub_total, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Total}" 
+                                                Header="{lex:Loc Cognitivo:local:SubTotal}" Width="SizeToHeader"
                                                 ElementStyle="{StaticResource RightAlignStyle}"/>
-                            <DataGridTextColumn Binding="{Binding prorated_cost, StringFormat={}{0:N2}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Cost}" ElementStyle="{StaticResource RightAlignStyle}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

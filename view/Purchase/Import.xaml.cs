@@ -361,13 +361,16 @@ namespace Cognitivo.Purchase
         private void Calculate_Click(object sender, RoutedEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
-            decimal totalExpence = impex.impex_expense.Sum(x => x.value);
             List<Class.clsImpexImportDetails> ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_importDataGrid.ItemsSource;
+
+            decimal totalExpense = impex.impex_expense.Sum(x => x.value);
+            decimal totalQuantity = ImpexImportDetails.Sum(x => x.quantity);
+
             foreach (Class.clsImpexImportDetails _ImpexImportDetails in ImpexImportDetails)
             {
-                if (totalExpence > 0)
+                if (totalExpense > 0)
                 {
-                    _ImpexImportDetails.prorated_cost = Math.Round(_ImpexImportDetails.unit_cost + (totalExpence / _ImpexImportDetails.quantity), 2);
+                    _ImpexImportDetails.prorated_cost = Math.Round(_ImpexImportDetails.unit_cost + (totalExpense / totalQuantity), 2);
                 }
                 else
                 {

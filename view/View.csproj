@@ -547,6 +547,9 @@
     <Compile Include="Reporting\Views\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\PendingSalesDocs.xaml.cs">
+      <DependentUpon>PendingSalesDocs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
     </Compile>

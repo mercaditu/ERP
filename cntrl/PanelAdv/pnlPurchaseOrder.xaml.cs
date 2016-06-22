@@ -41,7 +41,6 @@ namespace cntrl.PanelAdv
                     purchase_orderViewSource = (CollectionViewSource)Resources["purchase_orderViewSource"];
                     purchase_orderViewSource.Source = _entity.purchase_order.Where(x => x.id_contact == _contact.id_contact).ToList();
                 }
-
             }
         }
 
@@ -56,7 +55,6 @@ namespace cntrl.PanelAdv
             {
                 PurchaseOrder_Click(sender);
             }
-
         }
 
         private void sales_orderDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)

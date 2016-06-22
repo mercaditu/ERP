@@ -63,40 +63,29 @@ namespace entity
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected))
             {
-               item_transfer item_transfermov = new item_transfer();
-
-
-                item_transfermov.status = Status.Transfer.Pending;
-
-
+                item_transfer item_transfer = new item_transfer();
+                item_transfer.status = Status.Transfer.Pending;
                 entity.Properties.Settings setting = new Properties.Settings();
-                item_transfermov.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-                item_transfermov.id_item_request = item_request.id_item_request;
+                item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+                item_transfer.id_item_request = item_request.id_item_request;
                 if (base.app_department.FirstOrDefault()!=null)
                 {
-                    item_transfermov.id_department = base.app_department.FirstOrDefault().id_department;
-                    
+                    item_transfer.id_department = base.app_department.FirstOrDefault().id_department;
                 }
                 
                 if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault() != null)
                 {
-                    item_transfermov.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
+                    item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
                 }
 
-
                 item_transfer item_transfertrans= new item_transfer();
-
-
                 item_transfertrans.status = Status.Transfer.Pending;
-
-
 
                 item_transfertrans.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
                 item_transfertrans.id_item_request = item_request.id_item_request;
                 if (base.app_department.FirstOrDefault() != null)
                 {
                     item_transfertrans.id_department = base.app_department.FirstOrDefault().id_department;
-
                 }
 
                 if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault() != null)
@@ -136,25 +125,25 @@ namespace entity
                         {
                           //  ProductTransferDB ProductTransferDB = new entity.ProductTransferDB();
                           //  item_transfer _item_transfer = new entity.item_transfer();
-                            item_transfermov.status = Status.Transfer.Pending;
-                            item_transfermov.IsSelected = true;
+                            item_transfer.status = Status.Transfer.Pending;
+                            item_transfer.IsSelected = true;
 
-                            item_transfermov.State = EntityState.Added;
-                            item_transfermov.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
-                            item_transfermov.id_item_request = item_request.id_item_request;
+                            item_transfer.State = EntityState.Added;
+                            item_transfer.user_requested = base.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
+                            item_transfer.id_item_request = item_request.id_item_request;
                             if (base.app_department.FirstOrDefault() != null)
                             {
-                                item_transfermov.id_department = base.app_department.FirstOrDefault().id_department;
+                                item_transfer.id_department = base.app_department.FirstOrDefault().id_department;
                             }
                             if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault() != null)
                             {
-                                item_transfermov.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
+                                item_transfer.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.Movement).FirstOrDefault().id_range;
                             }
 
                             int id_location = (int)item.id_location;
-                            item_transfermov.app_location_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
-                            item_transfermov.app_branch_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault().app_branch;
-                            item_transfermov.comment = "Transfer item Request from " + item.decision.ToString();
+                            item_transfer.app_location_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault();
+                            item_transfer.app_branch_origin = base.app_location.Where(x => x.id_location == id_location).FirstOrDefault().app_branch;
+                            item_transfer.comment = "Transfer item Request from " + item.decision.ToString();
 
 
                             //Create Transfer Detail in DB.
@@ -168,18 +157,18 @@ namespace entity
                             if (item_request_detail.id_project_task != null)
                             {
                                 //Transfer related to Project because there is a Project.
-                                item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
+                                item_transfer_detail.id_project_task = item_request_detail.id_project_task;
 
                                 int id_branch = (int)base.projects.Where(x => x.id_project == item_request_detail.project_task.id_project).FirstOrDefault().id_branch;
-                                item_transfermov.app_location_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
-                                item_transfermov.app_branch_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
-                                item_transfermov.id_project = item_request_detail.project_task.id_project;
+                                item_transfer.app_location_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
+                                item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                item_transfer.id_project = item_request_detail.project_task.id_project;
                             }
 
                             if (item_request_detail.id_sales_order_detail != null)
                             {
-                                item_transfermov.app_location_destination = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
-                                item_transfermov.app_branch_destination = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault();
+                                item_transfer.app_location_destination = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
+                                item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == item_request.sales_order.app_branch.id_branch).FirstOrDefault();
                             }
 
                             if (item_request_detail.id_order_detail != null)
@@ -188,15 +177,15 @@ namespace entity
                                 int id_production_line = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().production_order.id_production_line;
                                 //Get Location based on Line
                                 app_location app_location = base.production_line.Where(x => x.id_production_line == id_production_line).FirstOrDefault().app_location;
-                                item_transfermov.app_location_destination = app_location;
+                                item_transfer.app_location_destination = app_location;
                                 //Get Branch based on Location
-                                item_transfermov.app_branch_destination = base.app_branch.Where(x => x.id_branch == app_location.id_branch).FirstOrDefault();
+                                item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == app_location.id_branch).FirstOrDefault();
                             }
 
-                            item_transfermov.item_transfer_detail.Add(item_transfer_detail);
-                            item_transfermov.transfer_type = entity.item_transfer.Transfer_type.movemnent;
+                            item_transfer.item_transfer_detail.Add(item_transfer_detail);
+                            item_transfer.transfer_type = entity.item_transfer.Transfer_type.movemnent;
 
-                            base.item_transfer.Add(item_transfermov);
+                            base.item_transfer.Add(item_transfer);
                           //  ProductTransferDB.SaveChanges();
                         }
 
@@ -327,9 +316,9 @@ namespace entity
                 {
                     base.purchase_tender.Add(purchase_tender);
                 }
-                if (item_transfermov.item_transfer_detail.Count() > 0)
+                if (item_transfer.item_transfer_detail.Count() > 0)
                 {
-                    base.item_transfer.Add(item_transfermov);
+                    base.item_transfer.Add(item_transfer);
                 }
                 if (item_transfertrans.item_transfer_detail.Count() > 0)
                 {

@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:crud="clr-namespace:cntrl.Curd"
+                 xmlns:Converter="clr-namespace:cntrl.Converters"
+                xmlns:pref="clr-namespace:cntrl.Controls"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:entity="clr-namespace:entity;assembly=entity"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -13,6 +15,7 @@
              mc:Ignorable="d" d:DesignHeight="26" d:DesignWidth="256" Margin="4,0,4,4" >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <Converter:sbxItem_CheckType x:Key="sbxItem_CheckType"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
     </UserControl.Resources>
     <Grid Width="256">
@@ -39,10 +42,19 @@
                         <Border BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="3">
                             <StackPanel Orientation="Vertical" Background="White">
                                
-                                <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Stock Item}" 
+                                <CheckBox x:Name="rbtnStock" Style="{StaticResource input_checkbox}" Content="{lex:Loc Stock Item}" 
                                       IsChecked="{Binding ElementName=_SmartBox_Item, Path=Is_Stock, Mode=TwoWay}"
                                      />
-                              
+                                <CheckBox x:Name="rbtnCode" Style="{StaticResource input_checkbox}" Content="{lex:Loc Code}" 
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=1}"
+                                      Checked="RadioButton_Checked"/>
+                                <CheckBox x:Name="rbtnName" Style="{StaticResource input_checkbox}" Content="{lex:Loc Name}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=2}" 
+                                      Checked="RadioButton_Checked"/>
+                                <CheckBox x:Name="rbtnTag" Style="{StaticResource input_checkbox}" Content="{lex:Loc Tag}"
+                                      IsChecked="{Binding Source={x:Static pref:smartBoxItemSetting.Default}, Path=SearchFilter, Mode=TwoWay, Converter={StaticResource sbxItem_CheckType}, ConverterParameter=3}" 
+                                      Checked="RadioButton_Checked"/>
+
                             </StackPanel>
                         </Border>
                     </Popup>

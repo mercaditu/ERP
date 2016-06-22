@@ -182,6 +182,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>smartBoxContactSetting.settings</DependentUpon>
     </Compile>
+    <Compile Include="Controls\smartBoxItemSetting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>smartBoxItemSetting.settings</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SmartBox_Geography.xaml.cs">
       <DependentUpon>SmartBox_Geography.xaml</DependentUpon>
     </Compile>
@@ -197,6 +202,7 @@
     <Compile Include="Controls\Totals.xaml.cs">
       <DependentUpon>Totals.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\sbxItem_CheckType.cs" />
     <Compile Include="Converters\Security2Decimal.cs" />
     <Compile Include="Converters\Security2Boolean.cs" />
     <Compile Include="Converters\Expiry2ColorConverter.cs" />
@@ -479,6 +485,10 @@
     <None Include="Controls\smartBoxContactSetting.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>smartBoxContactSetting.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Controls\smartBoxItemSetting.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>smartBoxItemSetting.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\entity.accounting_budget.datasource" />

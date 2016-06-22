@@ -91,7 +91,7 @@ namespace Cognitivo.Product
                     item_requestitem_request_detailViewSource.View.Refresh();
                     item_request_detailitem_request_decisionViewSource.View.Refresh();
                     //calculate_total(sender, e);
-
+                    item_request_detail.item_request.GetTotalDecision();
                 }
             }
             catch (Exception ex)

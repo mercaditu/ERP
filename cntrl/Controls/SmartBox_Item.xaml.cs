@@ -194,7 +194,22 @@ namespace cntrl.Controls
               
 
                 List<entity.item> results;
+                var param = smartBoxContactSetting.Default.SearchFilter;
                 var predicate = PredicateBuilder.True<entity.item>();
+
+                //var predicateOR = PredicateBuilder.False<entity.item>();
+
+                //if (param.Contains("Code"))
+                //{
+                //    predicateOR = predicateOR.Or(x => x.code == SearchText);
+                //}
+
+                //if (param.Contains("Name"))
+                //{
+                //    predicateOR = predicateOR.Or(x => x.name.Contains(SearchText));
+                //}
+                
+
 
                 predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
                                          (
@@ -208,6 +223,10 @@ namespace cntrl.Controls
                     predicate = predicate.And(x => x.id_item_type == item_types);
                 }
 
+            //      predicate = predicate.And
+            //(
+            //    predicateOR
+            //);
                 results = db.items.Where(predicate).OrderBy(x => x.name).ToList();
                 if (Is_Stock)
                 {
@@ -291,6 +310,31 @@ namespace cntrl.Controls
         {
             popupCustomize.IsOpen = true;
             popupCustomize.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (Controls.smartBoxItemSetting.Default.SearchFilter != null)
+            {
+                Controls.smartBoxItemSetting.Default.SearchFilter.Clear();
+            }
+
+            if (rbtnCode.IsChecked == true)
+            {
+                Controls.smartBoxItemSetting.Default.SearchFilter.Add("Code");
+            }
+            if (rbtnName.IsChecked == true)
+            {
+                Controls.smartBoxItemSetting.Default.SearchFilter.Add("Name");
+            }
+            if (rbtnTag.IsChecked == true)
+            {
+                Controls.smartBoxItemSetting.Default.SearchFilter.Add("Tag");
+            }
+
+
+            Controls.smartBoxItemSetting.Default.Save();
+
         }
 
 

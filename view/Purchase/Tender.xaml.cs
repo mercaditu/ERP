@@ -154,7 +154,11 @@ namespace Cognitivo.Purchase
                         purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
                         purchase_tender_dimension.id_dimension = item_dimension.id_app_dimension;
                         purchase_tender_dimension.id_measurement = item_dimension.id_measurement;
-                        purchase_tender_dimension.app_dimension = item_dimension.app_dimension;
+                        if (PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault()!=null)
+                        {
+                            purchase_tender_dimension.app_dimension = PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();     
+                        }
+                       
                         purchase_tender_dimension.app_measurement = item_dimension.app_measurement;
                         purchase_tender_dimension.value = item_dimension.value;
                         purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
@@ -295,6 +299,13 @@ namespace Cognitivo.Purchase
                     e.CanExecute = true;
                 }
             }
+            else if (dg.Name=="purchase_tender_itemDataGrid")
+            {
+                if (e.Parameter as purchase_tender_item != null)
+                {
+                    e.CanExecute = true;
+                }
+            }
             else
             {
                 if (e.Parameter as purchase_tender_detail != null)
@@ -302,6 +313,7 @@ namespace Cognitivo.Purchase
                     e.CanExecute = true;
                 }
             }
+
         }
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -317,6 +329,12 @@ namespace Cognitivo.Purchase
                         purchase_tender_contact_detailDataGrid.CancelEdit();
                         PurchaseTenderDB.purchase_tender_contact_detail.Remove(e.Parameter as purchase_tender_contact);
                         purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
+                    }
+                    else if (dg.Name == "purchase_tender_itemDataGrid")
+                    {
+                        purchase_tender_itemDataGrid.CancelEdit();
+                        PurchaseTenderDB.purchase_tender_item_detail.Remove(e.Parameter as purchase_tender_item);
+                        purchase_tenderpurchase_tender_itemViewSource.View.Refresh();
                     }
                     else
                     {

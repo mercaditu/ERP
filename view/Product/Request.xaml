@@ -190,8 +190,10 @@
                                                 Header="{lex:Loc Cognitivo:local:Comment}" Width="Auto"/>-->
                             <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Module}" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding app_location.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                Header="{lex:Loc Cognitivo:local:Origin}" Width="*"/>
                             <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Quantiity}" Width="Auto"/>
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                             <DataGridTemplateColumn Width="Auto" Header="">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

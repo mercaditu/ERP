@@ -183,6 +183,13 @@
                                 <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Description}" Width="*"/>
                                 <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" 
                             		ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                             <DataGrid.RowDetailsTemplate>
                                 <DataTemplate>
@@ -194,7 +201,7 @@
                                             <DataGridTextColumn Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Dimension" Width="100"/>
                                             <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
                                             <DataGridTextColumn Binding="{Binding app_measurement.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Measurement" Width="100"/>
-
+                                          
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </DataTemplate>

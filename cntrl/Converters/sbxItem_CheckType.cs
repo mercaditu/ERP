@@ -7,11 +7,11 @@ using System.Windows.Data;
 
 namespace cntrl.Converters
 {
-    class sbxContact_CheckType : IValueConverter
+    class sbxItem_CheckType : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            //string val = (string)value;
+            //System.Collections.Specialized.StringCollection val = (System.Collections.Specialized.StringCollection)value;
 
 
             //if (val.Contains("Code") && (int)parameter == 1)
@@ -24,17 +24,12 @@ namespace cntrl.Converters
             //    return true;
             //}
 
-            //if (val.Contains("GovID") && (int)parameter == 3)
+
+
+            //if (val.Contains("Tag") && (int)parameter == 3)
             //{
             //    return true;
             //}
-
-            //if (val.Contains("Tel") && (int)parameter == 4)
-            //{
-            //    return true;
-            //}
-
-     
 
             return false;
         }

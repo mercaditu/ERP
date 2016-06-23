@@ -209,8 +209,6 @@ namespace cntrl.Controls
                 //    predicateOR = predicateOR.Or(x => x.name.Contains(SearchText));
                 //}
                 
-
-
                 predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company &&
                                          (
                                              x.code.Contains(SearchText) ||
@@ -230,7 +228,7 @@ namespace cntrl.Controls
                 results = db.items.Where(predicate).OrderBy(x => x.name).ToList();
                 if (Is_Stock)
                 {
-                    results = results.Where(x => (x.item_product.FirstOrDefault()!=null?x.item_product.FirstOrDefault().stock:0) > 0)
+                    results = results.Where(x => (x.item_product.FirstOrDefault() != null ? x.item_product.FirstOrDefault().stock : 1) > 0)
 
                           .OrderBy(x => x.name)
                           .ToList(); 
@@ -264,20 +262,6 @@ namespace cntrl.Controls
 
         private void crudItem_btnSave_Click(object sender)
         {
-            //using (entity.db db = new entity.db())
-            //{
-            //    if (crudItem.itemList.Count() > 0)
-            //    {
-            //        foreach (entity.item item in crudItem.itemList)
-            //        {
-            //            if (item.id_item == 0)
-            //            {
-            //                db.items.Add(item);
-            //            }
-            //        }
-            //        db.SaveChanges();
-            //    }
-            //}
             db.db.items.Add(crudItem.itemobject);
             db.SaveChanges();
             popCrud.IsOpen = false;

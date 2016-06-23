@@ -33,8 +33,7 @@ namespace Cognitivo.Product
             hr_talentViewSource,
             itemitem_serviceViewSource,
             item_templateViewSource,
-            item_templateitem_template_detaildetailViewSource,
-            item_asset_groupViewSource;
+            item_templateitem_template_detaildetailViewSource;
 
         public Item()
         {
@@ -53,7 +52,6 @@ namespace Cognitivo.Product
             itemitem_serviceViewSource = FindResource("itemitem_serviceViewSource") as CollectionViewSource;
             item_templateViewSource = FindResource("item_templateViewSource") as CollectionViewSource;
             item_templateitem_template_detaildetailViewSource = FindResource("item_templateitem_template_detaildetailViewSource") as CollectionViewSource;
-            item_asset_groupViewSource = FindResource("item_asset_groupViewSource") as CollectionViewSource;
         }
 
         private void load_PrimaryData()

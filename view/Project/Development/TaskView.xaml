@@ -135,10 +135,10 @@
                         <Label Content="{lex:Loc ItemType}" Style="{StaticResource input_label}"/>
                         <ComboBox x:Name="cbxItemType" Style="{StaticResource input_combobox}" 
                                   IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" 
-                                  SelectedValue="{Binding items.id_item_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                  SelectedValue="{Binding items.id_item_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 							      SelectionChanged="cbxItemType_SelectionChanged"/>
                         <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
-                        <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        <TextBox Text="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                                  IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}" Style="{StaticResource input_textbox}"/>
                         <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
                         <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select" Text="{Binding items.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>

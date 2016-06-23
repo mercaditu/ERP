@@ -57,9 +57,11 @@ namespace Cognitivo.Product
         private void load_PrimaryData()
         {
             ItemDB = new ItemDB();
-            Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
-            task_PrimaryData.Wait();
-            Task thread_SecondaryData = Task.Factory.StartNew(() => load_SecondaryDataThread());
+            load_PrimaryDataThread();
+            load_SecondaryDataThread();
+            //Task task_PrimaryData = Task.Factory.StartNew(() => load_PrimaryDataThread());
+            //task_PrimaryData.Wait();
+            //Task thread_SecondaryData = Task.Factory.StartNew(() => load_SecondaryDataThread());
         }
 
         private async void load_PrimaryDataThread()

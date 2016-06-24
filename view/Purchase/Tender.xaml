@@ -37,7 +37,8 @@
         <CollectionViewSource x:Key="app_contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
-        <CollectionViewSource x:Key="purchase_tender_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="purchase_tender_dimensionViewSource" Source="{Binding purchase_tender_dimension, Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"/>
+        
                 <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource purchase_tenderViewSource}">
@@ -175,7 +176,7 @@
                         <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                         <DataGrid x:Name="purchase_tender_itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"  
-                                  SelectionChanged="purchase_tender_itemDataGrid_LoadingRowDetails"
+                                  
                                   RowDetailsVisibilityMode="VisibleWhenSelected"
                                   IsReadOnly="{Binding IsEditable, Converter={StaticResource TrueToFalse}, ElementName=toolBar}">
                             <DataGrid.Columns>
@@ -196,12 +197,17 @@
                                     <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
                                 		EnableRowVirtualization="True" Height="Auto" Margin="8,4"
                                 		ItemsSource="{Binding Source={StaticResource purchase_tender_dimensionViewSource}}"
-                                		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
+                                		RowDetailsVisibilityMode="VisibleWhenSelected" >
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Dimension" Width="100"/>
-                                            <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
-                                            <DataGridTextColumn Binding="{Binding app_measurement.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="Measurement" Width="100"/>
-                                          
+                                            <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"
+									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
+                                            <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
+									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
+
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </DataTemplate>

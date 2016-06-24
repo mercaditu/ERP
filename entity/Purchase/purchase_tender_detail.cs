@@ -14,6 +14,7 @@ namespace entity
             id_user =  CurrentSession.Id_User;
             is_head = true;
             status = Status.Documents_General.Pending;
+            purchase_tender_detail_dimension = new List<purchase_tender_detail_dimension>();
         }
 
         [Key]
@@ -138,7 +139,8 @@ namespace entity
         public virtual purchase_tender_item purchase_tender_item { get; set; }
     
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
-
+        public virtual ICollection<purchase_tender_detail_dimension> purchase_tender_detail_dimension { get; set; }
+        
 
 
         #region Methods

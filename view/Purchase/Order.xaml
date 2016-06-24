@@ -210,7 +210,7 @@
                         <!-- render each bound item using a TextBlock-->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Label VerticalAlignment="Top" Content="{Binding purchase_tender_detail.number}"/>
+                                <Label VerticalAlignment="Top" Content="{Binding purchase_tender_detail.purchase_tender_item.purchase_tender.number}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

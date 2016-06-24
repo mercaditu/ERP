@@ -237,6 +237,16 @@ namespace Cognitivo.Purchase
                                     purchase_tender_detail.quantity = purchase_tender_item.quantity;
                                     purchase_tender_detail.unit_cost = 0;
                                     purchase_tender_detail.id_vat_group = PurchaseTenderDB.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+                                    foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_item.purchase_tender_dimension)
+                                    {
+                                        purchase_tender_detail_dimension purchase_tender_detail_dimension = new purchase_tender_detail_dimension();
+                                        purchase_tender_detail_dimension.id_dimension = purchase_tender_dimension.id_dimension;
+                                        purchase_tender_detail_dimension.app_dimension = purchase_tender_dimension.app_dimension;
+                                        purchase_tender_detail_dimension.id_measurement = purchase_tender_dimension.id_measurement;
+                                        purchase_tender_detail_dimension.app_measurement = purchase_tender_dimension.app_measurement;
+                                        purchase_tender_detail_dimension.value = purchase_tender_dimension.value;
+                                        purchase_tender_detail.purchase_tender_detail_dimension.Add(purchase_tender_detail_dimension);
+                                    }
                                     purchase_tender_contact.purchase_tender_detail.Add(purchase_tender_detail);
                                 }
                                 else
@@ -458,25 +468,7 @@ namespace Cognitivo.Purchase
           
         }
 
-        private void purchase_tender_item_detailDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (purchase_tenderpurchase_tender_item_detailViewSource != null)
-            //{
-            //    if (purchase_tenderpurchase_tender_item_detailViewSource.View != null)
-            //    {
-            //        purchase_tender_detail purchase_tender_detail = (purchase_tender_detail)purchase_tenderpurchase_tender_item_detailViewSource.View.CurrentItem;
-            //        CollectionViewSource purchase_tender_dimensionOrderViewSource = ((CollectionViewSource)(FindResource("purchase_tender_dimensionOrderViewSource")));
-            //        if (purchase_tender_detail != null)
-            //        {
-            //            if (purchase_tender_detail.id_purchase_tender_item > 0)
-            //            {
-            //                purchase_tender_dimensionOrderViewSource.Source = PurchaseTenderDB.purchase_tender_dimension.Where(x => x.id_purchase_tender_item == purchase_tender_detail.id_purchase_tender_item).ToList();
-            //            }
-            //        }
-            //    }
-            //}
-      
-        }
+        
 
       
 

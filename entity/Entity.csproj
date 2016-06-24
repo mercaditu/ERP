@@ -324,6 +324,10 @@
     <Compile Include="Migrations\201606140917363_promissorynoteUpdate.Designer.cs">
       <DependentUpon>201606140917363_promissorynoteUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606241030393_updatepurchasetenderdetail.cs" />
+    <Compile Include="Migrations\201606241030393_updatepurchasetenderdetail.Designer.cs">
+      <DependentUpon>201606241030393_updatepurchasetenderdetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -534,6 +538,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Purchase\purchase_tender_detail.cs" />
+    <Compile Include="Purchase\purchase_tender_detail_dimension.cs" />
     <Compile Include="Purchase\purchase_tender_dimension.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1026,6 +1031,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606140917363_promissorynoteUpdate.resx">
       <DependentUpon>201606140917363_promissorynoteUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606241030393_updatepurchasetenderdetail.resx">
+      <DependentUpon>201606241030393_updatepurchasetenderdetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

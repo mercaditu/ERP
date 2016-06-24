@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:entity="clr-namespace:entity;assembly=entity"
+       xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
  
       
@@ -75,6 +76,22 @@
         
         </Grid>
         <StackPanel  Grid.Row="2" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
+                <DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
+                <toolkit:TimePicker x:Name="dtpstarttime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
+                <DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
+                <toolkit:TimePicker x:Name="dtpendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
+                <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" />
+            </StackPanel>
             <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
             <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select"/>
             <Controls:NotificationButton Text="{lex:Loc RequestResource}" 
@@ -95,6 +112,8 @@
                     <DataGridTextColumn Binding="{Binding id_maintainance_detail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                         Header="ID" Width="64" IsReadOnly="True"
                                         />
+                    <DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                                        Header="{lex:Loc Cognitivo:local:contact}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
 
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" 
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -105,6 +124,8 @@
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
 
+                    <DataGridTextColumn Binding="{Binding hours, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                                        Header="{lex:Loc Cognitivo:local:Hour}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
                     <!-- UnitPrice -->
                     <DataGridTextColumn Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
                                         Header="{lex:Loc Cognitivo:local:Price}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"

@@ -30,6 +30,7 @@
         <CollectionViewSource x:Key="purchase_tenderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_contact_detailViewSource" Source="{Binding purchase_tender_contact_detail, Source={StaticResource purchase_tenderViewSource}}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_item_detailViewSource" Source="{Binding purchase_tender_detail, Source={StaticResource purchase_tenderpurchase_tender_contact_detailViewSource}}"/>
+        <CollectionViewSource x:Key="purchase_tender_detail_dimensionViewSource" Source="{Binding purchase_tender_detail_dimension, Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}"/>
         <CollectionViewSource x:Key="purchase_tenderpurchase_tender_itemViewSource" Source="{Binding purchase_tender_item_detail, Source={StaticResource purchase_tenderViewSource}}"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}"/>
@@ -37,8 +38,7 @@
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="purchase_tender_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="purchase_tender_dimensionOrderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
+                <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource purchase_tenderViewSource}">
         <Grid.ColumnDefinitions>
@@ -281,7 +281,7 @@
                         <DataGrid x:Name="purchase_tender_item_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="1"
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_item_detailViewSource}}" Margin="4" 
                                   RowEditEnding="purchase_tender_item_detailDataGrid_RowEditEnding"
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="purchase_tender_item_detailDataGrid_SelectionChanged"
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" 
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -318,7 +318,7 @@
                                 <DataTemplate>
                                     <DataGrid x:Name="item_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" 
                         		                EnableRowVirtualization="True" Height="Auto" Margin="8,4"
-                        		                ItemsSource="{Binding Source={StaticResource purchase_tender_dimensionOrderViewSource}}"
+                        		                ItemsSource="{Binding Source={StaticResource purchase_tender_detail_dimensionViewSource}}"
                         		                RowDetailsVisibilityMode="VisibleWhenSelected" >
                                         <DataGrid.Columns>
                                             <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="*"

@@ -29,7 +29,55 @@ namespace entity
         public int? id_currencyfx { get; set; }
         public int? id_time_coefficient { get; set; }
         public int? id_contact { get; set; }
+        public DateTime start_date
+        {
+            get { return _start_date; }
+            set
+            {
+                if (value != _start_date)
+                {
+                    _start_date = value;
+                }
+            }
+        }
+        private DateTime _start_date = DateTime.Now;
 
+        public DateTime end_date
+        {
+            get
+            {
+                return _end_date;
+            }
+            set
+            {
+                if (value != _end_date)
+                {
+                    _end_date = value;
+                    TimeSpan time = end_date.Subtract(start_date);
+
+                    _hour = (decimal)time.TotalMinutes / 60;
+                    RaisePropertyChanged("hours");
+
+
+                }
+            }
+        }
+
+        private DateTime _end_date = DateTime.Now;
+
+        [NotMapped]
+        public decimal hours
+        {
+            get
+            {
+                return _hour;
+            }
+            set
+            {
+                _hour = value;
+            }
+        }
+        decimal _hour;
         [NotMapped]
         public new bool IsSelected
         {

@@ -135,7 +135,8 @@ namespace entity
             {
                 if (purchase_invoice.IsSelected && purchase_invoice.Error == null)
                 {
-                    if (purchase_invoice.accounting_journal == null && purchase_invoice.purchase_invoice_detail.Where(x => x.purchase_return_detail == null).Count() == 0)
+                    int count=purchase_invoice.purchase_invoice_detail.Where(x => x.purchase_return_detail == null).Count();
+                    if (purchase_invoice.accounting_journal == null && count > 0)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();
@@ -143,7 +144,7 @@ namespace entity
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.revert_Stock(this, App.Names.PurchaseInvoice, purchase_invoice.id_purchase_invoice);
+                        item_movementList = _Stock.revert_Stock(this, App.Names.PurchaseInvoice, purchase_invoice);
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {

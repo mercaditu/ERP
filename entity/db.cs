@@ -158,6 +158,8 @@
         public virtual DbSet<purchase_packing_dimension> purchase_packing_dimension { get; set; }
         public virtual DbSet<purchase_return_dimension> purchase_return_dimension { get; set; }
         public virtual DbSet<purchase_tender_dimension> purchase_tender_dimension { get; set; }
+        public virtual DbSet<purchase_tender_detail_dimension> purchase_tender_detail_dimension { get; set; }
+        
         public virtual DbSet<item_movement_dimension> item_movement_dimension { get; set; }
         public virtual DbSet<item_inventory_dimension> item_inventory_dimension { get; set; }
         public virtual DbSet<item_transfer_dimension> item_transfer_dimension { get; set; }

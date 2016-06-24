@@ -207,7 +207,7 @@ namespace Cognitivo.Product
             //Loads Primary and Secondary Data
             load_PrimaryData();
 
-            cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type));
+            cmbitem.ItemsSource = Enum.GetValues(typeof(item.item_type)).OfType<item.item_type>().Where(x=>x!=item.item_type.FixedAssets).ToList();
         }
 
         #region Implementing Interface For CanClose

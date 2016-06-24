@@ -18,9 +18,11 @@ namespace entity
         public long id_purchase_packing_detail { get; set; }
         public int id_dimension { get; set; }
         public decimal value { get; set; }
+        public int id_measurement { get; set; }
 
         public virtual purchase_packing_detail purchase_packing_detail { get; set; }
         public virtual app_dimension app_dimension { get; set; }
+        public virtual app_measurement app_measurement { get; set; }
 
     }
 }

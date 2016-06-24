@@ -73,6 +73,7 @@ namespace entity
 
                 if (purchase_tender.status != Status.Documents_General.Approved)
                 {
+                    
                     foreach (purchase_tender_contact purchase_tender_contact in purchase_tender.purchase_tender_contact_detail)
                     {
                         purchase_order purchase_order = new purchase_order();
@@ -96,7 +97,11 @@ namespace entity
                         purchase_order.id_condition = purchase_tender_contact.id_condition;
                         purchase_order.id_project = purchase_tender.id_project;
                         purchase_order.project = purchase_tender.project;
-                        
+
+                        if (purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected).Count()==0)
+                        {
+                            return;
+                        }
                         foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x=>x.IsSelected))
                         {
                             purchase_order_detail purchase_order_detail = new purchase_order_detail();

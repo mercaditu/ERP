@@ -112,8 +112,23 @@ namespace Cognitivo.Product
                     item_asset_maintainance_detail item_asset_maintainance_detail = new item_asset_maintainance_detail();
                     item_asset_maintainance_detail.item = item;
                     item_asset_maintainance_detail.id_item = item.id_item;
+                    string start_date = string.Format("{0} {1}", dtpstartdate.Text, dtpstarttime.Text);
+                    item_asset_maintainance_detail.start_date = Convert.ToDateTime(start_date);
+                    string end_date = string.Format("{0} {1}", dtpenddate.Text, dtpendtime.Text);
+                    item_asset_maintainance_detail.end_date = Convert.ToDateTime(end_date);
+
                     item_asset_maintainance_detail.quantity = 1;
-                    item_asset_maintainance_detail.unit_cost =(decimal)item.unit_cost;
+                   
+                    if (item.unit_cost!=null)
+                    {
+                        item_asset_maintainance_detail.unit_cost = (decimal)item.unit_cost;
+                    }
+                    if (CmbService.ContactID>0)
+                    {
+                        contact contact = db.db.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
+                        item_asset_maintainance_detail.id_contact = contact.id_contact;
+                        item_asset_maintainance_detail.contact = contact;
+                    }
                     item_asset_maintainance.item_asset_maintainance_detail.Add(item_asset_maintainance_detail);
                 }
             }

@@ -40,6 +40,7 @@ namespace entity
         public virtual IEnumerable<item_transfer> item_transfer_origin { get; set; }
         public virtual IEnumerable<item_transfer> item_transfer_destination { get; set; }
         public virtual IEnumerable<item_inventory> item_inventory { get; set; }
+        public virtual IEnumerable<item_request_decision> item_request_decision { get; set; }
 
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual IEnumerable<purchase_invoice_detail> purchase_invoice_detail { get; set; }

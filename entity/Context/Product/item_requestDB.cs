@@ -280,9 +280,26 @@ namespace entity
                             }
                             if (item_request_detail.id_order_detail != null)
                             {
-                                int id_project = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task.id_project;
-                                int id_branch = (int)base.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
-                                purchase_tender.app_branch = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                if (base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault()!=null)
+                                {
+                                    if ( base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task!=null)
+                                    {
+                                        int id_project = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task.id_project;
+                                        if (base.projects.Where(x => x.id_project == id_project).FirstOrDefault()!=null)
+                                        {
+                                            int id_branch = (int)base.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
+                                            if (base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault()!=null)
+                                            {
+                                                purchase_tender.app_branch = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                            }
+                                           
+                                        }
+                                      
+                                        
+                                    }
+                                }
+                             
+                              
                             }
 
 

@@ -18,6 +18,7 @@ namespace Cognitivo.Purchase
         CollectionViewSource impexViewSource, impeximpex_expenseViewSource, purchase_invoiceViewSource = null;
         int company_ID = CurrentSession.Id_Company;
         cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
+        List<Class.clsImpexImportDetails> clsImpexImportDetails = new List<Class.clsImpexImportDetails>();
 
         public Import()
         {
@@ -122,11 +123,15 @@ namespace Cognitivo.Purchase
         {
             if (impexDataGrid.SelectedItem != null)
             {
-                if (pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() != null)
+                foreach (purchase_invoice purchase_invoice in pnlPurchaseInvoice.selected_purchase_invoice)
                 {
-                    purchase_invoice purchase_invoice = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() as purchase_invoice;
-                    getProratedCostCounted(purchase_invoice, true);
+                    if (purchase_invoice != null)
+                    {
+                        //purchase_invoice purchase_invoice = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault() as purchase_invoice;
+                        getProratedCostCounted(purchase_invoice, true);
+                    }
                 }
+                impex_importDataGrid.ItemsSource = clsImpexImportDetails;
             }
         }
 
@@ -192,7 +197,7 @@ namespace Cognitivo.Purchase
 
             //Insert Purchase Invoice Detail
             List<purchase_invoice_detail> purchase_invoice_detail = purchase_invoice.purchase_invoice_detail.ToList();
-            List<Class.clsImpexImportDetails> clsImpexImportDetails = new List<Class.clsImpexImportDetails>();
+       
             decimal TotalInvoiceAmount = 0;
             foreach (var item in purchase_invoice_detail)
             {
@@ -224,7 +229,7 @@ namespace Cognitivo.Purchase
                 clsImpexImportDetails.Add(ImpexImportDetails);
             }
            
-            impex_importDataGrid.ItemsSource = clsImpexImportDetails;
+           
         }
 
         private void GetExpences_PreviewMouseUp(object sender, EventArgs e)

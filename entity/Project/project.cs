@@ -57,7 +57,23 @@ namespace entity
         public int? CurrecyFx_ID { get; set; }
 
         [Required]
-        public string name { get; set; }
+        public string name 
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    RaisePropertyChanged("name");
+                }
+            }
+        }
+        private string _name;
+
         public string code { get; set; }
         public DateTime? est_start_date { get; set; }
         public DateTime? est_end_date { get; set; }
@@ -70,12 +86,6 @@ namespace entity
         public int SelectedCount { get; set; }
         [NotMapped]
         public bool is_Executable { get; set; }
-        //[NotMapped]
-        //public decimal total_cost { get; set; }
-        //[NotMapped]
-        //public decimal total_paid { get; set; }
-        //[NotMapped]
-        //public decimal pending_payment { get; set; }
 
         public virtual app_branch app_branch { get; set; }
         public virtual contact contact { get; set; }

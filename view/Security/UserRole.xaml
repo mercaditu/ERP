@@ -111,7 +111,8 @@
             <TabItem Header="{lex:Loc Special}">
                 <Grid>
                     <DataGrid x:Name="security_role_privilageDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                              ItemsSource="{Binding Source={StaticResource security_rolesecurity_role_privilageViewSource}}" 
+                              ItemsSource="{Binding Source={StaticResource security_rolesecurity_role_privilageViewSource}}"   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
+                                                   UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" CanUserAddRows="False"
                               RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding id_privilage}" Visibility="Collapsed" Header="ID" Width="SizeToHeader"/>

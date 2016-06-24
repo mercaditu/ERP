@@ -120,16 +120,35 @@ namespace Cognitivo.Security
             security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
             foreach (entity.App.Names Names in Application)
             {
-                foreach (entity.Privilage.Privilages Privilage in Privilages)
+                if (Names == entity.App.Names.SalesInvoice )
                 {
-                    if (dbContext.security_privilage.Where(x => x.name == Privilage).Count() == 0)
+
+
+                    foreach (entity.Privilage.Privilages Privilage in Privilages)
                     {
-                        security_privilage security_privilage = new security_privilage();
-                        security_privilage.id_application = Names;
-                        security_privilage.name = Privilage;
+                        if (dbContext.security_privilage.Where(x => x.name == Privilage).Count() == 0)
+                        {
+                            if ((int)Privilage >= 3)
+                            {
+                                security_privilage security_privilage = new security_privilage();
+                                security_privilage.id_application = entity.App.Names.ProductionExecution;
+                                security_privilage.name = Privilage;
 
 
-                        dbContext.security_privilage.Add(security_privilage);
+                                dbContext.security_privilage.Add(security_privilage);
+                            }
+                            else
+                            {
+                                security_privilage security_privilage = new security_privilage();
+                                security_privilage.id_application = Names;
+                                security_privilage.name = Privilage;
+
+
+                                dbContext.security_privilage.Add(security_privilage);
+
+                            }
+
+                        }
                     }
                 }
             }
@@ -137,13 +156,15 @@ namespace Cognitivo.Security
             List<security_privilage> security_privilageList = dbContext.security_privilage.ToList();
             foreach (security_privilage security_privilage in security_privilageList)
             {
-                if (security_privilage.id_application==entity.App.Names.SalesInvoice)
+                if (security_privilage.id_application == entity.App.Names.SalesInvoice || security_privilage.id_application == entity.App.Names.ProductionExecution)
                 {
-                    if (dbContext.security_role_privilage.Where(x => x.security_privilage.name == security_privilage.name && x.security_privilage.id_application == security_privilage.id_application).Count() == 0)
+                    if (dbContext.security_role_privilage.Where(x => x.security_privilage.name == security_privilage.name && (x.security_privilage.id_application == security_privilage.id_application)).Count() == 0)
                     {
                         security_role_privilage security_role_privilage = new security_role_privilage();
                         security_role_privilage.id_privilage = security_privilage.id_privilage;
+                        security_role_privilage.security_privilage = security_privilage;
                         security_role_privilage.id_role = security_role.id_role;
+                        security_role_privilage.security_role = security_role;
 
 
                         dbContext.security_role_privilage.Add(security_role_privilage);

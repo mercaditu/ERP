@@ -12,158 +12,104 @@ namespace Cognitivo.Sales
 {
     public partial class Packing : Page
     {
-        db dbcontext = new db();
-        CollectionViewSource payment_schedualViewSource;
+        db dbContext = new db();
+        CollectionViewSource item_movementViewSource;
         sales_invoice sales_invoice;
-        entity.Properties.Settings _setting = new entity.Properties.Settings();
+
+        public string InvoiceNumber 
+        {
+            get { return _InvoiceNumber; }
+            set
+            {
+                if (_InvoiceNumber != value)
+                {
+                    _InvoiceNumber = value;
+                    //if (_InvoiceNumber.Length > 3)
+                    //{
+                    //    ListProducts();
+                    //}
+                }
+            }
+        }
+
+        private string _InvoiceNumber;
+
         public Packing()
         {
             InitializeComponent();
-            payment_schedualViewSource = ((CollectionViewSource)(FindResource("payment_schedualViewSource")));
+            item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+        }
+
+        private void ListProducts(object sender, EventArgs e)
+        {
+            if (InvoiceNumber != string.Empty)
+            {
+                List<sales_invoice_detail> sales_invoice_detailLIST = dbContext.sales_invoice_detail
+                    .Where(x => x.sales_invoice.number.Contains(InvoiceNumber) && 
+                        x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 &&
+                        x.sales_invoice.status == Status.Documents_General.Approved).ToList();
+
+                List<item_movement> item_movementLIST = new List<item_movement>();
+
+                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice_detailLIST.Where(x => x.item.item_product != null))
+                {
+                    item_movement item_movement = new entity.item_movement();
+
+                    item_movement.trans_date = DateTime.Now;
+                    item_movement.id_item_product = sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product;
+                    item_movement.item_product = sales_invoice_detail.item.item_product.FirstOrDefault();
+                    item_movement.id_sales_invoice_detail = sales_invoice_detail.id_sales_invoice_detail;
+                    item_movement.debit = 0;
+                    item_movement.credit = 0;
+                    item_movement.status = Status.Stock.InStock;
+                    item_movement.timestamp = DateTime.Now;
+                    item_movement.State = System.Data.Entity.EntityState.Added;
+
+                    if (sales_invoice_detail.id_location != null || sales_invoice_detail.id_location > 0)
+                    {
+                        item_movement.id_location = (int)sales_invoice_detail.id_location;
+                    }
+                    else
+                    {
+                        //find location code
+                        item_movement.id_location = 1;
+                    }
+
+                    if (sales_invoice_detail.item_movement != null)
+	                {
+                        item_movement.debit = sales_invoice_detail.quantity - sales_invoice_detail.item_movement.Sum(x => x.debit);
+	                }
+                    else
+                    {
+                        item_movement.debit = sales_invoice_detail.quantity;
+                    }
+
+                    if (item_movement.debit > 0)
+                    {
+                        item_movementLIST.Add(item_movement);
+                    }
+                }
+
+                dbContext.item_movement.AddRange(item_movementLIST);
+                item_movementViewSource.Source = item_movementLIST;
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            PackingListDB PackingListDB = new entity.PackingListDB();
-
-            sales_packing sales_packing = PackingListDB.New();
-            sales_packing.id_contact = sales_invoice.id_contact;
-
-            foreach (dynamic item in dgvItem.Items)
-            {
-                 int id_product = item.id_item;
-                 decimal quan = item.quantity;
-                sales_packing_detail sales_packing_detail = new sales_packing_detail();
-                sales_packing_detail.id_item = id_product;
-                sales_packing_detail.quantity = quan;
-                sales_packing_detail.id_location = item.id_location;
-
-                sales_packing_relation sales_packing_relation = new sales_packing_relation();
-                sales_packing_relation.id_sales_packing_detail = sales_packing_detail.id_sales_packing_detail;
-                sales_packing_relation.sales_packing_detail = sales_packing_detail;
-                sales_packing_relation.id_sales_invoice_detail = item.id_sales_invoice_detail;
-                sales_packing_detail.sales_packing_relation.Add(sales_packing_relation);
-                sales_packing.sales_packing_detail.Add(sales_packing_detail);
-            }
-            PackingListDB.SaveChanges();
-            Settings SalesSettings = new Settings();
-            PackingListDB.Approve(SalesSettings.DiscountStock);
-
-           
-
-
+            dbContext.SaveChanges();
+            item_movementViewSource.Source = null;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-        private void set_InvoicePrefKeyStroke(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                set_InvoicePref(sender, e);
-            }
+            btnCancel_Click(null, null);
+            item_movementViewSource.Source = null;
         }
 
-        private void set_InvoicePref(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (InvocieComboBox.Data != null)
-                {
-                    payment_schedual payment_schedual = (payment_schedual)InvocieComboBox.Data;
-                    sales_invoice = payment_schedual.sales_invoice;
-                    if (sales_invoice.app_contract.app_contract_detail.FirstOrDefault().interval == 0)
-                    {
-                        if (payment_schedual.debit - (payment_schedual.child.Count() > 0 ? payment_schedual.child.Sum(y => y.credit) : 0) > 0)
-                        {
-                            MessageBox.Show("Payment is Due ...");
-                        }
-                        else
-                        {
-                            dgvItem.ItemsSource = (from salesDetail in sales_invoice.sales_invoice_detail
-
-                                                   join sales_packing_relation in dbcontext.sales_packing_relation on salesDetail.id_sales_invoice_detail equals sales_packing_relation.id_sales_invoice_detail
-                                                   into b
-                                                   from a in b.DefaultIfEmpty()
-                                                   select new
-                                                   {
-                                                       Name = salesDetail.item.name,
-                                                       quantity = salesDetail.quantity - (a != null ? a.sales_packing_detail.quantity : 0),
-                                                       id_item = salesDetail.item!=null? salesDetail.item.id_item:0,
-                                                       id_location=salesDetail.app_location!=null?salesDetail.app_location.id_location:0,
-                                                       id_sales_invoice_detail = salesDetail.id_sales_invoice_detail
-                                                   }).ToList();
-                            InvocieComboBox.focusGrid = false;
-                            InvocieComboBox.Text = payment_schedual.sales_invoice.number;
-                        }
-                    }
-
-
-
-                    ///Start Thread to get Data.
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void InvocieComboBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            DateTime CurrentDate = DateTime.Now.Date;
-            payment_schedualViewSource.Source = dbcontext.payment_schedual.Where(x => x.id_company == _setting.company_ID && x.sales_invoice.number.Contains(InvocieComboBox.Text)
-                                                                               && x.sales_invoice.status == Status.Documents_General.Approved && x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)==0).ToList().Distinct();
-        }
-
-        private void dgvItem_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
-        {
-            dynamic sales_invoice_detail = ((DataGrid)sender).SelectedItem;
-            int id_product = sales_invoice_detail.id_item;
-            DataGrid item_movementDataGrid = e.DetailsElement as DataGrid;
-            var movement =
-                (from items in dbcontext.items
-
-                 join item_product in dbcontext.item_product on items.id_item equals item_product.id_item
-                     into its
-                 from p in its
-                 join item_movement in dbcontext.item_movement on p.id_item_product equals item_movement.id_item_product
-                 into IMS
-                 from a in IMS
-                 join AM in dbcontext.app_location on a.app_location.id_location equals AM.id_location
-                 where a.status == Status.Stock.InStock && a.item_product.id_item == id_product
-                 && a.app_location.id_branch == _setting.branch_ID
-                 group a by new { a.item_product, a.app_location }
-                     into last
-                     select new
-                     {
-                         LocationName = last.Key.app_location.name,
-                         quntitiy = last.Sum(x => x.credit) - last.Sum(x => x.debit)
-
-                     }).ToList();
-            item_movementDataGrid.ItemsSource = movement;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void toolIcon_Click(object sender, RoutedEventArgs e)
-        {
-            InvocieComboBox.focusGrid = false;
-            InvocieComboBox.Text = "";
-            dgvItem.ItemsSource = null;
-        }
-
-        private void toolIcon_Click_1(object sender, RoutedEventArgs e)
-        {
-            InvocieComboBox.focusGrid = false;
-            InvocieComboBox.Text = "";
-            dgvItem.ItemsSource = null;
+            //Cancel Code.
         }
     }
 }

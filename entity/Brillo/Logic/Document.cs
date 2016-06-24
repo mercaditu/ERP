@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Printing;
 using System.Windows.Media;
+using System.Net;
+using System.Drawing.Printing;
 
 namespace entity.Brillo.Logic
 {
@@ -366,9 +368,20 @@ namespace entity.Brillo.Logic
                     //Specify maximum page sizes.
                     document.MaxPageWidth = 300;
 
+
                     IDocumentPaginatorSource idpSource = document;
-                    pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
-                    pd.PrintDocument(idpSource.DocumentPaginator, Reciept.ItemMovement(item_transfer));
+                    try
+                    {
+                        pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
+                        pd.PrintDocument(idpSource.DocumentPaginator, document.Name);
+                    }
+                    catch
+                    {
+                        if (pd.ShowDialog() == true)
+                        {
+                            pd.PrintDocument(idpSource.DocumentPaginator, document.Name);
+                        }
+                    }
                 }
             }
         }

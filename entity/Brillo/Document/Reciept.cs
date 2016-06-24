@@ -22,37 +22,38 @@
             {
                 app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
                 PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
+                
                 if (app_document.id_application == App.Names.Movement)
                 {
                     item_transfer item_transfer = (item_transfer)obj;
                     Content = ItemMovement(item_transfer);
+                    Print(Content, app_document, PrinterName);
                 }
                 else if (app_document.id_application == App.Names.SalesReturn)
                 {
                     sales_return sales_return = (sales_return)obj;
                     Content = SalesReturn(sales_return);
+                    Print(Content, app_document, PrinterName);
                 }
                 else if (app_document.id_application == App.Names.SalesInvoice)
                 {
                     sales_invoice sales_invoice = (sales_invoice)obj;
                     Content = SalesInvoice(sales_invoice);
+                    Print(Content, app_document, PrinterName);
                 }
                 else if (app_document.id_application == App.Names.PaymentUtility)
                 {
                     payment payment = (payment)obj;
                     Content = Payment(payment);
+                    Print(Content, app_document, PrinterName);
                 }
-                //else if (app_document.id_application == App.Names.AccountUtility)
-                //{
-                //    app_account_session app_account_session = (app_account_session)obj;
-                //    ZReport(app_account_session);
-                //}
             }
+        }
 
+        private void Print(string Content, app_document app_document, string PrinterName)
+        {
             if (Content != "")
             {
-
-
                 if (app_document != null && PrinterName != string.Empty)
                 {
                     if (app_document.style_reciept == true)
@@ -61,13 +62,13 @@
                         PrintDialog pd = new PrintDialog();
 
                         FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
-                        document.Name = "ItemMovement";
+                        document.Name = app_document.name;
                         document.FontFamily = new FontFamily("Courier New");
                         document.FontSize = 11.0;
                         document.FontStretch = FontStretches.Normal;
                         document.FontWeight = FontWeights.Normal;
 
-                        document.PagePadding = new Thickness(20);
+                        document.PagePadding = new Thickness(5);
 
                         document.PageHeight = double.NaN;
                         document.PageWidth = double.NaN;
@@ -82,10 +83,15 @@
                         try
                         {
                             pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
-                            pd.PrintDocument(idpSource.DocumentPaginator, Content);
+                            pd.PrintDocument(idpSource.DocumentPaginator, document.Name);
                         }
                         catch
-                        { MessageBox.Show("Output (Reciept Printer) not Found Error", "Error 101"); }
+                        {
+                            if (pd.ShowDialog() == true)
+                            {
+                                pd.PrintDocument(idpSource.DocumentPaginator, document.Name);
+                            }
+                        }
                     }
                 }
             }
@@ -98,10 +104,12 @@
             string Footer = string.Empty;
 
             string CompanyName = string.Empty;
-            using(db db= new db())
+
+            using (db db = new db())
             {
-                 CompanyName = db.app_company.Where(x=>x.id_company==i.id_company).FirstOrDefault().name;
+                CompanyName = db.app_company.Where(x => x.id_company == i.id_company).FirstOrDefault().name;
             }
+
             string TransNumber = i.number;
             DateTime TransDate = i.trans_date;
             string BranchName = string.Empty;
@@ -130,8 +138,8 @@
             string ProjectCode = string.Empty;
             if (i.project != null)
             {
-                 ProjectName = i.project.name;
-                 ProjectCode = i.project.code;
+                ProjectName = i.project.name;
+                ProjectCode = i.project.code;
             }
 
 
@@ -156,69 +164,70 @@
                         Detail = "ACTIV. : " + d.project_task.parent.item_description + "\n";
                     }
 
-                    //foreach (project_task project_task in d.project_task.child)
-                    //{
-                    string ItemName = string.Empty;
-                    string ItemCode = string.Empty;
-
-                    if (d.project_task.items != null)
+                    foreach (project_task project_task in d.project_task.child)
                     {
-                        ItemName = d.project_task.items.name;
-                        ItemCode = d.project_task.code;
-                    }
+                        string ItemName = string.Empty;
+                        string ItemCode = string.Empty;
 
-                    
-                    decimal? Qty = d.project_task.quantity_est;
-                    string TaskName = d.project_task.item_description;
-                    string TaskCode = d.project_task.items.code;
+                        if (d.project_task.items != null)
+                        {
+                            ItemName = d.project_task.items.name;
+                            ItemCode = d.project_task.code;
+                        }
 
-                    Detail = Detail +
-                        ""
-                        + "Descripcion, Cantiad, Codigo" + "\n"
-                        + "-------------------------------" + "\n"
-                        + ItemCode + "\t" + ItemName + "\n"
-                        + TaskCode + "\t" + TaskName + "\n"
-                        + Qty.ToString() + "\n";
 
-                    if (d.project_task.project_task_dimension.Count()>0)
-                    {
+                        decimal? Qty = d.project_task.quantity_est;
+                        string TaskName = d.project_task.item_description;
+                        string TaskCode = d.project_task.items.code;
+
                         Detail = Detail +
-                     ""
-                     + "Dimension, Value, Measurement" + "\n";
-                    }
-                    foreach (project_task_dimension project_task_dimension in d.project_task.project_task_dimension)
-                    {
+                            ""
+                            + "Descripcion, Cantiad, Codigo" + "\n"
+                            + "-------------------------------" + "\n"
+                            + ItemCode + "\t" + ItemName + "\n"
+                            + Qty.ToString() + "\n";
 
-                        decimal value = project_task_dimension.value;
-                        string name = project_task_dimension.app_dimension != null ? project_task_dimension.app_dimension.name : "";
-                        string measurement = project_task_dimension.app_measurement != null ? project_task_dimension.app_measurement.name : "";
-                        string dimension = "-------------------------------" + "\n"
-                       + name + "\t" + value + "\t" + measurement + "\n";
-                        Detail = Detail + dimension + "\n";
-                                             
+                        if (d.project_task.project_task_dimension.Count() > 0)
+                        {
+                            Detail = Detail +
+                         ""
+                         + "Dimension, Value, Measurement" + "\n";
+                        }
+                        foreach (project_task_dimension project_task_dimension in d.project_task.project_task_dimension)
+                        {
+
+                            decimal value = project_task_dimension.value;
+                            string name = project_task_dimension.app_dimension != null ? project_task_dimension.app_dimension.name : "";
+                            string measurement = project_task_dimension.app_measurement != null ? project_task_dimension.app_measurement.name : "";
+                            string dimension = "-------------------------------" + "\n"
+                           + name + "\t" + value + "\t" + measurement + "\n";
+                            Detail = Detail + dimension + "\n";
+
+                        }
+
+                        //}
                     }
-                        
-                    //}
+
+
+                }
+
+                Footer = "-------------------------------\n";
+                if (i.employee != null)
+                {
+                    Footer += "RETIRADO: " + i.employee.name + "\n";
+                }
+                if (i.user_given != null)
+                {
+                    Footer += "APRORADO: " + i.user_given.name_full + "\n";
                 }
 
 
+                Footer += "-------------------------------";
+
+                string Text = Header + Detail + Footer;
+                return Text;
             }
-
-            Footer = "-------------------------------\n";
-            if (i.employee != null)
-            {
-                Footer += "RETIRADO: " + i.employee.name + "\n";
-            }
-            if (i.user_given != null)
-            {
-                Footer += "APRORADO: " + i.user_given.name_full + "\n";
-            }
-
-
-            Footer += "-------------------------------";
-
-            string Text = Header + Detail + Footer;
-            return Text;
+            return "";
         }
 
         public string SalesReturn(sales_return sales_return)

@@ -32,7 +32,7 @@ namespace Cognitivo.Setup.Migration
 
             Task accounting_Task = Task.Factory.StartNew(() => accounting());
             accounting_Task.Wait();
-           //  Start Sales and Purchase
+            //  Start Sales and Purchase
             Task purchase_Task = Task.Factory.StartNew(() => purchase());
             purchase_Task.Wait();
             Task sales_Task = Task.Factory.StartNew(() => sales());
@@ -81,14 +81,7 @@ namespace Cognitivo.Setup.Migration
 
         public app_contract GenerateDefaultContrat(app_condition app_condition, int interval)
         {
-            using(db db = new db())
-            {
-                if (true)
-	            {
-
-	            }
-            }
-
+           
             app_contract app_contract = new app_contract();
             app_contract.app_condition = app_condition;
             app_contract.name = interval.ToString() + " Días";
@@ -96,7 +89,28 @@ namespace Cognitivo.Setup.Migration
             _app_contract_detail.coefficient = 1;
             _app_contract_detail.app_contract = app_contract;
             _app_contract_detail.interval = (short)interval;
+            _app_contract_detail.is_order =false;
+            app_contract.app_contract_detail.Add(_app_contract_detail);
             return app_contract;
+        }
+        public payment_type GenerateDefaultPaymentType()
+        {
+
+            payment_type payment_type = new payment_type();
+            payment_type.name = "Default";
+            payment_type.payment_behavior = entity.payment_type.payment_behaviours.Normal;
+            payment_type.is_default = true;
+           return payment_type;
+        }
+        public app_account GenerateDefaultApp_Account()
+        {
+
+            app_account app_account = new app_account();
+            app_account.name = "Default";
+            app_account.id_account_type = entity.app_account.app_account_type.Terminal;
+            app_account.code = "Default";
+            app_account.is_active = true;
+            return app_account;
         }
 
         private void sync_Company()

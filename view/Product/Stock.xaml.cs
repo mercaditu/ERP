@@ -192,20 +192,15 @@ namespace Cognitivo.Product
 
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
-
+            //Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
+            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
+            ProductMovementDB.Generate_ProductMovement();
         }
 
         private void GenerateParentChildRel_Thread()
         {
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
-
-            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
-            ProductMovementDB.Generate_ProductMovement();
-
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
-
-            
         }
     }
 }

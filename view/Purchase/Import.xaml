@@ -147,7 +147,7 @@
                         <TextBlock Style="{StaticResource text_HyperLinks}" Text="{lex:Loc Extract}" MouseUp="GetExpences_PreviewMouseUp"/>
                         <DataGrid x:Name="impeximpex_expenseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                   ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}" 
-                                  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="4">
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="4" >
                                 <DataGrid.Columns>
                                
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:IncotermCondition}" Width="*" ItemsSource="{Binding Source={StaticResource incotermconditionViewSource}}"

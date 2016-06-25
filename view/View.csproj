@@ -331,9 +331,6 @@
     <Compile Include="Configs\CostCenter.xaml.cs">
       <DependentUpon>CostCenter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Configs\AccountingCurrency.xaml.cs">
-      <DependentUpon>AccountingCurrency.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Configs\Currency.xaml.cs">
       <DependentUpon>Currency.xaml</DependentUpon>
     </Compile>
@@ -354,6 +351,9 @@
     </Compile>
     <Compile Include="Configs\Hr_coefficient.xaml.cs">
       <DependentUpon>Hr_coefficient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Configs\ImpexCurrency.xaml.cs">
+      <DependentUpon>ImpexCurrency.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configs\IncotermCondition.xaml.cs">
       <DependentUpon>IncotermCondition.xaml</DependentUpon>
@@ -1463,10 +1463,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Configs\AccountingCurrency.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Configs\Currency.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1494,6 +1490,10 @@
     <Page Include="Configs\Hr_coefficient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\ImpexCurrency.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\IncotermCondition.xaml">
       <SubType>Designer</SubType>

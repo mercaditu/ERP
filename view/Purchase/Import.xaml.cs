@@ -258,6 +258,7 @@ namespace Cognitivo.Purchase
                     foreach (var item in impex_incoterm_detail)
                     {
                         impex_expense impex_expense = new impex_expense();
+                        impex_expense.State = EntityState.Added;
                         if ( ImpexDB.impex_incoterm_condition.Where(x => x.id_incoterm_condition == item.id_incoterm_condition).FirstOrDefault()!=null)
                         {
                             impex_expense.impex_incoterm_condition = ImpexDB.impex_incoterm_condition.Where(x => x.id_incoterm_condition == item.id_incoterm_condition).FirstOrDefault();    
@@ -457,5 +458,9 @@ namespace Cognitivo.Purchase
                 }   
             }
         }
+
+      
+
+     
     }
 }

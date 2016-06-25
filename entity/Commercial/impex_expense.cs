@@ -1,6 +1,7 @@
 
 namespace entity
 {
+    using entity.Brillo;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,8 +21,26 @@ namespace entity
         public int? id_purchase_invoice { get; set; }
         public int id_incoterm_condition { get; set; }
         public decimal value { get; set; }
-        public int id_currencyfx { get; set; }
-    
+        public int id_currencyfx { 
+            get {
+               return _id_currencyfx ;
+            }
+            set
+            {
+                if (_id_currencyfx != value)
+                {
+                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                    {
+                        this.value = Currency.convert_Values(this.value, _id_currencyfx, value, App.Modules.Purchase);
+                        RaisePropertyChanged("value");
+
+
+                    }
+                    _id_currencyfx = value;
+                }
+            }
+        }
+        int _id_currencyfx;
         public virtual impex impex { get; set; }
         public virtual impex_incoterm_condition impex_incoterm_condition { get; set; }
         public virtual purchase_invoice purchase_invoice { get; set; }

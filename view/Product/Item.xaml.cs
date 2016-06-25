@@ -309,9 +309,9 @@ namespace Cognitivo.Product
         private void toolBar_btnNew_Click(object sender)
         {
             item item = ItemDB.New();
-            item_price _item_price = new item_price();
+            //item_price _item_price = new item_price();
 
-            item.item_price.Add(_item_price);
+            //item.item_price.Add(_item_price);
             ItemDB.items.Add(item);
 
             itemViewSource.View.Refresh();
@@ -321,6 +321,7 @@ namespace Cognitivo.Product
         private void cmbitem_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             item item = itemViewSource.View.CurrentItem as item;
+
             if (item != null)
             {
                 //Product
@@ -337,7 +338,6 @@ namespace Cognitivo.Product
                             itemitem_productViewSource.View.Refresh();
                             itemitem_productViewSource.View.MoveCurrentTo(_product);
                         }
-
                     }
 
                     if (item.item_asset.Count > 0)

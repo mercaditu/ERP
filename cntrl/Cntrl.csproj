@@ -166,8 +166,8 @@
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\AccountingCurrencyBox.xaml.cs">
-      <DependentUpon>AccountingCurrencyBox.xaml</DependentUpon>
+    <Compile Include="Controls\ImpexCurrencyBox.xaml.cs">
+      <DependentUpon>ImpexCurrencyBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NotificationButton.xaml.cs">
       <DependentUpon>NotificationButton.xaml</DependentUpon>
@@ -228,8 +228,8 @@
     <Compile Include="Curd\ContactTag.xaml.cs">
       <DependentUpon>ContactTag.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Curd\accountingcurrency.xaml.cs">
-      <DependentUpon>accountingcurrency.xaml</DependentUpon>
+    <Compile Include="Curd\impexcurrency.xaml.cs">
+      <DependentUpon>impexcurrency.xaml</DependentUpon>
     </Compile>
     <Compile Include="Curd\ItemTemplate.xaml.cs">
       <DependentUpon>ItemTemplate.xaml</DependentUpon>
@@ -620,7 +620,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\AccountingCurrencyBox.xaml">
+    <Page Include="Controls\ImpexCurrencyBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -668,7 +668,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Curd\accountingcurrency.xaml">
+    <Page Include="Curd\impexcurrency.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

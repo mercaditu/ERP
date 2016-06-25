@@ -1,4 +1,4 @@
-﻿<Page xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"  x:Class="Cognitivo.Configs.AccountingCurrency"
+﻿<Page xmlns:Panels="clr-namespace:cntrl.Panels;assembly=cntrl"  x:Class="Cognitivo.Configs.ImpexCurrency"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl" 

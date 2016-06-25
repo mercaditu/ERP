@@ -42,6 +42,7 @@ namespace cntrl.PanelAdv
 
                     load_SalesBudget(_contact.id_contact);
                 }
+                filter_sales();
 
             }
         }

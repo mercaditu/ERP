@@ -18,14 +18,14 @@ namespace Cognitivo.Configs
     /// <summary>
     /// Interaction logic for CurrencyRecords.xaml
     /// </summary>
-    public partial class AccountingCurrency : Page
+    public partial class ImpexCurrency : Page
     {
         entity.dbContext entity = new entity.dbContext();
         CollectionViewSource app_currencyViewSource;
         private int _IdCurrency;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
 
-        public AccountingCurrency()
+        public ImpexCurrency()
         {
             InitializeComponent();
         }
@@ -40,7 +40,7 @@ namespace Cognitivo.Configs
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = System.Windows.Visibility.Visible;
-            cntrl.accountingcurrency objCur = new cntrl.accountingcurrency();
+            cntrl.impexcurrency objCur = new cntrl.impexcurrency();
             objCur.CurrencyId = 0;
             _IdCurrency = 0;
             crud_modal.Children.Add(objCur);
@@ -62,7 +62,7 @@ namespace Cognitivo.Configs
         private void pnl_Currency_linkEdit_Click(object sender, int intCurrencyId)
         {
             crud_modal.Visibility = System.Windows.Visibility.Visible;
-            cntrl.accountingcurrency objCur = new cntrl.accountingcurrency();
+            cntrl.impexcurrency objCur = new cntrl.impexcurrency();
             objCur.CurrencyId = intCurrencyId;
             _IdCurrency = intCurrencyId;
             crud_modal.Children.Add(objCur);

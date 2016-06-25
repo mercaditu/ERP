@@ -9,7 +9,7 @@
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
     VerticalAlignment="Center" BorderBrush="#990066" BorderThickness="2"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.accountingcurrency"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d" x:Class="cntrl.impexcurrency"
              Width="300" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <convert:InitialsConverter x:Key="InitialsConverter"/>

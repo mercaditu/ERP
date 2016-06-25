@@ -10,7 +10,7 @@ using System.Data.Entity.Validation;
 
 namespace cntrl
 {
-    public partial class accountingcurrency : UserControl
+    public partial class impexcurrency : UserControl
     {
         dbContext entity = new dbContext();
         CollectionViewSource app_currencyViewSource, app_currencyapp_currencyfxViewSource;
@@ -18,7 +18,7 @@ namespace cntrl
         private int Id;
         public int CurrencyId { get { return Id; } set { Id = value; } }
 
-        public accountingcurrency()
+        public impexcurrency()
         {
             InitializeComponent();
         }
@@ -50,7 +50,7 @@ namespace cntrl
                     app_currencyapp_currencyfxViewSource.View.Filter = i =>
                         {
                             app_currencyfx app_currencyfx = (app_currencyfx)i;
-                            if (app_currencyfx.type == global::entity.app_currencyfx.CurrencyFXTypes.Accounting)
+                            if (app_currencyfx.type == global::entity.app_currencyfx.CurrencyFXTypes.Impex)
                                 return true;
                             else
                                 return false;
@@ -142,7 +142,7 @@ namespace cntrl
                 {
                     listapp_currencyfx = new List<app_currencyfx>();
                     if (_app_currency.app_currencyfx.Count > 0)
-                        listapp_currencyfx = _app_currency.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting).ToList();
+                        listapp_currencyfx = _app_currency.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Impex).ToList();
                     foreach (var item in listapp_currencyfx)
                     {
                         entity.db.app_currencyfx.Remove(item);
@@ -150,7 +150,7 @@ namespace cntrl
 
                     app_currencyfx _app_currencyfx = new app_currencyfx();
                     _app_currencyfx.is_active = false;
-                    _app_currencyfx.type = app_currencyfx.CurrencyFXTypes.Accounting;
+                    _app_currencyfx.type = app_currencyfx.CurrencyFXTypes.Impex;
                     _app_currencyfx.buy_value = 1;
                     _app_currencyfx.sell_value = 1;
                     _app_currency.app_currencyfx.Add(_app_currencyfx);
@@ -250,7 +250,7 @@ namespace cntrl
         private void dataCurrencyfx_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             app_currencyfx app_currencyfx = app_currencyapp_currencyfxViewSource.View.CurrentItem as app_currencyfx;
-            app_currencyfx.type = global::entity.app_currencyfx.CurrencyFXTypes.Accounting;
+            app_currencyfx.type = global::entity.app_currencyfx.CurrencyFXTypes.Impex;
         }
 
         

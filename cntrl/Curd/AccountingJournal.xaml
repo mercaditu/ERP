@@ -52,7 +52,7 @@
                 </cntrl:SearchableTextbox.Columns>
             </cntrl:SearchableTextbox>
             <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-            <Controls:AccountingCurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" Width="256" HorizontalAlignment="Left"
+            <Controls:ImpexCurrencyBox x:Name="cbxCurrency" appName="SalesInvoice" Width="256" HorizontalAlignment="Left"
                                              SelectedValue="{Binding id_currencyfx,Source={StaticResource accounting_journal_detailViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"       
                                             TransDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Source={StaticResource accounting_journalViewSource}}"/>
 

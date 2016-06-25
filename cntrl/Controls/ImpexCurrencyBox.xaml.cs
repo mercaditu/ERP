@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace cntrl.Controls
 {
-    public partial class AccountingCurrencyBox : UserControl, INotifyPropertyChanged
+    public partial class ImpexCurrencyBox : UserControl, INotifyPropertyChanged
     {
         List<app_currency> app_currencyList;
 
@@ -29,9 +29,9 @@ namespace cntrl.Controls
         }
 
         public static DependencyProperty SelectedValueProperty
-            = DependencyProperty.Register("SelectedValue", typeof(int), typeof(AccountingCurrencyBox), new PropertyMetadata(OnCurrencyChangeCallBack));
+            = DependencyProperty.Register("SelectedValue", typeof(int), typeof(ImpexCurrencyBox), new PropertyMetadata(OnCurrencyChangeCallBack));
 
-        public static readonly DependencyProperty TransDateProperty = DependencyProperty.Register("TransDate", typeof(DateTime), typeof(AccountingCurrencyBox));
+        public static readonly DependencyProperty TransDateProperty = DependencyProperty.Register("TransDate", typeof(DateTime), typeof(ImpexCurrencyBox));
         public DateTime TransDate
         {
             get { return (DateTime)GetValue(TransDateProperty); }
@@ -41,8 +41,8 @@ namespace cntrl.Controls
         #region "INotifyPropertyChanged"
         private static void OnCurrencyChangeCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            AccountingCurrencyBox c = sender as AccountingCurrencyBox;
-            c = sender as AccountingCurrencyBox;
+            ImpexCurrencyBox c = sender as ImpexCurrencyBox;
+            c = sender as ImpexCurrencyBox;
             if (c != null)
             {
                 c.OnCurrencyChange((int)e.NewValue);
@@ -62,7 +62,7 @@ namespace cntrl.Controls
         }
         #endregion
 
-        public AccountingCurrencyBox()
+        public ImpexCurrencyBox()
         {
             InitializeComponent();
         }
@@ -87,7 +87,7 @@ namespace cntrl.Controls
             {
                 app_currencyfx app_currencyfx;
                 List<app_currencyfx> app_currencyfxlist=db.app_currencyfx.ToList();
-                app_currencyfx = app_currencyfxlist.Where(x => x.id_currency == (int)id_currency && x.type == entity.app_currencyfx.CurrencyFXTypes.Accounting && x.timestamp.Date == TransDate.Date).FirstOrDefault();
+                app_currencyfx = app_currencyfxlist.Where(x => x.id_currency == (int)id_currency && x.type == entity.app_currencyfx.CurrencyFXTypes.Impex && x.timestamp.Date == TransDate.Date).FirstOrDefault();
 
                     if (app_currencyfx != null)
                     {
@@ -160,7 +160,7 @@ namespace cntrl.Controls
                     app_currencyfx.buy_value = Rate_Current;
                     app_currencyfx.sell_value = Rate_Current;
                     app_currencyfx.is_active = false;
-                    app_currencyfx.type = entity.app_currencyfx.CurrencyFXTypes.Accounting;
+                    app_currencyfx.type = entity.app_currencyfx.CurrencyFXTypes.Impex;
                     db.app_currencyfx.Add(app_currencyfx);
                     db.SaveChanges();
                     return app_currencyfx.id_currencyfx;

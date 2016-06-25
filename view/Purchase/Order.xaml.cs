@@ -549,12 +549,30 @@ namespace Cognitivo.Purchase
             }
             else
             {
-                //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, keep blank.
                 if (item != null)
                 {
                     int id_cost_center = 0;
-                    if (PurchaseOrderDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                        id_cost_center = Convert.ToInt32(PurchaseOrderDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+
+                    if (item.item_product != null)
+                    {
+                        if (PurchaseOrderDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                            id_cost_center = Convert.ToInt32(PurchaseOrderDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        if (id_cost_center > 0)
+                            purchase_order_detail.id_cost_center = id_cost_center;   
+                    }
+                    else if (item.item_asset != null)
+                    {
+                        if (PurchaseOrderDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                            id_cost_center = Convert.ToInt32(PurchaseOrderDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        if (id_cost_center > 0)
+                            purchase_order_detail.id_cost_center = id_cost_center;
+                    }
+                }
+                else
+                {
+                    int id_cost_center = 0;
+                    if (PurchaseOrderDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                        id_cost_center = Convert.ToInt32(PurchaseOrderDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
                     if (id_cost_center > 0)
                         purchase_order_detail.id_cost_center = id_cost_center;
                 }

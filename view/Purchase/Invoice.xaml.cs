@@ -447,12 +447,15 @@ namespace Cognitivo.Purchase
                 if (item != null)
                 {
                     int id_cost_center = 0;
-                    if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
-                        id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
-                    if (id_cost_center > 0)
-                        purchase_invoice_detail.id_cost_center = id_cost_center;
 
-                    if (item.item_asset != null)
+                    if (item.item_product != null)
+                    {
+                        if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                            id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        if (id_cost_center > 0)
+                            purchase_invoice_detail.id_cost_center = id_cost_center; 
+                    }
+                    else if (item.item_asset != null)
                     {
                         if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                             id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);

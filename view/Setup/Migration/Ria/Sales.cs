@@ -409,6 +409,7 @@ namespace Cognitivo.Setup.Migration
 
                     if (IMPORTE is DBNull)
                     {
+                        
                         if (sales_invoice.payment_schedual.FirstOrDefault() != null)
                         {
                             payment_schedual payment_schedual = sales_invoice.payment_schedual.FirstOrDefault();

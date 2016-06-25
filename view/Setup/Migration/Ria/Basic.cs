@@ -17,28 +17,28 @@ namespace Cognitivo.Setup.Migration
 
         public void start()
         {
-            basic();
+            //basic();
 
-            Task customer_Task = Task.Factory.StartNew(() => customer());
-            Task supplier_Task = Task.Factory.StartNew(() => supplier());
-            Task product_Task = Task.Factory.StartNew(() => product());
+            //Task customer_Task = Task.Factory.StartNew(() => customer());
+            //Task supplier_Task = Task.Factory.StartNew(() => supplier());
+            //Task product_Task = Task.Factory.StartNew(() => product());
 
-            ////Wait for Related Tables to finish so we can be 
-            ////assured that they are available for us when 
-            ////we start with sales and purchase.
-            customer_Task.Wait();
-            supplier_Task.Wait();
-            product_Task.Wait();
+            //////Wait for Related Tables to finish so we can be 
+            //////assured that they are available for us when 
+            //////we start with sales and purchase.
+            //customer_Task.Wait();
+            //supplier_Task.Wait();
+            //product_Task.Wait();
 
-            Task accounting_Task = Task.Factory.StartNew(() => accounting());
-            accounting_Task.Wait();
-            //  Start Sales and Purchase
-            Task purchase_Task = Task.Factory.StartNew(() => purchase());
-            purchase_Task.Wait();
+            //Task accounting_Task = Task.Factory.StartNew(() => accounting());
+            //accounting_Task.Wait();
+            ////  Start Sales and Purchase
+            //Task purchase_Task = Task.Factory.StartNew(() => purchase());
+            //purchase_Task.Wait();
             Task sales_Task = Task.Factory.StartNew(() => sales());
             sales_Task.Wait();
-            Task salesReturn_Task = Task.Factory.StartNew(() => salesReturn());
-            salesReturn_Task.Wait();
+            //Task salesReturn_Task = Task.Factory.StartNew(() => salesReturn());
+            //salesReturn_Task.Wait();
             
         }
 

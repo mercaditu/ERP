@@ -17,6 +17,7 @@ namespace entity
             status = Status.Documents_General.Pending;
 
             sales_invoice_detail = new List<sales_invoice_detail>();
+            payment_schedual = new List<payment_schedual>();
             sales_return = new List<sales_return>();
             payment_withholding_details = new List<payment_withholding_details>();
 

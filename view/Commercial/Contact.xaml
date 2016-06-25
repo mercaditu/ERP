@@ -22,7 +22,6 @@
         <converter:InitialsConverter x:Key="InitialsConverter"/>
         <converter:LowerCaseConverter x:Key="LowerCaseConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
-
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactParentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>

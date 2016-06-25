@@ -416,6 +416,15 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.item = item;
                     purchase_invoice_detail.id_item = item.id_item;
                 }
+
+                foreach (item_dimension item_dimension in item.item_dimension)
+                {
+                    purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
+                    purchase_invoice_dimension.id_dimension = item_dimension.id_app_dimension;
+                    purchase_invoice_dimension.app_dimension = item_dimension.app_dimension;
+                    purchase_invoice_dimension.value = item_dimension.value;
+                    purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
+                }
             }
             else
             {
@@ -434,12 +443,28 @@ namespace Cognitivo.Purchase
             }
             else
             {
-                //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, keep blank.
+                //If Contact does not exist, and If product exist, then take defualt Product Cost Center. Else, bring Administrative
                 if (item != null)
                 {
                     int id_cost_center = 0;
                     if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
                         id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_product == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                    if (id_cost_center > 0)
+                        purchase_invoice_detail.id_cost_center = id_cost_center;
+
+                    if (item.item_asset != null)
+                    {
+                        if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                            id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_fixedasset == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
+                        if (id_cost_center > 0)
+                            purchase_invoice_detail.id_cost_center = id_cost_center;
+                    }
+                }
+                else
+                {
+                    int id_cost_center = 0;
+                    if (PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
+                        id_cost_center = Convert.ToInt32(PurchaseInvoiceDB.app_cost_center.Where(a => a.is_administrative == true && a.is_active == true && a.id_company == CurrentSession.Id_Company).FirstOrDefault().id_cost_center);
                     if (id_cost_center > 0)
                         purchase_invoice_detail.id_cost_center = id_cost_center;
                 }
@@ -456,16 +481,6 @@ namespace Cognitivo.Purchase
             else if (PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault() != null)
             {
                 purchase_invoice_detail.id_vat_group = PurchaseInvoiceDB.app_vat_group.Where(x => x.is_active == true && x.is_default == true && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group;
-            }
-
-            foreach (item_dimension item_dimension in item.item_dimension)
-            {
-                purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
-                purchase_invoice_dimension.id_dimension = item_dimension.id_app_dimension;
-                purchase_invoice_dimension.app_dimension = item_dimension.app_dimension;
-                purchase_invoice_dimension.value = item_dimension.value;
-                purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
-
             }
         
             Dispatcher.BeginInvoke((Action)(() =>

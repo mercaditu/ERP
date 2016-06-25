@@ -86,7 +86,7 @@
                 <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}"/>
                 <AdornerDecorator>
                     <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"
-                                                   Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                               Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </AdornerDecorator>
                 <Label Content="{lex:Loc InvoiceNumber}" Style="{StaticResource input_label}"/>
                 <TextBox x:Name="numberTextBox" Style="{StaticResource input_textbox}"

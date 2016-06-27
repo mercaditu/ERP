@@ -17,7 +17,7 @@ namespace Cognitivo.Commercial
         ContactDB ContactDB = new ContactDB();
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
-        CollectionViewSource contact_subscriptionViewSource, contactcontact_field_valueViewSource;
+        CollectionViewSource contactcontact_field_valueViewSource;
         
         #region Initilize and load
 
@@ -94,8 +94,8 @@ namespace Cognitivo.Commercial
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
-            contact_subscriptionViewSource.View.Refresh();
-            FilterSubscription();
+            
+            //FilterSubscription();
         }
         #endregion
 
@@ -179,12 +179,12 @@ namespace Cognitivo.Commercial
                 if (contact_role.can_transact == true)
                 {
                     tabFinance.Visibility = Visibility.Visible;
-                    tabSubscription.Visibility = Visibility.Visible;
+                    //tabSubscription.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     tabFinance.Visibility = Visibility.Collapsed;
-                    tabSubscription.Visibility = Visibility.Collapsed;
+                    //tabSubscription.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -275,14 +275,14 @@ namespace Cognitivo.Commercial
                         ContactDB.contact_field_value.Remove(e.Parameter as contact_field_value);
                         //contactcontact_field_valueViewSource.View.Refresh();
                     }
-                    else if (e.Parameter as contact_subscription != null)
-                    {
-                        contactcontact_subscriptionDataGrid.CancelEdit();
-                        ContactDB.contact_subscription.Remove(e.Parameter as contact_subscription);
+                    //else if (e.Parameter as contact_subscription != null)
+                    //{
+                    //    //contactcontact_subscriptionDataGrid.CancelEdit();
+                    //    ContactDB.contact_subscription.Remove(e.Parameter as contact_subscription);
 
-                        contact_subscriptionViewSource.View.Refresh();
-                        FilterSubscription();
-                    }
+                    //    contact_subscriptionViewSource.View.Refresh();
+                    //    FilterSubscription();
+                    //}
                     else if (e.Parameter as contact_tag_detail != null)
                     {
                         contact_tag_detailDataGrid.CancelEdit();
@@ -307,34 +307,34 @@ namespace Cognitivo.Commercial
             }
         }
 
-        private void FilterSubscription()
-        {
-            try
-            {
-                contact contact = contactViewSource.View.CurrentItem as contact;
-                if (contact != null)
-                {
-                    if (contact_subscriptionViewSource != null)
-                    {
-                        if (contact_subscriptionViewSource.View != null)
-                        {
-                            contact_subscriptionViewSource.View.Filter = i =>
-                            {
-                                contact_subscription _contact_subscription = (contact_subscription)i;
-                                if (_contact_subscription.id_contact == contact.id_contact || (contact.child != null ? contact.child.Contains(_contact_subscription.contact) : false))
-                                    return true;
-                                else
-                                    return false;
-                            };
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
-        }
+        //private void FilterSubscription()
+        //{
+        //    try
+        //    {
+        //        contact contact = contactViewSource.View.CurrentItem as contact;
+        //        if (contact != null)
+        //        {
+        //            if (contact_subscriptionViewSource != null)
+        //            {
+        //                if (contact_subscriptionViewSource.View != null)
+        //                {
+        //                    contact_subscriptionViewSource.View.Filter = i =>
+        //                    {
+        //                        contact_subscription _contact_subscription = (contact_subscription)i;
+        //                        if (_contact_subscription.id_contact == contact.id_contact || (contact.child != null ? contact.child.Contains(_contact_subscription.contact) : false))
+        //                            return true;
+        //                        else
+        //                            return false;
+        //                    };
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        toolBar.msgError(ex);
+        //    }
+        //}
 
         private void toolIcon_Click(object sender, RoutedEventArgs e)
         {
@@ -400,42 +400,42 @@ namespace Cognitivo.Commercial
                 //}
            // }
 
-            if (contact_subscriptionViewSource != null)
-            {
-                if (contact_subscriptionViewSource.View != null)
-                {
-                    contact_subscriptionViewSource.View.Refresh();
-                    FilterSubscription();
-                }
-            }
+            //if (contact_subscriptionViewSource != null)
+            //{
+            //    if (contact_subscriptionViewSource.View != null)
+            //    {
+            //        contact_subscriptionViewSource.View.Refresh();
+            //        FilterSubscription();
+            //    }
+            //}
         }
 
-        private void item_Select(object sender, EventArgs e)
-        {
-            if (sbxItem.ItemID > 0)
-            {
-                contact contact = contactViewSource.View.CurrentItem as contact;
+        //private void item_Select(object sender, EventArgs e)
+        //{
+        //    if (sbxItem.ItemID > 0)
+        //    {
+        //        contact contact = contactViewSource.View.CurrentItem as contact;
 
-                if (contact != null)
-                {
-                    item item = ContactDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+        //        if (contact != null)
+        //        {
+        //            item item = ContactDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                    contact_subscription contact_subscription = new contact_subscription();
-                    contact_subscription.contact = contact;
-                    contact_subscription.id_contact = contact.id_contact;
-                    contact_subscription.id_item = (int)item.id_item;
-                    contact_subscription.item = item;
-                    contact_subscription.id_vat_group = item.id_vat_group;
-                    contact_subscription.id_contract = contact.app_contract == null ? 0 : (int)contact.id_contract;
+        //            contact_subscription contact_subscription = new contact_subscription();
+        //            contact_subscription.contact = contact;
+        //            contact_subscription.id_contact = contact.id_contact;
+        //            contact_subscription.id_item = (int)item.id_item;
+        //            contact_subscription.item = item;
+        //            contact_subscription.id_vat_group = item.id_vat_group;
+        //            contact_subscription.id_contract = contact.app_contract == null ? 0 : (int)contact.id_contract;
 
-                    ContactDB.contact_subscription.Add(contact_subscription);
-                    contactViewSource.View.Refresh();
-                    contact_subscriptionViewSource.View.Refresh();
+        //            ContactDB.contact_subscription.Add(contact_subscription);
+        //            contactViewSource.View.Refresh();
+        //            contact_subscriptionViewSource.View.Refresh();
 
-                    FilterSubscription();
-                }
-            }
-        }
+        //            FilterSubscription();
+        //        }
+        //    }
+        //}
 
         private async void cbxRelation_Select(object sender, RoutedEventArgs e)
         {
@@ -485,7 +485,7 @@ namespace Cognitivo.Commercial
             myMap.Children.Add(pin);
             
             contact contact = (contact)contactViewSource.View.CurrentItem;
-            if (contact != null && cbxRelation.ContactID > 0)
+            if (contact != null)
             {
                 contact.comment = pinLocation.ToString();
             }

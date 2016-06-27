@@ -18,7 +18,7 @@ namespace Cognitivo.Setup.Migration
             app_vat_group app_vat_group5 = null;
             app_vat_group app_vat_group0 = null;
 
-            using (db db = new db())
+            using (SalesInvoiceDB db = new db())
             {
                 if (db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault() != null)
                 {
@@ -34,68 +34,74 @@ namespace Cognitivo.Setup.Migration
                 {
                     app_vat_group0 = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault();
                 }
-            }
 
-            string sql = " SELECT "
-                + " dbo.VENTAS.CODVENTA, dbo.VENTAS.NUMVENTA, dbo.VENTAS.FECHAVENTA, dbo.VENTAS.PORCENTAJEDESCUENTO,"
-                + " dbo.VENTAS.TOTALEXENTA, dbo.VENTAS.TOTALGRAVADA, dbo.VENTAS.TOTALIVA, dbo.VENTAS.TOTALDESCUENTO,"
-                + " dbo.VENTAS.MODALIDADPAGO, dbo.VENTAS.FECGRA, dbo.VENTAS.ESTADO, dbo.VENTAS.MOTIVOANULADO,"
-                + " dbo.VENTAS.FECHAANULADO, dbo.VENTAS.TIPOVENTA, dbo.VENTAS.TIPOPRECIO, dbo.VENTAS.NUMVENTATIMBRADO,"
-                + " dbo.VENTAS.TOTAL5, dbo.VENTAS.TOTAL10, dbo.VENTAS.CODPRESUPUESTO, dbo.VENTAS.METODO, dbo.VENTAS.ENVIADO,"
-                + " dbo.VENTAS.TOTALGRAVADO5, dbo.VENTAS.TOTALGRAVADO10, dbo.VENTAS.ASENTADO,"
-                + " dbo.VENTAS.TOTALVENTA, dbo.VENDEDOR.DESVENDEDOR, dbo.CLIENTES.NOMBRE, dbo.CLIENTES.RUC,"
-                + " dbo.SUCURSAL.DESSUCURSAL, dbo.VENTAS.COTIZACION1, FACTURACOBRAR_1.FECHAVCTO,"
-                + " dbo.FACTURACOBRAR.FECHAVCTO AS Expr1, dbo.FACTURACOBRAR.SALDOCUOTA, dbo.FACTURACOBRAR.IMPORTECUOTA, "
-                + " dbo.FACTURACOBRAR.COTIZACION, dbo.VENTASFORMACOBRO.IMPORTE, dbo.VENTASFORMACOBRO.DESTIPOCOBRO,"
-                + " dbo.VENTASFORMACOBRO.NUMDEVOLUCION, dbo.VENTASFORMACOBRO.TIPOCOBRO"
-                + " FROM  dbo.SUCURSAL RIGHT OUTER JOIN"
-                + " dbo.FACTURACOBRAR RIGHT OUTER JOIN"
-                + " dbo.VENTAS ON dbo.FACTURACOBRAR.CODVENTA = dbo.VENTAS.CODVENTA LEFT OUTER JOIN"
-                + " dbo.VENTASFORMACOBRO ON dbo.VENTAS.CODVENTA = dbo.VENTASFORMACOBRO.CODVENTA ON dbo.SUCURSAL.CODSUCURSAL = dbo.VENTAS.CODSUCURSAL"
-                + " LEFT OUTER JOIN dbo.VENDEDOR ON dbo.VENTAS.CODVENDEDOR = dbo.VENDEDOR.CODVENDEDOR LEFT OUTER JOIN"
-                + " dbo.CLIENTES ON dbo.VENTAS.CODCLIENTE = dbo.CLIENTES.CODCLIENTE LEFT OUTER JOIN"
-                + " dbo.FACTURACOBRAR AS FACTURACOBRAR_1 ON dbo.VENTAS.CODVENTA = FACTURACOBRAR_1.CODVENTA";
 
-            SqlConnection conn = new SqlConnection(_connString);
+                string sql = " SELECT "
+                    + " dbo.VENTAS.CODVENTA, dbo.VENTAS.NUMVENTA, dbo.VENTAS.FECHAVENTA, dbo.VENTAS.PORCENTAJEDESCUENTO,"
+                    + " dbo.VENTAS.TOTALEXENTA, dbo.VENTAS.TOTALGRAVADA, dbo.VENTAS.TOTALIVA, dbo.VENTAS.TOTALDESCUENTO,"
+                    + " dbo.VENTAS.MODALIDADPAGO, dbo.VENTAS.FECGRA, dbo.VENTAS.ESTADO, dbo.VENTAS.MOTIVOANULADO,"
+                    + " dbo.VENTAS.FECHAANULADO, dbo.VENTAS.TIPOVENTA, dbo.VENTAS.TIPOPRECIO, dbo.VENTAS.NUMVENTATIMBRADO,"
+                    + " dbo.VENTAS.TOTAL5, dbo.VENTAS.TOTAL10, dbo.VENTAS.CODPRESUPUESTO, dbo.VENTAS.METODO, dbo.VENTAS.ENVIADO,"
+                    + " dbo.VENTAS.TOTALGRAVADO5, dbo.VENTAS.TOTALGRAVADO10, dbo.VENTAS.ASENTADO,"
+                    + " dbo.VENTAS.TOTALVENTA, dbo.VENDEDOR.DESVENDEDOR, dbo.CLIENTES.NOMBRE, dbo.CLIENTES.RUC,"
+                    + " dbo.SUCURSAL.DESSUCURSAL, dbo.VENTAS.COTIZACION1, FACTURACOBRAR_1.FECHAVCTO,"
+                    + " dbo.FACTURACOBRAR.FECHAVCTO AS Expr1, dbo.FACTURACOBRAR.SALDOCUOTA, dbo.FACTURACOBRAR.IMPORTECUOTA, "
+                    + " dbo.FACTURACOBRAR.COTIZACION, dbo.VENTASFORMACOBRO.IMPORTE, dbo.VENTASFORMACOBRO.DESTIPOCOBRO,"
+                    + " dbo.VENTASFORMACOBRO.NUMDEVOLUCION, dbo.VENTASFORMACOBRO.TIPOCOBRO"
+                    + " FROM  dbo.SUCURSAL RIGHT OUTER JOIN"
+                    + " dbo.FACTURACOBRAR RIGHT OUTER JOIN"
+                    + " dbo.VENTAS ON dbo.FACTURACOBRAR.CODVENTA = dbo.VENTAS.CODVENTA LEFT OUTER JOIN"
+                    + " dbo.VENTASFORMACOBRO ON dbo.VENTAS.CODVENTA = dbo.VENTASFORMACOBRO.CODVENTA ON dbo.SUCURSAL.CODSUCURSAL = dbo.VENTAS.CODSUCURSAL"
+                    + " LEFT OUTER JOIN dbo.VENDEDOR ON dbo.VENTAS.CODVENDEDOR = dbo.VENDEDOR.CODVENDEDOR LEFT OUTER JOIN"
+                    + " dbo.CLIENTES ON dbo.VENTAS.CODCLIENTE = dbo.CLIENTES.CODCLIENTE LEFT OUTER JOIN"
+                    + " dbo.FACTURACOBRAR AS FACTURACOBRAR_1 ON dbo.VENTAS.CODVENTA = FACTURACOBRAR_1.CODVENTA";
 
-            //Counts Total number of Rows we have to process
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            conn.Open();
-            cmd.CommandType = CommandType.Text;
-            DataTable dt_sales = exeDT(sql);
-            int count = (int)dt_sales.Rows.Count;
-            conn.Close();
+                SqlConnection conn = new SqlConnection(_connString);
 
-            int value = 0;
+                //Counts Total number of Rows we have to process
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                cmd.CommandType = CommandType.Text;
+                DataTable dt_sales = exeDT(sql);
+                int count = (int)dt_sales.Rows.Count;
+                conn.Close();
 
-            Dispatcher.BeginInvoke((Action)(() => salesMaximum.Text = count.ToString()));
-            Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
-            Dispatcher.BeginInvoke((Action)(() => progSales.Maximum = count));
-            Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
+                int value = 0;
 
-            //Sales Invoice Detail
-            string sqlDetail = "SELECT"
-            + " dbo.PRODUCTOS.DESPRODUCTO," //0
-            + " dbo.VENTASDETALLE.CANTIDADVENTA," //1
-            + " dbo.VENTASDETALLE.PRECIOVENTANETO, " //2
-            + " dbo.VENTASDETALLE.PRECIOVENTALISTA, " //3
-            + " dbo.VENTASDETALLE.COSTOPROMEDIO, " //4
-            + " dbo.VENTASDETALLE.COSTOULTIMO, " //5
-            + " dbo.VENTASDETALLE.IVA, " //6
-            + " dbo.VENTAS.COTIZACION1, " //7
-            + " dbo.MONEDA.DESMONEDA, " //8
-            + " dbo.VENTASDETALLE.CODVENTA"
-            + " FROM dbo.VENTAS LEFT OUTER JOIN"
-            + " dbo.MONEDA ON dbo.VENTAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
-            + " dbo.VENTASDETALLE ON dbo.VENTAS.CODVENTA = dbo.VENTASDETALLE.CODVENTA LEFT OUTER JOIN"
-            + " dbo.PRODUCTOS ON dbo.VENTASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO";
+                Dispatcher.BeginInvoke((Action)(() => salesMaximum.Text = count.ToString()));
+                Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
+                Dispatcher.BeginInvoke((Action)(() => progSales.Maximum = count));
+                Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
 
-            DataTable dt_detail = exeDT(sqlDetail);
+                //Sales Invoice Detail
+                string sqlDetail = "SELECT"
+                + " dbo.PRODUCTOS.DESPRODUCTO," //0
+                + " dbo.VENTASDETALLE.CANTIDADVENTA," //1
+                + " dbo.VENTASDETALLE.PRECIOVENTANETO, " //2
+                + " dbo.VENTASDETALLE.PRECIOVENTALISTA, " //3
+                + " dbo.VENTASDETALLE.COSTOPROMEDIO, " //4
+                + " dbo.VENTASDETALLE.COSTOULTIMO, " //5
+                + " dbo.VENTASDETALLE.IVA, " //6
+                + " dbo.VENTAS.COTIZACION1, " //7
+                + " dbo.MONEDA.DESMONEDA, " //8
+                + " dbo.VENTASDETALLE.CODVENTA"
+                + " FROM dbo.VENTAS LEFT OUTER JOIN"
+                + " dbo.MONEDA ON dbo.VENTAS.CODMONEDA = dbo.MONEDA.CODMONEDA LEFT OUTER JOIN"
+                + " dbo.VENTASDETALLE ON dbo.VENTAS.CODVENTA = dbo.VENTASDETALLE.CODVENTA LEFT OUTER JOIN"
+                + " dbo.PRODUCTOS ON dbo.VENTASDETALLE.CODPRODUCTO = dbo.PRODUCTOS.CODPRODUCTO";
 
-            foreach (DataRow reader in dt_sales.Rows)
-            {
-                using (SalesInvoiceDB db = new SalesInvoiceDB())
+                DataTable dt_detail = exeDT(sqlDetail);
+
+
+
+                app_condition app_conditionCrédito = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
+                app_condition app_conditionContado = db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
+
+
+                foreach (DataRow reader in dt_sales.Rows)
                 {
+                    //using (SalesInvoiceDB db = new SalesInvoiceDB())
+                    //{
                     db.Configuration.AutoDetectChangesEnabled = false;
 
                     sales_invoice sales_invoice = db.New(0);
@@ -120,13 +126,13 @@ namespace Cognitivo.Setup.Migration
                     //Condition (Cash or Credit)
                     if (!(reader["TIPOVENTA"] is DBNull) && Convert.ToByte(reader["TIPOVENTA"]) == 0)
                     {
-                        app_condition app_condition = db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
-                        sales_invoice.id_condition = app_condition.id_condition;
+
+                        sales_invoice.id_condition = app_conditionContado.id_condition;
                         //Contract...
 
                         app_contract_detail app_contract_detail =
                             db.app_contract_detail.Where(x => x.id_company == id_company &&
-                            x.app_contract.id_condition == app_condition.id_condition)
+                            x.app_contract.id_condition == app_conditionContado.id_condition)
                                 .FirstOrDefault();
 
                         if (app_contract_detail != null)
@@ -136,7 +142,7 @@ namespace Cognitivo.Setup.Migration
                         }
                         else
                         {
-                            app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
+                            app_contract app_contract = GenerateDefaultContrat(app_conditionContado, 0);
                             db.app_contract.Add(app_contract);
                             sales_invoice.app_contract = app_contract;
                             sales_invoice.id_contract = app_contract.id_contract;
@@ -145,9 +151,9 @@ namespace Cognitivo.Setup.Migration
                     else if (!(reader["TIPOVENTA"] is DBNull) && Convert.ToByte(reader["TIPOVENTA"]) == 1)
                     {
 
-                        app_condition app_condition = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
-                        sales_invoice.id_condition = app_condition.id_condition;
-                            
+
+                        sales_invoice.id_condition = app_conditionCrédito.id_condition;
+
                         //Contract...
                         if (!(reader["FECHAVCTO"] is DBNull))
                         {
@@ -167,7 +173,7 @@ namespace Cognitivo.Setup.Migration
                             }
                             else
                             {
-                                app_contract app_contract = GenerateDefaultContrat(app_condition, interval);
+                                app_contract app_contract = GenerateDefaultContrat(app_conditionCrédito, interval);
                                 db.app_contract.Add(app_contract);
                                 sales_invoice.app_contract = app_contract;
                                 sales_invoice.id_contract = app_contract.id_contract;
@@ -177,7 +183,7 @@ namespace Cognitivo.Setup.Migration
                         {
                             if (db.app_contract.Where(x => x.name == "0 Días").Count() == 0)
                             {
-                                app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
+                                app_contract app_contract = GenerateDefaultContrat(app_conditionCrédito, 0);
                                 db.app_contract.Add(app_contract);
                                 sales_invoice.app_contract = app_contract;
                                 sales_invoice.id_contract = app_contract.id_contract;
@@ -192,12 +198,12 @@ namespace Cognitivo.Setup.Migration
                     }
                     else
                     {
-                        app_condition app_condition = db.app_condition.Where(x => x.name == "Contado").FirstOrDefault();
-                        sales_invoice.id_condition = app_condition.id_condition;
+                      
+                        sales_invoice.id_condition = app_conditionContado.id_condition;
 
                         if (db.app_contract.Where(x => x.name == "0 Días").Count() == 0)
                         {
-                            app_contract app_contract = GenerateDefaultContrat(app_condition, 0);
+                            app_contract app_contract = GenerateDefaultContrat(app_conditionContado, 0);
                             db.app_contract.Add(app_contract);
                             sales_invoice.app_contract = app_contract;
                             sales_invoice.id_contract = app_contract.id_contract;
@@ -234,7 +240,7 @@ namespace Cognitivo.Setup.Migration
                         {
                             id_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
                             app_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault();
-                             
+
                         }
 
                         //Terminal
@@ -300,20 +306,13 @@ namespace Cognitivo.Setup.Migration
                         sales_invoice_detail.unit_cost = Convert.ToDecimal(row["COSTOPROMEDIO"]);
 
                         //Commit Sales Invoice Detail
-                        sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);   
+                        sales_invoice.sales_invoice_detail.Add(sales_invoice_detail);
                     }
 
                     if (sales_invoice.Error == null)
                     {
 
-                        if (value == 100)
-                        {
-                            bool _true = true;
-                            if (_true)
-                            {
-                                _true = false;
-                            }
-                        }
+
 
                         sales_invoice.State = System.Data.Entity.EntityState.Added;
                         sales_invoice.IsSelected = true;
@@ -325,7 +324,7 @@ namespace Cognitivo.Setup.Migration
 
                             if (status == 0)
                             {
-                                sales_invoice.status = Status.Documents_General.Pending;                                
+                                sales_invoice.status = Status.Documents_General.Pending;
                             }
                             else if (status == 1)
                             {
@@ -357,8 +356,8 @@ namespace Cognitivo.Setup.Migration
                         //Add code to include error contacts into
                         SalesInvoice_ErrorList.Add(sales_invoice);
                     }
+                    // }
                 }
-
                 value += 1;
                 Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                 Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
@@ -389,7 +388,7 @@ namespace Cognitivo.Setup.Migration
                             {
                                 payment_detail payment_detail = new payment_detail();
                                 payment_detail.value = invoice_total;
-                                
+
                                 if (db.app_account.Where(x => x.id_account_type == app_account.app_account_type.Terminal).FirstOrDefault() != null)
                                 {
                                     app_account app_account = db.app_account.Where(x => x.id_account_type == app_account.app_account_type.Terminal).FirstOrDefault();
@@ -404,7 +403,7 @@ namespace Cognitivo.Setup.Migration
                                 }
 
                                 payment payment = new payment();
-                                
+
                                 if (payment_schedual != null)
                                 {
                                     payment.id_contact = payment_schedual.id_contact;
@@ -434,7 +433,7 @@ namespace Cognitivo.Setup.Migration
 
                                 //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
                                 app_account_detail app_account_detail = new app_account_detail();
-                                
+
                                 if (db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
                                 {
                                     app_account_detail.id_session = db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;

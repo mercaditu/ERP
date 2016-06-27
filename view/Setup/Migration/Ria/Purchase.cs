@@ -76,8 +76,14 @@ namespace Cognitivo.Setup.Migration
                     purchase_invoice purchase_invoice = db.New();
 
                     purchase_invoice.number = purchaserow["NUMCOMPRA"] is DBNull ? null : purchaserow["NUMCOMPRA"].ToString();
-                    purchase_invoice.trans_date =Convert.ToDateTime(purchaserow["FECHACOMPRA"]);
-
+                    if (!(purchaserow["FECHACOMPRA"] is DBNull))
+                    {
+                        purchase_invoice.trans_date = Convert.ToDateTime(purchaserow["FECHACOMPRA"]);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                     
                     //Supplier
                     if (!(purchaserow["NOMBRE"] is DBNull))

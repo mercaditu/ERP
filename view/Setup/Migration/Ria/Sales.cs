@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Cognitivo.Setup.Migration
             app_vat_group app_vat_group5 = null;
             app_vat_group app_vat_group0 = null;
 
-            using (SalesInvoiceDB db = new db())
+            using (SalesInvoiceDB db = new SalesInvoiceDB())
             {
                 if (db.app_vat_group.Where(x => x.name == "10%").FirstOrDefault() != null)
                 {
@@ -35,6 +36,13 @@ namespace Cognitivo.Setup.Migration
                     app_vat_group0 = db.app_vat_group.Where(x => x.name == "Excento").FirstOrDefault();
                 }
 
+                List<entity.contact> ContactLsit = db.contacts.ToList();
+                List<entity.sales_rep> sales_repLsit = db.sales_rep.ToList();
+                List<entity.app_branch> BranchLsit = db.app_branch.ToList();
+                List<entity.app_location> LocationLsit = db.app_location.ToList();
+                List<entity.app_terminal> TerminalLsit = db.app_terminal.ToList();
+                List<entity.item> ItemList = db.items.ToList();
+                List<entity.app_currencyfx> app_currencyfxList = db.app_currencyfx.ToList();
 
                 string sql = " SELECT "
                     + " dbo.VENTAS.CODVENTA, dbo.VENTAS.NUMVENTA, dbo.VENTAS.FECHAVENTA, dbo.VENTAS.PORCENTAJEDESCUENTO,"
@@ -96,7 +104,12 @@ namespace Cognitivo.Setup.Migration
 
                 app_condition app_conditionCrédito = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
                 app_condition app_conditionContado = db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
+                app_currencyfx app_currencyfx = null;
 
+                if (app_currencyfxList.Where(x => x.is_active).FirstOrDefault() != null)
+                {
+                    app_currencyfx = app_currencyfxList.Where(x => x.is_active).FirstOrDefault();
+                }
 
                 foreach (DataRow reader in dt_sales.Rows)
                 {
@@ -104,7 +117,15 @@ namespace Cognitivo.Setup.Migration
                     //{
                     db.Configuration.AutoDetectChangesEnabled = false;
 
-                    sales_invoice sales_invoice = db.New(0);
+                 //   sales_invoice sales_invoice = db.New(0);
+                    sales_invoice sales_invoice = new entity.sales_invoice();
+                    sales_invoice.State = EntityState.Added;
+                    sales_invoice.status = Status.Documents_General.Pending;
+                    sales_invoice.IsSelected = true;
+                    sales_invoice.trans_type = Status.TransactionTypes.Normal;
+                    sales_invoice.trans_date = DateTime.Now.AddDays(0);
+                    sales_invoice.timestamp = DateTime.Now;
+
                     sales_invoice.id_company = id_company;
 
                     sales_invoice.number = (reader["NUMVENTA"] is DBNull) ? null : reader["NUMVENTA"].ToString();
@@ -114,7 +135,7 @@ namespace Cognitivo.Setup.Migration
                     if (!(reader["NOMBRE"] is DBNull))
                     {
                         string _customer = reader["NOMBRE"].ToString();
-                        contact contact = db.contacts.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
+                        contact contact = ContactLsit.Where(x => x.name == _customer && x.id_company == id_company).FirstOrDefault();
 
                         if (contact != null)
                         {
@@ -220,7 +241,7 @@ namespace Cognitivo.Setup.Migration
                     if (!(reader["DESVENDEDOR"] is DBNull))
                     {
                         string _sales_rep = reader["DESVENDEDOR"].ToString();
-                        sales_rep sales_rep = db.sales_rep.Where(x => x.name == _sales_rep && x.id_company == id_company).FirstOrDefault();
+                        sales_rep sales_rep = sales_repLsit.Where(x => x.name == _sales_rep && x.id_company == id_company).FirstOrDefault();
                         sales_invoice.id_sales_rep = sales_rep.id_sales_rep;
                     }
 
@@ -232,26 +253,21 @@ namespace Cognitivo.Setup.Migration
                     {
                         //Branch
                         string _branch = reader["DESSUCURSAL"].ToString();
-                        app_branch app_branch = db.app_branch.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
+                        app_branch app_branch = BranchLsit.Where(x => x.name == _branch && x.id_company == id_company).FirstOrDefault();
                         sales_invoice.id_branch = app_branch.id_branch;
 
                         //Location
                         if (db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault() != null)
                         {
-                            id_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
-                            app_location = db.app_location.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault();
+                            id_location =  LocationLsit.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault().id_location;
+                            app_location = LocationLsit.Where(x => x.id_branch == app_branch.id_branch && x.is_default).FirstOrDefault();
 
                         }
 
                         //Terminal
-                        sales_invoice.id_terminal = db.app_terminal.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
+                        sales_invoice.id_terminal = TerminalLsit.Where(x => x.app_branch.id_branch == app_branch.id_branch).FirstOrDefault().id_terminal;
                     }
-                    app_currencyfx app_currencyfx = null;
-
-                    if (db.app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
-                    {
-                        app_currencyfx = db.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
-                    }
+                   
 
                     if (app_currencyfx != null)
                     {
@@ -271,7 +287,7 @@ namespace Cognitivo.Setup.Migration
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
                         string _prod_Name = row["DESPRODUCTO"].ToString();
-                        item item = db.items.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
+                        item item = ItemList.Where(x => x.name == _prod_Name && x.id_company == id_company).FirstOrDefault();
                         sales_invoice_detail.id_item = item.id_item;
                         sales_invoice_detail.quantity = Convert.ToDecimal(row["CANTIDADVENTA"]);
 
@@ -328,8 +344,14 @@ namespace Cognitivo.Setup.Migration
                             }
                             else if (status == 1)
                             {
+                               
                                 db.Approve(true);
+                                sales_invoice.State = System.Data.Entity.EntityState.Modified;
+                                sales_invoice.status = Status.Documents_General.Approved;
+                                sales_invoice.IsSelected = true;
+                                
                                 add_paymnet_detail(db, sales_invoice, reader["SALDOCUOTA"], reader["IMPORTE"]);
+                           
                             }
                             else if (status == 2)
                             {
@@ -344,6 +366,7 @@ namespace Cognitivo.Setup.Migration
                             try
                             {
                                 db.SaveChanges();
+                                sales_invoice.IsSelected = false;
                             }
                             catch (Exception)
                             {
@@ -357,10 +380,11 @@ namespace Cognitivo.Setup.Migration
                         SalesInvoice_ErrorList.Add(sales_invoice);
                     }
                     // }
+                    value += 1;
+                    Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
+                    Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
                 }
-                value += 1;
-                Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
-                Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
+               
             }
         }
 
@@ -369,12 +393,18 @@ namespace Cognitivo.Setup.Migration
             if (!(SALDOCUOTA is DBNull))
             {
                 decimal SALDOCUOTAValue = Convert.ToDecimal(SALDOCUOTA);
+                payment_type payment_type;
                 if (SALDOCUOTAValue < sales_invoice.GrandTotal)
                 {
                     if (db.payment_type.Where(x => x.is_default).FirstOrDefault() == null)
                     {
-                        payment_type payment_type = GenerateDefaultPaymentType();
+                        payment_type = GenerateDefaultPaymentType();
                         db.payment_type.Add(payment_type);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
                     }
 
                     if (IMPORTE is DBNull)
@@ -409,10 +439,10 @@ namespace Cognitivo.Setup.Migration
                                     payment.id_contact = payment_schedual.id_contact;
                                     payment.contact = payment_schedual.contact;
                                     payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
-                                    if (db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
-                                    {
-                                        payment_detail.id_payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
-                                    }
+                                  
+                                        payment_detail.id_payment_type =payment_type.id_payment_type;
+                                        payment_detail.payment_type = payment_type;
+                                   
                                 }
 
                                 payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
@@ -442,11 +472,20 @@ namespace Cognitivo.Setup.Migration
                                 app_account_detail.id_account = (int)payment_detail.id_account;
                                 app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
                                 app_account_detail.id_payment_type = payment_detail.id_payment_type;
+                                app_account_detail.payment_type = payment_type;
                                 app_account_detail.debit = 0;
                                 app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
                                 db.app_account_detail.Add(app_account_detail);
 
-                                db.payments.Add(payment);
+                                try
+                                {
+                                    db.payments.Add(payment);
+                                }
+                                catch(Exception ex)
+                                {
+                                    throw ex;
+                                }
+
                             }
                         }
                     }

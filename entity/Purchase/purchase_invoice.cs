@@ -255,7 +255,7 @@ namespace entity
                 }
                 if (columnName == "id_contract")
                 {
-                    if (id_contract == 0)
+                    if (id_contract == 0 && app_contract==null)
                         return "Contract needs to be selected";
                 }
                 if (columnName == "id_currencyfx")

@@ -197,6 +197,7 @@ namespace entity
 
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
+                        
                         SaveChanges();
                     }
 

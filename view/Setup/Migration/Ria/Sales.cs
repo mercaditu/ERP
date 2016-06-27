@@ -344,7 +344,29 @@ namespace Cognitivo.Setup.Migration
                             else if (status == 1)
                             {
                                
-                                db.Approve(true);
+                              //  db.Approve(true);
+
+                                //Logic
+                                List<payment_schedual> payment_schedualList = new List<payment_schedual>();
+                                entity.Brillo.Logic.Payment _Payment = new entity.Brillo.Logic.Payment();
+                                payment_schedualList = _Payment.insert_Schedual(sales_invoice);
+
+                                //Save Promisory Note first, because it is referenced in Payment Schedual
+                                if (_Payment.payment_promissory_noteLIST != null && _Payment.payment_promissory_noteLIST.Count > 0)
+                                {
+                                    db.payment_promissory_note.AddRange(_Payment.payment_promissory_noteLIST);
+                                }
+
+                                //Payment Schedual
+                                if (payment_schedualList != null && payment_schedualList.Count > 0)
+                                {
+                                    db.payment_schedual.AddRange(payment_schedualList);
+                                }
+
+
+                                db.Insert_Items_2_Movement(sales_invoice);
+
+                                sales_invoice.is_issued = false;
                                 sales_invoice.State = System.Data.Entity.EntityState.Modified;
                                 sales_invoice.status = Status.Documents_General.Approved;
                                 sales_invoice.IsSelected = true;
@@ -392,7 +414,7 @@ namespace Cognitivo.Setup.Migration
             if (!(SALDOCUOTA is DBNull))
             {
                 decimal SALDOCUOTAValue = Convert.ToDecimal(SALDOCUOTA);
-                
+                payment_type payment_type = null;
                 if (SALDOCUOTAValue < sales_invoice.GrandTotal)
                 {
                     if (IMPORTE is DBNull)
@@ -427,9 +449,17 @@ namespace Cognitivo.Setup.Migration
                                     payment.id_contact = payment_schedual.id_contact;
                                     payment.contact = payment_schedual.contact;
                                     payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
-                                  
-                                        payment_detail.id_payment_type =payment_type.id_payment_type;
+                                    if (db.payment_type.Where(x => x.is_default).FirstOrDefault() == null)
+                                    {
+                                        payment_type = GenerateDefaultPaymentType();
+                                        db.payment_type.Add(payment_type);
                                         payment_detail.payment_type = payment_type;
+                                    }
+                                    else
+                                    {
+                                        payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
+                                        payment_detail.payment_type = payment_type;
+                                    }   
                                    
                                 }
 

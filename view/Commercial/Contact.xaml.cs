@@ -40,12 +40,12 @@ namespace Cognitivo.Commercial
             CollectionViewSource contactParentViewSource = (CollectionViewSource)FindResource("contactParentViewSource");
             contactParentViewSource.Source = ContactDB.contacts.Local;
     
-
             //contactChildListViewSource.Source = ContactDB.contacts.Local;
 
             //contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
             //ContactDB.contact_subscription.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
             //contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
+            //cbxbillcycle.ItemsSource = Enum.GetValues(typeof(contact_subscription.Billng_Cycles));
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
@@ -82,8 +82,6 @@ namespace Cognitivo.Commercial
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
-            //cbxbillcycle.ItemsSource = Enum.GetValues(typeof(contact_subscription.Billng_Cycles));
-
 
             ContactDB.contact_tag
              .Where(x => x.id_company == _entity.company_ID && x.is_active == true)
@@ -94,8 +92,6 @@ namespace Cognitivo.Commercial
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
-            
-            //FilterSubscription();
         }
         #endregion
 

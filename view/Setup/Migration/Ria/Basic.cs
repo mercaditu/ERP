@@ -80,12 +80,26 @@ namespace Cognitivo.Setup.Migration
             sync_city();
             sync_zone();
 
+            using (db db = new db())
+            {
+                payment_type payment_type;
+                if (db.payment_type.Where(x => x.is_default).FirstOrDefault() == null)
+                {
+                    payment_type = GenerateDefaultPaymentType();
+                    db.payment_type.Add(payment_type);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
+                }   
+            }
+
             Dispatcher.BeginInvoke((Action)(() => progBasic.IsIndeterminate = false));
         }
 
         public app_contract GenerateDefaultContrat(app_condition app_condition, int interval)
         {
-           
             app_contract app_contract = new app_contract();
             app_contract.app_condition = app_condition;
             app_contract.name = interval.ToString() + " Días";
@@ -97,15 +111,16 @@ namespace Cognitivo.Setup.Migration
             app_contract.app_contract_detail.Add(_app_contract_detail);
             return app_contract;
         }
+
         public payment_type GenerateDefaultPaymentType()
         {
-
             payment_type payment_type = new payment_type();
             payment_type.name = "Default";
             payment_type.payment_behavior = entity.payment_type.payment_behaviours.Normal;
             payment_type.is_default = true;
            return payment_type;
         }
+
         public app_account GenerateDefaultApp_Account()
         {
 

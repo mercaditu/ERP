@@ -101,7 +101,6 @@ namespace Cognitivo.Setup.Migration
                 DataTable dt_detail = exeDT(sqlDetail);
 
 
-
                 app_condition app_conditionCrédito = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
                 app_condition app_conditionContado = db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
                 app_currencyfx app_currencyfx = null;
@@ -393,20 +392,9 @@ namespace Cognitivo.Setup.Migration
             if (!(SALDOCUOTA is DBNull))
             {
                 decimal SALDOCUOTAValue = Convert.ToDecimal(SALDOCUOTA);
-                payment_type payment_type;
+                
                 if (SALDOCUOTAValue < sales_invoice.GrandTotal)
                 {
-                    if (db.payment_type.Where(x => x.is_default).FirstOrDefault() == null)
-                    {
-                        payment_type = GenerateDefaultPaymentType();
-                        db.payment_type.Add(payment_type);
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        payment_type = db.payment_type.Where(x => x.is_default).FirstOrDefault();
-                    }
-
                     if (IMPORTE is DBNull)
                     {
                         if (sales_invoice.payment_schedual.FirstOrDefault() != null)

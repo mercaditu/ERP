@@ -18,27 +18,31 @@ namespace Cognitivo.Setup.Migration
         public void start()
         {
             //basic();
+            Task basic_Task = Task.Factory.StartNew(() => basic());
+            basic_Task.Wait();
 
-            //Task customer_Task = Task.Factory.StartNew(() => customer());
-            //Task supplier_Task = Task.Factory.StartNew(() => supplier());
-            //Task product_Task = Task.Factory.StartNew(() => product());
+            Task customer_Task = Task.Factory.StartNew(() => customer());
+            Task supplier_Task = Task.Factory.StartNew(() => supplier());
+            Task product_Task = Task.Factory.StartNew(() => product());
 
             //////Wait for Related Tables to finish so we can be 
             //////assured that they are available for us when 
             //////we start with sales and purchase.
-            //customer_Task.Wait();
-            //supplier_Task.Wait();
-            //product_Task.Wait();
+            customer_Task.Wait();
+            supplier_Task.Wait();
+            product_Task.Wait();
 
             //Task accounting_Task = Task.Factory.StartNew(() => accounting());
             //accounting_Task.Wait();
             ////  Start Sales and Purchase
             //Task purchase_Task = Task.Factory.StartNew(() => purchase());
+            
             //purchase_Task.Wait();
-            Task sales_Task = Task.Factory.StartNew(() => sales());
-            sales_Task.Wait();
-            //Task salesReturn_Task = Task.Factory.StartNew(() => salesReturn());
-            //salesReturn_Task.Wait();
+            sales();
+            //Task sales_Task = Task.Factory.StartNew(() => sales());
+            //sales_Task.Wait();
+            Task salesReturn_Task = Task.Factory.StartNew(() => salesReturn());
+            salesReturn_Task.Wait();
             
         }
 
@@ -123,10 +127,6 @@ namespace Cognitivo.Setup.Migration
             {
                 app_company _app_company = new app_company();
                 _app_company.name = row["NOMCONTRIBUYENTE"].ToString();
-
-                //this is to help find the id later on.
-                //company_Name = _app_company.name;
-
                 _app_company.alias = row["NOMFANTASIA"].ToString();
 
                 if (_app_company.name != null && _app_company.alias != null)
@@ -141,21 +141,12 @@ namespace Cognitivo.Setup.Migration
                 _app_company.address = (row["DIRECCION"].ToString() == "") ? "Address Placeholder" : row["DIRECCION"].ToString();
                 _app_company.gov_code = (row["RUCCONTRIBUYENTE"].ToString() == "") ? "GovID Placeholder" : row["RUCCONTRIBUYENTE"].ToString();
 
-                //_app_company.representative_gov_code = row["RUCREPRESENTANTE"].ToString();
-                //_app_company.representative_name = row["NOMREPRESENTANTE"].ToString();
-
-                try
-                {
-                    dbContext.app_company.Add(_app_company);
-                    dbContext.SaveChanges();
-                }
-                catch
-                {
-
-                }
-
+                dbContext.app_company.Add(_app_company);
+                dbContext.SaveChanges();
 
                 id_company = _app_company.id_company;
+                CurrentSession.Id_Company = id_company;
+
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     entity.Properties.Settings.Default.company_ID = id_company;
@@ -164,14 +155,9 @@ namespace Cognitivo.Setup.Migration
                 ));
 
                 sync_Users();
-                id_user=dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    CurrentSession.Id_User = id_user;
-                    //entity.Properties.Settings.Default.user_ID = id_user;
-                    //entity.Properties.Settings.Default.Save();
-                }
-              ));
+
+                id_user = dbContext.security_user.Where(i => i.id_company == id_company).FirstOrDefault().id_user;
+                CurrentSession.Id_User = id_company;
 
                 foreach (DataRow row_Branch in dt_Branch.Rows)
                 {
@@ -192,6 +178,7 @@ namespace Cognitivo.Setup.Migration
                     }
 
                     string id_branchString = row_Branch["CODSUCURSAL"].ToString();
+                    
                     foreach (DataRow row_Terminal in dt_Terminal.Select("CODSUCURSAL = " + id_branchString))
                     {
                         app_terminal app_terminal = new app_terminal();
@@ -200,18 +187,11 @@ namespace Cognitivo.Setup.Migration
                         app_terminal.name = row_Terminal["NOMBRE"].ToString();
                         _app_branch.app_terminal.Add(app_terminal);
                     }
+
                     if (_app_branch.Error == null)
                     {
                         dbContext.app_branch.Add(_app_branch);
-                        try
-                        {
-                            dbContext.SaveChanges();
-                        }
-                        catch
-                        {
-                            throw;
-                        }
-                      
+                        dbContext.SaveChanges();
                     }
                 }
                 id_branch = dbContext.app_branch.Where(i => i.id_company == id_company).FirstOrDefault().id_branch;

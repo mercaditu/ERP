@@ -217,26 +217,26 @@ namespace entity
         {
             List<item_movement> item_movementList = new List<item_movement>();
 
+            ///
             Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
             item_movementList = _Stock.insert_Stock(this, invoice);
 
-            if (item_movementList != null && item_movementList.Count > 0)
+            if (item_movementList.Count() > 0)
             {
+                item_movement.AddRange(item_movementList);
+
                 foreach (sales_invoice_detail sales_detail in invoice.sales_invoice_detail.Where(x => x.item.item_product != null))
                 {
-                    int id_item_product = item_product.Where(x => x.id_item == sales_detail.id_item).FirstOrDefault().id_item_product;
-                    item_movement _item_movement = item_movementList.Where(x => x.id_item_product == id_item_product).FirstOrDefault();
-
-                    if (_item_movement.item_movement_value != null)
+                    if (sales_detail.unit_cost == null || sales_detail.unit_cost == 0)
                     {
-                        sales_detail.unit_cost = entity.Brillo.Currency.convert_Values(_item_movement.item_movement_value.Average(x => x.unit_value)
-                                                , _item_movement.item_movement_value.FirstOrDefault().id_currencyfx, sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                        if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                        {
+                            sales_detail.unit_cost = entity.Brillo.Currency.convert_Values
+                                (sales_detail.item_movement.FirstOrDefault().item_movement_value.Average(x => x.unit_value),
+                                sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
+                                sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                        }
                     }
-                }
-
-                if (item_movementList.Count() > 0)
-                {
-                    item_movement.AddRange(item_movementList);
                 }
             }
         }

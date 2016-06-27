@@ -5,6 +5,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -34,7 +35,7 @@
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
         <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
-        <CollectionViewSource x:Key="contact_subscriptionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_subscription}, CreateList=True}"/>
+        <!--<CollectionViewSource x:Key="contact_subscriptionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_subscription}, CreateList=True}"/>-->
         
         <CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="app_fieldViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
@@ -147,7 +148,6 @@
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
-                        <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
                             <Label Content="+" HorizontalAlignment="Left" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
@@ -217,6 +217,20 @@
                     </StackPanel>
                    
                 </WrapPanel>
+            </TabItem>
+            <TabItem Header="{lex:Loc Geography}">
+                <Grid DataContext="{StaticResource contactViewSource}">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="2">
+                        <cntrls:SmartBox_Geography x:Name="smtgeo" Text="{Binding app_geography.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Select="SmartBox_Geography_Select" />
+                        <Label Content="{lex:Loc Location}"/>
+                        <TextBox Text="{Binding /comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}" Width="64"/>
+                    </StackPanel>
+                    <m:Map Margin="0,32,0,0" x:Name="myMap"
+                           CredentialsProvider="Asw032Mj8UBsgfD0LJU4_VILp3lA_8dJcraaYsy6Mdl6KfakTbWObzT7M0agiha2" 
+                           ZoomLevel="12" Center="-25.298340,-57.622501" MouseDoubleClick="MapsDropPin_DoubleClick">
+                        <m:Pushpin Location="{Binding /comment}"/>
+                    </m:Map>
+                </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc Relationship}" HorizontalAlignment="Right">
                 <StackPanel  IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8">
@@ -307,7 +321,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem x:Name="tabSubscription" Header="{lex:Loc Subscription}">
+            <!--<TabItem x:Name="tabSubscription" Header="{lex:Loc Subscription}">
                 <StackPanel>
                     <Label Content="{lex:Loc Subscription}" Style="{StaticResource H2}" Margin="8"/>
                     <cntrls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
@@ -317,7 +331,8 @@
                               ItemsSource="{Binding Source={StaticResource contact_subscriptionViewSource}}" CanUserAddRows="False" RowEditEnding="contactcontact_subscriptionDataGrid_RowEditEnding"
                               RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
-                            <!-- add here contact column. only show contacts that exist in relationship including current contact. -->
+                            -->
+            <!-- add here contact column. only show contacts that exist in relationship including current contact. --><!--
                             <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Contact}" Width="SizeToHeader"
                                                     DisplayMemberPath="name" SelectedValuePath="id_contact"
                                                     ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" SelectedValueBinding="{Binding id_contact,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -346,16 +361,16 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"
                                                 Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" />
                             
-                            <!-- UnitPrice_Vat -->
+                            --><!-- UnitPrice_Vat --><!--
                             <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
                            
-                            <!-- SubTotal -->
+                            --><!-- SubTotal --><!--
                             <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
                                                 ElementStyle="{StaticResource RightAlignStyle}"/>
                             
-                            <!-- SubTotal_VAT -->
+                            --><!-- SubTotal_VAT --><!--
                             <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
                                                 Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
                             
@@ -391,7 +406,7 @@
                         <Label Content="{Binding GrandTotal, FallbackValue=0, StringFormat={}{0:N0}}" FontSize="18" Style="{StaticResource generic_Label}" />
                     </StackPanel>
                 </StackPanel>
-            </TabItem>
+            </TabItem>-->
         </TabControl>
 
         <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="Contact"

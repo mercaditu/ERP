@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using Microsoft.Maps.MapControl.WPF;
 
 namespace Cognitivo.Commercial
 {
@@ -17,7 +18,9 @@ namespace Cognitivo.Commercial
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
         CollectionViewSource contact_subscriptionViewSource, contactcontact_field_valueViewSource;
+        
         #region Initilize and load
+
         public Contact()
         {
             InitializeComponent();
@@ -38,12 +41,12 @@ namespace Cognitivo.Commercial
             contactParentViewSource.Source = ContactDB.contacts.Local;
     
 
-          //  contactChildListViewSource.Source = ContactDB.contacts.Local;
+            //contactChildListViewSource.Source = ContactDB.contacts.Local;
 
+            //contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
+            //ContactDB.contact_subscription.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
+            //contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
 
-            contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
-            ContactDB.contact_subscription.Where(a => a.is_active == true && a.id_company == _entity.company_ID).Load();
-            contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
             //ContactRole
             CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
             contactRoleViewSource.Source = ContactDB.contact_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
@@ -79,7 +82,7 @@ namespace Cognitivo.Commercial
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
-            cbxbillcycle.ItemsSource = Enum.GetValues(typeof(contact_subscription.Billng_Cycles));
+            //cbxbillcycle.ItemsSource = Enum.GetValues(typeof(contact_subscription.Billng_Cycles));
 
 
             ContactDB.contact_tag
@@ -460,6 +463,32 @@ namespace Cognitivo.Commercial
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Add_field();
+        }
+
+        private void MapsDropPin_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Disables the default mouse double-click action.
+            e.Handled = true;
+
+            // Determin the location to place the pushpin at on the map.
+
+            //Get the mouse click coordinates
+            Point mousePosition = e.GetPosition(this);
+            //Convert the mouse coordinates to a locatoin on the map
+            Location pinLocation = myMap.ViewportPointToLocation(mousePosition);
+
+            // The pushpin to add to the map.
+            Pushpin pin = new Pushpin();
+            pin.Location = pinLocation;
+
+            // Adds the pushpin to the map.
+            myMap.Children.Add(pin);
+            
+            contact contact = (contact)contactViewSource.View.CurrentItem;
+            if (contact != null && cbxRelation.ContactID > 0)
+            {
+                contact.comment = pinLocation.ToString();
+            }
         }
 
         private void Add_field()

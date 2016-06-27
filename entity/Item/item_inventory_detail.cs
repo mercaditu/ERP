@@ -24,26 +24,20 @@ namespace entity
         {
             get
             {
+             
+               
                 return _id_item_product;
             }
             set 
             {
                 _id_item_product=value;
-                if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
-                {
-                    using (db db = new db())
-                    {
-                        if (db.item_inventory_detail.Where(x => x.id_item_product == value).LastOrDefault() != null)
-                        {
-                            unit_value = db.item_inventory_detail.Where(x => x.id_item_product == value).LastOrDefault().unit_value;
-                            RaisePropertyChanged("unit_value");
-                        }
-
-                    }
-                }
+             
+               
             }
         }
         int _id_item_product;
+        [NotMapped]
+        public string currency { get; set; }
         public Status.Documents status { get; set; }
         public decimal value_system
         {

@@ -109,6 +109,29 @@ namespace Cognitivo.Product
                             {
                                 item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                             }
+                          
+                                using (db db = new db())
+                                {
+                                    if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location).ToList().Count() > 0
+                                                                                 )
+                                    {
+                                        item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.status == Status.Stock.InStock)
+                                                                                 .OrderByDescending(x => x.trans_date).FirstOrDefault();
+                                        if (item_movement.item_movement_value.FirstOrDefault() != null)
+                                        {
+                                            item_inventory_detail.unit_value = item_movement.item_movement_value.FirstOrDefault().unit_value;
+                                            item_inventory_detail.currency = item_movement.item_movement_value.FirstOrDefault().app_currencyfx.app_currency.name;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        item_inventory_detail.unit_value = 0;
+                                    }
+
+                                }
+
+                            
 
                             item_inventory.item_inventory_detail.Add(item_inventory_detail);
                         }

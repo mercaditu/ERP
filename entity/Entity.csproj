@@ -71,9 +71,8 @@
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Maps.MapControl.WPF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Maps.MapControl.WPF">
       <HintPath>..\packages\Microsoft.Maps.MapControl.WPF.1.0.0.3\lib\net40-Client\Microsoft.Maps.MapControl.WPF.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -280,55 +279,85 @@
     <Compile Include="Migrations\201604291159283_AddItem_inventory_dimension.Designer.cs">
       <DependentUpon>201604291159283_AddItem_inventory_dimension.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605021122391_Updateitemvaluedimension.cs" />
+    <Compile Include="Migrations\201605021122391_Updateitemvaluedimension.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605021122391_Updateitemvaluedimension.Designer.cs">
       <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.cs" />
+    <Compile Include="Migrations\201605022356063_SecurityPrivilage.cs" />
+    <Compile Include="Migrations\201605022356063_SecurityPrivilage.Designer.cs">
+      <DependentUpon>201605022356063_SecurityPrivilage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.Designer.cs">
       <DependentUpon>201605031243272_UpdatesecurityandProductionandproductionorder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605041008086_updateimpex.cs" />
+    <Compile Include="Migrations\201605041008086_updateimpex.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605041008086_updateimpex.Designer.cs">
       <DependentUpon>201605041008086_updateimpex.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605041240184_updatemovement.cs" />
+    <Compile Include="Migrations\201605041240184_updatemovement.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605041240184_updatemovement.Designer.cs">
       <DependentUpon>201605041240184_updatemovement.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605061308522_app_account_detail.cs" />
+    <Compile Include="Migrations\201605061308522_app_account_detail.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605061308522_app_account_detail.Designer.cs">
       <DependentUpon>201605061308522_app_account_detail.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605161345367_TryingToFix_ItemMovement_ExcessFK.cs" />
+    <Compile Include="Migrations\201605161345367_TryingToFix_ItemMovement_ExcessFK.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605161345367_TryingToFix_ItemMovement_ExcessFK.Designer.cs">
       <DependentUpon>201605161345367_TryingToFix_ItemMovement_ExcessFK.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605171343372_UpdateItemMaintaince.cs" />
+    <Compile Include="Migrations\201605171343372_UpdateItemMaintaince.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605171343372_UpdateItemMaintaince.Designer.cs">
       <DependentUpon>201605171343372_UpdateItemMaintaince.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605271250378_Update_Maintanaince_Detail.cs" />
+    <Compile Include="Migrations\201605271250378_Update_Maintanaince_Detail.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605271250378_Update_Maintanaince_Detail.Designer.cs">
       <DependentUpon>201605271250378_Update_Maintanaince_Detail.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605301355538_UpdatePromissorynote.cs" />
+    <Compile Include="Migrations\201605301355538_UpdatePromissorynote.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201605301355538_UpdatePromissorynote.Designer.cs">
       <DependentUpon>201605301355538_UpdatePromissorynote.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606091205296_updatepurchasetender.cs" />
+    <Compile Include="Migrations\201606091205296_updatepurchasetender.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201606091205296_updatepurchasetender.Designer.cs">
       <DependentUpon>201606091205296_updatepurchasetender.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606111135436_Changesin_productionorder.cs" />
+    <Compile Include="Migrations\201606111135436_Changesin_productionorder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201606111135436_Changesin_productionorder.Designer.cs">
       <DependentUpon>201606111135436_Changesin_productionorder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606140917363_promissorynoteUpdate.cs" />
+    <Compile Include="Migrations\201606140917363_promissorynoteUpdate.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201606140917363_promissorynoteUpdate.Designer.cs">
       <DependentUpon>201606140917363_promissorynoteUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606241030393_updatepurchasetenderdetail.cs" />
+    <Compile Include="Migrations\201606241030393_updatepurchasetenderdetail.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Migrations\201606241030393_updatepurchasetenderdetail.Designer.cs">
       <DependentUpon>201606241030393_updatepurchasetenderdetail.cs</DependentUpon>
     </Compile>
@@ -1002,6 +1031,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605021122391_Updateitemvaluedimension.resx">
       <DependentUpon>201605021122391_Updateitemvaluedimension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605022356063_SecurityPrivilage.resx">
+      <DependentUpon>201605022356063_SecurityPrivilage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605031243272_UpdatesecurityandProductionandproductionorder.resx">
       <DependentUpon>201605031243272_UpdatesecurityandProductionandproductionorder.cs</DependentUpon>

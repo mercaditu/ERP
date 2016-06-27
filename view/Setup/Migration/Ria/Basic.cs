@@ -35,9 +35,9 @@ namespace Cognitivo.Setup.Migration
             Task accounting_Task = Task.Factory.StartNew(() => accounting());
             accounting_Task.Wait();
             //////  Start Sales and Purchase
-            Task purchase_Task = Task.Factory.StartNew(() => purchase());
+            //Task purchase_Task = Task.Factory.StartNew(() => purchase());
 
-            purchase_Task.Wait();
+            //purchase_Task.Wait();
             //sales();
             Task sales_Task = Task.Factory.StartNew(() => sales());
             sales_Task.Wait();

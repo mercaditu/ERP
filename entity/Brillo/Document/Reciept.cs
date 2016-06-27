@@ -90,50 +90,6 @@
                     }
                 }
             }
-
-            //if (Content != "")
-            //{
-            //    if (app_document != null && PrinterName != string.Empty)
-            //    {
-            //        if (app_document.style_reciept == true)
-            //        {
-            //            Reciept Reciept = new Reciept();
-            //            PrintDialog pd = new PrintDialog();
-
-            //            FlowDocument document = new FlowDocument(new Paragraph(new Run(Content)));
-            //            document.Name = app_document.name;
-            //            document.FontFamily = new FontFamily("Courier New");
-            //            document.FontSize = 11.0;
-            //            document.FontStretch = FontStretches.Normal;
-            //            document.FontWeight = FontWeights.Normal;
-
-            //            document.PagePadding = new Thickness(5);
-
-            //            document.PageHeight = double.NaN;
-            //            document.PageWidth = double.NaN;
-            //            //document.
-
-            //            //Specify minimum page sizes. Origintally 283, but was too small.
-            //            document.MinPageWidth = 283;
-            //            //Specify maximum page sizes.
-            //            document.MaxPageWidth = 300;
-
-            //            IDocumentPaginatorSource idpSource = document;
-            //            try
-            //            {
-            //                pd.PrintQueue = new PrintQueue(new PrintServer(), PrinterName);
-            //                pd.PrintDocument(idpSource.DocumentPaginator, document.Name);
-            //            }
-            //            catch
-            //            {
-            //                if (pd.ShowDialog() == true)
-            //                {
-            //                    pd.PrintDocument(idpSource.DocumentPaginator, document.Name);
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
         }
 
         public string ItemMovement(item_transfer i)

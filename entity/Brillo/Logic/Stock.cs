@@ -680,7 +680,11 @@ namespace entity.Brillo.Logic
                     //Logic for Value in case Parent does not Exist, we will take from 
 
                     item_movement_value item_movement_value = new item_movement_value();
-                    item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                    if (item_product.item.unit_cost!=null)
+                    {
+                        item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                    }
+              
                     item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
                     item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                     item_movement.item_movement_value.Add(item_movement_value);

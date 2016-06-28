@@ -25,7 +25,7 @@ namespace Cognitivo.Commercial
     /// </summary>
     public partial class Payments : Page
     {
-        CollectionViewSource payment_schedualMadeViewSource, payment_schedualReceive;
+        CollectionViewSource payment_detailMadeViewSource, payment_detailReceive;
         PaymentDB PaymentDB = new entity.PaymentDB();
         public Payments()
         {
@@ -39,23 +39,38 @@ namespace Cognitivo.Commercial
         }
         private void load_Schedual()
         {
-            payment_schedualMadeViewSource = (CollectionViewSource)FindResource("payment_schedualMadeViewSource");
-            payment_schedualMadeViewSource.Source =     PaymentDB.payment_schedual
-                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company
-                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0) && x.id_note == null
-                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
-                         .OrderBy(x => x.expire_date).ToList();
+            payment_detailMadeViewSource = (CollectionViewSource)FindResource("payment_detailMadeViewSource");
+            payment_detailMadeViewSource.Source = PaymentDB.payment_detail
+                     .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y=>y.credit>0).Count()==0)                         
+                         .ToList();
 
         }
         private void load_SchedualReceived()
         {
-            payment_schedualReceive = (CollectionViewSource)FindResource("payment_schedualReceive");
-            payment_schedualReceive.Source = PaymentDB.payment_schedual
-                                                                    .Where(x => x.id_company == CurrentSession.Id_Company
-                                                                       && (x.id_purchase_invoice > 0 || x.id_purchase_order > 0) && x.id_note == null
-                                                                       && (x.credit - (x.child.Count() > 0 ? x.child.Sum(y => y.debit) : 0)) > 0).OrderBy(x => x.expire_date)
-                                                                    .ToList();
+            payment_detailReceive = (CollectionViewSource)FindResource("payment_detailReceive");
+            payment_detailReceive.Source = PaymentDB.payment_detail
+                     .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y => y.debit > 0).Count() == 0)
+                         .ToList();
 
+        }
+
+        private void EditCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as payment_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void EditCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            payment_detail payment_detail = e.Parameter as payment_detail;
+
+
+            cntrl.Curd.payment_display payment_display = new cntrl.Curd.payment_display(cntrl.Curd.payment_display.Modes.Recievable, payment_detail.payment.id_contact, payment_detail.payment.id_payment);
+
+            crud_modal.Visibility = System.Windows.Visibility.Visible;
+            crud_modal.Children.Add(payment_display);
         }
     }
 }

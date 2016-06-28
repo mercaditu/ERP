@@ -243,6 +243,9 @@
     <Compile Include="Curd\Payment.xaml.cs">
       <DependentUpon>Payment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Curd\payment_display.xaml.cs">
+      <DependentUpon>payment_display.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Curd\receive_payment.xaml.cs">
       <DependentUpon>receive_payment.xaml</DependentUpon>
     </Compile>
@@ -684,6 +687,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Curd\Payment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Curd\payment_display.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

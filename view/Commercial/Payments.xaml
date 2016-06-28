@@ -6,13 +6,21 @@
           xmlns:converters="clr-namespace:Cognitivo.Converters;assembly=cntrl"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+          xmlns:customcmd="clr-namespace:Cognitivo.Class"
           xmlns:entity="clr-namespace:entity;assembly=entity"
       mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="700"
 	Title="Payments" Loaded="Page_Loaded">
+
+    <Page.CommandBindings>
+        <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
+                        CanExecute="EditCommand_CanExecute" 
+                        Executed="EditCommand_Executed"/>
+      
+    </Page.CommandBindings>
     <Page.Resources>
         <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter"/>
-        <CollectionViewSource x:Key="payment_schedualMadeViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
-        <CollectionViewSource x:Key="payment_schedualReceive"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
+        <CollectionViewSource x:Key="payment_detailMadeViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="payment_detailReceive"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}"/>
         
     </Page.Resources>
     <Grid Background="WhiteSmoke">
@@ -21,6 +29,8 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         
+        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
+			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10" />
         <ListView Style="{StaticResource nav_List}">
             
         </ListView>
@@ -28,19 +38,15 @@
         <TabControl Margin="0,40,0,0" Background="WhiteSmoke" Grid.Column="1">
             <TabItem Header="Payments Made">
                 <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                      RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_schedualMadeViewSource}}" CanUserAddRows="False">
+                      RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        <DataGridTextColumn Binding="{Binding payment.contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
-                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Foreground" Value="{Binding expire_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Expiry2ColorConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                        <DataGridTextColumn Binding="{Binding payment.trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
+                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
+
+
+                        <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
                                         ElementStyle="{StaticResource RightAlignStyle}"/>
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -50,24 +56,28 @@
             </TabItem>
             <TabItem Header="Payments Recieved">
                 <DataGrid x:Name="payment_schedualReceiveDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                      RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_schedualReceive}}" CanUserAddRows="False">
+                      RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_detailReceive}}" CanUserAddRows="False">
                     <DataGrid.Columns>
-                   
-                        <DataGridTextColumn Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        <DataGridTextColumn Binding="{Binding payment.contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
-                        <DataGridTextColumn Binding="{Binding expire_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
-                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Foreground" Value="{Binding expire_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Expiry2ColorConverter}}"/>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding AccountReceivableBalance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                        <DataGridTextColumn Binding="{Binding payment.trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
+                                        Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
+
+
+                        <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
                                         ElementStyle="{StaticResource RightAlignStyle}"/>
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
+                        <DataGridTemplateColumn Width="Auto" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.EditAll"
+                                                    Style="{StaticResource btnEditChildStyle}"
+                                                    CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

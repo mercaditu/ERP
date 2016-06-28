@@ -14,7 +14,7 @@ namespace Cognitivo.Product
     public partial class Inventory : Page
     {
         InventoryDB InventoryDB = new InventoryDB();
-        CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource, 
+        CollectionViewSource item_inventoryViewSource, item_inventoryitem_inventory_detailViewSource,
             app_branchapp_locationViewSource, app_branchViewSource;
 
         cntrl.Panels.pnl_ItemMovement objpnl_ItemMovement;
@@ -81,10 +81,10 @@ namespace Cognitivo.Product
 
             //Dispatcher.InvokeAsync(new Action(() =>
             //{
-                item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
-                app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
-          //  }));
-           
+            item_inventory = (item_inventory)item_inventoryViewSource.View.CurrentItem;
+            app_location = app_branchapp_locationViewSource.View.CurrentItem as app_location;
+            //  }));
+
 
             if (app_location != null && item_inventory != null)
             {
@@ -109,29 +109,30 @@ namespace Cognitivo.Product
                             {
                                 item_inventory_detail.id_currencyfx = InventoryDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
                             }
-                          
-                                using (db db = new db())
-                                {
-                                    if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location).ToList().Count() > 0
-                                                                                 )
-                                    {
-                                        item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.status == Status.Stock.InStock)
-                                                                                 .OrderByDescending(x => x.trans_date).FirstOrDefault();
-                                        if (item_movement.item_movement_value.FirstOrDefault() != null)
-                                        {
-                                            item_inventory_detail.unit_value = item_movement.item_movement_value.FirstOrDefault().unit_value;
-                                            item_inventory_detail.currency = item_movement.item_movement_value.FirstOrDefault().app_currencyfx.app_currency.name;
-                                        }
 
-                                    }
-                                    else
+                            using (db db = new db())
+                            {
+                                if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0).ToList().Count() > 0
+                                                                             )
+                                {
+
+                                    item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0)
+                                                                             .OrderByDescending(x => x.trans_date).FirstOrDefault();
+                                    if (item_movement.item_movement_value.FirstOrDefault() != null)
                                     {
-                                        item_inventory_detail.unit_value = 0;
+                                        item_inventory_detail.unit_value = item_movement.item_movement_value.FirstOrDefault().unit_value;
+                                        item_inventory_detail.currency = item_movement.item_movement_value.FirstOrDefault().app_currencyfx.app_currency.name;
                                     }
 
                                 }
+                                else
+                                {
+                                    item_inventory_detail.unit_value = 0;
+                                }
 
-                            
+                            }
+
+
 
                             item_inventory.item_inventory_detail.Add(item_inventory_detail);
                         }
@@ -139,8 +140,8 @@ namespace Cognitivo.Product
                 }
                 //Dispatcher.InvokeAsync(new Action(() =>
                 //{
-                    item_inventoryitem_inventory_detailViewSource.View.Refresh();
-                    filetr_detail();
+                item_inventoryitem_inventory_detailViewSource.View.Refresh();
+                filetr_detail();
                 //}));
             }
         }
@@ -150,7 +151,7 @@ namespace Cognitivo.Product
             try
             {
                 app_branch app_branch = app_branchViewSource.View.CurrentItem as app_branch;
-               item_inventory item_inventory = new item_inventory();
+                item_inventory item_inventory = new item_inventory();
                 item_inventory.IsSelected = true;
                 item_inventory.id_branch = app_branch.id_branch;
                 item_inventory.trans_date = DateTime.Now;
@@ -160,7 +161,7 @@ namespace Cognitivo.Product
                 app_branchapp_locationViewSource.View.MoveCurrentToFirst();
                 item_inventoryViewSource.View.Refresh();
                 item_inventoryViewSource.View.MoveCurrentToLast();
-              
+
 
             }
             catch (Exception ex)
@@ -227,7 +228,7 @@ namespace Cognitivo.Product
                 {
                     if (app_branchapp_locationViewSource.View != null)
                     {
-                       BindItemMovement();
+                        BindItemMovement();
                     }
                 }
             }
@@ -260,7 +261,7 @@ namespace Cognitivo.Product
                         {
                             item_inventory_detail item_inventory_detail = (item_inventory_detail)i;
                             if ((item_inventory_detail.item_product.item.name.ToUpper().Contains(txtsearch.Text.ToUpper()) ||
-                                 item_inventory_detail.item_product.item.code.ToUpper().Contains(txtsearch.Text.ToUpper())) && 
+                                 item_inventory_detail.item_product.item.code.ToUpper().Contains(txtsearch.Text.ToUpper())) &&
                                  app_location.id_location == item_inventory_detail.id_location)
                                 return true;
                             else

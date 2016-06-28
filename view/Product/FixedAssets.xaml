@@ -151,7 +151,7 @@
                        btnNew_Click="toolBar_btnNew_Click"
                        btnCancel_Click="toolBar_btnCancel_Click"
                        btnDelete_Click="toolBar_btnDelete_Click"
-                       appName="Inventory"
+                       appName="FixedAssets"
                                     State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Margin="0"/>

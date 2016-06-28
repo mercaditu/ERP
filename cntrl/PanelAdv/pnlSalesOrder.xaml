@@ -41,27 +41,9 @@
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
                 <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="SizeToHeader" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:Number}" Width="SizeToHeader" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding GrandTotal}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding GrandTotal, StringFormat=N2}" Header="{lex:Loc Cognitivo:local:Total}" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name}" Width="Auto" IsReadOnly="True"/>
             </DataGrid.Columns>
-            <!--<DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    -->
-            <!--<StackPanel Background="Gainsboro" Opacity="0.64">
-                        <Label Content="{lex:Loc Details}" Style="{StaticResource H3}" Foreground="White"/>-->
-            <!--
-                        <DataGrid AutoGenerateColumns="False" Margin="16">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding name}" Header="name" Width="SizeToHeader" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding quantity}" Header="{lex:Loc Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding balance}" Header="Balance" Width="SizeToHeader" IsReadOnly="True"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    -->
-            <!--</StackPanel>-->
-            <!--
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>-->
         </DataGrid>
     </StackPanel>
 </UserControl>

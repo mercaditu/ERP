@@ -25,7 +25,7 @@ namespace Cognitivo.Commercial
     /// </summary>
     public partial class Payments : Page
     {
-        CollectionViewSource payment_detailMadeViewSource, payment_detailReceive;
+        CollectionViewSource payment_detailMadeViewSource, payment_detailReceive, contactViewSource;
         PaymentDB PaymentDB = new entity.PaymentDB();
         public Payments()
         {
@@ -34,23 +34,47 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            load_Schedual();
-            load_SchedualReceived();
+            contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
+            PaymentDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == false).OrderBy(a => a.code).Load();
+            contactViewSource.Source = PaymentDB.contacts.Local;
+            load_Schedual(0);
+            load_SchedualReceived(0);
+         
         }
-        private void load_Schedual()
+        private void load_Schedual(int id_contact)
         {
             payment_detailMadeViewSource = (CollectionViewSource)FindResource("payment_detailMadeViewSource");
-            payment_detailMadeViewSource.Source = PaymentDB.payment_detail
-                     .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y=>y.credit>0).Count()==0)                         
-                         .ToList();
+            if (id_contact>0)
+            {
+                payment_detailMadeViewSource.Source = PaymentDB.payment_detail
+                    .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y => y.credit > 0).Count() == 0 && x.payment.id_contact==id_contact)
+                        .ToList();
+            }
+            else
+            {
+                payment_detailMadeViewSource.Source = PaymentDB.payment_detail
+                  .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y => y.credit > 0).Count() == 0 )
+                      .ToList();
+            }
+          
+           
 
         }
-        private void load_SchedualReceived()
+        private void load_SchedualReceived(int id_contact)
         {
             payment_detailReceive = (CollectionViewSource)FindResource("payment_detailReceive");
-            payment_detailReceive.Source = PaymentDB.payment_detail
-                     .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y => y.debit > 0).Count() == 0)
-                         .ToList();
+            if (id_contact > 0)
+            {
+                payment_detailReceive.Source = PaymentDB.payment_detail
+                         .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y => y.debit > 0).Count() == 0 && x.payment.id_contact == id_contact)
+                             .ToList();
+            }
+            else
+            {
+                payment_detailReceive.Source = PaymentDB.payment_detail
+                        .Where(x => x.id_company == CurrentSession.Id_Company && x.payment_schedual.Where(y => y.debit > 0).Count() == 0 )
+                            .ToList();
+            }
 
         }
 
@@ -72,5 +96,21 @@ namespace Cognitivo.Commercial
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(payment_display);
         }
+
+        private void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            load_Schedual(contact.id_contact);
+            load_SchedualReceived(contact.id_contact);
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            load_Schedual(0);
+            load_SchedualReceived(0);
+
+        }
+     
     }
 }

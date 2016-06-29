@@ -20,6 +20,7 @@
     <Page.Resources>
         <converters:Expiry2ColorConverter x:Key="Expiry2ColorConverter"/>
         <CollectionViewSource x:Key="payment_detailMadeViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}"/>
+        <CollectionViewSource x:Key="contactViewSource"  d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="payment_detailReceive"  d:DesignSource="{d:DesignInstance {x:Type entity:payment_detail}, CreateList=True}"/>
         
     </Page.Resources>
@@ -28,14 +29,34 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
 			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10" />
-        <ListView Style="{StaticResource nav_List}">
-            
-        </ListView>
-        
-        <TabControl Margin="0,40,0,0" Background="WhiteSmoke" Grid.Column="1">
+        <StackPanel  Grid.Row="1">
+            <Button Content="Clear Filter" Click="Button_Click"></Button>
+            <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="listContacts"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listContacts_SelectionChanged"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding Source={StaticResource contactViewSource}, IsAsync=True}" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <cntrl:navList recordCode="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   recordSecondaryName="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </StackPanel>
+   
+        <TabControl  Background="WhiteSmoke" Grid.Column="1" Grid.Row="1">
             <TabItem Header="Payments Made">
                 <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                       RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" CanUserAddRows="False">

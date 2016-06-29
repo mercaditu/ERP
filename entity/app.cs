@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 91
+            /// Last Used : 92
             /// </summary>
 
             //Sales
@@ -84,6 +84,8 @@ namespace entity
             DebeHaberSync=90,
             [LocalizedDescription("Contact")]
             Contact = 10,
+            [LocalizedDescription("ContactSubscription")]
+            ContactSubscription = 92,
             [LocalizedDescription("PaymentUtility")]
             PaymentUtility = 16,
             [LocalizedDescription("PaymentType")]
@@ -98,8 +100,7 @@ namespace entity
             Bank = 47,
             [LocalizedDescription("PromissoryNote")]
             PromissoryNote = 85,
-            [LocalizedDescription("Payments")]
-            Payments = 91,
+            
 
             //Stock
             [LocalizedDescription("Item")]

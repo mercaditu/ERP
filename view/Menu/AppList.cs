@@ -41,6 +41,7 @@ namespace Cognitivo.Menu
 
             //Sales        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.ContactSubscription", entity.App.Names.ContactSubscription, "Contact");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Invoice", entity.App.Names.SalesInvoice, "Sales");
@@ -101,7 +102,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Form, "Configs.AccountUtility", entity.App.Names.AccountUtility, "BankAccountTrans");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.Payments", entity.App.Names.Payments, "");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.Payments", entity.App.Names.AccountsRecievableAnalisys, "");
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Transaction, "Commercial.PromissoryNote", entity.App.Names.PromissoryNote, "");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Currency", entity.App.Names.Currency, "Currency");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Commercial.PaymentType", entity.App.Names.PaymentType, "");
@@ -175,7 +176,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.Account", "Account", "BankAccountTrans");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.FiscalPeriod", "FiscalPeriod", "BankAccountTrans");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Financial, "Configs.Hr_coefficient", "Hr_coefficient", "");
-        
+
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Transaction, "Configs.Condition", "Condition", "Condition");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Transaction, "Configs.Contract", "Contract", "Contract");
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Transaction, "Configs.Status", "Status", "Status");
@@ -208,7 +209,7 @@ namespace Cognitivo.Menu
             string _name = app["name"].ToString();
             string _img = app["img"].ToString();
             string _description = "desc_" + app["name"].ToString();
-            
+
             cntrl.applicationIcon appIcon = new cntrl.applicationIcon();
 
             ///AssemblyCheck. If reporting exists, don't add Cognitivo.
@@ -227,20 +228,20 @@ namespace Cognitivo.Menu
             {
                 appIcon.IsEnabled = false;
             }
-                        
-            if (_description != "") 
+
+            if (_description != "")
             { var appLocApplicationDescription = new LocTextExtension("Cognitivo:local:" + _description + "").SetBinding(appIcon, cntrl.applicationIcon.ApplicationDescriptionProperty); }
             var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _name + "").SetBinding(appIcon, cntrl.applicationIcon.ApplicationNameProperty);
 
             //Incase img is not set, set it to DefaultIcon
             if (_img == "") { _img = "DefaultIcon"; }
-            
+
             _img = "../Images/Application/128/" + _img + ".png";
             appIcon.imgSource = new BitmapImage(new Uri(_img, UriKind.Relative));
 
             return appIcon;
         }
-        
+
         public StackPanel get_ConfigIcon(DataRow app)
         {
             string _app = app["app"].ToString();
@@ -269,11 +270,11 @@ namespace Cognitivo.Menu
             stckIcon.Orientation = Orientation.Horizontal;
             stckIcon.Children.Add(img);
             stckIcon.Children.Add(txtApp);
-            
+
             StackPanel stckApp = new StackPanel();
             stckApp.Children.Add(stckIcon);
 
-            if (_description != "") 
+            if (_description != "")
             {
                 TextBlock txtDesc = new TextBlock();
                 txtDesc.Style = (Style)Application.Current.FindResource("text_Instructions");

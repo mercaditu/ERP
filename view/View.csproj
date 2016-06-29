@@ -288,6 +288,9 @@
     <Compile Include="Commercial\CashFlow.xaml.cs">
       <DependentUpon>CashFlow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commercial\ContactSubscription.xaml.cs">
+      <DependentUpon>ContactSubscription.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Commercial\Payments.xaml.cs">
       <DependentUpon>Payments.xaml</DependentUpon>
     </Compile>
@@ -1399,6 +1402,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Commercial\ContactRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Commercial\ContactSubscription.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

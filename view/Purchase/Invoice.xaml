@@ -360,14 +360,14 @@
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" MinWidth="128"
                                         Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpDate}" Width="Auto"   Visibility="{Binding displayexpire,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
+                    <!--<DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpDate}" Width="Auto"   Visibility="{Binding displayexpire,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding expiration_date, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                            />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    </DataGridTemplateColumn>-->
 
                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="64"
 					                        ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  

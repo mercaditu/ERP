@@ -94,7 +94,8 @@ namespace entity
                     RaisePropertyChanged("quantity");
                     //update quantity
                     update_SubTotal();
-                    Factor_Quantity();
+                    Quantity_Factored = Factor_Quantity();
+                   RaisePropertyChanged("_Quantity_Factored");
                 }
             }
         }
@@ -114,7 +115,8 @@ namespace entity
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
 
-                    Factor_Quantity_Back();
+                   quantity= Factor_Quantity_Back();
+                   RaisePropertyChanged("quantity");
                 }
             }
         }
@@ -471,22 +473,31 @@ namespace entity
             {
                 if (item.item_product.FirstOrDefault() != null)
                 {
-                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null &&
-                        item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
+                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null
+                        )
                     {
-                        if (item.item_dimension.Count() > 0)
+                        if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
                         {
-                            decimal i = 1M;
-                            foreach (item_dimension item_dimension in item.item_dimension)
-                            {
-                                i = i * item_dimension.value;
-                            }
 
-                            return quantity / (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
-                        }
-                        else
-                        {
-                            return quantity / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+
+                            if (item.item_dimension.Count() > 0)
+                            {
+                                decimal i = 1M;
+                                foreach (item_dimension item_dimension in item.item_dimension)
+                                {
+                                    if (item_dimension.value > 0)
+                                    {
+                                        i = i * item_dimension.value;
+                                    }
+                                }
+                              
+
+                                return quantity / (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                            }
+                            else
+                            {
+                                return quantity / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                            }
                         }
                     }
                 }
@@ -501,22 +512,27 @@ namespace entity
             {
                 if (item.item_product.FirstOrDefault() != null)
                 {
-                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null &&
-                        item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
+                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null )
                     {
-                        if (item.item_dimension.Count() > 0)
+                        if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
                         {
-                            decimal i = 1M;
-                            foreach (item_dimension item_dimension in item.item_dimension)
+                            if (item.item_dimension.Count() > 0)
                             {
-                                i = i * item_dimension.value;
-                            }
+                                decimal i = 1M;
+                                foreach (item_dimension item_dimension in item.item_dimension)
+                                {
+                                    if (item_dimension.value > 0)
+                                    {
+                                        i = i * item_dimension.value;
+                                    }
+                                }
 
-                            return quantity * (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
-                        }
-                        else
-                        {
-                            return quantity * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                                return quantity * (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                            }
+                            else
+                            {
+                                return quantity * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                            }
                         }
                     }
                 }

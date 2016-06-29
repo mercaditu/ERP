@@ -448,6 +448,9 @@
     <Compile Include="Product\FixedAssets.xaml.cs">
       <DependentUpon>FixedAssets.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product\ProductBarcode.xaml.cs">
+      <DependentUpon>ProductBarcode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product\SuppliesRequest.xaml.cs">
       <DependentUpon>SuppliesRequest.xaml</DependentUpon>
     </Compile>
@@ -1577,6 +1580,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Product\ProductBarcode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Product\Request.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2043,6 +2050,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\Inventory\" />
+    <Folder Include="bin\Debug\item\" />
     <Folder Include="bin\Debug\Sales\" />
     <Folder Include="Promotion\" />
   </ItemGroup>

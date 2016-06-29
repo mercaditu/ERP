@@ -488,6 +488,7 @@ namespace Cognitivo.Purchase
         
             Dispatcher.BeginInvoke((Action)(() =>
             {
+              
                 purchase_invoice.purchase_invoice_detail.Add(purchase_invoice_detail);
                 purchase_invoicepurchase_invoice_detailViewSource.View.Refresh();
                 calculate_vat(null, null);

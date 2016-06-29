@@ -67,7 +67,7 @@ namespace Cognitivo.Commercial
             payment_detail payment_detail = e.Parameter as payment_detail;
 
 
-            cntrl.Curd.payment_display payment_display = new cntrl.Curd.payment_display(cntrl.Curd.payment_display.Modes.Recievable, payment_detail.payment.id_contact, payment_detail.payment.id_payment);
+            cntrl.Curd.payment_display payment_display = new cntrl.Curd.payment_display(cntrl.Curd.payment_display.Modes.Recievable, payment_detail.payment.id_contact, payment_detail.payment.id_payment, payment_detail.id_payment_detail);
 
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             crud_modal.Children.Add(payment_display);

@@ -23,22 +23,22 @@ namespace cntrl.Curd
         private Modes Mode;
         CollectionViewSource paymentpayment_detailViewSource;
         CollectionViewSource paymentViewSource;
-       
-        //public int id_payment_schedual { get; set; } 
-        //public payment_detail payment_detail { get; set; }
 
-        public payment_display(Modes App_Mode, int? ContactID,int id_payment)
+        //public int id_payment_schedual { get; set; } 
+        public int _id_payment_detail { get; set; }
+
+        public payment_display(Modes App_Mode, int? ContactID, int id_payment, int id_payment_detail)
         {
             InitializeComponent();
 
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             Mode = App_Mode;
-
+            _id_payment_detail = id_payment_detail;
             paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
             PaymentDB.payments.Where(x => x.id_payment == id_payment).Load();
             paymentViewSource.Source = PaymentDB.payments.Local;
-        
+
 
 
 
@@ -47,7 +47,27 @@ namespace cntrl.Curd
 
 
             paymentViewSource.View.MoveCurrentToLast();
-           
+            filter_payment_detail();
+
+        }
+        void filter_payment_detail()
+        {
+            if (paymentpayment_detailViewSource != null)
+            {
+                if (paymentpayment_detailViewSource.View != null)
+                {
+
+                    paymentpayment_detailViewSource.View.Filter = i =>
+                    {
+                        payment_detail payment_detail = (payment_detail)i;
+                        if (payment_detail.id_payment_detail == _id_payment_detail)
+                            return true;
+                        else
+                            return false;
+                    };
+                }
+
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -95,9 +115,9 @@ namespace cntrl.Curd
             payment payment = paymentViewSource.View.CurrentItem as payment;
             //entity.Brillo.Logic.AccountReceivable AccountReceivable = new entity.Brillo.Logic.AccountReceivable();
 
-          
+
             PaymentDB.SaveChanges();
-           
+
 
         }
 

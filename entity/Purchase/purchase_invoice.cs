@@ -26,7 +26,7 @@ namespace entity
 
             purchase_invoice_detail = new List<purchase_invoice_detail>();
             purchase_return = new List<purchase_return>();
-          
+
             payment_withholding_detail = new List<payment_withholding_detail>();
             payment_withholding_details = new List<payment_withholding_details>();
         }
@@ -37,7 +37,7 @@ namespace entity
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order { get; set; }
         public int? id_department { get; set; }
-        
+
         [Required]
         [CustomValidation(typeof(Class.EntityValidation), "CheckId")]
         public int id_currencyfx
@@ -50,18 +50,18 @@ namespace entity
             {
                 //if (_id_currencyfx != value)
                 //{
-                    _id_currencyfx = value;
-                    RaisePropertyChanged("id_currencyfx");
+                _id_currencyfx = value;
+                RaisePropertyChanged("id_currencyfx");
 
-                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
+                {
+                    foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail)
                     {
-                        foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail)
-                        {
-                            _purchase_invoice_detail.State = System.Data.Entity.EntityState.Modified;
-                            _purchase_invoice_detail.CurrencyFX_ID = _id_currencyfx;
-                        }
-                        RaisePropertyChanged("GrandTotal");
-                    }   
+                        _purchase_invoice_detail.State = System.Data.Entity.EntityState.Modified;
+                        _purchase_invoice_detail.CurrencyFX_ID = _id_currencyfx;
+                    }
+                    RaisePropertyChanged("GrandTotal");
+                }
                 //}
             }
         }
@@ -189,21 +189,52 @@ namespace entity
         }
         private decimal _DiscountWithoutPercentage;
 
+        [NotMapped]
+        public Boolean displayexpire
+        {
+            get
+            {
+                foreach (purchase_invoice_detail _purchase_invoice_detail in purchase_invoice_detail)
+                {
+                    if (_purchase_invoice_detail.item != null)
+                    {
+                        if (_purchase_invoice_detail.item.item_product.FirstOrDefault() != null)
+                        {
+                            if (_purchase_invoice_detail.item.item_product.FirstOrDefault().can_expire)
+                            {
+                                _displayexpire = true;
+                                return _displayexpire;
+                            }
+
+                        }
+                    }
+
+                }
+                _displayexpire = false;
+                return _displayexpire;
+            }
+            set { _displayexpire=value; }
+        }
+        Boolean _displayexpire=false;
+
         #region "Navigation Properties"
         public virtual purchase_order purchase_order { get; set; }
         public virtual app_department app_department { get; set; }
 
         public virtual accounting_journal accounting_journal { get; set; }
 
-        public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail 
-        { 
-            get { 
-               return  _purchase_invoice_detail;
-            } 
-            set { 
-                _purchase_invoice_detail=value;} 
+        public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail
+        {
+            get
+            {
+                return _purchase_invoice_detail;
+            }
+            set
+            {
+                _purchase_invoice_detail = value;
+            }
         }
-        ICollection<purchase_invoice_detail> _purchase_invoice_detail; 
+        ICollection<purchase_invoice_detail> _purchase_invoice_detail;
         public virtual IEnumerable<purchase_packing_relation> purchase_packing_relation { get; set; }
 
         public virtual IEnumerable<purchase_return> purchase_return { get; set; }
@@ -211,7 +242,7 @@ namespace entity
         public virtual ICollection<payment_withholding_details> payment_withholding_details { get; set; }
         public virtual IEnumerable<payment_withholding_detail> payment_withholding_detail { get; set; }
         public virtual ICollection<payment_schedual> payment_schedual { get; set; }
-        
+
         #endregion
 
         #region Validation
@@ -255,7 +286,7 @@ namespace entity
                 }
                 if (columnName == "id_contract")
                 {
-                    if (id_contract == 0 && app_contract==null)
+                    if (id_contract == 0 && app_contract == null)
                         return "Contract needs to be selected";
                 }
                 if (columnName == "id_currencyfx")

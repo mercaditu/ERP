@@ -22,6 +22,7 @@
     </Page.CommandBindings>
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <converter:ExpireDate2Visible x:Key="ExpireDate2Visible" />
         <converter:Status2Enable x:Key="Status2Enable"/>
         <converter:CostCenterCanStockItemConverter x:Key="CostCenterCanStockItemCheck"/>
         <converter:CostCenterCanStockCodeConverter x:Key="CostCenterCanStockCodeCheck"/>
@@ -358,12 +359,12 @@
                     
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" MinWidth="128"
                                         Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    
-                    <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpDate}" Width="Auto" Visibility="Collapsed">
+
+                    <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpDate}" Width="Auto"   Visibility="{Binding displayexpire,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding expiration_date, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                            Visibility="{Binding id_item, Converter={StaticResource IsNamedObjectVisibilityConverter}}" />
+                                           />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -375,6 +376,9 @@
                     
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
+
+                    <DataGridTextColumn Binding="{Binding conversionquantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                                        Header="{lex:Loc Cognitivo:local:ConversionQuantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
 
                     <!-- UnitPrice -->
                     <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 

@@ -301,8 +301,11 @@ namespace entity
         /// </summary>
         public Status.TransactionTypes trans_type { get; set; }
 
+      
+
         [NotMapped]
         public ICollection<CommercialVAT> CommercialVAT { get; set; }
+
 
         #region Navigation
 

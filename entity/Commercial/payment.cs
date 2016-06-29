@@ -96,11 +96,7 @@ namespace entity
         {
             get
             {
-                foreach (payment_detail _payment_detail in payment_detail)
-                {
-                    _GrandTotal += _payment_detail.value;
-                }
-                return Math.Round(_GrandTotal, 2);
+                return _GrandTotal;
             }
             set
             {

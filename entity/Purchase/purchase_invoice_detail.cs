@@ -36,6 +36,7 @@ namespace entity
                     if (_purchase_invoice != value)
                     {
                         _purchase_invoice = value;
+                        bool a = _purchase_invoice.displayexpire;
                         CurrencyFX_ID = value.id_currencyfx;
                     }
                 }

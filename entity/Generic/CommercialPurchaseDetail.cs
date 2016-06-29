@@ -99,6 +99,37 @@ namespace entity
         }
         private decimal _quantity;
 
+        [NotMapped]
+        public decimal conversionquantity
+        {
+            get { return _conversionquantity; }
+            set
+            {
+                if (_conversionquantity != value)
+                {
+                    _conversionquantity = value;
+                    RaisePropertyChanged("conversionquantity");
+                    if (item != null)
+                    {
+                        decimal factor = 1;
+
+                        if (item.item_product.FirstOrDefault()!=null)
+                        {
+                            if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault()!=null)
+                            {
+                                factor = item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                                quantity = value * factor;
+                            }
+                            
+                        }
+                       
+                    }
+                 
+                }
+            }
+        }
+        private decimal _conversionquantity;
+
         /// <summary>
         /// 
         /// </summary>

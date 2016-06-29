@@ -473,13 +473,10 @@ namespace entity
             {
                 if (item.item_product.FirstOrDefault() != null)
                 {
-                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null
-                        )
+                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null)
                     {
                         if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
                         {
-
-
                             if (item.item_dimension.Count() > 0)
                             {
                                 decimal i = 1M;
@@ -490,8 +487,6 @@ namespace entity
                                         i = i * item_dimension.value;
                                     }
                                 }
-                              
-
                                 return quantity / (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
                             }
                             else

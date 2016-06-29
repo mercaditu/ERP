@@ -90,11 +90,11 @@ namespace entity
             {
                 if (_quantity != value)
                 {
-                    _quantity = value;
-                    RaisePropertyChanged("quantity");
-                    //update quantity
-                    update_SubTotal();
-                    Quantity_Factored = Factor_Quantity();
+                   _quantity = value;
+                   RaisePropertyChanged("quantity");
+                   //update quantity
+                   update_SubTotal();
+                   _Quantity_Factored = Factor_Quantity();
                    RaisePropertyChanged("_Quantity_Factored");
                 }
             }
@@ -110,12 +110,12 @@ namespace entity
             get { return _Quantity_Factored; }
             set
             {
-                if (_Quantity_Factored != value)
+              if (_Quantity_Factored != value)
                 {
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
 
-                   quantity= Factor_Quantity_Back();
+                    _quantity = Factor_Quantity_Back();
                    RaisePropertyChanged("quantity");
                 }
             }
@@ -487,11 +487,11 @@ namespace entity
                                         i = i * item_dimension.value;
                                     }
                                 }
-                                return quantity / (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                                return Quantity_Factored / (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
                             }
                             else
                             {
-                                return quantity / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                                return Quantity_Factored / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
                             }
                         }
                     }

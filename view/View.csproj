@@ -528,6 +528,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Data\ProductionDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductionDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -559,6 +564,9 @@
     </Compile>
     <Compile Include="Reporting\Views\PendingSalesDocs.xaml.cs">
       <DependentUpon>PendingSalesDocs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\EmployeesInProduction.xaml.cs">
+      <DependentUpon>EmployeesInProduction.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
@@ -998,6 +1006,7 @@
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CurrentAccount_Customer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PendingSalesDocs.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
@@ -1301,6 +1310,17 @@
     </None>
     <None Include="Reporting\Data\ProductDS.xss">
       <DependentUpon>ProductDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\ProductionDS.xsc">
+      <DependentUpon>ProductionDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\ProductionDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProductionDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporting\Data\ProductionDS.xss">
+      <DependentUpon>ProductionDS.xsd</DependentUpon>
     </None>
     <None Include="Reporting\Data\PurchaseDS.xsc">
       <DependentUpon>PurchaseDS.xsd</DependentUpon>
@@ -1669,6 +1689,10 @@
     <Page Include="Reporting\Views\PendingSalesDocs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reporting\Views\EmployeesInProduction.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\SalesByDate.xaml">
       <SubType>Designer</SubType>

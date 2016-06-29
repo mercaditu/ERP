@@ -133,8 +133,6 @@ namespace entity
                             
                             purchase_order_detail.id_cost_center = base.app_cost_center.Where(x => x.is_active == true).FirstOrDefault().id_cost_center;
 
-                            
-                           
                             foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
                             {
                                 purchase_order_dimension purchase_order_dimension = new purchase_order_dimension();

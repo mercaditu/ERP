@@ -241,7 +241,9 @@ namespace entity
             [LocalizedDescription("SuppliesRequest")]
             SuppliesRequest = 84,
             [LocalizedDescription("AccountsRecievableAnalisys")]
-            AccountsRecievableAnalisys = 91
+            AccountsRecievableAnalisys = 91,
+            [LocalizedDescription("SalesBySalesRep")]
+            SalesBySalesRep = 92
         }
     }
 }

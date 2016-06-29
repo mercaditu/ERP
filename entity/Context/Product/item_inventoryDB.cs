@@ -147,7 +147,7 @@ namespace entity
                     }
                     else
                     {
-                        if (item_inventory_detail.value_counted != 0 && item_inventory_detail.IsSelected)
+                        if (item_inventory_detail.IsSelected)
                         {
                             decimal delta = 0;
 

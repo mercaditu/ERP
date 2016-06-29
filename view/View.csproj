@@ -920,9 +920,6 @@
     <Content Include="bin\Debug\Images\Wallpaper\Yosemite.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\Debug\SalesInvoice.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="bin\Debug\SalesOrder.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -937,6 +934,7 @@
     <Content Include="bin\Debug\Transfer.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="bin\Debug\SalesInvoice.rdlc" />
     <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

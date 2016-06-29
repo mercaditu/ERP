@@ -92,12 +92,33 @@ namespace entity
                 {
                     _quantity = value;
                     RaisePropertyChanged("quantity");
-
+                    //update quantity
                     update_SubTotal();
+                    Factor_Quantity();
                 }
             }
         }
         private decimal _quantity;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+                    Factor_Quantity_Back();
+                }
+            }
+        }
+        private decimal _Quantity_Factored;
 
         [NotMapped]
         public decimal conversionquantity
@@ -443,6 +464,66 @@ namespace entity
         #endregion
 
         #region Methods
+
+        public decimal Factor_Quantity_Back()
+        {
+            if (item != null)
+            {
+                if (item.item_product.FirstOrDefault() != null)
+                {
+                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null &&
+                        item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
+                    {
+                        if (item.item_dimension.Count() > 0)
+                        {
+                            decimal i = 1M;
+                            foreach (item_dimension item_dimension in item.item_dimension)
+                            {
+                                i = i * item_dimension.value;
+                            }
+
+                            return quantity / (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                        }
+                        else
+                        {
+                            return quantity / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                        }
+                    }
+                }
+            }
+
+            return quantity;
+        }
+
+        public decimal Factor_Quantity()
+        {
+            if (item != null)
+            {
+                if (item.item_product.FirstOrDefault() != null)
+                {
+                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null &&
+                        item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
+                    {
+                        if (item.item_dimension.Count() > 0)
+                        {
+                            decimal i = 1M;
+                            foreach (item_dimension item_dimension in item.item_dimension)
+                            {
+                                i = i * item_dimension.value;
+                            }
+
+                            return quantity * (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                        }
+                        else
+                        {
+                            return quantity * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                        }
+                    }
+                }
+            }
+
+            return quantity;
+        }
 
         /// <summary>
         /// 

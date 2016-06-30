@@ -172,5 +172,15 @@ namespace Cognitivo.Product
                 return img;
             }
         }
+
+        private void AddBrand_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void EditBrand_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

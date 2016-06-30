@@ -37,7 +37,7 @@ namespace Cognitivo.Purchase {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool VAT_Excluded {
             get {
                 return ((bool)(this["VAT_Excluded"]));
@@ -128,6 +128,18 @@ namespace Cognitivo.Purchase {
             }
             set {
                 this["filterbyBranch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowFactorQty {
+            get {
+                return ((bool)(this["ShowFactorQty"]));
+            }
+            set {
+                this["ShowFactorQty"] = value;
             }
         }
     }

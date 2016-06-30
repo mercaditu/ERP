@@ -6,7 +6,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="VAT_Excluded" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TransDate_OffSet" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -27,6 +27,9 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="filterbyBranch" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowFactorQty" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

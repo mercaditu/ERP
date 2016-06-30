@@ -327,7 +327,7 @@
                                         Select="item_Select"
                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
             </StackPanel>
-            <DataGrid x:Name="dgvPurchaseDetail" Margin="8,57,8,8"
+            <DataGrid x:Name="dgvPurchaseDetail" Margin="8,57,0,8"
                         VerticalScrollBarVisibility="Auto" Height="Auto"
                         AutoGenerateColumns="False"
                         IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
@@ -377,11 +377,9 @@
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
                     <DataGridTextColumn Binding="{Binding Quantity_Factored, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-                                        Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
-
-                    <!--<DataGridTextColumn Binding="{Binding Quantity_Factored, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-                                        Header="{lex:Loc Cognitivo:local:ConversionQuantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>-->
-
+                                        Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
+                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                    
                     <!-- UnitPrice -->
                     <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:Price}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"

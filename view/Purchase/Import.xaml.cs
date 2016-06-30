@@ -19,6 +19,7 @@ namespace Cognitivo.Purchase
         int company_ID = CurrentSession.Id_Company;
         cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
         List<Class.clsImpexImportDetails> clsImpexImportDetails = new List<Class.clsImpexImportDetails>();
+        List<Class.clsProductDetail> clsProductDetails = new List<Class.clsProductDetail>();
 
         public Import()
         {
@@ -132,6 +133,7 @@ namespace Cognitivo.Purchase
                     }
                 }
                 impex_importDataGrid.ItemsSource = clsImpexImportDetails;
+                productDataGrid.ItemsSource = clsProductDetails;
             }
         }
 
@@ -160,6 +162,8 @@ namespace Cognitivo.Purchase
 
         private void getProratedCostCounted(purchase_invoice purchase_invoice, bool isNew)
         {
+            clsImpexImportDetails.Clear();
+            clsProductDetails.Clear();
             impex impex = impexDataGrid.SelectedItem as impex;
             if (isNew == true)
             {
@@ -203,9 +207,27 @@ namespace Cognitivo.Purchase
             {
                 TotalInvoiceAmount += (item.quantity * item.UnitCost_Vat);
             }
-
+            if (clsProductDetails.Where(x => x.id_item == 0).Count() == 0)
+            {
+                Class.clsProductDetail ImpexImportProductDetails = new Class.clsProductDetail();
+                ImpexImportProductDetails.id_item = 0;
+                ImpexImportProductDetails.item = "ALL";
+                clsProductDetails.Add(ImpexImportProductDetails);
+            }
+                
             foreach (var item in purchase_invoice_detail.Where(x =>x.item!=null && x.item.item_product != null))
             {
+                int id_item=(int)item.id_item;
+                if (clsProductDetails.Where(x => x.id_item == id_item).Count() == 0)
+                {
+                    Class.clsProductDetail ImpexImportProductDetails = new Class.clsProductDetail();
+                    ImpexImportProductDetails.id_item = (int)item.id_item;
+                    ImpexImportProductDetails.item = ImpexDB.items.Where(a => a.id_item == item.id_item).FirstOrDefault().name;
+                    clsProductDetails.Add(ImpexImportProductDetails);
+                }
+                
+              
+
                 Class.clsImpexImportDetails ImpexImportDetails = new Class.clsImpexImportDetails();
                 ImpexImportDetails.number = item.purchase_invoice.number;
                 ImpexImportDetails.id_item = (int)item.id_item;
@@ -227,6 +249,7 @@ namespace Cognitivo.Purchase
                 decimal SubTotal = (item.quantity * ImpexImportDetails.prorated_cost);
                 ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
                 clsImpexImportDetails.Add(ImpexImportDetails);
+                
             }
            
            
@@ -367,7 +390,18 @@ namespace Cognitivo.Purchase
         private void Calculate_Click(object sender, RoutedEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
-            List<Class.clsImpexImportDetails> ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_importDataGrid.ItemsSource;
+            List<Class.clsImpexImportDetails> ImpexImportDetails =null;
+            Class.clsProductDetail objclsproduct = productDataGrid.SelectedItem as Class.clsProductDetail;
+            if (objclsproduct!=null && objclsproduct.item=="ALL")
+            {
+                ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_importDataGrid.ItemsSource;
+            }
+            else
+            {
+                ImpexImportDetails = impex_importDataGrid.ItemsSource.OfType<Class.clsImpexImportDetails>().ToList().Where(x => x.id_item == objclsproduct.id_item).ToList();
+                    
+            }
+          
 
             decimal totalExpense = impex.impex_expense.Sum(x => x.value);
             decimal totalQuantity = ImpexImportDetails.Sum(x => x.quantity);
@@ -458,6 +492,8 @@ namespace Cognitivo.Purchase
                 }   
             }
         }
+
+        
 
       
 

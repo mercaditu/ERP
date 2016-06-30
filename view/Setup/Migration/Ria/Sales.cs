@@ -79,30 +79,31 @@ namespace Cognitivo.Setup.Migration
             {
                 if (RoofValue > FloorValue)
                 {
-                    using (SalesInvoiceDB db = new SalesInvoiceDB())
+                    for (int i = FloorValue; i < RoofValue; i++)
                     {
-                        db.Configuration.AutoDetectChangesEnabled = false;
-
-                        List<entity.app_vat_group> VATGroupList = db.app_vat_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.contact> ContactList = db.contacts.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.sales_rep> sales_repList = db.sales_rep.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_branch> BranchList = db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_location> LocationList = db.app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_terminal> TerminalList = db.app_terminal.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.item> ItemList = db.items.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-                        List<entity.app_currencyfx> app_currencyfxList = db.app_currencyfx.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-
-                        app_condition app_conditionCrédito = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
-                        app_condition app_conditionContado = db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
-                        app_currencyfx app_currencyfx = null;
-                        if (app_currencyfxList.Where(x => x.is_active).FirstOrDefault() != null)
+                        using (SalesInvoiceDB db = new SalesInvoiceDB())
                         {
-                            app_currencyfx = app_currencyfxList.Where(x => x.is_active).FirstOrDefault();
-                        }
-                        //  RoofValue += 100;
+                            db.Configuration.AutoDetectChangesEnabled = false;
 
-                        for (int i = FloorValue; i < RoofValue; i++)
-                        {
+                            List<entity.app_vat_group> VATGroupList = db.app_vat_group.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                            List<entity.contact> ContactList = db.contacts.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                            List<entity.sales_rep> sales_repList = db.sales_rep.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                            List<entity.app_branch> BranchList = db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                            List<entity.app_location> LocationList = db.app_location.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                            List<entity.app_terminal> TerminalList = db.app_terminal.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                            List<entity.item> ItemList = db.items.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+                            List<entity.app_currencyfx> app_currencyfxList = db.app_currencyfx.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+
+                            app_condition app_conditionCrédito = db.app_condition.Where(x => x.name == "Crédito" && x.id_company == id_company).FirstOrDefault();
+                            app_condition app_conditionContado = db.app_condition.Where(x => x.name == "Contado" && x.id_company == id_company).FirstOrDefault();
+                            app_currencyfx app_currencyfx = null;
+                            if (app_currencyfxList.Where(x => x.is_active).FirstOrDefault() != null)
+                            {
+                                app_currencyfx = app_currencyfxList.Where(x => x.is_active).FirstOrDefault();
+                            }
+                            //  RoofValue += 100;
+
+
                             DataRow InnerRow = dt_sales.Rows[i];
                             app_vat_group app_vat_group10 = VATGroupList.Where(x => x.name.Contains("10")).FirstOrDefault();
                             app_vat_group app_vat_group5 = VATGroupList.Where(x => x.name.Contains("5")).FirstOrDefault();
@@ -364,10 +365,13 @@ namespace Cognitivo.Setup.Migration
                             Dispatcher.BeginInvoke((Action)(() => progSales.Value = value));
                             Dispatcher.BeginInvoke((Action)(() => salesValue.Text = value.ToString()));
 
+
                         }
                     }
 
-                    FloorValue += 100;
+
+                    FloorValue = RoofValue;
+                    RoofValue += 100;
                 }
 
             }

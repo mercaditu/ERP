@@ -45,7 +45,7 @@ namespace Cognitivo.Production
             production_order_detaillAssetViewSource,
             production_order_detaillSupplyViewSource,
             production_order_detaillServiceContractViewSource;
-           // item_dimensionViewSource;
+        // item_dimensionViewSource;
 
         cntrl.Curd.ItemRequest ItemRequest;
 
@@ -203,7 +203,7 @@ namespace Cognitivo.Production
             filter_execution(production_execution_detailServiceContractViewSource, item.item_type.ServiceContract);
             #endregion
         }
-     
+
         public void filter_task()
         {
             if (production_orderproduction_order_detailViewSource != null)
@@ -226,10 +226,13 @@ namespace Cognitivo.Production
         {
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order.status = Status.Production.Executed;
+            production_order.State = EntityState.Modified;
             production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
-            if (production_execution!=null)
+            if (production_execution != null)
             {
+                production_execution.State = EntityState.Modified;
                 production_execution.status = Status.Documents_General.Approved;
+
             }
             if (OrderDB.SaveChanges() > 0)
             {
@@ -249,6 +252,12 @@ namespace Cognitivo.Production
         {
             //Update_request();
             filter_task();
+            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
+            if (production_order.production_execution.FirstOrDefault()!=null)
+            {
+                production_executionViewSource.View.MoveCurrentTo(production_order.production_execution.FirstOrDefault());
+            }
+         
         }
 
         //public async void Update_request()
@@ -1646,6 +1655,6 @@ namespace Cognitivo.Production
 
         }
 
-     
+
     }
 }

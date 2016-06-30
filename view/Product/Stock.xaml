@@ -62,7 +62,7 @@
                     <DataTemplate>
                         <DataGrid x:Name="itemmovementDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                               Margin="16" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionMode="Single"
-                              IsReadOnly="True" HorizontalAlignment="Stretch" FontSize="10"     RowDetailsVisibilityMode="Visible" >
+                              IsReadOnly="True" HorizontalAlignment="Stretch" FontSize="10" RowDetailsVisibilityMode="Visible" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="128"/>
                                 <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="auto"/>

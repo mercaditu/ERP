@@ -24,7 +24,7 @@ namespace Cognitivo.Reporting.Data {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class ProductDS : global::System.Data.DataSet {
         
-        private INVENTORYDataTable tableINVENTORY;
+        private inventoryDataTable tableinventory;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -54,8 +54,8 @@ namespace Cognitivo.Reporting.Data {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["INVENTORY"] != null)) {
-                    base.Tables.Add(new INVENTORYDataTable(ds.Tables["INVENTORY"]));
+                if ((ds.Tables["inventory"] != null)) {
+                    base.Tables.Add(new inventoryDataTable(ds.Tables["inventory"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace Cognitivo.Reporting.Data {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public INVENTORYDataTable INVENTORY {
+        public inventoryDataTable inventory {
             get {
-                return this.tableINVENTORY;
+                return this.tableinventory;
             }
         }
         
@@ -152,8 +152,8 @@ namespace Cognitivo.Reporting.Data {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["INVENTORY"] != null)) {
-                    base.Tables.Add(new INVENTORYDataTable(ds.Tables["INVENTORY"]));
+                if ((ds.Tables["inventory"] != null)) {
+                    base.Tables.Add(new inventoryDataTable(ds.Tables["inventory"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace Cognitivo.Reporting.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableINVENTORY = ((INVENTORYDataTable)(base.Tables["INVENTORY"]));
+            this.tableinventory = ((inventoryDataTable)(base.Tables["inventory"]));
             if ((initTable == true)) {
-                if ((this.tableINVENTORY != null)) {
-                    this.tableINVENTORY.InitVars();
+                if ((this.tableinventory != null)) {
+                    this.tableinventory.InitVars();
                 }
             }
         }
@@ -204,13 +204,13 @@ namespace Cognitivo.Reporting.Data {
             this.Namespace = "http://tempuri.org/ProductDS.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableINVENTORY = new INVENTORYDataTable();
-            base.Tables.Add(this.tableINVENTORY);
+            this.tableinventory = new inventoryDataTable();
+            base.Tables.Add(this.tableinventory);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeINVENTORY() {
+        private bool ShouldSerializeinventory() {
             return false;
         }
         
@@ -270,29 +270,31 @@ namespace Cognitivo.Reporting.Data {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void INVENTORYRowChangeEventHandler(object sender, INVENTORYRowChangeEvent e);
+        public delegate void inventoryRowChangeEventHandler(object sender, inventoryRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class INVENTORYDataTable : global::System.Data.TypedTableBase<INVENTORYRow> {
+        public partial class inventoryDataTable : global::System.Data.TypedTableBase<inventoryRow> {
             
             private global::System.Data.DataColumn columndepositio;
             
             private global::System.Data.DataColumn columncodigo;
             
-            private global::System.Data.DataColumn columnproducto;
-            
             private global::System.Data.DataColumn columnquantity;
+            
+            private global::System.Data.DataColumn columnproducto;
             
             private global::System.Data.DataColumn columncost;
             
+            private global::System.Data.DataColumn columncategory;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public INVENTORYDataTable() {
-                this.TableName = "INVENTORY";
+            public inventoryDataTable() {
+                this.TableName = "inventory";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -300,7 +302,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal INVENTORYDataTable(global::System.Data.DataTable table) {
+            internal inventoryDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -317,7 +319,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected INVENTORYDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected inventoryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -340,14 +342,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn productoColumn {
-                get {
-                    return this.columnproducto;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn quantityColumn {
                 get {
                     return this.columnquantity;
@@ -356,9 +350,25 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn productoColumn {
+                get {
+                    return this.columnproducto;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn costColumn {
                 get {
                     return this.columncost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn categoryColumn {
+                get {
+                    return this.columncategory;
                 }
             }
             
@@ -373,49 +383,50 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public INVENTORYRow this[int index] {
+            public inventoryRow this[int index] {
                 get {
-                    return ((INVENTORYRow)(this.Rows[index]));
+                    return ((inventoryRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event INVENTORYRowChangeEventHandler INVENTORYRowChanging;
+            public event inventoryRowChangeEventHandler inventoryRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event INVENTORYRowChangeEventHandler INVENTORYRowChanged;
+            public event inventoryRowChangeEventHandler inventoryRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event INVENTORYRowChangeEventHandler INVENTORYRowDeleting;
+            public event inventoryRowChangeEventHandler inventoryRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event INVENTORYRowChangeEventHandler INVENTORYRowDeleted;
+            public event inventoryRowChangeEventHandler inventoryRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddINVENTORYRow(INVENTORYRow row) {
+            public void AddinventoryRow(inventoryRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public INVENTORYRow AddINVENTORYRow(string depositio, string codigo, string producto, decimal quantity, decimal cost) {
-                INVENTORYRow rowINVENTORYRow = ((INVENTORYRow)(this.NewRow()));
+            public inventoryRow AddinventoryRow(string depositio, string codigo, decimal quantity, string producto, decimal cost, string category) {
+                inventoryRow rowinventoryRow = ((inventoryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         depositio,
                         codigo,
-                        producto,
                         quantity,
-                        cost};
-                rowINVENTORYRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowINVENTORYRow);
-                return rowINVENTORYRow;
+                        producto,
+                        cost,
+                        category};
+                rowinventoryRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowinventoryRow);
+                return rowinventoryRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                INVENTORYDataTable cln = ((INVENTORYDataTable)(base.Clone()));
+                inventoryDataTable cln = ((inventoryDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -423,7 +434,7 @@ namespace Cognitivo.Reporting.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new INVENTORYDataTable();
+                return new inventoryDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -431,9 +442,10 @@ namespace Cognitivo.Reporting.Data {
             internal void InitVars() {
                 this.columndepositio = base.Columns["depositio"];
                 this.columncodigo = base.Columns["codigo"];
-                this.columnproducto = base.Columns["producto"];
                 this.columnquantity = base.Columns["quantity"];
+                this.columnproducto = base.Columns["producto"];
                 this.columncost = base.Columns["cost"];
+                this.columncategory = base.Columns["category"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -443,38 +455,40 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columndepositio);
                 this.columncodigo = new global::System.Data.DataColumn("codigo", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncodigo);
-                this.columnproducto = new global::System.Data.DataColumn("producto", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnproducto);
                 this.columnquantity = new global::System.Data.DataColumn("quantity", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnquantity);
+                this.columnproducto = new global::System.Data.DataColumn("producto", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnproducto);
                 this.columncost = new global::System.Data.DataColumn("cost", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncost);
+                this.columncategory = new global::System.Data.DataColumn("category", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncategory);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public INVENTORYRow NewINVENTORYRow() {
-                return ((INVENTORYRow)(this.NewRow()));
+            public inventoryRow NewinventoryRow() {
+                return ((inventoryRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new INVENTORYRow(builder);
+                return new inventoryRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(INVENTORYRow);
+                return typeof(inventoryRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.INVENTORYRowChanged != null)) {
-                    this.INVENTORYRowChanged(this, new INVENTORYRowChangeEvent(((INVENTORYRow)(e.Row)), e.Action));
+                if ((this.inventoryRowChanged != null)) {
+                    this.inventoryRowChanged(this, new inventoryRowChangeEvent(((inventoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -482,8 +496,8 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.INVENTORYRowChanging != null)) {
-                    this.INVENTORYRowChanging(this, new INVENTORYRowChangeEvent(((INVENTORYRow)(e.Row)), e.Action));
+                if ((this.inventoryRowChanging != null)) {
+                    this.inventoryRowChanging(this, new inventoryRowChangeEvent(((inventoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -491,8 +505,8 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.INVENTORYRowDeleted != null)) {
-                    this.INVENTORYRowDeleted(this, new INVENTORYRowChangeEvent(((INVENTORYRow)(e.Row)), e.Action));
+                if ((this.inventoryRowDeleted != null)) {
+                    this.inventoryRowDeleted(this, new inventoryRowChangeEvent(((inventoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -500,14 +514,14 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.INVENTORYRowDeleting != null)) {
-                    this.INVENTORYRowDeleting(this, new INVENTORYRowChangeEvent(((INVENTORYRow)(e.Row)), e.Action));
+                if ((this.inventoryRowDeleting != null)) {
+                    this.inventoryRowDeleting(this, new inventoryRowChangeEvent(((inventoryRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveINVENTORYRow(INVENTORYRow row) {
+            public void RemoveinventoryRow(inventoryRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -534,7 +548,7 @@ namespace Cognitivo.Reporting.Data {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "INVENTORYDataTable";
+                attribute2.FixedValue = "inventoryDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -578,15 +592,15 @@ namespace Cognitivo.Reporting.Data {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class INVENTORYRow : global::System.Data.DataRow {
+        public partial class inventoryRow : global::System.Data.DataRow {
             
-            private INVENTORYDataTable tableINVENTORY;
+            private inventoryDataTable tableinventory;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal INVENTORYRow(global::System.Data.DataRowBuilder rb) : 
+            internal inventoryRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableINVENTORY = ((INVENTORYDataTable)(this.Table));
+                this.tableinventory = ((inventoryDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -594,14 +608,14 @@ namespace Cognitivo.Reporting.Data {
             public string depositio {
                 get {
                     try {
-                        return ((string)(this[this.tableINVENTORY.depositioColumn]));
+                        return ((string)(this[this.tableinventory.depositioColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'depositio\' in table \'INVENTORY\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'depositio\' in table \'inventory\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableINVENTORY.depositioColumn] = value;
+                    this[this.tableinventory.depositioColumn] = value;
                 }
             }
             
@@ -610,30 +624,14 @@ namespace Cognitivo.Reporting.Data {
             public string codigo {
                 get {
                     try {
-                        return ((string)(this[this.tableINVENTORY.codigoColumn]));
+                        return ((string)(this[this.tableinventory.codigoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'codigo\' in table \'INVENTORY\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'codigo\' in table \'inventory\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableINVENTORY.codigoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string producto {
-                get {
-                    try {
-                        return ((string)(this[this.tableINVENTORY.productoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'producto\' in table \'INVENTORY\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableINVENTORY.productoColumn] = value;
+                    this[this.tableinventory.codigoColumn] = value;
                 }
             }
             
@@ -642,14 +640,30 @@ namespace Cognitivo.Reporting.Data {
             public decimal quantity {
                 get {
                     try {
-                        return ((decimal)(this[this.tableINVENTORY.quantityColumn]));
+                        return ((decimal)(this[this.tableinventory.quantityColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'quantity\' in table \'INVENTORY\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'quantity\' in table \'inventory\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableINVENTORY.quantityColumn] = value;
+                    this[this.tableinventory.quantityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string producto {
+                get {
+                    try {
+                        return ((string)(this[this.tableinventory.productoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'producto\' in table \'inventory\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableinventory.productoColumn] = value;
                 }
             }
             
@@ -658,75 +672,103 @@ namespace Cognitivo.Reporting.Data {
             public decimal cost {
                 get {
                     try {
-                        return ((decimal)(this[this.tableINVENTORY.costColumn]));
+                        return ((decimal)(this[this.tableinventory.costColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'cost\' in table \'INVENTORY\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'cost\' in table \'inventory\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableINVENTORY.costColumn] = value;
+                    this[this.tableinventory.costColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string category {
+                get {
+                    try {
+                        return ((string)(this[this.tableinventory.categoryColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'category\' in table \'inventory\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableinventory.categoryColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsdepositioNull() {
-                return this.IsNull(this.tableINVENTORY.depositioColumn);
+                return this.IsNull(this.tableinventory.depositioColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetdepositioNull() {
-                this[this.tableINVENTORY.depositioColumn] = global::System.Convert.DBNull;
+                this[this.tableinventory.depositioColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IscodigoNull() {
-                return this.IsNull(this.tableINVENTORY.codigoColumn);
+                return this.IsNull(this.tableinventory.codigoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetcodigoNull() {
-                this[this.tableINVENTORY.codigoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsproductoNull() {
-                return this.IsNull(this.tableINVENTORY.productoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetproductoNull() {
-                this[this.tableINVENTORY.productoColumn] = global::System.Convert.DBNull;
+                this[this.tableinventory.codigoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsquantityNull() {
-                return this.IsNull(this.tableINVENTORY.quantityColumn);
+                return this.IsNull(this.tableinventory.quantityColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetquantityNull() {
-                this[this.tableINVENTORY.quantityColumn] = global::System.Convert.DBNull;
+                this[this.tableinventory.quantityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsproductoNull() {
+                return this.IsNull(this.tableinventory.productoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetproductoNull() {
+                this[this.tableinventory.productoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IscostNull() {
-                return this.IsNull(this.tableINVENTORY.costColumn);
+                return this.IsNull(this.tableinventory.costColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetcostNull() {
-                this[this.tableINVENTORY.costColumn] = global::System.Convert.DBNull;
+                this[this.tableinventory.costColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IscategoryNull() {
+                return this.IsNull(this.tableinventory.categoryColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetcategoryNull() {
+                this[this.tableinventory.categoryColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -734,22 +776,22 @@ namespace Cognitivo.Reporting.Data {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class INVENTORYRowChangeEvent : global::System.EventArgs {
+        public class inventoryRowChangeEvent : global::System.EventArgs {
             
-            private INVENTORYRow eventRow;
+            private inventoryRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public INVENTORYRowChangeEvent(INVENTORYRow row, global::System.Data.DataRowAction action) {
+            public inventoryRowChangeEvent(inventoryRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public INVENTORYRow Row {
+            public inventoryRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -777,7 +819,7 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class INVENTORYTableAdapter : global::System.ComponentModel.Component {
+    public partial class inventoryTableAdapter : global::System.ComponentModel.Component {
         
         private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
         
@@ -791,7 +833,7 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public INVENTORYTableAdapter() {
+        public inventoryTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -888,12 +930,13 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
             this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "INVENTORY";
+            tableMapping.DataSetTable = "inventory";
             tableMapping.ColumnMappings.Add("depositio", "depositio");
             tableMapping.ColumnMappings.Add("codigo", "codigo");
-            tableMapping.ColumnMappings.Add("producto", "producto");
             tableMapping.ColumnMappings.Add("quantity", "quantity");
+            tableMapping.ColumnMappings.Add("producto", "producto");
             tableMapping.ColumnMappings.Add("cost", "cost");
+            tableMapping.ColumnMappings.Add("category", "category");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -910,12 +953,19 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "`cognitivogolden`.`INVENTORY`";
+            this._commandCollection[0].CommandText = "`cognitivogolden`.`inventory`";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "EndDate";
+            param.ParameterName = "enddate";
             param.DbType = global::System.Data.DbType.DateTime;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
+            param.Size = 2147483647;
+            param.IsNullable = true;
+            this._commandCollection[0].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "idcompany";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.Size = 2147483647;
             param.IsNullable = true;
             this._commandCollection[0].Parameters.Add(param);
@@ -925,13 +975,19 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(ProductDS.INVENTORYDataTable dataTable, global::System.Nullable<global::System.DateTime> EndDate) {
+        public virtual int Fill(ProductDS.inventoryDataTable dataTable, global::System.Nullable<global::System.DateTime> enddate, global::System.Nullable<int> idcompany) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((EndDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(EndDate.Value));
+            if ((enddate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(enddate.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((idcompany.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(idcompany.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -944,15 +1000,21 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ProductDS.INVENTORYDataTable GetData(global::System.Nullable<global::System.DateTime> EndDate) {
+        public virtual ProductDS.inventoryDataTable GetData(global::System.Nullable<global::System.DateTime> enddate, global::System.Nullable<int> idcompany) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((EndDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(EndDate.Value));
+            if ((enddate.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(enddate.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
-            ProductDS.INVENTORYDataTable dataTable = new ProductDS.INVENTORYDataTable();
+            if ((idcompany.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(idcompany.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            ProductDS.inventoryDataTable dataTable = new ProductDS.inventoryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }

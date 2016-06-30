@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V528\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V531\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>516</ApplicationRevision>
+    <ApplicationRevision>517</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -519,6 +519,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FinanceDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Data\ProductDS.cs">
+      <DependentUpon>ProductDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.Designer.cs">
       <AutoGen>True</AutoGen>

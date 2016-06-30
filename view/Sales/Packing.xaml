@@ -11,6 +11,7 @@
       Title="Packing">
     <Page.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
+        <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
     </Page.Resources>
 
     <Grid Background="{StaticResource AccentColor_Brush}" DataContext="{StaticResource ResourceKey=item_movementViewSource}">
@@ -41,31 +42,41 @@
             <Button  Click="ListProducts" Content="Buscar" Width="128"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" Margin="32,8" AutoGenerateColumns="False" ItemsSource="{Binding}">
+        <DataGrid Grid.Row="2" Margin="32,8" AutoGenerateColumns="False" SelectionChanged="StockList"
+                  ItemsSource="{Binding}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Item" Width="256" Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Quantity" Width="256" Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     ElementStyle="{StaticResource RightAlignStyle}"/>
             </DataGrid.Columns>
+            
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <DataGrid VerticalScrollBarVisibility="Auto"
-                              AutoGenerateColumns="False" Grid.Column="1"
-                              EnableRowVirtualization="True"  Grid.Row="1" 
-                              IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding LocationName}" Header="BranchName" Width="auto" />
-                            <DataGridTextColumn Binding="{Binding quntitiy}" Header="Quantity" Width="auto" />
-                            <!--<DataGridTemplateColumn Width="Auto">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="+" Click="Button_Click" Tag="{Binding LocationName}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>-->
-                        </DataGrid.Columns>
-
-                    </DataGrid>
+                    <Grid DataContext="{StaticResource inventoryViewSource}" Background="WhiteSmoke" Margin="4">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Grid Height="130" Width="130" AllowDrop="True" Background="White" Margin="4">
+                                <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
+                                            FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
+                                <Image x:Name="imageViewer" Margin="4"/>
+                            </Grid>
+                            <StackPanel>
+                                <Label Style="{StaticResource H1}" Content="{Binding name, FallbackValue='Out Of Stock'}"/>
+                                <Label Style="{StaticResource H3}" Content="{Binding code}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid HorizontalAlignment="Right" Margin="8" Width="256">
+                            <Label Style="{StaticResource H3}" Content="Location"/>
+                            <DataGrid x:Name="dgvLocation" VerticalScrollBarVisibility="Auto" Margin="0,28,0,0"
+                                      AutoGenerateColumns="False" Grid.Column="1" ItemsSource="{Binding}"
+                                      EnableRowVirtualization="True"  Grid.Row="1" 
+                                      IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding location}" Header="Location" Width="auto" />
+                                    <DataGridTextColumn Binding="{Binding quantity}" Header="Quantity" Width="auto" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Grid>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

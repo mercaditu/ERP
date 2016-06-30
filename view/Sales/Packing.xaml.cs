@@ -14,8 +14,8 @@ namespace Cognitivo.Sales
     {
         db dbContext = new db();
         CollectionViewSource item_movementViewSource;
-        sales_invoice sales_invoice;
-
+        CollectionViewSource inventoryViewSource;
+             
         public string InvoiceNumber 
         {
             get { return _InvoiceNumber; }
@@ -24,10 +24,6 @@ namespace Cognitivo.Sales
                 if (_InvoiceNumber != value)
                 {
                     _InvoiceNumber = value;
-                    //if (_InvoiceNumber.Length > 3)
-                    //{
-                    //    ListProducts();
-                    //}
                 }
             }
         }
@@ -38,6 +34,7 @@ namespace Cognitivo.Sales
         {
             InitializeComponent();
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+            inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
         }
 
         private void ListProducts(object sender, EventArgs e)
@@ -45,9 +42,16 @@ namespace Cognitivo.Sales
             if (InvoiceNumber != string.Empty)
             {
                 List<sales_invoice_detail> sales_invoice_detailLIST = dbContext.sales_invoice_detail
-                    .Where(x => x.sales_invoice.number.Contains(InvoiceNumber) && 
-                        x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 &&
-                        x.sales_invoice.status == Status.Documents_General.Approved).ToList();
+                    .Where(x => x.sales_invoice.number.Contains(InvoiceNumber) &&
+                        //Contado (Cash) + Payment Made
+                        (
+                        (x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 && x.sales_invoice.app_contract.app_contract_detail.Sum(z => z.coefficient) == 0) 
+                        
+                        ||
+                        //Credit
+                        (x.sales_invoice.app_contract.app_contract_detail.Sum(y => y.coefficient) > 0)
+                        ) &&
+                         x.sales_invoice.status == Status.Documents_General.Approved).ToList();
 
                 List<item_movement> item_movementLIST = new List<item_movement>();
 
@@ -92,6 +96,51 @@ namespace Cognitivo.Sales
 
                 dbContext.item_movement.AddRange(item_movementLIST);
                 item_movementViewSource.Source = item_movementLIST;
+            }
+        }
+
+        private void StockList(object sender, EventArgs e)
+        {
+            if (item_movementViewSource.View != null)
+            {
+                if (item_movementViewSource.View.CurrentItem != null)
+                {
+                    item_product _item_product = (item_movementViewSource.View.CurrentItem as item_movement).item_product;
+                    if (_item_product != null && inventoryViewSource != null)
+                    {
+                        using (StockDB StockDB = new StockDB())
+                        {
+                            var movement =
+                               (from items in StockDB.items
+                                join item_product in StockDB.item_product on items.id_item equals item_product.id_item
+                                    into its
+                                from p in its
+                                join item_movement in StockDB.item_movement on p.id_item_product equals item_movement.id_item_product
+                                into IMS
+                                from a in IMS
+                                join AM in StockDB.app_branch on a.app_location.id_branch equals AM.id_branch
+                                where a.status == Status.Stock.InStock
+                                && a.id_item_product == _item_product.id_item_product
+                                && a.trans_date <= DateTime.Now
+                                && a.app_location.id_branch == CurrentSession.Id_Branch
+                                group a by new { a.item_product, a.app_location }
+                                    into last
+                                    select new
+                                    {
+                                        code = last.Key.item_product.item.code,
+                                        name = last.Key.item_product.item.name,
+                                        location = last.Key.app_location.name,
+                                        itemid = last.Key.item_product.item.id_item,
+                                        quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                                        id_item_product = last.Key.item_product.id_item_product,
+                                        measurement = last.Key.item_product.item.app_measurement.code_iso,
+                                        id_location = last.Key.app_location.id_location
+                                    }).ToList().OrderBy(y => y.name);
+
+                            inventoryViewSource.Source = movement;
+                        }
+                    }
+                }
             }
         }
 

@@ -327,7 +327,7 @@
                                         Select="item_Select"
                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
             </StackPanel>
-            <DataGrid x:Name="dgvPurchaseDetail" Margin="8,57,0,8"
+            <DataGrid x:Name="dgvPurchaseDetail" Margin="0,57,0,8"
                         VerticalScrollBarVisibility="Auto" Height="Auto"
                         AutoGenerateColumns="False"
                         IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"

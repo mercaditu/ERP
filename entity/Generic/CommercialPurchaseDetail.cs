@@ -94,7 +94,7 @@ namespace entity
                    RaisePropertyChanged("quantity");
                    //update quantity
                    update_SubTotal();
-                   _Quantity_Factored = Factor_Quantity();
+                   _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity);
                    RaisePropertyChanged("_Quantity_Factored");
                 }
             }
@@ -115,7 +115,7 @@ namespace entity
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
 
-                    _quantity = Factor_Quantity_Back();
+                    _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored);
                    RaisePropertyChanged("quantity");
                 }
             }
@@ -466,75 +466,6 @@ namespace entity
         #endregion
 
         #region Methods
-
-        public decimal Factor_Quantity_Back()
-        {
-            if (item != null)
-            {
-                if (item.item_product.FirstOrDefault() != null)
-                {
-                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null)
-                    {
-                        if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
-                        {
-                            if (item.item_dimension.Count() > 0)
-                            {
-                                decimal i = 1M;
-                                foreach (item_dimension item_dimension in item.item_dimension)
-                                {
-                                    if (item_dimension.value > 0)
-                                    {
-                                        i = i * item_dimension.value;
-                                    }
-                                }
-                                return Quantity_Factored / (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
-                            }
-                            else
-                            {
-                                return Quantity_Factored / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return quantity;
-        }
-
-        public decimal Factor_Quantity()
-        {
-            if (item != null)
-            {
-                if (item.item_product.FirstOrDefault() != null)
-                {
-                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault() != null )
-                    {
-                        if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
-                        {
-                            if (item.item_dimension.Count() > 0)
-                            {
-                                decimal i = 1M;
-                                foreach (item_dimension item_dimension in item.item_dimension)
-                                {
-                                    if (item_dimension.value > 0)
-                                    {
-                                        i = i * item_dimension.value;
-                                    }
-                                }
-
-                                return quantity * (i * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
-                            }
-                            else
-                            {
-                                return quantity * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return quantity;
-        }
 
         /// <summary>
         /// 

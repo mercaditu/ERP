@@ -882,6 +882,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\WindowsIcons-license.txt" />
+    <Content Include="SQL\sp_drop_budgetstatus.sql" />
+    <Content Include="SQL\sp_create_budgetstatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DocumentViewr.xaml">

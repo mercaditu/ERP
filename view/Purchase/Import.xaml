@@ -142,10 +142,10 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Expenses}">
-                    <StackPanel IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}"
+                    <Grid IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <TextBlock Style="{StaticResource text_HyperLinks}" Text="{lex:Loc Extract}" MouseUp="GetExpences_PreviewMouseUp"/>
-                        <Grid>
+                        <TextBlock VerticalAlignment="Top" Style="{StaticResource text_HyperLinks}" Text="{lex:Loc Extract}" MouseUp="GetExpences_PreviewMouseUp"/>
+                        <Grid Margin="0,25,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="*"/>
@@ -176,7 +176,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                             <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" Grid.Column="1"
-                                EnableRowVirtualization="True" Height="Auto" Margin="4"
+                                EnableRowVirtualization="True" Height="Auto" Margin="0,4,4,38"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="128" Binding="{Binding item}"/>
@@ -187,7 +187,7 @@
 
                         <Button Style="{StaticResource btn_green}" Content="{lex:Loc Calculate}" Click="Calculate_Click"
                                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"/>
-                        </StackPanel>
+                        </Grid>
                 </TabItem>
             </TabControl>
         </Grid>

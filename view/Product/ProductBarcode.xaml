@@ -12,7 +12,7 @@
     <Page.Resources>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
     </Page.Resources>
-    <Grid>
+    <Grid DataContext="{StaticResource itemViewSource}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>

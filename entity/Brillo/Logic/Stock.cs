@@ -38,8 +38,6 @@ namespace entity.Brillo.Logic
                                  if (item_productSub != null)
                                  {
 
-
-
                                      if (detail.id_location == null)
                                      {
                                          detail.id_location = FindNFix_Location(item_productSub, detail.app_location, sales_invoice.app_branch);

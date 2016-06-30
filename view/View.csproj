@@ -945,6 +945,10 @@
     <Content Include="bin\Debug\Transfer.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="bin\Debug\item\Carnet_item.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="bin\Debug\SalesInvoice.rdlc" />
     <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
       <SubType>Designer</SubType>
@@ -2081,7 +2085,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\Inventory\" />
-    <Folder Include="bin\Debug\item\" />
     <Folder Include="bin\Debug\Sales\" />
     <Folder Include="Promotion\" />
   </ItemGroup>

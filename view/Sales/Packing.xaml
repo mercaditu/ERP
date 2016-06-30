@@ -4,9 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-       xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:local="clr-namespace:Cognitivo.Sales"
-        xmlns:my="clr-namespace:entity.Properties;assembly=entity"
+      xmlns:main="clr-namespace:Cognitivo.Properties"
+      xmlns:my="clr-namespace:entity.Properties;assembly=entity"
       mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="800"
       Title="Packing">
     <Page.Resources>
@@ -14,7 +15,10 @@
         <CollectionViewSource x:Key="inventoryViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_inventory}, CreateList=True}"/>
     </Page.Resources>
 
-    <Grid Background="{StaticResource AccentColor_Brush}" DataContext="{StaticResource ResourceKey=item_movementViewSource}">
+    <Grid DataContext="{StaticResource ResourceKey=item_movementViewSource}">
+        <Grid.Background>
+            <ImageBrush ImageSource="{Binding Source={x:Static main:Settings.Default}, Path=wallpaper_Image}" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="103*"/>
@@ -22,6 +26,7 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
+        <Grid Style="{StaticResource ThemeBackGround}" Grid.RowSpan="4"/>
         <StackPanel Orientation="Horizontal">
             <cntrl:toolIcon icoName="New" imgSource="+" Click="btnNew_Click"/>
             <cntrl:toolIcon icoName="Cancel" imgSource="c" Click="btnCancel_Click"/>
@@ -44,6 +49,12 @@
 
         <DataGrid Grid.Row="2" Margin="32,8" AutoGenerateColumns="False" SelectionChanged="StockList"
                   ItemsSource="{Binding}">
+            <DataGrid.RowBackground>
+                <SolidColorBrush Color="White" Opacity="0.32"/>
+            </DataGrid.RowBackground>
+            <DataGrid.Background>
+                <SolidColorBrush Color="White" Opacity="0.32"/>
+            </DataGrid.Background>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Item" Width="256" Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTextColumn Header="Quantity" Width="256" Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

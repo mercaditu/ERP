@@ -330,7 +330,7 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <!--<TabItem Header="{lex:Loc ProductionExecution}">
+                <TabItem Header="{lex:Loc ProductionExecution}">
                     <TabControl Grid.ColumnSpan="2" Grid.Row="1">
                         <TabItem Header="{lex:Loc Product}">
                             <Grid>
@@ -823,7 +823,7 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                </TabItem>-->
+                </TabItem>
             </TabControl>
         </Grid>
       

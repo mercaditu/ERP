@@ -189,8 +189,9 @@ namespace Cognitivo.Sales
             payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
             app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active);
+            app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
 
+            int Id_Account = CurrentSession.Id_Account;
             if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
             {
                 if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)

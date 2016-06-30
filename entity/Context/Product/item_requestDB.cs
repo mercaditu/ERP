@@ -210,15 +210,22 @@ namespace entity
                             }
                             if (item_request_detail.id_order_detail != null)
                             {
-                                int id_project = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task.id_project;
-                                int id_branch = (int)base.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
-                                item_transfertrans.app_location_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
-                                item_transfertrans.app_branch_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                if (base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task != null)
+                                {
+                                    int id_project = base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault().project_task.id_project;
+                                    int id_branch = (int)base.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
+                                    item_transfertrans.app_location_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().app_location.Where(x => x.is_default).FirstOrDefault();
+                                    item_transfertrans.app_branch_destination = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
+                                }
                             }
 
                             item_transfer_detail item_transfer_detail = new item_transfer_detail();
                             item_transfer_detail.id_item_product = item_request_detail.item.item_product.FirstOrDefault().id_item_product;
-                            item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
+                            if (item_request_detail.project_task!=null)
+                            {
+                                item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
+                            }
+                     
                             item_transfer_detail.quantity_origin = item.quantity;
                             item_transfer_detail.quantity_destination = item.quantity;
                             item_transfertrans.item_transfer_detail.Add(item_transfer_detail);

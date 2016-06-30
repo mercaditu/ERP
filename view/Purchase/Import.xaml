@@ -177,7 +177,7 @@
                             </DataGrid>
                             <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" Grid.Column="1"
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4,4,38"
-                                RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
+                                RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionChanged="productDataGrid_SelectionChanged">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="128" Binding="{Binding item}"/>
                                 </DataGrid.Columns>

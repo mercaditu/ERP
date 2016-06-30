@@ -41,6 +41,8 @@ namespace entity
             }
         }
         int _id_currencyfx;
+        [NotMapped]
+        public int id_item { get; set; }
         public virtual impex impex { get; set; }
         public virtual impex_incoterm_condition impex_incoterm_condition { get; set; }
         public virtual purchase_invoice purchase_invoice { get; set; }

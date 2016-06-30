@@ -71,7 +71,7 @@ namespace Cognitivo.Setup.Migration
 
             DataTable dt_detail = exeDT(sqlDetail);
 
-            int RoofValue = 100;
+            int RoofValue = 1000;
             int FloorValue = 0;
 
             //Run a Foreach Lap
@@ -371,7 +371,7 @@ namespace Cognitivo.Setup.Migration
 
 
                     FloorValue = RoofValue;
-                    RoofValue += 100;
+                    RoofValue += 1000;
                 }
 
             }

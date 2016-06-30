@@ -23,33 +23,81 @@ namespace entity.Brillo.Logic
                 sales_invoice sales_invoice = (sales_invoice)obj_entity;
 
                 foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail
-                    .Where(x => x.item.item_product.Count() > 0))
+                    )
                 {
-                    item_product item_product = FindNFix_ItemProduct(detail.item);
 
-                    if (detail.id_location == null)
+                    if (detail.item.is_autorecepie)
                     {
-                        detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
-                        detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+                         item_product item_product = FindNFix_ItemProduct(detail.item);
+                         if (detail.item.item_recepie.FirstOrDefault()!=null)
+                         {
+                             foreach (item_recepie_detail item_recepie_detail in detail.item.item_recepie.FirstOrDefault().item_recepie_detail)
+                             {
+                                 
+                                 item_product item_productSub = FindNFix_ItemProduct(item_recepie_detail.item);
+                                 if (item_productSub != null)
+                                 {
+
+
+
+                                     if (detail.id_location == null)
+                                     {
+                                         detail.id_location = FindNFix_Location(item_productSub, detail.app_location, sales_invoice.app_branch);
+                                         detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+                                     }
+
+                                     sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                                     List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
+                                                                                       && x.id_item_product == item_productSub.id_item_product
+                                                                                       && x.status == entity.Status.Stock.InStock
+                                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+
+                                     item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
+                                                              App.Names.SalesInvoice,
+                                                              detail.id_sales_invoice,
+                                                              (int)detail.id_sales_invoice_detail,
+                                                              sales_invoice.app_currencyfx,
+                                                              item_productSub,
+                                                              detail.app_location,
+                                                              item_recepie_detail.quantity,
+                                                              sales_invoice.trans_date,
+                                                              comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
+                                                              ));
+                                 }
+                             }
+                         }
+                        
                     }
+                    else
+                    {
+                        item_product item_product = FindNFix_ItemProduct(detail.item);
+                        if (item_product != null)
+                        {
+                            if (detail.id_location == null)
+                            {
+                                detail.id_location = FindNFix_Location(item_product, detail.app_location, sales_invoice.app_branch);
+                                detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
+                            }
 
-                    sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
-                    List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
-                                                                      && x.id_item_product == item_product.id_item_product
-                                                                      && x.status == entity.Status.Stock.InStock
-                                                                      && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                            sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                            List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
+                                                                              && x.id_item_product == item_product.id_item_product
+                                                                              && x.status == entity.Status.Stock.InStock
+                                                                              && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
-                    item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
-                                             App.Names.SalesInvoice,
-                                             detail.id_sales_invoice,
-                                             (int)detail.id_sales_invoice_detail,
-                                             sales_invoice.app_currencyfx,
-                                             item_product,
-                                             detail.app_location,
-                                             detail.quantity,
-                                             sales_invoice.trans_date,
-                                             comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
-                                             ));
+                            item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
+                                                     App.Names.SalesInvoice,
+                                                     detail.id_sales_invoice,
+                                                     (int)detail.id_sales_invoice_detail,
+                                                     sales_invoice.app_currencyfx,
+                                                     item_product,
+                                                     detail.app_location,
+                                                     detail.quantity,
+                                                     sales_invoice.trans_date,
+                                                     comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
+                                                     ));
+                        }
+                    }
                 }
                 //Return List so we can save into context.
                 return item_movementList;

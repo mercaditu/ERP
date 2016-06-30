@@ -28,14 +28,14 @@
         <converter:CostCenterCanStockItemConverter x:Key="CostCenterCanStockItemCheck"/>
         <converter:CostCenterCanStockCodeConverter x:Key="CostCenterCanStockCodeCheck"/>
         <CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}"/>
-        
+
         <CollectionViewSource x:Key="purchase_orderpurchase_order_detailViewSource" Source="{Binding purchase_order_detail, Source={StaticResource purchase_orderViewSource}}"/>
         <CollectionViewSource x:Key="purchase_order_detailpurchase_order_dimensionViewSource" Source="{Binding purchase_order_dimension, Source={StaticResource purchase_orderpurchase_order_detailViewSource}}"/>
-       
+
         <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
-        
+
     </Page.Resources>
     <Grid DataContext="{StaticResource purchase_orderViewSource}">
         <Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 </DataTemplate>
-                
+
             </ListBox.ItemTemplate>
         </ListBox>
 
@@ -75,7 +75,7 @@
                 <RowDefinition Height="400"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-  
+
             <!-- SideBar -->
             <StackPanel Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.RowSpan="2">
                 <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
@@ -122,6 +122,10 @@
                                 <CheckBox Margin="6,0,0,0" x:Name="chkfilterbyBranch" 
                                           IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=filterbyBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                     <Label Content="{lex:Loc filterbyBranch}" Foreground="MediumVioletRed"/>
+                                </CheckBox>
+                                <CheckBox Margin="6,0,0,0" x:Name="chkshowconversion" 
+                                          IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                    <Label Content="{lex:Loc chkfilterbyBranch}" Foreground="MediumVioletRed"/>
                                 </CheckBox>
                             </StackPanel>
                         </Border>
@@ -220,8 +224,8 @@
                         <TextBox Width="Auto" TextWrapping="WrapWithOverflow" Margin="4,0" Height="64" HorizontalAlignment="Stretch" Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </StackPanel>
-                
-            
+
+
             </StackPanel>
 
             <!-- MainForm -->
@@ -250,7 +254,7 @@
                               Style="{DynamicResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                               IsEnabled="{Binding Text, Converter={StaticResource TextChangeToEnable}, ElementName=tbxInvoiceNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                               SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"/>
-                    
+
                     <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
                     <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, Mode=TwoWay, ElementName=PurchaseOrder, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"
                              metro:TextBoxHelper.SelectAllOnFocus="True" metro:ControlsHelper.FocusBorderBrush="RoyalBlue" metro:ControlsHelper.MouseOverBorderBrush="Silver" 
@@ -341,8 +345,10 @@
                         <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding Quantity_Factored, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-                                            Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
-                        
+                                            Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
+                                               Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+
+
                         <!-- UnitPrice -->
                         <DataGridTextColumn Binding="{Binding unit_cost, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -350,7 +356,7 @@
                         <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto"  ElementStyle="{StaticResource RightAlignStyle}"/>
-                        
+
                         <!-- UnitPrice_Vat -->
                         <DataGridTextColumn Binding="{Binding UnitCost_Vat, Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -358,7 +364,7 @@
                         <DataGridTextColumn Binding="{Binding Discount_SubTotal, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" />
-                        
+
                         <!-- SubTotal -->
                         <DataGridTextColumn IsReadOnly="True" Binding="{Binding SubTotal, Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -366,7 +372,7 @@
                         <DataGridTextColumn Binding="{Binding DiscountVat, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" />
-                        
+
                         <!-- SubTotal_VAT -->
                         <DataGridTextColumn IsReadOnly="True" Binding="{Binding SubTotal_Vat, Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                             Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Converter={StaticResource BooleanToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
@@ -381,7 +387,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                      
+
                     </DataGrid.Columns>
                     <DataGrid.RowDetailsTemplate>
                         <DataTemplate>
@@ -394,7 +400,7 @@
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
-                                  
+
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DataTemplate>

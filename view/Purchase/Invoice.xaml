@@ -34,7 +34,7 @@
         <CollectionViewSource x:Key="purchase_invoicepurchase_invoice_detailViewSource" Source="{Binding purchase_invoice_detail, Source={StaticResource purchase_invoiceViewSource}}"/>
         <CollectionViewSource x:Key="purchase_invoice_detailpurchase_invoice_dimensionViewSource" Source="{Binding purchase_invoice_dimension, Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}"/>
         <CollectionViewSource x:Key="purchase_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_order}, CreateList=True}"/>
-      
+
         <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
@@ -49,7 +49,7 @@
             <RowDefinition Height="330"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
               Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
 
@@ -73,28 +73,28 @@
 
         <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <Grid Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
 
-            <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" 
+                <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" 
                             Background="White" Margin="8,0" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center">
-                <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-                <DatePicker x:Name="trans_dateDatePicker" Style="{StaticResource input_datepicker}"
+                    <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                    <DatePicker x:Name="trans_dateDatePicker" Style="{StaticResource input_datepicker}"
 					            SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, 
                                 ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}"/>
-                <AdornerDecorator>
-                    <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"
+                    <Label Content="{lex:Loc Supplier}" Style="{StaticResource input_label}"/>
+                    <AdornerDecorator>
+                        <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="set_ContactPref"
                                                Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </AdornerDecorator>
-                <Label Content="{lex:Loc InvoiceNumber}" Style="{StaticResource input_label}"/>
-                <TextBox x:Name="numberTextBox" Style="{StaticResource input_textbox}"
+                    </AdornerDecorator>
+                    <Label Content="{lex:Loc InvoiceNumber}" Style="{StaticResource input_label}"/>
+                    <TextBox x:Name="numberTextBox" Style="{StaticResource input_textbox}"
                          Text="{Binding number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
-                <AdornerDecorator>
-                    <ComboBox  Style="{StaticResource input_combobox}" x:Name="cbxCondition"
+                    <Label Content="{lex:Loc Condition}" Style="{StaticResource input_label}"/>
+                    <AdornerDecorator>
+                        <ComboBox  Style="{StaticResource input_combobox}" x:Name="cbxCondition"
 					           DisplayMemberPath="name" SelectedValuePath="id_condition" 
 					           SelectedValue="{Binding id_condition, 
                                                        Mode=TwoWay, 
@@ -103,109 +103,113 @@
                                                        UpdateSourceTrigger=PropertyChanged, 
                                                        ValidatesOnDataErrors=True}" 
 					           Grid.Row="1" SelectionChanged="cbxCondition_SelectionChanged">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-                </AdornerDecorator>
-                <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
-                <AdornerDecorator>
-                    <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxContract"
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </AdornerDecorator>
+                    <Label Content="{lex:Loc Contract}" Style="{StaticResource input_label}" />
+                    <AdornerDecorator>
+                        <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxContract"
 					          DisplayMemberPath="name" SelectedValuePath="id_contract" 
 					          SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-                </AdornerDecorator>
-                <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                <AdornerDecorator>
-                    <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseInvoice"
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </AdornerDecorator>
+                    <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
+                    <AdornerDecorator>
+                        <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseInvoice"
                                           SelectedValue="{Binding id_currencyfx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"  
                                           LostFocus="cbxCurrency_LostFocus" />
-                </AdornerDecorator>
-                <!--<Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
+                    </AdornerDecorator>
+                    <!--<Label Content="{lex:Loc Discount(In %)}" Style="{StaticResource input_label}"/>
                 <TextBox Text="{Binding DiscountPercentage, StringFormat={}{0:N},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
-            </StackPanel>
+                </StackPanel>
 
-            <!-- SideBar -->
-            <StackPanel Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.RowSpan="3">
-                <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-                <StackPanel Orientation="Horizontal" Margin="3">
-                    <Label Content="A" Style="{StaticResource btn_Label}"/>
-                    <TextBlock MouseUp="tbCustomize_MouseUp" 
+                <!-- SideBar -->
+                <StackPanel Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.RowSpan="3">
+                    <Label Content="{lex:Loc QuickAction}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+                    <StackPanel Orientation="Horizontal" Margin="3">
+                        <Label Content="A" Style="{StaticResource btn_Label}"/>
+                        <TextBlock MouseUp="tbCustomize_MouseUp" 
                                     VerticalAlignment="Center"><Hyperlink x:Name="hrefCustomize">
                                     <Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
-                    <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
+                        <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
                             PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
-                        <Border BorderThickness="1" BorderBrush="Gray">
-                            <StackPanel Background="WhiteSmoke" Width="180">
-                                <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="MediumVioletRed"/>
-                                <WrapPanel>
-                                    <TextBox Width="30" HorizontalAlignment="Left" 
+                            <Border BorderThickness="1" BorderBrush="Gray">
+                                <StackPanel Background="WhiteSmoke" Width="180">
+                                    <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                    <WrapPanel>
+                                        <TextBox Width="30" HorizontalAlignment="Left" 
                                             Text="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=TransDate_OffSet, Mode=TwoWay}"
                                             Margin="6,2,2,2"/>
-                                    <Label Content="{lex:Loc DifferenceinDate}" Style="{StaticResource generic_Label}"/>
-                                </WrapPanel>
-                                <Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="MediumVioletRed"/>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkPriceWithVAT" 
+                                        <Label Content="{lex:Loc DifferenceinDate}" Style="{StaticResource generic_Label}"/>
+                                    </WrapPanel>
+                                    <Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkPriceWithVAT" 
                                             IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Included, Mode=TwoWay}">
-                                    <Label Content="{lex:Loc VATIncluded}" Style="{StaticResource generic_Label}"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkPriceWithoutVAT"
+                                        <Label Content="{lex:Loc VATIncluded}" Style="{StaticResource generic_Label}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkPriceWithoutVAT"
                                             IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Excluded, Mode=TwoWay}">
-                                    <Label Content="{lex:Loc VATExcluded}" Style="{StaticResource generic_Label}"/>
-                                </CheckBox>
-                                <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="MediumVioletRed"/>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkField"
+                                        <Label Content="{lex:Loc VATExcluded}" Style="{StaticResource generic_Label}"/>
+                                    </CheckBox>
+                                    <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkField"
                                             IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Telephone, Mode=TwoWay}">
-                                    <Label Content="{lex:Loc Telephone}" Style="{StaticResource generic_Label}"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkSalesOrder"
+                                        <Label Content="{lex:Loc Telephone}" Style="{StaticResource generic_Label}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkSalesOrder"
                                             IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_PurchaseOrder, Mode=TwoWay}">
-                                    <Label Content="{lex:Loc SalesOrder}" Style="{StaticResource generic_Label}"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkProject"
+                                        <Label Content="{lex:Loc SalesOrder}" Style="{StaticResource generic_Label}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkProject"
                                             IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Project, Mode=TwoWay}">
-                                    <Label Content="{lex:Loc Project}" Style="{StaticResource generic_Label}"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkBranch"
+                                        <Label Content="{lex:Loc Project}" Style="{StaticResource generic_Label}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkBranch"
                                             IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Branch, Mode=TwoWay}">
-                                    <Label Content="{lex:Loc Branch}" Style="{StaticResource generic_Label}"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkDeveloper"
+                                        <Label Content="{lex:Loc Branch}" Style="{StaticResource generic_Label}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkDeveloper"
                                             IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Mode=TwoWay}">
-                                    <Label Content="{lex:Loc DeveloperMode}" Style="{StaticResource generic_Label}"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkDuplicateItem" 
+                                        <Label Content="{lex:Loc DeveloperMode}" Style="{StaticResource generic_Label}"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkDuplicateItem" 
                                           IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=AllowDuplicateItems, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                    <Label Content="{lex:Loc AllowDuplicateItem}" Foreground="MediumVioletRed"/>
-                                </CheckBox>
-                                <CheckBox Margin="6,0,0,0" x:Name="chkfilterbyBranch" 
+                                        <Label Content="{lex:Loc AllowDuplicateItem}" Foreground="MediumVioletRed"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkfilterbyBranch" 
                                           IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=chkfilterbyBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                    <Label Content="{lex:Loc chkfilterbyBranch}" Foreground="MediumVioletRed"/>
-                                </CheckBox>
-                            </StackPanel>
-                        </Border>
-                    </Popup>
-                </StackPanel>
-                <StackPanel Margin="4,0,0,0">
-                    <StackPanel Orientation="Horizontal" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource Status2Enable}}">
-                        <Label Content="$" Style="{StaticResource btn_Label}"/>
-                        <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                        <Label Content="{lex:Loc chkfilterbyBranch}" Foreground="MediumVioletRed"/>
+                                    </CheckBox>
+                                    <CheckBox Margin="6,0,0,0" x:Name="chkshowconversion" 
+                                          IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                        <Label Content="{lex:Loc chkfilterbyBranch}" Foreground="MediumVioletRed"/>
+                                    </CheckBox>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                    </StackPanel>
+                    <StackPanel Margin="4,0,0,0">
+                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource Status2Enable}}">
+                            <Label Content="$" Style="{StaticResource btn_Label}"/>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center">
                             <Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp">
                                 <Run Text="{lex:Loc MakePayment}"/>
                             </Hyperlink>
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" IsEnabled="False">
-                        <Label Content="" Style="{StaticResource btn_Label}"/>
-                        <TextBlock VerticalAlignment="Center"><Hyperlink PreviewMouseUp="btnDuplicateInvoice_PreviewMouseUp"><Run Text="{lex:Loc Duplicate}"/></Hyperlink></TextBlock>
-                    </StackPanel>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" IsEnabled="False">
+                            <Label Content="" Style="{StaticResource btn_Label}"/>
+                            <TextBlock VerticalAlignment="Center"><Hyperlink PreviewMouseUp="btnDuplicateInvoice_PreviewMouseUp"><Run Text="{lex:Loc Duplicate}"/></Hyperlink></TextBlock>
+                        </StackPanel>
                         <!--<StackPanel Orientation="Horizontal" >
                             <Label Content="" Style="{StaticResource btn_Label}"/>
                             <TextBlock Margin="5,0" VerticalAlignment="Center">
@@ -215,90 +219,90 @@
                             </TextBlock>
                         </StackPanel>-->
                     </StackPanel>
-                <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
-                <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
+                    <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+                    <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        <Label Content="" Style="{StaticResource ico_Label}"/>
-                        <TextBlock Margin="5,0" Text="{lex:Loc Importation}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
-                        <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                    
-                    <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Margin="5,0" Text="{lex:Loc Importation}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
+                            <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
                                     Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Telephone, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        <Label Content="P" Style="{StaticResource ico_Label}"/>
-                        <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Telephone}"/>
-                        <TextBlock Style="{StaticResource text_Label}" Text="{Binding contact.telephone, ElementName=sbxContact}"/>
-                    </StackPanel>
-                    <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
+                            <Label Content="P" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Telephone}"/>
+                            <TextBlock Style="{StaticResource text_Label}" Text="{Binding contact.telephone, ElementName=sbxContact}"/>
+                        </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
                                     Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_PurchaseOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        <Label Content="" Style="{StaticResource ico_Label}"/>
-                        <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                 <Hyperlink PreviewMouseUp="btnPurchaseOreder_Click">
                                     <Run Text="{lex:Loc PurchaseOrder}"/>
                                 </Hyperlink>
-                        </TextBlock>
-                    </StackPanel>
-                    <ItemsControl  ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" Margin="0">
-                        <!-- host the items generated by this ItemsControl in a grid -->
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <!-- render each bound item using a TextBlock-->
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
+                            </TextBlock>
+                        </StackPanel>
+                        <ItemsControl  ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" Margin="0">
+                            <!-- host the items generated by this ItemsControl in a grid -->
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <!-- render each bound item using a TextBlock-->
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
                                     <Hyperlink PreviewMouseUp="purchaseorder_PreviewMouseUp" Tag="{Binding purchase_order_detail.purchase_order}">
                                         <Run  Text="{Binding purchase_order_detail.purchase_order.number}" />
                                     </Hyperlink>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <StackPanel Margin="2" Orientation="Horizontal"  HorizontalAlignment="Left">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <StackPanel Margin="2" Orientation="Horizontal"  HorizontalAlignment="Left">
                             <Label Content="" Style="{StaticResource ico_Label}"/>
-                        <TextBlock Text="{lex:Loc Code}" Style="{StaticResource text_Label}"/>
-                        <TextBox Text="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                            <TextBlock Text="{lex:Loc Code}" Style="{StaticResource text_Label}"/>
+                            <TextBox Text="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                  Style="{StaticResource TextToLabelStyle}" />
-                    </StackPanel>
-                    <StackPanel Margin="2" Orientation="Horizontal"  HorizontalAlignment="Left"
+                        </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal"  HorizontalAlignment="Left"
                                 Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Project, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                    <Label Content="Y" Style="{StaticResource ico_Label}"/>
-                    <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
-                    <ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
+                            <Label Content="Y" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
+                            <ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
 						        DisplayMemberPath="name"
 						        SelectedValuePath="id_project" 
 						        SelectedValue="{Binding id_project, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
 						        Margin="0"/>
-                    </StackPanel>
-                    <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
+                        </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
                                     Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_Branch, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        <Label Content="" Style="{StaticResource ico_Label}"/>
-                        <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}"/>
-                        <ComboBox Width="Auto" Margin="0" x:Name="cbxBranch" Style="{StaticResource ComboToLabelStyle}"
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Text="{lex:Loc Branch}" Style="{StaticResource text_Label}"/>
+                            <ComboBox Width="Auto" Margin="0" x:Name="cbxBranch" Style="{StaticResource ComboToLabelStyle}"
 						            DisplayMemberPath="name" SelectedValuePath="id_branch" TabIndex="4"
 						            SelectedValue="{Binding id_branch, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource purchase_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
 						            />
-                    </StackPanel>
-                    <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Label Content="" Style="{StaticResource ico_Label}"/>
-                        <TextBlock Text="{lex:Loc Department}" Style="{StaticResource text_Label}"/>
-                        <ComboBox Width="Auto" Margin="0" x:Name="cbxDepartment" Style="{StaticResource ComboToLabelStyle}"
+                        </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Text="{lex:Loc Department}" Style="{StaticResource text_Label}"/>
+                            <ComboBox Width="Auto" Margin="0" x:Name="cbxDepartment" Style="{StaticResource ComboToLabelStyle}"
 						            DisplayMemberPath="name" SelectedValuePath="id_department" TabIndex="4"
 						            SelectedValue="{Binding id_department, Mode=TwoWay, NotifyOnValidationError=True, Source={StaticResource purchase_invoiceViewSource}, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    </StackPanel>
-                    <StackPanel VerticalAlignment="Center" Margin="2">
-                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center" Margin="2">
+                            <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                            <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
                                  Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </Grid>
+            </Grid>
         </ScrollViewer>
-        
+
         <Grid Grid.Column="1" Grid.Row="2" Background="White">
             <Rectangle Height="0.7" Fill="Silver" VerticalAlignment="Top" Margin="32,0"/>
 
@@ -350,13 +354,13 @@
                     <DataGridTextColumn Binding="{Binding id_purchase_invoice_detail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                         Header="ID" Width="64" IsReadOnly="True"
                                         Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=developer_Option, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged}"/>
-                    
+
                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:CostCenter}" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource app_cost_centerViewSource}}"
                                             DisplayMemberPath="name" SelectedValuePath="id_cost_center" SelectedValueBinding="{Binding id_cost_center, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    
+
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" MinWidth="64"
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    
+
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" MinWidth="128"
                                         Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -373,13 +377,13 @@
 					                        ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
                                             DisplayMemberPath="name" SelectedValuePath="id_vat_group" 
 					                        SelectedValueBinding="{Binding id_vat_group, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                    
+
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
                     <DataGridTextColumn Binding="{Binding Quantity_Factored, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
                                         Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    
+
                     <!-- UnitPrice -->
                     <DataGridTextColumn Binding="{Binding unit_cost, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:Price}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
@@ -387,7 +391,7 @@
                     <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                         Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto"  ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson"
                                         Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                    
+
                     <!-- UnitPrice_Vat -->
                     <DataGridTextColumn Binding="{Binding UnitCost_Vat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
                                         Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
@@ -403,7 +407,7 @@
                     <DataGridTextColumn Binding="{Binding Discount_SubTotal, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                         Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto"  ElementStyle="{StaticResource RightAlignStyle}"
                                         Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=VAT_Excluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                    
+
                     <!-- SubTotal_VAT -->
                     <DataGridTextColumn IsReadOnly="True" Binding="{Binding SubTotal_Vat, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, Mode=TwoWay, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
@@ -426,7 +430,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                
+
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <Grid>
@@ -435,11 +439,11 @@
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <StackPanel>
                                 <Label Content="{Binding item.name}"/>
                             </StackPanel>
-                            
+
                             <DataGrid x:Name="dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Column="2"
                                       ItemsSource="{Binding Source={StaticResource purchase_invoice_detailpurchase_invoice_dimensionViewSource}}" 
                                       RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="True">

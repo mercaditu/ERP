@@ -157,17 +157,30 @@ namespace Cognitivo.Sales
         {
             sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
             item_movement item_movement = item_movementViewSource.View.CurrentItem as item_movement;
+            sales_packing.contact = item_movement.sales_invoice_detail.sales_invoice.contact;
             sales_packing.id_contact = item_movement.sales_invoice_detail.sales_invoice.id_contact;
             foreach (item_movement _item_movement in item_movementViewSource.View.OfType<item_movement>().ToList())
             {
                 sales_packing_detail sales_packing_detail = new sales_packing_detail();
                 sales_packing_detail.id_location = _item_movement.id_location;
                 sales_packing_detail.id_item = _item_movement.item_product.id_item;
-                sales_packing_detail.quantity = _item_movement.debit; 
+                sales_packing_detail.quantity = _item_movement.debit;
+                sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
+                sales_packing_relation.sales_packing_detail = sales_packing_detail;
+                sales_packing_relation.id_sales_invoice_detail = (long)_item_movement.id_sales_invoice_detail;
+                dbContext.sales_packing_relation.Add(sales_packing_relation);
                 sales_packing.sales_packing_detail.Add(sales_packing_detail);
 
+
             }
-            dbContext.sales_packing.Add(sales_packing);
+
+
+            crm_opportunity crm_opportunity = new crm_opportunity();
+            crm_opportunity.id_contact = sales_packing.id_contact;
+
+            crm_opportunity.sales_packing.Add(sales_packing);
+            dbContext.crm_opportunity.Add(crm_opportunity);
+
             dbContext.SaveChanges();
             item_movementViewSource.Source = null;
         }

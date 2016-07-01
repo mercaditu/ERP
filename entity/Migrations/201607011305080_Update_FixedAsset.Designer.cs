@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateFixedAsset : IMigrationMetadata
+    public sealed partial class Update_FixedAsset : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateFixedAsset));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Update_FixedAsset));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607010959435_UpdateFixedAsset"; }
+            get { return "201607011305080_Update_FixedAsset"; }
         }
         
         string IMigrationMetadata.Source

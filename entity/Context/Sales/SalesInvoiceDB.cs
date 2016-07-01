@@ -18,7 +18,7 @@ namespace entity
             sales_invoice.trans_type = Status.TransactionTypes.Normal;
             sales_invoice.trans_date = DateTime.Now.AddDays(TransDate_OffSet);
             sales_invoice.timestamp = DateTime.Now;
-
+            
             //Navigation Properties
             sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();

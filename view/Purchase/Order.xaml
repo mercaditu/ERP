@@ -35,6 +35,7 @@
         <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
 
     </Page.Resources>
     <Grid DataContext="{StaticResource purchase_orderViewSource}">
@@ -83,8 +84,7 @@
                     <Label Content="A" Style="{StaticResource btn_Label}" 
                                FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                     <TextBlock x:Name="tbCustomize" VerticalAlignment="Center"
-                                   MouseUp="tbCustomize_MouseUp" Margin="5,0">
-                            <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
+                                   MouseUp="tbCustomize_MouseUp" Margin="5,0"><Hyperlink x:Name="hrefCustomize"><Run Text="Key: Customize"/></Hyperlink></TextBlock>
                     <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                         <Border BorderThickness="1" BorderBrush="Gray">
@@ -124,8 +124,8 @@
                                     <Label Content="{lex:Loc filterbyBranch}" Foreground="MediumVioletRed"/>
                                 </CheckBox>
                                 <CheckBox Margin="6,0,0,0" x:Name="chkshowconversion" 
-                                          IsChecked="{Binding Source={x:Static mainpref:Settings.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                                    <Label Content="{lex:Loc chkfilterbyBranch}" Foreground="MediumVioletRed"/>
+                                          IsChecked="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                    <Label Content="{lex:Loc Show Factor}" Foreground="MediumVioletRed"/>
                                 </CheckBox>
                             </StackPanel>
                         </Border>
@@ -400,7 +400,10 @@
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="100"/>
-
+                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
+									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DataTemplate>

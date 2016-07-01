@@ -189,6 +189,7 @@ namespace entity.Brillo.Logic
                             item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
                             item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
                             item_movement_dimension.value = purchase_invoice_dimension.value;
+                       
                             item_movement_dimensionLIST.Add(item_movement_dimension);
                         }   
                     }

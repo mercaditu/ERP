@@ -100,10 +100,10 @@ namespace Cognitivo.Purchase
                 app_vat_groupViewSource.Source = PurchaseInvoiceDB.app_vat_group.Local;
             }));
 
+            PurchaseInvoiceDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-
                 app_dimensionViewSource.Source = PurchaseInvoiceDB.app_dimension.Local;
             }));
 

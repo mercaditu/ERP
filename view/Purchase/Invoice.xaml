@@ -381,7 +381,7 @@
 
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
-                    <DataGridTextColumn Binding="{Binding Quantity_Factored,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                    <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
                                         Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
@@ -434,6 +434,7 @@
 
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
+                        
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
@@ -449,12 +450,11 @@
                                       ItemsSource="{Binding Source={StaticResource purchase_invoice_detailpurchase_invoice_dimensionViewSource}}" 
                                       RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="True">
                                 <DataGrid.Columns>
-                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto"
+                                    <DataGridComboBoxColumn Header="Dimension" Width="auto"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                                     <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
-                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-									                        DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
+                                    <DataGridComboBoxColumn DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
                                 </DataGrid.Columns>

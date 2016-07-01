@@ -7,6 +7,7 @@ using System.Data;
 using entity;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Cognitivo.Product
 {
@@ -58,16 +59,19 @@ namespace Cognitivo.Product
             if (app_branch != null && app_branch.id_branch > 0)
             {
                 int id_branch = app_branch.id_branch;
-
+                List<item> itemlist = StockDB.items.ToList();
+                List<item_product> item_productlist = StockDB.item_product.ToList();
+                List<app_branch> app_branchlist = StockDB.app_branch.ToList();
+                List<item_movement> item_movementlist = StockDB.item_movement.ToList();
                 var movement =
-                (from items in StockDB.items
-                 join item_product in StockDB.item_product on items.id_item equals item_product.id_item
+                (from items in itemlist
+                 join item_product in item_productlist on items.id_item equals item_product.id_item
                      into its
                  from p in its
-                 join item_movement in StockDB.item_movement on p.id_item_product equals item_movement.id_item_product
+                 join item_movement in item_movementlist on p.id_item_product equals item_movement.id_item_product
                  into IMS
                  from a in IMS
-                 join AM in StockDB.app_branch on a.app_location.id_branch equals AM.id_branch
+                 join AM in app_branchlist on a.app_location.id_branch equals AM.id_branch
                  where a.status == Status.Stock.InStock
                  && a.trans_date <= InventoryDate
                  && a.app_location.id_branch == id_branch
@@ -80,8 +84,9 @@ namespace Cognitivo.Product
                          location = last.Key.app_location.name,
                          itemid = last.Key.item_product.item.id_item,
                          quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                         Quantity_Factored = last.Sum(x => x.credit_Factored) - last.Sum(x => x.debit_Factored),
                          id_item_product = last.Key.item_product.id_item_product,
-                         measurement = last.Key.item_product.item.app_measurement.code_iso,
+                         measurement = last.Key.item_product.item.app_measurement!=null?last.Key.item_product.item.app_measurement.code_iso:"",
                          id_location = last.Key.app_location.id_location
                      }).ToList().OrderBy(y => y.name);
 
@@ -91,7 +96,10 @@ namespace Cognitivo.Product
                 TextBox_TextChanged(null, null);
             }
         }
-
+        string factor(item item,decimal qty)
+        {
+            return entity.Brillo.ConversionFactor.Factor_Quantity(item,qty).ToString();
+        }
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             calc_Inventory();
@@ -161,9 +169,9 @@ namespace Cognitivo.Product
                             {
                                 item_movement.comment += " " + item_movement_dimension.app_dimension.name + " : " + item_movement_dimension.value + ",";
                             }
-                            
+
                         }
-                        
+
                     }
                 }
             }
@@ -186,7 +194,7 @@ namespace Cognitivo.Product
                                 return false;
                         };
                     }
-                }   
+                }
             }
         }
 

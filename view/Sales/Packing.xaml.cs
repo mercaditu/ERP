@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using entity;
 using System.Windows.Input;
+using System.Data.Entity;
 
 namespace Cognitivo.Sales
 {
@@ -14,9 +15,9 @@ namespace Cognitivo.Sales
     {
         db dbContext = new db();
         CollectionViewSource item_movementViewSource;
-        CollectionViewSource inventoryViewSource;
-             
-        public string InvoiceNumber 
+        CollectionViewSource inventoryViewSource, sales_packingViewSource;
+
+        public string InvoiceNumber
         {
             get { return _InvoiceNumber; }
             set
@@ -35,6 +36,13 @@ namespace Cognitivo.Sales
             InitializeComponent();
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+
+            sales_packing sales_packing = new sales_packing();
+            dbContext.sales_packing.Add(sales_packing);
+            sales_packingViewSource = ((CollectionViewSource)(FindResource("sales_packingViewSource")));
+            sales_packingViewSource.Source = dbContext.sales_packing.Local;
+            sales_packingViewSource.View.MoveCurrentToLast();
         }
 
         private void ListProducts(object sender, EventArgs e)
@@ -45,8 +53,8 @@ namespace Cognitivo.Sales
                     .Where(x => x.sales_invoice.number.Contains(InvoiceNumber) &&
                         //Contado (Cash) + Payment Made
                         (
-                        (x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 && x.sales_invoice.app_contract.app_contract_detail.Sum(z => z.coefficient) == 0) 
-                        
+                        (x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 && x.sales_invoice.app_contract.app_contract_detail.Sum(z => z.coefficient) == 0)
+
                         ||
                         //Credit
                         (x.sales_invoice.app_contract.app_contract_detail.Sum(y => y.coefficient) > 0)
@@ -63,6 +71,7 @@ namespace Cognitivo.Sales
                     item_movement.id_item_product = sales_invoice_detail.item.item_product.FirstOrDefault().id_item_product;
                     item_movement.item_product = sales_invoice_detail.item.item_product.FirstOrDefault();
                     item_movement.id_sales_invoice_detail = sales_invoice_detail.id_sales_invoice_detail;
+                    item_movement.sales_invoice_detail = sales_invoice_detail;
                     item_movement.debit = 0;
                     item_movement.credit = 0;
                     item_movement.status = Status.Stock.InStock;
@@ -80,9 +89,9 @@ namespace Cognitivo.Sales
                     }
 
                     if (sales_invoice_detail.item_movement != null)
-	                {
+                    {
                         item_movement.debit = sales_invoice_detail.quantity - sales_invoice_detail.item_movement.Sum(x => x.debit);
-	                }
+                    }
                     else
                     {
                         item_movement.debit = sales_invoice_detail.quantity;
@@ -146,6 +155,19 @@ namespace Cognitivo.Sales
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            sales_packing sales_packing = sales_packingViewSource.View.CurrentItem as sales_packing;
+            item_movement item_movement = item_movementViewSource.View.CurrentItem as item_movement;
+            sales_packing.id_contact = item_movement.sales_invoice_detail.sales_invoice.id_contact;
+            foreach (item_movement _item_movement in item_movementViewSource.View.OfType<item_movement>().ToList())
+            {
+                sales_packing_detail sales_packing_detail = new sales_packing_detail();
+                sales_packing_detail.id_location = _item_movement.id_location;
+                sales_packing_detail.id_item = _item_movement.item_product.id_item;
+                sales_packing_detail.quantity = _item_movement.debit; 
+                sales_packing.sales_packing_detail.Add(sales_packing_detail);
+
+            }
+            dbContext.sales_packing.Add(sales_packing);
             dbContext.SaveChanges();
             item_movementViewSource.Source = null;
         }

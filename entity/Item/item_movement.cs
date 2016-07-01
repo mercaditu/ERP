@@ -36,8 +36,99 @@ namespace entity
         public int? id_sales_packing_detail { get; set; }
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
-        public decimal debit { get; set; }
-        public decimal credit { get; set; }
+        public decimal debit
+        {
+            get
+            {
+                return _debit;
+            }
+            set
+            {
+                _debit = value;
+                RaisePropertyChanged("debit");
+                if (item_product != null)
+                {
+                    if (item_product.item != null)
+                    {
+                        _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, debit);
+                        RaisePropertyChanged("_Quantity_Factored");
+                    }
+                }
+            }
+        }
+        decimal _debit = 0;
+
+        public decimal credit
+        {
+            get
+            {
+                return _credit;
+            }
+            set
+            {
+                _credit = value;
+                RaisePropertyChanged("credit");
+                if (item_product != null)
+                {
+                    if (item_product.item != null)
+                    {
+                        _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, credit);
+                        RaisePropertyChanged("credit_Factored");
+                    }
+                }
+            }
+        }
+        decimal _credit = 0;
+        [NotMapped]
+        public decimal credit_Factored
+        {
+            get { return _debit_Factored; }
+            set
+            {
+                if (_debit_Factored != value)
+                {
+                    _debit_Factored = value;
+                    RaisePropertyChanged("credit_Factored");
+
+                    if (item_product != null)
+                    {
+                        if (item_product.item != null)
+                        {
+                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, credit_Factored);
+                            RaisePropertyChanged("value_counted");
+                        }
+
+                    }
+
+                }
+            }
+        }
+        private decimal _credit_Factored;
+        [NotMapped]
+        public decimal debit_Factored
+        {
+            get { return _debit_Factored; }
+            set
+            {
+                if (_debit_Factored != value)
+                {
+                    _debit_Factored = value;
+                    RaisePropertyChanged("debit_Factored");
+
+                    if (item_product != null)
+                    {
+                        if (item_product.item != null)
+                        {
+                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, debit_Factored);
+                            RaisePropertyChanged("value_counted");
+                        }
+
+                    }
+
+                }
+            }
+        }
+        private decimal _debit_Factored;
         public string comment { get; set; }
         public string code { get; set; }
         public DateTime? expire_date { get; set; }

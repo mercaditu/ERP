@@ -28,6 +28,10 @@ namespace entity
         public decimal? purchase_value { get; set; }
         public decimal? current_value { get; set; }
 
+        public int? id_department { get; set; }
+     
+       public int? id_contact { get; set; }
+ 
         public decimal? speed { get; set; }
 
         //Remove all items

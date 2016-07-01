@@ -24,15 +24,15 @@ namespace entity
         {
             get
             {
-             
-               
+
+
                 return _id_item_product;
             }
-            set 
+            set
             {
-                _id_item_product=value;
-             
-               
+                _id_item_product = value;
+
+
             }
         }
         int _id_item_product;
@@ -74,7 +74,52 @@ namespace entity
             }
         }
         decimal _value_system = 0;
-        public decimal value_counted { get; set; }
+        public decimal value_counted
+        {
+            get
+            {
+                return _value_counted;
+            }
+            set
+            {
+                _value_counted = value;
+                RaisePropertyChanged("value_counted");
+                if (item_product != null)
+                {
+                    if (item_product.item != null)
+                    {
+                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, value_counted);
+                        RaisePropertyChanged("_Quantity_Factored");
+                    }
+                }
+            }
+        }
+        decimal _value_counted = 0;
+        [NotMapped]
+        public decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+                    if (item_product != null)
+                    {
+                        if (item_product.item != null)
+                        {
+                            _value_counted = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, Quantity_Factored);
+                            RaisePropertyChanged("value_counted");
+                        }
+
+                    }
+
+                }
+            }
+        }
+        private decimal _Quantity_Factored;
         public string comment { get; set; }
         public int id_currencyfx { get; set; }
         public decimal unit_value { get; set; }

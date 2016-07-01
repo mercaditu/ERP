@@ -109,7 +109,7 @@
                 <Label Content="{Binding sales_order.number}" Style="{StaticResource generic_Label}"/>
                
                 <Label Content="{lex:Loc ProductionOrder}"  Style="{StaticResource input_label}"/>
-                <Label Content="{Binding ProductionOrder.name}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding production_order.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                 <Label Content="{lex:Loc Branch}"  Style="{StaticResource input_label}"/>
                 <ComboBox  Style="{StaticResource input_combobox}" DisplayMemberPath="name"
                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -182,18 +182,18 @@
                         </Grid>
                     </TabItem.Header>
                     <DataGrid x:Name="item_request_detailDataGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                              ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}">
+                              ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item_request_detail.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Item}" Width="Auto"/>
+                                                Header="{lex:Loc Cognitivo:local:Item}" Width="Auto" IsReadOnly="True"/>
                             <!--<DataGridTextColumn Binding="{Binding item_request_detail.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Comment}" Width="Auto"/>-->
                             <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Module}" Width="*"/>
+                                                Header="{lex:Loc Cognitivo:local:Module}" Width="*" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding app_location.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Origin}" Width="*"/>
+                                                Header="{lex:Loc Cognitivo:local:Origin}" Width="*" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
+                                                Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" IsReadOnly="True"/>
                             <DataGridTemplateColumn Width="Auto" Header="">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

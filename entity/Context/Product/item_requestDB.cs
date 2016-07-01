@@ -245,8 +245,7 @@ namespace entity
                             if (item.item_request_detail.project_task != null)
                             {
                                 production_order_detail.id_project_task = item.item_request_detail.id_project_task;
-                                production_order_detail.production_order.name = item.item_request_detail.item_request.project.name;
-                                production_order_detail.production_order.work_number = item.item_request_detail.item_request.project.name;
+                         
                             }
 
                             foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)

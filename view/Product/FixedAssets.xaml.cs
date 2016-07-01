@@ -13,7 +13,7 @@ namespace Cognitivo.Product
     public partial class FixedAssets : Page
     {
         ItemDB ItemDB = new ItemDB();
-        CollectionViewSource 
+        CollectionViewSource
             itemViewSource,
             itemitem_capitalViewSource, item_asset_maintainanceViewSource;
 
@@ -29,13 +29,21 @@ namespace Cognitivo.Product
         {
             ItemDB.items.Where(i => i.is_active && i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).ToList();
             itemViewSource.Source = ItemDB.items.Local;
-            
+
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
 
             cbxBranch.ItemsSource = ItemDB.app_branch.Where(b => b.id_company == CurrentSession.Id_Company && b.is_active).OrderBy(b => b.name).ToList();
 
             cbxassetGroup.ItemsSource = ItemDB.item_asset_group.Where(b => b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxType.ItemsSource = Enum.GetValues(typeof(item_asset_maintainance.MaintainanceTypes));
+
+            CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
+            app_departmentViewSource.Source = ItemDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            CollectionViewSource item_brandViewSource = ((CollectionViewSource)(FindResource("item_brandViewSource")));
+            item_brandViewSource.Source = ItemDB.item_brand.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
+            contactViewSource.Source = ItemDB.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_employee).ToList();
+
         }
 
         #region Mini ToolBar
@@ -69,14 +77,14 @@ namespace Cognitivo.Product
 
                     itemitem_capitalViewSource.View.Refresh();
                     item_asset_maintainanceViewSource.View.Refresh();
-                    item_asset_maintainanceViewSource.View.MoveCurrentTo(item_asset_maintainance);      
+                    item_asset_maintainanceViewSource.View.MoveCurrentTo(item_asset_maintainance);
                 }
             }
         }
         #endregion
 
         #region Toolbar
-        
+
         private void toolBar_btnEdit_Click(object sender)
         {
             if (itemDataGrid.SelectedItem != null)
@@ -104,10 +112,10 @@ namespace Cognitivo.Product
         {
             item item = ItemDB.New();
             item.id_item_type = entity.item.item_type.FixedAssets;
-            
-            using(db db = new db())
-	        { item.id_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group; }
-            
+
+            using (db db = new db())
+            { item.id_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group; }
+
             item_asset item_asset = new item_asset();
 
             item.item_asset.Add(item_asset);

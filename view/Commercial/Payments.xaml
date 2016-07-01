@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Commercial.Payments"
+﻿<Page x:Class="Cognitivo.Commercial.Payments" x:Name="PaymentPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
@@ -30,15 +30,15 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden"
 			Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="10" />
-        <StackPanel  Grid.Row="1">
-            <Button Content="Clear Filter" Click="Button_Click"></Button>
-            <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="listContacts"
+        <Grid Grid.Row="1">
+            <Button Content="All Transactions" Click="Button_Click" VerticalAlignment="Top"/>
+            <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="listContacts" Margin="0,28,0,0"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionChanged="listContacts_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
@@ -54,7 +54,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-        </StackPanel>
+        </Grid>
    
         <TabControl  Background="WhiteSmoke" Grid.Column="1" Grid.Row="1">
             <TabItem Header="Payments Made">
@@ -62,13 +62,13 @@
                       RowDetailsVisibilityMode="VisibleWhenSelected" ItemsSource="{Binding Source={StaticResource payment_detailMadeViewSource}}" CanUserAddRows="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding payment.contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                        Header="{lex:Loc Cognitivo:local:Customer}" Width="*" MinWidth="128" IsReadOnly="True"/>
+                                        Header="{lex:Loc Cognitivo:local:Supplier}" Width="*" MinWidth="128" IsReadOnly="True"/>
                         <DataGridTextColumn Binding="{Binding payment.trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat=D}" 
                                         Header="{lex:Loc Cognitivo:local:Date}" Width="auto" IsReadOnly="True"/>
 
 
                         <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                        Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
+                                        Header="{lex:Loc Cognitivo:local:AccountsPayable}" Width="auto" IsReadOnly="True" 
                                         ElementStyle="{StaticResource RightAlignStyle}"/>
                         <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                         Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
@@ -104,7 +104,24 @@
             </TabItem>
         </TabControl>
         <Grid VerticalAlignment="Top" Height="40" Grid.ColumnSpan="2" Background="White">
-            
+            <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding ElementName=PaymentPage, Path=PaymentDate,
+                                      StringFormat=D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                      MouseDown="Today_MouseDown" HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRMonth_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRDay_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                    <Slider x:Name="slider" Width="256" VerticalAlignment="Center" Minimum="1" Ticks="1"
+                        Value="{Binding ElementName=PaymentPage, Path=sliderValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ValueChanged="slider_ValueChanged" Focusable="False" SmallChange="1"/>
+                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="FFDay_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                    <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="FFMonth_MouseDown"
+                       HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

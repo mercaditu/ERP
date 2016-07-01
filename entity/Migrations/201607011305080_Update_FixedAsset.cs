@@ -9,7 +9,7 @@ namespace entity.Migrations
         {
             AddColumn("item_asset", "id_department", c => c.Int());
             AddColumn("item_asset", "id_contact", c => c.Int());
-            Sql(InstallScript);
+            //Sql(InstallScript);
         }
         
         public override void Down()
@@ -17,6 +17,7 @@ namespace entity.Migrations
             DropColumn("item_asset", "id_contact");
             DropColumn("item_asset", "id_department");
         }
+
         private const string InstallScript = @"
         CREATE  PROCEDURE `inventory`(in enddate datetime,
 															in idcompany int(11))

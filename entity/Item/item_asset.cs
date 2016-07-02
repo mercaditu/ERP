@@ -10,13 +10,20 @@ namespace entity
         public item_asset()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             id_branch = CurrentSession.Id_Branch;
-            
+
             is_head = true;
             item_asset_maintainance = new List<item_asset_maintainance>();
         }
 
+        public enum DeActiveTypes
+        {
+            EXPIRATION_CADUCIDAD = 1,
+            LOSS_EXTRAVIOOHURTO = 2,
+            ESTRANGEMENT_ENAJENACION_O_VENTA = 3,
+            INPERFECTION_DESPERFECTO = 4
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_item_asset { get; set; }
@@ -29,11 +36,11 @@ namespace entity
         public decimal? current_value { get; set; }
 
         public int? id_department { get; set; }
-     
-       public int? id_contact { get; set; }
- 
-        public decimal? speed { get; set; }
 
+        public int? id_contact { get; set; }
+
+        public decimal? speed { get; set; }
+        public DeActiveTypes deactivetype { get; set; }
         //Remove all items
         public decimal? dieset_price { get; set; }
         public decimal? min_length { get; set; }

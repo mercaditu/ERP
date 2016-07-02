@@ -12,7 +12,7 @@
         lex:LocalizeDictionary.DesignCulture="en-US" 
       xmlns:convert="clr-namespace:Cognitivo.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800" Loaded="Page_Loaded"
+      d:DesignHeight="655" d:DesignWidth="800" Loaded="Page_Loaded"
 	  Title="{lex:Loc FixedAssets}">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
@@ -117,6 +117,9 @@
                             <TextBox Text="{Binding purchase_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding current_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                            <Label Content="{lex:Loc Deactive}" Style="{StaticResource input_label}" />
+                            <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
+                              Name="cmbdeactive" SelectedValue="{Binding deactivetype,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>

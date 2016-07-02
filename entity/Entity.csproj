@@ -366,6 +366,10 @@
     <Compile Include="Migrations\201607011305080_Update_FixedAsset.Designer.cs">
       <DependentUpon>201607011305080_Update_FixedAsset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607021118501_Updatefixedasset.cs" />
+    <Compile Include="Migrations\201607021118501_Updatefixedasset.Designer.cs">
+      <DependentUpon>201607021118501_Updatefixedasset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -1084,6 +1088,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607011305080_Update_FixedAsset.resx">
       <DependentUpon>201607011305080_Update_FixedAsset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607021118501_Updatefixedasset.resx">
+      <DependentUpon>201607021118501_Updatefixedasset.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

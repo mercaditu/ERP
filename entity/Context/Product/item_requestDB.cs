@@ -238,8 +238,8 @@ namespace entity
                             production_order_detail production_order_detail = new production_order_detail();
                             production_order_detail.name = item_request_detail.item.name;
                             production_order_detail.quantity = item.quantity;
-                            production_order_detail.status = Status.Project.Approved;
-                            production_order_detail.is_input = true;
+                            production_order_detail.status = Status.Project.Pending;
+                            production_order_detail.is_input = false;
                             production_order_detail.id_item = item_request_detail.item.id_item;
 
                             if (item.item_request_detail.project_task != null)

@@ -43,7 +43,7 @@ namespace Cognitivo.Product
             item_brandViewSource.Source = ItemDB.item_brand.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
             contactViewSource.Source = ItemDB.contacts.Where(x => x.id_company == CurrentSession.Id_Company && x.is_employee).ToList();
-
+            cmbdeactive.ItemsSource = Enum.GetValues(typeof(item_asset.DeActiveTypes)).OfType<item_asset.DeActiveTypes>().ToList();
         }
 
         #region Mini ToolBar

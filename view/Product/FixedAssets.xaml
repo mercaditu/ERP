@@ -41,7 +41,7 @@
                         <cntrl:navList recordCode="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                        recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                        IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -68,6 +68,8 @@
                             <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                            <CheckBox Content="{lex:Loc Active}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
+                                  IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
                             <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
                             <AdornerDecorator>
                                 <ComboBox x:Name="cbxBranch" Grid.Column="1" Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
@@ -105,7 +107,7 @@
                             <ComboBox x:Name="cbxItemDepartment" Grid.Column="1" Style="{StaticResource input_combobox}"
                                       DisplayMemberPath="name" SelectedValuePath="id_department"
                                       ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"
-                                      SelectedValue="{Binding id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                                      SelectedValue="{Binding id_department, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
                             <Label Content="{lex:Loc Employee}"  Style="{StaticResource input_label}"/>
                             <ComboBox x:Name="cbxItemEmp" Grid.Column="1" Style="{StaticResource input_combobox}"
                                       DisplayMemberPath="name" SelectedValuePath="id_contact"

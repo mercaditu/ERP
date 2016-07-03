@@ -230,12 +230,15 @@ namespace entity
                 {
                     if (sales_detail.unit_cost == null || sales_detail.unit_cost == 0)
                     {
-                        if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                        if (sales_detail.item_movement.FirstOrDefault() != null)
                         {
-                            sales_detail.unit_cost = entity.Brillo.Currency.convert_Values
+                            if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
+                            {
+                                sales_detail.unit_cost = entity.Brillo.Currency.convert_Values
                                 (sales_detail.item_movement.FirstOrDefault().item_movement_value.Average(x => x.unit_value),
                                 sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
                                 sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
+                            }
                         }
                     }
                 }

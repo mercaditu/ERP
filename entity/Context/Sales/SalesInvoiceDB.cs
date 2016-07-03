@@ -163,7 +163,7 @@ namespace entity
                     {
                         payment_schedual.AddRange(payment_schedualList);
                     }
-
+                    //Item Movement
                     if (IsDiscountStock)
                     {
                         Insert_Items_2_Movement(invoice);
@@ -171,7 +171,6 @@ namespace entity
 
                     if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range > 0)
                     {
-                        invoice.is_issued = true;
                         if (invoice.id_branch > 0)
                         {
                             Brillo.Logic.Range.branch_Code = app_branch.Where(x => x.id_branch == invoice.id_branch).FirstOrDefault().code;
@@ -182,11 +181,16 @@ namespace entity
                         }
 
                         app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
+                        
+                        invoice.is_issued = true;
                         invoice.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                         invoice.RaisePropertyChanged("number");
-
-                        //Save Changes before Printing, so that all fields show up.
                         invoice.status = Status.Documents_General.Approved;
+                        invoice.timestamp = DateTime.Now;
+
+                        //Generate BarCode
+                        
+                        //Save Changes before Printing, so that all fields show up.
                         SaveChanges();
 
                         Brillo.Document.Start.Automatic(invoice, app_document_range);

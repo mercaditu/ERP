@@ -14,6 +14,9 @@ namespace Cognitivo.Sales
     public partial class Packing : Page
     {
         PackingListDB dbContext = new PackingListDB();
+
+        app_branch app_branch;
+
         CollectionViewSource item_movementViewSource;
         CollectionViewSource inventoryViewSource, sales_packingViewSource;
 
@@ -43,6 +46,9 @@ namespace Cognitivo.Sales
             sales_packingViewSource = ((CollectionViewSource)(FindResource("sales_packingViewSource")));
             sales_packingViewSource.Source = dbContext.sales_packing.Local;
             sales_packingViewSource.View.MoveCurrentToLast();
+
+            app_branch = dbContext.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            cbxLocation.ItemsSource = app_branch.app_location.ToList();
         }
 
         private async void ListProducts(object sender, EventArgs e)
@@ -83,8 +89,8 @@ namespace Cognitivo.Sales
                     }
                     else
                     {
-                        //find location code
-                        item_movement.id_location = 1;
+                        //find location code by using checkbox.
+                        item_movement.id_location = app_branch.app_location.Where(x => x.is_default).FirstOrDefault().id_location;
                     }
 
                     if (sales_invoice_detail.item_movement != null)

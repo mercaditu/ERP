@@ -53,11 +53,7 @@ namespace Cognitivo.Sales
                     .Where(x => x.sales_invoice.number.Contains(InvoiceCode) &&
                         //Contado (Cash) + Payment Made
                         (
-                           (x.sales_invoice.payment_schedual.Sum(z => z.credit) 
-                            == 
-                            x.sales_invoice.sales_invoice_detail.Sum(z => (z.quantity * z.unit_price * z.app_vat_group.app_vat_group_details.Sum(u => u.app_vat.coefficient))) 
-                            && x.sales_invoice.app_contract.app_contract_detail.Sum(z => z.coefficient) == 0)
-
+                           (x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 && x.sales_invoice.app_contract.app_contract_detail.Sum(z => z.coefficient) == 0)
                         ||
                         //Credit
                         (x.sales_invoice.app_contract.app_contract_detail.Sum(y => y.coefficient) > 0)

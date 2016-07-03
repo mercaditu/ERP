@@ -84,16 +84,15 @@ namespace Cognitivo.Product
             ProductTransferDB.item_transfer.Where(a =>
                 a.id_company == CurrentSession.Id_Company &&
                 a.transfer_type == item_transfer.Transfer_type.transfer)
-                .Include(i => i.item_transfer_detail)
+                //.Include(i => i.item_transfer_detail)
                 .Load();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
             item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(this.FindResource("item_transferitem_transfer_detailViewSource")));
 
+            ProductTransferDB.app_branch.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.app_location.Count > 0).OrderBy(a => a.name).Load();
             CollectionViewSource branch_originViewSource = ((CollectionViewSource)(this.FindResource("branch_originViewSource")));
-            ProductTransferDB.app_branch.Where(a => a.is_active == true).OrderBy(a => a.name).Load();
             branch_originViewSource.Source = ProductTransferDB.app_branch.Local;
-
             CollectionViewSource branch_destViewSource = ((CollectionViewSource)(this.FindResource("branch_destViewSource")));
             branch_destViewSource.Source = ProductTransferDB.app_branch.Local;
 
@@ -166,7 +165,11 @@ namespace Cognitivo.Product
         private void toolBar_btnApproveDestination_Click(object sender)
         {
             TransferSetting TransferSetting = new Product.TransferSetting();
-            clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
+
+            item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
+            item_transfer.IsSelected = true;
+
+            //clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
             int NumberOfRecords = ProductTransferDB.ApproveDestination((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
             if (NumberOfRecords > 0)
             {

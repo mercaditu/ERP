@@ -56,7 +56,7 @@
                                  metro:TextBoxHelper.Watermark="{Binding NumberWatermark,Source={StaticResource sales_packingViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource input_textbox}"/>
             <Label Content="Numero de Factura" Style="{StaticResource input_label}"/>
-            <TextBox Text="{Binding ElementName=_Packing, Path=InvoiceNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            <TextBox Text="{Binding ElementName=_Packing, Path=InvoiceCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                      Style="{StaticResource input_textbox}"/>
             <Button  Click="ListProducts" Content="Buscar" Width="128"/>
         </StackPanel>

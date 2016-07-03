@@ -224,10 +224,7 @@ namespace entity
                             {
                                 app_currencyfx = currencyfx;
                             }
-
                         }
-
-
                     }
                 }
                

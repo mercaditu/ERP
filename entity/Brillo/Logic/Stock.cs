@@ -46,9 +46,9 @@ namespace entity.Brillo.Logic
 
                                      sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
                                      List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.app_location.id_location
-                                                                                       && x.id_item_product == item_productSub.id_item_product
-                                                                                       && x.status == entity.Status.Stock.InStock
-                                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                                            && x.id_item_product == item_productSub.id_item_product
+                                            && x.status == entity.Status.Stock.InStock
+                                            && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
                                      item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
                                                               App.Names.SalesInvoice,

@@ -334,7 +334,7 @@
             </StackPanel>
             <DataGrid x:Name="dgvPurchaseDetail" Margin="0,57,0,8"
                         VerticalScrollBarVisibility="Auto" Height="Auto"
-                        AutoGenerateColumns="False"
+                        AutoGenerateColumns="False" CanUserAddRows="False"
                         IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
                         EnableRowVirtualization="True"
                         ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
@@ -434,31 +434,34 @@
 
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel>
-                                <Label Content="{Binding item.name}"/>
+                        <Grid Background="WhiteSmoke" Margin="4">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid Height="130" Width="130" AllowDrop="True" Background="White" Margin="4">
+                                    <TextBlock Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gainsboro"
+                                            FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="64" FontStyle="Normal"/>
+                                    <Image x:Name="imageViewer" Margin="4"/>
+                                </Grid>
+                                <StackPanel>
+                                    <Label Style="{StaticResource H1}" Content="{Binding item.name}"/>
+                                    <Label Style="{StaticResource H3}" Content="{Binding item.code}"/>
+                                </StackPanel>
                             </StackPanel>
-
-                            <DataGrid x:Name="dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Column="2"
+                            <Grid HorizontalAlignment="Right" Margin="8" Width="256">
+                                <Label Style="{StaticResource H3}" Content="{lex:Loc Dimension}"/>
+                                <DataGrid x:Name="dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Column="2"
                                       ItemsSource="{Binding Source={StaticResource purchase_invoice_detailpurchase_invoice_dimensionViewSource}}" 
                                       RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="True">
-                                <DataGrid.Columns>
-                                    <DataGridComboBoxColumn Header="Dimension" Width="auto"
+                                    <DataGrid.Columns>
+                                        <DataGridComboBoxColumn Header="Dimension" Width="auto"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
-                                    <DataGridComboBoxColumn DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
+                                        <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" Width="auto"/>
+                                        <DataGridComboBoxColumn DisplayMemberPath="code_iso" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 									                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" Width="50"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
                         </Grid>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>

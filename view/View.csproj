@@ -439,10 +439,6 @@
     <Compile Include="HumanResource\Talent.xaml.cs">
       <DependentUpon>Talent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Production\FractionExecutionold.xaml.cs">
-      <DependentUpon>FractionExecutionold.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Production\FractionOrder.xaml.cs">
       <DependentUpon>FractionOrder.xaml</DependentUpon>
     </Compile>
@@ -1600,10 +1596,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HumanResource\Talent.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Production\FractionExecutionold.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

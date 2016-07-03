@@ -1308,16 +1308,19 @@ namespace Cognitivo.Production
                 toolBar.msgError(ex);
             }
         }
+
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
             production_execution _production_execution = production_executionViewSource.View.CurrentItem as production_execution;
             production_execution_detail _production_execution_detail = new entity.production_execution_detail();
+
             _production_execution_detail.State = EntityState.Added;
             _production_execution_detail.id_item = production_order_detail.id_item;
             _production_execution_detail.item = production_order_detail.item;
             _production_execution_detail.quantity = Quantity;
             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
             _production_execution_detail.movement_id = production_order_detail.movement_id;
+
             if (production_order_detail.item.unit_cost != null)
             {
                 _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
@@ -1336,6 +1339,7 @@ namespace Cognitivo.Production
             }
             _production_execution.production_execution_detail.Add(_production_execution_detail);
         }
+
         private void dgServicecontract_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (production_execution_detailServiceContractViewSource != null)
@@ -1415,18 +1419,6 @@ namespace Cognitivo.Production
                         if (obj.id_item != null)
                         {
                             int _id_item = (int)obj.id_item;
-                            //item_dimensionViewSource.View.Filter = i =>
-                            //{
-                            //    item_dimension item_dimension = i as item_dimension;
-                            //    if (item_dimension.id_item == _id_item)
-                            //    {
-                            //        return true;
-                            //    }
-                            //    else
-                            //    {
-                            //        return false;
-                            //    }
-                            //};
                         }
                         List<item_movement> Items_InStockLIST = OrderDB.item_movement.Where(x =>
                                                             x.item_product.id_item == obj.id_item
@@ -1474,18 +1466,6 @@ namespace Cognitivo.Production
                         if (obj.id_item != null)
                         {
                             int _id_item = (int)obj.id_item;
-                            //item_dimensionViewSource.View.Filter = i =>
-                            //{
-                            //    item_dimension item_dimension = i as item_dimension;
-                            //    if (item_dimension.id_item == _id_item)
-                            //    {
-                            //        return true;
-                            //    }
-                            //    else
-                            //    {
-                            //        return false;
-                            //    }
-                            //};
                         }
                         List<item_movement> Items_InStockLIST = OrderDB.item_movement.Where(x =>
                                                          x.item_product.id_item == obj.id_item
@@ -1505,15 +1485,10 @@ namespace Cognitivo.Production
                                     {
                                         obj.movement_id = (int)item_movement.id_movement;
                                     }
-
                                 }
                             }
-
                         }
-
                     }
-                 
-
                 }
             }
         }
@@ -1530,20 +1505,7 @@ namespace Cognitivo.Production
                         if (obj.id_item != null)
                         {
                             int _id_item = (int)obj.id_item;
-                            //item_dimensionViewSource.View.Filter = i =>
-                            //{
-                            //    item_dimension item_dimension = i as item_dimension;
-                            //    if (item_dimension.id_item == _id_item)
-                            //    {
-                            //        return true;
-                            //    }
-                            //    else
-                            //    {
-                            //        return false;
-                            //    }
-                            //};
                         }
-
                     }
                 }
             }
@@ -1622,6 +1584,7 @@ namespace Cognitivo.Production
 
             }
         }
+
         private void treeProduct_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             production_order_detail production_order_detail = (production_order_detail)treeProduct.SelectedItem_;
@@ -1645,6 +1608,7 @@ namespace Cognitivo.Production
 
             }
         }
+
         private void treecapital_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             production_order_detail production_order_detail = (production_order_detail)treeAsset.SelectedItem_;
@@ -1666,6 +1630,7 @@ namespace Cognitivo.Production
                 production_execution_detailProductViewSource.View.Filter = null;
             }
         }
+
         public void loadProductTotal(production_order_detail production_order_detail)
         {
             production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem as production_execution;
@@ -1785,6 +1750,11 @@ namespace Cognitivo.Production
                 }
 
             }
+        }
+
+        private void btnInsert_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
    

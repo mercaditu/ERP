@@ -1110,17 +1110,19 @@ namespace Cognitivo.Reporting.Data {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class CostOfGoodsSoldDataTable : global::System.Data.TypedTableBase<CostOfGoodsSoldRow> {
             
-            private global::System.Data.DataColumn columnITEM;
+            private global::System.Data.DataColumn columnitem;
             
-            private global::System.Data.DataColumn columnCODE;
+            private global::System.Data.DataColumn columncode;
             
-            private global::System.Data.DataColumn columnBRANCH;
+            private global::System.Data.DataColumn columnname;
             
-            private global::System.Data.DataColumn columnQUANTITY;
+            private global::System.Data.DataColumn columnbranch;
             
-            private global::System.Data.DataColumn columnCOST;
+            private global::System.Data.DataColumn columnquantity;
             
-            private global::System.Data.DataColumn columnSUBTOTAL;
+            private global::System.Data.DataColumn columncost;
+            
+            private global::System.Data.DataColumn columnsubtotal;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1157,49 +1159,57 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ITEMColumn {
+            public global::System.Data.DataColumn itemColumn {
                 get {
-                    return this.columnITEM;
+                    return this.columnitem;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CODEColumn {
+            public global::System.Data.DataColumn codeColumn {
                 get {
-                    return this.columnCODE;
+                    return this.columncode;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BRANCHColumn {
+            public global::System.Data.DataColumn nameColumn {
                 get {
-                    return this.columnBRANCH;
+                    return this.columnname;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn QUANTITYColumn {
+            public global::System.Data.DataColumn branchColumn {
                 get {
-                    return this.columnQUANTITY;
+                    return this.columnbranch;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn COSTColumn {
+            public global::System.Data.DataColumn quantityColumn {
                 get {
-                    return this.columnCOST;
+                    return this.columnquantity;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SUBTOTALColumn {
+            public global::System.Data.DataColumn costColumn {
                 get {
-                    return this.columnSUBTOTAL;
+                    return this.columncost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn subtotalColumn {
+                get {
+                    return this.columnsubtotal;
                 }
             }
             
@@ -1240,15 +1250,16 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public CostOfGoodsSoldRow AddCostOfGoodsSoldRow(string ITEM, string CODE, string BRANCH, decimal QUANTITY, decimal COST, decimal SUBTOTAL) {
+            public CostOfGoodsSoldRow AddCostOfGoodsSoldRow(string item, string code, string name, string branch, decimal quantity, decimal cost, decimal subtotal) {
                 CostOfGoodsSoldRow rowCostOfGoodsSoldRow = ((CostOfGoodsSoldRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        ITEM,
-                        CODE,
-                        BRANCH,
-                        QUANTITY,
-                        COST,
-                        SUBTOTAL};
+                        item,
+                        code,
+                        name,
+                        branch,
+                        quantity,
+                        cost,
+                        subtotal};
                 rowCostOfGoodsSoldRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCostOfGoodsSoldRow);
                 return rowCostOfGoodsSoldRow;
@@ -1271,29 +1282,33 @@ namespace Cognitivo.Reporting.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnITEM = base.Columns["ITEM"];
-                this.columnCODE = base.Columns["CODE"];
-                this.columnBRANCH = base.Columns["BRANCH"];
-                this.columnQUANTITY = base.Columns["QUANTITY"];
-                this.columnCOST = base.Columns["COST"];
-                this.columnSUBTOTAL = base.Columns["SUBTOTAL"];
+                this.columnitem = base.Columns["item"];
+                this.columncode = base.Columns["code"];
+                this.columnname = base.Columns["name"];
+                this.columnbranch = base.Columns["branch"];
+                this.columnquantity = base.Columns["quantity"];
+                this.columncost = base.Columns["cost"];
+                this.columnsubtotal = base.Columns["subtotal"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnITEM = new global::System.Data.DataColumn("ITEM", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnITEM);
-                this.columnCODE = new global::System.Data.DataColumn("CODE", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCODE);
-                this.columnBRANCH = new global::System.Data.DataColumn("BRANCH", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBRANCH);
-                this.columnQUANTITY = new global::System.Data.DataColumn("QUANTITY", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnQUANTITY);
-                this.columnCOST = new global::System.Data.DataColumn("COST", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCOST);
-                this.columnSUBTOTAL = new global::System.Data.DataColumn("SUBTOTAL", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSUBTOTAL);
+                this.columnitem = new global::System.Data.DataColumn("item", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnitem);
+                this.columncode = new global::System.Data.DataColumn("code", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncode);
+                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnname);
+                this.columnbranch = new global::System.Data.DataColumn("branch", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnbranch);
+                this.columnquantity = new global::System.Data.DataColumn("quantity", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnquantity);
+                this.columncost = new global::System.Data.DataColumn("cost", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columncost);
+                this.columnsubtotal = new global::System.Data.DataColumn("subtotal", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnsubtotal);
+                this.columncost.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2715,170 +2730,181 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ITEM {
+            public string item {
                 get {
                     try {
-                        return ((string)(this[this.tableCostOfGoodsSold.ITEMColumn]));
+                        return ((string)(this[this.tableCostOfGoodsSold.itemColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ITEM\' in table \'CostOfGoodsSold\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'item\' in table \'CostOfGoodsSold\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCostOfGoodsSold.ITEMColumn] = value;
+                    this[this.tableCostOfGoodsSold.itemColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string CODE {
+            public string code {
                 get {
                     try {
-                        return ((string)(this[this.tableCostOfGoodsSold.CODEColumn]));
+                        return ((string)(this[this.tableCostOfGoodsSold.codeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'CODE\' in table \'CostOfGoodsSold\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'code\' in table \'CostOfGoodsSold\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCostOfGoodsSold.CODEColumn] = value;
+                    this[this.tableCostOfGoodsSold.codeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string BRANCH {
+            public string name {
                 get {
                     try {
-                        return ((string)(this[this.tableCostOfGoodsSold.BRANCHColumn]));
+                        return ((string)(this[this.tableCostOfGoodsSold.nameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'BRANCH\' in table \'CostOfGoodsSold\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'name\' in table \'CostOfGoodsSold\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCostOfGoodsSold.BRANCHColumn] = value;
+                    this[this.tableCostOfGoodsSold.nameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal QUANTITY {
+            public string branch {
                 get {
                     try {
-                        return ((decimal)(this[this.tableCostOfGoodsSold.QUANTITYColumn]));
+                        return ((string)(this[this.tableCostOfGoodsSold.branchColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'QUANTITY\' in table \'CostOfGoodsSold\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'branch\' in table \'CostOfGoodsSold\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCostOfGoodsSold.QUANTITYColumn] = value;
+                    this[this.tableCostOfGoodsSold.branchColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal COST {
+            public decimal quantity {
                 get {
                     try {
-                        return ((decimal)(this[this.tableCostOfGoodsSold.COSTColumn]));
+                        return ((decimal)(this[this.tableCostOfGoodsSold.quantityColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'COST\' in table \'CostOfGoodsSold\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'quantity\' in table \'CostOfGoodsSold\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCostOfGoodsSold.COSTColumn] = value;
+                    this[this.tableCostOfGoodsSold.quantityColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal SUBTOTAL {
+            public decimal cost {
+                get {
+                    return ((decimal)(this[this.tableCostOfGoodsSold.costColumn]));
+                }
+                set {
+                    this[this.tableCostOfGoodsSold.costColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal subtotal {
                 get {
                     try {
-                        return ((decimal)(this[this.tableCostOfGoodsSold.SUBTOTALColumn]));
+                        return ((decimal)(this[this.tableCostOfGoodsSold.subtotalColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SUBTOTAL\' in table \'CostOfGoodsSold\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'subtotal\' in table \'CostOfGoodsSold\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableCostOfGoodsSold.SUBTOTALColumn] = value;
+                    this[this.tableCostOfGoodsSold.subtotalColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsITEMNull() {
-                return this.IsNull(this.tableCostOfGoodsSold.ITEMColumn);
+            public bool IsitemNull() {
+                return this.IsNull(this.tableCostOfGoodsSold.itemColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetITEMNull() {
-                this[this.tableCostOfGoodsSold.ITEMColumn] = global::System.Convert.DBNull;
+            public void SetitemNull() {
+                this[this.tableCostOfGoodsSold.itemColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCODENull() {
-                return this.IsNull(this.tableCostOfGoodsSold.CODEColumn);
+            public bool IscodeNull() {
+                return this.IsNull(this.tableCostOfGoodsSold.codeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCODENull() {
-                this[this.tableCostOfGoodsSold.CODEColumn] = global::System.Convert.DBNull;
+            public void SetcodeNull() {
+                this[this.tableCostOfGoodsSold.codeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsBRANCHNull() {
-                return this.IsNull(this.tableCostOfGoodsSold.BRANCHColumn);
+            public bool IsnameNull() {
+                return this.IsNull(this.tableCostOfGoodsSold.nameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetBRANCHNull() {
-                this[this.tableCostOfGoodsSold.BRANCHColumn] = global::System.Convert.DBNull;
+            public void SetnameNull() {
+                this[this.tableCostOfGoodsSold.nameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsQUANTITYNull() {
-                return this.IsNull(this.tableCostOfGoodsSold.QUANTITYColumn);
+            public bool IsbranchNull() {
+                return this.IsNull(this.tableCostOfGoodsSold.branchColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetQUANTITYNull() {
-                this[this.tableCostOfGoodsSold.QUANTITYColumn] = global::System.Convert.DBNull;
+            public void SetbranchNull() {
+                this[this.tableCostOfGoodsSold.branchColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCOSTNull() {
-                return this.IsNull(this.tableCostOfGoodsSold.COSTColumn);
+            public bool IsquantityNull() {
+                return this.IsNull(this.tableCostOfGoodsSold.quantityColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCOSTNull() {
-                this[this.tableCostOfGoodsSold.COSTColumn] = global::System.Convert.DBNull;
+            public void SetquantityNull() {
+                this[this.tableCostOfGoodsSold.quantityColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSUBTOTALNull() {
-                return this.IsNull(this.tableCostOfGoodsSold.SUBTOTALColumn);
+            public bool IssubtotalNull() {
+                return this.IsNull(this.tableCostOfGoodsSold.subtotalColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSUBTOTALNull() {
-                this[this.tableCostOfGoodsSold.SUBTOTALColumn] = global::System.Convert.DBNull;
+            public void SetsubtotalNull() {
+                this[this.tableCostOfGoodsSold.subtotalColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -4161,12 +4187,13 @@ Group by i.id_item";
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "CostOfGoodsSold";
-            tableMapping.ColumnMappings.Add("ITEM", "ITEM");
-            tableMapping.ColumnMappings.Add("CODE", "CODE");
-            tableMapping.ColumnMappings.Add("BRANCH", "BRANCH");
-            tableMapping.ColumnMappings.Add("QUANTITY", "QUANTITY");
-            tableMapping.ColumnMappings.Add("COST", "COST");
-            tableMapping.ColumnMappings.Add("SUBTOTAL", "SUBTOTAL");
+            tableMapping.ColumnMappings.Add("item", "item");
+            tableMapping.ColumnMappings.Add("code", "code");
+            tableMapping.ColumnMappings.Add("name", "name");
+            tableMapping.ColumnMappings.Add("branch", "branch");
+            tableMapping.ColumnMappings.Add("quantity", "quantity");
+            tableMapping.ColumnMappings.Add("cost", "cost");
+            tableMapping.ColumnMappings.Add("subtotal", "subtotal");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -4183,45 +4210,48 @@ Group by i.id_item";
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"
-SELECT 
-	I.NAME AS ITEM, 
-	I.CODE, 
-	B.NAME AS BRANCH,
-	SUM(SD.quantity) AS QUANTITY,
- AVG(SD.UNIT_COST) AS COST, 
-SUM(SD.quantity * SD.UNIT_COST) AS SUBTOTAL
-
- 
-FROM sales_invoice_detail AS SD
-	
-	
-INNER JOIN sales_invoice AS SI
- ON SI.ID_SALES_INVOICE = SD.ID_SALES_INVOICE
-	
-	
-LEFT JOIN ITEMS AS I
- ON I.id_item = SD.id_item
-	
-LEFT JOIN APP_BRANCH AS B
-	ON B.id_branch = SI.id_branch
- WHERE (SI.status = 2) and (SI.trans_date >= @StartDate) and (SI.trans_date <= @EndDate)
-	Group by I.name, B.name
-	Order by I.Name";
+            this._commandCollection[0].CommandText = @"select  
+	i.name as item,  
+    i.code,  
+    tags.name,
+    b.name as branch, 
+    sum(sd.quantity) as quantity, 
+	sd.unit_cost as cost,
+	(sum(sd.quantity)*sd.unit_cost) as subtotal 
+from sales_invoice_detail as sd
+inner join sales_invoice as si on sd.id_sales_invoice = si.id_sales_invoice 
+left join items as i on i.id_item = sd.id_item
+left join item_tag_detail as tagdetail
+on tagdetail.id_item = i.id_item
+left join item_tag as tags
+on tags.id_tag = tagdetail.id_tag 
+left join app_branch as b on b.id_branch = si.id_branch
+where si.trans_date >= @startdate
+and si.trans_date <= @enddate
+and si.id_company = @idcompany
+group by i.code, b.name 
+order by i.name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
+            param.ParameterName = "@startdate";
             param.DbType = global::System.Data.DbType.DateTime;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
+            param.ParameterName = "@enddate";
             param.DbType = global::System.Data.DbType.DateTime;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
+            this._commandCollection[0].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@idcompany";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_company";
             this._commandCollection[0].Parameters.Add(param);
         }
         
@@ -4229,10 +4259,11 @@ LEFT JOIN APP_BRANCH AS B
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(SalesDS.CostOfGoodsSoldDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int Fill(SalesDS.CostOfGoodsSoldDataTable dataTable, System.DateTime startdate, System.DateTime enddate, int idcompany) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(startdate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(enddate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(idcompany));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -4244,10 +4275,11 @@ LEFT JOIN APP_BRANCH AS B
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.CostOfGoodsSoldDataTable GetData(System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual SalesDS.CostOfGoodsSoldDataTable GetData(System.DateTime startdate, System.DateTime enddate, int idcompany) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(startdate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(enddate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(idcompany));
             SalesDS.CostOfGoodsSoldDataTable dataTable = new SalesDS.CostOfGoodsSoldDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

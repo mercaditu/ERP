@@ -56,7 +56,7 @@ namespace Cognitivo.Reporting.Views
             //fill data
             Data.SalesDSTableAdapters.CostOfGoodsSoldTableAdapter CostOfGoodsSoldTableAdapter = new Data.SalesDSTableAdapters.CostOfGoodsSoldTableAdapter();
             CostOfGoodsSoldTableAdapter.ClearBeforeFill = true;
-            CostOfGoodsSoldTableAdapter.Fill(SalesDB.CostOfGoodsSold, StartDate, EndDate);
+            CostOfGoodsSoldTableAdapter.Fill(SalesDB.CostOfGoodsSold, StartDate, EndDate, entity.CurrentSession.Id_Company);
 
             this.reportViewer.RefreshReport();
         }

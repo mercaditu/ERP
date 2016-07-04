@@ -53,12 +53,12 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TabControl Grid.Row="1" Grid.Column="2" Margin="0,85,0,0" metro:TabControlHelper.IsUnderlined="True">
-            <TabItem VerticalAlignment="Center">
+        <TabControl Grid.Row="1" Grid.Column="2" Margin="0,85,0,0" metro:TabControlHelper.IsUnderlined="True" >
+            <TabItem VerticalAlignment="Center"  >
                 <TabItem.Header>
                     <Label Content="U" Foreground="{StaticResource AccentColor_Introvert}" FontSize="20" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                 </TabItem.Header>
-                <Grid Background="{StaticResource AccentColor_Brush}">
+                <Grid Background="{StaticResource AccentColor_Brush}" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="2*"/>
@@ -88,8 +88,8 @@
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="{lex:Loc Personal}">
-                <WrapPanel DataContext="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <TabItem Header="{lex:Loc Personal}"  >
+                <WrapPanel DataContext="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Auto" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <StackPanel HorizontalAlignment="Center" Margin="16,16,16,0">
                         <Label Content="{lex:Loc Information}" Style="{StaticResource H3}"/>
                         <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
@@ -132,7 +132,7 @@
                 </WrapPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Family}">
-                <StackPanel Margin="16">
+                <StackPanel Margin="16" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Label Content="{lex:Loc BloodType}" Style="{StaticResource input_label}"/>
                     <ComboBox x:Name="cbxBloodtype"  Style="{StaticResource input_combobox}"
                                  SelectedValue="{Binding blood_type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
@@ -161,8 +161,8 @@
                     </DataGrid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="{lex:Loc Education}">
-                <Grid Margin="16">
+            <TabItem Header="{lex:Loc Education}"  >
+                <Grid Margin="16" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <DataGrid x:Name="hr_educationDataGrid" AutoGenerateColumns="False" 
                               EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource contacthr_educationViewSource}}" 
                               Margin="4" RowDetailsVisibilityMode="VisibleWhenSelected">
@@ -188,8 +188,8 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="{lex:Loc Work}">
-                <Grid Margin="16,16,16,0">
+            <TabItem Header="{lex:Loc Work}"  >
+                <Grid Margin="16,16,16,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -248,10 +248,10 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
-                </Grid>
+                </Grid >
             </TabItem>
-            <TabItem Header="{lex:Loc Talent}">
-                <StackPanel>
+            <TabItem Header="{lex:Loc Talent}"  >
+                <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox x:Name="cmbtalent" ItemsSource="{Binding Source={StaticResource hr_talentViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_talent"
                                   SelectedValue="{Binding id_talent, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

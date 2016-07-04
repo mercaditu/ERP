@@ -373,7 +373,7 @@
                             </TextBlock>
                             <Label Content=" "/>
                             <TextBlock FontSize="30" Foreground="White"
-                                       Text="{Binding GrandTotalDetail, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource paymentViewSource}}">
+                                       Text="{Binding GrandTotalDetail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource paymentViewSource}}">
                                 <TextBlock.Effect>
                                     <DropShadowEffect Color="White" ShadowDepth="0"/>
                                 </TextBlock.Effect>

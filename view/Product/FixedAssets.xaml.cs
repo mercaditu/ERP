@@ -127,7 +127,19 @@ namespace Cognitivo.Product
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            ItemDB.CancelAllChanges();
+           // ItemDB.CancelAllChanges();
+            item item = (item)itemDataGrid.SelectedItem;
+             if (item.State == EntityState.Added)
+            {
+                ItemDB.Entry(item).State = EntityState.Detached;
+            }
+            else
+            {
+                item.is_active = false;
+                item.State = EntityState.Unchanged;
+                ItemDB.Entry(item).State = EntityState.Unchanged;
+            }
+            itemViewSource.View.Refresh();
         }
 
         private void toolBar_btnDelete_Click(object sender)

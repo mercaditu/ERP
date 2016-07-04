@@ -61,8 +61,7 @@
         <!--<CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>-->
         <!--<CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
+       
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_movementitem_movement_dimensionViewSource" Source="{Binding item_movement_dimension, Source={StaticResource item_movementViewSource}}"/>
         <CollectionViewSource x:Key="item_movementrawViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
@@ -89,7 +88,7 @@
               Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5">
 
         </Grid>
-        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
 
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="production_orderDataGrid"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -378,12 +377,7 @@
                                         <TextBox x:Name="txtProduct" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" />
                                         <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
-                                    <Grid >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="3*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <DataGrid  Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 
+                                      <DataGrid  Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 
                                       ItemsSource="{Binding Source={StaticResource production_execution_detailProductViewSource}}" 
                                       SelectionChanged="dgproduct_SelectionChanged">
                                             <DataGrid.Columns>
@@ -393,7 +387,9 @@
                                                         Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"/>
                                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
                                                         Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
-                                                <DataGridTemplateColumn Width="Auto" Header="">
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                                            <DataGridTemplateColumn Width="Auto" Header="">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <Button Command="customcmd:CustomCommands.Delete"
@@ -403,7 +399,7 @@
                                                 </DataGridTemplateColumn>
                                             </DataGrid.Columns>
                                         </DataGrid >
-                                        <StackPanel x:Name="StpMovement" Grid.Column="1">
+                                        <!--<StackPanel x:Name="StpMovement" Grid.Column="1">
                                             <Label Content="Stock"/>
                                             <DataGrid Height="Auto" x:Name="item_movement_detailDataGrid" Width="340" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
                               AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
@@ -436,8 +432,8 @@
                                                     </DataTemplate>
                                                 </DataGrid.RowDetailsTemplate>
                                             </DataGrid>
-                                        </StackPanel>
-                                    </Grid>
+                                        </StackPanel>-->
+                                 
 
 
 
@@ -508,16 +504,14 @@
                                         <TextBox  x:Name="txtRaw" Width="64" KeyUp="btnInsert_KeyDown" Margin="8,0" VerticalAlignment="Top" />
                                         <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
-                                    <Grid >
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="3*"/>
-                                        </Grid.ColumnDefinitions>
+                                    
                                         <DataGrid Margin="0" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailRawViewSource}}" SelectionChanged="dgRaw_SelectionChanged">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
                                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
-                                                <DataGridTemplateColumn Width="32" Header="">
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                                            <DataGridTemplateColumn Width="32" Header="">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
@@ -526,7 +520,7 @@
                                                 </DataGridTemplateColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <StackPanel x:Name="StpMovementraw" Grid.Column="1">
+                                        <!--<StackPanel x:Name="StpMovementraw" Grid.Column="1">
                                             <Label Content="Stock"/>
                                             <DataGrid Height="Auto" x:Name="item_movement_detailDataGridraw" Width="340" SelectionChanged="item_movement_detailDataGridraw_SelectionChanged"
                                                       AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementrawViewSource}}"
@@ -559,8 +553,8 @@
                                                     </DataTemplate>
                                                 </DataGrid.RowDetailsTemplate>
                                             </DataGrid>
-                                        </StackPanel>
-                                    </Grid>
+                                        </StackPanel>-->
+                                  
                                  
                                     <Label x:Name="lblProjectedRawQty" Content="Total" VerticalAlignment="Bottom"/>
                                     <Label x:Name="lblTotalRaw" Content="Total" VerticalAlignment="Bottom"/>
@@ -895,6 +889,8 @@
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" 
                                                         Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                                         Width="100"/>
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                             <DataGridTemplateColumn Width="Auto" Header="">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>

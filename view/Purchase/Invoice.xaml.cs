@@ -435,6 +435,8 @@ namespace Cognitivo.Purchase
                     purchase_invoice_dimension purchase_invoice_dimension = new purchase_invoice_dimension();
                     purchase_invoice_dimension.id_dimension = item_dimension.id_app_dimension;
                     purchase_invoice_dimension.app_dimension = item_dimension.app_dimension;
+                    purchase_invoice_dimension.id_measurement = item_dimension.id_measurement;
+                    purchase_invoice_dimension.app_measurement = item_dimension.app_measurement;
                     purchase_invoice_dimension.value = item_dimension.value;
                     purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
                 }

@@ -22,7 +22,7 @@
             {
                 app_document = db.app_document.Where(x => x.id_document == document_id).FirstOrDefault();
                 PrinterName = app_document.app_document_range.FirstOrDefault().printer_name;
-                
+
                 if (app_document.id_application == App.Names.Movement)
                 {
                     item_transfer item_transfer = (item_transfer)obj;
@@ -203,6 +203,54 @@
                         //}
                     }
 
+
+                }
+                else
+                {
+                    if (d.item_product != null)
+                    {
+                        if (d.item_product.item != null)
+                        {
+                            Detail = "ACTIV. : " + d.item_product.item.description + "\n";
+                            string ItemName = string.Empty;
+                            string ItemCode = string.Empty;
+
+                            if (d.item_product.item != null)
+                            {
+                                ItemName = d.item_product.item.name;
+                                ItemCode = d.item_product.item.code;
+                            }
+
+
+                            decimal? Qty = d.quantity_destination;
+
+
+                            Detail = Detail +
+                                ""
+                                + "Descripcion, Cantiad, Codigo" + "\n"
+                                + "-------------------------------" + "\n"
+                                + ItemCode + "\t" + ItemName + "\n"
+                                + Qty.ToString() + "\n";
+
+                            if (d.project_task.project_task_dimension.Count() > 0)
+                            {
+                                Detail = Detail +
+                             ""
+                             + "Dimension, Value, Measurement" + "\n";
+                            }
+                            foreach (item_transfer_dimension item_transfer_dimension in d.item_transfer_dimension)
+                            {
+
+                                decimal value = item_transfer_dimension.value;
+                                string name = item_transfer_dimension.app_dimension != null ? item_transfer_dimension.app_dimension.name : "";
+                                string dimension = "-------------------------------" + "\n"
+                                + name + "\t" + value + "\n";
+                                Detail = Detail + dimension + "\n";
+
+                            }
+                        }
+
+                    }
 
                 }
 
@@ -437,7 +485,7 @@
             Footer = "--------------------------------" + "\n";
             Footer += "Total Bruto       : " + Math.Round((sales_invoice.GrandTotal + DiscountTotal), 2) + "\n";
             Footer += "Total Descuento   : -" + Math.Round(sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat), 2) + "\n";
-            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + " : " + Math.Round(sales_invoice.GrandTotal,2) + "\n";
+            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + " : " + Math.Round(sales_invoice.GrandTotal, 2) + "\n";
             Footer += "Fecha & Hora      : " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura : " + sales_invoice.number + "\n";
             Footer += "-------------------------------" + "\n";

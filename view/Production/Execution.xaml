@@ -69,7 +69,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" 
-              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+              Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="projectDataGrid"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto"
 			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -188,6 +188,8 @@
                                                         Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
                                                         Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                     <DataGridTemplateColumn Width="Auto" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -267,6 +269,8 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                     <DataGridTemplateColumn Width="32" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -609,6 +613,8 @@
                                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" 
                                                         Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                                         Width="100"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                     <DataGridTemplateColumn Width="Auto" Header="">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

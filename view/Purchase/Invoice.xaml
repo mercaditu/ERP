@@ -382,7 +382,7 @@
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
                     <DataGridTextColumn Binding="{Binding Quantity_Factored, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
-                                        Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
+                                         Header="Factor" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
                                         Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=ShowFactorQty, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <!-- UnitPrice -->

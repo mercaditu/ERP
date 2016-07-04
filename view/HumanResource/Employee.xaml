@@ -233,8 +233,8 @@
 
                     <StackPanel Grid.Column="0">
                         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True"
-                                  ItemsSource="{Binding}" 
-                                  Margin="4" RowDetailsVisibilityMode="VisibleWhenSelected">
+                                  ItemsSource="{Binding}" CanUserAddRows="True"
+                                  Margin="4" RowDetailsVisibilityMode="Collapsed">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="id department" Visibility="Collapsed" Width="SizeToHeader"/>
                                 <DataGridTextColumn Binding="{Binding codigo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="codigo" Width="SizeToHeader"/>

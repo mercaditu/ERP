@@ -135,6 +135,27 @@ namespace entity
             }
         }
         private decimal _SubTotal_Vat;
+
+        [NotMapped]
+        public string DimensionString
+        {
+            get
+            {
+                string s = string.Empty;
+
+                foreach (purchase_tender_detail_dimension dimensionList in purchase_tender_detail_dimension)
+                {
+                    if (dimensionList.app_dimension != null && dimensionList.app_measurement != null)
+                    {
+                        s = s + dimensionList.app_dimension.name + ": " + dimensionList.value + " x " + dimensionList.app_measurement.name;
+                    }
+                }
+
+                return s;
+            }
+        }
+        private string _DimensionString;
+
         public virtual purchase_tender_contact purchase_tender_contact { get; set; }
         public virtual purchase_tender_item purchase_tender_item { get; set; }
     

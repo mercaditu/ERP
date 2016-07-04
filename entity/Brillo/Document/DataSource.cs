@@ -414,6 +414,7 @@ namespace entity.Brillo.Document
                         unit_cost = g.unit_cost,
                         unit_price = g.unit_cost,
                         unit_price_vat = g.UnitCost_Vat,
+                        branch_name = g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_branch != null ? g.purchase_tender_contact.purchase_tender.app_branch.name : "" : "",
                         terminal_name = g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_terminal != null ? g.purchase_tender_contact.purchase_tender.app_terminal.name:"" : "",
                         Condition = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_condition!= null ?g.purchase_tender_contact.app_condition.name :"": "",
                         Contract = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_contract!= null ?g.purchase_tender_contact.app_contract.name:"" : "",
@@ -424,6 +425,7 @@ namespace entity.Brillo.Document
                         id_vat_group = g.id_vat_group,
                         gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null?g.purchase_tender_contact.contact.gov_code:"" : "",
                         Number = g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number!=null?g.purchase_tender_contact.purchase_tender.number.ToString():"" : "",
+                        DimensionString = g.DimensionString,
                         AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
 
                      // Text -> Words

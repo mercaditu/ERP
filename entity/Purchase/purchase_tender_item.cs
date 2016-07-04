@@ -22,7 +22,28 @@ namespace entity
         public int? id_item { get; set; }
         public int? id_project_task { get; set; }
         public string item_description { get; set; }
-        public decimal quantity { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Required]
+        public decimal quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                if (_quantity != value)
+                {
+                    _quantity = value;
+                    RaisePropertyChanged("quantity");
+
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity);
+                    RaisePropertyChanged("_Quantity_Factored");
+                }
+            }
+        }
+        private decimal _quantity;
+
         /// <summary>
         /// 
         /// </summary>

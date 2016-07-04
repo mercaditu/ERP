@@ -43,6 +43,8 @@ namespace entity
                     RaisePropertyChanged("quantity");
 
                     update_SubTotal();
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity);
+                    RaisePropertyChanged("_Quantity_Factored");
                 }
             }
         }

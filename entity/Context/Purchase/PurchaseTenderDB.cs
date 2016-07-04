@@ -136,7 +136,10 @@ namespace entity
                             foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
                             {
                                 purchase_order_dimension purchase_order_dimension = new purchase_order_dimension();
+                                purchase_order_dimension.id_company = CurrentSession.Id_Company;
+
                                 purchase_order_dimension.id_dimension = purchase_tender_dimension.id_dimension;
+                                purchase_order_dimension.id_measurement = purchase_tender_dimension.id_measurement;
                                 purchase_order_dimension.value = purchase_tender_dimension.value;
                                 purchase_order_detail.purchase_order_dimension.Add(purchase_order_dimension);
                             }

@@ -115,8 +115,8 @@ namespace entity
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
 
-                    _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored);
-                   RaisePropertyChanged("quantity");
+                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored);
+                    RaisePropertyChanged("quantity");
                 }
             }
         }

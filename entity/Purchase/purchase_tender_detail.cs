@@ -22,13 +22,16 @@ namespace entity
         public int id_purchase_tender_detail { get; set; }
         public int id_purchase_tender_contact { get; set; }
         public int id_purchase_tender_item { get; set; }
+        
         public Status.Documents_General status
         {
             get { return _status; }
             set { _status = value; RaisePropertyChanged("status"); }
         }
         Status.Documents_General _status;
+        
         public string item_description { get; set; }
+        
         public decimal quantity
         {
             get { return _quantity; }
@@ -44,6 +47,24 @@ namespace entity
             }
         }
         private decimal _quantity;
+
+        [NotMapped]
+        public decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored);
+                    RaisePropertyChanged("quantity");
+                }
+            }
+        }
+        private decimal _Quantity_Factored; 
 
         /// <summary>
         /// 

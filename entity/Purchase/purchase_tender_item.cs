@@ -23,6 +23,26 @@ namespace entity
         public int? id_project_task { get; set; }
         public string item_description { get; set; }
         public decimal quantity { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored);
+                    RaisePropertyChanged("quantity");
+                }
+            }
+        }
+        private decimal _Quantity_Factored;
 
         public virtual item item { get; set; }
         public virtual purchase_tender purchase_tender { get; set; }

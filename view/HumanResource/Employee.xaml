@@ -189,7 +189,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{lex:Loc Work}"  >
-                <Grid Margin="16,16,16,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <Grid Margin="16,16,16,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" DataContext="{StaticResource contacthr_contractViewSource}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -210,17 +210,13 @@
                         </Border>
                     </Grid>
                     <ScrollViewer Grid.Column="1" Margin="0">
-                        <StackPanel Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" DataContext="{StaticResource contacthr_contractViewSource}">
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0">
                             <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                             <TextBox Text="{Binding codigo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc Department}" Style="{StaticResource input_label}"/>
                             <ComboBox ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_department"
                                   SelectedValue="{Binding id_department, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                   Style="{StaticResource input_combobox}"/>
-                            <!--<Label Content="{lex:Loc Position}" Style="{StaticResource input_label}"/>
-                                <ComboBox ItemsSource="{Binding Source={StaticResource hr_positionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_position"
-                                  SelectedValue="{Binding id_position, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                  Style="{StaticResource input_combobox}"/>-->
                             <Label Content="{lex:Loc BaseSalary}" Style="{StaticResource input_label}"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox Text="{Binding salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" Width="160" Style="{StaticResource input_textbox}"/>
@@ -237,7 +233,7 @@
 
                     <StackPanel Grid.Column="0">
                         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True"
-                                  ItemsSource="{Binding Source={StaticResource contacthr_contractViewSource}}" 
+                                  ItemsSource="{Binding}" 
                                   Margin="4" RowDetailsVisibilityMode="VisibleWhenSelected">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding id_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="id department" Visibility="Collapsed" Width="SizeToHeader"/>

@@ -26,7 +26,7 @@ namespace Cognitivo.Commercial
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
-            ContactDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_customer).OrderBy(a => a.code).Load();
+            ContactDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_customer).OrderBy(a => a.name).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;

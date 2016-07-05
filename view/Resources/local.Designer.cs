@@ -1582,6 +1582,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @Fraction.
+        /// </summary>
+        public static string Fraction {
+            get {
+                return ResourceManager.GetString("Fraction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Freight.
         /// </summary>
         public static string Freight {
@@ -1942,15 +1951,6 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @Item.
-        /// </summary>
-        public static string Item {
-            get {
-                return ResourceManager.GetString("Item", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @ItemDefect.
         /// </summary>
         public static string ItemDefect {
@@ -1974,6 +1974,15 @@ namespace Cognitivo.Resources {
         public static string ItemMovement {
             get {
                 return ResourceManager.GetString("ItemMovement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @Items.
+        /// </summary>
+        public static string Items {
+            get {
+                return ResourceManager.GetString("Items", resourceCulture);
             }
         }
         

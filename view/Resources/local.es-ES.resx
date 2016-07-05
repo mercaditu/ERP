@@ -624,6 +624,9 @@
   <data name="Form" xml:space="preserve">
     <value>Formulario</value>
   </data>
+  <data name="Fraction" xml:space="preserve">
+    <value>Fracción</value>
+  </data>
   <data name="Freight" xml:space="preserve">
     <value>Carga</value>
   </data>
@@ -744,9 +747,6 @@
   <data name="Issued" xml:space="preserve">
     <value>Emitido</value>
   </data>
-  <data name="Item" xml:space="preserve">
-    <value>Ít.</value>
-  </data>
   <data name="ItemDefect" xml:space="preserve">
     <value>Defecto Del Artículo</value>
   </data>
@@ -755,6 +755,9 @@
   </data>
   <data name="ItemMovement" xml:space="preserve">
     <value>Movimiento De Artículos</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Artículos</value>
   </data>
   <data name="ItemTag" xml:space="preserve">
     <value>Etiqueta De Artículo</value>

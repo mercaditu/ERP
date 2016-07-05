@@ -624,6 +624,9 @@
   <data name="Form" xml:space="preserve">
     <value>@Form</value>
   </data>
+  <data name="Fraction" xml:space="preserve">
+    <value>@Fraction</value>
+  </data>
   <data name="Freight" xml:space="preserve">
     <value>@Freight</value>
   </data>
@@ -744,9 +747,6 @@
   <data name="Issued" xml:space="preserve">
     <value>@Issued</value>
   </data>
-  <data name="Item" xml:space="preserve">
-    <value>@Item</value>
-  </data>
   <data name="ItemDefect" xml:space="preserve">
     <value>@ItemDefect</value>
   </data>
@@ -755,6 +755,9 @@
   </data>
   <data name="ItemMovement" xml:space="preserve">
     <value>@ItemMovement</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>@Items</value>
   </data>
   <data name="ItemTag" xml:space="preserve">
     <value>@ItemTag</value>

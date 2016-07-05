@@ -1154,7 +1154,7 @@ namespace Cognitivo.Production
 
             try
             {
-                if (production_order_detail.item.item_dimension.Count() > 0)
+                if (production_order_detail.is_input)
                 {
 
 
@@ -1181,6 +1181,8 @@ namespace Cognitivo.Production
                 else
                 {
                     Insert_IntoDetail(production_order_detail, Quantity);
+                    itemMovementFraction.production_order_detail = production_order_detail;
+                    RefeshData();
                 }
           
             }
@@ -1190,6 +1192,43 @@ namespace Cognitivo.Production
             }
         }
 
+        public void RefeshData()
+        {
+            production_execution_detailRawViewSource.View.Refresh();
+            production_execution_detailRawViewSource.View.MoveCurrentToLast();
+
+            production_execution_detailSupplyViewSource.View.Refresh();
+            production_execution_detailSupplyViewSource.View.MoveCurrentToLast();
+
+            production_execution_detailProductViewSource.View.Refresh();
+            production_execution_detailProductViewSource.View.MoveCurrentToLast();
+
+            production_execution_detailAssetViewSource.View.Refresh();
+            production_execution_detailAssetViewSource.View.MoveCurrentToLast();
+            production_execution_detailServiceContractViewSource.View.Refresh();
+            production_execution_detailServiceContractViewSource.View.MoveCurrentToLast();
+
+            if (itemMovementFraction.type == Configs.itemMovementFraction.Types.Product)
+            {
+                loadProductTotal(itemMovementFraction.production_order_detail);
+            }
+            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.RawMaterial)
+            {
+                loadRawTotal(itemMovementFraction.production_order_detail);
+            }
+            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.Asset)
+            {
+                loadAssetTotal(itemMovementFraction.production_order_detail);
+            }
+            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.Supplier)
+            {
+                loadSupplierTotal(itemMovementFraction.production_order_detail);
+            }
+            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.ServiceContract)
+            {
+                loadServiceContractTotal(itemMovementFraction.production_order_detail);
+            }
+        }
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
             production_execution _production_execution = production_executionViewSource.View.CurrentItem as production_execution;
@@ -1636,41 +1675,12 @@ namespace Cognitivo.Production
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            crud_modal.Children.Clear();
-            production_execution_detailRawViewSource.View.Refresh();
-            production_execution_detailRawViewSource.View.MoveCurrentToLast();
+            if ( crud_modal.Children!=null)
+            {
+                crud_modal.Children.Clear();
+            }
 
-            production_execution_detailSupplyViewSource.View.Refresh();
-            production_execution_detailSupplyViewSource.View.MoveCurrentToLast();
-
-            production_execution_detailProductViewSource.View.Refresh();
-            production_execution_detailProductViewSource.View.MoveCurrentToLast();
-
-            production_execution_detailAssetViewSource.View.Refresh();
-            production_execution_detailAssetViewSource.View.MoveCurrentToLast();
-            production_execution_detailServiceContractViewSource.View.Refresh();
-            production_execution_detailServiceContractViewSource.View.MoveCurrentToLast();
-
-            if (itemMovementFraction.type == Configs.itemMovementFraction.Types.Product)
-            {
-                loadProductTotal(itemMovementFraction.production_order_detail);
-            }
-            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.RawMaterial)
-            {
-                loadRawTotal(itemMovementFraction.production_order_detail);
-            }
-            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.Asset)
-            {
-                loadAssetTotal(itemMovementFraction.production_order_detail);
-            }
-            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.Supplier)
-            {
-                loadSupplierTotal(itemMovementFraction.production_order_detail);
-            }
-            else if (itemMovementFraction.type == Configs.itemMovementFraction.Types.ServiceContract)
-            {
-                loadServiceContractTotal(itemMovementFraction.production_order_detail);
-            }
+            RefeshData();
 
         }
 
@@ -1679,6 +1689,7 @@ namespace Cognitivo.Production
 
         }
 
+      
        
         
     }

@@ -81,7 +81,7 @@ namespace Cognitivo.Configs
 
                 app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
                 //Items_InStockLIST = OrderDB.item_movement.ToList();
-                Items_InStockLIST = OrderDB.item_movement.Where(x =>
+                Items_InStockLIST = OrderDB.item_movement.Where(x => x.id_location == _production_execution.production_line.id_location &&
                                                                            x.item_product.id_item == id_item
                                                                            && x.status == entity.Status.Stock.InStock
                                                                            && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();

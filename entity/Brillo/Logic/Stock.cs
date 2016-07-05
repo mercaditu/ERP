@@ -189,7 +189,7 @@ namespace entity.Brillo.Logic
                             item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
                             item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
                             item_movement_dimension.value = purchase_invoice_dimension.value;
-                           // item_movement_dimension.id_measurement = purchase_invoice_dimension.id_measurement;
+                            // item_movement_dimension.id_measurement = purchase_invoice_dimension.id_measurement;
                             item_movement_dimensionLIST.Add(item_movement_dimension);
                         }
                     }
@@ -633,17 +633,63 @@ namespace entity.Brillo.Logic
 
                     item_movement.trans_date = TransDate;
 
+                    decimal Dimension_Cost = 0;
+                    if (ApplicationID == App.Names.ProductionExecution)
+                    {
 
+                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
+                        {
+                            production_execution_detail production_execution_detail = db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault();
+                            if (production_execution_detail.production_execution.production_order.types == production_order.ProductionOrderTypes.Fraction)
+                            {
+                                if (parent_Movement.item_movement_dimension != null && item_movement.item_movement_dimension != null)
+                                {
+                                    decimal ParentDimesion = 0;
+                                    decimal ChildDimesion = 0;
+
+                                    foreach (item_movement_dimension item_movement_dimension in parent_Movement.item_movement_dimension)
+                                    {
+                                        ParentDimesion = ParentDimesion * item_movement_dimension.value;
+                                    }
+                                    foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                                    {
+                                        ChildDimesion = ChildDimesion * item_movement_dimension.value;
+                                    }
+
+
+                                    if (ParentDimesion > 0 && ChildDimesion > 0)
+                                    {
+                                        Dimension_Cost = parent_Movement.GetValue_ByCurrency(app_currencyfx.app_currency);
+                                        decimal ChildPaticipantion = (ChildDimesion / ParentDimesion);
+                                        Dimension_Cost = Dimension_Cost * ChildPaticipantion;
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
 
                     //Logic for Value
                     if (app_currencyfx != null)
                     {
                         item_movement_value item_movement_value = new item_movement_value();
-                        item_movement_value.unit_value = parent_Movement.GetValue_ByCurrency(app_currencyfx.app_currency);
+                        if (Dimension_Cost > 0)
+                        {
+                            item_movement_value.unit_value = Dimension_Cost;
+                        }
+                        else
+                        {
+                            item_movement_value.unit_value = parent_Movement.GetValue_ByCurrency(app_currencyfx.app_currency);
+                        }
+
                         item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
                         item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
                         item_movement.item_movement_value.Add(item_movement_value);
                     }
+
                     if (id_movement > 0)
                     {
 
@@ -655,7 +701,7 @@ namespace entity.Brillo.Logic
                                 item_movement_dimension _item_movement_dimension = new item_movement_dimension();
                                 _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
                                 _item_movement_dimension.value = item_movement_dimension.value;
-                              //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
+                                //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
                                 item_movement.item_movement_dimension.Add(_item_movement_dimension);
                             }
                         }
@@ -689,12 +735,12 @@ namespace entity.Brillo.Logic
                 {
                     item_movement.id_execution_detail = TransactionDetailID;
 
-                    if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
-                    {
-                        id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
-                        item_movement._parent = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
+                    //if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
+                    //{
+                    //    id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
+                    //    item_movement._parent = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
 
-                    }
+                    //}
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {
@@ -740,20 +786,20 @@ namespace entity.Brillo.Logic
                 }
                 if (id_movement > 0)
                 {
-                   
-                        if (db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault() != null)
+
+                    if (db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault() != null)
+                    {
+                        item_movement Execustionitem_movement = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
+                        foreach (item_movement_dimension item_movement_dimension in Execustionitem_movement.item_movement_dimension)
                         {
-                            item_movement Execustionitem_movement = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
-                            foreach (item_movement_dimension item_movement_dimension in Execustionitem_movement.item_movement_dimension)
-                            {
-                                item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                                _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                                _item_movement_dimension.value = item_movement_dimension.value;
-                              //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
-                                item_movement.item_movement_dimension.Add(_item_movement_dimension);
-                            }
+                            item_movement_dimension _item_movement_dimension = new item_movement_dimension();
+                            _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
+                            _item_movement_dimension.value = item_movement_dimension.value;
+                            //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
+                            item_movement.item_movement_dimension.Add(_item_movement_dimension);
                         }
-                    
+                    }
+
                 }
                 Final_ItemMovementLIST.Add(item_movement);
             }

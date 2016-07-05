@@ -170,10 +170,10 @@ namespace cntrl.Curd
                             //If Recievable, then Hide->Payment and Show->Sales
                             stpcreditpurchase.Visibility = Visibility.Collapsed;
                             stpcreditsales.Visibility = Visibility.Visible;
-
+                           
                             CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
-                            PaymentDB.sales_return.Where(x => x.id_contact == payment.id_contact && (x.sales_invoice.GrandTotal - x.GrandTotal) > 0).Load();
-                            sales_returnViewSource.Source = PaymentDB.sales_return.Local;
+                            PaymentDB.sales_return.Where(x => x.id_contact == payment.id_contact).Load();
+                            sales_returnViewSource.Source = PaymentDB.sales_return.Local.Where(x=>(x.sales_invoice.GrandTotal - x.GrandTotal) > 0);
                         }
                     }
                     else

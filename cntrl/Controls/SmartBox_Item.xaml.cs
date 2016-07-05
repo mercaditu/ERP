@@ -27,7 +27,7 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
                 if (Sec.create)
                 {
                     _can_new = value;
@@ -58,7 +58,7 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
                 if (Sec.edit)
                 {
                     _can_edit = value;
@@ -250,7 +250,7 @@ namespace cntrl.Controls
 
         private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
             if (Sec.create)
             {
                 crudItem.itemobject = new entity.item();
@@ -270,7 +270,7 @@ namespace cntrl.Controls
 
         private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
             if (Sec.edit)
             {
                 crudItem.itemobject = new entity.item();

@@ -54,7 +54,7 @@ namespace cntrl.Curd
             foreach (accounting_template_detail _accounting_template_detail in accounting_template_detail)
             {
                 accounting_journal_detail accounting_journal_detail = new accounting_journal_detail();
-                accounting_journal_detail.id_application = App.Names.Item;
+                accounting_journal_detail.id_application = App.Names.Items;
                 accounting_journal_detail.id_chart = _accounting_template_detail.id_chart;
                 accounting_journal_detail.id_currencyfx = entity.db.app_currency.Where(x => x.is_priority == true).FirstOrDefault().app_currencyfx.FirstOrDefault().id_currencyfx;
                 if (_accounting_template_detail.is_debit == true)

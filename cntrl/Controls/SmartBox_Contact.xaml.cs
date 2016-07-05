@@ -34,7 +34,7 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
                 if (Sec.create)
                 {
                     _can_new = value;
@@ -53,7 +53,7 @@ namespace cntrl.Controls
             get { return _can_new; }
             set
             {
-                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Item);
+                entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
                 if (Sec.edit)
                 {
                     _can_edit = value;

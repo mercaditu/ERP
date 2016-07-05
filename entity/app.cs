@@ -105,8 +105,8 @@ namespace entity
             
 
             //Stock
-            [LocalizedDescription("Item")]
-            Item = 11,
+            [LocalizedDescription("Items")]
+            Items = 11,
             [LocalizedDescription("Adjust")]
             Adjust = 12,
             [LocalizedDescription("Movement")]

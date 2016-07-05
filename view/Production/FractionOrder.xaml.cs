@@ -45,7 +45,8 @@ namespace Cognitivo.Production
             production_order_detaillRawViewSource,
             production_order_detaillAssetViewSource,
             production_order_detaillSupplyViewSource,
-            production_order_detaillServiceContractViewSource;
+            production_order_detaillServiceContractViewSource,
+            production_order_dimensionViewSource;
         // item_dimensionViewSource;
 
         cntrl.Curd.ItemRequest ItemRequest;
@@ -151,7 +152,7 @@ namespace Cognitivo.Production
             //app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
             production_orderproduction_order_detailViewSource = ((CollectionViewSource)(FindResource("production_orderproduction_order_detailViewSource")));
-
+            production_order_dimensionViewSource = ((CollectionViewSource)(FindResource("production_order_dimensionViewSource")));
 
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
             //cbxItemType.ItemsSource = Enum.GetValues(typeof(item.item_type)).Cast<item.item_type>().ToList();
@@ -580,7 +581,7 @@ namespace Cognitivo.Production
                     //if (production_order_detail.item.id_item_type == entity.item.item_type.Task)
                     //{
                     production_order_detail n_production_order_detail = new production_order_detail();
-                    n_production_order_detail.is_input = true;
+                    n_production_order_detail.is_input = false;
                     n_production_order_detail.id_item = production_order_detail.id_item;
                     n_production_order_detail.item = production_order_detail.item;
                     n_production_order_detail.name = production_order_detail.item.name;
@@ -589,8 +590,24 @@ namespace Cognitivo.Production
                     n_production_order_detail.production_order.status = Status.Production.Pending;
                     n_production_order_detail.quantity = 0;
                     n_production_order_detail.status = Status.Project.Pending;
+                    if (production_order_detail.item != null)
+                    {
+                        foreach (item_dimension item_dimension in production_order_detail.item.item_dimension)
+                        {
+                            production_order_dimension production_order_dimension = new production_order_dimension();
+                            production_order_dimension.id_dimension = item_dimension.id_app_dimension;
+                            production_order_dimension.app_dimension = item_dimension.app_dimension;
+                            production_order_dimension.id_measurement = item_dimension.id_measurement;
+                            production_order_dimension.app_measurement = item_dimension.app_measurement;
+                            production_order_dimension.value = 0;
+                            n_production_order_detail.production_order_dimension.Add(production_order_dimension);
+
+                        }
+                    }
                     production_order_detail.child.Add(n_production_order_detail);
+                   
                     OrderDB.production_order_detail.Add(n_production_order_detail);
+                    production_order_dimensionViewSource.View.Refresh();
                     production_orderproduction_order_detailViewSource.View.Refresh();
                     production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
                     //  }

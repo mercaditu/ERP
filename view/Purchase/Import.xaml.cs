@@ -145,6 +145,8 @@ namespace Cognitivo.Purchase
                         getProratedCostCounted(purchase_invoice, true);
                     }
                 }
+                productDataGrid.ItemsSource = null;
+                impex_importDataGrid.ItemsSource = null;
                 impex_importDataGrid.ItemsSource = clsImpexImportDetails;
                 productDataGrid.ItemsSource = clsProductDetails;
             }
@@ -175,8 +177,8 @@ namespace Cognitivo.Purchase
 
         private void getProratedCostCounted(purchase_invoice purchase_invoice, bool isNew)
         {
-            clsImpexImportDetails.Clear();
-            clsProductDetails.Clear();
+            //clsImpexImportDetails.Clear();
+            //clsProductDetails.Clear();
             impex impex = impexDataGrid.SelectedItem as impex;
             if (isNew == true)
             {

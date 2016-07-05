@@ -146,7 +146,7 @@
 
             <TabControl Grid.Row="1" Grid.ColumnSpan="2">
                 <TabItem Header="{lex:Loc Origin}">
-                    <Grid>
+                    <Grid     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -191,7 +191,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Destination}">
-                    <Grid>
+                    <Grid     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="1*"/>
@@ -242,7 +242,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc Cost}">
-                    <StackPanel>
+                    <StackPanel     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <DataGrid x:Name="dgbcost" Height="Auto"
                                   AutoGenerateColumns="False" Grid.ColumnSpan="2" 
                                   EnableRowVirtualization="True" 

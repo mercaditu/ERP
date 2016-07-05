@@ -63,8 +63,12 @@ namespace Cognitivo.HumanResource
         {
             contact contact = (contact)employeeViewSource.View.CurrentItem;
             hr_contract hr_contract = new hr_contract();
+            hr_contract.start_date = DateTime.Now;
+            hr_contract.end_date = DateTime.Now.AddYears(1);
+
             contact.hr_contract.Add(hr_contract);
             contacthr_contractViewSource.View.MoveCurrentToLast();
+            contacthr_contractViewSource.View.Refresh();
         }
 
         private void btnDeleteTask_Click(object sender, EventArgs e)

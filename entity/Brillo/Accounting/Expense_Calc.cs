@@ -68,11 +68,11 @@ namespace entity.Brillo.Accounting
                                 INV_accounting_journal.accounting_chart = INV_Chart;
                                 INV_accounting_journal.trans_date = purchase_invoice.trans_date;
                                 INV_accounting_journal.debit = Math.Round(purchase_invoice_detail.SubTotal,2);
-                                if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                          x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                         .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
                                 {
-                                    INV_accounting_journal.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                    INV_accounting_journal.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                                  x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                                  .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
                                 }
@@ -101,11 +101,11 @@ namespace entity.Brillo.Accounting
                             INV_accounting_journal.accounting_chart = Exp_Chart;
                             INV_accounting_journal.trans_date = purchase_invoice.trans_date;
                             INV_accounting_journal.debit = Math.Round(purchase_invoice_detail.SubTotal, 2);
-                            if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                            if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                          x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                          .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
                             {
-                                INV_accounting_journal.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                INV_accounting_journal.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                              x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                              .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
                             }
@@ -131,11 +131,11 @@ namespace entity.Brillo.Accounting
                             INV_accounting_journal.accounting_chart = VAT_Chart;
                             INV_accounting_journal.trans_date = purchase_invoice.trans_date;
                             INV_accounting_journal.debit = Math.Round(Vat.calculate_Vat((purchase_invoice_detail.unit_cost * purchase_invoice_detail.quantity), app_vat_group.app_vat.coefficient),2);
-                            if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                            if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                     x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                          .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
                             {
-                                INV_accounting_journal.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                INV_accounting_journal.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                                x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                              .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
                             }
@@ -170,11 +170,11 @@ namespace entity.Brillo.Accounting
                                 PAYaccounting_journal_detail.accounting_chart = AR_Chart;
                                 PAYaccounting_journal_detail.trans_date = payment_schedual.trans_date;
                                 PAYaccounting_journal_detail.credit = payment_schedual.debit;
-                                if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                          x.id_currency == payment_schedual.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                          .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
                                 {
-                                    PAYaccounting_journal_detail.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                    PAYaccounting_journal_detail.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                                   x.id_currency == payment_schedual.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                                  .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
                                 }
@@ -199,11 +199,11 @@ namespace entity.Brillo.Accounting
                                 AR_accounting_journal_detail.accounting_chart = AR_Chart;
                                 AR_accounting_journal_detail.trans_date = purchase_invoice.trans_date;
                                 AR_accounting_journal_detail.credit = payment_schedual.credit - payment_schedual.child.Sum(x => x.debit);
-                                if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                           x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                         .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
                                 {
-                                    AR_accounting_journal_detail.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                                    AR_accounting_journal_detail.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                                     x.id_currency == purchase_invoice.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                                  .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
                                 }
@@ -231,11 +231,12 @@ namespace entity.Brillo.Accounting
                         PAYaccounting_journal_detail.trans_date = accounting_journal_detail.trans_date;
                         PAYaccounting_journal_detail.credit = Math.Round(accounting_journal_detail.credit,2);
                         PAYaccounting_journal_detail.debit = Math.Round(accounting_journal_detail.debit,2);
-                        if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+
+                        if (AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                         x.id_currency == accounting_journal_detail.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                      .OrderByDescending(x => x.timestamp).FirstOrDefault() != null)
                         {
-                            PAYaccounting_journal_detail.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Accounting &&
+                            PAYaccounting_journal_detail.id_currencyfx = AccountingJournalDB.app_currencyfx.Where(x => x.type == app_currencyfx.CurrencyFXTypes.Transaction &&
                                                            x.id_currency == accounting_journal_detail.app_currencyfx.id_currency && x.timestamp <= DateTime.Now)
                                                          .OrderByDescending(x => x.timestamp).FirstOrDefault().id_currencyfx;
                         }

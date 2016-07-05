@@ -21,6 +21,10 @@
             <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
             <Button Click="btnLogin_Click" Content="LogIn" Style="{StaticResource btn_green}" Margin="16,8"/>
             <Label x:Name="tbxServer" Content="104.131.70.188" HorizontalContentAlignment="Center" FontSize="14" Style="{StaticResource EditableLabelStyle}"/>
+            <DataGrid x:Name="dgEmployee" AutoGenerateColumns="True">
+               
+
+            </DataGrid>
         </StackPanel>
 
         <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="54" Margin="0,-128,0,0"

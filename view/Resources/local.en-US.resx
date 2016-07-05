@@ -957,6 +957,9 @@
   <data name="Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="Production" xml:space="preserve">
+    <value>Production</value>
+  </data>
   <data name="ProductionExecution" xml:space="preserve">
     <value>Production Execution</value>
   </data>

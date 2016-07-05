@@ -247,7 +247,9 @@ namespace entity
             [LocalizedDescription("SalesBySalesRep")]
             SalesBySalesRep = 92,
             [LocalizedDescription("EmployeesInProduction")]
-            EmployeesInProduction = 93
+            EmployeesInProduction = 93,
+            [LocalizedDescription("Fraction")]
+            Fraction = 94
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Product.Item" Title="{lex:Loc Item}" x:Name="pageItem"
+﻿<Page x:Class="Cognitivo.Product.Item" Title="{lex:Loc Items}" x:Name="pageItem"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -477,7 +477,7 @@
         </Grid>
 
         <local:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2"
-                       btnSave_Click="toolBar_btnSave_Click" appName="Item"
+                       btnSave_Click="toolBar_btnSave_Click" appName="Items"
                        btnDelete_Click="toolBar_btnDelete_Click" 
                        btnCancel_Click="toolBar_btnCancel_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click" 

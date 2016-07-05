@@ -17,6 +17,9 @@ namespace Cognitivo.Accounting
 {
     public partial class DebeHaberLogIn : Page
     {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+
         public DebeHaberLogIn()
         {
             InitializeComponent();
@@ -24,6 +27,7 @@ namespace Cognitivo.Accounting
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            string api = "http://104.131.70.188/api/verification_api/" + UserName +"/" + Password ;
 
         }
 

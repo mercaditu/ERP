@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Accounting.DebeHaberLogIn"
+﻿<Page x:Class="Cognitivo.Accounting.DebeHaberLogIn" x:Name="_DebeHaberLogin"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,9 +16,9 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,128,0,0">
             <Label Content="Usuario" Style="{StaticResource input_label}"/>
-            <TextBox Style="{StaticResource input_textbox}"/>
+            <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
             <Label Content="Contrasena" Style="{StaticResource input_label}"/>
-            <PasswordBox Style="{StaticResource input_password}"/>
+            <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
             <Button Click="btnLogin_Click" Content="LogIn" Style="{StaticResource btn_green}" Margin="16,8"/>
             <Label x:Name="tbxServer" Content="104.131.70.188" HorizontalContentAlignment="Center" FontSize="14" Style="{StaticResource EditableLabelStyle}"/>
         </StackPanel>

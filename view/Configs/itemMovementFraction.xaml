@@ -39,7 +39,7 @@
                               RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding item_product.item.name, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Name}" Width="100" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}" 
+                    <DataGridTextColumn Binding="{Binding avlquantity, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}" 
                         		Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*"/>
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>

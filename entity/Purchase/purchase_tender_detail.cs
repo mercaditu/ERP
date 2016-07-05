@@ -5,13 +5,13 @@ namespace entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     public partial class purchase_tender_detail : Audit
     {
         public purchase_tender_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             status = Status.Documents_General.Pending;
             purchase_tender_detail_dimension = new List<purchase_tender_detail_dimension>();
@@ -22,16 +22,16 @@ namespace entity
         public int id_purchase_tender_detail { get; set; }
         public int id_purchase_tender_contact { get; set; }
         public int id_purchase_tender_item { get; set; }
-        
+
         public Status.Documents_General status
         {
             get { return _status; }
             set { _status = value; RaisePropertyChanged("status"); }
         }
         Status.Documents_General _status;
-        
+
         public string item_description { get; set; }
-        
+
         public decimal quantity
         {
             get { return _quantity; }
@@ -43,9 +43,14 @@ namespace entity
                     RaisePropertyChanged("quantity");
 
                     update_SubTotal();
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity);
-                    RaisePropertyChanged("_Quantity_Factored");
+                    if (purchase_tender_item != null)
+                    {
+                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity);
+                        RaisePropertyChanged("Quantity_Factored");
+                    }
+
                 }
+
             }
         }
         private decimal _quantity;
@@ -60,13 +65,15 @@ namespace entity
                 {
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
-
-                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored);
-                    RaisePropertyChanged("quantity");
+                    if (purchase_tender_item != null)
+                    {
+                        quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored);
+                        RaisePropertyChanged("quantity");
+                    }
                 }
             }
         }
-        private decimal _Quantity_Factored; 
+        private decimal _Quantity_Factored;
 
         /// <summary>
         /// 
@@ -180,16 +187,33 @@ namespace entity
         private string _DimensionString;
 
         public virtual purchase_tender_contact purchase_tender_contact { get; set; }
-        public virtual purchase_tender_item purchase_tender_item { get; set; }
-    
+        public virtual purchase_tender_item purchase_tender_item
+        {
+            get
+            {
+                return _purchase_tender_item;
+            }
+            set
+            {
+                _purchase_tender_item = value;
+                if (quantity > 0)
+                {
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity);
+                    RaisePropertyChanged("Quantity_Factored");
+                }
+
+            }
+        }
+        purchase_tender_item _purchase_tender_item;
+
         public virtual IEnumerable<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual ICollection<purchase_tender_detail_dimension> purchase_tender_detail_dimension { get; set; }
-        
+
 
 
         #region Methods
 
-      
+
 
         /// <summary>
         /// 

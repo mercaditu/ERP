@@ -41,7 +41,7 @@ namespace cntrl.Panels
         public void add_item(item_inventory_detail item_inventory_detail)
         {
             item_inventory_detail.id_inventory = item_inventoryList.FirstOrDefault().id_inventory;
-         //   item_inventory_detail.item_inventory = item_inventoryList.FirstOrDefault().item_inventory;
+            //   item_inventory_detail.item_inventory = item_inventoryList.FirstOrDefault().item_inventory;
             item_inventory_detail.value_system = item_inventoryList.FirstOrDefault().value_system;
             item_inventory_detail.id_item_product = item_inventoryList.FirstOrDefault().id_item_product;
             item_inventory_detail.item_product = item_inventoryList.FirstOrDefault().item_product;
@@ -67,6 +67,7 @@ namespace cntrl.Panels
                             item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
                             item_inventory_dimension.id_dimension = item_dimension.id_app_dimension;
                             item_inventory_dimension.value = item_dimension.value;
+                          //  item_inventory_dimension.id_measurement = item_dimension.id_measurement;
                             item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                         }
 
@@ -80,8 +81,8 @@ namespace cntrl.Panels
         {
 
             item_inventory_detailViewSource = ((CollectionViewSource)(FindResource("item_inventory_detailViewSource")));
-           // InventoryDB.item_inventory_detail.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            item_inventory_detailViewSource.Source =item_inventoryList;
+            // InventoryDB.item_inventory_detail.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            item_inventory_detailViewSource.Source = item_inventoryList;
 
 
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
@@ -96,7 +97,7 @@ namespace cntrl.Panels
             //    add_item(item_inventory_detail);
             //    InventoryDB.item_inventory_detail.Add(item_inventory_detail);
             //}
-         
+
 
 
 
@@ -141,7 +142,7 @@ namespace cntrl.Panels
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             item_inventoryList = item_inventory_detailViewSource.View.OfType<item_inventory_detail>().ToList();
-          //  quantity = item_inventoryList.Sum(y => y.value_counted);
+            //  quantity = item_inventoryList.Sum(y => y.value_counted);
             //ProductMovementDB.SaveChanges();
             btnCancel_Click(sender, null);
         }

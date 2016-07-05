@@ -68,7 +68,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" 
+        <Grid x:Name="crud_modal" Background="#7FC0C0C0" Visibility="Hidden" Grid.Row="1" Grid.Column="1"
               Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="projectDataGrid"
 			     ScrollViewer.VerticalScrollBarVisibility="Auto"

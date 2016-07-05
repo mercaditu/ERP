@@ -189,7 +189,7 @@ namespace entity.Brillo.Logic
                             item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
                             item_movement_dimension.id_dimension = purchase_invoice_dimension.id_dimension;
                             item_movement_dimension.value = purchase_invoice_dimension.value;
-
+                           // item_movement_dimension.id_measurement = purchase_invoice_dimension.id_measurement;
                             item_movement_dimensionLIST.Add(item_movement_dimension);
                         }
                     }
@@ -654,7 +654,8 @@ namespace entity.Brillo.Logic
                             {
                                 item_movement_dimension _item_movement_dimension = new item_movement_dimension();
                                 _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                                _item_movement_dimension.value = item_movement_dimension.id_dimension;
+                                _item_movement_dimension.value = item_movement_dimension.value;
+                              //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
                                 item_movement.item_movement_dimension.Add(_item_movement_dimension);
                             }
                         }
@@ -747,7 +748,8 @@ namespace entity.Brillo.Logic
                             {
                                 item_movement_dimension _item_movement_dimension = new item_movement_dimension();
                                 _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                                _item_movement_dimension.value = item_movement_dimension.id_dimension;
+                                _item_movement_dimension.value = item_movement_dimension.value;
+                              //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
                                 item_movement.item_movement_dimension.Add(_item_movement_dimension);
                             }
                         }

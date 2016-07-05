@@ -133,8 +133,20 @@ namespace entity
         public string code { get; set; }
         public DateTime? expire_date { get; set; }
         public DateTime trans_date { get; set; }
-
-
+        [NotMapped]
+        public decimal avlquantity
+        {
+            get 
+            {
+                _avlquantity = credit - (_child.Count() > 0 ? _child.Sum(y => y.debit) : 0);
+                return _avlquantity;
+            }
+            set
+            {
+                _avlquantity = value;
+            }
+        }
+        private decimal _avlquantity;
 
 
         //Heirarchy For Movement

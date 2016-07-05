@@ -218,7 +218,7 @@
                                                     btnParent_Click="btnAddParentTask_Click"/>-->
                                 <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                                     Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                
+                                                    btnNew_Click="btnNewTask_Click"
                                                     btnEdit_Click="btnEditTask_Click"
                                                     btnSave_Click="btnSaveTask_Click"
                                                     btnDelete_Click="btnDeleteTask_Click"

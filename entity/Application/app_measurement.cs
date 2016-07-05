@@ -17,6 +17,8 @@ namespace entity
             is_head = true;
             item_conversion_factor = new List<item_conversion_factor>();
             item_dimension = new List<item_dimension>();
+            //item_movement_dimension = new List<item_movement_dimension>();
+            //item_inventory_dimension = new List<item_inventory_dimension>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,6 +36,8 @@ namespace entity
         public virtual ICollection<item_conversion_factor> item_conversion_factor { get; set; }
         public virtual ICollection<item_request_dimension> item_request_dimension { get; set; }
         public virtual ICollection<purchase_tender_dimension> purchase_tender_dimension { get; set; }
+        //public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
+        //public virtual ICollection<item_inventory_dimension> item_inventory_dimension { get; set; }
 
         public string Error
         {

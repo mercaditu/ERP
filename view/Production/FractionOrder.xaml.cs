@@ -994,26 +994,31 @@ namespace Cognitivo.Production
             //StpMovement.Visibility = System.Windows.Visibility.Visible;
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order_detail production_order_detail = treeProject.SelectedItem_ as production_order_detail;
-            if (production_order_detail.item != null && production_order_detail.is_input == false && production_order_detail.parent == null)
+            if (production_order_detail != null)
             {
-                //if (production_order_detail.item.id_item_type == entity.item.item_type.Task)
-                //{
-                production_order_detail n_production_order_detail = new production_order_detail();
-                n_production_order_detail.is_input = true;
-                n_production_order_detail.id_item = production_order_detail.id_item;
-                n_production_order_detail.item = production_order_detail.item;
-                n_production_order_detail.name = production_order_detail.item.name;
-                n_production_order_detail.id_production_order = production_order.id_production_order;
-                n_production_order_detail.production_order = production_order;
-                n_production_order_detail.production_order.status = Status.Production.Pending;
-                n_production_order_detail.quantity = 0;
-                n_production_order_detail.status = Status.Project.Pending;
-                n_production_order_detail.child.Add(production_order_detail);
-                //   production_order_detail.child.Add(n_production_order_detail);
-                OrderDB.production_order_detail.Add(n_production_order_detail);
-                production_orderproduction_order_detailViewSource.View.Refresh();
-                production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
-                //  }
+
+
+                if (production_order_detail.item != null && production_order_detail.is_input == false && production_order_detail.parent == null)
+                {
+                    //if (production_order_detail.item.id_item_type == entity.item.item_type.Task)
+                    //{
+                    production_order_detail n_production_order_detail = new production_order_detail();
+                    n_production_order_detail.is_input = true;
+                    n_production_order_detail.id_item = production_order_detail.id_item;
+                    n_production_order_detail.item = production_order_detail.item;
+                    n_production_order_detail.name = production_order_detail.item.name;
+                    n_production_order_detail.id_production_order = production_order.id_production_order;
+                    n_production_order_detail.production_order = production_order;
+                    n_production_order_detail.production_order.status = Status.Production.Pending;
+                    n_production_order_detail.quantity = 0;
+                    n_production_order_detail.status = Status.Project.Pending;
+                    n_production_order_detail.child.Add(production_order_detail);
+                    //   production_order_detail.child.Add(n_production_order_detail);
+                    OrderDB.production_order_detail.Add(n_production_order_detail);
+                    production_orderproduction_order_detailViewSource.View.Refresh();
+                    production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
+                    //  }
+                }
             }
 
         }
@@ -1792,5 +1797,7 @@ namespace Cognitivo.Production
         {
 
         }
+
+        
     }
 }

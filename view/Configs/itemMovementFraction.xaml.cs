@@ -27,6 +27,7 @@ namespace Cognitivo.Configs
         public ExecutionDB ExecutionDB { get; set; }
         public int id_item { get; set; }
         public long id_movement { get; set; }
+        public item_movement item_movement { get; set; }
         public production_execution _production_execution { get; set; }
         public production_order_detail production_order_detail { get; set; }
         public decimal Quantity { get; set; }
@@ -57,7 +58,8 @@ namespace Cognitivo.Configs
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
-             List<item_movement> Items_InStockLIST=null;
+            List<item_movement> Items_InStockLIST = null;
+
             if (mode == modes.execustion)
             {
                 app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
@@ -65,10 +67,11 @@ namespace Cognitivo.Configs
 
                 app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
-              Items_InStockLIST = ExecutionDB.item_movement.Where(x =>
-                                                                       x.item_product.id_item == id_item
-                                                                       && x.status == entity.Status.Stock.InStock
-                                                                       && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                Items_InStockLIST = ExecutionDB.item_movement.ToList();
+                Items_InStockLIST = Items_InStockLIST.Where(x =>
+                                                                         x.item_product.id_item == id_item
+                                                                         && x.status == entity.Status.Stock.InStock
+                                                                         && (x.avlquantity) > 0).ToList();
 
             }
             else
@@ -77,11 +80,11 @@ namespace Cognitivo.Configs
 
 
                 app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-
-                Items_InStockLIST = OrderDB.item_movement.Where(x =>
+                Items_InStockLIST = ExecutionDB.item_movement.ToList();
+                Items_InStockLIST = Items_InStockLIST.Where(x =>
                                                                            x.item_product.id_item == id_item
                                                                            && x.status == entity.Status.Stock.InStock
-                                                                           && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                                                                           && (x.avlquantity) > 0).ToList();
 
             }
 
@@ -92,6 +95,7 @@ namespace Cognitivo.Configs
                 item_movementViewSource.View.MoveCurrentToFirst();
 
                 id_movement = (item_movementViewSource.View.CurrentItem as item_movement).id_movement;
+                item_movement = item_movementViewSource.View.CurrentItem as item_movement;
             }
 
         }
@@ -105,6 +109,7 @@ namespace Cognitivo.Configs
                     if (item_movementViewSource.View.CurrentItem as item_movement != null)
                     {
                         id_movement = (item_movementViewSource.View.CurrentItem as item_movement).id_movement;
+                        item_movement = item_movementViewSource.View.CurrentItem as item_movement;
                     }
                 }
 
@@ -149,6 +154,14 @@ namespace Cognitivo.Configs
                     else
                     {
                         _production_execution_detail.is_input = true;
+                    }
+                    foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                    {
+                        production_execution_dimension production_execution_dimension = new production_execution_dimension();
+                        production_execution_dimension.id_dimension = item_movement_dimension.id_dimension;
+                        production_execution_dimension.value = item_movement_dimension.value;
+                        // production_execution_dimension.id_measurement =(int) item_movement_dimension.id_measurement;
+                        _production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
                     }
                     _production_execution.production_execution_detail.Add(_production_execution_detail);
                 }

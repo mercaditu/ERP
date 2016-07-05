@@ -305,6 +305,7 @@ namespace Cognitivo.Product
                                 item_inventory_dimension item_inventory_dimension = new item_inventory_dimension();
                                 item_inventory_dimension.id_dimension = item_dimension.id_app_dimension;
                                 item_inventory_dimension.value = item_dimension.value;
+                              //  item_inventory_dimension.id_measurement = item_dimension.id_measurement;
                                 item_inventory_detail.item_inventory_dimension.Add(item_inventory_dimension);
                             }
 

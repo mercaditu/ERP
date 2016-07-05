@@ -249,7 +249,9 @@ namespace entity
             [LocalizedDescription("EmployeesInProduction")]
             EmployeesInProduction = 93,
             [LocalizedDescription("Fraction")]
-            Fraction = 94
+            Fraction = 94,
+            [LocalizedDescription("DebeHaberLogin")]
+            DebeHaberLogin = 95
         }
     }
 }

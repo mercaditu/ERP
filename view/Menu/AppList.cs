@@ -127,7 +127,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "");
             dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder");
 
-
             //Projects Plain
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Form, "Project.Development.ProjectType", entity.App.Names.Template, "ProjectCategory");
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Form, "Project.Development.Project", entity.App.Names.Project, "Project");
@@ -150,6 +149,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.ExpenseJournal", entity.App.Names.BookofExpenses, "ExpenseBook");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.IncomeJournal", entity.App.Names.BookofIncomes, "IncomeBook");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberSync", entity.App.Names.DebeHaberSync, "");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberLogin", entity.App.Names.DebeHaberLogin, "");
 
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Preferences, "Configs.Language", "Language", "Language");

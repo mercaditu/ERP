@@ -607,7 +607,8 @@ namespace Cognitivo.Production
                     production_order_detail.child.Add(n_production_order_detail);
                    
                     OrderDB.production_order_detail.Add(n_production_order_detail);
-                    production_order_dimensionViewSource.View.Refresh();
+                    project_task_dimensionDataGrid.ItemsSource = production_order_detail.production_order_dimension.ToList();
+        
                     production_orderproduction_order_detailViewSource.View.Refresh();
                     production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
                     //  }

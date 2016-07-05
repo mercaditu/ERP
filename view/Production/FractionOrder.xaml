@@ -245,8 +245,8 @@
                                     <StackPanel x:Name="stpproduct">
                                         <Label Content="Product Dimension"/>
                                         <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
-                                                      EnableRowVirtualization="True" Margin="8" IsReadOnly="True" CanUserAddRows="False"
-                                                     
+                                                      EnableRowVirtualization="True" Margin="8"  CanUserAddRows="False"
+                                                   
                                                       RowDetailsVisibilityMode="VisibleWhenSelected">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn x:Name="dimension" Binding="{Binding app_dimension.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 

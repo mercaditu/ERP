@@ -52,18 +52,21 @@ namespace entity
                     RaisePropertyChanged("quantity");
 
 
-
-                    if (parent != null && parent.item != null)
+                    if (production_order!=null)
                     {
-                        if (!parent.item.is_autorecepie)
+                        if (parent != null && parent.item != null && production_order.types != entity.production_order.ProductionOrderTypes.Fraction)
                         {
-                            parent.quantity = objclsproject.getsumquantityProduction(parent.id_order_detail, parent.child);
-                            parent.RaisePropertyChanged("quantity");
+                            if (!parent.item.is_autorecepie)
+                            {
+                                parent.quantity = objclsproject.getsumquantityProduction(parent.id_order_detail, parent.child);
+                                parent.RaisePropertyChanged("quantity");
+                            }
+
+
                         }
 
-
                     }
-
+                  
                     if (this.item != null)
                     {
 

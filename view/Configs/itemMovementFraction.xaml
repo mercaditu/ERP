@@ -7,6 +7,7 @@
       mc:Ignorable="d" 
           xmlns:lex="http://wpflocalizeextension.codeplex.com" 
       d:DesignHeight="300" d:DesignWidth="300"
+             MaxHeight="512" MaxWidth="312"
 	 Loaded="Page_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>

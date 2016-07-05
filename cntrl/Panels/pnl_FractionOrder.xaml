@@ -31,7 +31,7 @@
             <Grid Background="#344C6B">
                 <Image Source="/cntrl;component/Images/Outline_White/move_by_trolley_filled-100.png" 
                            Height="32" HorizontalAlignment="Left" Margin="4,0"/>
-                <Label Content="{lex:Loc Fraction Order}" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
+                <Label Content="Fraction" FontSize="25" Margin="50,0,0,0" Foreground="White"/>
                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
                          Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                 <Label Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"

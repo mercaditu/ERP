@@ -39,12 +39,13 @@ namespace Cognitivo.Configs
             Supplier,
             ServiceContract
         }
+
         public enum modes
         {
             Production,
-            execustion
-
+            Execution
         }
+
         public modes mode { get; set; }
         public Types type { get; set; }
         public itemMovementFraction()
@@ -60,18 +61,16 @@ namespace Cognitivo.Configs
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             List<item_movement> Items_InStockLIST = null;
 
-            if (mode == modes.execustion)
+            if (mode == modes.Execution)
             {
                 app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-
-
                 app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
-                Items_InStockLIST = ExecutionDB.item_movement.ToList();
+                //Items_InStockLIST = ExecutionDB.item_movement.ToList();
                 Items_InStockLIST = Items_InStockLIST.Where(x =>
                                                                          x.item_product.id_item == id_item
                                                                          && x.status == entity.Status.Stock.InStock
-                                                                         && (x.avlquantity) > 0).ToList();
+                                                                         && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
             }
             else
@@ -80,11 +79,11 @@ namespace Cognitivo.Configs
 
 
                 app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-                Items_InStockLIST = ExecutionDB.item_movement.ToList();
+                //Items_InStockLIST = ExecutionDB.item_movement.ToList();
                 Items_InStockLIST = Items_InStockLIST.Where(x =>
                                                                            x.item_product.id_item == id_item
                                                                            && x.status == entity.Status.Stock.InStock
-                                                                           && (x.avlquantity) > 0).ToList();
+                                                                           && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
             }
 

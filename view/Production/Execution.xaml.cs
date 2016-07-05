@@ -703,7 +703,7 @@ namespace Cognitivo.Production
         private void btnInsert_Click(object sender, EventArgs e)
         {
             itemMovementFraction = new Cognitivo.Configs.itemMovementFraction();
-            itemMovementFraction.mode = Configs.itemMovementFraction.modes.execustion;
+            itemMovementFraction.mode = Configs.itemMovementFraction.modes.Execution;
                 production_order_detail production_order_detail = null;
             Button btn = sender as Button;
             decimal Quantity = 0M;

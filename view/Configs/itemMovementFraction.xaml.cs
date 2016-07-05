@@ -48,6 +48,7 @@ namespace Cognitivo.Configs
 
         public modes mode { get; set; }
         public Types type { get; set; }
+        CollectionViewSource app_measurementViewSource;
         public itemMovementFraction()
         {
             InitializeComponent();
@@ -56,7 +57,7 @@ namespace Cognitivo.Configs
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource app_dimensionViewSource = ((CollectionViewSource)(FindResource("app_dimensionViewSource")));
-            CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
+             app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             List<item_movement> Items_InStockLIST = null;
@@ -159,7 +160,7 @@ namespace Cognitivo.Configs
                         production_execution_dimension production_execution_dimension = new production_execution_dimension();
                         production_execution_dimension.id_dimension = item_movement_dimension.id_dimension;
                         production_execution_dimension.value = item_movement_dimension.value;
-                        // production_execution_dimension.id_measurement =(int) item_movement_dimension.id_measurement;
+                        production_execution_dimension.id_measurement =(app_measurementViewSource.View.CurrentItem as app_measurement).id_measurement;
                         _production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
                     }
                     _production_execution.production_execution_detail.Add(_production_execution_detail);

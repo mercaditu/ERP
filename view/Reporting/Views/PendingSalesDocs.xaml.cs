@@ -56,9 +56,10 @@ namespace Cognitivo.Reporting.Views
 
                 this.reportViewer.RefreshReport();
             }
-            catch
+            catch (Exception ex)
             {
-                CreateStoredProcedure();
+                MessageBox.Show("Please create Procedure: " + ex.Message);
+                //CreateStoredProcedure();
             }
         }
 

@@ -24,6 +24,8 @@ namespace entity
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
 
+
+
         #region "Navigation Properties"
         public virtual purchase_order_detail purchase_order_detail { get; set; }
         public virtual purchase_invoice purchase_invoice

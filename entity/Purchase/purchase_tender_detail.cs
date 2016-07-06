@@ -45,7 +45,7 @@ namespace entity
                     update_SubTotal();
                     if (purchase_tender_item != null)
                     {
-                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity);
+                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
                         RaisePropertyChanged("Quantity_Factored");
                     }
 
@@ -67,7 +67,8 @@ namespace entity
                     RaisePropertyChanged("Quantity_Factored");
                     if (purchase_tender_item != null)
                     {
-                        quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored);
+
+                        quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored, GetDimensionValue());
                         RaisePropertyChanged("quantity");
                     }
                 }
@@ -198,7 +199,7 @@ namespace entity
                 _purchase_tender_item = value;
                 if (quantity > 0)
                 {
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity);
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
                     RaisePropertyChanged("Quantity_Factored");
                 }
 
@@ -213,6 +214,15 @@ namespace entity
 
         #region Methods
 
+        private decimal GetDimensionValue()
+        {
+            decimal Dimension = 1M;
+            foreach (purchase_tender_detail_dimension _purchase_tender_detail_dimension in purchase_tender_detail_dimension)
+            {
+                Dimension = Dimension * _purchase_tender_detail_dimension.value;
+            }
+            return Dimension;
+        }
 
 
         /// <summary>

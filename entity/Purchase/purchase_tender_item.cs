@@ -37,7 +37,7 @@ namespace entity
                     _quantity = value;
                     RaisePropertyChanged("quantity");
 
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity);
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
                     RaisePropertyChanged("_Quantity_Factored");
                 }
             }
@@ -58,7 +58,7 @@ namespace entity
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
 
-                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored);
+                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
                     RaisePropertyChanged("quantity");
                 }
             }
@@ -70,5 +70,15 @@ namespace entity
         public virtual IEnumerable<purchase_tender_detail> purchase_tender_detail { get; set; }
         public virtual ICollection<purchase_tender_dimension> purchase_tender_dimension { get; set; }
         public virtual project_task project_task { get; set; }
+
+        private decimal GetDimensionValue()
+        {
+            decimal Dimension = 1M;
+            foreach (purchase_tender_dimension _purchase_tender_dimension in purchase_tender_dimension)
+            {
+                Dimension = Dimension * _purchase_tender_dimension.value;
+            }
+            return Dimension;
+        }
     }
 }

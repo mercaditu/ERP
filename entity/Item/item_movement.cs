@@ -50,7 +50,7 @@ namespace entity
                 {
                     if (item_product.item != null)
                     {
-                        _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, debit);
+                        _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, debit, GetDimensionValue());
                         RaisePropertyChanged("_Quantity_Factored");
                     }
                 }
@@ -72,7 +72,7 @@ namespace entity
                 {
                     if (item_product.item != null)
                     {
-                        _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, credit);
+                        _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, credit, GetDimensionValue());
                         RaisePropertyChanged("credit_Factored");
                     }
                 }
@@ -94,7 +94,7 @@ namespace entity
                     {
                         if (item_product.item != null)
                         {
-                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, credit_Factored);
+                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, credit_Factored, GetDimensionValue());
                             RaisePropertyChanged("value_counted");
                         }
 
@@ -119,7 +119,7 @@ namespace entity
                     {
                         if (item_product.item != null)
                         {
-                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, debit_Factored);
+                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, debit_Factored, GetDimensionValue());
                             RaisePropertyChanged("value_counted");
                         }
 
@@ -166,6 +166,15 @@ namespace entity
         public virtual ICollection<item_movement_value> item_movement_value { get; set; }
         public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
 
+        private decimal GetDimensionValue()
+        {
+            decimal Dimension = 1M;
+            foreach (item_movement_dimension _item_movement_dimension in item_movement_dimension)
+            {
+                Dimension = Dimension * _item_movement_dimension.value;
+            }
+            return Dimension;
+        }
         public decimal GetValue_ByCurrency(app_currency app_currency)
         {
             decimal Value = 0M;

@@ -88,7 +88,7 @@ namespace entity
                 {
                     if (item_product.item != null)
                     {
-                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, value_counted);
+                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, value_counted,GetDimensionValue());
                         RaisePropertyChanged("_Quantity_Factored");
                     }
                 }
@@ -110,7 +110,7 @@ namespace entity
                     {
                         if (item_product.item != null)
                         {
-                            _value_counted = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, Quantity_Factored);
+                            _value_counted = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, Quantity_Factored, GetDimensionValue());
                             RaisePropertyChanged("value_counted");
                         }
 
@@ -128,6 +128,14 @@ namespace entity
         public virtual app_location app_location { get; set; }
         public virtual item_product item_product { get; set; }
         public virtual ICollection<item_inventory_dimension> item_inventory_dimension { get; set; }
-
+        private decimal GetDimensionValue()
+        {
+            decimal Dimension = 1M;
+            foreach (item_inventory_dimension _item_inventory_dimension in item_inventory_dimension)
+            {
+                Dimension = Dimension * _item_inventory_dimension.value;
+            }
+            return Dimension;
+        }
     }
 }

@@ -217,9 +217,14 @@ namespace entity
         private decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
-            foreach (purchase_tender_detail_dimension _purchase_tender_detail_dimension in purchase_tender_detail_dimension)
+            if (purchase_tender_detail_dimension != null)
             {
-                Dimension = Dimension * _purchase_tender_detail_dimension.value;
+
+
+                foreach (purchase_tender_detail_dimension _purchase_tender_detail_dimension in purchase_tender_detail_dimension)
+                {
+                    Dimension = Dimension * _purchase_tender_detail_dimension.value;
+                }
             }
             return Dimension;
         }

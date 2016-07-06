@@ -169,9 +169,14 @@ namespace entity
         private decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
-            foreach (item_movement_dimension _item_movement_dimension in item_movement_dimension)
+            if (item_movement_dimension != null)
             {
-                Dimension = Dimension * _item_movement_dimension.value;
+
+
+                foreach (item_movement_dimension _item_movement_dimension in item_movement_dimension)
+                {
+                    Dimension = Dimension * _item_movement_dimension.value;
+                }
             }
             return Dimension;
         }

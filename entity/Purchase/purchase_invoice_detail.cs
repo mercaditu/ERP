@@ -24,7 +24,41 @@ namespace entity
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
 
+        [Required]
+        public new decimal quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                if (_quantity != value)
+                {
+                   _quantity = value;
+                   RaisePropertyChanged("quantity");
+                   //update quantity
+                   _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+                   RaisePropertyChanged("_Quantity_Factored");
+                }
+            }
+        }
+        private decimal _quantity;
 
+        [NotMapped]
+        public new decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
+                    RaisePropertyChanged("quantity");
+                }
+            }
+        }
+        private decimal _Quantity_Factored;
 
         #region "Navigation Properties"
         public virtual purchase_order_detail purchase_order_detail { get; set; }
@@ -103,6 +137,20 @@ namespace entity
             }
         }
         #endregion
+
+        private decimal GetDimensionValue()
+        {
+            decimal Dimension = 1M;
+            if (purchase_invoice_dimension!=null)
+            {
+                foreach (purchase_invoice_dimension _purchase_invoice_dimension in purchase_invoice_dimension)
+                {
+                    Dimension = Dimension * _purchase_invoice_dimension.value;
+                }
+            }
+         
+            return Dimension;
+        }
 
     }
 }

@@ -96,10 +96,10 @@ namespace Cognitivo.Product
                 TextBox_TextChanged(null, null);
             }
         }
-        string factor(item item,decimal qty)
-        {
-            return entity.Brillo.ConversionFactor.Factor_Quantity(item,qty).ToString();
-        }
+        //string factor(item item,decimal qty)
+        //{
+        //    return entity.Brillo.ConversionFactor.Factor_Quantity(item,qty).ToString();
+        //}
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             calc_Inventory();

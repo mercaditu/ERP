@@ -131,9 +131,14 @@ namespace entity
         private decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
-            foreach (item_inventory_dimension _item_inventory_dimension in item_inventory_dimension)
+            if (item_inventory_dimension != null)
             {
-                Dimension = Dimension * _item_inventory_dimension.value;
+
+
+                foreach (item_inventory_dimension _item_inventory_dimension in item_inventory_dimension)
+                {
+                    Dimension = Dimension * _item_inventory_dimension.value;
+                }
             }
             return Dimension;
         }

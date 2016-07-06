@@ -8,7 +8,7 @@ namespace entity.Brillo
 {
     public static class ConversionFactor
     {
-        public static decimal Factor_Quantity_Back(item item, decimal Quantity_Factored,decimal Dimension)
+        public static decimal Factor_Quantity_Back(item item, decimal Quantity_Factored, decimal BaseDimension)
         {
             if (item != null)
             {
@@ -18,7 +18,7 @@ namespace entity.Brillo
                     {
                         if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
                         {
-                            if (Dimension > 1)
+                            if (item.item_dimension.Count() > 0)
                             {
                                 //decimal i = 1M;
                                 //foreach (item_dimension item_dimension in item.item_dimension)
@@ -28,7 +28,7 @@ namespace entity.Brillo
                                 //        i = i * item_dimension.value;
                                 //    }
                                 //}
-                                return Quantity_Factored / (Dimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                                return Quantity_Factored / (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
                             }
                             else
                             {
@@ -42,7 +42,7 @@ namespace entity.Brillo
             return Quantity_Factored;
         }
 
-        public static decimal Factor_Quantity(item item, decimal Quantity, decimal Dimension)
+        public static decimal Factor_Quantity(item item, decimal Quantity,Decimal BaseDimension)
         {
             if (item != null)
             {
@@ -52,10 +52,10 @@ namespace entity.Brillo
                     {
                         if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
                         {
-                            if (Dimension > 1)
+                            if (item.item_dimension.Count()>0)
                             {
                                 //decimal i = 1M;
-                                //foreach (item_dimension item_dimension in item.item_dimension)
+                                //foreach (Dimension item_dimension in BaseDimension)
                                 //{
                                 //    if (item_dimension.value > 0)
                                 //    {
@@ -63,7 +63,7 @@ namespace entity.Brillo
                                 //    }
                                 //}
 
-                                return Quantity * (Dimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                                return Quantity * (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
                             }
                             else
                             {

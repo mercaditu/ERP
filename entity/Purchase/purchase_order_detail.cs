@@ -15,7 +15,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            quantity = 1;
+          //  quantity = 1;
             purchase_order_dimension = new List<purchase_order_dimension>();
         }
 

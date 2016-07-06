@@ -13,7 +13,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
-            quantity = 1;
+          //  quantity = 1;
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();
             item_movement = new List<item_movement>();
         }

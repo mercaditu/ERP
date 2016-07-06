@@ -530,6 +530,7 @@ namespace Cognitivo.Purchase
                     //Item DOES NOT Exist in Context
                     purchase_order_detail.item = item;
                     purchase_order_detail.id_item = item.id_item;
+                    purchase_order_detail.quantity = 1;
                 }
             }
             else

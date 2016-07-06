@@ -81,7 +81,7 @@ namespace entity
                 else
                 {
                     _purchase_invoice = null;
-                    RaisePropertyChanged("sales_invoice");
+                    RaisePropertyChanged("purchase_invoice");
                 }
             }
         }
@@ -90,12 +90,16 @@ namespace entity
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
         public virtual ICollection<purchase_invoice_dimension> purchase_invoice_dimension
         {
-            get { return _purchase_invoice_dimension; }
+            get
+            {
+                _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+                
+                return _purchase_invoice_dimension;
+            }
             set
             {
                 _purchase_invoice_dimension = value; 
-                _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
-                RaisePropertyChanged("_Quantity_Factored");
+               
             }
         }
         ICollection<purchase_invoice_dimension> _purchase_invoice_dimension;

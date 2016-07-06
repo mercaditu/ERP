@@ -92,7 +92,7 @@ namespace entity
         {
             get
             {
-                _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+              //  _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
                 
                 return _purchase_invoice_dimension;
             }

@@ -220,13 +220,17 @@
                             </TextBlock>
                         </StackPanel>-->
                     </StackPanel>
+                    <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
+                                       Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                        <Label Content="Z" Style="{StaticResource ico_Label}"/>
+                        <CheckBox Content="{lex:Loc Details}" Checked="chbxRowDetail_Checked" Unchecked="chbxRowDetail_Checked"/>
+                    </StackPanel>
                     <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                     <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                        Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <Label Content="" Style="{StaticResource ico_Label}"/>
-                            <TextBlock Margin="5,0" Text="{lex:Loc Importation}" VerticalAlignment="Center" Style="{StaticResource text_Label}"/>
-                            <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <CheckBox Content="{lex:Loc Importation}" IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
 
                         <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left"
@@ -336,9 +340,9 @@
                         VerticalScrollBarVisibility="Auto" Height="Auto"
                         AutoGenerateColumns="False" CanUserAddRows="False"
                         IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-                        EnableRowVirtualization="True"
-                        ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
-                        RowDetailsVisibilityMode="Collapsed" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
+                        EnableRowVirtualization="True" 
+                      RowDetailsVisibilityMode="Collapsed"
+                      ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
                         InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
                         CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding">
                 <DataGrid.Resources>
@@ -365,14 +369,16 @@
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" MinWidth="128"
                                         Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <!--<DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpDate}" Width="Auto"   Visibility="{Binding displayexpire,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
+                    <!--
+                    <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:ExpDate}" Width="Auto"   Visibility="{Binding displayexpire,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ExpireDate2Visible}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePicker SelectedDate="{Binding expiration_date, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                                            />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>-->
+                    </DataGridTemplateColumn>
+                    -->
 
                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="64"
 					                        ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
@@ -420,13 +426,6 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="" Style="{StaticResource btnDeleteChildStyle}" Click="dgvRow_ShowRowDetail"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

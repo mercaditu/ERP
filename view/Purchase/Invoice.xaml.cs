@@ -398,6 +398,8 @@ namespace Cognitivo.Purchase
             //ItemLink 
             if (item != null)
             {
+                purchase_invoice_detail.item = item;
+                purchase_invoice_detail.id_item = item.id_item;
                 if (purchase_invoice.purchase_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() != null)
                 {
                     if (!InvoiceSetting.AllowDuplicateItems)
@@ -426,8 +428,7 @@ namespace Cognitivo.Purchase
                     }
 
                     //Item DOES NOT Exist in Context
-                    purchase_invoice_detail.item = item;
-                    purchase_invoice_detail.id_item = item.id_item;
+                  
                 }
 
                 foreach (item_dimension item_dimension in item.item_dimension)

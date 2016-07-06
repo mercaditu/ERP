@@ -11,9 +11,9 @@ namespace entity
         public purchase_invoice_detail()
         {
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
-          //  quantity = 1;
+            //  quantity = 1;
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();
             item_movement = new List<item_movement>();
         }
@@ -32,11 +32,13 @@ namespace entity
             {
                 if (_quantity != value)
                 {
-                   _quantity = value;
-                   RaisePropertyChanged("quantity");
-                   //update quantity
-                   _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
-                   RaisePropertyChanged("_Quantity_Factored");
+                    _quantity = value;
+                    RaisePropertyChanged("quantity");
+                    //update quantity
+                    base.quantity = value;
+
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+                    RaisePropertyChanged("_Quantity_Factored");
                 }
             }
         }
@@ -84,9 +86,19 @@ namespace entity
             }
         }
         purchase_invoice _purchase_invoice;
-        
+
         public virtual IEnumerable<purchase_return_detail> purchase_return_detail { get; set; }
-        public virtual ICollection<purchase_invoice_dimension> purchase_invoice_dimension { get; set; }
+        public virtual ICollection<purchase_invoice_dimension> purchase_invoice_dimension
+        {
+            get { return _purchase_invoice_dimension; }
+            set
+            {
+                _purchase_invoice_dimension = value; 
+                _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+                RaisePropertyChanged("_Quantity_Factored");
+            }
+        }
+        ICollection<purchase_invoice_dimension> _purchase_invoice_dimension;
         public virtual ICollection<item_movement> item_movement { get; set; }
         #endregion
 
@@ -141,14 +153,14 @@ namespace entity
         private decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
-            if (purchase_invoice_dimension!=null)
+            if (purchase_invoice_dimension != null)
             {
                 foreach (purchase_invoice_dimension _purchase_invoice_dimension in purchase_invoice_dimension)
                 {
                     Dimension = Dimension * _purchase_invoice_dimension.value;
                 }
             }
-         
+
             return Dimension;
         }
 

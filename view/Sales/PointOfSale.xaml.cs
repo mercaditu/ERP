@@ -391,5 +391,23 @@ namespace Cognitivo.Sales
             payment_detail payment_detail = new payment_detail();
             payment.payment_detail.Add(payment_detail);
         }
+
+     
+
+        private void Clear_MouseDown(object sender, EventArgs e)
+        {
+            if (sales_invoiceViewSource != null && paymentViewSource != null)
+            {
+                if (sales_invoiceViewSource.View != null && paymentViewSource.View != null)
+                {
+                    if (sales_invoiceViewSource.View.CurrentItem != null && paymentViewSource.View.CurrentItem != null)
+                    {
+                        sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                        decimal TrailingDecimals = sales_invoice.GrandTotal - Math.Floor(sales_invoice.GrandTotal);
+                        sales_invoice.DiscountWithoutPercentage += TrailingDecimals;
+                    }
+                }
+            }
+        }
     }
 }

@@ -77,8 +77,7 @@ namespace cntrl.Curd
                 MessageBox.Show("Saving Error");
             }
 
-            StackPanel parentGrid = (StackPanel)this.Parent;
-            parentGrid.Children.Clear();
+            btnCancel_MouseDown(null, null);
         }
 
         #endregion
@@ -111,8 +110,14 @@ namespace cntrl.Curd
                     else
                     {
                         ///If ContactID is Null, then this form is in NEW MODE. Must create Contact and add into Context.
-                        _contact = ContactDB.New();
-                        ContactDB.contacts.Add(_contact);
+
+
+                        if (ContactDB.contacts.Local.Where(x=>x.id_contact==0).Count()==0)
+                        {
+                            _contact = ContactDB.New();
+                            ContactDB.contacts.Add(_contact);  
+                        }
+                      
                     }
 
                     if (IsCustomer)

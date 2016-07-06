@@ -36,7 +36,7 @@
                      metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                      metro:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}"
                      metro:TextBoxHelper.SelectAllOnFocus="True"
-                         Text="{Binding name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                         Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                 <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}"/>
                 <TextBox x:Name="txtGovCode" 
                                               metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

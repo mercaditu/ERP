@@ -163,6 +163,14 @@ namespace Cognitivo.Product
                 {
                     item_movement_origin.id_item_product = item_transfer_detail.item_product.id_item_product;
                 }
+
+                foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
+                {
+                    item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                    item_movement_dimension.id_dimension = item_transfer_dimension.id_dimension;
+                    item_movement_dimension.value = item_transfer_dimension.value;
+                    item_movement_origin.item_movement_dimension.Add(item_movement_dimension);
+                }
                
                 ProductMovementDB.item_movement.Add(item_movement_origin);
 
@@ -178,6 +186,14 @@ namespace Cognitivo.Product
                 if (item_transfer_detail.item_product.id_item_product != 0)
                 {
                     item_movement_dest.id_item_product = item_transfer_detail.item_product.id_item_product;
+                }
+
+                foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
+                {
+                    item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                    item_movement_dimension.id_dimension = item_transfer_dimension.id_dimension;
+                    item_movement_dimension.value = item_transfer_dimension.value;
+                    item_movement_dest.item_movement_dimension.Add(item_movement_dimension);
                 }
 
                 ProductMovementDB.item_movement.Add(item_movement_dest);

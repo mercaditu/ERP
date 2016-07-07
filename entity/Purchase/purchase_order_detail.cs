@@ -95,7 +95,7 @@ namespace entity
         #endregion
 
 
-        private decimal GetDimensionValue()
+        public decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
             if (purchase_order_dimension != null)

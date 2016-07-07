@@ -119,17 +119,17 @@ namespace entity
                         parent.RaisePropertyChanged("IsSelected");
                     }
 
-                    //if (child != null)
-                    //{
-                    //    if (child.Count() > 0)
-                    //    {
-                    //        foreach (production_order_detail _child in child)
-                    //        {
-                    //            _child.IsSelected = value;
-                    //            _child.RaisePropertyChanged("IsSelected");
-                    //        }
-                    //    }
-                    //} 
+                    if (child != null)
+                    {
+                        if (child.Count() > 0)
+                        {
+                            foreach (production_order_detail _child in child)
+                            {
+                                _child.IsSelected = value;
+                                _child.RaisePropertyChanged("IsSelected");
+                            }
+                        }
+                    } 
 
                     if (production_order != null)
                     {

@@ -88,7 +88,10 @@ namespace Cognitivo.Production
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            OrderDB.CancelAllChanges();
+            production_order _production_order = (production_order)production_orderDataGrid.SelectedItem;
+            _production_order.State = EntityState.Unchanged;
+            production_orderViewSource.View.Refresh();
+            //OrderDB.CancelAllChanges();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

@@ -282,6 +282,9 @@
     <Compile Include="Commercial\AccountsPayable.xaml.cs">
       <DependentUpon>AccountsPayable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commercial\EmpRecievable.xaml.cs">
+      <DependentUpon>EmpRecievable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Commercial\AccountsRecievable.xaml.cs">
       <DependentUpon>AccountsRecievable.xaml</DependentUpon>
     </Compile>
@@ -1425,6 +1428,10 @@
     <Page Include="Commercial\AccountsPayable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Commercial\EmpRecievable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Commercial\AccountsRecievable.xaml">
       <SubType>Designer</SubType>

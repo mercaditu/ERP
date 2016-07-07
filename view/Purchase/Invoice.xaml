@@ -344,7 +344,7 @@
                       RowDetailsVisibilityMode="Collapsed"
                       ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
                         InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
-                        CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding">
+                        CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding" >
                 <DataGrid.Resources>
                     <!-- the non-editing cell -->
                     <DataTemplate x:Key="CellTemplate">

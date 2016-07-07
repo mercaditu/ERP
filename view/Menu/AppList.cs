@@ -77,6 +77,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "HumanResource.CurrentAccount", "CurrentAccount", "");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "HumanResource.Payroll", "Payroll", "Money");
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "EntryExit");
+            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Commercial.EmpRecievable", entity.App.Names.EmpRecievable, "Money");
 
             //Stock
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.Item", entity.App.Names.Items, "Product");

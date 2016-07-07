@@ -177,6 +177,8 @@ namespace entity
             Talent = 36,
             [LocalizedDescription("HourCoeficient")]
             HourCoeficient = 48,
+            [LocalizedDescription("EmpRecievable")]
+            EmpRecievable = 95,
 
             //Configuration
             [LocalizedDescription("User")]

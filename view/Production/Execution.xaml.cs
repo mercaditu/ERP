@@ -318,7 +318,10 @@ namespace Cognitivo.Production
 
         private void toolBar_btnCancel_Click(object sender)
         {
-            ExecutionDB.CancelAllChanges();
+            production_execution production_execution = (production_execution)projectDataGrid.SelectedItem;
+            production_execution.State = EntityState.Unchanged;
+            production_executionViewSource.View.Refresh();
+           // ExecutionDB.CancelAllChanges();
         }
 
         private void toolBar_btnDelete_Click(object sender)

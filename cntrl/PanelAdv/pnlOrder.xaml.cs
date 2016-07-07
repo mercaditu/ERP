@@ -68,7 +68,7 @@ namespace cntrl.PanelAdv
                 {
                     project_task _project_task = (project_task)item;
                     production_order_detail production_order_detail = new production_order_detail();
-
+                    production_order_detail.status = Status.Project.Pending;
                     production_order_detail.id_order_detail = _project_task.id_project_task;
                     production_order_detail.name = _project_task.item_description;
                     production_order_detail.item = _project_task.items;

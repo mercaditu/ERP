@@ -84,7 +84,73 @@ namespace entity
         public int? id_bank { get; set; }
 
         [Required]
-        public string name { get; set; }
+        public string name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+
+                if (_name != value)
+                {
+                    _name = value;
+                    if (name.Contains(","))
+                    {
+                        _firstname = _name.Take(_name.IndexOf(",") - 1).ToString();
+                        _lastname = _name.Substring(_name.IndexOf(",") + 1).ToString();
+                    }
+                    else
+                    {
+                        _firstname = value;
+                    }
+                  
+                }
+
+            }
+        }
+        string _name;
+
+        [NotMapped]
+        public string firstname 
+        {
+            get
+            {
+                return _firstname;
+            }
+            set
+            {
+              
+                if (_firstname!=value)
+                {
+                    _firstname = value;
+                    _name = _lastname + "," + _firstname;
+                }
+               
+            } 
+        }
+        string _firstname;
+        [NotMapped]
+        public string lastname 
+        {
+            get
+            {
+                return _lastname;
+            }
+            set
+            {
+             
+                if (_lastname!=value)
+                {
+                    _lastname = value;
+                    _name = _lastname + "," + _firstname;
+                }
+              
+            } 
+        }
+        string _lastname;
+
         public string alias { get; set; }
         public string code { get; set; }
         public string gov_code { get; set; }

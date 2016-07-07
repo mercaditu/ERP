@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 94
+            /// Last Used : 95
             /// </summary>
 
             //Sales
@@ -121,6 +121,8 @@ namespace entity
             Export = 34,
             [LocalizedDescription("RequestResource")]
             RequestResource = 18,
+            [LocalizedDescription("SuppliesRequestResource")]
+            SuppliesRequestResource = 95,
             [LocalizedDescription("Inventory")]
             Inventory = 26,
             [LocalizedDescription("Transfer")]

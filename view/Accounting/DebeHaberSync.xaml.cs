@@ -188,8 +188,8 @@ namespace Cognitivo.Accounting
             ///Serealize SalesInvoiceLIST into Json
             var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
 
-            Send2API(Sales_Json);
-            //file_create(Sales_Json as string,"sales_invoice");
+           // Send2API(Sales_Json);
+            file_create(Sales_Json as string,"sales_invoice");
             //Send Sales_Json send it to Server Address specified.
         }
         private void SalesReturn_Sync()

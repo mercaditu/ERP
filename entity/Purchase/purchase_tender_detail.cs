@@ -199,8 +199,12 @@ namespace entity
                 _purchase_tender_item = value;
                 if (quantity > 0)
                 {
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
-                    RaisePropertyChanged("Quantity_Factored");
+                    if (purchase_tender_item!=null)
+                    {
+                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
+                        RaisePropertyChanged("Quantity_Factored");
+                    }
+                   
                 }
 
             }
@@ -214,7 +218,7 @@ namespace entity
 
         #region Methods
 
-        private decimal GetDimensionValue()
+        public decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
             if (purchase_tender_detail_dimension != null)

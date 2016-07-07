@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -31,10 +32,13 @@ namespace Cognitivo.Accounting
         {
             string api = "http://104.131.70.188/api/verification_api/" + UserName +"/" + Password ;
             var r = await DownloadPage(api);
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                dgEmployee.ItemsSource = r;
-            }));
+            List<ClassForJson> q = JsonConvert.DeserializeObject<List<ClassForJson>>("{'80044198-2':'Cognitivo Paraguay SA':'Cognitivo'}");
+            dgEmployee.ItemsSource = q;
+           // GridView1.DataBind();
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
+            //    dgEmployee.ItemsSource = r;
+            //}));
         }
 
         static async Task<string> DownloadPage(string url)
@@ -51,6 +55,18 @@ namespace Cognitivo.Accounting
         private void Verify_Access(string User, string Password, string ServerAddress)
         {
 
+        }
+
+        public class ClassForJson
+        {
+            public string key { get; set; }
+            public Value value { get; set; }
+            public class Value
+            {
+                public string gov_code { get; set; }
+                public string name { get; set; }
+                public string alias { get; set; }
+            }
         }
     }
 }

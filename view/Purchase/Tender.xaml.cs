@@ -152,6 +152,7 @@ namespace Cognitivo.Purchase
                     foreach (item_dimension item_dimension in item.item_dimension)
                     {
                         purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
+                        purchase_tender_dimension.purchase_tender_item = purchase_tender_item;
                         purchase_tender_dimension.id_dimension = item_dimension.id_app_dimension;
                         purchase_tender_dimension.id_measurement = item_dimension.id_measurement;
                         if (PurchaseTenderDB.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault()!=null)
@@ -240,6 +241,7 @@ namespace Cognitivo.Purchase
                                     foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_item.purchase_tender_dimension)
                                     {
                                         purchase_tender_detail_dimension purchase_tender_detail_dimension = new purchase_tender_detail_dimension();
+                                        purchase_tender_detail_dimension.purchase_tender_detail = purchase_tender_detail;
                                         purchase_tender_detail_dimension.id_dimension = purchase_tender_dimension.id_dimension;
                                         purchase_tender_detail_dimension.app_dimension = purchase_tender_dimension.app_dimension;
                                         purchase_tender_detail_dimension.id_measurement = purchase_tender_dimension.id_measurement;

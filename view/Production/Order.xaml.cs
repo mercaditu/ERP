@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Cognitivo.Production
 {
-    public partial class Order : Page
+    public partial class Order : Page,INotifyPropertyChanged
     {
         OrderDB OrderDB = new OrderDB();
 
@@ -22,7 +22,10 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource;
 
         cntrl.Curd.ItemRequest ItemRequest;
-
+        /// <summary>
+        /// Property used by Open TreeView Button.
+        /// </summary>
+        public bool ViewAll { get; set; }
         public Order()
         {
             InitializeComponent();
@@ -730,6 +733,20 @@ namespace Cognitivo.Production
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Update_request();
+        }
+
+        private void btnExpandAll_Checked(object sender, RoutedEventArgs e)
+        {
+            ViewAll = !ViewAll;
+            RaisePropertyChanged("ViewAll");
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
 
     }

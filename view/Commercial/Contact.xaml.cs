@@ -98,7 +98,7 @@ namespace Cognitivo.Commercial
             ContactDB.contacts.Add(contact);
             contactViewSource.View.Refresh();
             contactViewSource.View.MoveCurrentToLast();
-            txtName.Focus();
+            txtfirstName.Focus();
         }
 
         private void toolBar_btnDelete_Click(object sender)

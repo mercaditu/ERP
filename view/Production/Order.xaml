@@ -17,7 +17,7 @@
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US" 
-      MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
+      MinHeight="800" MinWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
         <converter:SecurityConverter x:Key="SecurityConverter"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
@@ -127,6 +127,7 @@
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" 
                         Grid.Row="2" Grid.ColumnSpan="2" Margin="8">
                 <TabItem Header="{lex:Loc Order}">
+                   
                     <Grid Grid.Row="1"  Background="White" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                               DataContext="{StaticResource production_orderproduction_order_detailViewSource}">
                         <Grid.ColumnDefinitions>
@@ -146,25 +147,41 @@
                                                              Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </HierarchicalDataTemplate>
                             </Grid.Resources>
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"   
+                            <StackPanel Grid.Column="0">
+                                <Grid DataContext="{StaticResource production_orderViewSource}">
+                                    <Label Content="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource generic_Label}"/>
+                                    <TextBlock Style="{StaticResource TextAreaH2}" Margin="36,24,0,0"
+                           Text="{Binding name, FallbackValue=Production, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                           HorizontalAlignment="Stretch" TextTrimming="CharacterEllipsis" />
+                                    <ToggleButton x:Name="btnExpandAll" Width="32" Height="32" Margin="0,26"  FontSize="16"
+                              VerticalAlignment="Top" HorizontalAlignment="Left" BorderBrush="{StaticResource AccentColor_Brush2}"
+                              Style="{DynamicResource MetroCircleToggleButtonStyle}" Content="&#xE81D;" 
+                              FontFamily="/Cognitivo;component/Resources/#cognitivo" Foreground="RoyalBlue"
+                              Unchecked="btnExpandAll_Checked" Checked="btnExpandAll_Checked"/>
+                                </Grid>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="500">
+                                    <cntrl:ExtendedTreeView x:Name="treeProject" ItemsSource="{Binding}"   
                                                         VirtualizingPanel.VirtualizationMode="Recycling" 
                                                         VirtualizingPanel.IsVirtualizing="True" 
                                                         ScrollViewer.CanContentScroll="True">
-                                    <TreeView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel/>
-                                        </ItemsPanelTemplate>
-                                    </TreeView.ItemsPanel>
-                                    <TreeView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type TreeViewItem}">
-                                            <Setter Property="IsExpanded" Value="True" />
-                                        </Style>
-                                    </TreeView.ItemContainerStyle>
-                                </cntrl:ExtendedTreeView>
-                            </ScrollViewer>
+                                        <TreeView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </TreeView.ItemsPanel>
+                                        <TreeView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type TreeViewItem}" >
+                                                <Setter Property="IsExpanded" Value="{Binding ElementName=Productionorder, Path=ViewAll, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            </Style>
+                                        </TreeView.ItemContainerStyle>
+                                    </cntrl:ExtendedTreeView>
+                                </ScrollViewer>
+                            </StackPanel>
+                        
                         </Grid>
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
+                        
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" >
                             <StackPanel DataContext="{Binding SelectedItem_, ElementName=treeProject}">
                                 <Label Style="{StaticResource generic_Label}" HorizontalAlignment="Center" 
                                        Content="{Binding parent.name, FallbackValue=---}"/>
@@ -208,8 +225,10 @@
                                              Text="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N4}}" Style="{StaticResource input_textbox}"/>
                                     </StackPanel>
                                 </StackPanel>
+
                             </StackPanel>
                         </ScrollViewer>
+                      
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc RequestResource}">

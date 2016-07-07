@@ -71,7 +71,7 @@ namespace entity
         public virtual ICollection<purchase_tender_dimension> purchase_tender_dimension { get; set; }
         public virtual project_task project_task { get; set; }
 
-        private decimal GetDimensionValue()
+        public decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
             if (purchase_tender_dimension != null)

@@ -20,7 +20,29 @@ namespace entity
         public int id_measurement { get; set; }
         public decimal value { get; set; }
 
-        public virtual purchase_tender_item purchase_tender_item { get; set; }
+        public virtual purchase_tender_item purchase_tender_item
+        {
+            get
+            {
+
+                if (_purchase_tender_item != null)
+                {
+                    _purchase_tender_item.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_tender_item.item, _purchase_tender_item.quantity, _purchase_tender_item.GetDimensionValue());
+                }
+                return _purchase_tender_item;
+            }
+            set
+            {
+                _purchase_tender_item = value;
+                if (_purchase_tender_item != null)
+                {
+                    _purchase_tender_item.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_tender_item.item, _purchase_tender_item.quantity, _purchase_tender_item.GetDimensionValue());
+                }
+
+            }
+        }
+        purchase_tender_item _purchase_tender_item;
+     
         public virtual app_dimension app_dimension { get; set; }
         public virtual app_measurement app_measurement { get; set; }
     }

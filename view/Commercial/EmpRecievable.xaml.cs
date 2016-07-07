@@ -77,19 +77,19 @@ namespace Cognitivo.Commercial
             load_Schedual();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
-            List<contact> contactLIST = new List<contact>();
+            //List<contact> contactLIST = new List<contact>();
 
-            foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.Where(x=>x.contact.is_employee).ToList())
-            {
-                if (contactLIST.Contains(payment.contact) == false)
-                {
-                    contact contact = new contact();
-                    contact = payment.contact;
-                    contactLIST.Add(contact);
-                }
-            }
+            //foreach (payment_schedual payment in PaymentDB.payment_schedual.Local.Where(x=>x.contact.is_employee).ToList())
+            //{
+            //    if (contactLIST.Contains(payment.contact) == false)
+            //    {
+            //        contact contact = new contact();
+            //        contact = payment.contact;
+            //        contactLIST.Add(contact);
+            //    }
+            //}
 
-            contactViewSource.Source = contactLIST;
+            contactViewSource.Source = PaymentDB.contacts.Where(x => x.is_employee).ToList();
         }
 
         private  void load_Schedual()

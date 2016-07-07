@@ -36,13 +36,13 @@
         <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
         <!--<CollectionViewSource x:Key="contact_subscriptionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_subscription}, CreateList=True}"/>-->
-        
+
         <CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="app_fieldViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
         <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="bankViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_bank}, CreateList=True}"/>
-        
+
     </Page.Resources>
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
@@ -72,9 +72,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-       
+
         <StackPanel Grid.Column="1" Grid.Row="1" Background="White" Orientation="Horizontal" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-           
+
             <Border CornerRadius="64" Background="WhiteSmoke"
                     Width="100" Height="100" Margin="24"
                     HorizontalAlignment="Center" VerticalAlignment="Top">
@@ -136,10 +136,10 @@
                             <!--<Label Content="+" HorizontalAlignment="Right" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
                                    Style="{StaticResource btn_Label}"/>-->
                         </StackPanel>
-               
+
                         <TextBox Style="{StaticResource input_textbox}"
                                  Text="{Binding telephone, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
-                     
+
                         <Label Content="{lex:Loc Email}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="txtEmail" Style="{StaticResource input_textbox}"
                                  Text="{Binding email, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
@@ -180,7 +180,7 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
-                    
+
                     <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 
                                 IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
@@ -215,7 +215,7 @@
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-                   
+
                 </WrapPanel>
             </TabItem>
             <TabItem Header="{lex:Loc Geography}">
@@ -281,6 +281,9 @@
                         <Label Content="{lex:Loc Invoice}" Style="{StaticResource H2}"/>
                         <Label Content="{lex:Loc PriceList}" Style="{StaticResource input_label}"
                                    Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"/>
+                        <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" 
+                        	HorizontalAlignment="Right" MouseUp="lblCancel_MouseUp"   Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
+                        	FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
                         <ComboBox x:Name="cbPriceList" Style="{StaticResource input_combobox}" 
                                       Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxCustomer}"
                                       ItemsSource="{Binding Source={StaticResource itemPriceListViewSource}}" 
@@ -332,7 +335,8 @@
                               RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
                             -->
-            <!-- add here contact column. only show contacts that exist in relationship including current contact. --><!--
+            <!-- add here contact column. only show contacts that exist in relationship including current contact. -->
+            <!--
                             <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Contact}" Width="SizeToHeader"
                                                     DisplayMemberPath="name" SelectedValuePath="id_contact"
                                                     ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" SelectedValueBinding="{Binding id_contact,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
@@ -361,16 +365,22 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="100" ElementStyle="{StaticResource RightAlignStyle}"
                                                 Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" />
                             
-                            --><!-- UnitPrice_Vat --><!--
+                            -->
+            <!-- UnitPrice_Vat -->
+            <!--
                             <DataGridTextColumn Binding="{Binding UnitPrice_Vat, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:PricewithVAT}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto" />
                            
-                            --><!-- SubTotal --><!--
+                            -->
+            <!-- SubTotal -->
+            <!--
                             <DataGridTextColumn Binding="{Binding SubTotal, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                                 Header="{lex:Loc Cognitivo:local:SubTotal}" Width="Auto" IsReadOnly="True"
                                                 ElementStyle="{StaticResource RightAlignStyle}"/>
                             
-                            --><!-- SubTotal_VAT --><!--
+                            -->
+            <!-- SubTotal_VAT -->
+            <!--
                             <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"  Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" 
                                                 Width="Auto" IsReadOnly="True" ElementStyle="{StaticResource RightAlignStyle}"/>
                             

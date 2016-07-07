@@ -144,10 +144,7 @@ namespace cntrl
             }
         }
 
-        private void lblCancel_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-        }
+        
 
          
     }

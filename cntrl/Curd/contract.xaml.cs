@@ -142,5 +142,7 @@ namespace cntrl
             else
             { contract_detail.coefficient = 1; }
         }
+
+       
     }
 }

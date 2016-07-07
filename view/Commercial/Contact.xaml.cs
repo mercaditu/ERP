@@ -18,7 +18,7 @@ namespace Cognitivo.Commercial
         CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource;
         CollectionViewSource contactcontact_field_valueViewSource;
-        
+
         #region Initilize and load
 
         public Contact()
@@ -33,7 +33,7 @@ namespace Cognitivo.Commercial
             entity.Properties.Settings _entity = new entity.Properties.Settings();
 
             //Contact
-            ContactDB.contacts.Where(a =>a.id_company == _entity.company_ID && a.is_employee == false).OrderBy(a => a.name).Load();
+            ContactDB.contacts.Where(a => a.id_company == _entity.company_ID && a.is_employee == false).OrderBy(a => a.name).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;
@@ -154,7 +154,7 @@ namespace Cognitivo.Commercial
             if (cbxContactRole.SelectedItem != null)
             {
                 contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
-                
+
                 if (contact_role.is_principal == true)
                 {
                     cbxRelation.IsEnabled = false;
@@ -163,7 +163,7 @@ namespace Cognitivo.Commercial
                 {
                     cbxRelation.IsEnabled = true;
                 }
-                    
+
                 if (contact_role.can_transact == true)
                 {
                     tabFinance.Visibility = Visibility.Visible;
@@ -379,14 +379,14 @@ namespace Cognitivo.Commercial
         {
             contact contact = contactViewSource.View.CurrentItem as contact;
             contact_role contact_role = cbxContactRole.SelectedItem as contact_role;
-            
+
             //if (contact_role != null)
             //{
             //    if (contact_role.is_principal == true)
             //    {
-                   LoadRelatedContactOnThread(contact);
-                //}
-           // }
+            LoadRelatedContactOnThread(contact);
+            //}
+            // }
 
             //if (contact_subscriptionViewSource != null)
             //{
@@ -439,13 +439,13 @@ namespace Cognitivo.Commercial
 
         private void contactcontact_subscriptionDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-           // FilterSubscription();
+            // FilterSubscription();
         }
 
         private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             Add_field();
-        
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -471,7 +471,7 @@ namespace Cognitivo.Commercial
 
             // Adds the pushpin to the map.
             myMap.Children.Add(pin);
-            
+
             contact contact = (contact)contactViewSource.View.CurrentItem;
             if (contact != null)
             {
@@ -484,9 +484,9 @@ namespace Cognitivo.Commercial
             contact contact = contactViewSource.View.CurrentItem as contact;
             if (contact != null)
             {
-                using (db db= new db())
+                using (db db = new db())
                 {
-                    if (db.app_field.Where(x=>x.field_type==app_field.field_types.Account).Count()==0)
+                    if (db.app_field.Where(x => x.field_type == app_field.field_types.Account).Count() == 0)
                     {
                         app_field app_field = new app_field();
                         app_field.field_type = entity.app_field.field_types.Account;
@@ -502,8 +502,18 @@ namespace Cognitivo.Commercial
                 contactcontact_field_valueViewSource.View.Refresh();
             }
         }
-       
 
-       
+        private void lblCancel_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact != null)
+            {
+                contact.id_price_list = null;
+                contactViewSource.View.Refresh();
+            }
+        }
+
+
+
     }
 }

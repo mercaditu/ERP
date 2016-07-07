@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+         xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=Entity"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
@@ -77,7 +78,7 @@
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
                             </AdornerDecorator>
-                           
+
                             <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
                             <toolkit:RichTextBox x:Name="rtbxDetails" Margin="5" BorderBrush="Gray" Padding="4" MinHeight="128" Width="256"
                                           Text="{Binding description,Source={StaticResource itemViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
@@ -108,11 +109,10 @@
                                       DisplayMemberPath="name" SelectedValuePath="id_department"
                                       ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"
                                       SelectedValue="{Binding id_department, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-                            <Label Content="{lex:Loc Employee}"  Style="{StaticResource input_label}"/>
-                            <ComboBox x:Name="cbxItemEmp" Grid.Column="1" Style="{StaticResource input_combobox}"
-                                      DisplayMemberPath="name" SelectedValuePath="id_contact"
-                                      ItemsSource="{Binding Source={StaticResource contactViewSource}}"
-                                      SelectedValue="{Binding id_contact, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+
+                            <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
+                            <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
+
                             <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
                             <DatePicker SelectedDate="{Binding purchase_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
                             <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />
@@ -162,7 +162,7 @@
                                      Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap"/>
 
                             <Rectangle Style="{StaticResource line_Bar}"/>
-                            
+
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{lex:Loc Status}" Style="{StaticResource input_label}"/>
                                 <Label Content="{Binding status, Mode=OneWay}" Style="{StaticResource generic_Label}"/>

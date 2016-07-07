@@ -127,9 +127,9 @@ namespace Cognitivo.Product
 
         private void toolBar_btnCancel_Click(object sender)
         {
-           // ItemDB.CancelAllChanges();
+            // ItemDB.CancelAllChanges();
             item item = (item)itemDataGrid.SelectedItem;
-             if (item.State == EntityState.Added)
+            if (item.State == EntityState.Added)
             {
                 ItemDB.Entry(item).State = EntityState.Detached;
             }
@@ -200,6 +200,18 @@ namespace Cognitivo.Product
 
         private void EditBrand_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
+        }
+
+        private void itemserviceComboBox_MouseDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (CmbService.ContactID > 0)
+            {
+                contact contact = ItemDB.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
+                item_asset item_asset = itemitem_capitalViewSource.View.CurrentItem as item_asset;
+                item_asset.id_contact = contact.id_contact;
+                
+            }
 
         }
     }

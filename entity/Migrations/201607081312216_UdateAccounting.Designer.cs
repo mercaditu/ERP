@@ -7,13 +7,13 @@ namespace entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class EventManagement : IMigrationMetadata
+    public sealed partial class UdateAccounting : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(EventManagement));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UdateAccounting));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607080839490_EventManagement"; }
+            get { return "201607081312216_UdateAccounting"; }
         }
         
         string IMigrationMetadata.Source

@@ -766,6 +766,17 @@ namespace Cognitivo.Purchase
             }
         }
 
+        private void Totals_btnClean_Click(object sender)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
+
+            if (purchase_invoice != null)
+            {
+                decimal TrailingDecimals = purchase_invoice.GrandTotal - Math.Floor(purchase_invoice.GrandTotal);
+                purchase_invoice.DiscountWithoutPercentage += TrailingDecimals;
+            }
+        }
+
       
 
 

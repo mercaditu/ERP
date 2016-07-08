@@ -64,6 +64,7 @@ namespace entity
         /// </summary>
         public int id_opportunity { get; set; }
 
+        public bool is_accounted { get; set; }
         public int? id_journal { get; set; }
 
         /// <summary>

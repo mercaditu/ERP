@@ -16,6 +16,7 @@
         lex:ResxLocalizationProvider.DefaultDictionary="local"
       xmlns:local="clr-namespace:cntrl;assembly=cntrl"
       xmlns:convert="clr-namespace:Cognitivo.Converters"
+      
       Loaded="Item_Loaded"
       mc:Ignorable="d" MinHeight="400" MinWidth="800">
     <Page.CommandBindings>
@@ -134,7 +135,9 @@
                                             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                             NotifyOnValidationError=true, 
                                             ValidatesOnDataErrors=True}"  />
+                  
                 </AdornerDecorator>
+                
                 <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                 <AdornerDecorator>
                     <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"

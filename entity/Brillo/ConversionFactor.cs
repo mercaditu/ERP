@@ -28,11 +28,26 @@ namespace entity.Brillo
                                 //        i = i * item_dimension.value;
                                 //    }
                                 //}
-                                return Quantity_Factored / (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                                if ((BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value)>0)
+                                {
+                                    return Quantity_Factored / (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                                    
+                                }
+                                else
+                                {
+                                    if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value>0)
+                                    {
+                                         return Quantity_Factored / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                                    }
+                                }
+                           
                             }
                             else
                             {
-                                return Quantity_Factored / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                                if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
+                                {
+                                    return Quantity_Factored / item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value;
+                                }
                             }
                         }
                     }

@@ -82,6 +82,7 @@ namespace Cognitivo.Project
             project_event project_costing = new project_event();
             project_costing.IsSelected = true;
             project_costing.State = EntityState.Added;
+            project_costing.status = Status.Documents_General.Pending;
             EventDB.Entry(project_costing).State = EntityState.Added;
 
             EventDB.project_event.Add(project_costing);
@@ -764,7 +765,7 @@ namespace Cognitivo.Project
 
                 }
 
-
+                project_costing.status = Status.Documents_General.Approved;
 
                 EventDB.projects.Add(project);
                 EventDB.SaveChanges();
@@ -798,7 +799,8 @@ namespace Cognitivo.Project
                 app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
             if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
             {
-                cbxCurrency.SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx);
+                cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.id_currency==app_currencyfx.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
+                //Convert.ToInt32(app_currencyfx.id_currencyfx);
             }
             else
             {

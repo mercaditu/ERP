@@ -27,7 +27,29 @@ namespace entity
         public int id_contact { get; set; }
         public int id_contract { get; set; }
         public int id_condition { get; set; }
-        public int id_currencyfx { get; set; }
+        public int id_currencyfx 
+        { 
+            get 
+            { 
+                return _id_currencyfx;
+            } 
+            set 
+            {
+                _id_currencyfx = value;
+                RaisePropertyChanged("id_currencyfx");
+
+               
+                    foreach (purchase_tender_detail _purchase_tender_detail in purchase_tender_detail)
+                    {
+                        _purchase_tender_detail.State = System.Data.Entity.EntityState.Modified;
+                        _purchase_tender_detail.CurrencyFX_ID = _id_currencyfx;
+                    }
+                    RaisePropertyChanged("GrandTotal");
+               
+                
+            } 
+        }
+        int _id_currencyfx;
         public string comment { get; set; }
         public DateTime? recieve_date_est { get; set; }
 

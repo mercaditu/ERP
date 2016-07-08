@@ -73,7 +73,7 @@ namespace entity
 
                 if (purchase_tender.status != Status.Documents_General.Approved)
                 {
-                    
+
                     foreach (purchase_tender_contact purchase_tender_contact in purchase_tender.purchase_tender_contact_detail)
                     {
                         purchase_order purchase_order = new purchase_order();
@@ -82,7 +82,7 @@ namespace entity
                         purchase_order.id_department = purchase_tender.id_department;
                         purchase_order.id_currencyfx = purchase_tender_contact.id_currencyfx;
                         purchase_order.recieve_date_est = purchase_tender_contact.recieve_date_est;
-                        
+
                         if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault() != null)
                         {
                             purchase_order.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault().id_range;
@@ -98,11 +98,11 @@ namespace entity
                         purchase_order.id_project = purchase_tender.id_project;
                         purchase_order.project = purchase_tender.project;
 
-                        if (purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected).Count()==0)
+                        if (purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected).Count() == 0)
                         {
                             return;
                         }
-                        foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x=>x.IsSelected))
+                        foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected))
                         {
                             purchase_order_detail purchase_order_detail = new purchase_order_detail();
                             purchase_order_detail.purchase_tender_detail = purchase_tender_detail;
@@ -110,8 +110,8 @@ namespace entity
                             purchase_order_detail.item = purchase_tender_detail.purchase_tender_item.item;
                             purchase_order_detail.id_item = purchase_tender_detail.purchase_tender_item.id_item;
                             purchase_order_detail.unit_cost = purchase_tender_detail.unit_cost;
-                            
-                            if (purchase_tender_detail.item_description=="")
+
+                            if (purchase_tender_detail.item_description == "")
                             {
                                 purchase_order_detail.item_description = purchase_tender_detail.item_description;
                             }
@@ -121,7 +121,7 @@ namespace entity
                             }
 
                             purchase_order_detail.quantity = purchase_tender_detail.quantity;
-                            
+
                             if (base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault() != null)
                             {
                                 purchase_order_detail.id_vat_group = base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault().id_vat_group;
@@ -130,7 +130,7 @@ namespace entity
                             {
                                 purchase_order_detail.id_vat_group = base.app_vat_group.Where(x => x.is_active == true).FirstOrDefault().id_vat_group;
                             }
-                            
+
                             purchase_order_detail.id_cost_center = base.app_cost_center.Where(x => x.is_active == true).FirstOrDefault().id_cost_center;
 
                             foreach (purchase_tender_dimension purchase_tender_dimension in purchase_tender_detail.purchase_tender_item.purchase_tender_dimension)
@@ -165,8 +165,18 @@ namespace entity
             }
         }
         public void Anull()
-        { 
-        
+        {
+            foreach (purchase_tender purchase_tender in base.purchase_tender.Local.Where(x => x.IsSelected == true))
+            {
+              
+                if (purchase_tender.status == Status.Documents_General.Approved)
+                {
+                    base.purchase_order.RemoveRange(purchase_tender.purchase_order);
+                }
+                purchase_tender.status = Status.Documents_General.Annulled;
+            }
+         
+            SaveChanges();
         }
     }
 }

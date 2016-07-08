@@ -88,7 +88,15 @@ namespace entity
         {
             get
             {
-                return _name;
+                if (_name!=null)
+                {
+                    return _name.Replace(",", " ");
+                }
+                else
+                {
+                    return _name;
+                }
+               
             }
             set
             {

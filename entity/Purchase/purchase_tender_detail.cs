@@ -187,6 +187,30 @@ namespace entity
         }
         private string _DimensionString;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public int CurrencyFX_ID
+        {
+            get
+            {
+                return _CurrencyFX_ID;
+            }
+            set
+            {
+                if (_CurrencyFX_ID != value)
+                {
+
+                    unit_cost = Currency.convert_Values(unit_cost, _CurrencyFX_ID, value, App.Modules.Purchase);
+                    RaisePropertyChanged("unit_cost");
+
+                    _CurrencyFX_ID = value;
+                }
+            }
+        }
+        private int _CurrencyFX_ID;
+
         public virtual purchase_tender_contact purchase_tender_contact { get; set; }
         public virtual purchase_tender_item purchase_tender_item
         {
@@ -199,12 +223,12 @@ namespace entity
                 _purchase_tender_item = value;
                 if (quantity > 0)
                 {
-                    if (purchase_tender_item!=null)
+                    if (purchase_tender_item != null)
                     {
                         _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
                         RaisePropertyChanged("Quantity_Factored");
                     }
-                   
+
                 }
 
             }

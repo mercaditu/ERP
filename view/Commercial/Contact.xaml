@@ -33,16 +33,12 @@
         <CollectionViewSource x:Key="salesRepViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
         <CollectionViewSource x:Key="salesRepViewSourceCollector" d:DesignSource="{d:DesignInstance {x:Type entity:sales_rep}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
-        <!--<CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="contactcontact_tag_detailViewSource" Source="{Binding contact_tag_detail, Source={StaticResource contactViewSource}}"/>
-        <!--<CollectionViewSource x:Key="contact_subscriptionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_subscription}, CreateList=True}"/>-->
-
         <CollectionViewSource x:Key="contactcontact_field_valueViewSource" Source="{Binding contact_field_value, Source={StaticResource contactViewSource}}"/>
         <CollectionViewSource x:Key="app_fieldViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_field}, CreateList=True}"/>
         <CollectionViewSource x:Key="contact_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_tag}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="bankViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_bank}, CreateList=True}"/>
-
     </Page.Resources>
     <Page.CommandBindings>
         <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" CanExecute="DeleteCommand_CanExecute" Executed="DeleteCommand_Executed"/>
@@ -65,7 +61,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                   recordName="{Binding firstname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                   recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                    recordSecondaryName="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -97,14 +93,10 @@
                     <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264"
                                IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Label Content="{lex:Loc General}" Style="{StaticResource H2}"/>
-                        <Label Content="{lex:Loc FirstName}" 
+                        <Label Content="{lex:Loc Name}" 
                     		   Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtfirstName" Style="{StaticResource input_textbox}" 
-                    		     Text="{Binding firstname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
-                        <Label Content="{lex:Loc LastName}" 
-                    		   Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtlastName" Style="{StaticResource input_textbox}" 
-                    		     Text="{Binding lastname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
+                        <TextBox Style="{StaticResource input_textbox}" 
+                    		     Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
                         <Label Content="{lex:Loc Alias}" 
                     		   Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}" 

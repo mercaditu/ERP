@@ -221,7 +221,6 @@ namespace Cognitivo.Purchase
                     purchase_tender_contact.app_contract = (app_contract)cbxContract.SelectedItem;
                     purchase_tender_contact.app_condition = (app_condition)cbxCondition.SelectedItem;
 
-
                     if (purchase_tender != null)
                     {
                         List<purchase_tender_item> listtender = purchase_tender.purchase_tender_item_detail.ToList();

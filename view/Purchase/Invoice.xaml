@@ -227,8 +227,7 @@
                     </StackPanel>
                     <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                     <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
-                                       Visibility="{Binding Source={x:Static pref:InvoiceSetting.Default}, Path=quicklook_SalesOrder, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                        <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
                             <Label Content="" Style="{StaticResource ico_Label}"/>
                             <CheckBox Content="{lex:Loc Importation}" IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
@@ -337,14 +336,15 @@
                                         IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
             </StackPanel>
             <DataGrid x:Name="dgvPurchaseDetail" Margin="0,57,0,8"
-                        VerticalScrollBarVisibility="Auto" Height="Auto"
-                        AutoGenerateColumns="False" CanUserAddRows="False"
-                        IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
-                        EnableRowVirtualization="True" 
+                      VerticalScrollBarVisibility="Auto" Height="Auto"
+                      AutoGenerateColumns="False" CanUserAddRows="False"
+                      IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+                      EnableRowVirtualization="True" 
                       RowDetailsVisibilityMode="Collapsed"
-                      ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
-                        InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
-                        CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding" >
+                      ItemsSource="{Binding Source={StaticResource purchase_invoicepurchase_invoice_detailViewSource}}" 
+                      RowEditEnding="purchase_invoice_detailDataGrid_RowEditEnding" 
+                      InitializingNewItem="purchase_invoice_detailDataGrid_InitializingNewItem"
+                      CellEditEnding="purchase_invoice_detailDataGrid_CellEditEnding" >
                 <DataGrid.Resources>
                     <!-- the non-editing cell -->
                     <DataTemplate x:Key="CellTemplate">
@@ -366,7 +366,7 @@
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" MinWidth="64"
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" MinWidth="128"
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" MinWidth="128"
                                         Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <!--

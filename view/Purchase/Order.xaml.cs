@@ -618,16 +618,18 @@ namespace Cognitivo.Purchase
             }
         }
 
-        //private void txtTotal_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
-        //        BindingExpression binding = txtTotal.GetBindingExpression(TextBox.TextProperty);
-        //        binding.UpdateSource();
-        //        calculate_vat(sender, e);
-        //    }
-        //}
+        private void chbxRowDetail_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chbx = sender as CheckBox;
+            if ((bool)chbx.IsChecked)
+            {
+                purchase_order_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            }
+            else
+            {
+                purchase_order_detailDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+            }
+        }
 
         private void purchase_order_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {

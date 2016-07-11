@@ -57,12 +57,15 @@ namespace Cognitivo.Project.Development
                     dgvSupplies.ItemsSource = null;
 
                     int _id_project = 0;
-                    _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
+                    if (projectViewSource.View.CurrentItem != null)
+                    {
+                        _id_project = ((project)projectViewSource.View.CurrentItem).id_project;
+                    }
 
                     if (_id_project > 0)
                     {
                         var productlistbasic = (from IT in ProjectTaskDB.project_task
-                                                where (IT.status == Status.Project.Approved)
+                                                where (IT.status == Status.Project.Approved || IT.status == Status.Project.InProcess)
                                                 && IT.status != null && IT.id_project == _id_project
                                                 join IK in ProjectTaskDB.item_product on IT.id_item equals IK.id_item
                                                 //join PTD in ProjectTaskDB.purchase_tender_detail on IT.id_project_task equals PTD.purchase_tender_item.id_project_task into a
@@ -231,11 +234,6 @@ namespace Cognitivo.Project.Development
                             purchase_tender.app_branch = ProjectTaskDB.app_branch.Where(x => x.can_invoice == true && x.can_stock == true).FirstOrDefault();
                         }
 
-
-
-
-
-
                         purchase_tender.id_project = project_task.id_project;
                         purchase_tender_item purchase_tender_item = new purchase_tender_item();
                         purchase_tender_item.id_item = project_task.id_item;
@@ -315,7 +313,7 @@ namespace Cognitivo.Project.Development
 
                     List<project_task> list = ProjectTaskDB.project_task.Where(IT =>
                             IT.items.id_item_type == Type &&
-                            IT.status == Status.Project.Approved &&
+                            (IT.status == Status.Project.Approved || IT.status == Status.Project.InProcess) &&
                             IT.status != null &&
                             IT.id_project == _id_project &&
                             IT.id_item == _id_item)
@@ -434,7 +432,7 @@ namespace Cognitivo.Project.Development
 
 
                     var item_List_group_basic = (from IT in ProjectTaskDB.project_task
-                                                 where (IT.status == Status.Project.Approved)
+                                                 where (IT.status == Status.Project.Approved || IT.status == Status.Project.InProcess)
                                                  && IT.status != null && IT.id_project == id_project
                                                  join IK in ProjectTaskDB.item_product on IT.id_item equals IK.id_item
                                                  join IO in ProjectTaskDB.item_movement on IK.id_item_product equals IO.id_item_product into a
@@ -476,9 +474,6 @@ namespace Cognitivo.Project.Development
 
                         Logistics.avlqtyColumn = item.avlqtyColumn;
                         Logistics.buyqty = item.buyqty;
-
-
-
                         Logistics._id_item = item._id_item;
                         Logistics._code = item._code;
                         Logistics._name = item._name;
@@ -490,28 +485,15 @@ namespace Cognitivo.Project.Development
                     item_ProductDataGrid.ItemsSource = LogisticsList.Where(x => x.item.id_item_type == item.item_type.Product);
                     item_RawDataGrid.ItemsSource = LogisticsList.Where(x => x.item.id_item_type == item.item_type.RawMaterial);
                 }
-
             }
         }
 
         private void chkqtyneeded_Unchecked(object sender, RoutedEventArgs e)
         {
-
             LoadData();
-
         }
-
-       
-      
-
-      
-
-
-
-
-
-
     }
+
     public class Logistic
     {
         public int _id_item { get; set; }
@@ -522,8 +504,5 @@ namespace Cognitivo.Project.Development
         public decimal avlqtyColumn { get; set; }
         public item item { get; set; }
         public decimal buyqty { get; set; }
-
-
-
     }
 }

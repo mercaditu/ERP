@@ -78,7 +78,8 @@ namespace entity.Brillo
                                 //    }
                                 //}
 
-                                return Quantity * (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                                decimal i = Quantity * (BaseDimension * item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value);
+                                return i;
                             }
                             else
                             {

@@ -53,7 +53,6 @@ namespace cntrl.PanelAdv
                         purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
                     }
                 }
-
             }
         }
       
@@ -63,6 +62,7 @@ namespace cntrl.PanelAdv
         {
             List<purchase_invoice> purchase_invoice = purchase_invoiceDatagrid.ItemsSource.OfType<purchase_invoice>().ToList();
             selected_purchase_invoice = purchase_invoice.Where(x => x.IsSelected == true).ToList();
+
             if (PurchaseInvoice_Click != null)
             {
                 PurchaseInvoice_Click(sender);

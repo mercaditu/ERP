@@ -124,7 +124,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding number}" Header="{lex:Loc Cognitivo:local:InvoiceNumber}" Width="100"/>
                             
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="128" Binding="{Binding item}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="128" Binding="{Binding item}"/>
 
                             <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" Width="SizeToHeader"
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"/>
@@ -179,7 +179,7 @@
                                 EnableRowVirtualization="True" Height="Auto" Margin="0,4,4,38"
                                 RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionChanged="productDataGrid_SelectionChanged">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="128" Binding="{Binding item}"/>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" Binding="{Binding item}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

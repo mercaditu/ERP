@@ -424,7 +424,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.item = item;
                     purchase_invoice_detail.id_item = item.id_item;
                     purchase_invoice_detail.quantity = 1;
-
+                    purchase_invoice_detail.RaisePropertyChanged("quantity");
                 }
 
                 foreach (item_dimension item_dimension in item.item_dimension)
@@ -438,7 +438,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_dimension.value = item_dimension.value;
                     purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
                 }
-                purchase_invoice_detail.RaisePropertyChanged("quantity");
+                
             }
             else
             {

@@ -102,7 +102,10 @@
                     			SelectedValue="{Binding gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}"
-                            Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                            Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=True}" />
+                        <Label Content="Appelido" Style="{StaticResource input_label}"/>
+                        <TextBox Style="{StaticResource input_textbox}"
+                            Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=True}" />
                         <Label Content="{lex:Loc GovernmentID}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}"
                             Text="{Binding gov_code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />

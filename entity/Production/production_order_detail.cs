@@ -102,13 +102,13 @@ namespace entity
 
         public Status.Project? status { get; set; }
 
-        [NotMapped]
-        public bool TrickleDown_IsSelected 
-        {
-            get { return _TrickleDown_IsSelected; }
-            set { _TrickleDown_IsSelected = value; }
-        }
-        private bool _TrickleDown_IsSelected = true;
+        //[NotMapped]
+        //public bool TrickleDown_IsSelected 
+        //{
+        //    get { return _TrickleDown_IsSelected; }
+        //    set { _TrickleDown_IsSelected = value; }
+        //}
+        //private bool _TrickleDown_IsSelected = true;
 
         [NotMapped]
         public new bool IsSelected
@@ -121,20 +121,18 @@ namespace entity
                     _is_selected = value;
                     RaisePropertyChanged("IsSelected");
 
-                    if (parent != null)
-                    {
-                        parent.TrickleDown_IsSelected = false;
-                        parent.IsSelected = value;
-                        parent.RaisePropertyChanged("IsSelected");
-                    }
+                    //if (parent != null)
+                    //{
+                    //    parent.IsSelected = value;
+                    //    parent.RaisePropertyChanged("IsSelected");
+                    //}
 
-                    if (child != null && TrickleDown_IsSelected == true)
+                    if (child != null)
                     {
                         if (child.Count() > 0)
                         {
                             foreach (production_order_detail _child in child)
                             {
-                                _child.TrickleDown_IsSelected = true;
                                 _child.IsSelected = value;
                                 _child.RaisePropertyChanged("IsSelected");
                                 

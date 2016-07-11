@@ -84,80 +84,45 @@ namespace entity
         public int? id_bank { get; set; }
 
         [Required]
-        public string name
-        {
-            get
-            {
-                if (_name!=null)
-                {
-                    return _name.Replace(",", " ");
-                }
-                else
-                {
-                    return _name;
-                }
-               
-            }
-            set
-            {
-
-                if (_name != value)
-                {
-                    _name = value;
-                    if (name.Contains(","))
-                    {
-                        _firstname = _name.Take(_name.IndexOf(",") - 1).ToString();
-                        _lastname = _name.Substring(_name.IndexOf(",") + 1).ToString();
-                    }
-                    else
-                    {
-                        _firstname = value;
-                    }
-                  
-                }
-
-            }
-        }
-        string _name;
+        public string name { get; set; }
 
         [NotMapped]
-        public string firstname 
+        public string FirstName
         {
             get
             {
-                return _firstname;
+                if (name.Contains(","))
+                {
+                    _FirstName = name.Substring(name.IndexOf(",") + 1); 
+                }
+                return _FirstName;
             }
             set
             {
-              
-                if (_firstname!=value)
-                {
-                    _firstname = value;
-                    _name = _lastname + "," + _firstname;
-                }
-               
-            } 
+                _FirstName = value;
+                name = LastName + "," + _FirstName;
+            }
         }
-        string _firstname;
+        private string _FirstName;
+
         [NotMapped]
-        public string lastname 
+        public string LastName
         {
             get
             {
-                return _lastname;
+                if (name.Contains(","))
+                {
+                    _LastName = name.Substring(0, name.IndexOf(",") + 1);
+                }
+                return _LastName;
             }
             set
             {
-             
-                if (_lastname!=value)
-                {
-                    _lastname = value;
-                    _name = _lastname + "," + _firstname;
-                }
-              
-            } 
+                _LastName = value;
+                name = _LastName + "," + FirstName;
+            }
         }
-        string _lastname;
+        private string _LastName;
 
         public string alias { get; set; }
         public string code { get; set; }

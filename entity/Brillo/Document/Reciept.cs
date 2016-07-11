@@ -232,7 +232,7 @@
                                 + ItemCode + "\t" + ItemName + "\n"
                                 + Qty.ToString() + "\n";
 
-                            if (d.project_task.project_task_dimension.Count() > 0)
+                            if (d.item_transfer_dimension.Count() > 0)
                             {
                                 Detail = Detail +
                              ""

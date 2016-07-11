@@ -145,7 +145,16 @@ namespace Cognitivo.Project.Development
                             Logistics._code = item._code;
                             Logistics._name = item._name;
                             Logistics._id_task = item._id_task;
-                            Logistics._ordered_quantity = item._ordered_quantity;
+                            if (item._ordered_quantity==null)
+                            {
+                                Logistics._ordered_quantity = 0;
+                                
+                            }
+                            else
+                            {
+                                Logistics._ordered_quantity = item._ordered_quantity;
+                            }
+                           
                             Logistics.item = item.item;
                             LogisticsListService.Add(Logistics);
                         }

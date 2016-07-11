@@ -126,7 +126,7 @@ namespace Cognitivo.Product
         private void toolBar_btnApprove_Click(object sender)
         {
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            
+
             if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.app_document_range != null)
             {
                 entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
@@ -139,7 +139,7 @@ namespace Cognitivo.Product
             item_transfer.user_requested = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
             item_transfer.user_given = dbContext.security_user.Where(x => x.id_user == CurrentSession.Id_User).FirstOrDefault();
             item_transfer.status = Status.Transfer.Approved;
-            
+
             dbContext.SaveChanges();
 
             ProductMovementDB ProductMovementDB = new ProductMovementDB();
@@ -171,7 +171,7 @@ namespace Cognitivo.Product
                     item_movement_dimension.value = item_transfer_dimension.value;
                     item_movement_origin.item_movement_dimension.Add(item_movement_dimension);
                 }
-               
+
                 ProductMovementDB.item_movement.Add(item_movement_origin);
 
                 item_movement item_movement_dest = new item_movement();
@@ -208,7 +208,7 @@ namespace Cognitivo.Product
             if (ProductMovementDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ProductMovementDB.NumberOfRecords);
-            }   
+            }
         }
 
         private void cbxItem_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -234,8 +234,24 @@ namespace Cognitivo.Product
                 item_transfer_detail.item_product = ((item)cbxItem.Data).item_product.FirstOrDefault();
                 item_transfer_detail.quantity_destination = 1;
                 item_transfer_detail.quantity_origin = 1;
+                item item = ((item)cbxItem.Data);
+                foreach (item_dimension item_dimension in item.item_dimension)
+                {
+                    item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                    item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
+                    item_transfer_dimension.id_dimension = item_dimension.id_app_dimension;
+                    if (dbContext.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault() != null)
+                    {
+                        item_transfer_dimension.app_dimension = dbContext.app_dimension.Where(x => x.id_dimension == item_dimension.id_app_dimension).FirstOrDefault();
+
+                    }
+                    item_transfer_dimension.value = item_dimension.value;
+                    item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                }
+
                 item_transfer.item_transfer_detail.Add(item_transfer_detail);
             }
+            
             CollectionViewSource item_transferitem_transfer_detailViewSource = ((CollectionViewSource)(FindResource("item_transferitem_transfer_detailViewSource")));
             item_transferitem_transfer_detailViewSource.View.Refresh();
         }
@@ -272,7 +288,7 @@ namespace Cognitivo.Product
             if (item_transfer != null)
             {
                 CollectionViewSource location_destViewSource = ((CollectionViewSource)(FindResource("location_destViewSource")));
-                location_destViewSource.Source =  dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch ).OrderBy(a => a.name).ToList();
+                location_destViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch).OrderBy(a => a.name).ToList();
                 CollectionViewSource location_originViewSource = ((CollectionViewSource)(FindResource("location_originViewSource")));
                 location_originViewSource.Source = dbContext.app_location.Where(a => a.is_active == true && a.id_branch == item_transfer.id_branch).OrderBy(a => a.name).ToList();
             }

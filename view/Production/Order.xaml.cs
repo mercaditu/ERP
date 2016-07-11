@@ -579,6 +579,7 @@ namespace Cognitivo.Production
                         OrderDB.production_order_detail.Add(n_production_order_detail);
                         production_orderproduction_order_detailViewSource.View.Refresh();
                         production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
+                        treeProject.SelectedItem_ = n_production_order_detail;
                     }
                 }
             }
@@ -592,7 +593,9 @@ namespace Cognitivo.Production
                 production_orderproduction_order_detailViewSource.View.Refresh();
                 production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
                 filter_task();
+                treeProject.SelectedItem_ = n_production_order_detail;
             }
+           
         }
 
         private void btnEditTask_Click(object sender)
@@ -728,6 +731,7 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource.View.Refresh();
             production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
             filter_task();
+            treeProject.SelectedItem_ = n_production_order_detail;
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

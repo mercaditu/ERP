@@ -25,7 +25,7 @@ namespace entity
             [LocalizedDescription("Viudo/a")]
             Widowed
         }
-        
+
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum Genders
         {
@@ -66,13 +66,12 @@ namespace entity
             contact_subscription = new List<contact_subscription>();
             item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
             hr_contract = new List<hr_contract>();
-             hr_education = new List<hr_education>();
-       hr_education = new List<hr_education>();
-                 hr_education = new List<hr_education>();
-                 hr_education = new List<hr_education>();
-        public virtual ICollection<hr_family> hr_family { get; set; }
-        public virtual ICollection<hr_talent_detail> hr_talent_detail { get; set; }
-        public virtual IEnumerable<hr_timesheet> hr_timesheet { get; set; }
+            hr_education = new List<hr_education>();
+            hr_timesheet = new List<hr_timesheet>();
+            hr_family = new List<hr_family>();
+            hr_talent_detail = new List<hr_talent_detail>();
+
+
         }
 
         [Key]
@@ -99,14 +98,14 @@ namespace entity
         {
             get
             {
-                if (name!=null)
+                if (name != null)
                 {
                     if (name.Contains(","))
                     {
                         _FirstName = name.Substring(name.IndexOf(",") + 1);
-                    } 
+                    }
                 }
-               
+
                 return _FirstName;
             }
             set
@@ -204,7 +203,7 @@ namespace entity
                 {
                     _GrandTotal += _contact_subscription.SubTotal_Vat;
                 }
-                if (child!=null)
+                if (child != null)
                 {
                     foreach (contact contact in child)
                     {
@@ -225,7 +224,7 @@ namespace entity
                 if (_GrandTotal != value)
                 {
                     _GrandTotal = value;
-                    RaisePropertyChanged("GrandTotal");   
+                    RaisePropertyChanged("GrandTotal");
                 }
             }
         }
@@ -266,7 +265,7 @@ namespace entity
         public virtual IEnumerable<sales_invoice> sales_invoice { get; set; }
         public virtual IEnumerable<sales_packing> sales_packing { get; set; }
         public virtual IEnumerable<sales_return> sales_return { get; set; }
-        
+
         public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
         public virtual IEnumerable<payment_withholding_tax> payment_withholding_tax { get; set; }
 
@@ -281,7 +280,7 @@ namespace entity
         public virtual ICollection<hr_talent_detail> hr_talent_detail { get; set; }
         public virtual IEnumerable<hr_timesheet> hr_timesheet { get; set; }
         public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
-     
+
 
         #region Validation
 
@@ -325,7 +324,7 @@ namespace entity
                 return "";
             }
         }
-        
+
         #endregion
     }
 }

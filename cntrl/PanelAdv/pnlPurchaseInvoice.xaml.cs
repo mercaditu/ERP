@@ -60,6 +60,7 @@ namespace cntrl.PanelAdv
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
+            selected_purchase_invoice = null;
             List<purchase_invoice> purchase_invoice = purchase_invoiceDatagrid.ItemsSource.OfType<purchase_invoice>().ToList();
             selected_purchase_invoice = purchase_invoice.Where(x => x.IsSelected == true).ToList();
 

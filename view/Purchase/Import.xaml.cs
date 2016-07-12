@@ -205,10 +205,10 @@ namespace Cognitivo.Purchase
                 impex_import impex_import = impex.impex_import.First();
                 purchase_invoice = impex_import.purchase_invoice;
             }
-            if (purchase_invoice != null)
-            {
-                pnlPurchaseInvoice.selected_purchase_invoice.Add(purchase_invoice);
-            }
+            //if (purchase_invoice != null)
+            //{
+            //    pnlPurchaseInvoice.selected_purchase_invoice.Add(purchase_invoice);
+            //}
             //Get expences
             List<impex_expense> impex_expense = impex.impex_expense.ToList();
             decimal totalExpence = 0;

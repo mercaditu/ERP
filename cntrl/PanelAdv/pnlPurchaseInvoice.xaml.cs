@@ -14,7 +14,7 @@ namespace cntrl.PanelAdv
     {
         CollectionViewSource purchase_invoiceViewSource;
 
-        private List<purchase_invoice> _selected_purchase_invoice = null;
+        private List<purchase_invoice> _selected_purchase_invoice = new List<purchase_invoice>();
         public List<purchase_invoice> selected_purchase_invoice { get { return _selected_purchase_invoice; } set { _selected_purchase_invoice = value; } }
   
         public ImpexDB _entity { get; set; }

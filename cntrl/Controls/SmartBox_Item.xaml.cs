@@ -151,13 +151,28 @@ namespace cntrl.Controls
 
             else if (e.Key == Key.Up)
             {
-                itemViewSource.View.MoveCurrentToPrevious();
-                itemViewSource.View.Refresh();
+                if (itemViewSource!=null)
+                {
+                    if (itemViewSource.View != null)
+                    {
+                        itemViewSource.View.MoveCurrentToPrevious();
+                        itemViewSource.View.Refresh();
+                    }
+                }
+              
+            
             }
             else if (e.Key == Key.Down)
             {
-                itemViewSource.View.MoveCurrentToNext();
-                itemViewSource.View.Refresh();
+                if (itemViewSource != null)
+                {
+                    if (itemViewSource.View != null)
+                    {
+                        itemViewSource.View.MoveCurrentToNext();
+                        itemViewSource.View.Refresh();
+                    }
+                }
+               
             }
             else
             {

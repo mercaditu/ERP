@@ -48,7 +48,8 @@
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Grid Background="{StaticResource AccentColor_Introvert}">
+
+                        <Grid Background="{StaticResource AccentColor_Introvert}"  ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <DataGrid AutoGenerateColumns="False" Margin="4" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="128">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />

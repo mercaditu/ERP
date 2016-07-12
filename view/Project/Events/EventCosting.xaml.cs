@@ -194,7 +194,7 @@ namespace Cognitivo.Project
                                         project_event_variable project_event_variable = project_event.project_event_variable.Where(x => x.id_item == tag_detail.item.id_item).FirstOrDefault();
                                         project_event_variable.adult_consumption = person_service.adult_consumption * project_event.quantity_adult;
                                         project_event_variable.child_consumption = person_service.child_consumption * project_event.quantity_child;
-                                      
+
                                     }
                                     else
                                     {
@@ -209,7 +209,7 @@ namespace Cognitivo.Project
                                         project_event.project_event_variable.Add(project_event_variable);
                                     }
 
-                                    
+
                                 }
                             }
                         }
@@ -222,7 +222,7 @@ namespace Cognitivo.Project
                     project_event_template project_event_template = id_template_designerComboBox.SelectedItem as project_event_template;
                     if (project_event_template.project_event_template_fixed != null && project_event_template.project_event_template_fixed.Count > 0)
                     {
-                       // EventDB.project_event_fixed.RemoveRange(project_event.project_event_fixed);
+                        // EventDB.project_event_fixed.RemoveRange(project_event.project_event_fixed);
                         foreach (project_event_template_fixed project_event_template_fixed in project_event_template.project_event_template_fixed)
                         {
                             item_tag item_tag = project_event_template_fixed.item_tag;
@@ -233,9 +233,9 @@ namespace Cognitivo.Project
                                     if (project_event.project_event_fixed.Where(x => x.id_item == tag_detail.item.id_item).Any())
                                     {
                                         project_event_fixed services_per_event_details = project_event.project_event_fixed.Where(x => x.id_item == tag_detail.item.id_item).FirstOrDefault();
-                                       
+
                                         services_per_event_details.consumption = 1;
-                                      
+
                                     }
                                     else
                                     {
@@ -288,7 +288,8 @@ namespace Cognitivo.Project
             if (adult_guest > 0 || child_guest > 0)
             {
                 project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
-                contact contact = contactComboBox.Data as contact;
+
+                contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
                 if (project_event != null)
                 {
@@ -350,15 +351,15 @@ namespace Cognitivo.Project
             EstimateCost();
         }
 
-        private void project_costingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
-            if (project_costing != null && project_costing.contact != null)
-                contactComboBox.Text = project_costing.contact.name;
-            else
-                contactComboBox.Text = string.Empty;
-            EstimateCost();
-        }
+        //private void project_costingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
+        //    if (project_costing != null && project_costing.contact != null)
+        //        contactComboBox.Text = project_costing.contact.name;
+        //    else
+        //        contactComboBox.Text = string.Empty;
+        //    EstimateCost();
+        //}
 
         private void id_template_designerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -416,7 +417,7 @@ namespace Cognitivo.Project
             project_event project_costing = project_costingViewSource.View.CurrentItem as project_event;
             if (project_costing != null)
             {
-                contact contact = (contact)contactComboBox.Data;
+                contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 app_condition app_condition = id_conditionComboBox.SelectedItem as app_condition;
                 app_contract app_contract = id_contractComboBox.SelectedItem as app_contract;
 
@@ -460,7 +461,7 @@ namespace Cognitivo.Project
                             sales_budget_detail.item = db.items.Where(a => a.id_item == project_event_fixed.id_item).FirstOrDefault();
                             sales_budget_detail.id_item = project_event_fixed.id_item;
                             sales_budget_detail.quantity = project_event_fixed.consumption;
-                            sales_budget_detail.UnitPrice_Vat =  Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales));
+                            sales_budget_detail.UnitPrice_Vat = Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail.item, entity.App.Modules.Sales));
                             sales_budget.sales_budget_detail.Add(sales_budget_detail);
                         }
 
@@ -469,7 +470,7 @@ namespace Cognitivo.Project
                         sales_budget_detail_hall.item = db.items.Where(a => a.id_item == project_costing.id_item).FirstOrDefault();
                         sales_budget_detail_hall.id_item = project_costing.id_item;
                         sales_budget_detail_hall.quantity = 1;
-                        sales_budget_detail_hall.UnitPrice_Vat =  Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail_hall.item, entity.App.Modules.Sales));
+                        sales_budget_detail_hall.UnitPrice_Vat = Math.Round(get_Price(contact, IDcurrencyfx, sales_budget_detail_hall.item, entity.App.Modules.Sales));
                         sales_budget.sales_budget_detail.Add(sales_budget_detail_hall);
 
                         db.sales_budget.Add(sales_budget);
@@ -545,7 +546,7 @@ namespace Cognitivo.Project
                     //decimal currencyfx = Currency.get_specificRate(id_currencyfx, application);
                     if (item.item_price.Where(x => x.id_price_list == id_priceList) != null && item.item_price.Where(x => x.id_price_list == id_priceList).Count() > 0)
                     {
-                        item_price =item.item_price.Where(y => y.id_price_list == id_priceList).FirstOrDefault();
+                        item_price = item.item_price.Where(y => y.id_price_list == id_priceList).FirstOrDefault();
                         item_price_value = item_price.valuewithVAT;
                         using (db db = new db())
                         {
@@ -554,15 +555,15 @@ namespace Cognitivo.Project
                             {
                                 if (db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
                                 {
-                                    return Currency.convert_Values(item_price_value, db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, id_currencyfx, Module);            
+                                    return Currency.convert_Values(item_price_value, db.app_currency.Where(x => x.id_currency == item_price.id_currency).FirstOrDefault().app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, id_currencyfx, Module);
 
                                 }
                             }
                         }
-                        
+
                     }
                     //return Currency.convert_Value(item_price_value, id_currencyfx, Module);            
-                 
+
                 }
             }
             return 0;
@@ -592,7 +593,7 @@ namespace Cognitivo.Project
             //{
             project project = new project();
 
-            contact contact = (contact)contactComboBox.Data;
+            contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
             project.id_contact = contact.id_contact;
 
             project.IsSelected = true;
@@ -773,24 +774,24 @@ namespace Cognitivo.Project
             //}
         }
 
-        private void contactComboBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                contactComboBox._focusgrid = false;
-                contactComboBox.Text = ((contact)contactComboBox.Data).name;
-                contact contact = (contact)contactComboBox.Data;
-                get_ActiveRateXContact(ref contact);
-            }
-        }
+        //private void contactComboBox_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        contactComboBox._focusgrid = false;
+        //        contactComboBox.Text = ((contact)contactComboBox.Data).name;
+        //        contact contact = (contact)contactComboBox.Data;
+        //        get_ActiveRateXContact(ref contact);
+        //    }
+        //}
 
-        private void contactComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            contactComboBox._focusgrid = false;
-            contactComboBox.Text = ((contact)contactComboBox.Data).name;
-            contact contact = (contact)contactComboBox.Data;
-            get_ActiveRateXContact(ref contact);
-        }
+        //private void contactComboBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        //{
+        //    contactComboBox._focusgrid = false;
+        //    contactComboBox.Text = ((contact)contactComboBox.Data).name;
+        //    contact contact = (contact)contactComboBox.Data;
+        //    get_ActiveRateXContact(ref contact);
+        //}
 
         public void get_ActiveRateXContact(ref contact contact)
         {
@@ -799,12 +800,12 @@ namespace Cognitivo.Project
                 app_currencyfx = contact.app_currency.app_currencyfx.Where(a => a.is_active == true).First();
             if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
             {
-                cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.id_currency==app_currencyfx.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
+                cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.id_currency == app_currencyfx.id_currency && x.is_active).FirstOrDefault().id_currencyfx;
                 //Convert.ToInt32(app_currencyfx.id_currencyfx);
             }
             else
             {
-                cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx;
+                cbxCurrency.SelectedValue = EventDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault().id_currencyfx;
             }
 
         }
@@ -957,6 +958,18 @@ namespace Cognitivo.Project
 
                 }
             }
+        }
+
+        private void sbxContact_Select(object sender, RoutedEventArgs e)
+        {
+            if (sbxContact.ContactID > 0)
+            {
+                project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
+                contact contact = EventDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                project_event.id_contact = contact.id_contact;
+                get_ActiveRateXContact(ref contact);
+            }
+
         }
 
 

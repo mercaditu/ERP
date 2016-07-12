@@ -121,11 +121,11 @@ namespace Cognitivo.Purchase
             //    decimal totalExpense = impex.impex_expense.Where(x => x.id_incoterm_condition == item.id_incoterm_condition && x.id_item > 0).Sum(x => x.value);
             //    item.value = allValue + totalExpense;
             //}
-            List<impex_expense> impex_expenseList = impex.impex_expense.Where(x => x.id_item > 0).ToList();
-            foreach (impex_expense impex_expense in impex_expenseList)
-            {
-                impex.impex_expense.Remove(impex_expense);
-            }
+            //List<impex_expense> impex_expenseList = impex.impex_expense.Where(x => x.id_item > 0).ToList();
+            //foreach (impex_expense impex_expense in impex_expenseList)
+            //{
+            //    impex.impex_expense.Remove(impex_expense);
+            //}
 
             if (ImpexDB.SaveChanges() > 0)
             {
@@ -264,10 +264,7 @@ namespace Cognitivo.Purchase
                         //  ImpexImportDetails.prorated_cost = Math.Round(item.unit_cost + (ImpexImportDetails.unit_cost / TotalInvoiceAmount) * totalExpence, 2);
                         ImpexImportDetails.prorated_cost = Math.Round(item.UnitCost_Vat + (totalExpence / ImpexImportDetails.quantity), 2);
                     }
-                    else
-                    {
-                        ImpexImportDetails.prorated_cost = 0;
-                    }
+                  
                     decimal SubTotal = (item.quantity * ImpexImportDetails.prorated_cost);
                     ImpexImportDetails.sub_total = Math.Round(SubTotal, 2);
                     clsImpexImportDetails.Add(ImpexImportDetails);

@@ -59,10 +59,10 @@ namespace Cognitivo.Sales
                     .Where(x => x.sales_invoice.number.Contains(InvoiceCode) &&
                         //Contado (Cash) + Payment Made
                         (
-                           (x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 && x.sales_invoice.app_contract.app_contract_detail.Sum(z => z.coefficient) == 0)
+                           (x.sales_invoice.payment_schedual.Sum(z => z.credit) > 0 && x.sales_invoice.app_contract.app_contract_detail.Sum(z => z.interval) == 0)
                         ||
                         //Credit
-                        (x.sales_invoice.app_contract.app_contract_detail.Sum(y => y.coefficient) > 0)
+                        (x.sales_invoice.app_contract.app_contract_detail.Sum(y => y.interval) > 0)
                         ) &&
                          x.sales_invoice.status == Status.Documents_General.Approved).ToListAsync();
 

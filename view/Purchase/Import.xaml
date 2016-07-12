@@ -144,7 +144,7 @@
                 <TabItem Header="{lex:Loc Expenses}">
                     <Grid IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <TextBlock VerticalAlignment="Top" Style="{StaticResource text_HyperLinks}" Text="{lex:Loc Extract}" MouseUp="GetExpences_PreviewMouseUp"/>
+                        <TextBlock VerticalAlignment="Top" Style="{StaticResource text_HyperLinks}" Text="{lex:Loc Extract}" MouseUp="GetExpenses_PreviewMouseUp"/>
                         <Grid Margin="0,25,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>

@@ -167,11 +167,6 @@ namespace Cognitivo.Purchase
                     List<Class.clsImpexImportDetails> clsImpexImportDetails = new List<Class.clsImpexImportDetails>();
                     impex_importDataGrid.ItemsSource = clsImpexImportDetails;
                 }
-
-                //if (impex.contact != null)
-                //    contactComboBox.Text = impex.contact.name;
-                //else
-                //    contactComboBox.Text = "";
             }
         }
 

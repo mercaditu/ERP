@@ -94,47 +94,47 @@ namespace Cognitivo.Accounting
         private void btnData_Sync(object sender, RoutedEventArgs e)
         {
             SalesInvoice_Sync();
-            PurchaseInvoice_Sync();
-            SalesReturn_Sync();
-            PurchaseReturn_Sync();
-            Payment_Sync();
+            //PurchaseInvoice_Sync();
+            //SalesReturn_Sync();
+            //PurchaseReturn_Sync();
+           // Payment_Sync();
         }
 
 
-        private void Payment_Sync()
-        {
-            List<entity.DebeHaber.Commercial_Invoice> PaymentLIST = new List<entity.DebeHaber.Commercial_Invoice>();
+        //private void Payment_Sync()
+        //{
+        //    List<entity.DebeHaber.Commercial_Invoice> PaymentLIST = new List<entity.DebeHaber.Commercial_Invoice>();
 
-            foreach (entity.payment payment in db.payments.Local.Where(x => x.IsSelected))
-            {
-                entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
+        //    foreach (entity.payment payment in db.payments.Local.Where(x => x.IsSelected))
+        //    {
+        //        entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.ID = payment.id_payment;
-                Invoice.Type = entity.DebeHaber.TransactionTypes.Sales;
-                Invoice.BranchCode = payment.app_branch.code;
-                Invoice.BranchName = payment.app_branch.name;
-              //  Invoice.Comment = payment.comm;
-                Invoice.Contact_GovCode = payment.contact.gov_code;
-               // Invoice.CurrencyISO_Code = payment..app_currency.name;
-                Invoice.InvoiceTotal = payment.GrandTotal;
-              //  Invoice.PaymentCondition = payment.app_contract.app_contract_detail.Sum(x => x.interval);
+        //        Invoice.ID = payment.id_payment;
+        //        Invoice.Type = (int)entity.DebeHaber.TransactionTypes.Sales;
+        //        Invoice.BranchCode = payment.app_branch.code;
+        //        Invoice.BranchName = payment.app_branch.name;
+        //      //  Invoice.Comment = payment.comm;
+        //        Invoice.Gov_Code = payment.contact.gov_code;
+        //       // Invoice.CurrencyISO_Code = payment..app_currency.name;
+        //        Invoice.InvoiceTotal = payment.GrandTotal;
+        //      //  Invoice.PaymentCondition = payment.app_contract.app_contract_detail.Sum(x => x.interval);
 
-                Invoice.InvoiceCode = payment.app_document_range != null ? payment.app_document_range.code : "NA";
-                Invoice.InvoiceCode_ExpDate = (payment.app_document_range != null ? (DateTime)payment.app_document_range.expire_date : DateTime.Now);
+        //        Invoice.InvoiceCode = payment.app_document_range != null ? payment.app_document_range.code : "NA";
+        //        Invoice.InvoiceCode_ExpDate = (payment.app_document_range != null ? (DateTime)payment.app_document_range.expire_date : DateTime.Now);
 
-                Invoice.InvoiceNumber = payment.number;
-                Invoice.InvoiceDate = payment.trans_date;
+        //        Invoice.DocNumber = payment.number;
+        //        Invoice.InvoiceDate = payment.trans_date;
 
-                PaymentLIST.Add(Invoice);
+        //        PaymentLIST.Add(Invoice);
 
-                ///Serealize SalesInvoiceLIST into Json
-                var Payment_Json = new JavaScriptSerializer().Serialize(PaymentLIST);
+        //        ///Serealize SalesInvoiceLIST into Json
+        //        var Payment_Json = new JavaScriptSerializer().Serialize(PaymentLIST);
 
-                Send2API(Payment_Json);
-                //file_create(Payment_Json as string, "Payment");
-                //Send Sales_Json send it to Server Address specified.
-            }
-        }
+        //        Send2API(Payment_Json);
+        //        //file_create(Payment_Json as string, "Payment");
+        //        //Send Sales_Json send it to Server Address specified.
+        //    }
+        //}
         private void SalesInvoice_Sync()
         {
             List<entity.DebeHaber.Commercial_Invoice> SalesInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
@@ -143,44 +143,64 @@ namespace Cognitivo.Accounting
             {
                 entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.ID = sales_invoice.id_sales_invoice;
-                Invoice.Type = entity.DebeHaber.TransactionTypes.Sales;
-                Invoice.BranchCode = sales_invoice.app_branch.code;
-                Invoice.BranchName = sales_invoice.app_branch.name;
-                Invoice.Comment = sales_invoice.comment;
-                Invoice.Contact_GovCode = sales_invoice.contact.gov_code;
+                Invoice.Type = 1;
+                Invoice.Variation = entity.DebeHaber.TransactionTypes.Sales;
+                //Invoice.BranchCode = sales_invoice.app_branch.code;
+                //Invoice.BranchName = sales_invoice.app_branch.name;
+                //Invoice.Comment = sales_invoice.comment;
+               
                 using (entity.db dbContext = new entity.db())
                 {
-                    Invoice.CurrencyISO_Code = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault()
+                    Invoice.Currency = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault()
                         .app_currency.name;
                 }
                 
-                Invoice.InvoiceTotal = sales_invoice.GrandTotal;
-                Invoice.PaymentCondition = sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval);
+                //Invoice.InvoiceTotal = sales_invoice.GrandTotal;
+                //Invoice.PaymentCondition = sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval);
 
-                Invoice.InvoiceCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
-                Invoice.InvoiceCode_ExpDate = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
+                Invoice.Gov_Code = sales_invoice.contact.gov_code;
+                Invoice.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
+                Invoice.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
 
-                Invoice.InvoiceNumber = sales_invoice.number;
-                Invoice.InvoiceDate = sales_invoice.trans_date;
+                Invoice.DocNumber = sales_invoice.number;
+                Invoice.Date = sales_invoice.trans_date;
 
                 ///Loop through details.
                 foreach (entity.sales_invoice_detail Detail in sales_invoice.sales_invoice_detail)
                 {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-                    CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
-                    CommercialInvoice_Detail.Comment = Detail.item_description;
+                    entity.DebeHaber.Vat CommercialInvoice_Detail = new entity.DebeHaber.Vat();
+                    CommercialInvoice_Detail.Type = 2;
+                    CommercialInvoice_Detail.Coef = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+                    CommercialInvoice_Detail.ValueWVAT = Detail.SubTotal_Vat;
+                 
 
-                    Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+                    Invoice.TotalValue.Add(CommercialInvoice_Detail);
                 }
 
-                //Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0))
+                ////Loop through payments made.
+                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0 && x.parent!=null))
                 {
-                    entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
-                    Invoice.Payments.Add(Payments);
+                    entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
+                    Payment.Type = 3;
+                    Payment.Date = schedual.trans_date;
+                    if (schedual.parent.sales_invoice != null)
+                    {
+
+
+                        Payment.Parent = schedual.parent.sales_invoice.number;
+                        Payment.Gov_Code = schedual.parent.sales_invoice.contact.gov_code;
+                        Payment.DocCode = schedual.parent.sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
+                        Payment.DocExpiry = (schedual.parent.sales_invoice.app_document_range != null ? (DateTime)schedual.parent.sales_invoice.app_document_range.expire_date : DateTime.Now);
+
+                        Payment.DocNumber = schedual.parent.sales_invoice.number;
+                    }
+                    Payment.Account = schedual.payment_detail.app_account.name;
+                    Payment.Value = schedual.debit;
+
+                  
+                    Invoice.TotalValue.Add(Payment);
                 }
+                
 
                 SalesInvoiceLIST.Add(Invoice);
             }
@@ -192,165 +212,165 @@ namespace Cognitivo.Accounting
             file_create(Sales_Json as string,"sales_invoice");
             //Send Sales_Json send it to Server Address specified.
         }
-        private void SalesReturn_Sync()
-        {
-            List<entity.DebeHaber.Commercial_Invoice> SalesReturnLIST = new List<entity.DebeHaber.Commercial_Invoice>();
+        //private void SalesReturn_Sync()
+        //{
+        //    List<entity.DebeHaber.Commercial_Invoice> SalesReturnLIST = new List<entity.DebeHaber.Commercial_Invoice>();
 
-            foreach (entity.sales_return sales_return in db.sales_return.Local.Where(x => x.IsSelected))
-            {
-                entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
+        //    foreach (entity.sales_return sales_return in db.sales_return.Local.Where(x => x.IsSelected))
+        //    {
+        //        entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.ID = sales_return.id_sales_return;
-                Invoice.Type = entity.DebeHaber.TransactionTypes.Sales;
-                Invoice.BranchCode = sales_return.app_branch.code;
-                Invoice.BranchName = sales_return.app_branch.name;
-                Invoice.Comment = sales_return.comment;
-                Invoice.Contact_GovCode = sales_return.contact.gov_code;
-                Invoice.CurrencyISO_Code = sales_return.app_currencyfx.app_currency.name;
-                Invoice.InvoiceTotal = sales_return.GrandTotal;
-                Invoice.PaymentCondition = sales_return.app_contract.app_contract_detail.Sum(x => x.interval);
+        //        Invoice.ID = sales_return.id_sales_return;
+        //        Invoice.Type = entity.DebeHaber.TransactionTypes.Sales;
+        //        Invoice.BranchCode = sales_return.app_branch.code;
+        //        Invoice.BranchName = sales_return.app_branch.name;
+        //        Invoice.Comment = sales_return.comment;
+        //        Invoice.Gov_Code = sales_return.contact.gov_code;
+        //        Invoice.Currency = sales_return.app_currencyfx.app_currency.name;
+        //        Invoice.InvoiceTotal = sales_return.GrandTotal;
+        //        Invoice.PaymentCondition = sales_return.app_contract.app_contract_detail.Sum(x => x.interval);
 
-                Invoice.InvoiceCode = sales_return.app_document_range != null ? sales_return.app_document_range.code : "NA";
-                Invoice.InvoiceCode_ExpDate = (sales_return.app_document_range != null ? (DateTime)sales_return.app_document_range.expire_date : DateTime.Now);
+        //        Invoice.InvoiceCode = sales_return.app_document_range != null ? sales_return.app_document_range.code : "NA";
+        //        Invoice.InvoiceCode_ExpDate = (sales_return.app_document_range != null ? (DateTime)sales_return.app_document_range.expire_date : DateTime.Now);
 
-                Invoice.InvoiceNumber = sales_return.number;
-                Invoice.InvoiceDate = sales_return.trans_date;
+        //        Invoice.DocNumber = sales_return.number;
+        //        Invoice.InvoiceDate = sales_return.trans_date;
 
-                ///Loop through details.
-                foreach (entity.sales_return_detail Detail in sales_return.sales_return_detail)
-                {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-                    CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
-                    CommercialInvoice_Detail.Comment = Detail.item_description;
+        //        ///Loop through details.
+        //        foreach (entity.sales_return_detail Detail in sales_return.sales_return_detail)
+        //        {
+        //            entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+        //            CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+        //            CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
+        //            CommercialInvoice_Detail.Comment = Detail.item_description;
 
-                    Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
-                }
+        //            Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+        //        }
 
-                //Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_return.payment_schedual.Where(x => x.id_payment_detail > 0))
-                {
-                    entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
-                    Invoice.Payments.Add(Payments);
-                }
+        //        //Loop through payments made.
+        //        foreach (entity.payment_schedual schedual in sales_return.payment_schedual.Where(x => x.id_payment_detail > 0))
+        //        {
+        //            entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+        //            Invoice.Payments.Add(Payments);
+        //        }
 
-                SalesReturnLIST.Add(Invoice);
-            }
+        //        SalesReturnLIST.Add(Invoice);
+        //    }
 
 
-            ///Serealize SalesInvoiceLIST into Json
-            var Sales_return_Json = new JavaScriptSerializer().Serialize(SalesReturnLIST);
+        //    ///Serealize SalesInvoiceLIST into Json
+        //    var Sales_return_Json = new JavaScriptSerializer().Serialize(SalesReturnLIST);
 
-            Send2API(Sales_return_Json);
-            //file_create(Sales_return_Json as string, "sales_return");
-            //Send Sales_Json send it to Server Address specified.
-        }
+        //    Send2API(Sales_return_Json);
+        //    //file_create(Sales_return_Json as string, "sales_return");
+        //    //Send Sales_Json send it to Server Address specified.
+        //}
 
-        private void PurchaseInvoice_Sync()
-        {
-            List<entity.DebeHaber.Commercial_Invoice> PurchaseInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
+        //private void PurchaseInvoice_Sync()
+        //{
+        //    List<entity.DebeHaber.Commercial_Invoice> PurchaseInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
 
-            foreach (entity.purchase_invoice invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
-            {
-                entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
+        //    foreach (entity.purchase_invoice invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
+        //    {
+        //        entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.ID = invoice.id_purchase_invoice;
-                Invoice.Type = entity.DebeHaber.TransactionTypes.Purchase;
-                Invoice.BranchCode = invoice.app_branch.code;
-                Invoice.BranchName = invoice.app_branch.name;
-                Invoice.Comment = invoice.comment;
-                Invoice.Contact_GovCode = invoice.contact.gov_code;
-                Invoice.CurrencyISO_Code = invoice.app_currencyfx.app_currency.name;
-                Invoice.InvoiceTotal = invoice.GrandTotal;
-                Invoice.PaymentCondition = invoice.app_contract.app_contract_detail.Sum(x => x.interval);
+        //        Invoice.ID = invoice.id_purchase_invoice;
+        //        Invoice.Type = entity.DebeHaber.TransactionTypes.Purchase;
+        //        Invoice.BranchCode = invoice.app_branch.code;
+        //        Invoice.BranchName = invoice.app_branch.name;
+        //        Invoice.Comment = invoice.comment;
+        //        Invoice.Gov_Code = invoice.contact.gov_code;
+        //        Invoice.Currency = invoice.app_currencyfx.app_currency.name;
+        //        Invoice.InvoiceTotal = invoice.GrandTotal;
+        //        Invoice.PaymentCondition = invoice.app_contract.app_contract_detail.Sum(x => x.interval);
 
-                Invoice.InvoiceCode = invoice.code;
-                //Invoice.InvoiceCode_ExpDate = //invoice. Here we need to add new field in database
+        //        Invoice.InvoiceCode = invoice.code;
+        //        //Invoice.InvoiceCode_ExpDate = //invoice. Here we need to add new field in database
 
-                Invoice.InvoiceNumber = invoice.number;
-                Invoice.InvoiceDate = invoice.trans_date;
+        //        Invoice.DocNumber = invoice.number;
+        //        Invoice.InvoiceDate = invoice.trans_date;
 
-                ///Loop through details.
-                foreach (entity.purchase_invoice_detail Detail in invoice.purchase_invoice_detail)
-                {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-                    CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
-                    CommercialInvoice_Detail.Comment = Detail.item_description;
+        //        ///Loop through details.
+        //        foreach (entity.purchase_invoice_detail Detail in invoice.purchase_invoice_detail)
+        //        {
+        //            entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+        //            CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+        //            CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
+        //            CommercialInvoice_Detail.Comment = Detail.item_description;
 
-                    Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
-                }
+        //            Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+        //        }
 
-                //Loop through payments made.
-                foreach (entity.payment_schedual schedual in invoice.payment_schedual.Where(x => x.id_payment_detail > 0))
-                {
-                    entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
-                    Invoice.Payments.Add(Payments);
-                }
+        //        //Loop through payments made.
+        //        foreach (entity.payment_schedual schedual in invoice.payment_schedual.Where(x => x.id_payment_detail > 0))
+        //        {
+        //            entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+        //            Invoice.Payments.Add(Payments);
+        //        }
 
-                PurchaseInvoiceLIST.Add(Invoice);
-            }
+        //        PurchaseInvoiceLIST.Add(Invoice);
+        //    }
 
-            ///Serealize SalesInvoiceLIST into Json
-            var Purchase_Json = new JavaScriptSerializer().Serialize(PurchaseInvoiceLIST);
+        //    ///Serealize SalesInvoiceLIST into Json
+        //    var Purchase_Json = new JavaScriptSerializer().Serialize(PurchaseInvoiceLIST);
 
-            Send2API(Purchase_Json);
-            //file_create(Purchase_Json as string, "purchase_invoice");
-            //Send Sales_Json send it to Server Address specified.
-        }
+        //    Send2API(Purchase_Json);
+        //    //file_create(Purchase_Json as string, "purchase_invoice");
+        //    //Send Sales_Json send it to Server Address specified.
+        //}
 
-        private void PurchaseReturn_Sync()
-        {
-            List<entity.DebeHaber.Commercial_Invoice> PurchaseReturnLIST = new List<entity.DebeHaber.Commercial_Invoice>();
+        //private void PurchaseReturn_Sync()
+        //{
+        //    List<entity.DebeHaber.Commercial_Invoice> PurchaseReturnLIST = new List<entity.DebeHaber.Commercial_Invoice>();
 
-            foreach (entity.purchase_return Purcahsereturn in db.purchase_return.Local.Where(x => x.IsSelected))
-            {
-                entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
+        //    foreach (entity.purchase_return Purcahsereturn in db.purchase_return.Local.Where(x => x.IsSelected))
+        //    {
+        //        entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.ID = Purcahsereturn.id_purchase_invoice;
-                Invoice.Type = entity.DebeHaber.TransactionTypes.Purchase;
-                Invoice.BranchCode = Purcahsereturn.app_branch.code;
-                Invoice.BranchName = Purcahsereturn.app_branch.name;
-                Invoice.Comment = Purcahsereturn.comment;
-                Invoice.Contact_GovCode = Purcahsereturn.contact.gov_code;
-                Invoice.CurrencyISO_Code = Purcahsereturn.app_currencyfx.app_currency.name;
-                Invoice.InvoiceTotal = Purcahsereturn.GrandTotal;
-                Invoice.PaymentCondition = Purcahsereturn.app_contract.app_contract_detail.Sum(x => x.interval);
+        //        Invoice.ID = Purcahsereturn.id_purchase_invoice;
+        //        Invoice.Type = entity.DebeHaber.TransactionTypes.Purchase;
+        //        Invoice.BranchCode = Purcahsereturn.app_branch.code;
+        //        Invoice.BranchName = Purcahsereturn.app_branch.name;
+        //        Invoice.Comment = Purcahsereturn.comment;
+        //        Invoice.Gov_Code = Purcahsereturn.contact.gov_code;
+        //        Invoice.Currency = Purcahsereturn.app_currencyfx.app_currency.name;
+        //        Invoice.InvoiceTotal = Purcahsereturn.GrandTotal;
+        //        Invoice.PaymentCondition = Purcahsereturn.app_contract.app_contract_detail.Sum(x => x.interval);
 
-                Invoice.InvoiceCode = Purcahsereturn.code;
-                //Invoice.InvoiceCode_ExpDate = //invoice. Here we need to add new field in database
+        //        Invoice.InvoiceCode = Purcahsereturn.code;
+        //        //Invoice.InvoiceCode_ExpDate = //invoice. Here we need to add new field in database
 
-                Invoice.InvoiceNumber = Purcahsereturn.number;
-                Invoice.InvoiceDate = Purcahsereturn.trans_date;
+        //        Invoice.DocNumber = Purcahsereturn.number;
+        //        Invoice.InvoiceDate = Purcahsereturn.trans_date;
 
-                ///Loop through details.
-                foreach (entity.purchase_return_detail Detail in Purcahsereturn.purchase_return_detail)
-                {
-                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-                    CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
-                    CommercialInvoice_Detail.Comment = Detail.item_description;
+        //        ///Loop through details.
+        //        foreach (entity.purchase_return_detail Detail in Purcahsereturn.purchase_return_detail)
+        //        {
+        //            entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+        //            CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+        //            CommercialInvoice_Detail.Value = Detail.SubTotal_Vat;
+        //            CommercialInvoice_Detail.Comment = Detail.item_description;
 
-                    Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
-                }
+        //            Invoice.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+        //        }
 
-                //Loop through payments made.
-                foreach (entity.payment_schedual schedual in Purcahsereturn.payment_schedual.Where(x => x.id_payment_detail > 0))
-                {
-                    entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
-                    Invoice.Payments.Add(Payments);
-                }
+        //        //Loop through payments made.
+        //        foreach (entity.payment_schedual schedual in Purcahsereturn.payment_schedual.Where(x => x.id_payment_detail > 0))
+        //        {
+        //            entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+        //            Invoice.Payments.Add(Payments);
+        //        }
 
-                PurchaseReturnLIST.Add(Invoice);
-            }
+        //        PurchaseReturnLIST.Add(Invoice);
+        //    }
 
-            ///Serealize SalesInvoiceLIST into Json
-            var PurchaseReturn_Json = new JavaScriptSerializer().Serialize(PurchaseReturnLIST);
-            Send2API(PurchaseReturn_Json);
+        //    ///Serealize SalesInvoiceLIST into Json
+        //    var PurchaseReturn_Json = new JavaScriptSerializer().Serialize(PurchaseReturnLIST);
+        //    Send2API(PurchaseReturn_Json);
 
-            //file_create(PurchaseReturn_Json as string, "Purcahse_return");
-            //Send Sales_Json send it to Server Address specified.
-        }
+        //    //file_create(PurchaseReturn_Json as string, "Purcahse_return");
+        //    //Send Sales_Json send it to Server Address specified.
+        //}
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {

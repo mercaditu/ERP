@@ -65,6 +65,14 @@ namespace entity
             contact_tag_detail = new List<contact_tag_detail>();
             contact_subscription = new List<contact_subscription>();
             item_asset_maintainance_detail = new List<item_asset_maintainance_detail>();
+            hr_contract = new List<hr_contract>();
+             hr_education = new List<hr_education>();
+       hr_education = new List<hr_education>();
+                 hr_education = new List<hr_education>();
+                 hr_education = new List<hr_education>();
+        public virtual ICollection<hr_family> hr_family { get; set; }
+        public virtual ICollection<hr_talent_detail> hr_talent_detail { get; set; }
+        public virtual IEnumerable<hr_timesheet> hr_timesheet { get; set; }
         }
 
         [Key]
@@ -91,10 +99,14 @@ namespace entity
         {
             get
             {
-                if (name.Contains(","))
+                if (name!=null)
                 {
-                    _FirstName = name.Substring(name.IndexOf(",") + 1); 
+                    if (name.Contains(","))
+                    {
+                        _FirstName = name.Substring(name.IndexOf(",") + 1);
+                    } 
                 }
+               
                 return _FirstName;
             }
             set
@@ -110,9 +122,12 @@ namespace entity
         {
             get
             {
-                if (name.Contains(","))
+                if (name != null)
                 {
-                    _LastName = name.Substring(0, name.IndexOf(",") + 1);
+                    if (name.Contains(","))
+                    {
+                        _LastName = name.Substring(0, name.IndexOf(",") + 1);
+                    }
                 }
                 return _LastName;
             }

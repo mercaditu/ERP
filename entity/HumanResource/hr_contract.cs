@@ -13,6 +13,9 @@
             id_user =  CurrentSession.Id_User;
             is_head = true;
             is_active = true;
+
+            start_date = DateTime.Now;
+            end_date = DateTime.Now.AddYears(1);
         }
 
         [Key]

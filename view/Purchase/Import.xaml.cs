@@ -394,11 +394,6 @@ namespace Cognitivo.Purchase
             }
         }
 
-        private void btn_Calculate(object sender, RoutedEventArgs e)
-        {
-            //impeximpex_expenseViewSource.
-        }
-
         private void Calculate_Click(object sender, RoutedEventArgs e)
         {
             impex impex = impexDataGrid.SelectedItem as impex;
@@ -419,20 +414,6 @@ namespace Cognitivo.Purchase
                     totalExpense = impex.impex_expense.Where(x => x.id_item == objclsproduct.id_item ).Sum(x => x.value);
                     totalQuantity = ImpexImportDetails.Sum(x => x.quantity);
                 }
-                //Class.clsProductDetail objclsproduct = productDataGrid.SelectedItem as Class.clsProductDetail;
-                //if (objclsproduct != null && objclsproduct.item == "ALL")
-                //{
-                //    ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_importDataGrid.ItemsSource;
-                //}
-                //else
-                //{
-                //    ImpexImportDetails = impex_importDataGrid.ItemsSource.OfType<Class.clsImpexImportDetails>().ToList().Where(x => x.id_item == objclsproduct.id_item).ToList();
-
-                //}
-
-
-                //decimal totalExpense = impex.impex_expense.Sum(x => x.value);
-                //decimal totalQuantity = ImpexImportDetails.Sum(x => x.quantity);
 
                 foreach (Class.Impex_CostDetail _ImpexImportDetails in ImpexImportDetails)
                 {
@@ -453,11 +434,10 @@ namespace Cognitivo.Purchase
         {
             try
             {
+                contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
 
-                if (sbxContact.ContactID > 0)
+                if (contact != null)
                 {
-                    contact contact = ImpexDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-
                     impex impex = (impex)impexViewSource.View.CurrentItem;
                     impex.contact = contact;
 

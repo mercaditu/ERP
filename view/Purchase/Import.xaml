@@ -47,7 +47,7 @@
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding eta, StringFormat=d}" 
                                    recordSecondaryName="{Binding contact.name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   recordName="{Binding name}"
+                                   recordName="{Binding number}"
                                    IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">

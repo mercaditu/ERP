@@ -133,14 +133,14 @@ namespace Cognitivo.Sales
                 if (impex.status != Status.Documents_General.Approved)
                 {
                     List<impex_expense> impex_expenses = impex.impex_expense.ToList();
-                    List<Class.clsImpexImportDetails> ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_ExportDataGrid.ItemsSource;
+                    List<Class.Impex_CostDetail> ImpexImportDetails = (List<Class.Impex_CostDetail>)impex_ExportDataGrid.ItemsSource;
                     if (ImpexImportDetails.Count > 0)
                     {
                         //To make sure we have a Purchase Total
                         decimal SalesTotal = ImpexImportDetails.Sum(i => i.sub_total);
                         if (SalesTotal != 0)
                         {
-                            foreach (Class.clsImpexImportDetails detail in ImpexImportDetails)
+                            foreach (Class.Impex_CostDetail detail in ImpexImportDetails)
                             {
                                 //Get total value of a Product Row
                                 decimal itemTotal = detail.quantity * detail.unit_cost;
@@ -208,7 +208,7 @@ namespace Cognitivo.Sales
                 }
                 else
                 {
-                    List<Class.clsImpexImportDetails> clsImpexImportDetails = new List<Class.clsImpexImportDetails>();
+                    List<Class.Impex_CostDetail> clsImpexImportDetails = new List<Class.Impex_CostDetail>();
                     impex_ExportDataGrid.ItemsSource = clsImpexImportDetails;
                 }
 
@@ -253,7 +253,7 @@ namespace Cognitivo.Sales
 
             //Insert sales Invoice Detail
             List<sales_invoice_detail> sales_invoice_detail = sales_invoice.sales_invoice_detail.ToList();
-            List<Class.clsImpexImportDetails> clsImpexImportDetails = new List<Class.clsImpexImportDetails>();
+            List<Class.Impex_CostDetail> clsImpexImportDetails = new List<Class.Impex_CostDetail>();
             decimal TotalInvoiceAmount = 0;
             foreach (var item in sales_invoice_detail)
             {
@@ -262,7 +262,7 @@ namespace Cognitivo.Sales
 
             foreach (var item in sales_invoice_detail)
             {
-                Class.clsImpexImportDetails ImpexImportDetails = new Class.clsImpexImportDetails();
+                Class.Impex_CostDetail ImpexImportDetails = new Class.Impex_CostDetail();
                 ImpexImportDetails.number = item.sales_invoice.number;
                 ImpexImportDetails.id_item = (int)item.id_item;
                 ImpexImportDetails.item = item.item.name;
@@ -390,8 +390,8 @@ namespace Cognitivo.Sales
         {
             impex impex = impexDataGrid.SelectedItem as impex;
             decimal totalExpence = impex.impex_expense.Sum(x => x.value);
-            List<Class.clsImpexImportDetails> ImpexImportDetails = (List<Class.clsImpexImportDetails>)impex_ExportDataGrid.ItemsSource;
-            foreach (Class.clsImpexImportDetails _ImpexImportDetails in ImpexImportDetails)
+            List<Class.Impex_CostDetail> ImpexImportDetails = (List<Class.Impex_CostDetail>)impex_ExportDataGrid.ItemsSource;
+            foreach (Class.Impex_CostDetail _ImpexImportDetails in ImpexImportDetails)
             {
                 if (totalExpence > 0)
                 {

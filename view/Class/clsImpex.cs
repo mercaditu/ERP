@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Cognitivo.Class
 {
-    public class clsImpexImportDetails : INotifyPropertyChanged
+    public class Impex_CostDetail : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string number { get; set; }
@@ -30,7 +30,7 @@ namespace Cognitivo.Class
         }
 
     }
-    public class clsProductDetail : INotifyPropertyChanged
+    public class Impex_Products : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public int? id_item { get; set; }

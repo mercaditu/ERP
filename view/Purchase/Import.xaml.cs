@@ -420,10 +420,20 @@ namespace Cognitivo.Purchase
             List<Class.clsImpexImportDetails> ImpexImportDetails = null;
             foreach (Class.clsProductDetail objclsproduct in clsProductDetails)
             {
-                ImpexImportDetails = impex_importDataGrid.ItemsSource.OfType<Class.clsImpexImportDetails>().ToList().Where(x => x.id_item == objclsproduct.id_item || x.id_item == 0).ToList();
-                decimal totalExpense = impex.impex_expense.Where(x => x.id_item == objclsproduct.id_item || x.id_item == 0).Sum(x => x.value);
-                decimal totalQuantity = ImpexImportDetails.Sum(x => x.quantity);
-
+                decimal totalExpense = 0;
+                decimal totalQuantity = 0;
+                if (objclsproduct.id_item == 0)
+                {
+                    ImpexImportDetails = impex_importDataGrid.ItemsSource.OfType<Class.clsImpexImportDetails>().ToList();
+                    totalExpense = impex.impex_expense.Where(x => x.id_item == objclsproduct.id_item || x.id_item == 0).Sum(x => x.value);
+                    totalQuantity = ImpexImportDetails.Sum(x => x.quantity);
+                }
+                else
+                {
+                    ImpexImportDetails = impex_importDataGrid.ItemsSource.OfType<Class.clsImpexImportDetails>().ToList().Where(x => x.id_item == objclsproduct.id_item || x.id_item == 0).ToList();
+                    totalExpense = impex.impex_expense.Where(x => x.id_item == objclsproduct.id_item || x.id_item == 0).Sum(x => x.value);
+                    totalQuantity = ImpexImportDetails.Sum(x => x.quantity);
+                }
                 //Class.clsProductDetail objclsproduct = productDataGrid.SelectedItem as Class.clsProductDetail;
                 //if (objclsproduct != null && objclsproduct.item == "ALL")
                 //{

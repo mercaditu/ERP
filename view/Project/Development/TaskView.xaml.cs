@@ -354,6 +354,8 @@ namespace Cognitivo.Project.Development
                         toolBar_btnAnull_Click(sender);
                     }
                 }
+                ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
+                projectViewSource.Source = ProjectTaskDB.projects.Local;
 
                 if (ProjectTaskDB.NumberOfRecords > 0)
                 {
@@ -588,6 +590,7 @@ namespace Cognitivo.Project.Development
                 if (item.item_dimension != null)
                 {
                     project_task_output.items = item;
+                    project_task_output.project_task_dimension.Clear();
                     foreach (item_dimension _item_dimension in item.item_dimension)
                     {
                         project_task_dimension project_task_dimension = new project_task_dimension();

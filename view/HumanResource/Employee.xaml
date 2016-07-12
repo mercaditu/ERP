@@ -222,7 +222,7 @@
                                   Style="{StaticResource input_combobox}" SelectedItem="{Binding app_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <Label Content="{lex:Loc BaseSalary}" Style="{StaticResource input_label}"/>
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Text="{Binding salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
+                                <TextBox Text="{Binding base_salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
                             </StackPanel>
                             <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
                             <DatePicker Style="{StaticResource input_datepicker}" Text="{Binding start_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>

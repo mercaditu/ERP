@@ -219,7 +219,7 @@
                             <Label Content="{lex:Loc Department}" Style="{StaticResource input_label}"/>
                             <ComboBox ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_department"
                                   SelectedValue="{Binding id_department, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                  Style="{StaticResource input_combobox}"/>
+                                  Style="{StaticResource input_combobox}" SelectedItem="{Binding app_department,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <Label Content="{lex:Loc BaseSalary}" Style="{StaticResource input_label}"/>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox Text="{Binding salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>

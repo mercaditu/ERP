@@ -5,7 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class hr_contract : Audit, INotifyPropertyChanged
+    public class hr_contract : Audit
     {
         public hr_contract()
         {

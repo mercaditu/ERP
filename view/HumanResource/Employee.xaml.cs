@@ -62,10 +62,15 @@ namespace Cognitivo.HumanResource
         private void btnNewTask_Click(object sender, EventArgs e)
         {
             contact contact = (contact)employeeViewSource.View.CurrentItem;
+            foreach (hr_contract _hr_contract in contact.hr_contract)
+            {
+                _hr_contract.is_active = false;
+            }
+           
             hr_contract hr_contract = new hr_contract();
             hr_contract.start_date = DateTime.Now;
             hr_contract.end_date = DateTime.Now.AddYears(1);
-
+            hr_contract.is_active = true;
             contact.hr_contract.Add(hr_contract);
             contacthr_contractViewSource.View.MoveCurrentToLast();
             contacthr_contractViewSource.View.Refresh();
@@ -187,5 +192,7 @@ namespace Cognitivo.HumanResource
                 contact.app_geography = await dbContext.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
             }
         }
+
+        
     }
 }

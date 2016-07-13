@@ -986,6 +986,13 @@ namespace Cognitivo.Project
                 if (project_event.id_contact!=null)
                 {
                     sbxContact.ContactID = (int)project_event.id_contact;
+                    if (project_costingproject_event_template_variable_detailsViewSource!=null && project_costingservices_per_event_detailsViewSource!=null )
+                    {
+                        if (project_costingproject_event_template_variable_detailsViewSource.View != null && project_costingservices_per_event_detailsViewSource.View != null)
+                        { GetServices(sender, null); }
+                        
+                    }
+                    
                 }
               
             }

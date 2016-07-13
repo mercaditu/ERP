@@ -25,10 +25,51 @@
         public int? id_branch { get; set; }
         public int? id_department { get; set; }
         public int? id_currency { get; set; }
-        public decimal base_salary { get; set; }
+        public decimal base_salary 
+        { 
+            get { return _base_salary; } 
+            set {
+                if (_base_salary != value)
+	            {
+                    _base_salary = value;
+                    RaisePropertyChanged("base_salary");
+                    RaisePropertyChanged("Hourly");
+                    RaisePropertyChanged("Daily");
+	            } 
+            }
+        }
+        private decimal _base_salary;
+
+        [NotMapped]
+        public decimal Hourly
+        {
+            get
+            {
+                if (base_salary > 0)
+                {
+                    return base_salary / 184;
+                }
+
+                return 0;
+            }
+        }
+
+        [NotMapped]
+        public decimal Daily
+        {
+            get
+            {
+                if (base_salary > 0)
+                {
+                    return base_salary / 30;
+                }
+
+                return 0;
+            }
+        }
 
         public string codigo { get { return _codigo; } set { _codigo = value; RaisePropertyChanged("codigo"); } }
-       public  string _codigo;
+        private  string _codigo;
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public DateTime end_trial_period { get; set; }

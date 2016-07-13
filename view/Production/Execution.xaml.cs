@@ -247,6 +247,12 @@ namespace Cognitivo.Production
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
 
+                            hr_contract contract = ExecutionDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
+                            if (contract != null)
+                            {
+                                _production_execution_detail.unit_cost = contract.Hourly * _production_execution_detail.hours;
+                            }
+
                             ExecutionDB.production_execution_detail.Add(_production_execution_detail);
 
 

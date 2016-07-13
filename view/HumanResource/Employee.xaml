@@ -179,7 +179,7 @@
                     </DataGrid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="{lex:Loc Education}"  >
+            <TabItem Header="{lex:Loc Education}" Visibility="Collapsed">
                 <Grid Margin="16" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <DataGrid x:Name="hr_educationDataGrid" AutoGenerateColumns="False" 
                               EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource contacthr_educationViewSource}}" 
@@ -206,7 +206,7 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="{lex:Loc Work}"  >
+            <TabItem Header="{lex:Loc Contract}"  >
                 <Grid Margin="16,16,16,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" DataContext="{StaticResource contacthr_contractViewSource}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -239,6 +239,14 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBox Text="{Binding base_salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" Style="{StaticResource input_textbox}"/>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Por Hora" Style="{StaticResource input_label}"/>
+                                <Label Content="{Binding Hourly, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" ContentStringFormat="N2"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Por Dia" Style="{StaticResource input_label}"/>
+                                <Label Content="{Binding Daily, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" ContentStringFormat="N2"/>
+                            </StackPanel>
                             <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
                             <DatePicker Style="{StaticResource input_datepicker}" 
                                         Text="{Binding start_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -253,7 +261,7 @@
 
                     <StackPanel Grid.Column="0">
                         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True"
-                                  ItemsSource="{Binding}" CanUserAddRows="True"
+                                  ItemsSource="{Binding}" CanUserAddRows="False"
                                   Margin="4" RowDetailsVisibilityMode="Collapsed">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding codigo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="SizeToHeader"/>
@@ -273,7 +281,7 @@
                     </StackPanel>
                     <DataGrid x:Name="hr_talent_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="200" ItemsSource="{Binding Source={StaticResource contacthr_talent_detailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="id_talentColumn" Binding="{Binding hr_talent.name}" Header="id talent" Width="SizeToHeader"/>
+                            <DataGridTextColumn Binding="{Binding hr_talent.name}" Header="{lex:Loc Cognitivo:local:Talent}" Width="SizeToHeader"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

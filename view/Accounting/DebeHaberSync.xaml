@@ -35,7 +35,7 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -49,7 +49,7 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -63,7 +63,7 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -77,7 +77,7 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" IsReadOnly="True" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" IsReadOnly="True" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" IsReadOnly="True" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

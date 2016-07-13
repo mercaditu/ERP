@@ -23,7 +23,10 @@ namespace Cognitivo.Accounting
         public string UserName { get; set; }
         public string Password { get; set; }
 
-        public class DebeHaberCompanyList
+        string Company_RUC = string.Empty;
+        string Company_Name = string.Empty;
+
+        public class DebeHaberCompany
         {
             public string gov_code { get; set; }
             public string name { get; set; }
@@ -33,16 +36,44 @@ namespace Cognitivo.Accounting
         public DebeHaberLogIn()
         {
             InitializeComponent();
+
+            using (entity.db db = new entity.db())
+            {
+                entity.app_company company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
+                if (company != null)
+                {
+                    Company_RUC = company.gov_code;
+                    Company_Name = company.name;
+                }
+            }
         }
 
-        List<DebeHaberCompanyList> _DebeHaberCompanyList = new List<DebeHaberCompanyList>();
+        List<DebeHaberCompany> _DebeHaberCompanyList = new List<DebeHaberCompany>();
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string server = "http://" + tbxServer.Content + "/api/verification_api/" + UserName + "/" + Password;
-            var json = await DownloadPage(server);
-            _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompanyList>>(json);
+            try
+            {
+                string server = "http://" + tbxServer.Content + "/api/verification_api/" + UserName + "/" + Password;
+                var json = await DownloadPage(server);
+                _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection Error: " + ex.Message);
+            }
 
+            DebeHaberCompany _DebeHaberCompany = _DebeHaberCompanyList.Where(x => x.gov_code == Company_RUC).FirstOrDefault();
+
+            if (_DebeHaberCompany != null)
+            {
+                lblCompanyName.Content = _DebeHaberCompany.name;
+                tabVerification.IsSelected = true;
+            }
+            else
+            {
+                MessageBox.Show("0 Companies Found with these credentials. Please check and try again.");
+            }
 
         }
 
@@ -57,14 +88,19 @@ namespace Cognitivo.Accounting
                 }
             }
         }
-        private void Verify_Access(string User, string Password, string ServerAddress)
+
+        private async void btnApprove_Click(object sender, MouseButtonEventArgs e)
         {
-
-        }
-
-        private void btnApprove_Click(object sender, MouseButtonEventArgs e)
-        {
-
+            try
+            {
+                string server = "http://" + tbxServer.Content + "/api/registration_api/3d893946e7b8d4f830ea9091d7ff2894/" + Company_RUC;
+                var json = await DownloadPage(server);
+                _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection Error: " + ex.Message);
+            }
         }
     }
 }

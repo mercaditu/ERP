@@ -34,12 +34,11 @@
         </TabItem>
         <TabItem x:Name="tabVerification" Focusable="False">
             <StackPanel VerticalAlignment="Center" Focusable="True">
-                <Label Content="Verifique Su Cuenta" HorizontalAlignment="Center" Style="{StaticResource H2}" Margin="16"/>
-                <Label Content="{Binding CompanyName, ElementName=_DebeHaberLogin, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="Verifique Su Cuenta" HorizontalAlignment="Center" Style="{StaticResource H2}" Margin="0"/>
+                <Label x:Name="lblCompanyName" Style="{StaticResource H3}" HorizontalAlignment="Center" Margin="16"/>
                 <Image Source="http://icons.iconarchive.com/icons/bokehlicia/captiva/256/checkbox-icon.png" 
                        MouseDown="btnApprove_Click"
                        Cursor="Hand" Height="64"/>
-
             </StackPanel>
         </TabItem>
         <TabItem x:Name="tabUpLoad" Focusable="False">

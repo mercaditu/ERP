@@ -330,6 +330,13 @@ namespace cntrl.Curd
 
         }
 
+        private void dgvPaymentDetail_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+          
+            paymentpayment_detailViewSource.View.MoveCurrentTo(payment_detail);
+        }
+
 
 
 

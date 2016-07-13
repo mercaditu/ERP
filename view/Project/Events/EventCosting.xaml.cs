@@ -982,7 +982,11 @@ namespace Cognitivo.Project
 
             if (project_event != null)
             {
-                sbxContact.ContactID = (int)project_event.id_contact;
+                if (project_event.id_contact!=null)
+                {
+                    sbxContact.ContactID = (int)project_event.id_contact;
+                }
+              
             }
         }
 

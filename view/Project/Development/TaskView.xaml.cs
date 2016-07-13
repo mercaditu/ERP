@@ -354,6 +354,7 @@ namespace Cognitivo.Project.Development
                         toolBar_btnAnull_Click(sender);
                     }
                 }
+                ProjectTaskDB = new entity.ProjectTaskDB();
                 ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
                 projectViewSource.Source = ProjectTaskDB.projects.Local;
 
@@ -361,6 +362,7 @@ namespace Cognitivo.Project.Development
                 {
                     filter_task();
                 }
+                treeProject.UpdateLayout();
             }
         }
 

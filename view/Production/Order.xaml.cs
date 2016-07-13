@@ -616,21 +616,52 @@ namespace Cognitivo.Production
 
         private void btnDeleteTask_Click(object sender)
         {
-            production_orderproduction_order_detailViewSource.View.Filter = null;
-            List<production_order_detail> production_order_detailLIST = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
-            production_order_detailLIST = production_order_detailLIST.Where(x => x.IsSelected == true).ToList();
-
-            foreach (production_order_detail production_order_detail in production_order_detailLIST)
+            if (production_orderproduction_order_detailViewSource.View != null)
             {
-                production_order_detail.status = Status.Project.Rejected;
-                production_order_detail.IsSelected = false;
+                production_orderproduction_order_detailViewSource.View.Filter = null;
+                List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
+
+                OrderDB.NumberOfRecords = 0;
+                foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true))
+                {
+                    if (production_order_detail.status == Status.Project.Pending)
+                    {
+                        using (db db = new db())
+                        {
+                            if (production_order_detail.id_project_task != 0)
+                            {
+                                db.production_order_detail.Remove(db.production_order_detail.Where(x => x.id_order_detail == production_order_detail.id_order_detail).FirstOrDefault());
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                OrderDB.Entry(production_order_detail).State = EntityState.Detached;
+                            }
+                        }
+
+                        OrderDB.NumberOfRecords += 1;
+                    }
+                    else
+                    {
+                        //ProjectTaskDB.SaveChanges();
+                        toolBar_btnAnull_Click(sender);
+                    }
+                }
+                OrderDB = new entity.OrderDB();
+                OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.types == production_order.ProductionOrderTypes.Production).Load();
+                production_orderViewSource.Source = OrderDB.production_order.Local;
+
+                if (OrderDB.NumberOfRecords > 0)
+                {
+                    toolBar.msgSaved(OrderDB.NumberOfRecords);
+                    filter_task();
+                }
+                treeProject.UpdateLayout();
             }
 
-            if (OrderDB.SaveChanges() > 0)
-            {
-                toolBar.msgSaved(OrderDB.NumberOfRecords);
-                filter_task();
-            }
+          
+
+            
         }
 
         private void cbxItemType_SelectionChanged(object sender, SelectionChangedEventArgs e)

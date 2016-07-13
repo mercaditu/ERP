@@ -36,7 +36,7 @@
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemContainerStyle="{StaticResource nav_ListSelection}"
-                 ItemsSource="{Binding}" Grid.Row="1" Margin="0,3,0,-3">
+                 ItemsSource="{Binding}" Grid.Row="1" Margin="-1,0,1,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"

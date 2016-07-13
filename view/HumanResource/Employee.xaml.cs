@@ -18,6 +18,7 @@ namespace Cognitivo.HumanResource
             app_departmentViewSource, 
             app_locationViewSource, 
             contacthr_contractViewSource, 
+            contacthr_familyViewSource,
             hr_talentViewSource, 
             contacthr_talent_detailViewSource;
 
@@ -36,6 +37,7 @@ namespace Cognitivo.HumanResource
             await dbContext.contacts.Where(i => i.is_employee && i.is_active && i.id_company == _setting.company_ID).OrderBy(i => i.name).ToListAsync();
             employeeViewSource.Source = dbContext.contacts.Local;
             contacthr_contractViewSource = (CollectionViewSource)FindResource("contacthr_contractViewSource");
+            contacthr_familyViewSource = (CollectionViewSource)FindResource("contacthr_familyViewSource");
             contacthr_talent_detailViewSource = (CollectionViewSource)FindResource("contacthr_talent_detailViewSource");
             hr_positionViewSource = (CollectionViewSource)FindResource("hr_positionViewSource");
             await dbContext.hr_position.ToListAsync();
@@ -56,6 +58,7 @@ namespace Cognitivo.HumanResource
             cbxBloodtype.ItemsSource = Enum.GetValues(typeof(contact.BloodTypes));
             cbxmaritialstatus.ItemsSource = Enum.GetValues(typeof(contact.CivilStatus));
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
+            cbxRelation.ItemsSource = Enum.GetValues(typeof(hr_family.Relationship));
         }
 
         #region Contract Buttons
@@ -190,6 +193,35 @@ namespace Cognitivo.HumanResource
             if (smtgeo.GeographyID > 0)
             {
                 contact.app_geography = await dbContext.app_geography.Where(p => p.id_geography == smtgeo.GeographyID).FirstOrDefaultAsync();
+            }
+        }
+
+        private void DeleteCommandBinding_CanExecute(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as hr_family != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    hr_family hr_family = contacthr_familyViewSource.View.CurrentItem as hr_family;
+                    //DeleteDetailGridRow
+                    hr_familyDataGrid.CancelEdit();
+                    dbContext.hr_family.Remove(e.Parameter as hr_family);
+                    contacthr_familyViewSource.View.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
             }
         }
 

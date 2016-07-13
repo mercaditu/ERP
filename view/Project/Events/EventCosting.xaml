@@ -75,7 +75,7 @@
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                  ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                 ItemsSource="{Binding}" Grid.Row="1">
+                 ItemsSource="{Binding}" Grid.Row="1" SelectionChanged="project_costingDataGrid_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <cntrl:navList recordCode="{Binding trans_date, StringFormat=d,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -116,7 +116,7 @@
                             </StackPanel>
                             <StackPanel>
                                 <Label Content="{lex:Loc Customer}"  Style="{StaticResource input_label}"/>
-                                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="sbxContact_Select"
+                                <Controls:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="sbxContact_Select" 
                                                Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             <StackPanel>

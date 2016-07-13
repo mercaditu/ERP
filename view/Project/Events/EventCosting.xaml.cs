@@ -621,22 +621,26 @@ namespace Cognitivo.Project
                         project_task.unit_cost_est = get_Price(contact, IDcurrencyfx, project_event_variable.item, entity.App.Modules.Sales);
 
 
-                        foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
+                        if (item.item_recepie.Count() > 0)
                         {
-                            project_task Subproject_task = new project_task();
-
-                            Subproject_task.code = item_recepie_detail.item.code;
-                            Subproject_task.item_description = item_recepie_detail.item.name;
-                            Subproject_task.id_item = item_recepie_detail.item.id_item;
-                            Subproject_task.items = item_recepie_detail.item;
-                            project_task.status = Status.Project.Pending;
-                            Subproject_task.RaisePropertyChanged("item");
-                            if (item_recepie_detail.quantity > 0)
+                            foreach (item_recepie_detail item_recepie_detail in item.item_recepie.FirstOrDefault().item_recepie_detail)
                             {
-                                Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
+                                project_task Subproject_task = new project_task();
+
+                                Subproject_task.code = item_recepie_detail.item.code;
+                                Subproject_task.item_description = item_recepie_detail.item.name;
+                                Subproject_task.id_item = item_recepie_detail.item.id_item;
+                                Subproject_task.items = item_recepie_detail.item;
+                                project_task.status = Status.Project.Pending;
+                                Subproject_task.RaisePropertyChanged("item");
+                                if (item_recepie_detail.quantity > 0)
+                                {
+                                    Subproject_task.quantity_est = (decimal)item_recepie_detail.quantity * project_task.quantity_est;
+                                }
+                                project_task.child.Add(Subproject_task);
                             }
-                            project_task.child.Add(Subproject_task);
                         }
+
 
                         project.project_task.Add(project_task);
                     }
@@ -970,6 +974,16 @@ namespace Cognitivo.Project
                 get_ActiveRateXContact(ref contact);
             }
 
+        }
+
+        private void project_costingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            project_event project_event = project_costingViewSource.View.CurrentItem as project_event;
+
+            if (project_event != null)
+            {
+                sbxContact.ContactID = (int)project_event.id_contact;
+            }
         }
 
 

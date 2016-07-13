@@ -21,7 +21,8 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_talent { get; set; }
         [Required]
-        public string name { get; set; }
+        public string name { get { return _name; } set { _name = value;RaisePropertyChanged("name");} }
+        string _name;
         [Required]
         public bool is_active { get; set; }
 

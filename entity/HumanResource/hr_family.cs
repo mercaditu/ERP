@@ -6,6 +6,7 @@
 
     public class hr_family : Audit
     {
+       
         public enum Relationship
         {
             Child,
@@ -20,6 +21,7 @@
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_head = true;
+            date_birth = DateTime.Now;
         }
 
         [Key]

@@ -7,12 +7,18 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
            xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=Entity"
+        xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
       Loaded="Page_Loaded"
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800">
+    <Page.CommandBindings>
+        <CommandBinding x:Name="DeleteCommand" Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
+    </Page.CommandBindings>
     <Page.Resources>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="hr_positionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:hr_position}, CreateList=True}"/>
@@ -158,8 +164,17 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Age" IsReadOnly="True" Binding="{Binding Age, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
-                            <DataGridTextColumn Header="Relationship" Binding="{Binding relationship, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+                            <DataGridComboBoxColumn x:Name="cbxRelation" Header="Relationship" SelectedValueBinding="{Binding relationship, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
                             <DataGridTextColumn Header="Telephone" Binding="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete"
+                                                        Style="{StaticResource btnDeleteChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

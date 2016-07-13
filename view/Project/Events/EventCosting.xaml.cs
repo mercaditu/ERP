@@ -916,10 +916,11 @@ namespace Cognitivo.Project
                     services_per_event_details.is_included = false;
                     project_event.project_event_fixed.Add(services_per_event_details);
                 }
-
+                project_costingservices_per_event_detailsViewSource.View.Refresh();
                 toolBar_btnSave_Click(sender);
                 toolBar_btnEdit_Click(sender);
                 EstimateCost();
+
 
             }
         }

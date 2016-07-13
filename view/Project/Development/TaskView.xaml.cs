@@ -161,9 +161,16 @@ namespace Cognitivo.Project.Development
                     if (Project_TaskApprove.id_range != null)
                     {
                         project_task.id_range = Project_TaskApprove.id_range;
+                       app_document_range app_document_range= ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                       if (app_document_range!=null)
+                       {
+                           project_task.app_document_range = app_document_range;
+                           project_task.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
+                       }
+                    
 
                     }
-                    project_task.number = number;
+                   // project_task.number = number;
                     if (project_task.status == Status.Project.Management_Approved)
                     {
                         if (project_task.status == Status.Project.Management_Approved || project_task.status == null)

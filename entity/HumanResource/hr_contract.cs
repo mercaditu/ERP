@@ -27,7 +27,8 @@
         public int? id_currency { get; set; }
         public decimal base_salary { get; set; }
 
-        public string codigo { get; set; }
+        public string codigo { get { return _codigo; } set { _codigo = value; RaisePropertyChanged("codigo"); } }
+       public  string _codigo;
         public DateTime start_date { get; set; }
         public DateTime end_date { get; set; }
         public DateTime end_trial_period { get; set; }

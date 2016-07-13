@@ -13,20 +13,39 @@
         </RadialGradientBrush>
     </Page.Background>
 
-    <Grid>
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
-            <Label Content="Usuario" Style="{StaticResource input_label}"/>
-            <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-            <Label Content="Contrasena" Style="{StaticResource input_label}"/>
-            <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-            <Button Click="btnLogin_Click" Content="LogIn" Style="{StaticResource btn_green}" Margin="16,8"/>
-            <Label x:Name="tbxServer" Content="104.131.70.188" HorizontalContentAlignment="Center" FontSize="14" Style="{StaticResource EditableLabelStyle}"/>
-            <DataGrid x:Name="dgvCompanyList" AutoGenerateColumns="True">
-                
-            </DataGrid>
-        </StackPanel>
+    <TabControl Focusable="False">
+        <TabItem x:Name="tabLogIn" Focusable="False">
+            <Grid Focusable="True">
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,128,0,0">
+                    <Label Content="Usuario" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                    <Label Content="Contrasena" Style="{StaticResource input_label}"/>
+                    <TextBox Text="{Binding ElementName=_DebeHaberLogin, Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                    <Button Click="btnLogin_Click" Content="LogIn" Style="{StaticResource btn_green}" Margin="16,8"/>
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+                    <Label Style="{StaticResource input_label}" Content="Server :" HorizontalAlignment="Center"/>
+                    <Label x:Name="tbxServer" Content="debehaber.com" HorizontalContentAlignment="Center" FontSize="14" Foreground="Gray"
+                           Style="{StaticResource EditableLabelStyle}"/>
+                </StackPanel>
 
-        <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="54" Margin="0,64,0,0"
+                <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="54" Margin="0,64,0,0"
                VerticalAlignment="Top" HorizontalAlignment="Center"/>
-    </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem x:Name="tabVerification" Focusable="False">
+            <StackPanel VerticalAlignment="Center" Focusable="True">
+                <Label Content="Verifique Su Cuenta" HorizontalAlignment="Center" Style="{StaticResource H2}" Margin="16"/>
+                <Label Content="{Binding CompanyName, ElementName=_DebeHaberLogin, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Image Source="http://icons.iconarchive.com/icons/bokehlicia/captiva/256/checkbox-icon.png" 
+                       MouseDown="btnApprove_Click"
+                       Cursor="Hand" Height="64"/>
+
+            </StackPanel>
+        </TabItem>
+        <TabItem x:Name="tabUpLoad" Focusable="False">
+            <Grid Focusable="True">
+                
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Page>

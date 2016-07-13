@@ -23,17 +23,27 @@ namespace Cognitivo.Accounting
         public string UserName { get; set; }
         public string Password { get; set; }
 
+        public class DebeHaberCompanyList
+        {
+            public string gov_code { get; set; }
+            public string name { get; set; }
+            public string alias { get; set; }
+        }
+
         public DebeHaberLogIn()
         {
             InitializeComponent();
         }
 
+        List<DebeHaberCompanyList> _DebeHaberCompanyList = new List<DebeHaberCompanyList>();
+
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string api = "http://" + tbxServer.Content + "/api/verification_api/" + UserName + "/" + Password;
-            var r = await DownloadPage(api);
-            List<DebeHaberCompanyList> q = JsonConvert.DeserializeObject<List<DebeHaberCompanyList>>(r);
-            dgvCompanyList.ItemsSource = q;
+            string server = "http://" + tbxServer.Content + "/api/verification_api/" + UserName + "/" + Password;
+            var json = await DownloadPage(server);
+            _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompanyList>>(json);
+
+
         }
 
         static async Task<string> DownloadPage(string url)
@@ -52,11 +62,9 @@ namespace Cognitivo.Accounting
 
         }
 
-        public class DebeHaberCompanyList
+        private void btnApprove_Click(object sender, MouseButtonEventArgs e)
         {
-            public string gov_code { get; set; }
-            public string name { get; set; }
-            public string alias { get; set; }
+
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Cognitivo.Project.Development
         cntrl.Curd.PurchaseTender PurchaseTender;
         List<Logistic> LogisticsList = new List<Logistic>();
         List<Logistic> LogisticsListService = new List<Logistic>();
+        project_task project_task;
         public Logistics()
         {
             InitializeComponent();
@@ -148,16 +149,16 @@ namespace Cognitivo.Project.Development
                             Logistics._code = item._code;
                             Logistics._name = item._name;
                             Logistics._id_task = item._id_task;
-                            if (item._ordered_quantity==null)
+                            if (item._ordered_quantity == null)
                             {
                                 Logistics._ordered_quantity = 0;
-                                
+
                             }
                             else
                             {
                                 Logistics._ordered_quantity = item._ordered_quantity;
                             }
-                           
+
                             Logistics.item = item.item;
                             LogisticsListService.Add(Logistics);
                         }
@@ -399,15 +400,18 @@ namespace Cognitivo.Project.Development
             {
                 itemDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
+            if (project_task != (project_task)itemDataGrid.SelectedItem)
+            {
+                project_task = (project_task)itemDataGrid.SelectedItem;
+                CollectionViewSource project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
+
+                project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Where(a => a.id_company == CurrentSession.Id_Company && a.id_project_task == project_task.id_project_task).ToList();
+
+            }
+
         }
 
-        private void itemDataGrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
-        {
-            project_task project_task = (project_task)itemDataGrid.SelectedItem;
-            CollectionViewSource project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
 
-            project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Where(a => a.id_company == CurrentSession.Id_Company && a.id_project_task == project_task.id_project_task).ToList();
-        }
 
         private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

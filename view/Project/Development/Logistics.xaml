@@ -218,7 +218,7 @@
                                              VerticalAlignment="Top" HorizontalAlignment="Center"/>
                 <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="0"
                       CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Right"
-                      SelectionChanged="itemDataGrid_SelectionChanged" LoadingRowDetails="itemDataGrid_LoadingRowDetails"
+                      SelectionChanged="itemDataGrid_SelectionChanged"
                       Width="300" >
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

@@ -206,29 +206,31 @@ namespace Cognitivo.Production
             }
         }
 
-        public void adddatacontact(contact Data, cntrl.ExtendedTreeView treeview)
+        public void adddatacontact(contact contact, cntrl.ExtendedTreeView treeview)
         {
             production_order_detail production_order_detail = (production_order_detail)treeview.SelectedItem_;
             if (production_order_detail != null)
             {
-                if (Data != null)
+                if (contact != null)
                 {
 
                     //Product
-                    int id = Convert.ToInt32(((contact)Data).id_contact);
+                    int id = Convert.ToInt32(((contact)contact).id_contact);
                     if (id > 0)
                     {
                         production_execution _production_execution = (production_execution)production_executionViewSource.View.CurrentItem;
                         production_execution_detail _production_execution_detail = new entity.production_execution_detail();
 
                         //Check for contact
-                        _production_execution_detail.id_contact = ((contact)Data).id_contact;
-                        _production_execution_detail.contact = Data;
+                        _production_execution_detail.id_contact = ((contact)contact).id_contact;
+                        _production_execution_detail.contact = contact;
                         _production_execution_detail.quantity = 1;
                         _production_execution_detail.item = production_order_detail.item;
                         _production_execution_detail.id_item = production_order_detail.item.id_item;
                         _production_execution.RaisePropertyChanged("quantity");
-
+                        _production_execution_detail.is_input = true;
+                        _production_execution_detail.name = contact.name + ": " + production_order_detail.name;
+                        
                         if (production_order_detail.item.id_item_type == item.item_type.Service)
                         {
                             if (cmbcoefficient.SelectedValue != null)

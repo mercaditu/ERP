@@ -22,7 +22,7 @@ namespace Cognitivo.Accounting
     {
         public string UserName { get; set; }
         public string Password { get; set; }
-        string ErrorMessage;
+
         public DebeHaberLogIn()
         {
             InitializeComponent();
@@ -30,15 +30,10 @@ namespace Cognitivo.Accounting
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string api = "http://104.131.70.188/api/verification_api/" + UserName +"/" + Password ;
+            string api = "http://" + tbxServer.Content + "/api/verification_api/" + UserName + "/" + Password;
             var r = await DownloadPage(api);
-            List<ClassForJson> q = JsonConvert.DeserializeObject<List<ClassForJson>>("{'80044198-2':'Cognitivo Paraguay SA':'Cognitivo'}");
-            dgEmployee.ItemsSource = q;
-           // GridView1.DataBind();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            //    dgEmployee.ItemsSource = r;
-            //}));
+            List<DebeHaberCompanyList> q = JsonConvert.DeserializeObject<List<DebeHaberCompanyList>>(r);
+            dgvCompanyList.ItemsSource = q;
         }
 
         static async Task<string> DownloadPage(string url)
@@ -57,16 +52,11 @@ namespace Cognitivo.Accounting
 
         }
 
-        public class ClassForJson
+        public class DebeHaberCompanyList
         {
-            public string key { get; set; }
-            public Value value { get; set; }
-            public class Value
-            {
-                public string gov_code { get; set; }
-                public string name { get; set; }
-                public string alias { get; set; }
-            }
+            public string gov_code { get; set; }
+            public string name { get; set; }
+            public string alias { get; set; }
         }
     }
 }

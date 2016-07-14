@@ -32,7 +32,7 @@
       <Value Profile="(Default)">server=localhost;user id=root;password=root;persistsecurityinfo=True;database=cognitivogolden</Value>
     </Setting>
     <Setting Name="DebeHaberConnString" Type="System.String" Scope="User">
-      <Value Profile="(Default)">debehaber.com</Value>
+      <Value Profile="(Default)">http://www.debehaber.com</Value>
     </Setting>
   </Settings>
 </SettingsFile>

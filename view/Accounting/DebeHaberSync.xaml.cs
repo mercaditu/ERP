@@ -385,7 +385,7 @@ namespace Cognitivo.Accounting
 
         private void Send2API(string Json)
         {
-            var webAddr = "http://" + Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/";
+            var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";

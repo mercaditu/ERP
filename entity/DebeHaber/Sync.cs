@@ -37,7 +37,12 @@ namespace entity.DebeHaber
     }
 
     public class CommercialInvoice_Detail
-    { 
+    {
+        public CommercialInvoice_Detail()
+        {
+            CostCenter = new List<CostCenter>();
+        }
+
         public decimal VAT_Coeficient { get; set; }
         public decimal UnitValue_WithVAT { get; set; }
         public string Comment { get; set; }
@@ -73,7 +78,7 @@ namespace entity.DebeHaber
     public class Payments
     {
         public int Type { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime TransDate { get; set; }
         public string Parent { get; set; }
         public string Gov_Code { get; set; }
 

@@ -33,6 +33,11 @@ namespace Cognitivo.Accounting
             public string alias { get; set; }
         }
 
+        public class DebeHaberRegistration
+        {
+            public string hash_integretion { get; set; }
+        }
+
         public DebeHaberLogIn()
         {
             InitializeComponent();
@@ -54,7 +59,7 @@ namespace Cognitivo.Accounting
         {
             try
             {
-                string server = "http://" + tbxServer.Content + "/api/verification_api/" + UserName + "/" + Password;
+                string server = "http://" + Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/verification_api/" + UserName + "/" + Password;
                 var json = await DownloadPage(server);
                 _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
             }
@@ -93,9 +98,15 @@ namespace Cognitivo.Accounting
         {
             try
             {
-                string server = "http://" + tbxServer.Content + "/api/registration_api/3d893946e7b8d4f830ea9091d7ff2894/" + Company_RUC;
+                string server = "http://" + Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/registration_api/54HY3kXgamBsJ94hhd1DYsFSWzlI4KtF7aJMDxO9D4wnTVaEoqtuI42eC1sM5NMqFvZsHhYPgsudolP8Ug1JhKPyBMKxfbvGSnON/" + Company_RUC;
                 var json = await DownloadPage(server);
-                _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
+                string Hash = JsonConvert.DeserializeObject<DebeHaberRegistration>(json).hash_integretion;
+                using (entity.db db = new entity.db()) 
+                {
+                    entity.app_company company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
+                    company.domain = Hash;
+                    db.SaveChanges();
+                }
             }
             catch (Exception ex)
             {

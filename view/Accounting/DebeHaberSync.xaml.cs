@@ -31,6 +31,8 @@ namespace Cognitivo.Accounting
 
         entity.db db = new entity.db();
 
+        string RelationshipHash = string.Empty;
+
         public DebeHaberSync()
         {
             InitializeComponent();
@@ -40,6 +42,8 @@ namespace Cognitivo.Accounting
             purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));
             purchase_returnViewSource = ((CollectionViewSource)(FindResource("purchase_returnViewSource")));
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+
+            RelationshipHash = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault().domain;
         }
 
         private void btnData_Refresh(object sender, RoutedEventArgs e)
@@ -168,12 +172,17 @@ namespace Cognitivo.Accounting
 
                     entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
 
+                    // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
                     if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
                     {
                         CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
                         CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+
+                        //Add CostCenter into Detail.
+                        CommercialInvoice_Detail.CostCenter.Add(CostCenter);
                     }
-                    else if (Detail.item.id_item_type == entity.item.item_type.Service)
+                    // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
+                    else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
                     {
                         if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
                         { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
@@ -181,25 +190,30 @@ namespace Cognitivo.Accounting
                         { CostCenter.Name = Detail.item_description; }
 
                         CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+
+                        //Add CostCenter into Detail.
+                        CommercialInvoice_Detail.CostCenter.Add(CostCenter);
                     }
+                    // Finally if all else fails, assume Item being sold is Merchendice.
                     else
                     {
                         CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
                         CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+
+                        //Add CostCenter into Detail.
+                        CommercialInvoice_Detail.CostCenter.Add(CostCenter);
                     }
 
-                    //Add CostCenter into Detail.
-                    CommercialInvoice_Detail.CostCenter.Add(CostCenter);
                     //Add Detail into Sales.
                     Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
-                ////Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0 && x.parent!=null))
+                //Loop through payments made.
+                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0 && x.parent!=null && x.payment_detail.payment.is_accounted == false))
                 {
                     entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
                     Payment.Type = 3;
-                    Payment.Date = schedual.payment_detail.payment.trans_date;
+                    Payment.TransDate = schedual.payment_detail.payment.trans_date;
 
                     if (schedual.parent.sales_invoice != null)
                     {
@@ -212,19 +226,35 @@ namespace Cognitivo.Accounting
 
                     Payment.Account = schedual.payment_detail.app_account.name;
                     Payment.Value = schedual.debit;
-
+                    
                     Sales.Payments.Add(Payment);
+
+                    //This will make the Sales Invoice hide from the next load.
+                    schedual.payment_detail.payment.is_accounted = true;
                 }
 
                 SalesInvoiceLIST.Add(Sales);
+
+                //This will make the Sales Invoice hide from the next load.
+                sales_invoice.is_accounted = true;
             }
 
-            ///Serealize SalesInvoiceLIST into Json
-            var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
+            try
+            {
+                ///Serealize SalesInvoiceLIST into Json
+                var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
 
-            // Send2API(Sales_Json);
-            file_create(Sales_Json as string,"sales_invoice");
-            //Send Sales_Json send it to Server Address specified.
+                Send2API(Sales_Json);
+                file_create(Sales_Json as string, "sales_invoice");
+                //Send Sales_Json send it to Server Address specified.
+
+                //If all success, then SaveChanges.
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception Error: " + ex.Message);
+            }
         }
 
         #region CheckBox Check/UnCheck Methods
@@ -355,7 +385,7 @@ namespace Cognitivo.Accounting
 
         private void Send2API(string Json)
         {
-            var webAddr = "http://104.131.70.188/api_transactions";
+            var webAddr = "http://" + Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";

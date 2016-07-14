@@ -117,5 +117,17 @@ namespace Cognitivo.Properties {
                 return ((string)(this["MySQLconnString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("debehaber.com")]
+        public string DebeHaberConnString {
+            get {
+                return ((string)(this["DebeHaberConnString"]));
+            }
+            set {
+                this["DebeHaberConnString"] = value;
+            }
+        }
     }
 }

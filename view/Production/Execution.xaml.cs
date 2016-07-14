@@ -213,7 +213,6 @@ namespace Cognitivo.Production
             {
                 if (contact != null)
                 {
-
                     //Product
                     int id = Convert.ToInt32(((contact)contact).id_contact);
                     if (id > 0)
@@ -230,7 +229,14 @@ namespace Cognitivo.Production
                         _production_execution.RaisePropertyChanged("quantity");
                         _production_execution_detail.is_input = true;
                         _production_execution_detail.name = contact.name + ": " + production_order_detail.name;
-                        
+
+                        //Gets the Employee's contracts Hourly Rate.
+                        hr_contract contract = ExecutionDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
+                        if (contract != null)
+                        {
+                            _production_execution_detail.unit_cost = contract.Hourly;
+                        }
+
                         if (production_order_detail.item.id_item_type == item.item_type.Service)
                         {
                             if (cmbcoefficient.SelectedValue != null)
@@ -249,14 +255,7 @@ namespace Cognitivo.Production
                             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
                             _production_execution_detail.production_order_detail = production_order_detail;
 
-                            hr_contract contract = ExecutionDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
-                            if (contract != null)
-                            {
-                                _production_execution_detail.unit_cost = contract.Hourly;
-                            }
-
                             ExecutionDB.production_execution_detail.Add(_production_execution_detail);
-
 
                             production_execution_detailServiceViewSource.View.Refresh();
                             production_execution_detailServiceViewSource.View.MoveCurrentToLast();

@@ -57,23 +57,15 @@ namespace entity.DebeHaber
 
     public class Commercial_Return
     {
-        public int Reference_ID { get; set; }
+        //Return Data
         public TransactionTypes Type { get; set; }
-        public string CurrencyISO_Code { get; set; }
+        public DateTime Date { get; set; }
+        public string Gov_Code { get; set; }
 
-        public string Contact_GovCode { get; set; }
-
-        public string BranchName { get; set; }
-        public string BranchCode { get; set; }
-
-        public DateTime ReturnDate { get; set; }
-        public decimal ReturnNumber { get; set; }
-        public string ReturnCode { get; set; }
-        public DateTime ReturnCodeDate { get; set; }
-        public decimal ReturnTotal { get; set; }
-        public int PaymentCondition { get; set; }
-
-        public string Comment { get; set; }
+        //Invoice Documents
+        public string DocNumber { get; set; }
+        public string DocCode { get; set; }
+        public DateTime? DocExpiry { get; set; }
     }
 
     public class Payments
@@ -82,9 +74,10 @@ namespace entity.DebeHaber
         public DateTime Date { get; set; }
         public string Parent { get; set; }
         public string Gov_Code { get; set; }
+
         public string DocNumber { get; set; }
         public string DocCode { get; set; }
-        public DateTime DocExpiry { get; set; }
+        public DateTime? DocExpiry { get; set; }
 
         public string  Account { get; set; }
         public decimal Value { get; set; }

@@ -154,9 +154,6 @@ namespace Cognitivo.Accounting
                 {
                     Invoice.Currency = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault().app_currency.name;
                 }
-                
-                //Invoice.InvoiceTotal = sales_invoice.GrandTotal;
-                //Invoice.PaymentCondition = sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval);
 
                 Invoice.Gov_Code = sales_invoice.contact.gov_code;
                 Invoice.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
@@ -172,9 +169,6 @@ namespace Cognitivo.Accounting
                     CommercialInvoice_Detail.Type = 2;
                     CommercialInvoice_Detail.Coef = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
                     CommercialInvoice_Detail.ValueWVAT = Detail.SubTotal_Vat;
-                 
-
-                    //Invoice.TotalValue.Add(CommercialInvoice_Detail);
                 }
 
                 ////Loop through payments made.
@@ -187,16 +181,16 @@ namespace Cognitivo.Accounting
                     if (schedual.parent.sales_invoice != null)
                     {
                         Payment.Parent = schedual.parent.sales_invoice.number;
-                        Payment.Gov_Code = schedual.parent.sales_invoice.contact.gov_code;
-                        Payment.DocCode = schedual.parent.sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
-                        Payment.DocExpiry = schedual.payment_detail.payment.app_document_range != null ? (DateTime)schedual.payment_detail.payment.app_document_range.expire_date : null);
+                        Payment.Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
+                        Payment.DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
+                        Payment.DocExpiry = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.expire_date : DateTime.Now;
                         Payment.DocNumber = schedual.payment_detail.payment.number;
                     }
 
                     Payment.Account = schedual.payment_detail.app_account.name;
                     Payment.Value = schedual.debit;
 
-                    //Invoice.TotalValue.Add(Payment);
+                    Invoice.Payments.Add(Payment);
                 }
 
                 SalesInvoiceLIST.Add(Invoice);

@@ -275,7 +275,7 @@
                                           ScrollViewer.VerticalScrollBarVisibility="Auto" />
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="{lex:Loc Property}" >
+                <!--<TabItem Header="{lex:Loc Property}" >
                     <DataGrid x:Name="item_propertyDataGrid" VerticalScrollBarVisibility="Auto" 
                                   AutoGenerateColumns="False" EnableRowVirtualization="True"
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
@@ -290,7 +290,7 @@
                           
                         </DataGrid.Columns>
                     </DataGrid>
-                </TabItem>
+                </TabItem>-->
                 <TabItem Header="{lex:Loc Usage}" Visibility="{Binding SelectedIndex, FallbackValue=Visible, ConverterParameter=0, Converter={StaticResource ItemProduct2VisibilityConverter}, ElementName=cmbitem}">
                     <StackPanel Orientation="Vertical" Grid.ColumnSpan="2">
                         <Label Content="{lex:Loc Measurement}"  Style="{StaticResource input_label}"/>

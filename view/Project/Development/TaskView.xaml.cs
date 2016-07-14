@@ -49,6 +49,10 @@ namespace Cognitivo.Project.Development
             ProjectTaskDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_dimensionViewSource.Source = ProjectTaskDB.app_dimension.Local;
 
+            CollectionViewSource app_propertyViewSource = ((CollectionViewSource)(FindResource("app_propertyViewSource")));
+            ProjectTaskDB.app_property.Load();
+            app_propertyViewSource.Source = ProjectTaskDB.app_property.Local;
+
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
             ProjectTaskDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_measurementViewSource.Source = ProjectTaskDB.app_measurement.Local;
@@ -669,6 +673,18 @@ namespace Cognitivo.Project.Development
 
                 stpestimate.Visibility = System.Windows.Visibility.Visible;
                 stpexcustion.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        private void cbxproperty_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxproperty.SelectedItem!=null)
+            {
+                project_task project_task_output = treeProject.SelectedItem_ as project_task;
+                if (project_task_output!=null)
+                {
+                    project_task_output.item_description = project_task_output.item_description + " POS:-" + cbxproperty.Text;
+                }
             }
         }
     }

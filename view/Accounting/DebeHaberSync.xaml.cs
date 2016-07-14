@@ -145,29 +145,59 @@ namespace Cognitivo.Accounting
         {
             List<entity.DebeHaber.Commercial_Invoice> SalesInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
 
+            //Loop through
             foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))
             {
                 entity.DebeHaber.Commercial_Invoice Sales = new entity.DebeHaber.Commercial_Invoice();
 
-                using (entity.db dbContext = new entity.db())
-                {
-                    Sales.CurrencyName = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault().app_currency.name;
-                }
-
+                Sales.Type = entity.DebeHaber.TransactionTypes.Sales;
+                Sales.TransDate = sales_invoice.trans_date;
                 Sales.Gov_Code = sales_invoice.contact.gov_code;
-                Sales.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
-                Sales.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
+                Sales.Comment = sales_invoice.comment;
+                Sales.CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
 
                 Sales.DocNumber = sales_invoice.number;
-                Sales.TransDate = sales_invoice.trans_date;
+                Sales.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
+                Sales.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
 
-                ///Loop through details.
+                ///Loop through Details.
                 foreach (entity.sales_invoice_detail Detail in sales_invoice.sales_invoice_detail)
                 {
-                    entity.DebeHaber.Vat CommercialInvoice_Detail = new entity.DebeHaber.Vat();
-                    CommercialInvoice_Detail.Type = 2;
-                    CommercialInvoice_Detail.Coef = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-                    CommercialInvoice_Detail.ValueWVAT = Detail.SubTotal_Vat;
+                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+                    CommercialInvoice_Detail.UnitValue_WithVAT = Detail.SubTotal_Vat;
+                    CommercialInvoice_Detail.Comment = Detail.item_description;
+
+                    entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
+
+                    if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
+                    {
+                        CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
+                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+                    }
+                    else if (Detail.item.id_item_type == entity.item.item_type.Service)
+                    {
+                        if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                        {
+                            CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name;
+                        }
+                        else
+                        {
+                            CostCenter.Name = Detail.item_description;
+                        }
+
+                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+                    }
+                    else
+                    {
+                        CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
+                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    }
+
+                    //Add CostCenter into Detail.
+                    CommercialInvoice_Detail.CostCenter.Add(CostCenter);
+                    //Add Detail into Sales.
+                    Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
                 ////Loop through payments made.

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace entity.DebeHaber
 {
     public enum TransactionTypes { Sales = 1, Purchase = 1}
-    public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3 }
+    public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
 
     public class Commercial_Invoice
     {
@@ -38,14 +38,15 @@ namespace entity.DebeHaber
 
     public class CommercialInvoice_Detail
     { 
-        public CostCenter CostCenter { get; set; }
-
         public decimal VAT_Coeficient { get; set; }
         public decimal UnitValue_WithVAT { get; set; }
         public string Comment { get; set; }
 
         //Nav Property
         public virtual Commercial_Invoice Commercial_Invoice { get; set; }
+
+        //Collection Property
+        public virtual ICollection<CostCenter> CostCenter { get; set; }
     }
 
     public class CostCenter
@@ -53,8 +54,7 @@ namespace entity.DebeHaber
         public CostCenterTypes Type { get; set; }
         public string Name { get; set; }
 
-        //Collection Property
-        public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
+        public CommercialInvoice_Detail CommercialInvoice_Detail { get; set; }
     }
 
     public class Commercial_Return

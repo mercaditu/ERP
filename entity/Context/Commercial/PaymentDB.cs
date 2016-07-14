@@ -70,6 +70,8 @@ namespace entity
                         payment.timestamp = DateTime.Now;
                         payment.State = EntityState.Unchanged;
                         Entry(payment).State = EntityState.Added;
+                      
+                     
                     }
                     else if (payment.State == EntityState.Modified)
                     {
@@ -114,8 +116,9 @@ namespace entity
 
         public void MakePayment(payment_schedual Parent_Schedual, payment payment, bool RequirePrint)
         {
-            foreach (payment_detail payment_detail in payment.payment_detail)
-            {                
+            foreach (payment_detail payment_detail in payment.payment_detail.Where(x=>x.IsSelected))
+            {
+                Parent_Schedual = base.payment_schedual.Where(x => x.id_payment_schedual == payment_detail.id_payment_schedual).FirstOrDefault();
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 payment_schedual balance_payment_schedual = new payment_schedual();
@@ -192,9 +195,10 @@ namespace entity
                 }
 
                 ///
-                if (Parent_Schedual.id_purchase_order != null)
+
+                if (payment_detail.payment_schedual.FirstOrDefault() != null)
                 {
-                    balance_payment_schedual.id_purchase_order = Parent_Schedual.id_purchase_order;
+                    balance_payment_schedual.id_purchase_order = payment_detail.payment_schedual.FirstOrDefault().id_purchase_order;
                     ModuleName = "PurchaseOrder";
                 }
 

@@ -54,7 +54,7 @@ namespace Cognitivo.Commercial
                 payment_schedualViewSource.View.Filter = i =>
                 {
                     payment_schedual payment_schedual = i as payment_schedual;
-                    if (payment_schedual.id_contact == contact.id_contact)
+                    if (payment_schedual.id_contact == contact.id_contact && payment_schedual.AccountReceivableBalance>0)
                     {
                         return true;
                     }

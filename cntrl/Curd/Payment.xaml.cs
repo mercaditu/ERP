@@ -80,6 +80,7 @@ namespace cntrl.Curd
                
 
                 payment_detail.id_payment_schedual = payment_schedual.id_payment_schedual;
+              
                 payment.payment_detail.Add(payment_detail);
             }
 
@@ -101,6 +102,20 @@ namespace cntrl.Curd
 
             paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+            if (payment!=null)
+            {
+                app_account app_account = app_accountViewSource.View.CurrentItem as app_account;
+                if (app_account!=null)
+                {
+                    foreach (payment_detail payment_detail in payment.payment_detail)
+                    {
+                        payment_detail.id_account = app_account.id_account;
+                    }
+                }
+               
+            }
+            paymentpayment_detailViewSource.View.Refresh();
         }
 
         #region Events
@@ -121,17 +136,34 @@ namespace cntrl.Curd
             paymentpayment_detailViewSource.View.Refresh();
             payment payment = paymentViewSource.View.CurrentItem as payment;
 
-            foreach (payment_detail payment_detail in payment.payment_detail)
+            if (payment.payment_detail.Where(x=>x.IsSelected).Count()>0)
             {
-                if (Mode == Modes.Recievable)
-	            {
-		            PaymentDB.Approve(payment_detail.id_payment_schedual, true);
-                }
-                else
+                //List<payment_detail> payment_detailList = payment.payment_detail.Where(x => x.IsSelected == false).ToList();
+                PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
+                //foreach (payment_detail payment_detail in payment_detailList)
+                //{
+                //    payment.payment_detail.Remove(payment_detail);
+
+                //}
+                PaymentDB.SaveChanges();
+                foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
                 {
-                    PaymentDB.Approve(payment_detail.id_payment_schedual, false);
+                    if (Mode == Modes.Recievable)
+                    {
+                        PaymentDB.Approve(payment_detail.id_payment_schedual, true);
+                    }
+                    else
+                    {
+                        PaymentDB.Approve(payment_detail.id_payment_schedual, false);
+                    }
                 }
+                lblCancel_MouseDown(null, null);
             }
+            else
+            {
+                MessageBox.Show("Please select Payment..");
+            }
+         
         }
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -271,7 +303,7 @@ namespace cntrl.Curd
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SaveChanges();
-            lblCancel_MouseDown(sender, null);
+            
         }
 
 

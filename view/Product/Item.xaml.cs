@@ -29,6 +29,7 @@ namespace Cognitivo.Product
             item_price_listViewSource,
             itemitem_productViewSource,
             app_dimentionViewSource,
+            app_propertyViewSource,
             itemitem_tagdetailViewSource,
             hr_talentViewSource,
             itemitem_serviceViewSource,
@@ -48,6 +49,7 @@ namespace Cognitivo.Product
             item_price_listViewSource = FindResource("item_price_listViewSource") as CollectionViewSource;
             app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_dimentionViewSource = FindResource("app_dimentionViewSource") as CollectionViewSource;
+            app_propertyViewSource = FindResource("app_propertyViewSource") as CollectionViewSource;
             hr_talentViewSource = FindResource("hr_talentViewSource") as CollectionViewSource;
             itemitem_serviceViewSource = FindResource("itemitem_serviceViewSource") as CollectionViewSource;
             item_templateViewSource = FindResource("item_templateViewSource") as CollectionViewSource;
@@ -135,6 +137,12 @@ namespace Cognitivo.Product
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 app_dimentionViewSource.Source = ItemDB.app_dimension.Local;
+            }));
+            await ItemDB.app_property
+            .OrderBy(a => a.name).LoadAsync();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                app_propertyViewSource.Source = ItemDB.app_property.Local;
             }));
 
             await ItemDB.app_vat_group

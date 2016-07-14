@@ -178,13 +178,9 @@ namespace Cognitivo.Accounting
                     else if (Detail.item.id_item_type == entity.item.item_type.Service)
                     {
                         if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
-                        {
-                            CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name;
-                        }
+                        { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
                         else
-                        {
-                            CostCenter.Name = Detail.item_description;
-                        }
+                        { CostCenter.Name = Detail.item_description; }
 
                         CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
                     }

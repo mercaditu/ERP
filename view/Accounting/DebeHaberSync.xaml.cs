@@ -135,6 +135,7 @@ namespace Cognitivo.Accounting
         //        //Send Sales_Json send it to Server Address specified.
         //    }
         //}
+        
         private void SalesInvoice_Sync()
         {
             List<entity.DebeHaber.Commercial_Invoice> SalesInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
@@ -143,16 +144,15 @@ namespace Cognitivo.Accounting
             {
                 entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
 
-                Invoice.Type = 1;
-                Invoice.Variation = entity.DebeHaber.TransactionTypes.Sales;
+                //Invoice.Type = 1;
+                //Invoice.Variation = entity.DebeHaber.TransactionTypes.Sales;
                 //Invoice.BranchCode = sales_invoice.app_branch.code;
                 //Invoice.BranchName = sales_invoice.app_branch.name;
                 //Invoice.Comment = sales_invoice.comment;
                
                 using (entity.db dbContext = new entity.db())
                 {
-                    Invoice.Currency = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault()
-                        .app_currency.name;
+                    Invoice.Currency = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault().app_currency.name;
                 }
                 
                 //Invoice.InvoiceTotal = sales_invoice.GrandTotal;
@@ -174,7 +174,7 @@ namespace Cognitivo.Accounting
                     CommercialInvoice_Detail.ValueWVAT = Detail.SubTotal_Vat;
                  
 
-                    Invoice.TotalValue.Add(CommercialInvoice_Detail);
+                    //Invoice.TotalValue.Add(CommercialInvoice_Detail);
                 }
 
                 ////Loop through payments made.
@@ -182,25 +182,22 @@ namespace Cognitivo.Accounting
                 {
                     entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
                     Payment.Type = 3;
-                    Payment.Date = schedual.trans_date;
+                    Payment.Date = schedual.payment_detail.payment.trans_date;
+
                     if (schedual.parent.sales_invoice != null)
                     {
-
-
                         Payment.Parent = schedual.parent.sales_invoice.number;
                         Payment.Gov_Code = schedual.parent.sales_invoice.contact.gov_code;
                         Payment.DocCode = schedual.parent.sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
-                        Payment.DocExpiry = (schedual.parent.sales_invoice.app_document_range != null ? (DateTime)schedual.parent.sales_invoice.app_document_range.expire_date : DateTime.Now);
-
-                        Payment.DocNumber = schedual.parent.sales_invoice.number;
+                        Payment.DocExpiry = schedual.payment_detail.payment.app_document_range != null ? (DateTime)schedual.payment_detail.payment.app_document_range.expire_date : null);
+                        Payment.DocNumber = schedual.payment_detail.payment.number;
                     }
+
                     Payment.Account = schedual.payment_detail.app_account.name;
                     Payment.Value = schedual.debit;
 
-                  
-                    Invoice.TotalValue.Add(Payment);
+                    //Invoice.TotalValue.Add(Payment);
                 }
-                
 
                 SalesInvoiceLIST.Add(Invoice);
             }
@@ -208,10 +205,11 @@ namespace Cognitivo.Accounting
             ///Serealize SalesInvoiceLIST into Json
             var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
 
-           // Send2API(Sales_Json);
+            // Send2API(Sales_Json);
             file_create(Sales_Json as string,"sales_invoice");
             //Send Sales_Json send it to Server Address specified.
         }
+
         //private void SalesReturn_Sync()
         //{
         //    List<entity.DebeHaber.Commercial_Invoice> SalesReturnLIST = new List<entity.DebeHaber.Commercial_Invoice>();

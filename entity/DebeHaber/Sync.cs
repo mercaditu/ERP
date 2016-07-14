@@ -6,43 +6,34 @@ using System.Threading.Tasks;
 
 namespace entity.DebeHaber
 {
-    public enum TransactionTypes { Sales=1, Purchase=1}
-    public enum CostCenterTypes { Expense, Merchendice, FixedAsset }
+    public enum TransactionTypes { Sales = 1, Purchase = 1}
+    public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3 }
 
     public class Commercial_Invoice
     {
         public Commercial_Invoice()
         {
-            //CommercialInvoice_Detail = new List<CommercialInvoice_Detail>();
-            //Payments = new List<Payments>();
-            TotalValue = new List<object>();
+            CommercialInvoice_Detail = new List<CommercialInvoice_Detail>();
+            Commercial_Return = new List<Commercial_Return>();
+            Payments = new List<Payments>();
         }
-     
-        public int Type { get; set; }
-        public TransactionTypes Variation { get; set; }
+        
+        //Invoice Data
+        public TransactionTypes Type { get; set; }
         public DateTime Date { get; set; }
         public string Gov_Code { get; set; }
+
+        //Invoice Documents
         public string DocNumber { get; set; }
         public string DocCode { get; set; }
-        public DateTime DocExpiry { get; set; }
-       public string Currency { get; set; }
+        public DateTime? DocExpiry { get; set; }
 
-       public virtual ICollection<object> TotalValue { get; set; }
+        //Currency
+        public string Currency { get; set; }
 
-        //public string BranchName { get; set; }
-        //public string BranchCode { get; set; }
-
-    
-        //public string InvoiceNumber { get; set; }
-        //public string InvoiceCode { get; set; }
-        //public DateTime InvoiceCode_ExpDate { get; set; }
-        //public decimal InvoiceTotal { get; set; }
-        //public int PaymentCondition { get; set; }
-
-        //public string Comment { get; set; }
-
-        //public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
-        //public virtual ICollection<Payments> Payments { get; set; }
+        public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
+        public virtual ICollection<Payments> Payments { get; set; }
+        public virtual ICollection<Commercial_Return> Commercial_Return { get; set; }
     }
 
     public class CommercialInvoice_Detail

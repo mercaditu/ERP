@@ -98,7 +98,7 @@
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                      ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-                                     ItemsSource="{Binding Source={StaticResource paymentpayment_detailViewSource}}" Grid.Row="1" SelectionChanged="dgvPaymentDetail_SelectionChanged">
+                                     ItemsSource="{Binding Source={StaticResource paymentViewSource}}" Grid.Row="1" SelectionChanged="dgvPaymentDetail_SelectionChanged">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <cntrl:navList recordCode="{Binding id_currencyfx.app_currency.name, FallbackValue=Currency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 

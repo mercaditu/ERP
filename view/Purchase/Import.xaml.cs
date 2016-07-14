@@ -152,11 +152,12 @@ namespace Cognitivo.Purchase
                     getProratedCostCounted(impex_import.purchase_invoice, false); 
                 }
             }
-
+      
             productDataGrid.ItemsSource = null;
             impex_importDataGrid.ItemsSource = null;
             impex_importDataGrid.ItemsSource = Impex_CostDetailLIST;
             productDataGrid.ItemsSource = Impex_ProductsLIST;
+            Calculate_Click(null, null);
         }
 
         private void getProratedCostCounted(purchase_invoice purchase_invoice, bool isNew)

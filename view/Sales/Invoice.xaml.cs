@@ -28,7 +28,7 @@ namespace Cognitivo.Sales
         cntrl.PanelAdv.pnlPacking pnlPacking;
         cntrl.PanelAdv.pnlSalesOrder pnlSalesOrder;
 
-
+        public entity.App.Names AppName { get; set; }
         public app_geography Geography { get; set; }
         public contact Contact { get; set; }
         public item Item { get; set; }
@@ -147,6 +147,7 @@ namespace Cognitivo.Sales
         public Invoice()
         {
             InitializeComponent();
+            AppName = entity.App.Names.SalesInvoice;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

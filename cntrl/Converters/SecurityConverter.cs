@@ -10,9 +10,9 @@ namespace Cognitivo.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            entity.App.Names appname = (entity.App.Names)value;
-            entity.Brillo.Security security = new entity.Brillo.Security(appname);
-            entity.Privilage.Privilages Privilages=(entity.Privilage.Privilages)parameter;
+           // entity.App.Names appname = (entity.App.Names)value;
+            entity.Brillo.Security security = new entity.Brillo.Security(0);
+            entity.Privilage.Privilages Privilages=(entity.Privilage.Privilages)value;
             if (security.SpecialSecurity_ReturnsBoolean(Privilages))
                 return false;
             else

@@ -20,17 +20,17 @@ namespace entity.DebeHaber
         
         //Invoice Data
         public TransactionTypes Type { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime TransDate { get; set; }
         public string Gov_Code { get; set; }
+        public string Comment { get; set; }
+        public string CurrencyName { get; set; }
 
         //Invoice Documents
         public string DocNumber { get; set; }
         public string DocCode { get; set; }
         public DateTime? DocExpiry { get; set; }
 
-        //Currency
-        public string Currency { get; set; }
-
+        //Collection Property
         public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
         public virtual ICollection<Commercial_Return> Commercial_Return { get; set; }
@@ -41,17 +41,19 @@ namespace entity.DebeHaber
         public CostCenter CostCenter { get; set; }
 
         public decimal VAT_Coeficient { get; set; }
-        public decimal Value { get; set; }
+        public decimal UnitValue_WithVAT { get; set; }
         public string Comment { get; set; }
+
+        //Nav Property
         public virtual Commercial_Invoice Commercial_Invoice { get; set; }
     }
 
     public class CostCenter
     {
-        public int Reference_ID { get; set; }
         public CostCenterTypes Type { get; set; }
         public string Name { get; set; }
 
+        //Collection Property
         public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
     }
 

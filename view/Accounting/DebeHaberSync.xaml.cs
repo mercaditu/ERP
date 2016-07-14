@@ -57,6 +57,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             sales_invoiceViewSource.Source = db.sales_invoice.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
+                x.is_accounted == false &&
                 x.status == entity.Status.Documents_General.Approved).ToList();
         }
         public void Get_Payment()
@@ -64,6 +65,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             paymentViewSource.Source = db.payments.Where(x =>
                  x.id_company == entity.CurrentSession.Id_Company &&
+                 x.is_accounted == false &&
                  x.status == entity.Status.Documents_General.Approved).ToList();
         }
 
@@ -72,6 +74,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             sales_returnViewSource.Source = db.sales_return.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
+                x.is_accounted == false &&
                 x.status == entity.Status.Documents_General.Approved).ToList();
         }
 
@@ -80,6 +83,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             purchase_returnViewSource.Source = db.purchase_return.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
+                x.is_accounted == false &&
                 x.status == entity.Status.Documents_General.Approved).ToList();
         }
 
@@ -88,6 +92,7 @@ namespace Cognitivo.Accounting
             //x.Is Head replace with Is_Accounted = True.
             purchase_invoiceViewSource.Source = db.purchase_invoice.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
+                x.is_accounted == false &&
                 x.status == entity.Status.Documents_General.Approved).ToList();
         }
 
@@ -142,25 +147,19 @@ namespace Cognitivo.Accounting
 
             foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))
             {
-                entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
+                entity.DebeHaber.Commercial_Invoice Sales = new entity.DebeHaber.Commercial_Invoice();
 
-                //Invoice.Type = 1;
-                //Invoice.Variation = entity.DebeHaber.TransactionTypes.Sales;
-                //Invoice.BranchCode = sales_invoice.app_branch.code;
-                //Invoice.BranchName = sales_invoice.app_branch.name;
-                //Invoice.Comment = sales_invoice.comment;
-               
                 using (entity.db dbContext = new entity.db())
                 {
-                    Invoice.Currency = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault().app_currency.name;
+                    Sales.CurrencyName = dbContext.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault().app_currency.name;
                 }
 
-                Invoice.Gov_Code = sales_invoice.contact.gov_code;
-                Invoice.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
-                Invoice.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
+                Sales.Gov_Code = sales_invoice.contact.gov_code;
+                Sales.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "NA";
+                Sales.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
 
-                Invoice.DocNumber = sales_invoice.number;
-                Invoice.Date = sales_invoice.trans_date;
+                Sales.DocNumber = sales_invoice.number;
+                Sales.TransDate = sales_invoice.trans_date;
 
                 ///Loop through details.
                 foreach (entity.sales_invoice_detail Detail in sales_invoice.sales_invoice_detail)
@@ -190,10 +189,10 @@ namespace Cognitivo.Accounting
                     Payment.Account = schedual.payment_detail.app_account.name;
                     Payment.Value = schedual.debit;
 
-                    Invoice.Payments.Add(Payment);
+                    Sales.Payments.Add(Payment);
                 }
 
-                SalesInvoiceLIST.Add(Invoice);
+                SalesInvoiceLIST.Add(Sales);
             }
 
             ///Serealize SalesInvoiceLIST into Json

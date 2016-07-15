@@ -116,59 +116,15 @@ namespace Cognitivo.Accounting
             {
                 entity.DebeHaber.Commercial_Invoice Sales = new entity.DebeHaber.Commercial_Invoice();
 
-                Sales.Type = entity.DebeHaber.TransactionTypes.Sales;
-                Sales.TransDate = sales_invoice.trans_date;
-                Sales.Gov_Code = sales_invoice.contact.gov_code;
-                Sales.Comment = sales_invoice.comment;
-                Sales.CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
-
-                Sales.DocNumber = sales_invoice.number;
-                Sales.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";
-                Sales.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
+                //Loads Data from Sales
+                Sales.Fill_BySales(sales_invoice);
 
                 ///Loop through Details.
                 foreach (entity.sales_invoice_detail Detail in sales_invoice.sales_invoice_detail)
                 {
                     entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                    CommercialInvoice_Detail.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
-                    CommercialInvoice_Detail.UnitValue_WithVAT = Detail.SubTotal_Vat;
-                    CommercialInvoice_Detail.Comment = Detail.item_description;
-
-                    entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
-
-                    // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
-                    if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
-                    {
-                        CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
-                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
-
-                        //Add CostCenter into Detail.
-                        CommercialInvoice_Detail.CostCenter.Add(CostCenter);
-                    }
-                    // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
-                    else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
-                    {
-                        if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
-                        { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
-                        else
-                        { CostCenter.Name = Detail.item_description; }
-
-                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
-
-                        //Add CostCenter into Detail.
-                        CommercialInvoice_Detail.CostCenter.Add(CostCenter);
-                    }
-                    // Finally if all else fails, assume Item being sold is Merchendice.
-                    else
-                    {
-                        CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
-                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
-
-                        //Add CostCenter into Detail.
-                        CommercialInvoice_Detail.CostCenter.Add(CostCenter);
-                    }
-
-                    //Add Detail into Sales.
+                    //Fill and Detail SalesDetail
+                    CommercialInvoice_Detail.Fill_BySales(Detail);
                     Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
@@ -177,33 +133,10 @@ namespace Cognitivo.Accounting
                 {         
                     if (schedual.parent.sales_invoice != null && schedual.payment_detail != null)
                     {
-                        entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
-
-                        Payment.PaymentType = entity.DebeHaber.PaymentTypes.Normal;
-
-                        if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.CreditNote)
-                        {
-                            Payment.PaymentType = entity.DebeHaber.PaymentTypes.CreditNote;
-                        }
-                        else if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.WithHoldingVAT)
-                        {
-                            Payment.PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
-                        }
-
-                        Payment.Parent = schedual.parent.sales_invoice.number;
-                        Payment.Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
-                        Payment.DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
-                        Payment.DocExpiry = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.expire_date : DateTime.Now;
-                        Payment.DocNumber = schedual.payment_detail.payment.number;
-
-                        Payment.Account = schedual.payment_detail.app_account != null ? schedual.payment_detail.app_account.name : "";
-                        Payment.Value = schedual.payment_detail.value;
-
-                        Payment.TransDate = schedual.payment_detail.payment.trans_date;
-                        Payment.Account = schedual.payment_detail.app_account.name;
-                        Payment.Value = schedual.debit;
-
-                        Sales.Payments.Add(Payment);
+                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        //Fill and Add Payments
+                        Payments.FillPayments(schedual);
+                        Sales.Payments.Add(Payments);
 
                         //This will make the Sales Invoice hide from the next load.
                         schedual.payment_detail.payment.is_accounted = true;

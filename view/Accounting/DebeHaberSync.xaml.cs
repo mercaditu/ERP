@@ -310,7 +310,13 @@ namespace Cognitivo.Accounting
                 streamWriter.Flush();
                 streamWriter.Close();
             }
-            
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+
             //var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/";
             //var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             //httpWebRequest.ContentType = "application/json; charset=utf-8";

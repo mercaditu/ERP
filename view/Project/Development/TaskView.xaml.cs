@@ -684,7 +684,8 @@ namespace Cognitivo.Project.Development
 
                 if (project_task_output != null)
                 {
-                    project_task_output.item_description = project_task_output.item_description + " POS:-" + cbxproperty.Text;
+                    project_task_output.item_description = project_task_output.item_description + " || POS: '" + cbxproperty.Text + "'";
+                    project_task_output.RaisePropertyChanged("item_description");
                 }
             }
         }

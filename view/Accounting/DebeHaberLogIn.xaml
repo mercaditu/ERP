@@ -25,7 +25,7 @@
                     <Button Click="btnLogin_Click" Content="LogIn" Style="{StaticResource btn_green}" Margin="16,8"/>
                     <Rectangle Style="{StaticResource line_Bar}"/>
                     <Label Style="{StaticResource input_label}" Content="Server :" HorizontalAlignment="Center"/>
-                    <Label x:Name="tbxServer" 
+                    <Label x:Name="tbxServer" LostFocus="tbxServer_LostFocus"
                            Content="{Binding Source={x:Static mainpref:Settings.Default}, Path=DebeHaberConnString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                            HorizontalContentAlignment="Center" FontSize="14" Foreground="Gray"
                            Style="{StaticResource EditableLabelStyle}"/>
@@ -45,9 +45,7 @@
             </StackPanel>
         </TabItem>
         <TabItem x:Name="tabUpLoad" Focusable="False">
-            <Grid Focusable="True">
-                
-            </Grid>
+            <Frame Source="/Cognitivo;component/Accounting/DebeHaberSync.xaml" NavigationUIVisibility="Hidden" Focusable="True"/>
         </TabItem>
     </TabControl>
 </Page>

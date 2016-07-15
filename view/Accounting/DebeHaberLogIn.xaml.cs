@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Cognitivo.Properties;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,6 +113,14 @@ namespace Cognitivo.Accounting
             {
                 MessageBox.Show("Connection Error: " + ex.Message);
             }
+        }
+
+        private void tbxServer_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Settings SalesSettings = new Settings();
+
+            Settings.Default.Save();
+            SalesSettings = Settings.Default;
         }
     }
 }

@@ -143,12 +143,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Reports, "Reporting.Views.EmployeesInProduction", entity.App.Names.EmployeesInProduction, "Reports");
 
             //Accounting
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.Cycle", entity.App.Names.FiscalPeriod, "AccountingPeriod");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Form, "Accounting.ChartOfAccounts", entity.App.Names.ChartofAccount, "AccountingChart");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.Journal", entity.App.Names.AccountingJournal, "AccountingTransaction");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.ExpenseJournal", entity.App.Names.BookofExpenses, "ExpenseBook");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.IncomeJournal", entity.App.Names.BookofIncomes, "IncomeBook");
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberSync", entity.App.Names.DebeHaberSync, "");
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberLogin", entity.App.Names.DebeHaberLogin, "");
 
             //Application

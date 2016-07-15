@@ -175,7 +175,7 @@ namespace Cognitivo.Accounting
                 //Loop through payments made.
                 foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0 && x.parent != null && x.payment_detail.payment.is_accounted == false))
                 {         
-                    if (schedual.parent.sales_invoice != null)
+                    if (schedual.parent.sales_invoice != null && schedual.payment_detail != null)
                     {
                         entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
 

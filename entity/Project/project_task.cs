@@ -74,11 +74,12 @@ namespace entity
         public string item_description
         {
             get { return _item_description; }
-            set { _item_description = value; }
+            set { _item_description = value; RaisePropertyChanged("item_description"); }
         }
         private string _item_description;
 
-        public string code { get { return _code; } set { _code = value; RaisePropertyChanged("code"); } }
+        public string code { get { return _code; } 
+            set { _code = value; RaisePropertyChanged("code"); } }
         private string _code;
 
         public decimal? quantity_est

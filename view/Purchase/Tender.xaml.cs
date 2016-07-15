@@ -130,7 +130,6 @@ namespace Cognitivo.Purchase
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
             PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
-
         }
 
 

@@ -79,7 +79,7 @@ namespace entity
                             app_document_range _app_range = db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault();
                             Brillo.Logic.Range.branch_Code = db.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault().code;
                             Brillo.Logic.Range.terminal_Code = db.app_terminal.Where(x => x.id_terminal == id_terminal).FirstOrDefault().code;
-                            NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, true);
+                            NumberWatermark = Brillo.Logic.Range.calc_Range(_app_range, false);
                             number = NumberWatermark;
                             RaisePropertyChanged("NumberWatermark");
                             RaisePropertyChanged("number");

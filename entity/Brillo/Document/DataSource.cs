@@ -72,7 +72,7 @@ namespace entity.Brillo.Document
                 project project = (project)Document;
                 return Project(project);
             }
-            else if (Document.GetType().BaseType == typeof(item_inventory))
+            else if (Document.GetType() == typeof(item_inventory) || Document.GetType().BaseType == typeof(item_inventory))
             {
                 item_inventory item_inventory = (item_inventory)Document;
                 return Inventory(item_inventory);

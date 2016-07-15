@@ -1,8 +1,11 @@
-﻿using System;
+﻿using entity.Brillo.Document;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace entity
 {
@@ -206,6 +209,54 @@ namespace entity
                 base.item_movement.AddRange(item_movementLIST);
 
                 item_inventory.status = Status.Documents.Issued;
+
+                //string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\Inventory.rdlc";
+                //if (Directory.Exists(PathFull) == false)
+                //{
+                //    string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP";
+
+                //    //If path (CognitivoERP) does not exist, create path.
+                //    if (Directory.Exists(path) == false)
+                //    {
+                //        Directory.CreateDirectory(path);
+                //    }
+
+                //    string SubFolder = "\\TemplateFiles";
+
+                //    //If path (TemplateFiles) does not exist, create path
+                //    if (!Directory.Exists(path + SubFolder))
+                //    {
+                //        Directory.CreateDirectory(path + SubFolder);
+                //    }
+
+                //    //If file does not exist, create file.
+                //    if (!File.Exists(path + SubFolder + "\\Inventory.rdlc"))
+                //    {
+                //        //Add Logic
+                //        if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\Inventory.rdlc"))
+                //        {
+                //            File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\Inventory.rdlc",
+                //                   path + SubFolder + "\\Inventory.rdlc");
+                //        }
+
+                //    }
+                //}
+
+               
+                //DataSource DataSource = new DataSource();
+
+                //DocumentViewr DocumentViewr = new DocumentViewr();
+                //DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
+                //DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Create(item_inventory));
+                //DocumentViewr.reportViewer.RefreshReport();
+
+                //Window window = new Window
+                //{
+                //    Title = "Report",
+                //    Content = DocumentViewr
+                //};
+
+                //window.ShowDialog();
                 SaveChanges();
             }
 

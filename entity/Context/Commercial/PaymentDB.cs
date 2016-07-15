@@ -293,11 +293,15 @@ namespace entity
             }
 
             payment.status = Status.Documents_General.Approved;
+            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
+            payment.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
+            payment.RaisePropertyChanged("number");
             base.SaveChanges();
+
 
             if (RequirePrint)
             {
-                entity.Brillo.Document.Start.Automatic(payment, payment.app_document_range);
+                entity.Brillo.Document.Start.Automatic(payment, app_document_range);
             }
 
         }

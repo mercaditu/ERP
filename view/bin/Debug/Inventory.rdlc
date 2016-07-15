@@ -820,7 +820,7 @@
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!id_sales_order.Value</Value>
+                      <Value>=Fields!id_inventory_detail.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixMembers>

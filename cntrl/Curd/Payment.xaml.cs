@@ -59,6 +59,7 @@ namespace cntrl.Curd
             foreach (payment_schedual payment_schedual in payment_schedualList)
             {
                 payment_detail payment_detail = new payment_detail();
+                payment_detail.IsSelected = true;
                 payment_detail.payment = payment;
 
                 int id_currencyfx = _payment_schedualList.FirstOrDefault().id_currencyfx;

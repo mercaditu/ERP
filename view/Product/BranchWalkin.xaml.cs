@@ -99,7 +99,7 @@ namespace Cognitivo.Product
             app_branch_walkinsViewSource.Source = BranchWalkinsDB.app_branch_walkins.Local;
 
 
-            cbxBranch.ItemsSource = BranchWalkinsDB.app_branch.Where(b => b.id_company == CurrentSession.Id_Company && b.is_active).OrderBy(b => b.name).ToList();
+            //cbxBranch.ItemsSource = BranchWalkinsDB.app_branch.Where(b => b.id_company == CurrentSession.Id_Company && b.is_active).OrderBy(b => b.name).ToList();
 
 
         }

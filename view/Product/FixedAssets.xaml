@@ -119,6 +119,11 @@
                             <TextBox Text="{Binding purchase_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                             <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
                             <TextBox Text="{Binding current_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                            <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
+                            <TextBox x:Name="unit_costTextBox" Style="{StaticResource input_textbox}"
+							Text="{Binding unit_cost,Source={StaticResource itemViewSource}, Mode=TwoWay,
+                                            NotifyOnValidationError=true, ValidatesOnExceptions=true, 
+                                            UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" />
                             <Label Content="{lex:Loc Deactive}" Style="{StaticResource input_label}" />
                             <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
                               Name="cmbdeactive" SelectedValue="{Binding deactivetype,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>

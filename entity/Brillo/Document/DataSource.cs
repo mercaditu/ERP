@@ -72,6 +72,11 @@ namespace entity.Brillo.Document
                 project project = (project)Document;
                 return Project(project);
             }
+            else if (Document.GetType().BaseType == typeof(item_inventory))
+            {
+                item_inventory item_inventory = (item_inventory)Document;
+                return Inventory(item_inventory);
+            }
 
             return null;
         }
@@ -402,8 +407,8 @@ namespace entity.Brillo.Document
                     .Select(g => new
                     {
                         add1 = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.address : "" : "",
-                        telephone = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null? g.purchase_tender_contact.contact.telephone:"" : "",
-                        email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null? g.purchase_tender_contact.contact.email :"": "",
+                        telephone = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.telephone : "" : "",
+                        email = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.email : "" : "",
                         company_name = g.app_company != null ? g.app_company.name : "",
                         item_code = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.code : "" : "",
                         item_description = g.purchase_tender_item != null ? g.purchase_tender_item.item != null ? g.purchase_tender_item.item.description : "" : "",
@@ -415,15 +420,15 @@ namespace entity.Brillo.Document
                         unit_price = g.unit_cost,
                         unit_price_vat = g.UnitCost_Vat,
                         branch_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_branch != null ? g.purchase_tender_contact.purchase_tender.app_branch.name : "" : "" : "",
-                        terminal_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_terminal != null ? g.purchase_tender_contact.purchase_tender.app_terminal.name :"" :"" : "",
-                        Condition = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_condition!= null ?g.purchase_tender_contact.app_condition.name :"": "",
-                        Contract = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_contract!= null ?g.purchase_tender_contact.app_contract.name:"" : "",
+                        terminal_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.app_terminal != null ? g.purchase_tender_contact.purchase_tender.app_terminal.name : "" : "" : "",
+                        Condition = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_condition != null ? g.purchase_tender_contact.app_condition.name : "" : "",
+                        Contract = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_contract != null ? g.purchase_tender_contact.app_contract.name : "" : "",
                         Currency = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.name : "" : "" : "",
                         code = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.code.ToString() : "" : "",
-                        contact_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null?g.purchase_tender_contact.contact.name : "" : "",
+                        contact_name = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.name : "" : "",
                         trans_date = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.trans_date : DateTime.Now : DateTime.Now,
                         id_vat_group = g.id_vat_group,
-                        gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact!=null?g.purchase_tender_contact.contact.gov_code:"" : "",
+                        gov_id = g.purchase_tender_contact != null ? g.purchase_tender_contact.contact != null ? g.purchase_tender_contact.contact.gov_code : "" : "",
                         Number = g.purchase_tender_contact != null ? g.purchase_tender_contact.purchase_tender != null ? g.purchase_tender_contact.purchase_tender.number != null ? g.purchase_tender_contact.purchase_tender.number.ToString() : "" : "" : "",
                         DimensionString = g.DimensionString,
                         AmountWords = g.purchase_tender_contact != null ? g.purchase_tender_contact.app_currencyfx != null ? g.purchase_tender_contact.app_currencyfx.app_currency != null ? g.purchase_tender_contact.app_currencyfx.app_currency.has_rounding ?
@@ -547,7 +552,7 @@ namespace entity.Brillo.Document
                                   Number = g.payment_promissory_note.note_number,
 
                                   AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
-                                        // Text -> Words
+                                      // Text -> Words
                                         NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment_promissory_note.value : 0))
                                         :
                                         NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment_promissory_note.value : 0))) : "" : "" : "",
@@ -558,7 +563,7 @@ namespace entity.Brillo.Document
                 return reportDataSource;
             }
         }
-       
+
         public ReportDataSource Payment(payment payment)
         {
             using (db db = new db())
@@ -624,6 +629,33 @@ namespace entity.Brillo.Document
                 return reportDataSource;
             }
         }
+
+        public ReportDataSource Inventory(item_inventory item_inventory)
+        {
+            using (db db = new db())
+            {
+                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+                List<item_inventory_detail> item_inventory_detail = item_inventory.item_inventory_detail.ToList();
+
+                reportDataSource.Value = item_inventory_detail
+                    .Select(g => new
+                    {
+
+                        id_inventory_detail = g.id_inventory_detail,
+                        id_company = g.id_company,
+                        item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code != null ? g.item_product.item.code : "" : "" : "",
+                        item_description = g.item_product != null ? g.item_product.item != null ? g.item_product.item.name != null ? g.item_product.item.name : "" : "" : "",
+                        item_long_description = g.item_product != null ? g.item_product.item != null ? g.item_product.item.description != null ? g.item_product.item.description : "" : "" : "",
+                        quantity_system = g.value_system,
+                        quantity_counted = g.value_counted,
+                        unit_cost = g.unit_value,
+                        location = g.app_location != null ? g.app_location.name : "",
+
+                    }).ToList();
+
+                return reportDataSource;
+            }
+        }
         private string GetTag(List<project_tag_detail> project_tag_detail)
         {
             string TagList = "";
@@ -641,7 +673,7 @@ namespace entity.Brillo.Document
 
             return TagList;
         }
-          private string GetRelation(List<contact> contact)
+        private string GetRelation(List<contact> contact)
         {
             string ContactList = "";
             if (contact.Count > 0)

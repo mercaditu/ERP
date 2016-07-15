@@ -449,7 +449,7 @@
                             </StackPanel>
                             <StackPanel x:Name="stphour" 
                                         Visibility="{Binding IsChecked,ElementName=rbtnQuantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Collapsed}}" >
-                                <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
+                                <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem,ElementName=treeServicecontract, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
                                  DataContext="{StaticResource production_execution_detailServiceViewSource}">
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">

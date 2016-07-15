@@ -228,10 +228,16 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
+
+            production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
+            if (production_execution.id_production_execution==0)
+            {
+                 toolBar_btnSave_Click(sender);
+            }
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order.status = Status.Production.Executed;
             production_order.State = EntityState.Modified;
-            production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
+          
             if (production_execution != null)
             {
                 entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();

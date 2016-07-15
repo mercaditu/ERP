@@ -581,6 +581,9 @@
     <Compile Include="Reporting\Views\SalesBudgetList.xaml.cs">
       <DependentUpon>SalesBudgetList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\BranchWalkinsReport.xaml.cs">
+      <DependentUpon>BranchWalkinsReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
     </Compile>
@@ -962,6 +965,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="bin\Debug\Inventory.rdlc" />
     <EmbeddedResource Include="bin\Debug\SalesInvoice.rdlc" />
     <EmbeddedResource Include="bin\Debug\PromissoryNote.rdlc">
       <SubType>Designer</SubType>
@@ -1015,6 +1019,7 @@
     <Content Include="bin\Debug\Movement.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="bin\SalesBudget.rdlc" />
     <EmbeddedResource Include="Project\PrintingPress\Reports\PrintingPress.rdlc" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1721,6 +1726,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\SalesBudgetList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\BranchWalkinsReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

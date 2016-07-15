@@ -12,7 +12,8 @@ namespace entity
     {
         public app_branch_walkins()
         {
-            id_company = CurrentSession.Id_Branch;
+            id_company = CurrentSession.Id_Company;
+            id_branch = CurrentSession.Id_Branch;
             id_user = CurrentSession.Id_User;
             is_head = true;
             start_date = DateTime.Now;

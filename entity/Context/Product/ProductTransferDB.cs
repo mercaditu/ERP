@@ -62,7 +62,13 @@ namespace entity
         public int ApproveOrigin(int ID_BranchOrigin, int ID_BranchDestination, bool movebytruck)
         {
             NumberOfRecords = 0;
-
+            foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
+            {
+                if (item_transfer.id_transfer == 0)
+                {
+                    SaveChanges();
+                }
+            }
             foreach (item_transfer item_transfer in base.item_transfer.Local.Where(x => x.IsSelected))
             {
                 foreach (item_transfer_detail item_transfer_detail in item_transfer.item_transfer_detail.Where(x => x.status != Status.Documents_General.Approved))
@@ -255,6 +261,7 @@ namespace entity
         /// <param name="invoice"></param>
         public void Discount_Items_Origin(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool movebytruck)
         {
+         
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
             if (item_transfer_detail.item_product != null)

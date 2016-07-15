@@ -16,7 +16,31 @@ namespace entity.Brillo.Document
 
         public Normal(object Document, app_document_range app_range, PrintStyles PrintStyle)
         {
-            if (app_range.app_document != null ? app_range.app_document.style_reciept : false || app_range.app_document != null ? app_range.app_document.id_application==App.Names.PointOfSale:false)
+            if (app_range==null)
+            {
+                string PathFull = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CogntivoERP\\TemplateFiles\\Inventory.rdlc";
+
+                if (Directory.Exists(PathFull) == false)
+                {
+                    CreateFile(app_range);
+                }
+
+                DataSource DataSource = new DataSource();
+
+                DocumentViewr DocumentViewr = new DocumentViewr();
+                DocumentViewr.reportViewer.LocalReport.ReportPath = PathFull; // Path of the rdlc file
+                DocumentViewr.reportViewer.LocalReport.DataSources.Add(DataSource.Create(Document));
+                DocumentViewr.reportViewer.RefreshReport();
+
+                Window window = new Window
+                {
+                    Title = "Report",
+                    Content = DocumentViewr
+                };
+
+                window.ShowDialog();
+            }
+            else if (app_range.app_document != null ? app_range.app_document.style_reciept : false || app_range.app_document != null ? app_range.app_document.id_application==App.Names.PointOfSale:false)
             {
                 TicketPrint.Document_Print(app_range.app_document.id_document, Document);
             }

@@ -44,11 +44,11 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Background="White" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="left" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Height="544" Margin="0,45,0,0" >
-                <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
+                <!--<Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="cbxBranch" Grid.Column="1" Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
                                           SelectedValue="{Binding id_branch,Source={StaticResource app_branch_walkinsViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
-                                                                  ValidatesOnDataErrors=True}"/>
+                                                                  ValidatesOnDataErrors=True}"/>-->
                 <Label Content="{lex:Loc quantity}" Style="{StaticResource input_label}"/>
                 <TextBox Text="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>

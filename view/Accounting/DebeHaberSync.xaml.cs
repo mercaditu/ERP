@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Web.Script.Serialization;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 
 namespace Cognitivo.Accounting
 {
@@ -299,16 +300,27 @@ namespace Cognitivo.Accounting
 
         private void Send2API(string Json)
         {
-            var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/");
+            httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 streamWriter.Write(Json);
                 streamWriter.Flush();
+                streamWriter.Close();
             }
+            
+            //var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/";
+            //var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+            //httpWebRequest.ContentType = "application/json; charset=utf-8";
+            //httpWebRequest.Method = "POST";
+
+            //using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            //{
+            //    streamWriter.Write(Json);
+            //    streamWriter.Flush();
+            //}
         }
 
         public void file_create(String Data,String filename)

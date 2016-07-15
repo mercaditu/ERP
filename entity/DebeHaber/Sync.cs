@@ -10,6 +10,37 @@ namespace entity.DebeHaber
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
+    public class Methods
+    {
+        public string Currency2ISOCode(string CurrencyName)
+        {
+            string ISOCode = string.Empty;
+
+            if (CurrencyName.Contains("Guaran"))
+            {
+                ISOCode = "PYG";
+            }
+            else if (CurrencyName.Contains("Dol") || CurrencyName.Contains("lar"))
+            {
+                ISOCode = "USD";
+            }
+            else if (CurrencyName.Contains("Euro"))
+            {
+                ISOCode = "EUR";
+            }
+            else if (CurrencyName.Contains("Argen"))
+            {
+                ISOCode = "ARP";
+            }
+            else if (CurrencyName.Contains("Bra"))
+            {
+                ISOCode = "BRL";
+            }
+
+            return ISOCode;
+        }
+    }
+
     public class Commercial_Invoice
     {
         public Commercial_Invoice()

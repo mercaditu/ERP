@@ -317,17 +317,6 @@ namespace Cognitivo.Accounting
             {
                 var result = streamReader.ReadToEnd();
             }
-
-            //var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api_transactions/" + RelationshipHash + "/";
-            //var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-            //httpWebRequest.ContentType = "application/json; charset=utf-8";
-            //httpWebRequest.Method = "POST";
-
-            //using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            //{
-            //    streamWriter.Write(Json);
-            //    streamWriter.Flush();
-            //}
         }
 
         public void file_create(String Data,String filename)

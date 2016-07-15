@@ -112,7 +112,7 @@ namespace Cognitivo.Accounting
             List<entity.DebeHaber.Commercial_Invoice> SalesInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
 
             //Loop through
-            foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))
+            foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.is_accounted == false))
             {
                 entity.DebeHaber.Commercial_Invoice Sales = new entity.DebeHaber.Commercial_Invoice();
 
@@ -124,12 +124,15 @@ namespace Cognitivo.Accounting
                 {
                     entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_BySales(Detail);
+                    CommercialInvoice_Detail.Fill_BySales(Detail, db);
                     Sales.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0 && x.parent != null && x.payment_detail.payment.is_accounted == false))
+                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => 
+                    x.id_payment_detail > 0 
+                    && x.parent != null 
+                    && x.payment_detail.payment.is_accounted == false))
                 {         
                     if (schedual.parent.sales_invoice != null && schedual.payment_detail != null)
                     {
@@ -160,6 +163,7 @@ namespace Cognitivo.Accounting
 
                 //If all success, then SaveChanges.
                 db.SaveChanges();
+                Get_SalesInvoice();
             }
             catch (Exception ex)
             {

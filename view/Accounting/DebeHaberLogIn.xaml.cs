@@ -51,6 +51,11 @@ namespace Cognitivo.Accounting
                     Company_RUC = company.gov_code;
                     Company_Name = company.name;
                 }
+
+                if (company.domain != null)
+                {
+                    tabUpLoad.IsSelected = true;
+                }
             }
         }
 
@@ -60,13 +65,14 @@ namespace Cognitivo.Accounting
         {
             try
             {
-                string server = "http://" + Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/verification_api/" + UserName + "/" + Password;
+                string server = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/verification_api/" + UserName + "/" + Password;
                 var json = await DownloadPage(server);
                 _DebeHaberCompanyList = JsonConvert.DeserializeObject<List<DebeHaberCompany>>(json);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Connection Error: " + ex.Message);
+                return;
             }
 
             DebeHaberCompany _DebeHaberCompany = _DebeHaberCompanyList.Where(x => x.gov_code == Company_RUC).FirstOrDefault();
@@ -102,16 +108,19 @@ namespace Cognitivo.Accounting
                 string server = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/registration_api/54HY3kXgamBsJ94hhd1DYsFSWzlI4KtF7aJMDxO9D4wnTVaEoqtuI42eC1sM5NMqFvZsHhYPgsudolP8Ug1JhKPyBMKxfbvGSnON/" + Company_RUC;
                 var json = await DownloadPage(server);
                 string Hash = JsonConvert.DeserializeObject<DebeHaberRegistration>(json).hash_integretion;
-                using (entity.db db = new entity.db()) 
+                using (entity.db db = new entity.db())
                 {
                     entity.app_company company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
                     company.domain = Hash;
                     db.SaveChanges();
                 }
+
+                tabUpLoad.IsSelected = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Connection Error: " + ex.Message);
+                return;
             }
         }
 

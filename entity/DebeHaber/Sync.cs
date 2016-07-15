@@ -81,7 +81,7 @@ namespace entity.DebeHaber
         public virtual ICollection<CostCenter> CostCenter { get; set; }
 
         //Methods
-        public void Fill_BySales(sales_invoice_detail Detail)
+        public void Fill_BySales(sales_invoice_detail Detail, db db)
         {
             this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
             this.UnitValue_WithVAT = Detail.SubTotal_Vat;
@@ -158,19 +158,17 @@ namespace entity.DebeHaber
         public string  Account { get; set; }
         public decimal Value { get; set; }
 
-        public Payments FillPayments(entity.payment_schedual schedual)
+        public void FillPayments(entity.payment_schedual schedual)
         {
-            entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
-
-            Payment.PaymentType = entity.DebeHaber.PaymentTypes.Normal;
+            this.PaymentType = entity.DebeHaber.PaymentTypes.Normal;
 
             if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.CreditNote)
             {
-                Payment.PaymentType = entity.DebeHaber.PaymentTypes.CreditNote;
+                this.PaymentType = entity.DebeHaber.PaymentTypes.CreditNote;
             }
             else if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.WithHoldingVAT)
             {
-                Payment.PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
+                this.PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
             }
 
             this.Parent = schedual.parent.sales_invoice.number;
@@ -184,9 +182,7 @@ namespace entity.DebeHaber
 
             this.TransDate = schedual.payment_detail.payment.trans_date;
             this.Account = schedual.payment_detail.app_account.name;
-            thisf.Value = schedual.debit;
-
-            return Payment;
+            this.Value = schedual.debit;
         }
     }
 

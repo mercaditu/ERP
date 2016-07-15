@@ -1,0 +1,86 @@
+﻿<Page x:Class="Cognitivo.Product.BranchWalkin"
+     Title="{lex:Loc Project}" x:Name="_Project"
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     xmlns:entity="clr-namespace:entity;assembly=entity"
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+              xmlns:lex="http://wpflocalizeextension.codeplex.com"        
+          lex:LocalizeDictionary.DesignCulture="en-US"
+          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+          lex:ResxLocalizationProvider.DefaultDictionary="local"
+      mc:Ignorable="d"
+      MinHeight="550" MinWidth="750" Loaded="Project_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="app_branch_walkinsViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch_walkins}, CreateList=True}" />
+   
+    </Page.Resources>
+    <Grid DataContext="{StaticResource app_branch_walkinsViewSource}" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+
+
+        <ListBox x:Name="BranchWalkinsDataGrid" Background="{StaticResource AccentColor_Brush}"
+			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
+			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+			     ItemsSource="{Binding}" Grid.Row="1" Margin="0,45,0,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding start_date, StringFormat=d}" 
+						recordSecondaryName="{Binding end_date, StringFormat=d}"
+						recordName="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Background="White" Grid.ColumnSpan="2">
+            <StackPanel HorizontalAlignment="left" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Height="544" Margin="0,45,0,0" >
+                <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="cbxBranch" Grid.Column="1" Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
+                                          SelectedValue="{Binding id_branch,Source={StaticResource app_branch_walkinsViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                                  ValidatesOnDataErrors=True}"/>
+                <Label Content="{lex:Loc quantity}" Style="{StaticResource input_label}"/>
+                <TextBox Text="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
+                <DatePicker  Style="{StaticResource input_datepicker}"
+                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
+					            SelectedDate="{Binding start_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
+                <DatePicker  Style="{StaticResource input_datepicker}"
+                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
+					            SelectedDate="{Binding end_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+              
+             
+             
+            </StackPanel>
+
+        </ScrollViewer>
+        <cntrl:toolBar x:Name="toolBar" appName="BranchWalkin"
+			           btnNew_Click="btnNew_Click" 
+			           btnDelete_Click="btnDelete_Click" 
+			           btnSave_Click="btnSave_Click" 
+                       btnEdit_Click="toolBar_btnEdit_Click"
+                   
+			            btnCancel_Click="toolBar_btnCancel_Click"
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                
+			           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="-1,3,1,0" Grid.RowSpan="2"/>
+     
+    </Grid>
+
+
+
+</Page>

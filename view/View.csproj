@@ -376,6 +376,9 @@
     <Compile Include="Configs\ItemTemplate.xaml.cs">
       <DependentUpon>ItemTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product\BranchWalkin.xaml.cs">
+      <DependentUpon>BranchWalkin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\ProjectTag.xaml.cs">
       <DependentUpon>ProjectTag.xaml</DependentUpon>
     </Compile>
@@ -1568,6 +1571,10 @@
     <Page Include="Configs\ItemTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Product\BranchWalkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\ProjectTag.xaml">
       <SubType>Designer</SubType>

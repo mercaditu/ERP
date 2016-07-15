@@ -179,7 +179,7 @@
                     </DataGrid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="{lex:Loc Education}" Visibility="Collapsed">
+            <TabItem Header="{lex:Loc Education}" Visibility="Visible">
                 <Grid Margin="16" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <DataGrid x:Name="hr_educationDataGrid" AutoGenerateColumns="False" 
                               EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource contacthr_educationViewSource}}" 

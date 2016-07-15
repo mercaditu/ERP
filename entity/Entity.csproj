@@ -209,6 +209,7 @@
     <Compile Include="Context\Commercial\PaymentDB.cs" />
     <Compile Include="Context\Commercial\StockDB.cs" />
     <Compile Include="Context\Commercial\IncotermDB.cs" />
+    <Compile Include="Context\Config\BranchWalkinsDB.cs" />
     <Compile Include="Context\Human Resource\hr_TalentDB.cs" />
     <Compile Include="Context\Product\ItemDB.cs" />
     <Compile Include="Context\Commercial\ContactDB.cs" />

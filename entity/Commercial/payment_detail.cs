@@ -208,6 +208,7 @@ namespace entity
             }
         }
         private decimal _ValueInDefaultCurrency;
+      
 
         /// <summary>
         /// 

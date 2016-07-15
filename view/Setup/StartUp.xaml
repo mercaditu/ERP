@@ -50,7 +50,7 @@
                 <Button Content="Locate Server" Click="connStringBuilder_Click" Padding="10,0"
                         HorizontalAlignment="Center" 
                         Background="PaleGreen"/>
-                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify">
+                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
                     Cognitivo needs to know where the Server is located to send and recieve your data.
                 </TextBlock>
                 <Rectangle Fill="Black" HorizontalAlignment="Center" Height="2" Width="200"/>
@@ -66,7 +66,7 @@
                     <TextBlock Text="Database" HorizontalAlignment="Center" Style="{StaticResource text_Data}"/>
                     <Label x:Name="lbl_database_Name" Style="{StaticResource generic_Label}" HorizontalAlignment="Center"/>
                 </StackPanel>
-                <TextBlock Style="{StaticResource text_Instructions}">
+                <TextBlock Style="{StaticResource text_Instructions}" Foreground="Black">
                     Click here to <Hyperlink Click="connStringBuilder_Click">Update your Connection Settings</Hyperlink>. Application restart will be required.
                 </TextBlock>
             </StackPanel>
@@ -76,11 +76,11 @@
                 <Image Margin="10" Source="/Cognitivo;component/Images/Application/128/ProductionExecution.png" Width="64"/>
                 <Button Content="Generate the Database" Padding="10,0" Click="createDB_Click"
                         HorizontalAlignment="Center" Background="PaleGreen"/>
-                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify">
+                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
                     A DataBase is where we will store all your company's information, stuff like Accounting, Sales, and Inventory data.
                     Cognitivo will automatically create the database as needed within the Server you specified in Step 1.
                 </TextBlock>
-                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify">
+                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
                     Note: You only need one Database per Server.
                 </TextBlock>
             </StackPanel>
@@ -90,7 +90,7 @@
                 <Image Margin="10" Source="/Cognitivo;component/Images/Application/128/HomeCompany.png" Width="64"/>
                 <Button Content="Setup a New Company" Padding="10,0" Click="createCompany_Click"
                         HorizontalAlignment="Center" Background="PaleGreen"/>
-                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify">
+                <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
                     Cognitivo allows you work with multiples companies. Click on the button above to create a new Company, 
                     and follow the easy on-screen instructions.
                     If you already have one or more companies setup, they will appear at the bottom.

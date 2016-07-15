@@ -53,6 +53,7 @@ namespace entity.DebeHaber
         //Invoice Data
         public TransactionTypes Type { get; set; }
         public DateTime TransDate { get; set; }
+        public string CompanyName {get;set;}
         public string Gov_Code { get; set; }
         public string Comment { get; set; }
         public string CurrencyName { get; set; }
@@ -72,6 +73,7 @@ namespace entity.DebeHaber
         {
             this.Type = entity.DebeHaber.TransactionTypes.Sales;
             this.TransDate = sales_invoice.trans_date;
+            this.CompanyName = sales_invoice.contact.name;
             this.Gov_Code = sales_invoice.contact.gov_code;
             this.Comment = sales_invoice.comment;
             this.CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
@@ -85,6 +87,7 @@ namespace entity.DebeHaber
         {
             this.Type = entity.DebeHaber.TransactionTypes.Sales;
             this.TransDate = purchase_invoice.trans_date;
+            this.CompanyName = purchase_invoice.contact.name;
             this.Gov_Code = purchase_invoice.contact.gov_code;
             this.Comment = purchase_invoice.comment;
             this.CurrencyName = purchase_invoice.app_currencyfx.app_currency.name;
@@ -167,6 +170,7 @@ namespace entity.DebeHaber
         //Return Data
         public TransactionTypes Type { get; set; }
         public DateTime Date { get; set; }
+        public string CompanyName { get; set; }
         public string Gov_Code { get; set; }
 
         //Invoice Documents
@@ -180,6 +184,7 @@ namespace entity.DebeHaber
         public PaymentTypes PaymentType { get; set; }
         public DateTime TransDate { get; set; }
         public string Parent { get; set; }
+        public string CompanyName { get; set; }
         public string Gov_Code { get; set; }
 
         public string DocNumber { get; set; }
@@ -203,6 +208,7 @@ namespace entity.DebeHaber
             }
 
             this.Parent = schedual.parent.sales_invoice.number;
+            this.CompanyName = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
             this.Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
             this.DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
             this.DocExpiry = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.expire_date : DateTime.Now;

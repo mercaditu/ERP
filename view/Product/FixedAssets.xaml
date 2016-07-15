@@ -25,6 +25,8 @@
         <CollectionViewSource x:Key="item_brandViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_brand}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_departmentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_department}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>
+        <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource itemViewSource}">
         <Grid.ColumnDefinitions>
@@ -104,12 +106,33 @@
                                       DisplayMemberPath="name" SelectedValuePath="id_brand"
                                       ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
                                       SelectedValue="{Binding item.id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                            <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
+                                                 CollectionViewSource="{StaticResource item_tagViewSource}"
+                                                 focusGrid="True" Height="27" Width="256" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
+                                                 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                                <cntrl:SearchableTextbox.Columns>
+                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+                                                          Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
+                                </cntrl:SearchableTextbox.Columns>
+                            </cntrl:SearchableTextbox>
+                            <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                      CanUserAddRows="False"
+                                      HeadersVisibility="None" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+                                      ItemsSource="{Binding Source={StaticResource itemitem_tagdetailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <Rectangle Style="{StaticResource line_Bar}"/>
+
                             <Label Content="{lex:Loc Department}"  Style="{StaticResource input_label}"/>
                             <ComboBox x:Name="cbxItemDepartment" Grid.Column="1" Style="{StaticResource input_combobox}"
                                       DisplayMemberPath="name" SelectedValuePath="id_department"
                                       ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"
                                       SelectedValue="{Binding id_department, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-
+                            
                             <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
                             <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
 

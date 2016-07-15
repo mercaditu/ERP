@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using entity;
 using System.IO;
 using System.Data.Entity;
+using System.Windows.Input;
 
 namespace Cognitivo.Product
 {
@@ -15,7 +16,8 @@ namespace Cognitivo.Product
         ItemDB ItemDB = new ItemDB();
         CollectionViewSource
             itemViewSource,
-            itemitem_capitalViewSource, item_asset_maintainanceViewSource;
+            itemitem_capitalViewSource, item_asset_maintainanceViewSource,
+            itemitem_tagdetailViewSource;
 
         public FixedAssets()
         {
@@ -23,9 +25,10 @@ namespace Cognitivo.Product
 
             itemViewSource = FindResource("itemViewSource") as CollectionViewSource;
             itemitem_capitalViewSource = FindResource("itemitem_capitalViewSource") as CollectionViewSource;
+            itemitem_tagdetailViewSource = FindResource("itemitem_tagdetailViewSource") as CollectionViewSource;
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ItemDB.items.Where(i => i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).ToList();
             itemViewSource.Source = ItemDB.items.Local;
@@ -44,6 +47,15 @@ namespace Cognitivo.Product
             CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
             contactViewSource.Source = ItemDB.contacts.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_employee).OrderBy(x => x.name).ToList();
             cmbdeactive.ItemsSource = Enum.GetValues(typeof(item_asset.DeActiveTypes)).OfType<item_asset.DeActiveTypes>().ToList();
+
+            await ItemDB.item_tag
+                .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
+                .OrderBy(x => x.name).LoadAsync();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
+                item_tagViewSource.Source = ItemDB.item_tag.Local;
+            }));
         }
 
         #region Mini ToolBar
@@ -213,6 +225,40 @@ namespace Cognitivo.Product
                 
             }
 
+        }
+
+        private void cbxTag_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Add_Tag();
+            }
+        }
+
+        private void cbxTag_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Add_Tag();
+        }
+
+        void Add_Tag()
+        {
+            if (cbxTag.Data != null)
+            {
+                int id = Convert.ToInt32(((item_tag)cbxTag.Data).id_tag);
+                if (id > 0)
+                {
+                    item item = itemViewSource.View.CurrentItem as item;
+                    if (item != null)
+                    {
+                        item_tag_detail item_tag_detail = new item_tag_detail();
+                        item_tag_detail.id_tag = ((item_tag)cbxTag.Data).id_tag;
+                        item_tag_detail.item_tag = ((item_tag)cbxTag.Data);
+                        item.item_tag_detail.Add(item_tag_detail);
+                        itemitem_tagdetailViewSource.View.Refresh();
+
+                    }
+                }
+            }
         }
     }
 }

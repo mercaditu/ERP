@@ -45,8 +45,8 @@
         <CollectionViewSource x:Key="itemitem_conversion_factorViewSource" Source="{Binding item_conversion_factor, Source={StaticResource itemitem_productViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_serviceViewSource" Source="{Binding item_service, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>
-
         <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
+        
         <CollectionViewSource x:Key="item_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_template}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_templateitem_template_detaildetailViewSource" Source="{Binding item_template_detail, Source={StaticResource item_templateViewSource}}"/>
 
@@ -181,7 +181,7 @@
                             <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
                             <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
                                                  CollectionViewSource="{StaticResource item_tagViewSource}"
-                                                 focusGrid="True" Height="27" Width="256"
+                                                 focusGrid="True" Height="27" Width="256" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
                                                  KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
                                 <cntrl:SearchableTextbox.Columns>
                                     <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 

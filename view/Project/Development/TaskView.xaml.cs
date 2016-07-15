@@ -676,12 +676,13 @@ namespace Cognitivo.Project.Development
             }
         }
 
-        private void cbxproperty_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxproperty_SelectionChanged(object sender, EventArgs e)
         {
-            if (cbxproperty.SelectedItem!=null)
+            if (cbxproperty.SelectedItem != null)
             {
                 project_task project_task_output = treeProject.SelectedItem_ as project_task;
-                if (project_task_output!=null)
+
+                if (project_task_output != null)
                 {
                     project_task_output.item_description = project_task_output.item_description + " POS:-" + cbxproperty.Text;
                 }

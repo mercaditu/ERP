@@ -8,6 +8,7 @@ namespace entity.DebeHaber
 {
     public enum TransactionTypes { Sales = 1, Purchase = 1}
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
+    public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
     public class Commercial_Invoice
     {
@@ -77,7 +78,7 @@ namespace entity.DebeHaber
 
     public class Payments
     {
-        public int Type { get; set; }
+        public PaymentTypes PaymentType { get; set; }
         public DateTime TransDate { get; set; }
         public string Parent { get; set; }
         public string Gov_Code { get; set; }
@@ -88,7 +89,6 @@ namespace entity.DebeHaber
 
         public string  Account { get; set; }
         public decimal Value { get; set; }
-     
     }
 
     public class Vat

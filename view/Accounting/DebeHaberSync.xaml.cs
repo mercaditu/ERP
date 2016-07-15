@@ -106,43 +106,7 @@ namespace Cognitivo.Accounting
         {
             SalesInvoice_Sync();
         }
-
-
-        //private void Payment_Sync()
-        //{
-        //    List<entity.DebeHaber.Commercial_Invoice> PaymentLIST = new List<entity.DebeHaber.Commercial_Invoice>();
-
-        //    foreach (entity.payment payment in db.payments.Local.Where(x => x.IsSelected))
-        //    {
-        //        entity.DebeHaber.Commercial_Invoice Invoice = new entity.DebeHaber.Commercial_Invoice();
-
-        //        Invoice.ID = payment.id_payment;
-        //        Invoice.Type = (int)entity.DebeHaber.TransactionTypes.Sales;
-        //        Invoice.BranchCode = payment.app_branch.code;
-        //        Invoice.BranchName = payment.app_branch.name;
-        //      //  Invoice.Comment = payment.comm;
-        //        Invoice.Gov_Code = payment.contact.gov_code;
-        //       // Invoice.CurrencyISO_Code = payment..app_currency.name;
-        //        Invoice.InvoiceTotal = payment.GrandTotal;
-        //      //  Invoice.PaymentCondition = payment.app_contract.app_contract_detail.Sum(x => x.interval);
-
-        //        Invoice.InvoiceCode = payment.app_document_range != null ? payment.app_document_range.code : "NA";
-        //        Invoice.InvoiceCode_ExpDate = (payment.app_document_range != null ? (DateTime)payment.app_document_range.expire_date : DateTime.Now);
-
-        //        Invoice.DocNumber = payment.number;
-        //        Invoice.InvoiceDate = payment.trans_date;
-
-        //        PaymentLIST.Add(Invoice);
-
-        //        ///Serealize SalesInvoiceLIST into Json
-        //        var Payment_Json = new JavaScriptSerializer().Serialize(PaymentLIST);
-
-        //        Send2API(Payment_Json);
-        //        //file_create(Payment_Json as string, "Payment");
-        //        //Send Sales_Json send it to Server Address specified.
-        //    }
-        //}
-        
+     
         private void SalesInvoice_Sync()
         {
             List<entity.DebeHaber.Commercial_Invoice> SalesInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
@@ -209,28 +173,41 @@ namespace Cognitivo.Accounting
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0 && x.parent!=null && x.payment_detail.payment.is_accounted == false))
-                {
-                    entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
-                    Payment.Type = 3;
-                    Payment.TransDate = schedual.payment_detail.payment.trans_date;
-
+                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => x.id_payment_detail > 0 && x.parent != null && x.payment_detail.payment.is_accounted == false))
+                {         
                     if (schedual.parent.sales_invoice != null)
                     {
+                        entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
+
+                        Payment.PaymentType = entity.DebeHaber.PaymentTypes.Normal;
+
+                        if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.CreditNote)
+                        {
+                            Payment.PaymentType = entity.DebeHaber.PaymentTypes.CreditNote;
+                        }
+                        else if (schedual.payment_detail.payment_type.payment_behavior == entity.payment_type.payment_behaviours.WithHoldingVAT)
+                        {
+                            Payment.PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
+                        }
+
                         Payment.Parent = schedual.parent.sales_invoice.number;
                         Payment.Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
                         Payment.DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";
                         Payment.DocExpiry = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.expire_date : DateTime.Now;
                         Payment.DocNumber = schedual.payment_detail.payment.number;
+
+                        Payment.Account = schedual.payment_detail.app_account != null ? schedual.payment_detail.app_account.name : "";
+                        Payment.Value = schedual.payment_detail.value;
+
+                        Payment.TransDate = schedual.payment_detail.payment.trans_date;
+                        Payment.Account = schedual.payment_detail.app_account.name;
+                        Payment.Value = schedual.debit;
+
+                        Sales.Payments.Add(Payment);
+
+                        //This will make the Sales Invoice hide from the next load.
+                        schedual.payment_detail.payment.is_accounted = true;
                     }
-
-                    Payment.Account = schedual.payment_detail.app_account.name;
-                    Payment.Value = schedual.debit;
-                    
-                    Sales.Payments.Add(Payment);
-
-                    //This will make the Sales Invoice hide from the next load.
-                    schedual.payment_detail.payment.is_accounted = true;
                 }
 
                 SalesInvoiceLIST.Add(Sales);

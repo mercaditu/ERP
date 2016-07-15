@@ -118,7 +118,13 @@ namespace entity
         {
             foreach (payment_detail payment_detail in payment.payment_detail.Where(x=>x.IsSelected))
             {
-                Parent_Schedual = base.payment_schedual.Where(x => x.id_payment_schedual == payment_detail.id_payment_schedual).FirstOrDefault();
+                if (payment_detail.id_payment_schedual > 0)
+                {
+                   Parent_Schedual = base.payment_schedual.Where(x => x.id_payment_schedual == payment_detail.id_payment_schedual).FirstOrDefault();
+                }
+               
+                   
+            
                 ///Creates counter balanced in payment schedual.
                 ///Use this to Balance pending payments.
                 payment_schedual balance_payment_schedual = new payment_schedual();

@@ -92,7 +92,8 @@ namespace entity
                     _quantity_est = value;
                     RaisePropertyChanged("quantity_est");
 
-                    if (parent != null && parent.items != null)
+                    //Sum Parent, check if not recepie so as not to create an infinite loop.
+                    if (parent != null && parent.items != null && parent.items.item_recepie == null)
                     {
                         //This stops the Recepie from Adding
                         //Also stops the Rejecte Tasks from Adding
@@ -103,16 +104,18 @@ namespace entity
                         }
                     }
 
+                    //Recepie
                     if (this.items != null)
                     {
                         if (this.items.item_recepie != null)
                         {
+                            item_recepie recepie = items.item_recepie.FirstOrDefault();
                             if (child.Count > 0)
                             {
-                                foreach (project_task project_task in child.Where(x => x.status == Status.Project.Pending || x.status == Status.Project.Approved))
+                                foreach (project_task _child in child.Where(x => x.status == Status.Project.Pending || x.status == Status.Project.Approved))
                                 {
-                                    project_task.quantity_est = project_task.items.item_recepie_detail.FirstOrDefault().quantity * this.quantity_est;
-                                    project_task.RaisePropertyChanged("quantity_est");
+                                    item_recepie_detail item_recepie_detail = _child.items.item_recepie_detail.Where(x => x.item_recepie.id_recepie == recepie.id_recepie).FirstOrDefault();
+                                    _child.quantity_est = item_recepie_detail.quantity * this.quantity_est;
                                 }
                             }
                         }

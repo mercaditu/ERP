@@ -10,35 +10,20 @@ namespace entity.DebeHaber
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
-    public class Methods
+    public class Transactions
     {
-        public string Currency2ISOCode(string CurrencyName)
+        public Transactions()
         {
-            string ISOCode = string.Empty;
-
-            if (CurrencyName.Contains("Guaran"))
-            {
-                ISOCode = "PYG";
-            }
-            else if (CurrencyName.Contains("Dol") || CurrencyName.Contains("lar"))
-            {
-                ISOCode = "USD";
-            }
-            else if (CurrencyName.Contains("Euro"))
-            {
-                ISOCode = "EUR";
-            }
-            else if (CurrencyName.Contains("Argen"))
-            {
-                ISOCode = "ARP";
-            }
-            else if (CurrencyName.Contains("Bra"))
-            {
-                ISOCode = "BRL";
-            }
-
-            return ISOCode;
+            Commercial_Invoice = new List<Commercial_Invoice>();
+            Commercial_Return = new List<Commercial_Return>();
+            Payments = new List<Payments>();
         }
+
+        public string HashIntegration { get; set; }
+
+        public virtual ICollection<Commercial_Invoice> Commercial_Invoice { get; set; }
+        public virtual ICollection<Payments> Payments { get; set; }
+        public virtual ICollection<Commercial_Return> Commercial_Return { get; set; }
     }
 
     public class Commercial_Invoice

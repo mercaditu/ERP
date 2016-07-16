@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:pref="clr-namespace:Cognitivo.Sales"
-         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:converter="clr-namespace:Cognitivo.Converters"

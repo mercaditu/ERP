@@ -110,7 +110,8 @@ namespace Cognitivo.Accounting
      
         private void SalesInvoice_Sync()
         {
-            List<entity.DebeHaber.Commercial_Invoice> SalesInvoiceLIST = new List<entity.DebeHaber.Commercial_Invoice>();
+            entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            Transactions.HashIntegration = RelationshipHash;
 
             //Loop through
             foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.is_accounted == false))
@@ -147,8 +148,7 @@ namespace Cognitivo.Accounting
                     }
                 }
 
-                SalesInvoiceLIST.Add(Sales);
-
+                Transactions.Commercial_Invoice.Add(Sales);
                 //This will make the Sales Invoice hide from the next load.
                 sales_invoice.is_accounted = true;
             }
@@ -156,7 +156,7 @@ namespace Cognitivo.Accounting
             try
             {
                 ///Serealize SalesInvoiceLIST into Json
-                var Sales_Json = new JavaScriptSerializer().Serialize(SalesInvoiceLIST);
+                var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
 
                 Send2API(Sales_Json);
                 file_create(Sales_Json as string, "sales_invoice");
@@ -300,7 +300,7 @@ namespace Cognitivo.Accounting
 
         private void Send2API(string Json)
         {
-            var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/transactions/" + RelationshipHash + "/";
+            var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/transactions";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -316,12 +316,13 @@ namespace Cognitivo.Accounting
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
+                MessageBox.Show(result.ToString());
             }
         }
 
         public void file_create(String Data,String filename)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + filename + ".json";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Json.json";
             if (!System.IO.File.Exists(path))
             {
                 using (System.IO.FileStream fs = System.IO.File.Create(path))

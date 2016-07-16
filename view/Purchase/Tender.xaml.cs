@@ -30,7 +30,6 @@ namespace Cognitivo.Purchase
         private void toolBar_btnCancel_Click(object sender)
         {
             PurchaseTenderDB.CancelAllChanges();
-
         }
 
         private void toolBar_btnAnull_Click(object sender)

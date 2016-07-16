@@ -1079,7 +1079,7 @@ namespace Cognitivo.Production
 
 
                             production_executionproduction_execustion_detailViewSource.View.Refresh();
-                            production_executionproduction_execustion_detailViewSource.View.MoveCurrentToLast();
+                            //production_executionproduction_execustion_detailViewSource.View.MoveCurrentToLast();
 
                             loadServiceTotal(production_order_detail);
                         }

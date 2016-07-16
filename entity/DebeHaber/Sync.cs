@@ -61,7 +61,7 @@ namespace entity.DebeHaber
             this.CompanyName = sales_invoice.contact.name;
             this.Gov_Code = sales_invoice.contact.gov_code;
             this.Comment = sales_invoice.comment;
-            this.CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
+            this.CurrencyName = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.name : "" : "";
 
             this.DocNumber = sales_invoice.number;
             this.DocCode = sales_invoice.app_document_range != null ? sales_invoice.app_document_range.code : "";

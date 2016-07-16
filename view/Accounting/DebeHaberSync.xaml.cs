@@ -317,6 +317,11 @@ namespace Cognitivo.Accounting
             {
                 var result = streamReader.ReadToEnd();
                 MessageBox.Show(result.ToString());
+                if (result.ToString().Contains("Error"))
+                {
+                    Exception ex = new Exception();
+                    throw ex;
+                }
             }
         }
 

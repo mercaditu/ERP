@@ -105,11 +105,11 @@ namespace entity
 
                     if (this.items != null)
                     {
-                        if (this.items.is_autorecepie)
+                        if (this.items.item_recepie != null)
                         {
                             if (child.Count > 0)
                             {
-                                foreach (project_task project_task in child.Where(x => x.status != Status.Project.Rejected))
+                                foreach (project_task project_task in child.Where(x => x.status == Status.Project.Pending || x.status == Status.Project.Approved))
                                 {
                                     project_task.quantity_est = project_task.items.item_recepie_detail.FirstOrDefault().quantity * this.quantity_est;
                                     project_task.RaisePropertyChanged("quantity_est");

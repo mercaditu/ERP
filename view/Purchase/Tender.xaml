@@ -172,7 +172,7 @@
                         Grid.ColumnSpan="2" Grid.Row="1" >
                 <TabItem Header="{lex:Loc Order}">
                     <StackPanel Margin="4">
-                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Item}"/>
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Items}"/>
                         <Controls:SmartBox_Item x:Name="sbxItem" Select="Item_Select" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                         <DataGrid x:Name="purchase_tender_itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
                                   ItemsSource="{Binding Source={StaticResource purchase_tenderpurchase_tender_itemViewSource}}"  
@@ -298,7 +298,7 @@
                                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                         Width="32" Header=""/>
                                 <DataGridTextColumn Binding="{Binding purchase_tender_item.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
-                                                    Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
+                                                    Header="{lex:Loc Cognitivo:local:Items}" Width="*"/>
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="50"
 					                            ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
                                                 DisplayMemberPath="name" SelectedValuePath="id_vat_group" 

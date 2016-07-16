@@ -13,11 +13,14 @@ namespace Cognitivo.Project.Development
     {
         ProjectTaskDB ProjectTaskDB = new ProjectTaskDB();
 
-        CollectionViewSource projectViewSource;
+        CollectionViewSource projectViewSource, project_taskViewSource;
+
         cntrl.Curd.PurchaseTender PurchaseTender;
+
         List<Logistic> LogisticsList = new List<Logistic>();
         List<Logistic> LogisticsListService = new List<Logistic>();
         project_task project_task;
+
         public Logistics()
         {
             InitializeComponent();
@@ -171,12 +174,17 @@ namespace Cognitivo.Project.Development
                 }
 
                 //Clears out values until Logistic is selected.
-                itemDataGrid.ItemsSource = null;
-
+                project_taskViewSource = ((CollectionViewSource)(this.FindResource("project_taskViewSource")));
+                if (project_taskViewSource != null)
+                {
+                    //Bad code to clear out ViewSource. I did this to avoid an error.
+                    List<project_task> list = ProjectTaskDB.project_task.Where(IT => IT.id_company == 999).ToList();
+                    project_taskViewSource.Source = list;
+                }
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
-                toolBar.msgError(ex);
+                //Do thing to avoid error showing for small reasons.
             }
         }
 
@@ -184,7 +192,7 @@ namespace Cognitivo.Project.Development
 
         private void btnRequestResource_Click(object sender, EventArgs e)
         {
-            if (itemDataGrid.ItemsSource != null)
+            if (project_taskViewSource.Source != null)
             {
                 if (tabraw.IsFocused)
                 {
@@ -317,9 +325,10 @@ namespace Cognitivo.Project.Development
                             (IT.status == Status.Project.Approved || IT.status == Status.Project.InProcess) &&
                             IT.status != null &&
                             IT.id_project == _id_project &&
-                            IT.id_item == _id_item)
-                              .ToList();
-                    itemDataGrid.ItemsSource = list.ToList();
+                            IT.id_item == _id_item).ToList();
+
+                    project_taskViewSource = ((CollectionViewSource)(this.FindResource("project_taskViewSource")));
+                    project_taskViewSource.Source = list;
                 }
             }
             catch (Exception ex)
@@ -392,17 +401,18 @@ namespace Cognitivo.Project.Development
         {
             if (((TabItem)TabLogistics.SelectedItem).Name == "tabproduct" || ((TabItem)TabLogistics.SelectedItem).Name == "tabraw")
             {
-
                 itemDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-
             }
             else
             {
                 itemDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
-            if (project_task != (project_task)itemDataGrid.SelectedItem)
+
+            project_taskViewSource = ((CollectionViewSource)(this.FindResource("project_taskViewSource")));
+
+            if (project_task != project_taskViewSource.View.CurrentItem as project_task)
             {
-                project_task = (project_task)itemDataGrid.SelectedItem;
+                project_task = project_taskViewSource.View.CurrentItem as project_task;
                 CollectionViewSource project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
 
                 project_task_dimensionViewSource.Source = ProjectTaskDB.project_task_dimension.Where(a => a.id_company == CurrentSession.Id_Company && a.id_project_task == project_task.id_project_task).ToList();
@@ -417,8 +427,9 @@ namespace Cognitivo.Project.Development
         {
             if (e.Source.GetType() == typeof(TabControl))
             {
-                LoadData();
-                itemDataGrid.ItemsSource = null;
+                LoadData(); 
+                project_taskViewSource = ((CollectionViewSource)(this.FindResource("project_taskViewSource")));
+                project_taskViewSource.Source = null;
             }
         }
 

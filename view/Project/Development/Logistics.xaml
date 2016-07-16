@@ -16,10 +16,8 @@
 	Title="Logistics">
     <Page.Resources>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
-        <!--
-        <CollectionViewSource x:Key="conditionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_condition}, CreateList=True}"/>
-        <CollectionViewSource x:Key="contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}"/>
-        -->
+
+        <CollectionViewSource x:Key="project_taskViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
@@ -67,7 +65,7 @@
                                                     ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" 
                                                     Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" 
-                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:InStock}" 
+                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Stock}" 
                                                     Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" 
                                                     ElementStyle="{StaticResource RightAlignStyle}" Header="buy qty" Width="SizeToHeader" />
@@ -108,7 +106,7 @@
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" 
                                                         ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" 
-                                                        ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:InStock}" Width="SizeToHeader" />
+                                                        ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Stock}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" 
                                                         ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Purchase}" Width="SizeToHeader" />
                             </DataGrid.Columns>
@@ -143,7 +141,7 @@
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" 
                                                     ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" 
-                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:InStock}" Width="SizeToHeader" />
+                                                    ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Stock}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" 
                                                     ElementStyle="{StaticResource RightAlignStyle}" Header="buy qty" Width="SizeToHeader" />
                             </DataGrid.Columns>
@@ -180,7 +178,7 @@
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" 
-                                                    Header="{lex:Loc Cognitivo:local:InStock}" Width="SizeToHeader" />
+                                                    Header="{lex:Loc Cognitivo:local:Stock}" Width="SizeToHeader" />
                                 <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}" 
                                                     Header="buy qty" Width="SizeToHeader" />
                             </DataGrid.Columns>
@@ -200,7 +198,7 @@
                                 <DataGridTextColumn Binding="{Binding _ordered_quantity, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader"/>
                                 <DataGridTextColumn Binding="{Binding avlqtyColumn, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
-                                                    Header="{lex:Loc Cognitivo:local:InStock}" Width="SizeToHeader"/>
+                                                    Header="{lex:Loc Cognitivo:local:Stock}" Width="SizeToHeader"/>
                                 <DataGridTextColumn Binding="{Binding buyqty, StringFormat={}{0:N}}" ElementStyle="{StaticResource RightAlignStyle}"
                                                     Header="Buy qty" Width="SizeToHeader"/>
                             </DataGrid.Columns>
@@ -211,15 +209,16 @@
                 </TabControl>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="2" Margin="0,42,0,0" Background="WhiteSmoke" HorizontalAlignment="Right">
-            <StackPanel  Grid.Column="3" >
+            <StackPanel Grid.Column="3" >
                 <Controls:NotificationButton Text="{lex:Loc RequestResource}" Margin="0,8"
                                              Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Icon="" Click="btnRequestResource_Click" 
                                              VerticalAlignment="Top" HorizontalAlignment="Center"/>
+
                 <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Grid.Row="0"
-                      CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Right"
-                      SelectionChanged="itemDataGrid_SelectionChanged"
-                      Width="300" >
+                          CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Right"
+                          SelectionChanged="itemDataGrid_SelectionChanged" Width="300"
+                          ItemsSource="{Binding Source={StaticResource project_taskViewSource}}">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24" 
@@ -238,14 +237,15 @@
 							        ItemsSource="{Binding Source={StaticResource project_task_dimensionViewSource}}" 
 							        RowDetailsVisibilityMode="VisibleWhenSelected">
                                 <DataGrid.Columns>
-                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" 
+                                    <DataGridComboBoxColumn Header="Dimension" 
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
-                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
+                                    <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                                        Header="value" />
+                                    <DataGridComboBoxColumn DisplayMemberPath="name" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-									                        SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" />
+									                        SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" 
+                                                            Header="Measurement" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DataTemplate>

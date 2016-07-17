@@ -14,11 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using entity;
 using System.Data.Entity;
+
 namespace Cognitivo.Product
 {
-    /// <summary>
-    /// Interaction logic for Project.xaml
-    /// </summary>
     public partial class BranchWalkin : Page
     {
         BranchWalkinsDB BranchWalkinsDB = new BranchWalkinsDB();
@@ -43,20 +41,20 @@ namespace Cognitivo.Product
 
         private void btnDelete_Click(object sender)
         {
-            try
-            {
-                if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    app_branch_walkins app_branch_walkins = (app_branch_walkins)BranchWalkinsDataGrid.SelectedItem;
-                    app_branch_walkins.is_head = false;
-                    app_branch_walkins.State = EntityState.Deleted;
-                    app_branch_walkins.IsSelected = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                toolBar.msgError(ex);
-            }
+            //try
+            //{
+            //    if (MessageBox.Show("Are you sure want to Delete?", "Cognitivo", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            //    {
+            //        app_branch_walkins app_branch_walkins = (app_branch_walkins)BranchWalkinsDataGrid.SelectedItem;
+            //        app_branch_walkins.is_head = false;
+            //        app_branch_walkins.State = EntityState.Deleted;
+            //        app_branch_walkins.IsSelected = true;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    toolBar.msgError(ex);
+            //}
         }
 
         private void btnSave_Click(object sender)
@@ -70,16 +68,16 @@ namespace Cognitivo.Product
 
         private void toolBar_btnEdit_Click(object sender)
         {
-            if (BranchWalkinsDataGrid.SelectedItem != null)
-            {
-                app_branch_walkins app_branch_walkins = (app_branch_walkins)BranchWalkinsDataGrid.SelectedItem;
-                app_branch_walkins.IsSelected = true;
-                app_branch_walkins.State = EntityState.Modified;
-            }
-            else
-            {
-                toolBar.msgWarning("Please Select an Item");
-            }
+            //if (BranchWalkinsDataGrid.SelectedItem != null)
+            //{
+            //    app_branch_walkins app_branch_walkins = (app_branch_walkins)BranchWalkinsDataGrid.SelectedItem;
+            //    app_branch_walkins.IsSelected = true;
+            //    app_branch_walkins.State = EntityState.Modified;
+            //}
+            //else
+            //{
+            //    toolBar.msgWarning("Please Select an Item");
+            //}
         }
 
 

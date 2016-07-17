@@ -606,12 +606,12 @@
                             </StackPanel>
 
                             <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" Margin="5,58,0,0" HorizontalAlignment="Left"
-                                  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
-                                                       UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
-				                  ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" 
-                                  InitializingNewItem="sales_invoice_detailDataGrid_InitializingNewItem" 
-                                  RowEditEnding="sales_invoice_detailDataGrid_RowEditEnding" 
-                                  CellEditEnding="sales_invoice_detailDataGrid_CellEditEnding">
+                                      IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse},
+                                                           UpdateSourceTrigger=PropertyChanged, FallbackValue=false}" 
+				                      ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}" 
+                                      InitializingNewItem="sales_invoice_detailDataGrid_InitializingNewItem" 
+                                      RowEditEnding="sales_invoice_detailDataGrid_RowEditEnding" 
+                                      CellEditEnding="sales_invoice_detailDataGrid_CellEditEnding">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding id_sales_invoice_detail, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"
                                                         Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True"/>

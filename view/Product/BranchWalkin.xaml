@@ -22,65 +22,33 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-
-
-
-        <ListBox x:Name="BranchWalkinsDataGrid" Background="{StaticResource AccentColor_Brush}"
-			     ScrollViewer.VerticalScrollBarVisibility="Auto" 
-			     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
-			     ItemsSource="{Binding}" Grid.Row="1" Margin="0,45,0,0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <cntrl:navList recordCode="{Binding start_date, StringFormat=d}" 
-						recordSecondaryName="{Binding end_date, StringFormat=d}"
-						recordName="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                          IsChecked="{Binding IsSelected,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Background="White" Grid.ColumnSpan="2">
-            <StackPanel HorizontalAlignment="left" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Height="544" Margin="0,45,0,0" >
-                <!--<Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
-                <ComboBox x:Name="cbxBranch" Grid.Column="1" Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
-                                          SelectedValue="{Binding id_branch,Source={StaticResource app_branch_walkinsViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                                                                  ValidatesOnExceptions=True, NotifyOnValidationError=True, 
-                                                                  ValidatesOnDataErrors=True}"/>-->
-                <Label Content="{lex:Loc quantity}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
-                <DatePicker  Style="{StaticResource input_datepicker}"
-                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
-					            SelectedDate="{Binding start_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
-                <DatePicker  Style="{StaticResource input_datepicker}"
-                                metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                                metro:ControlsHelper.MouseOverBorderBrush="Silver"
-					            SelectedDate="{Binding end_date, StringFormat=d, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-              
-             
-             
-            </StackPanel>
-
-        </ScrollViewer>
+        <DataGrid Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker Text="{Binding startdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker Text="{Binding enddate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <cntrl:toolBar x:Name="toolBar" appName="BranchWalkin"
 			           btnNew_Click="btnNew_Click" 
 			           btnDelete_Click="btnDelete_Click" 
 			           btnSave_Click="btnSave_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
-                   
-			            btnCancel_Click="toolBar_btnCancel_Click"
+			           btnCancel_Click="toolBar_btnCancel_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                
 			           VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="-1,3,1,0" Grid.RowSpan="2"/>
-     
     </Grid>
-
-
-
 </Page>

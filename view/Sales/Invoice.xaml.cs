@@ -544,10 +544,12 @@ namespace Cognitivo.Sales
 
                         if (sales_invoice != null)
                         {
+                            //Protect the code against null values.
+                            string number = sales_invoice.number != null ? sales_invoice.number : "";
+                            string customer = sales_invoice.contact != null ? sales_invoice.contact.name : "";
 
-                            if ((sales_invoice.contact != null ? sales_invoice.contact.name.ToLower().Contains(query.ToLower()) : false)
-                                || sales_invoice.number.Contains(query)
-                                || (sales_invoice.trans_date != null ? sales_invoice.trans_date.ToString() == query : false))
+                            if ((customer.ToLower().Contains(query.ToLower()))
+                                || number.Contains(query))
                             {
                                 return true;
                             }

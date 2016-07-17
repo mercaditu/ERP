@@ -396,9 +396,12 @@ namespace Cognitivo.Sales
                     sales_orderViewSource.View.Filter = i =>
                     {
                         sales_order sales_order = i as sales_order;
-                        if (sales_order.contact.name.ToLower().Contains(query.ToLower())
-                            || sales_order.number.ToLower().Contains(query.ToLower())
-                            || sales_order.trans_date == Convert.ToDateTime(query) || sales_order.sales_budget.number.ToLower().Contains(query.ToLower()))
+
+                        string number = sales_order.number != null ? sales_order.number : "";
+                        string customer = sales_order.contact != null ? sales_order.contact.name : "";
+
+                        if (customer.ToLower().Contains(query.ToLower())
+                            || number.ToLower().Contains(query.ToLower()))
                         {
                             return true;
                         }

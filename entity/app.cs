@@ -141,8 +141,8 @@ namespace entity
             Maintainance = 81,
             [LocalizedDescription("ItemBarcode")]
             ItemBarcode = 94,
-            [LocalizedDescription("BranchWalkin")]
-            BranchWalkin = 96,
+            [LocalizedDescription("FootTraffic")]
+            FootTraffic = 96,
 
             //Production
             [LocalizedDescription("ProductionExecution")]
@@ -260,10 +260,10 @@ namespace entity
             SalesbySalesman = 92,
             [LocalizedDescription("EmployeesInProduction")]
             EmployeesInProduction = 93,
-            [LocalizedDescription("Fraction")]
-            Fraction = 94,
-            [LocalizedDescription("DebeHaberLogin")]
-            DebeHaberLogin = 95
+            [LocalizedDescription("ProductionbyFraction")]
+            ProductionbyFraction = 94,
+            [LocalizedDescription("DebeHaberIntegration")]
+            DebeHaberIntegration = 95
         }
     }
 }

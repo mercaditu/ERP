@@ -86,7 +86,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.FixedAssets", entity.App.Names.FixedAssets, "");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.Recipe", entity.App.Names.Recipe, "Recipe");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.Stock", entity.App.Names.Stock, "ProductStock");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.BranchWalkin", entity.App.Names.BranchWalkin, "");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.BranchWalkin", entity.App.Names.FootTraffic, "");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transaction, "Product.Inventory", entity.App.Names.Inventory, "ProductStockAdjust");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transaction, "Product.Movement", entity.App.Names.Movement, "BranchLocation");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Transaction, "Product.Transfer", entity.App.Names.Transfer, "ProductSend");
@@ -97,8 +97,8 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.PriceList", entity.App.Names.PriceList, "ProductPriceList");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Inventory, "Sales.PackingList", "PackingList", "ProductSend");
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.Inventory", entity.App.Names.Inventory, "Reports");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Product.ProductBarcode", entity.App.Names.ItemBarcode, "Reports");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.BranchWalkinsReport", entity.App.Names.BranchWalkin, "Reports");
+            //dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Product.ProductBarcode", entity.App.Names.ItemBarcode, "Reports");
+            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.BranchWalkinsReport", entity.App.Names.FootTraffic, "Reports");
 
             //Impex
             dtApp.Rows.Add(entity.App.Modules.Impex, Namespace.Exports, "Sales.Export", entity.App.Names.Export, "Export");
@@ -143,12 +143,12 @@ namespace Cognitivo.Menu
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Form, "Production.Line", entity.App.Names.Line, "");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder");
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.FractionOrder", entity.App.Names.Fraction, "");
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution");
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Reports, "Reporting.Views.EmployeesInProduction", entity.App.Names.EmployeesInProduction, "Reports");
 
             //Accounting
-            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberLogin", entity.App.Names.DebeHaberLogin, "");
+            dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberLogin", entity.App.Names.DebeHaberIntegration, "");
 
             //Application
             dtApp.Rows.Add(entity.App.Modules.Configuration, Namespace.Preferences, "Configs.Language", "Language", "Language");

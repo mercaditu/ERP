@@ -2653,11 +2653,11 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @Productionby Fraction.
+        ///   Looks up a localized string similar to @ProductionbyFraction.
         /// </summary>
-        public static string Productionby_Fraction {
+        public static string ProductionbyFraction {
             get {
-                return ResourceManager.GetString("Productionby Fraction", resourceCulture);
+                return ResourceManager.GetString("ProductionbyFraction", resourceCulture);
             }
         }
         

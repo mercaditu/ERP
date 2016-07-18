@@ -11,12 +11,12 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
             <StackPanel>
                 <Label Content="StartDate" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding ElementName=_SalesByDate, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <DatePicker SelectedDate="{Binding ElementName=_AvgSales, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Style="{StaticResource input_datepicker}"/>
             </StackPanel>
             <StackPanel>
                 <Label Content="EndDate" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding ElementName=_SalesByDate, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <DatePicker SelectedDate="{Binding ElementName=_AvgSales, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Style="{StaticResource input_datepicker}"/>
             </StackPanel>
             <StackPanel>

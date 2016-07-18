@@ -366,7 +366,7 @@ namespace Cognitivo.Project
             if (id_template_designerComboBox.SelectedItem != null)
             {
                 project_event_template template_designer = id_template_designerComboBox.SelectedItem as project_event_template;
-                itemViewSource.Source = EventDB.items.Where(x => EventDB.item_tag_detail.Where(y => y.id_tag == template_designer.id_tag).Select(z => z.id_item).Contains(x.id_item) && x.is_active).ToList();
+                itemViewSource.Source = EventDB.items.Where(x => EventDB.item_tag_detail.Where(y => y.id_tag == template_designer.id_tag).Select(z => z.id_item).Contains(x.id_item) && x.is_active ).ToList();
             }
         }
 

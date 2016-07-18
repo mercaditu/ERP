@@ -14,7 +14,7 @@
     <Shape ID="DesignTable:SalesBudgetList" ZOrder="6" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
     <Shape ID="DesignTable:SalesByBrand" ZOrder="5" X="467" Y="29" Height="191" Width="284" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="24" OldDataTableHeight="0" SplitterPosition="140" />
     <Shape ID="DesignTable:SalesByTag" ZOrder="2" X="435" Y="574" Height="210" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
-    <Shape ID="DesignTable:AvgSales" ZOrder="1" X="212" Y="618" Height="229" Width="284" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
+    <Shape ID="DesignTable:AvgSales" ZOrder="1" X="212" Y="618" Height="248" Width="284" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="197" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

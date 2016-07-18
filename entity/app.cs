@@ -239,7 +239,7 @@ namespace entity
             [LocalizedDescription("CurrentAccountCustomer")]
             CurrentAccountCustomer = 86,
             [LocalizedDescription("SalesByItem")]
-            SalesByItem = 86,
+            SalesByItem = 103,
             [LocalizedDescription("SalesByBrand")]
             SalesByBrand = 97,
             [LocalizedDescription("SalesByTag")]

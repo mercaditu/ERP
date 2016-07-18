@@ -114,7 +114,7 @@ namespace Cognitivo.Accounting
             Transactions.HashIntegration = RelationshipHash;
 
             //Loop through
-            foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected && x.is_accounted == false))
+            foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
             {
                 entity.DebeHaber.Commercial_Invoice Sales = new entity.DebeHaber.Commercial_Invoice();
 
@@ -163,8 +163,8 @@ namespace Cognitivo.Accounting
                 //Send Sales_Json send it to Server Address specified.
 
                 //If all success, then SaveChanges.
-                db.SaveChanges();
-                Get_SalesInvoice();
+                //db.SaveChanges();
+                //Get_SalesInvoice();
             }
             catch (Exception ex)
             {

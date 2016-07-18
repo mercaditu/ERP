@@ -44,7 +44,7 @@ namespace Cognitivo.Reporting.Views
                 db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
                 cbxBranch.ItemsSource = db.app_branch.Local;
                 db.item_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
-                cbxBranch.ItemsSource = db.item_tag.Local;
+                cbxTag.ItemsSource = db.item_tag.Local;
             }
 
             Fill(null, null);

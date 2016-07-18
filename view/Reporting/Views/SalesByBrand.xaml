@@ -6,7 +6,7 @@
       mc:Ignorable="d" 
       xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
       d:DesignHeight="600" d:DesignWidth="800"
-	Title="SalesByItem">
+	Title="Sales By Brand">
 
     <Grid Background="Gainsboro">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">

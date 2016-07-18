@@ -41,7 +41,7 @@ namespace Cognitivo.Menu
 
             //Sales        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact");
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.ContactSubscription", entity.App.Names.ContactSubscription, "Contact");
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Form, "Commercial.ContactSubscription", entity.App.Names.Subscription, "Contact");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Budget", entity.App.Names.SalesBudget, "");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Order", entity.App.Names.SalesOrder, "SalesOrder");
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Transaction, "Sales.Invoice", entity.App.Names.SalesInvoice, "Sales");
@@ -115,9 +115,9 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Currency", entity.App.Names.Currency, "Currency");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Commercial.PaymentType", entity.App.Names.PaymentType, "");
             dtApp.Rows.Add(entity.App.Modules.Finance, entity.App.Modules.Configuration, "Configs.Bank", entity.App.Names.Bank, "BankAccount");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Reports, "Reporting.Views.CurrentAccount_Customer", entity.App.Names.CurrentAccount_Customer, "Reports");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Reports, "Reporting.Views.PendingSalesDocs", entity.App.Names.PendingSalesDocs, "Reports");
-            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Reports, "Reporting.Views.AccountsRecievableAnalisys", entity.App.Names.PendingSalesDocs, "Reports");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Reports, "Reporting.Views.CurrentAccount_Customer", entity.App.Names.CurrentAccountCustomer, "Reports");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Reports, "Reporting.Views.PendingSalesDocs", entity.App.Names.SalesDocuments, "Reports");
+            dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Reports, "Reporting.Views.AccountsRecievableAnalisys", entity.App.Names.AnalisysofAccountsReceivable, "Reports");
 
             //Projects Printing Press
             dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Form, "Project.PrintingPress.Template", entity.App.Names.Template, "ProjectCategory");

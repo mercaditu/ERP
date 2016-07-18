@@ -1700,10 +1700,6 @@ namespace Cognitivo.Production
         private void btnItemSelect_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-      
-       
-        
+        }        
     }
 }

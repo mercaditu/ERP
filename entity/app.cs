@@ -84,8 +84,8 @@ namespace entity
             DebeHaberSync=90,
             [LocalizedDescription("Contact")]
             Contact = 10,
-            [LocalizedDescription("ContactSubscription")]
-            ContactSubscription = 92,
+            [LocalizedDescription("Subscription")]
+            Subscription = 92,
             [LocalizedDescription("PaymentUtility")]
             PaymentUtility = 16,
             [LocalizedDescription("Payment")]
@@ -236,8 +236,8 @@ namespace entity
 
             [LocalizedDescription("SalesbyDate")]
             SalesbyDate = 83,
-            [LocalizedDescription("CurrentAccount_Customer")]
-            CurrentAccount_Customer = 86,
+            [LocalizedDescription("CurrentAccountCustomer")]
+            CurrentAccountCustomer = 86,
             [LocalizedDescription("SalesByItem")]
             SalesByItem = 86,
             [LocalizedDescription("SalesByBrand")]
@@ -250,12 +250,12 @@ namespace entity
             CostOfGoodsSold = 87,
             [LocalizedDescription("CostOfInventory")]
             CostOfInventory = 89,
-            [LocalizedDescription("PendingSalesDocs")]
-            PendingSalesDocs = 90,
+            [LocalizedDescription("SalesDocuments")]
+            SalesDocuments = 90,
             [LocalizedDescription("SuppliesRequest")]
             SuppliesRequest = 84,
-            [LocalizedDescription("AccountsRecievableAnalisys")]
-            AccountsRecievableAnalisys = 91,
+            [LocalizedDescription("AnalisysofAccountsReceivable")]
+            AnalisysofAccountsReceivable = 91,
             [LocalizedDescription("SalesbySalesman")]
             SalesbySalesman = 92,
             [LocalizedDescription("EmployeesInProduction")]

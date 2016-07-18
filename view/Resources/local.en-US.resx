@@ -180,6 +180,9 @@
   <data name="AmountPaid" xml:space="preserve">
     <value>Amount Paid</value>
   </data>
+  <data name="AnalisysofAccountsReceivable" xml:space="preserve">
+    <value>Analisys of Accounts Receivable</value>
+  </data>
   <data name="Annul" xml:space="preserve">
     <value>Annul</value>
   </data>
@@ -396,6 +399,9 @@
   <data name="Current" xml:space="preserve">
     <value>Current</value>
   </data>
+  <data name="CurrentAccountCustomer" xml:space="preserve">
+    <value>Current Account Customer</value>
+  </data>
   <data name="CurrentlyinAccount" xml:space="preserve">
     <value>Currently in Account</value>
   </data>
@@ -419,6 +425,9 @@
   </data>
   <data name="DateofBirth" xml:space="preserve">
     <value>Date of Birth</value>
+  </data>
+  <data name="DebeHaberIntegration" xml:space="preserve">
+    <value>DebeHaber Integration</value>
   </data>
   <data name="Debit" xml:space="preserve">
     <value>Debit</value>
@@ -621,6 +630,9 @@
   <data name="FixedAssets" xml:space="preserve">
     <value>Fixed Assets</value>
   </data>
+  <data name="FootTraffic" xml:space="preserve">
+    <value>Foot Traffic</value>
+  </data>
   <data name="Form" xml:space="preserve">
     <value>Form</value>
   </data>
@@ -707,6 +719,9 @@
   </data>
   <data name="InitialSetup" xml:space="preserve">
     <value>Initial Setup</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
   </data>
   <data name="Insert" xml:space="preserve">
     <value>Insert</value>
@@ -873,8 +888,14 @@
   <data name="Origin" xml:space="preserve">
     <value>Origin</value>
   </data>
+  <data name="Output" xml:space="preserve">
+    <value>Output</value>
+  </data>
   <data name="PackingList" xml:space="preserve">
     <value>Packing List</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Parent</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -960,6 +981,9 @@
   <data name="Production" xml:space="preserve">
     <value>Production</value>
   </data>
+  <data name="Productionby Fraction" xml:space="preserve">
+    <value>Production by Fraction</value>
+  </data>
   <data name="ProductionExecution" xml:space="preserve">
     <value>Production Execution</value>
   </data>
@@ -1004,6 +1028,9 @@
   </data>
   <data name="PurchaseDetail" xml:space="preserve">
     <value>Purchase Detail</value>
+  </data>
+  <data name="PurchaseDocuments" xml:space="preserve">
+    <value>Purchase Documents</value>
   </data>
   <data name="PurchaseInvoice" xml:space="preserve">
     <value>Purchase Invoice</value>
@@ -1107,6 +1134,9 @@
   <data name="SalesBudget" xml:space="preserve">
     <value>Sales Budget</value>
   </data>
+  <data name="SalesbyBrand" xml:space="preserve">
+    <value>Sales by Brand</value>
+  </data>
   <data name="SalesbyDate" xml:space="preserve">
     <value>Sales by Date</value>
   </data>
@@ -1121,6 +1151,9 @@
   </data>
   <data name="SalesDetails" xml:space="preserve">
     <value>Sales Details</value>
+  </data>
+  <data name="SalesDocuments" xml:space="preserve">
+    <value>Sales Documents</value>
   </data>
   <data name="SalesInvoice" xml:space="preserve">
     <value>Sales Invoice</value>

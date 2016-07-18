@@ -275,7 +275,7 @@ namespace Cognitivo.Project.Development
                         n_project_task.quantity_est = 0;
                         n_project_task.State = EntityState.Added;
                         project_task.child.Add(n_project_task);
-                        ProjectTaskDB.project_task.Add(n_project_task);
+                        //ProjectTaskDB.project_task.Add(n_project_task);
                         project_taskViewSource.View.Refresh();
                         project_taskViewSource.View.MoveCurrentTo(n_project_task);
 
@@ -560,7 +560,7 @@ namespace Cognitivo.Project.Development
                     }
                 }
 
-                if (item != null && item.id_item > 0 && item.is_autorecepie)
+                if (item != null && item.id_item > 0 && item.item_recepie.Count > 0)
                 {
                     project_task_output.id_item = item.id_item;
                     project_task_output.items = item;

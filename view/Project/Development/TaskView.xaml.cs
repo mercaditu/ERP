@@ -159,6 +159,7 @@ namespace Cognitivo.Project.Development
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
                 _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
                 string number = entity.Brillo.Logic.Range.calc_Range(_project_task.FirstOrDefault().app_document_range, true);
+
                 foreach (project_task project_task in _project_task)
                 {
                     project_task.project.code = Project_TaskApprove.code;

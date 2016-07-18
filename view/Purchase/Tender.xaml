@@ -168,7 +168,7 @@
 
             <Rectangle Style="{StaticResource line_Bar}" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Top"/>
 
-            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" x:Name="TabLogistics" 
+            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" x:Name="TabLogistics" SelectionChanged="TabLogistics_SelectionChanged"
                         Grid.ColumnSpan="2" Grid.Row="1" >
                 <TabItem Header="{lex:Loc Order}">
                     <StackPanel Margin="4">

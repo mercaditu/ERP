@@ -51,7 +51,7 @@ namespace entity
                     if (item_product.item != null)
                     {
                         _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, debit, GetDimensionValue());
-                        RaisePropertyChanged("_Quantity_Factored");
+                        RaisePropertyChanged("debit_Factored");
                     }
                 }
             }
@@ -82,12 +82,12 @@ namespace entity
         [NotMapped]
         public decimal credit_Factored
         {
-            get { return _debit_Factored; }
+            get { return _credit_Factored; }
             set
             {
-                if (_debit_Factored != value)
+                if (_credit_Factored != value)
                 {
-                    _debit_Factored = value;
+                    _credit_Factored = value;
                     RaisePropertyChanged("credit_Factored");
 
                     if (item_product != null)
@@ -95,7 +95,7 @@ namespace entity
                         if (item_product.item != null)
                         {
                             credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, credit_Factored, GetDimensionValue());
-                            RaisePropertyChanged("value_counted");
+                       
                         }
 
                     }
@@ -119,8 +119,8 @@ namespace entity
                     {
                         if (item_product.item != null)
                         {
-                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, debit_Factored, GetDimensionValue());
-                            RaisePropertyChanged("value_counted");
+                            debit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, debit_Factored, GetDimensionValue());
+                           
                         }
 
                     }
@@ -154,7 +154,25 @@ namespace entity
         public virtual item_movement _parent { get; set; }
 
         public virtual app_location app_location { get; set; }
-        public virtual item_product item_product { get; set; }
+        public virtual item_product item_product
+        {
+            get { return _item_product; }
+            set
+            {
+                _item_product = value;
+                if (_item_product != null)
+                {
+                    if (_item_product.item != null)
+                    {
+                        _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(_item_product.item, credit, GetDimensionValue());
+                        RaisePropertyChanged("credit_Factored");
+                        _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(_item_product.item, debit, GetDimensionValue());
+                        RaisePropertyChanged("debit_Factored");
+                    }
+                }
+            }
+        }
+        item_product _item_product;
         public virtual sales_packing_detail sales_packing_detail { get; set; }
         public virtual item_transfer_detail item_transfer_detail { get; set; }
         public virtual production_execution_detail production_execution_detail { get; set; }

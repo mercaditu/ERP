@@ -1117,7 +1117,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>SalesByItem</DataSetName>
+        <DataSetName>SalesByTag</DataSetName>
         <Height>1in</Height>
         <Width>8.49999in</Width>
         <Style>
@@ -1169,7 +1169,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="SalesByItem">
+    <DataSet Name="SalesByTag">
       <Query>
         <DataSourceName>SalesDS</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -1207,10 +1207,10 @@
       <rd:DataSetInfo>
         <rd:DataSetName>SalesDS</rd:DataSetName>
         <rd:SchemaPath>C:\Users\abhi\OneDrive\Documents\Projects\CognitivoERP\trunk\view\Reporting\Data\SalesDS.xsd</rd:SchemaPath>
-        <rd:TableName>SalesByItem</rd:TableName>
+        <rd:TableName>SalesByTag</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>SalesByItemTableAdapter</rd:TableAdapterName>
+        <rd:TableAdapterName>SalesByTagTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

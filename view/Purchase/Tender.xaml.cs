@@ -129,6 +129,8 @@ namespace Cognitivo.Purchase
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
             PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
+
+           
         }
 
 
@@ -465,6 +467,25 @@ namespace Cognitivo.Purchase
                 }
             }
           
+        }
+
+        private void TabLogistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabItem _TabItem = TabLogistics.SelectedItem as TabItem;
+            if (_TabItem!=null)
+            {
+                if (_TabItem.Header.ToString() == "Purchase Tender")
+                {
+                    if (PurchaseTenderDB.app_condition.Where(x=>x.is_active).FirstOrDefault()!=null)
+                    {
+                        cbxCondition.SelectedItem = PurchaseTenderDB.app_condition.Where(x => x.is_active).FirstOrDefault();
+                        cbxCondition_SelectionChanged(null, null);
+                    }
+                
+
+                } 
+            }
+         
         }
 
         

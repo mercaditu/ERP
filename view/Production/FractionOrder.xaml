@@ -180,7 +180,8 @@
                                     <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             								                 IsChecked="{Binding IsSelected,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             								                 HorizontalAlignment="Stretch"
-            								                 Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                                         Code="{Binding item.code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            								                 Type_Name="{Binding item.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                              TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
             								                 QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                              Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

@@ -315,7 +315,7 @@ namespace Cognitivo.Production
                     production_orderViewSource.View.Filter = i =>
                     {
                         production_order production_order = i as production_order;
-                        if (production_order.name.ToLower().Contains(query.ToLower()))
+                        if (production_order.name.ToLower().Contains(query.ToLower()) && production_order.types==entity.production_order.ProductionOrderTypes.Production)
                         {
                             return true;
                         }

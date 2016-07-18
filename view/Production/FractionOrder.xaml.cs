@@ -291,7 +291,14 @@ namespace Cognitivo.Production
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             if (production_order.production_execution.FirstOrDefault() != null)
             {
-                production_executionViewSource.View.MoveCurrentTo(production_order.production_execution.FirstOrDefault());
+                if (production_executionViewSource!=null)
+                {
+                    if (production_executionViewSource.View!=null)
+                    {
+                        production_executionViewSource.View.MoveCurrentTo(production_order.production_execution.FirstOrDefault());
+                    }
+                }
+               
             }
 
         }

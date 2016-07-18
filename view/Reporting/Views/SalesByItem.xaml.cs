@@ -22,13 +22,13 @@ namespace Cognitivo.Reporting.Views
     /// </summary>
     public partial class SalesByItem : Page
     {
-        public DateTime StartDate 
+        public DateTime StartDate
         {
             get { return _StartDate; }
             set { _StartDate = value; }
         }
         private DateTime _StartDate = DateTime.Now.AddMonths(-1);
-        public DateTime EndDate 
+        public DateTime EndDate
         {
             get { return _EndDate; }
             set { _EndDate = value; }
@@ -43,6 +43,7 @@ namespace Cognitivo.Reporting.Views
             {
                 db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
                 cbxBranch.ItemsSource = db.app_branch.Local;
+             
             }
 
             Fill(null, null);
@@ -51,31 +52,35 @@ namespace Cognitivo.Reporting.Views
         public void Fill(object sender, EventArgs e)
         {
             app_branch app_branch = cbxBranch.SelectedItem as app_branch;
-
+         
             if (app_branch != null)
             {
-                this.reportViewer.Reset();
+              
 
-                Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-                Data.SalesDS SalesDB = new Data.SalesDS();
 
-                SalesDB.BeginInit();
+                    this.reportViewer.Reset();
 
-                Data.SalesDSTableAdapters.SalesByItemTableAdapter SalesByItemTableAdapter = new Data.SalesDSTableAdapters.SalesByItemTableAdapter();
+                    Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+                    Data.SalesDS SalesDB = new Data.SalesDS();
 
-                //fill data
-                SalesByItemTableAdapter.ClearBeforeFill = true;
-                DataTable dt = SalesByItemTableAdapter.GetData(StartDate, EndDate, app_branch.id_branch);
+                    SalesDB.BeginInit();
 
-                reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
-                reportDataSource1.Value = dt;
-                this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByItem.rdlc";
+                    Data.SalesDSTableAdapters.SalesByItemTableAdapter SalesByItemTableAdapter = new Data.SalesDSTableAdapters.SalesByItemTableAdapter();
 
-                SalesDB.EndInit();
+                    //fill data
+                    SalesByItemTableAdapter.ClearBeforeFill = true;
+                    DataTable dt = SalesByItemTableAdapter.GetData(StartDate, EndDate, app_branch.id_branch);
 
-                this.reportViewer.Refresh();
-                this.reportViewer.RefreshReport();   
+                    reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file
+                    reportDataSource1.Value = dt;
+                    this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+                    this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByItem.rdlc";
+
+                    SalesDB.EndInit();
+
+                    this.reportViewer.Refresh();
+                    this.reportViewer.RefreshReport();
+                
             }
         }
     }

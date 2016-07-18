@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Reporting.Views.SalesByItem" x:Name="_SalesByItem"
+﻿<Page x:Class="Cognitivo.Reporting.Views.SalesByTag" x:Name="_SalesByTag"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,6 +23,10 @@
             <StackPanel>
                 <Label Content="Branch" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="cbxBranch" SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_branch" DisplayMemberPath="name" Style="{StaticResource input_combobox}" Width="128"/>
+            </StackPanel>
+            <StackPanel>
+                <Label Content="Tag" Style="{StaticResource input_label}"/>
+                <ComboBox x:Name="cbxTag" SelectedValue="{Binding id_tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_tag" DisplayMemberPath="name" Style="{StaticResource input_combobox}" Width="128"/>
             </StackPanel>
             <Button Content="Filter" VerticalAlignment="Center" Click="Fill"/>
         </StackPanel>

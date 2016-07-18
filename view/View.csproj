@@ -584,8 +584,17 @@
     <Compile Include="Reporting\Views\BranchWalkinsReport.xaml.cs">
       <DependentUpon>BranchWalkinsReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\AvgSales.xaml.cs">
+      <DependentUpon>AvgSales.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\SalesByBrand.xaml.cs">
+      <DependentUpon>SalesByBrand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\SalesByTag.xaml.cs">
+      <DependentUpon>SalesByTag.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesBySalesRep.xaml.cs">
       <DependentUpon>SalesBySalesRep.xaml</DependentUpon>
@@ -1032,7 +1041,14 @@
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PendingSalesDocs.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBudgetList.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\AvgSales.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesByBrand.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\Reports\SalesByTag.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1733,9 +1749,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Reporting\Views\AvgSales.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\SalesByDate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reporting\Views\SalesByBrand.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\SalesByTag.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\SalesBySalesRep.xaml">
       <Generator>MSBuild:Compile</Generator>

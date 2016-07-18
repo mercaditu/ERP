@@ -655,7 +655,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!quantity.Value, "SalesByDate")</Value>
+                              <Value>=Sum(Fields!quantity.Value, "AvgSales")</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <Format>N2</Format>
@@ -691,7 +691,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!total.Value, "SalesByDate")</Value>
+                              <Value>=Sum(Fields!total.Value, "AvgSales")</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <Format>N2</Format>
@@ -727,7 +727,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!totalCost.Value, "SalesByDate")</Value>
+                              <Value>=Sum(Fields!totalCost.Value, "AvgSales")</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <Format>N2</Format>
@@ -822,7 +822,7 @@
         </TablixRowHierarchy>
         <RepeatColumnHeaders>true</RepeatColumnHeaders>
         <FixedColumnHeaders>true</FixedColumnHeaders>
-        <DataSetName>SalesByDate</DataSetName>
+        <DataSetName>AvgSales</DataSetName>
         <Height>0.75in</Height>
         <Width>7.5in</Width>
         <Style>
@@ -849,7 +849,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Sales By Date</Value>
+                  <Value>Avg Sales</Value>
                   <Style>
                     <FontSize>12pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -933,7 +933,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="SalesByDate">
+    <DataSet Name="AvgSales">
       <Query>
         <DataSourceName>SalesDB</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -971,10 +971,10 @@
       <rd:DataSetInfo>
         <rd:DataSetName>SalesDB</rd:DataSetName>
         <rd:SchemaPath>C:\Users\abhi\OneDrive\Documents\Projects\CognitivoERP\trunk\view\Reporting\Data\SalesDB.xsd</rd:SchemaPath>
-        <rd:TableName>SalesByDate</rd:TableName>
+        <rd:TableName>AvgSales</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>SalesByDateTableAdapter</rd:TableAdapterName>
+        <rd:TableAdapterName>AvgSalesTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

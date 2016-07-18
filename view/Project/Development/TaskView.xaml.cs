@@ -260,26 +260,28 @@ namespace Cognitivo.Project.Development
             stpcode.IsEnabled = true;
 
             project project = projectViewSource.View.CurrentItem as project;
-            project_task project_task = treeProject.SelectedItem_ as project_task;
+            project_task parent_task = treeProject.SelectedItem_ as project_task;
 
-            if (project_task != null && project_task.items.item_recepie.Count() == 0)
+            if (parent_task != null && parent_task.items.item_recepie.Count() == 0)
             {
                 //Adding a Child Item.
-                if (project_task.items != null)
+                if (parent_task.items != null)
                 {
-                    if (project_task.items.id_item_type == entity.item.item_type.Task)
+                    if (parent_task.items.id_item_type == entity.item.item_type.Task)
                     {
-                        project_task n_project_task = new project_task();
-                        n_project_task.id_project = project.id_project;
-                        n_project_task.status = entity.Status.Project.Pending;
-                        n_project_task.quantity_est = 0;
-                        n_project_task.State = EntityState.Added;
-                        project_task.child.Add(n_project_task);
-                        //ProjectTaskDB.project_task.Add(n_project_task);
-                        project_taskViewSource.View.Refresh();
-                        project_taskViewSource.View.MoveCurrentTo(n_project_task);
+                        project_task child_task = new project_task();
+                        child_task.id_project = project.id_project;
+                        child_task.status = entity.Status.Project.Pending;
+                        child_task.quantity_est = 0;
+                        child_task.State = EntityState.Added;
 
-                        treeProject.SelectedItem_ = n_project_task;
+                        ProjectTaskDB.project_task.Add(child_task);
+                        parent_task.child.Add(child_task);
+                            
+                        project_taskViewSource.View.Refresh();
+                        project_taskViewSource.View.MoveCurrentTo(child_task);
+                        treeProject.SelectedItem_ = child_task;
+                        filter_task();
                     }
                 }
             }
@@ -603,15 +605,20 @@ namespace Cognitivo.Project.Development
                 {
                     project_task_output.items = item;
                     project_task_output.project_task_dimension.Clear();
+
                     foreach (item_dimension _item_dimension in item.item_dimension)
                     {
                         project_task_dimension project_task_dimension = new project_task_dimension();
                         project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
                         project_task_dimension.value = _item_dimension.value;
                         project_task_dimension.id_measurement = _item_dimension.id_measurement;
-                        project_task_dimension.id_project_task = project_task_output.id_project_task;
-                        project_task_dimension.project_task = project_task_output;
-                        ProjectTaskDB.project_task_dimension.Add(project_task_dimension);
+
+                        //project_task_dimension.id_project_task = project_task_output.id_project_task;
+                        //project_task_dimension.project_task = project_task_output;
+                        //ProjectTaskDB.project_task_dimension.Add(project_task_dimension);
+
+                        project_task_output.project_task_dimension.Add(project_task_dimension);
+
                         project_task_dimensionViewSource.View.MoveCurrentToLast();
                     }
                 }

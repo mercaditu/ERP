@@ -378,10 +378,7 @@ namespace entity
         public virtual ICollection<project_task> child
         {
             get { return _child; }
-            set
-            {
-                _child = value;
-            }
+            set { _child = value; }
         }
         private ICollection<project_task> _child;
 

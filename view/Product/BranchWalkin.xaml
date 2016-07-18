@@ -67,7 +67,7 @@
             </StackPanel>
 
         </ScrollViewer>
-        <cntrl:toolBar x:Name="toolBar" appName="BranchWalkin"
+        <cntrl:toolBar x:Name="toolBar" appName="FootTraffic"
 			           btnNew_Click="btnNew_Click" 
 			           btnDelete_Click="btnDelete_Click" 
 			           btnSave_Click="btnSave_Click" 

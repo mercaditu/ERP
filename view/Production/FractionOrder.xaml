@@ -1,4 +1,4 @@
-﻿<Page x:Class="Cognitivo.Production.FractionOrder" Title="{lex:Loc ProductionOrder}" x:Name="Productionorder"
+﻿<Page x:Class="Cognitivo.Production.FractionOrder" Title="{lex:Loc ProductionbyFraction}" x:Name="Productionorder"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -58,8 +58,6 @@
         <CollectionViewSource x:Key="production_execution_detailServiceContractViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_order_dimensionViewSource" Source="{Binding production_order_dimension, Source={StaticResource production_orderproduction_order_detailViewSource}}"/>
-        <!--<CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>-->
-        <!--<CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}"/>-->
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
        
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>

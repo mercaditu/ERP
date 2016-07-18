@@ -111,8 +111,8 @@ namespace entity
             Adjust = 12,
             [LocalizedDescription("Movement")]
             Movement = 13,
-            [LocalizedDescription("Import")]
-            Import = 14,
+            [LocalizedDescription("Imports")]
+            Imports = 14,
             [LocalizedDescription("IncotermCondition")]
             IncotermCondition = 45,
             [LocalizedDescription("Incoterm")]
@@ -182,7 +182,7 @@ namespace entity
             [LocalizedDescription("HourCoeficient")]
             HourCoeficient = 48,
             [LocalizedDescription("EmpRecievable")]
-            EmpRecievable = 95,
+            EmpRecievable = 101,
 
             //Configuration
             [LocalizedDescription("User")]
@@ -261,9 +261,9 @@ namespace entity
             [LocalizedDescription("EmployeesInProduction")]
             EmployeesInProduction = 93,
             [LocalizedDescription("ProductionbyFraction")]
-            ProductionbyFraction = 94,
+            ProductionbyFraction = 100,
             [LocalizedDescription("DebeHaberIntegration")]
-            DebeHaberIntegration = 95
+            DebeHaberIntegration = 102
         }
     }
 }

@@ -256,8 +256,8 @@ namespace entity
             SuppliesRequest = 84,
             [LocalizedDescription("AccountsRecievableAnalisys")]
             AccountsRecievableAnalisys = 91,
-            [LocalizedDescription("SalesBySalesRep")]
-            SalesBySalesRep = 92,
+            [LocalizedDescription("SalesbySalesman")]
+            SalesbySalesman = 92,
             [LocalizedDescription("EmployeesInProduction")]
             EmployeesInProduction = 93,
             [LocalizedDescription("Fraction")]

@@ -120,11 +120,8 @@ namespace entity
                         if (item_product.item != null)
                         {
                             debit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, debit_Factored, GetDimensionValue());
-                           
                         }
-
                     }
-
                 }
             }
         }
@@ -189,8 +186,6 @@ namespace entity
             decimal Dimension = 1M;
             if (item_movement_dimension != null)
             {
-
-
                 foreach (item_movement_dimension _item_movement_dimension in item_movement_dimension)
                 {
                     Dimension = Dimension * _item_movement_dimension.value;

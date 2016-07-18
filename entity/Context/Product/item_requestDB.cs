@@ -182,6 +182,13 @@ namespace entity
                                 item_transfer.app_branch_destination = base.app_branch.Where(x => x.id_branch == app_location.id_branch).FirstOrDefault();
                             }
 
+                            foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
+                            {
+                                item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                                item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
+                                item_transfer_dimension.value = item_request_dimension.value;
+                                item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                            }
                             item_transfer.item_transfer_detail.Add(item_transfer_detail);
                             item_transfer.transfer_type = entity.item_transfer.Transfer_type.movemnent;
 
@@ -225,7 +232,15 @@ namespace entity
                             {
                                 item_transfer_detail.id_project_task = item_request_detail.project_task.id_project_task;
                             }
-                     
+
+
+                            foreach (item_request_dimension item_request_dimension in item_request_detail.item_request_dimension)
+                            {
+                                item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                                item_transfer_dimension.id_dimension = item_request_dimension.id_dimension;
+                                item_transfer_dimension.value = item_request_dimension.value;
+                                item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                            }
                             item_transfer_detail.quantity_origin = item.quantity;
                             item_transfer_detail.quantity_destination = item.quantity;
                             item_transfertrans.item_transfer_detail.Add(item_transfer_detail);

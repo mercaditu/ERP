@@ -165,16 +165,16 @@ namespace Cognitivo.Project.Development
                     if (Project_TaskApprove.id_range != null)
                     {
                         project_task.id_range = Project_TaskApprove.id_range;
-                       app_document_range app_document_range= ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
-                       if (app_document_range!=null)
-                       {
-                           project_task.app_document_range = app_document_range;
-                           project_task.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
-                       }
-                    
+                        app_document_range app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                        if (app_document_range != null)
+                        {
+                            project_task.app_document_range = app_document_range;
+                            project_task.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
+                        }
+
 
                     }
-                   // project_task.number = number;
+                    // project_task.number = number;
                     if (project_task.status == Status.Project.Management_Approved)
                     {
                         if (project_task.status == Status.Project.Management_Approved || project_task.status == null)
@@ -347,10 +347,10 @@ namespace Cognitivo.Project.Development
                         using (db db = new db())
                         {
                             if (task.id_project_task != 0)
-	                        {
+                            {
                                 db.project_task.Remove(db.project_task.Where(x => x.id_project_task == task.id_project_task).FirstOrDefault());
                                 db.SaveChanges();
-	                        }
+                            }
                             else
                             {
                                 ProjectTaskDB.Entry(task).State = EntityState.Detached;
@@ -368,12 +368,11 @@ namespace Cognitivo.Project.Development
                 ProjectTaskDB = new entity.ProjectTaskDB();
                 ProjectTaskDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();//.Include(x => x.project_task).Load();
                 projectViewSource.Source = ProjectTaskDB.projects.Local;
+                project_taskViewSource.View.Filter = null;
+                project_taskViewSource.View.Refresh();
+                filter_task();
 
-                if (ProjectTaskDB.NumberOfRecords > 0)
-                {
-                    filter_task();
-                }
-                treeProject.UpdateLayout();
+                //treeProject.UpdateLayout();
             }
         }
 

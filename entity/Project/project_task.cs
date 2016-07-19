@@ -78,8 +78,11 @@ namespace entity
         }
         private string _item_description;
 
-        public string code { get { return _code; } 
-            set { _code = value; RaisePropertyChanged("code"); } }
+        public string code
+        {
+            get { return _code; }
+            set { _code = value; RaisePropertyChanged("code"); }
+        }
         private string _code;
 
         public decimal? quantity_est
@@ -107,7 +110,7 @@ namespace entity
                     //Recepie
                     if (this.items != null)
                     {
-                        if (this.items.item_recepie != null)
+                        if (this.items.item_recepie.Count > 0)
                         {
                             item_recepie recepie = items.item_recepie.FirstOrDefault();
                             if (child.Count > 0)
@@ -194,7 +197,7 @@ namespace entity
         {
             get
             {
-              
+
                 return _items;
             }
             set
@@ -203,7 +206,7 @@ namespace entity
                 {
                     _items = value;
                     RaisePropertyChanged("items");
-                    if (_item_description!=null && _item_description=="")
+                    if (_item_description != null && _item_description == "")
                     {
                         _item_description = items.name;
                         RaisePropertyChanged("item_description");
@@ -232,7 +235,7 @@ namespace entity
                     _id_range = value;
                     if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified || State == 0)
                     {
-                        
+
                         using (db db = new db())
                         {
                             if (db.app_document_range.Where(x => x.id_range == _id_range).FirstOrDefault() != null)
@@ -294,9 +297,9 @@ namespace entity
             set
             {
                 if (_production_execution_detail != value)
-	            {
+                {
                     _production_execution_detail = value;
-	            }
+                }
             }
         }
         ICollection<production_execution_detail> _production_execution_detail;

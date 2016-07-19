@@ -105,10 +105,13 @@ namespace Cognitivo.Accounting
 
         private void btnData_Sync(object sender, RoutedEventArgs e)
         {
-            SalesInvoice_Sync();
+            //Sales
+            Sales_Sync();
+            //Purchase
+            Purchase_Sync();
         }
      
-        private void SalesInvoice_Sync()
+        private void Sales_Sync()
         {
             entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
             Transactions.HashIntegration = RelationshipHash;
@@ -165,6 +168,65 @@ namespace Cognitivo.Accounting
                 //If all success, then SaveChanges.
                 //db.SaveChanges();
                 //Get_SalesInvoice();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception Error: " + ex.Message);
+            }
+        }
+
+        private void Purchase_Sync()
+        {
+            entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            Transactions.HashIntegration = RelationshipHash;
+
+            //Loop through
+            foreach (entity.purchase_invoice purchase_invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
+            {
+                entity.DebeHaber.Commercial_Invoice Purchase = new entity.DebeHaber.Commercial_Invoice();
+
+                //Loads Data from Sales
+                Purchase.Fill_ByPurchase(purchase_invoice);
+
+                ///Loop through Details.
+                foreach (entity.purchase_invoice_detail Detail in purchase_invoice.purchase_invoice_detail)
+                {
+                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    //Fill and Detail SalesDetail
+                    CommercialInvoice_Detail.Fill_ByPurchase(Detail, db);
+                    Purchase.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+                }
+
+                //Loop through payments made.
+                foreach (entity.payment_schedual schedual in purchase_invoice.payment_schedual.Where(x =>
+                    x.id_payment_detail > 0
+                    && x.parent != null
+                    && x.payment_detail.payment.is_accounted == false))
+                {
+                    if (schedual.parent.purchase_invoice != null && schedual.payment_detail != null)
+                    {
+                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        //Fill and Add Payments
+                        Payments.FillPayments(schedual);
+                        Purchase.Payments.Add(Payments);
+
+                        //This will make the Sales Invoice hide from the next load.
+                        schedual.payment_detail.payment.is_accounted = true;
+                    }
+                }
+
+                Transactions.Commercial_Invoice.Add(Purchase);
+                //This will make the Sales Invoice hide from the next load.
+                purchase_invoice.is_accounted = true;
+            }
+
+            try
+            {
+                ///Serealize SalesInvoiceLIST into Json
+                var Purchase_Json = new JavaScriptSerializer().Serialize(Transactions);
+
+                Send2API(Purchase_Json);
+                file_create(Purchase_Json as string, "purchase_invoice");
             }
             catch (Exception ex)
             {

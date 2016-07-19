@@ -309,7 +309,12 @@ namespace entity
 
         #region Navigation
 
-        public virtual app_currencyfx app_currencyfx { get; set; }
+        public virtual app_currencyfx app_currencyfx 
+        {
+            get { return _app_currencyfx; }
+            set { _app_currencyfx = value; RaisePropertyChanged("app_currencyfx"); }
+        }
+        private app_currencyfx _app_currencyfx;
 
         #endregion
 

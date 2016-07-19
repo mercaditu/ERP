@@ -220,7 +220,7 @@ namespace entity
                                 return "Maximum Quantity of :" + sales_invoice_detail.quantity + ", Exceeded";
                             }
                         }
-                    }   
+                    }
                 }
                 return "";
             }

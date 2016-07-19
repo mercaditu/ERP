@@ -230,14 +230,14 @@ namespace Cognitivo.Production
         {
 
             production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
-            if (production_execution.id_production_execution==0)
+            if (production_execution.id_production_execution == 0)
             {
-                 toolBar_btnSave_Click(sender);
+                toolBar_btnSave_Click(sender);
             }
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order.status = Status.Production.Executed;
             production_order.State = EntityState.Modified;
-          
+
             if (production_execution != null)
             {
                 entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
@@ -291,14 +291,14 @@ namespace Cognitivo.Production
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             if (production_order.production_execution.FirstOrDefault() != null)
             {
-                if (production_executionViewSource!=null)
+                if (production_executionViewSource != null)
                 {
-                    if (production_executionViewSource.View!=null)
+                    if (production_executionViewSource.View != null)
                     {
                         production_executionViewSource.View.MoveCurrentTo(production_order.production_execution.FirstOrDefault());
                     }
                 }
-               
+
             }
 
         }
@@ -618,10 +618,10 @@ namespace Cognitivo.Production
                         }
                     }
                     production_order_detail.child.Add(n_production_order_detail);
-                   
+
                     OrderDB.production_order_detail.Add(n_production_order_detail);
                     project_task_dimensionDataGrid.ItemsSource = production_order_detail.production_order_dimension.ToList();
-        
+
                     production_orderproduction_order_detailViewSource.View.Refresh();
                     production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
                     //  }
@@ -822,7 +822,7 @@ namespace Cognitivo.Production
                 {
                     ToggleQuantity.IsChecked = true;
                     stpproduct.Visibility = System.Windows.Visibility.Visible;
-                   // StpMovement.Visibility = System.Windows.Visibility.Collapsed;
+                    // StpMovement.Visibility = System.Windows.Visibility.Collapsed;
                 }
                 List<production_order_detail> production_order_detailList = OrderDB.production_order_detail.ToList();
                 cbxParent.ItemsSource = production_order_detailList.Where(x => x.id_production_order == production_order_detail.id_production_order && x != production_order_detail).ToList().ToList();
@@ -1085,10 +1085,36 @@ namespace Cognitivo.Production
                             OrderDB.production_execution_detail.Add(_production_execution_detail);
 
 
-                            production_executionproduction_execustion_detailViewSource.View.Refresh();
-                            //production_executionproduction_execustion_detailViewSource.View.MoveCurrentToLast();
+                           
+                            production_execution_detailServiceViewSource.View.MoveCurrentToLast();
 
                             loadServiceTotal(production_order_detail);
+                          
+                        }
+                        else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
+                        {
+                            if (cmbsccoefficient.SelectedValue != null)
+                            {
+                                _production_execution_detail.id_time_coefficient = (int)cmbsccoefficient.SelectedValue;
+                            }
+
+                            string start_date = string.Format("{0} {1}", dtpscstartdate.Text, dtpscstarttime.Text);
+                            _production_execution_detail.start_date = Convert.ToDateTime(start_date);
+                            string end_date = string.Format("{0} {1}", dtpscenddate.Text, dtpscendtime.Text);
+                            _production_execution_detail.end_date = Convert.ToDateTime(end_date);
+
+                            _production_execution_detail.id_production_execution = _production_execution.id_production_execution;
+                            _production_execution_detail.production_execution = _production_execution;
+                            _production_execution_detail.id_project_task = production_order_detail.id_project_task;
+                            _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
+                            _production_execution_detail.production_order_detail = production_order_detail;
+
+                            OrderDB.production_execution_detail.Add(_production_execution_detail);
+
+
+                            production_execution_detailServiceContractViewSource.View.Refresh();
+                          
+                            loadServiceContractTotal(production_order_detail);
                         }
 
 
@@ -1184,7 +1210,7 @@ namespace Cognitivo.Production
 
                         crud_modal.Visibility = Visibility.Visible;
                         crud_modal.Children.Add(itemMovementFraction);
-                        
+
 
 
 
@@ -1197,7 +1223,7 @@ namespace Cognitivo.Production
                     itemMovementFraction.production_order_detail = production_order_detail;
                     RefeshData();
                 }
-          
+
             }
             catch (Exception ex)
             {
@@ -1688,7 +1714,7 @@ namespace Cognitivo.Production
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if ( crud_modal.Children!=null)
+            if (crud_modal.Children != null)
             {
                 crud_modal.Children.Clear();
             }
@@ -1700,6 +1726,6 @@ namespace Cognitivo.Production
         private void btnItemSelect_Click(object sender, RoutedEventArgs e)
         {
 
-        }        
+        }
     }
 }

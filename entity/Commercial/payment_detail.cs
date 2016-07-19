@@ -82,10 +82,24 @@ namespace entity
                         if (this.value > 0)
                         {
 
-                          
-
-                            this.value = Currency.convert_Values(this.value, old_currencyfx, _id_currencyfx, App.Modules.Sales);
-                            RaisePropertyChanged("value");
+                            using (db db = new db())
+                            {
+                                if (db.app_currencyfx.Where(x => x.id_currencyfx == old_currencyfx).FirstOrDefault()!=null)
+                                {
+                                    app_currencyfx oldfx = db.app_currencyfx.Where(x => x.id_currencyfx == old_currencyfx).FirstOrDefault();
+                                    if (db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx).FirstOrDefault()!=null)
+                                    {
+                                        app_currencyfx newfx = db.app_currencyfx.Where(x => x.id_currencyfx == _id_currencyfx).FirstOrDefault();
+                                        if (oldfx.id_currency!=newfx.id_currency)
+                                        {
+                                            this.value = Currency.convert_Values(this.value, old_currencyfx, _id_currencyfx, App.Modules.Sales);
+                                            RaisePropertyChanged("value");
+                                        }
+                                    }
+                                }
+                            }
+                           
+                           
                             //if (payment != null)
                             //{
                             //    payment.id_currencyfx = _id_currencyfx;

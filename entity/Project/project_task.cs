@@ -210,6 +210,7 @@ namespace entity
                     {
                         _item_description = items.name;
                         RaisePropertyChanged("item_description");
+                        name = items.name;
                     }
                 }
             }

@@ -181,8 +181,6 @@ namespace Cognitivo.Sales
             //CURRENCY LIST
             SalesInvoiceDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
 
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
             cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
@@ -206,8 +204,6 @@ namespace Cognitivo.Sales
             {
                 cbxLocation.ItemsSource = app_branch.app_location.ToList();
             }
-
-            //}));
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -403,8 +399,11 @@ namespace Cognitivo.Sales
                     if (sales_invoiceViewSource.View.CurrentItem != null && paymentViewSource.View.CurrentItem != null)
                     {
                         sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-                        decimal TrailingDecimals = sales_invoice.GrandTotal - Math.Floor(sales_invoice.GrandTotal);
-                        sales_invoice.DiscountWithoutPercentage += TrailingDecimals;
+                        if (sales_invoice.GrandTotal > 0)
+                        {
+                            decimal TrailingDecimals = sales_invoice.GrandTotal - Math.Floor(sales_invoice.GrandTotal);
+                            sales_invoice.DiscountWithoutPercentage += TrailingDecimals;
+                        }
                     }
                 }
             }

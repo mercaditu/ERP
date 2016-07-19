@@ -6358,7 +6358,7 @@ from contacts
 inner join app_company on contacts.id_company= app_company.id_company
 left join contact_tag_detail on contacts.id_contact= contact_tag_detail.id_contact
 left join contact_tag on contact_tag_detail.id_contact_tag_detail= contact_tag.id_tag
- where is_customer = @IsCustomer or is_supplier = @IsSupplier";
+ where (is_customer = @IsCustomer or is_supplier = @IsSupplier) and is_employee = 0";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@IsCustomer";

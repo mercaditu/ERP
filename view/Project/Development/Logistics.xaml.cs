@@ -186,6 +186,7 @@ namespace Cognitivo.Project.Development
             {
                 //Do thing to avoid error showing for small reasons.
             }
+            
         }
 
         #region Add Purchase Tender
@@ -445,7 +446,7 @@ namespace Cognitivo.Project.Development
                 if (chkqtyneeded.IsChecked == true)
                 {
 
-
+                  //  buyqty.Visibility = System.Windows.Visibility.Collapsed;
                     var item_List_group_basic = (from IT in ProjectTaskDB.project_task
                                                  where (IT.status == Status.Project.Approved || IT.status == Status.Project.InProcess)
                                                  && IT.status != null && IT.id_project == id_project

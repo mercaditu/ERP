@@ -74,7 +74,10 @@ namespace entity
         public string item_description
         {
             get { return _item_description; }
-            set { _item_description = value; RaisePropertyChanged("item_description"); }
+            set {
+                _item_description = value;
+                RaisePropertyChanged("item_description");
+            }
         }
         private string _item_description;
 

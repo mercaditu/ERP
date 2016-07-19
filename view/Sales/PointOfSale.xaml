@@ -436,7 +436,7 @@
             </StackPanel.RenderTransform>
             <!-- Clean decimal -->
 
-            <!--<Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
+            <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
                   Cursor="Hand" MouseDown="Clear_MouseDown" TouchDown="Clear_MouseDown" ToolTip="{lex:Loc Cancel}">
                 <Border CornerRadius="5,16,16,5" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <Border.Background>
@@ -452,7 +452,7 @@
                            VerticalAlignment="Center" HorizontalAlignment="Center" 
                            Foreground="White"/>
                 </Border>
-            </Grid>-->
+            </Grid>
             <!-- Discount -->
             <Grid Margin="8" VerticalAlignment="Top" HorizontalAlignment="Right"
                   Cursor="Hand" ToolTip="{lex:Loc Discount}"

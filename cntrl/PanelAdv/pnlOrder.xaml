@@ -52,7 +52,7 @@
         <DataGrid x:Name="production_order_detailDataGrid" AutoGenerateColumns="False" IsReadOnly="True" EnableRowVirtualization="True" 
                   Height="168" ItemsSource="{Binding}" Margin="8" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding item.name}" Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
+                <DataGridTextColumn Binding="{Binding item.name}" Header="{lex:Loc Cognitivo:local:Items}" Width="*"/>
                 <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>

@@ -59,7 +59,7 @@
                 <DataTemplate>
                     <DataGrid AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding item}" Header="{lex:Loc Cognitivo:local:Item}" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding item}" Header="{lex:Loc Cognitivo:local:Items}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding balance,StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:balance}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding unitprice,StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Price}" Width="Auto"/>
                         </DataGrid.Columns>

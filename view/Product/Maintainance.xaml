@@ -118,7 +118,7 @@
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" 
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Item}" Width="*" 
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" 
                                         Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"

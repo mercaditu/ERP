@@ -61,7 +61,7 @@
                                                     ItemsSource="{Binding Source={StaticResource contactChildListViewSource}}" SelectedValueBinding="{Binding id_contact,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                     <DataGridTextColumn Binding="{Binding item.name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                Header="{lex:Loc Cognitivo:local:Item}" 
+                                                Header="{lex:Loc Cognitivo:local:Items}" 
                                                 Width="SizeToHeader"/>
                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Contract}" Width="SizeToHeader"
                                                     ItemsSource="{Binding Source={StaticResource appContractViewSource}}"

@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 99
+            /// Last Used : 104
             /// </summary>
 
             //Sales
@@ -251,7 +251,7 @@ namespace entity
             [LocalizedDescription("CostOfInventory")]
             CostOfInventory = 89,
             [LocalizedDescription("SalesDocuments")]
-            SalesDocuments = 90,
+            SalesDocuments = 104,
             [LocalizedDescription("SuppliesRequest")]
             SuppliesRequest = 84,
             [LocalizedDescription("AnalisysofAccountsReceivable")]

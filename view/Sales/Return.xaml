@@ -293,7 +293,7 @@
                                 <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
                                 <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                    Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
+                                                    Header="{lex:Loc Cognitivo:local:Items}" Width="*"/>
                                 <DataGridTemplateColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="80">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

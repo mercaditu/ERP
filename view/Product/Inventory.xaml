@@ -146,7 +146,7 @@
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                                 EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-                        <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Item}" MinWidth="128" Width="Auto"/>
+                        <DataGridTextColumn Binding="{Binding item_product.item.name}" IsReadOnly="True" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128" Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding value_system, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" MinWidth="64" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True">
                             <DataGridTextColumn.Header>
                                 <TextBlock><Run Text="{lex:Loc Cognitivo:local:Quantity}"/><Run Text=" System"/></TextBlock>

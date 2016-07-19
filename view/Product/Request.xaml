@@ -185,7 +185,7 @@
                               ItemsSource="{Binding Source={StaticResource item_request_detailitem_request_decisionViewSource}}" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item_request_detail.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Item}" Width="Auto" IsReadOnly="True"/>
+                                                Header="{lex:Loc Cognitivo:local:Items}" Width="Auto" IsReadOnly="True"/>
                             <!--<DataGridTextColumn Binding="{Binding item_request_detail.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Comment}" Width="Auto"/>-->
                             <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -244,7 +244,7 @@
                     <DataGrid x:Name="item_request_decisionproductionDataGrid" AutoGenerateColumns="False"  EnableRowVirtualization="True" RowEditEnding="item_request_decisionproductionDataGrid_RowEditEnding">
                         <DataGrid.Columns>
                             <DataGridTextColumn 
-                                Header="{lex:Loc Cognitivo:local:Item}" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
+                                Header="{lex:Loc Cognitivo:local:Items}" Binding="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*"/>
                            
                             <DataGridTextColumn 
                                 Header="{lex:Loc Cognitivo:local:Request}" Binding="{Binding decisionqty,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="*"/>

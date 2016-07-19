@@ -352,7 +352,7 @@
                                   InitializingNewItem="sales_order_detailDataGrid_InitializingNewItem" CellEditEnding="sales_order_detailDataGrid_CellEditEnding">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" Width="Auto" Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" Header="{lex:Loc Cognitivo:local:Item}"/>
+                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" Header="{lex:Loc Cognitivo:local:Items}"/>
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="64"
 					                                    ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
                                                         DisplayMemberPath="name" SelectedValuePath="id_vat_group" 
@@ -421,7 +421,7 @@
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                 <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" Width="Auto" Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" Header="{lex:Loc Cognitivo:local:Item}"/>
+                                <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" Header="{lex:Loc Cognitivo:local:Items}"/>
                                 <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
                             </DataGrid.Columns>

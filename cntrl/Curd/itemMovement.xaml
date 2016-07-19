@@ -80,7 +80,7 @@
                         ItemsSource="{Binding Source={StaticResource itemViewSource}}" 
                         SelectedValueBinding="{Binding id_item , UpdateSourceTrigger=PropertyChanged}" 
                         DisplayMemberPath="name" SelectedValuePath="id_item" 
-                        Header="{lex:Loc Cognitivo:local:Item}" Width="*"/>
+                        Header="{lex:Loc Cognitivo:local:Items}" Width="*"/>
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader"/>
                 </DataGrid.Columns>
             </DataGrid>

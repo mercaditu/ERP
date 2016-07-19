@@ -174,7 +174,7 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                    Header="{lex:Loc Cognitivo:local:Item}" Width="*" IsReadOnly="True"/>
+                                                    Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
@@ -223,7 +223,7 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                    Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="True" Width="Auto"/>
+                                                    Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="True" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding timestamp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

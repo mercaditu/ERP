@@ -130,6 +130,7 @@ namespace entity
         public string code { get; set; }
         public DateTime? expire_date { get; set; }
         public DateTime trans_date { get; set; }
+        
         [NotMapped]
         public decimal avlquantity
         {
@@ -144,7 +145,6 @@ namespace entity
             }
         }
         private decimal _avlquantity;
-
 
         //Heirarchy For Movement
         public virtual ICollection<item_movement> _child { get; set; }
@@ -169,6 +169,7 @@ namespace entity
                 }
             }
         }
+
         item_product _item_product;
         public virtual sales_packing_detail sales_packing_detail { get; set; }
         public virtual item_transfer_detail item_transfer_detail { get; set; }
@@ -177,10 +178,53 @@ namespace entity
         public virtual purchase_return_detail purchase_return_detail { get; set; }
         public virtual sales_invoice_detail sales_invoice_detail { get; set; }
         public virtual sales_return_detail sales_return_detail { get; set; }
-        //public virtual item_inventory_detail item_inventory_detail { get; set; }
         public virtual ICollection<item_movement_value> item_movement_value { get; set; }
         public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
 
+        #region ErrorHandling
+
+        public string Error
+        {
+            get
+            {
+                StringBuilder error = new StringBuilder();
+
+                // iterate over all of the properties
+                // of this object - aggregating any validation errors
+                PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
+                foreach (PropertyDescriptor prop in props)
+                {
+                    String propertyError = this[prop.Name];
+                    if (propertyError != string.Empty)
+                    {
+                        error.Append((error.Length != 0 ? ", " : "") + propertyError);
+                    }
+                }
+                return error.Length == 0 ? null : error.ToString();
+            }
+        }
+        public string this[string columnName]
+        {
+            get
+            {
+                // apply property level validation rules
+                if (columnName == "id_sales_invoice_detail")
+                {
+                    if (id_sales_invoice_detail != null)
+                    {
+                        if (sales_invoice_detail.quantity < debit)
+                        {
+                            return "Maximum Quantity of :" + sales_invoice_detail.quantity + ", Exceeded";
+                        }
+                    }
+                }
+                return "";
+            }
+        }
+
+        #endregion
+
+        #region Methods
         private decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
@@ -193,6 +237,7 @@ namespace entity
             }
             return Dimension;
         }
+
         public decimal GetValue_ByCurrency(app_currency app_currency)
         {
             decimal Value = 0M;
@@ -220,5 +265,6 @@ namespace entity
 
             return Value;
         }
+        #endregion
     }
 }

@@ -137,7 +137,7 @@
                                         <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                                             Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="128"/>
                                         <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                            Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="False" Width="256"/>
+                                                            Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="False" Width="256"/>
                                         <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                                             Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
                                         <!-- UnitPrice_Vat -->
@@ -620,7 +620,7 @@
                                     <DataGridTextColumn Binding="{Binding item.code, UpdateSourceTrigger=PropertyChanged}" 
                                                         Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
                                     <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                        Header="{lex:Loc Cognitivo:local:Item}" IsReadOnly="False" MinWidth="128"/>
+                                                        Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="False" MinWidth="128"/>
                                     <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:VAT}" Width="50"
 					                                        ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"  
                                                             DisplayMemberPath="name" SelectedValuePath="id_vat_group" 

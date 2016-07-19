@@ -67,12 +67,14 @@
                 <SolidColorBrush Color="White" Opacity="0.16"/>
             </DataGrid.Background>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Quantity" Width="128" Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="512" 
+                                    Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" 
+                                    Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
                                     ElementStyle="{StaticResource RightAlignStyle}"/>
                 <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" 
                                         SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"
                                         DisplayMemberPath="name" SelectedValuePath="id_location"/>
-                <DataGridTextColumn Header="Item" Width="512" Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
             
             <DataGrid.RowDetailsTemplate>

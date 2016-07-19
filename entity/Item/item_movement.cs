@@ -36,6 +36,7 @@ namespace entity
         public int? id_sales_packing_detail { get; set; }
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
+        [Required]
         public decimal debit
         {
             get
@@ -57,7 +58,7 @@ namespace entity
             }
         }
         decimal _debit = 0;
-
+        [Required]
         public decimal credit
         {
             get

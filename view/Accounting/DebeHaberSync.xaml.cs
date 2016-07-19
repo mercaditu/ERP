@@ -166,8 +166,8 @@ namespace Cognitivo.Accounting
                 //Send Sales_Json send it to Server Address specified.
 
                 //If all success, then SaveChanges.
-                //db.SaveChanges();
-                //Get_SalesInvoice();
+                db.SaveChanges();
+                Get_SalesInvoice();
             }
             catch (Exception ex)
             {
@@ -185,14 +185,14 @@ namespace Cognitivo.Accounting
             {
                 entity.DebeHaber.Commercial_Invoice Purchase = new entity.DebeHaber.Commercial_Invoice();
 
-                //Loads Data from Sales
+                //Loads Data from Purchase
                 Purchase.Fill_ByPurchase(purchase_invoice);
 
                 ///Loop through Details.
                 foreach (entity.purchase_invoice_detail Detail in purchase_invoice.purchase_invoice_detail)
                 {
                     entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                    //Fill and Detail SalesDetail
+                    //Fill and Detail PurchaseDetail
                     CommercialInvoice_Detail.Fill_ByPurchase(Detail, db);
                     Purchase.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
@@ -210,23 +210,27 @@ namespace Cognitivo.Accounting
                         Payments.FillPayments(schedual);
                         Purchase.Payments.Add(Payments);
 
-                        //This will make the Sales Invoice hide from the next load.
+                        //This will make the Purchase Invoice hide from the next load.
                         schedual.payment_detail.payment.is_accounted = true;
                     }
                 }
 
                 Transactions.Commercial_Invoice.Add(Purchase);
-                //This will make the Sales Invoice hide from the next load.
+                //This will make the Purchase Invoice hide from the next load.
                 purchase_invoice.is_accounted = true;
             }
 
             try
             {
-                ///Serealize SalesInvoiceLIST into Json
+                ///Serealize PurchaseInvoiceLIST into Json
                 var Purchase_Json = new JavaScriptSerializer().Serialize(Transactions);
 
                 Send2API(Purchase_Json);
                 file_create(Purchase_Json as string, "purchase_invoice");
+
+                //If all success, then SaveChanges.
+                db.SaveChanges();
+                Get_SalesInvoice();
             }
             catch (Exception ex)
             {

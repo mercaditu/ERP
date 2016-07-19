@@ -7,7 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     using System.Linq;
-    public partial class item_movement : Audit, IDataErrorInfo   
+    public partial class item_movement : Audit
     {
         public item_movement()
         {
@@ -37,6 +37,7 @@ namespace entity
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
         [Required]
+       
         public decimal debit
         {
             get
@@ -47,6 +48,8 @@ namespace entity
             {
                 _debit = value;
                 RaisePropertyChanged("debit");
+               
+               
                 if (item_product != null)
                 {
                     if (item_product.item != null)
@@ -182,51 +185,7 @@ namespace entity
         public virtual ICollection<item_movement_value> item_movement_value { get; set; }
         public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
 
-        #region ErrorHandling
-
-        public string Error
-        {
-            get
-            {
-                StringBuilder error = new StringBuilder();
-
-                // iterate over all of the properties
-                // of this object - aggregating any validation errors
-                PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
-                foreach (PropertyDescriptor prop in props)
-                {
-                    String propertyError = this[prop.Name];
-                    if (propertyError != string.Empty)
-                    {
-                        error.Append((error.Length != 0 ? ", " : "") + propertyError);
-                    }
-                }
-                return error.Length == 0 ? null : error.ToString();
-            }
-        }
-        public string this[string columnName]
-        {
-            get
-            {
-                if (debit > 0)
-                {
-                    // apply property level validation rules
-                    if (columnName == "id_sales_invoice_detail")
-                    {
-                        if (id_sales_invoice_detail != null)
-                        {
-                            if (sales_invoice_detail.quantity < debit)
-                            {
-                                return "Maximum Quantity of :" + sales_invoice_detail.quantity + ", Exceeded";
-                            }
-                        }
-                    }
-                }
-                return "";
-            }
-        }
-
-        #endregion
+      
 
         #region Methods
         private decimal GetDimensionValue()

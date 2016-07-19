@@ -30,34 +30,35 @@ namespace Cognitivo.Commercial
         {
             contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
             contactcontact_field_valueViewSource = (CollectionViewSource)FindResource("contactcontact_field_valueViewSource");
-            entity.Properties.Settings _entity = new entity.Properties.Settings();
+            //entity.Properties.Settings _entity = new entity.Properties.Settings();
 
             //Contact
-            ContactDB.contacts.Where(a => a.id_company == _entity.company_ID && a.is_employee == false).OrderBy(a => a.name).Load();
+            ContactDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_employee == false).OrderBy(a => a.name).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;
+
             CollectionViewSource contactParentViewSource = (CollectionViewSource)FindResource("contactParentViewSource");
             contactParentViewSource.Source = ContactDB.contacts.Local;
 
             //ContactRole
             CollectionViewSource contactRoleViewSource = (CollectionViewSource)FindResource("contactRoleViewSource");
-            contactRoleViewSource.Source = ContactDB.contact_role.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            contactRoleViewSource.Source = ContactDB.contact_role.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppContract
             CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
-            appContractViewSource.Source = ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            appContractViewSource.Source = ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppCostCenter
             CollectionViewSource appCostCenterViewSource = (CollectionViewSource)FindResource("appCostCenterViewSource");
-            appCostCenterViewSource.Source = ContactDB.app_cost_center.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            appCostCenterViewSource.Source = ContactDB.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //ItemPriceList
             CollectionViewSource itemPriceListViewSource = (CollectionViewSource)FindResource("itemPriceListViewSource");
-            itemPriceListViewSource.Source = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            itemPriceListViewSource.Source = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //SalesRep
-            List<sales_rep> sales_rep = ContactDB.sales_rep.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            List<sales_rep> sales_rep = ContactDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
             CollectionViewSource salesRepViewSource = (CollectionViewSource)FindResource("salesRepViewSource");
             salesRepViewSource.Source = sales_rep.ToList();
             CollectionViewSource salesRepViewSourceCollector = (CollectionViewSource)FindResource("salesRepViewSourceCollector");
@@ -65,25 +66,27 @@ namespace Cognitivo.Commercial
 
             //AppCurrency
             CollectionViewSource app_currencyViewSource = (CollectionViewSource)FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            app_currencyViewSource.Source = ContactDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            
+            //Fields
             CollectionViewSource app_fieldViewSource = (CollectionViewSource)FindResource("app_fieldViewSource");
-            app_fieldViewSource.Source = ContactDB.app_field.Where(a => a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            app_fieldViewSource.Source = ContactDB.app_field.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //AppBank
             CollectionViewSource bankViewSource = (CollectionViewSource)FindResource("bankViewSource");
-            bankViewSource.Source = ContactDB.app_bank.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).AsNoTracking().ToList();
+            bankViewSource.Source = ContactDB.app_bank.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             //Gender Type Enum
             cbxGender.ItemsSource = Enum.GetValues(typeof(contact.Genders));
 
             ContactDB.contact_tag
-             .Where(x => x.id_company == _entity.company_ID && x.is_active == true)
+             .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active == true)
              .OrderBy(x => x.name).Load();
             CollectionViewSource contact_tagViewSource = ((CollectionViewSource)(FindResource("contact_tagViewSource")));
             contact_tagViewSource.Source = ContactDB.contact_tag.Local;
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
+            app_vat_groupViewSource.Source = ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
         }
         #endregion
 

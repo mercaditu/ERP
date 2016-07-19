@@ -583,7 +583,7 @@
                             </StackPanel>
 
                             <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}}"
-                                             Currency="{Binding app_currencyfx.app_currency.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Currency="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                              DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              btnClean_Click="btnTotalClean_Click"

@@ -607,6 +607,19 @@ namespace Cognitivo.Sales
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            if (sales_invoice!=null)
+            {
+                if (sales_invoice.id_currencyfx>0)
+                {
+                    if (SalesInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault() != null)
+                    {
+
+
+                        sales_invoice.app_currencyfx = SalesInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                    }
+                }
+            }
             calculate_vat(sender, e);
         }
 

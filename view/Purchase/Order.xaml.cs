@@ -603,6 +603,19 @@ namespace Cognitivo.Purchase
         
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
+            purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
+            if (purchase_order != null)
+            {
+                if (purchase_order.id_currencyfx > 0)
+                {
+                    if (PurchaseOrderDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_order.id_currencyfx).FirstOrDefault() != null)
+                    {
+
+
+                        purchase_order.app_currencyfx = PurchaseOrderDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_order.id_currencyfx).FirstOrDefault();
+                    }
+                }
+            }
             calculate_vat(sender, e);
         }
 

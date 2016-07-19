@@ -569,6 +569,19 @@ namespace Cognitivo.Purchase
 
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
+            purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
+            if (purchase_invoice != null)
+            {
+                if (purchase_invoice.id_currencyfx > 0)
+                {
+                    if (PurchaseInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault() != null)
+                    {
+
+
+                        purchase_invoice.app_currencyfx = PurchaseInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == purchase_invoice.id_currencyfx).FirstOrDefault();
+                    }
+                }
+            }
             calculate_vat(sender, e);
         }
 

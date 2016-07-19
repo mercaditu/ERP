@@ -1116,6 +1116,9 @@
   <data name="Reprint" xml:space="preserve">
     <value>@Reprint</value>
   </data>
+  <data name="RequestManagement" xml:space="preserve">
+    <value>@RequestManagement</value>
+  </data>
   <data name="RequestResource" xml:space="preserve">
     <value>@RequestResource</value>
   </data>

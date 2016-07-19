@@ -119,10 +119,10 @@ namespace entity
             Incoterm = 33,
             [LocalizedDescription("Export")]
             Export = 34,
+            [LocalizedDescription("RequestManagement")]
+            RequestManagement = 18,
             [LocalizedDescription("RequestResource")]
-            RequestResource = 18,
-            [LocalizedDescription("SuppliesRequestResource")]
-            SuppliesRequestResource = 95,
+            RequestResource = 95,
             [LocalizedDescription("Inventory")]
             Inventory = 26,
             [LocalizedDescription("Transfer")]

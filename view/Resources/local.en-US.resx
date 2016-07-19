@@ -981,7 +981,7 @@
   <data name="Production" xml:space="preserve">
     <value>Production</value>
   </data>
-  <data name="Productionby Fraction" xml:space="preserve">
+  <data name="ProductionbyFraction" xml:space="preserve">
     <value>Production by Fraction</value>
   </data>
   <data name="ProductionExecution" xml:space="preserve">
@@ -1115,6 +1115,9 @@
   </data>
   <data name="Reprint" xml:space="preserve">
     <value>Reprint</value>
+  </data>
+  <data name="RequestManagement" xml:space="preserve">
+    <value>Request Management</value>
   </data>
   <data name="RequestResource" xml:space="preserve">
     <value>Request Resource</value>

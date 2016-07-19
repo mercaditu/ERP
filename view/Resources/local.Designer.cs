@@ -3058,6 +3058,15 @@ namespace Cognitivo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @RequestManagement.
+        /// </summary>
+        public static string RequestManagement {
+            get {
+                return ResourceManager.GetString("RequestManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @RequestResource.
         /// </summary>
         public static string RequestResource {

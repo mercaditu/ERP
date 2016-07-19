@@ -16,7 +16,7 @@
           lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
           lex:ResxLocalizationProvider.DefaultDictionary="local"
       mc:Ignorable="d"
-      Title="{lex:Loc RequestResource}"
+      Title="{lex:Loc RequestManagement}"
       MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
 
     <Page.CommandBindings>

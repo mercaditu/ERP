@@ -8,7 +8,7 @@
         xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl" 
         xmlns:customcmd="clr-namespace:Cognitivo.Class"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-        xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="Cognitivo.Purchase.Import" Title="{lex:Loc Import}" 
+        xmlns:entity="clr-namespace:entity;assembly=entity" x:Class="Cognitivo.Purchase.Import" Title="{lex:Loc Imports}" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
@@ -202,6 +202,6 @@
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
 			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Row="0" 
-                       HorizontalAlignment="Stretch" appName="Import"/>
+                       HorizontalAlignment="Stretch" appName="Imports"/>
     </Grid>
 </Page>

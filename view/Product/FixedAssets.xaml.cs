@@ -42,8 +42,10 @@ namespace Cognitivo.Product
 
             CollectionViewSource app_departmentViewSource = ((CollectionViewSource)(FindResource("app_departmentViewSource")));
             app_departmentViewSource.Source = ItemDB.app_department.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToList();
+            
             CollectionViewSource item_brandViewSource = ((CollectionViewSource)(FindResource("item_brandViewSource")));
-            item_brandViewSource.Source = ItemDB.item_brand.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToList();
+            ItemDB.item_brand.Where(x => x.id_company == CurrentSession.Id_Company).OrderBy(x => x.name).ToList();
+            item_brandViewSource.Source = ItemDB.item_brand.Local;
             CollectionViewSource contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
             contactViewSource.Source = ItemDB.contacts.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_employee).OrderBy(x => x.name).ToList();
             cmbdeactive.ItemsSource = Enum.GetValues(typeof(item_asset.DeActiveTypes)).OfType<item_asset.DeActiveTypes>().ToList();

@@ -207,16 +207,19 @@ namespace entity
         {
             get
             {
-                // apply property level validation rules
-                if (columnName == "id_sales_invoice_detail")
+                if (debit > 0)
                 {
-                    if (id_sales_invoice_detail != null)
+                    // apply property level validation rules
+                    if (columnName == "id_sales_invoice_detail")
                     {
-                        if (sales_invoice_detail.quantity < debit)
+                        if (id_sales_invoice_detail != null)
                         {
-                            return "Maximum Quantity of :" + sales_invoice_detail.quantity + ", Exceeded";
+                            if (sales_invoice_detail.quantity < debit)
+                            {
+                                return "Maximum Quantity of :" + sales_invoice_detail.quantity + ", Exceeded";
+                            }
                         }
-                    }
+                    }   
                 }
                 return "";
             }

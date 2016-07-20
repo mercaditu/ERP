@@ -46,11 +46,11 @@ namespace cntrl.PanelAdv
 
                     if (IsImpex)
                     {
-                        purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact && x.is_impex).ToList();
+                        purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact && x.is_impex && x.status == Status.Documents_General.Approved).ToList();
                     }
                     else
                     {
-                        purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
+                        purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact && x.status == Status.Documents_General.Approved).ToList();
                     }
                 }
             }
@@ -103,6 +103,20 @@ namespace cntrl.PanelAdv
                 {
                     purchase_invoiceViewSource.Source = _entity.purchase_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
                 }
+            }
+        }
+
+        private void ToggleSwitch_IsCheckedChanged(object sender, EventArgs e)
+        {
+            MahApps.Metro.Controls.ToggleSwitch ToggleSwitch = sender as MahApps.Metro.Controls.ToggleSwitch;
+
+            if (ToggleSwitch.IsChecked == true)
+            {
+                purchase_invoiceDatagrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            }
+            else
+            {
+                purchase_invoiceDatagrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
             }
         }
     }

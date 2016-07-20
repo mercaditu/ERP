@@ -559,8 +559,6 @@ namespace Cognitivo.Reporting.Data {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class SalesByDateDataTable : global::System.Data.TypedTableBase<SalesByDateRow> {
             
-            private global::System.Data.DataColumn columntrans_date;
-            
             private global::System.Data.DataColumn columnname;
             
             private global::System.Data.DataColumn columnnumber;
@@ -576,6 +574,8 @@ namespace Cognitivo.Reporting.Data {
             private global::System.Data.DataColumn columnMargin;
             
             private global::System.Data.DataColumn columnDiscount;
+            
+            private global::System.Data.DataColumn columntrans_date;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -608,14 +608,6 @@ namespace Cognitivo.Reporting.Data {
             protected SalesByDateDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn trans_dateColumn {
-                get {
-                    return this.columntrans_date;
-                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -684,6 +676,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn trans_dateColumn {
+                get {
+                    return this.columntrans_date;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -719,10 +719,9 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRow AddSalesByDateRow(System.DateTime trans_date, string name, string number, decimal quantity, int id_branch, decimal Total, decimal Cost, decimal Margin, decimal Discount) {
+            public SalesByDateRow AddSalesByDateRow(string name, string number, decimal quantity, int id_branch, decimal Total, decimal Cost, decimal Margin, decimal Discount, string trans_date) {
                 SalesByDateRow rowSalesByDateRow = ((SalesByDateRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        trans_date,
                         name,
                         number,
                         quantity,
@@ -730,7 +729,8 @@ namespace Cognitivo.Reporting.Data {
                         Total,
                         Cost,
                         Margin,
-                        Discount};
+                        Discount,
+                        trans_date};
                 rowSalesByDateRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSalesByDateRow);
                 return rowSalesByDateRow;
@@ -753,7 +753,6 @@ namespace Cognitivo.Reporting.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columntrans_date = base.Columns["trans_date"];
                 this.columnname = base.Columns["name"];
                 this.columnnumber = base.Columns["number"];
                 this.columnquantity = base.Columns["quantity"];
@@ -762,13 +761,12 @@ namespace Cognitivo.Reporting.Data {
                 this.columnCost = base.Columns["Cost"];
                 this.columnMargin = base.Columns["Margin"];
                 this.columnDiscount = base.Columns["Discount"];
+                this.columntrans_date = base.Columns["trans_date"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columntrans_date = new global::System.Data.DataColumn("trans_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntrans_date);
                 this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnname);
                 this.columnnumber = new global::System.Data.DataColumn("number", typeof(string), null, global::System.Data.MappingType.Element);
@@ -785,9 +783,11 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnMargin);
                 this.columnDiscount = new global::System.Data.DataColumn("Discount", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDiscount);
-                this.columntrans_date.AllowDBNull = false;
+                this.columntrans_date = new global::System.Data.DataColumn("trans_date", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntrans_date);
                 this.columnname.AllowDBNull = false;
                 this.columnid_branch.AllowDBNull = false;
+                this.columntrans_date.MaxLength = 38;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3611,17 +3611,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime trans_date {
-                get {
-                    return ((global::System.DateTime)(this[this.tableSalesByDate.trans_dateColumn]));
-                }
-                set {
-                    this[this.tableSalesByDate.trans_dateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string name {
                 get {
                     return ((string)(this[this.tableSalesByDate.nameColumn]));
@@ -3740,6 +3729,22 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string trans_date {
+                get {
+                    try {
+                        return ((string)(this[this.tableSalesByDate.trans_dateColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'trans_date\' in table \'SalesByDate\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByDate.trans_dateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsnumberNull() {
                 return this.IsNull(this.tableSalesByDate.numberColumn);
             }
@@ -3808,6 +3813,18 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDiscountNull() {
                 this[this.tableSalesByDate.DiscountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Istrans_dateNull() {
+                return this.IsNull(this.tableSalesByDate.trans_dateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Settrans_dateNull() {
+                this[this.tableSalesByDate.trans_dateColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -5839,7 +5856,6 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "SalesByDate";
-            tableMapping.ColumnMappings.Add("trans_date", "trans_date");
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("number", "number");
             tableMapping.ColumnMappings.Add("quantity", "quantity");
@@ -5848,6 +5864,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             tableMapping.ColumnMappings.Add("Cost", "Cost");
             tableMapping.ColumnMappings.Add("Margin", "Margin");
             tableMapping.ColumnMappings.Add("Discount", "Discount");
+            tableMapping.ColumnMappings.Add("trans_date", "trans_date");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -5864,7 +5881,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT s.trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, 
+            this._commandCollection[0].CommandText = @"SELECT DATE_FORMAT(s.trans_date,'%d %b %y') as trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, 
     round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
     round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
     ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as Margin,

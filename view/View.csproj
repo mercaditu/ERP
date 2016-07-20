@@ -1044,10 +1044,8 @@
     <EmbeddedResource Include="Reporting\Reports\AvgSales.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByBrand.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByTag.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\SalesBySalesRep.rdlc" />

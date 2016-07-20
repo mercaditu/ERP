@@ -12,7 +12,7 @@
               <DbSource ConnectionRef="MySQLconnString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT s.trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, 
+                    <CommandText>SELECT DATE_FORMAT(s.trans_date,'%d %b %y') as trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, 
     round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
     round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
     ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as Margin,
@@ -40,7 +40,6 @@ GROUP BY s.id_sales_invoice, s.trans_date</CommandText>
               </DbSource>
             </MainSource>
             <Mappings>
-              <Mapping SourceColumn="trans_date" DataSetColumn="trans_date" />
               <Mapping SourceColumn="name" DataSetColumn="name" />
               <Mapping SourceColumn="number" DataSetColumn="number" />
               <Mapping SourceColumn="quantity" DataSetColumn="quantity" />
@@ -49,6 +48,7 @@ GROUP BY s.id_sales_invoice, s.trans_date</CommandText>
               <Mapping SourceColumn="Cost" DataSetColumn="Cost" />
               <Mapping SourceColumn="Margin" DataSetColumn="Margin" />
               <Mapping SourceColumn="Discount" DataSetColumn="Discount" />
+              <Mapping SourceColumn="trans_date" DataSetColumn="trans_date" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -441,7 +441,6 @@ GROUP BY  s.trans_date</CommandText>
         <xs:element name="SalesByDate" msprop:Generator_TableClassName="SalesByDateDataTable" msprop:Generator_TableVarName="tableSalesByDate" msprop:Generator_RowChangedName="SalesByDateRowChanged" msprop:Generator_TablePropName="SalesByDate" msprop:Generator_RowDeletingName="SalesByDateRowDeleting" msprop:Generator_RowChangingName="SalesByDateRowChanging" msprop:Generator_RowEvHandlerName="SalesByDateRowChangeEventHandler" msprop:Generator_RowDeletedName="SalesByDateRowDeleted" msprop:Generator_RowClassName="SalesByDateRow" msprop:Generator_UserTableName="SalesByDate" msprop:Generator_RowEvArgName="SalesByDateRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="trans_date" msprop:Generator_ColumnVarNameInTable="columntrans_date" msprop:Generator_ColumnPropNameInRow="trans_date" msprop:Generator_ColumnPropNameInTable="trans_dateColumn" msprop:Generator_UserColumnName="trans_date" type="xs:dateTime" />
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name" type="xs:string" />
               <xs:element name="number" msprop:Generator_ColumnVarNameInTable="columnnumber" msprop:Generator_ColumnPropNameInRow="number" msprop:Generator_ColumnPropNameInTable="numberColumn" msprop:Generator_UserColumnName="number" type="xs:string" minOccurs="0" />
               <xs:element name="quantity" msprop:Generator_ColumnVarNameInTable="columnquantity" msprop:Generator_ColumnPropNameInRow="quantity" msprop:Generator_ColumnPropNameInTable="quantityColumn" msprop:Generator_UserColumnName="quantity" type="xs:decimal" minOccurs="0" />
@@ -450,6 +449,13 @@ GROUP BY  s.trans_date</CommandText>
               <xs:element name="Cost" msprop:Generator_ColumnVarNameInTable="columnCost" msprop:Generator_ColumnPropNameInRow="Cost" msprop:Generator_ColumnPropNameInTable="CostColumn" msprop:Generator_UserColumnName="Cost" type="xs:decimal" minOccurs="0" />
               <xs:element name="Margin" msprop:Generator_ColumnVarNameInTable="columnMargin" msprop:Generator_ColumnPropNameInRow="Margin" msprop:Generator_ColumnPropNameInTable="MarginColumn" msprop:Generator_UserColumnName="Margin" type="xs:decimal" minOccurs="0" />
               <xs:element name="Discount" msprop:Generator_ColumnVarNameInTable="columnDiscount" msprop:Generator_ColumnPropNameInRow="Discount" msprop:Generator_ColumnPropNameInTable="DiscountColumn" msprop:Generator_UserColumnName="Discount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="trans_date" msprop:Generator_ColumnVarNameInTable="columntrans_date" msprop:Generator_ColumnPropNameInRow="trans_date" msprop:Generator_ColumnPropNameInTable="trans_dateColumn" msprop:Generator_UserColumnName="trans_date" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="38" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

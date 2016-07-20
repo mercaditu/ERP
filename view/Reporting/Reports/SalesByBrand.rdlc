@@ -24,7 +24,7 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.03125in</Width>
+              <Width>1.14583in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -782,7 +782,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!Margin.Value)</Value>
+                              <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <Format>p</Format>
@@ -1237,7 +1237,7 @@
         </TablixRowHierarchy>
         <DataSetName>SalesByBrand</DataSetName>
         <Height>1in</Height>
-        <Width>8in</Width>
+        <Width>8.11458in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1248,7 +1248,7 @@
     <Height>1in</Height>
     <Style />
   </Body>
-  <Width>8in</Width>
+  <Width>8.11458in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>

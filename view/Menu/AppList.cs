@@ -272,8 +272,7 @@ namespace Cognitivo.Menu
 
             Image img = new Image();
             //Incase img is not set, set it to DefaultIcon
-            if (_img == "") { _img = "DefaultIcon"; }
-            _img = "../Images/Application/128/" + _img + ".png";
+            _img = "../Images/Application/128/" + (_img == "" ? _img : "DefaultIcon") + ".png";
             img.Stretch = Stretch.UniformToFill;
             img.Width = 26; img.Height = 26;
             img.Source = new BitmapImage(new Uri(_img, UriKind.Relative));

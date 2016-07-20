@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:cntrl.PanelAdv"
              xmlns:cntrl="clr-namespace:cntrl.Controls"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com" 
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -29,13 +30,14 @@
                    FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
             <Grid>
-                <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Left">
                     <cntrl:SmartBox_Contact x:Name="sbxContact" Get_Suppliers="True" Select="ContactPref" Margin="4" VerticalAlignment="Center"/>
                     <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnSave_MouseUp"/>
                 </StackPanel>
+                <metro:ToggleSwitch Content="{lex:Loc Details}" OffSwitchBrush="Crimson" OnSwitchBrush="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             </Grid>
             <DataGrid x:Name="purchase_invoiceDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_invoiceDatagrid_LoadingRowDetails"
-                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected"
+                  EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="Collapsed"
                   CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -48,7 +50,6 @@
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-
                         <Grid Background="{StaticResource AccentColor_Introvert}"  ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <DataGrid AutoGenerateColumns="False" Margin="4" ItemsSource="{Binding}" IsReadOnly="True" MaxHeight="128">
                                 <DataGrid.Columns>

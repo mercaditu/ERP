@@ -5,13 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
-         xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
+      xmlns:controls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:entity="clr-namespace:entity;assembly=Entity"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" 
         lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
         lex:ResxLocalizationProvider.DefaultDictionary="local"
         lex:LocalizeDictionary.DesignCulture="en-US" 
       xmlns:convert="clr-namespace:Cognitivo.Converters"
+      xmlns:prop="clr-namespace:Cognitivo.Product"
       mc:Ignorable="d" 
       d:DesignHeight="655" d:DesignWidth="800" Loaded="Page_Loaded"
 	  Title="{lex:Loc FixedAssets}">
@@ -20,6 +21,10 @@
         <convert:TrueToFalseConverter x:Key="TrueToFalse"/>
         <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
+        <CollectionViewSource x:Key="item_price_listViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_price_list}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemitem_priceViewSource" Source="{Binding item_price, Source={StaticResource itemViewSource}}"/>
+        <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
+        <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemitem_capitalViewSource" Source="{Binding item_asset, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="item_asset_maintainanceViewSource" Source="{Binding item_asset_maintainance, Source={StaticResource itemitem_capitalViewSource}}"/>
         <CollectionViewSource x:Key="item_brandViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_brand}, CreateList=True}"/>
@@ -89,7 +94,7 @@
                                           ScrollViewer.VerticalScrollBarVisibility="Auto" />
                             </StackPanel>
                             <StackPanel Margin="8,0" DataContext="{StaticResource itemitem_capitalViewSource}">
-                                <Label Style="{StaticResource H2}" Content="{lex:Loc Basic}"/>
+                                <Label Style="{StaticResource H2}" Content="{lex:Loc Integration}"/>
                                 <Label Content="{lex:Loc FixedAssetGroup}" Style="{StaticResource input_label}" />
                                 <AdornerDecorator>
                                     <ComboBox Grid.Column="1" x:Name="cbxassetGroup"  Style="{StaticResource input_combobox}" DisplayMemberPath="name" SelectedValuePath="id_item_asset_group"
@@ -128,9 +133,11 @@
                                       SelectedValue="{Binding id_department, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
                                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Employee}" />
-                                <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Select="itemserviceComboBox_MouseDoubleClick"/>
+                                <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True"
+                                                           Select="itemserviceComboBox_MouseDoubleClick"/>
+                                <!-- ="{Binding contacts.name}" -->
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel DataContext="{StaticResource itemitem_capitalViewSource}">
                                 <Label Style="{StaticResource H2}" Content="{lex:Loc Purchase}"/>
                                 <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
                                 <DatePicker SelectedDate="{Binding purchase_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
@@ -138,17 +145,69 @@
                                 <TextBox Text="{Binding purchase_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}"/>
                                 <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
                                 <TextBox Text="{Binding current_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}"/>
-                                <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
-                                <TextBox x:Name="unit_costTextBox" Style="{StaticResource input_textbox}"
-							         Text="{Binding unit_cost,Source={StaticResource itemViewSource}, Mode=TwoWay,
-                                     NotifyOnValidationError=true, ValidatesOnExceptions=true, 
-                                     UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" />
                                 <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
                                 <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
                                       Name="cmbdeactive" SelectedValue="{Binding deactivetype,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </WrapPanel>
                     </ScrollViewer>
+                </TabItem>
+                <TabItem Header="{lex:Loc Commercial}" >
+                    <StackPanel DataContext="{StaticResource itemViewSource}">
+                        <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="unit_costTextBox" Style="{StaticResource input_textbox}"
+							         Text="{Binding unit_cost,Source={StaticResource itemViewSource}, Mode=TwoWay,
+                                     NotifyOnValidationError=true, ValidatesOnExceptions=true, 
+                                     UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
+                        <Label Content="{lex:Loc VAT}"  Style="{StaticResource input_label}"/>
+                        <AdornerDecorator>
+                            <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}"
+                                      IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+                                      Name="cmbvat" ItemsSource="{Binding Source={StaticResource app_vat_groupViewSource}}"
+                                      SelectedValue="{Binding id_vat_group, Mode=TwoWay, 
+                                                      ValidatesOnExceptions=True, NotifyOnValidationError=True, 
+                                                      UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" DisplayMemberPath="name" SelectedValuePath="id_vat_group"/>
+                        </AdornerDecorator>
+                        <Grid Width="256" HorizontalAlignment="Left">
+                            <Label Content="{lex:Loc PriceList}"  Style="{StaticResource input_label}"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Label x:Name="AddPricelist" Content="+" HorizontalAlignment="Right" PreviewMouseUp="AddPricelist_PreviewMouseUp" 
+                                   Style="{StaticResource btn_Label}"/>
+                                <Label x:Name="EditPricelist" Content="e" HorizontalAlignment="Right" PreviewMouseUp="EditPricelist_PreviewMouseUp" 
+                                   Style="{StaticResource btn_Label}"/>
+                            </StackPanel>
+                        </Grid>
+                        <DataGrid x:Name="item_priceDataGrid" VerticalScrollBarVisibility="Auto" 
+                                  AutoGenerateColumns="False" EnableRowVirtualization="True"
+                                  IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
+                                    InitializingNewItem="item_priceDataGrid_InitializingNewItem"
+                                    ItemsSource="{Binding Source={StaticResource itemitem_priceViewSource}}" Margin="8" 
+                                    RowDetailsVisibilityMode="VisibleWhenSelected">
+                            <DataGrid.Columns>
+                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:PriceList}" Width="*" ItemsSource="{Binding Source={StaticResource item_price_listViewSource}}"
+                                                        DisplayMemberPath="name" SelectedValuePath="id_price_list" SelectedValueBinding="{Binding id_price_list , UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="Auto" ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}"
+                                                        DisplayMemberPath="name" SelectedValuePath="id_currency" SelectedValueBinding="{Binding id_currency, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                <DataGridTextColumn Binding="{Binding min_quantity,UpdateSourceTrigger=LostFocus, NotifyOnTargetUpdated=True, StringFormat={}{0:N}}" 
+                                                    Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Price}" Width="SizeToHeader" ElementStyle="{StaticResource RightAlignStyle}"
+                                                    Visibility="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Excluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                    Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True,Mode=TwoWay,
+                                                                      StringFormat={}{0:N}, NotifyOnValidationError=True}"/>
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
+                                                    Visibility="{Binding Source={x:Static prop:ProductSettings.Default}, Path=VAT_Included, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                                    Binding="{Binding valuewithVAT,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True,
+                                                                      ValidatesOnDataErrors=True, StringFormat={}{0:N}}"/>
+                                <!--<DataGridTemplateColumn Width="30">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>-->
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
                 </TabItem>
                 <TabItem Header="{lex:Loc Maintainance}" Height="40" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal" DataContext="{StaticResource item_asset_maintainanceViewSource}">

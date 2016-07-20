@@ -52,6 +52,7 @@ namespace entity
         public virtual item item { get; set; }
         public virtual item_asset_group item_asset_group { get; set; }
         public virtual app_branch app_branch { get; set; }
+        //public virtual contact contact { get; set; }
         public virtual ICollection<item_asset_maintainance> item_asset_maintainance { get; set; }
     }
 }

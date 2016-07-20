@@ -39,9 +39,10 @@
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_price_listViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_price_list}, CreateList=True}"/>
+        <CollectionViewSource x:Key="itemitem_priceViewSource" Source="{Binding item_price, Source={StaticResource itemViewSource}}"/>
+
         <CollectionViewSource x:Key="itemitem_productViewSource" Source="{Binding item_product, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_propertyViewSource" Source="{Binding item_property, Source={StaticResource itemViewSource}}"/>
-        <CollectionViewSource x:Key="itemitem_priceViewSource" Source="{Binding item_price, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_conversion_factorViewSource" Source="{Binding item_conversion_factor, Source={StaticResource itemitem_productViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_serviceViewSource" Source="{Binding item_service, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>

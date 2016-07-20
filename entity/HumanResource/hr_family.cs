@@ -1,5 +1,6 @@
 ﻿namespace entity
 {
+    using entity.Class;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -9,10 +10,15 @@
        
         public enum Relationship
         {
+            //[LocalizedDescription("Child")]
             Child,
+            //[LocalizedDescription("Parent")]
             Parent,
+            //[LocalizedDescription("Sibiling")]
             Sibiling,
+            //[LocalizedDescription("GrandParent")]
             GrandParent,
+            //[LocalizedDescription("Partner")]
             Partner
         }
 

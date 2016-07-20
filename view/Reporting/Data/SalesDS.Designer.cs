@@ -567,13 +567,15 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnquantity;
             
-            private global::System.Data.DataColumn columntotal;
-            
-            private global::System.Data.DataColumn columndiscount;
-            
             private global::System.Data.DataColumn columnid_branch;
             
-            private global::System.Data.DataColumn columntotalCost;
+            private global::System.Data.DataColumn columnTotal;
+            
+            private global::System.Data.DataColumn columnCost;
+            
+            private global::System.Data.DataColumn columnMargin;
+            
+            private global::System.Data.DataColumn columnDiscount;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -642,22 +644,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn totalColumn {
-                get {
-                    return this.columntotal;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn discountColumn {
-                get {
-                    return this.columndiscount;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn id_branchColumn {
                 get {
                     return this.columnid_branch;
@@ -666,9 +652,33 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn totalCostColumn {
+            public global::System.Data.DataColumn TotalColumn {
                 get {
-                    return this.columntotalCost;
+                    return this.columnTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CostColumn {
+                get {
+                    return this.columnCost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MarginColumn {
+                get {
+                    return this.columnMargin;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DiscountColumn {
+                get {
+                    return this.columnDiscount;
                 }
             }
             
@@ -709,17 +719,18 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRow AddSalesByDateRow(System.DateTime trans_date, string name, string number, decimal quantity, decimal total, decimal discount, int id_branch, decimal totalCost) {
+            public SalesByDateRow AddSalesByDateRow(System.DateTime trans_date, string name, string number, decimal quantity, int id_branch, decimal Total, decimal Cost, decimal Margin, decimal Discount) {
                 SalesByDateRow rowSalesByDateRow = ((SalesByDateRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         trans_date,
                         name,
                         number,
                         quantity,
-                        total,
-                        discount,
                         id_branch,
-                        totalCost};
+                        Total,
+                        Cost,
+                        Margin,
+                        Discount};
                 rowSalesByDateRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSalesByDateRow);
                 return rowSalesByDateRow;
@@ -746,10 +757,11 @@ namespace Cognitivo.Reporting.Data {
                 this.columnname = base.Columns["name"];
                 this.columnnumber = base.Columns["number"];
                 this.columnquantity = base.Columns["quantity"];
-                this.columntotal = base.Columns["total"];
-                this.columndiscount = base.Columns["discount"];
                 this.columnid_branch = base.Columns["id_branch"];
-                this.columntotalCost = base.Columns["totalCost"];
+                this.columnTotal = base.Columns["Total"];
+                this.columnCost = base.Columns["Cost"];
+                this.columnMargin = base.Columns["Margin"];
+                this.columnDiscount = base.Columns["Discount"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -763,14 +775,16 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnnumber);
                 this.columnquantity = new global::System.Data.DataColumn("quantity", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnquantity);
-                this.columntotal = new global::System.Data.DataColumn("total", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntotal);
-                this.columndiscount = new global::System.Data.DataColumn("discount", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columndiscount);
                 this.columnid_branch = new global::System.Data.DataColumn("id_branch", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnid_branch);
-                this.columntotalCost = new global::System.Data.DataColumn("totalCost", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntotalCost);
+                this.columnTotal = new global::System.Data.DataColumn("Total", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotal);
+                this.columnCost = new global::System.Data.DataColumn("Cost", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCost);
+                this.columnMargin = new global::System.Data.DataColumn("Margin", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMargin);
+                this.columnDiscount = new global::System.Data.DataColumn("Discount", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDiscount);
                 this.columntrans_date.AllowDBNull = false;
                 this.columnname.AllowDBNull = false;
                 this.columnid_branch.AllowDBNull = false;
@@ -919,7 +933,9 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnTag;
             
-            private global::System.Data.DataColumn columnTotalCost;
+            private global::System.Data.DataColumn columnCost;
+            
+            private global::System.Data.DataColumn columnMargin;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1004,9 +1020,17 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TotalCostColumn {
+            public global::System.Data.DataColumn CostColumn {
                 get {
-                    return this.columnTotalCost;
+                    return this.columnCost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MarginColumn {
+                get {
+                    return this.columnMargin;
                 }
             }
             
@@ -1047,7 +1071,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByItemRow AddSalesByItemRow(string Code, string Item, decimal Quantity, decimal Total, decimal Discount, string Tag, decimal TotalCost) {
+            public SalesByItemRow AddSalesByItemRow(string Code, string Item, decimal Quantity, decimal Total, decimal Discount, string Tag, decimal Cost, decimal Margin) {
                 SalesByItemRow rowSalesByItemRow = ((SalesByItemRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Code,
@@ -1056,7 +1080,8 @@ namespace Cognitivo.Reporting.Data {
                         Total,
                         Discount,
                         Tag,
-                        TotalCost};
+                        Cost,
+                        Margin};
                 rowSalesByItemRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSalesByItemRow);
                 return rowSalesByItemRow;
@@ -1085,7 +1110,8 @@ namespace Cognitivo.Reporting.Data {
                 this.columnTotal = base.Columns["Total"];
                 this.columnDiscount = base.Columns["Discount"];
                 this.columnTag = base.Columns["Tag"];
-                this.columnTotalCost = base.Columns["TotalCost"];
+                this.columnCost = base.Columns["Cost"];
+                this.columnMargin = base.Columns["Margin"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1107,8 +1133,10 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnDiscount);
                 this.columnTag = new global::System.Data.DataColumn("Tag", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTag);
-                this.columnTotalCost = new global::System.Data.DataColumn("TotalCost", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTotalCost);
+                this.columnCost = new global::System.Data.DataColumn("Cost", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCost);
+                this.columnMargin = new global::System.Data.DataColumn("Margin", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMargin);
                 this.columnTag.AllowDBNull = false;
             }
             
@@ -2540,6 +2568,10 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnBrand;
             
+            private global::System.Data.DataColumn columnCost;
+            
+            private global::System.Data.DataColumn columnMargin;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SalesByBrandDataTable() {
@@ -2623,6 +2655,22 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CostColumn {
+                get {
+                    return this.columnCost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MarginColumn {
+                get {
+                    return this.columnMargin;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2658,7 +2706,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByBrandRow AddSalesByBrandRow(string Code, string Item, decimal Quantity, decimal Total, decimal Discount, string Brand) {
+            public SalesByBrandRow AddSalesByBrandRow(string Code, string Item, decimal Quantity, decimal Total, decimal Discount, string Brand, decimal Cost, decimal Margin) {
                 SalesByBrandRow rowSalesByBrandRow = ((SalesByBrandRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Code,
@@ -2666,7 +2714,9 @@ namespace Cognitivo.Reporting.Data {
                         Quantity,
                         Total,
                         Discount,
-                        Brand};
+                        Brand,
+                        Cost,
+                        Margin};
                 rowSalesByBrandRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSalesByBrandRow);
                 return rowSalesByBrandRow;
@@ -2695,6 +2745,8 @@ namespace Cognitivo.Reporting.Data {
                 this.columnTotal = base.Columns["Total"];
                 this.columnDiscount = base.Columns["Discount"];
                 this.columnBrand = base.Columns["Brand"];
+                this.columnCost = base.Columns["Cost"];
+                this.columnMargin = base.Columns["Margin"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2716,6 +2768,10 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnDiscount);
                 this.columnBrand = new global::System.Data.DataColumn("Brand", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBrand);
+                this.columnCost = new global::System.Data.DataColumn("Cost", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCost);
+                this.columnMargin = new global::System.Data.DataColumn("Margin", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMargin);
                 this.columnBrand.AllowDBNull = false;
             }
             
@@ -3609,38 +3665,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal total {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByDate.totalColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'total\' in table \'SalesByDate\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByDate.totalColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal discount {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByDate.discountColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'discount\' in table \'SalesByDate\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByDate.discountColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int id_branch {
                 get {
                     return ((int)(this[this.tableSalesByDate.id_branchColumn]));
@@ -3652,17 +3676,65 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal totalCost {
+            public decimal Total {
                 get {
                     try {
-                        return ((decimal)(this[this.tableSalesByDate.totalCostColumn]));
+                        return ((decimal)(this[this.tableSalesByDate.TotalColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'totalCost\' in table \'SalesByDate\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Total\' in table \'SalesByDate\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalesByDate.totalCostColumn] = value;
+                    this[this.tableSalesByDate.TotalColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Cost {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesByDate.CostColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Cost\' in table \'SalesByDate\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByDate.CostColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Margin {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesByDate.MarginColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Margin\' in table \'SalesByDate\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByDate.MarginColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Discount {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesByDate.DiscountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Discount\' in table \'SalesByDate\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByDate.DiscountColumn] = value;
                 }
             }
             
@@ -3692,38 +3764,50 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IstotalNull() {
-                return this.IsNull(this.tableSalesByDate.totalColumn);
+            public bool IsTotalNull() {
+                return this.IsNull(this.tableSalesByDate.TotalColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SettotalNull() {
-                this[this.tableSalesByDate.totalColumn] = global::System.Convert.DBNull;
+            public void SetTotalNull() {
+                this[this.tableSalesByDate.TotalColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsdiscountNull() {
-                return this.IsNull(this.tableSalesByDate.discountColumn);
+            public bool IsCostNull() {
+                return this.IsNull(this.tableSalesByDate.CostColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetdiscountNull() {
-                this[this.tableSalesByDate.discountColumn] = global::System.Convert.DBNull;
+            public void SetCostNull() {
+                this[this.tableSalesByDate.CostColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IstotalCostNull() {
-                return this.IsNull(this.tableSalesByDate.totalCostColumn);
+            public bool IsMarginNull() {
+                return this.IsNull(this.tableSalesByDate.MarginColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SettotalCostNull() {
-                this[this.tableSalesByDate.totalCostColumn] = global::System.Convert.DBNull;
+            public void SetMarginNull() {
+                this[this.tableSalesByDate.MarginColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDiscountNull() {
+                return this.IsNull(this.tableSalesByDate.DiscountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDiscountNull() {
+                this[this.tableSalesByDate.DiscountColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3834,17 +3918,33 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal TotalCost {
+            public decimal Cost {
                 get {
                     try {
-                        return ((decimal)(this[this.tableSalesByItem.TotalCostColumn]));
+                        return ((decimal)(this[this.tableSalesByItem.CostColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TotalCost\' in table \'SalesByItem\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Cost\' in table \'SalesByItem\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalesByItem.TotalCostColumn] = value;
+                    this[this.tableSalesByItem.CostColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Margin {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesByItem.MarginColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Margin\' in table \'SalesByItem\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByItem.MarginColumn] = value;
                 }
             }
             
@@ -3910,14 +4010,26 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTotalCostNull() {
-                return this.IsNull(this.tableSalesByItem.TotalCostColumn);
+            public bool IsCostNull() {
+                return this.IsNull(this.tableSalesByItem.CostColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTotalCostNull() {
-                this[this.tableSalesByItem.TotalCostColumn] = global::System.Convert.DBNull;
+            public void SetCostNull() {
+                this[this.tableSalesByItem.CostColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMarginNull() {
+                return this.IsNull(this.tableSalesByItem.MarginColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMarginNull() {
+                this[this.tableSalesByItem.MarginColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -4737,6 +4849,38 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Cost {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesByBrand.CostColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Cost\' in table \'SalesByBrand\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByBrand.CostColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Margin {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesByBrand.MarginColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Margin\' in table \'SalesByBrand\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesByBrand.MarginColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsCodeNull() {
                 return this.IsNull(this.tableSalesByBrand.CodeColumn);
             }
@@ -4793,6 +4937,30 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDiscountNull() {
                 this[this.tableSalesByBrand.DiscountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCostNull() {
+                return this.IsNull(this.tableSalesByBrand.CostColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCostNull() {
+                this[this.tableSalesByBrand.CostColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMarginNull() {
+                return this.IsNull(this.tableSalesByBrand.MarginColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMarginNull() {
+                this[this.tableSalesByBrand.MarginColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -5675,10 +5843,11 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("number", "number");
             tableMapping.ColumnMappings.Add("quantity", "quantity");
-            tableMapping.ColumnMappings.Add("total", "total");
-            tableMapping.ColumnMappings.Add("discount", "discount");
             tableMapping.ColumnMappings.Add("id_branch", "id_branch");
-            tableMapping.ColumnMappings.Add("totalCost", "totalCost");
+            tableMapping.ColumnMappings.Add("Total", "Total");
+            tableMapping.ColumnMappings.Add("Cost", "Cost");
+            tableMapping.ColumnMappings.Add("Margin", "Margin");
+            tableMapping.ColumnMappings.Add("Discount", "Discount");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -5695,8 +5864,14 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT s.trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, ROUND(SUM(sd.quantity * sd.unit_price * vatco.coef), 4) AS total,ROUND(SUM(sd.quantity * sd.unit_cost * vatco.coef), 4) AS totalCost, SUM(sd.discount) * - 1 AS discount
- FROM  sales_invoice s INNER JOIN
+            this._commandCollection[0].CommandText = @"SELECT s.trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, 
+    round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
+    round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
+    ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as Margin,
+    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
+
+
+FROM  sales_invoice s INNER JOIN
          contacts contact ON s.id_contact = contact.id_contact INNER JOIN
          sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice LEFT OUTER JOIN
          items i ON i.id_item = sd.id_item LEFT OUTER JOIN
@@ -5889,7 +6064,8 @@ GROUP BY s.id_sales_invoice, s.trans_date";
             tableMapping.ColumnMappings.Add("Total", "Total");
             tableMapping.ColumnMappings.Add("Discount", "Discount");
             tableMapping.ColumnMappings.Add("Tag", "Tag");
-            tableMapping.ColumnMappings.Add("TotalCost", "TotalCost");
+            tableMapping.ColumnMappings.Add("Cost", "Cost");
+            tableMapping.ColumnMappings.Add("Margin", "Margin");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -5908,9 +6084,12 @@ GROUP BY s.id_sales_invoice, s.trans_date";
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"select 
 	tag.name as Tag, i.code as Code, i.name as Item, sum(sd.quantity) as Quantity,
+    
     round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
-   round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as TotalCost , round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
- 
+    round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
+    
+((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as Margin,
+    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
 from sales_invoice as s 
 inner join sales_invoice_detail as sd
  on s.id_sales_invoice = sd.id_sales_invoice 
@@ -6992,6 +7171,8 @@ s.id_sales_budget";
             tableMapping.ColumnMappings.Add("Total", "Total");
             tableMapping.ColumnMappings.Add("Discount", "Discount");
             tableMapping.ColumnMappings.Add("Brand", "Brand");
+            tableMapping.ColumnMappings.Add("Cost", "Cost");
+            tableMapping.ColumnMappings.Add("Margin", "Margin");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -7010,9 +7191,11 @@ s.id_sales_budget";
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"select 
 	itd.name as Brand, i.code as Code, i.name as Item, sum(sd.quantity) as Quantity,
-    round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
-    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
  
+    round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
+    round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
+    ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as Margin,
+    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
 from sales_invoice as s 
 inner join sales_invoice_detail as sd
  on s.id_sales_invoice = sd.id_sales_invoice 

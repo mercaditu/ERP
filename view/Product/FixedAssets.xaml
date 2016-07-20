@@ -65,93 +65,90 @@
             </StackPanel>
             <TabControl Margin="0,128,0,0">
                 <TabItem Header="{lex:Loc General}">
-                    <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Auto" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                        <StackPanel Margin="8,0" DataContext="{StaticResource itemViewSource}">
-                            <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                            <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
-                            <CheckBox Content="{lex:Loc Active}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
-                                  IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
-                            <AdornerDecorator>
-                                <ComboBox x:Name="cbxBranch" Grid.Column="1" Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                        <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                            <StackPanel Margin="8,0" DataContext="{StaticResource itemViewSource}">
+                                <Label Style="{StaticResource H2}" Content="{lex:Loc Basic}"/>
+                                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
+                                <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                                <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
+                                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                                <CheckBox Content="{lex:Loc Active}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
+                                          IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />
+                                <AdornerDecorator>
+                                    <ComboBox x:Name="cbxBranch" Grid.Column="1" Style="{StaticResource input_combobox}"  DisplayMemberPath="name" SelectedValuePath="id_branch" 
                                           SelectedValue="{Binding id_branch,Source={StaticResource itemitem_capitalViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
-                            </AdornerDecorator>
+                                </AdornerDecorator>
 
-                            <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
-                            <toolkit:RichTextBox x:Name="rtbxDetails" Margin="5" BorderBrush="Gray" Padding="4" MinHeight="128" Width="256"
+                                <Label Content="{lex:Loc Description}" Style="{StaticResource input_label}" />
+                                <toolkit:RichTextBox x:Name="rtbxDetails" Margin="5" BorderBrush="Gray" Padding="4" MinHeight="128" Width="256"
                                           Text="{Binding description,Source={StaticResource itemViewSource}, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
                                           ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                        </StackPanel>
-                        <StackPanel Margin="8,0" DataContext="{StaticResource itemitem_capitalViewSource}">
-                            <Label Content="{lex:Loc FixedAssetGroup}" Style="{StaticResource input_label}" />
-                            <AdornerDecorator>
-                                <ComboBox Grid.Column="1" x:Name="cbxassetGroup"  Style="{StaticResource input_combobox}" DisplayMemberPath="name" SelectedValuePath="id_item_asset_group"
+                            </StackPanel>
+                            <StackPanel Margin="8,0" DataContext="{StaticResource itemitem_capitalViewSource}">
+                                <Label Style="{StaticResource H2}" Content="{lex:Loc Basic}"/>
+                                <Label Content="{lex:Loc FixedAssetGroup}" Style="{StaticResource input_label}" />
+                                <AdornerDecorator>
+                                    <ComboBox Grid.Column="1" x:Name="cbxassetGroup"  Style="{StaticResource input_combobox}" DisplayMemberPath="name" SelectedValuePath="id_item_asset_group"
                                           SelectedValue="{Binding id_item_asset_group, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, 
                                                                   ValidatesOnDataErrors=True}"/>
-                            </AdornerDecorator>
-                            <Grid>
+                                </AdornerDecorator>
+                                
                                 <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Label Content="+" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="AddBrand_PreviewMouseUp" />
-                                    <Label Content="e" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="EditBrand_PreviewMouseUp" />
-                                </StackPanel>
-                            </Grid>
-
-                            <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}"
+                                <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}"
                                       DisplayMemberPath="name" SelectedValuePath="id_brand"
                                       ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
                                       SelectedValue="{Binding item.id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
-                            <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
+                                <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                                <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
                                                  CollectionViewSource="{StaticResource item_tagViewSource}"
                                                  focusGrid="True" Height="27" Width="256" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
                                                  KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-                                <cntrl:SearchableTextbox.Columns>
-                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+                                    <cntrl:SearchableTextbox.Columns>
+                                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
                                                           Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
-                                </cntrl:SearchableTextbox.Columns>
-                            </cntrl:SearchableTextbox>
-                            <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                                    </cntrl:SearchableTextbox.Columns>
+                                </cntrl:SearchableTextbox>
+                                <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
                                       CanUserAddRows="False"
                                       HeadersVisibility="None" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
                                       ItemsSource="{Binding Source={StaticResource itemitem_tagdetailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-
-                            <Rectangle Style="{StaticResource line_Bar}"/>
-
-                            <Label Content="{lex:Loc Department}"  Style="{StaticResource input_label}"/>
-                            <ComboBox x:Name="cbxItemDepartment" Grid.Column="1" Style="{StaticResource input_combobox}"
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <Label Content="{lex:Loc Department}"  Style="{StaticResource input_label}"/>
+                                <ComboBox x:Name="cbxItemDepartment" Grid.Column="1" Style="{StaticResource input_combobox}"
                                       DisplayMemberPath="name" SelectedValuePath="id_department"
                                       ItemsSource="{Binding Source={StaticResource app_departmentViewSource}}"
                                       SelectedValue="{Binding id_department, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
-                            
-                            <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
-                            <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
 
-                            <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
-                            <DatePicker SelectedDate="{Binding purchase_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
-                            <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding purchase_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}"/>
-                            <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
-                            <TextBox Text="{Binding current_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}"/>
-                            <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
-                            <TextBox x:Name="unit_costTextBox" Style="{StaticResource input_textbox}"
+                                <Label Style="{StaticResource input_label}" Content="{lex:Loc Employee}" />
+                                <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Select="itemserviceComboBox_MouseDoubleClick"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Style="{StaticResource H2}" Content="{lex:Loc Purchase}"/>
+                                <Label Content="{lex:Loc PurchaseDate}" Style="{StaticResource input_label}" />
+                                <DatePicker SelectedDate="{Binding purchase_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_datepicker}"/>
+                                <Label Content="{lex:Loc PurchaseValue}" Style="{StaticResource input_label}" />
+                                <TextBox Text="{Binding purchase_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}"/>
+                                <Label Content="{lex:Loc CurrentValue}" Style="{StaticResource input_label}" />
+                                <TextBox Text="{Binding current_value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource input_textbox}"/>
+                                <Label Content="{lex:Loc Cost}" Style="{StaticResource input_label}"/>
+                                <TextBox x:Name="unit_costTextBox" Style="{StaticResource input_textbox}"
 							         Text="{Binding unit_cost,Source={StaticResource itemViewSource}, Mode=TwoWay,
                                      NotifyOnValidationError=true, ValidatesOnExceptions=true, 
                                      UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" />
-                            <Label Content="{lex:Loc Deactive}" Style="{StaticResource input_label}" />
-                            <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
+                                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}" />
+                                <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" 
                                       Name="cmbdeactive" SelectedValue="{Binding deactivetype,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
-                    </WrapPanel>
+                            </StackPanel>
+                        </WrapPanel>
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{lex:Loc Maintainance}" Height="40" VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal" DataContext="{StaticResource item_asset_maintainanceViewSource}">
@@ -159,7 +156,7 @@
                                   IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding status, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Status}"/>
-                                <DataGridTextColumn Binding="{Binding start_date, StringFormat=d, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:StartDate}"/>
+                                <DataGridTextColumn Binding="{Binding start_date, StringFormat=d, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:StartDate}"/>
                                 <DataGridTextColumn Binding="{Binding comment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Comment}"/>
                             </DataGrid.Columns>
                         </DataGrid>

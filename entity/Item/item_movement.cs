@@ -37,7 +37,7 @@ namespace entity
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
         [Required]
-       
+
         public decimal debit
         {
             get
@@ -48,8 +48,8 @@ namespace entity
             {
                 _debit = value;
                 RaisePropertyChanged("debit");
-               
-               
+
+
                 if (item_product != null)
                 {
                     if (item_product.item != null)
@@ -99,7 +99,7 @@ namespace entity
                         if (item_product.item != null)
                         {
                             credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, credit_Factored, GetDimensionValue());
-                       
+
                         }
 
                     }
@@ -134,11 +134,11 @@ namespace entity
         public string code { get; set; }
         public DateTime? expire_date { get; set; }
         public DateTime trans_date { get; set; }
-        
+
         [NotMapped]
         public decimal avlquantity
         {
-            get 
+            get
             {
                 _avlquantity = credit - (_child.Count() > 0 ? _child.Sum(y => y.debit) : 0);
                 return _avlquantity;
@@ -155,6 +155,16 @@ namespace entity
         public virtual item_movement _parent { get; set; }
 
         public virtual app_location app_location { get; set; }
+
+        public virtual sales_packing_detail sales_packing_detail { get; set; }
+        public virtual item_transfer_detail item_transfer_detail { get; set; }
+        public virtual production_execution_detail production_execution_detail { get; set; }
+        public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
+        public virtual purchase_return_detail purchase_return_detail { get; set; }
+        public virtual sales_invoice_detail sales_invoice_detail { get; set; }
+        public virtual sales_return_detail sales_return_detail { get; set; }
+        public virtual ICollection<item_movement_value> item_movement_value { get; set; }
+        public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
         public virtual item_product item_product
         {
             get { return _item_product; }
@@ -165,8 +175,17 @@ namespace entity
                 {
                     if (_item_product.item != null)
                     {
-                        _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(_item_product.item, credit, GetDimensionValue());
-                        RaisePropertyChanged("credit_Factored");
+                        using (db db = new db())
+                        {
+                         
+                                _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(db.items.Where(x => x.id_item == _item_product.item.id_item).FirstOrDefault(), credit, GetDimensionValue());
+                                RaisePropertyChanged("credit_Factored");
+                            
+                        }
+
+
+
+
                         _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(_item_product.item, debit, GetDimensionValue());
                         RaisePropertyChanged("debit_Factored");
                     }
@@ -175,29 +194,24 @@ namespace entity
         }
 
         item_product _item_product;
-        public virtual sales_packing_detail sales_packing_detail { get; set; }
-        public virtual item_transfer_detail item_transfer_detail { get; set; }
-        public virtual production_execution_detail production_execution_detail { get; set; }
-        public virtual purchase_invoice_detail purchase_invoice_detail { get; set; }
-        public virtual purchase_return_detail purchase_return_detail { get; set; }
-        public virtual sales_invoice_detail sales_invoice_detail { get; set; }
-        public virtual sales_return_detail sales_return_detail { get; set; }
-        public virtual ICollection<item_movement_value> item_movement_value { get; set; }
-        public virtual ICollection<item_movement_dimension> item_movement_dimension { get; set; }
 
-      
 
         #region Methods
         private decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
-            if (item_movement_dimension != null)
+            using (db db = new db())
             {
-                foreach (item_movement_dimension _item_movement_dimension in item_movement_dimension)
+                List<item_movement_dimension> item_movement_dimensionold = db.item_movement_dimension.Where(x => x.id_movement == id_movement).ToList();
+                if (item_movement_dimensionold != null)
                 {
-                    Dimension = Dimension * _item_movement_dimension.value;
+                    foreach (item_movement_dimension _item_movement_dimension in item_movement_dimensionold)
+                    {
+                        Dimension = Dimension * _item_movement_dimension.value;
+                    }
                 }
             }
+
             return Dimension;
         }
 
@@ -220,7 +234,7 @@ namespace entity
                     if (app_currency.app_currencyfx.Where(x => x.is_active).FirstOrDefault() != null)
                     {
                         Value = Value + Brillo.Currency.convert_Values(item_movement_valueLIST.unit_value, app_currency.app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx, app_currencyfx.id_currencyfx, App.Modules.Purchase);
-                       // Value = Value + Brillo.Currency.convert_Value(item_movement_valueLIST.unit_value, app_currencyfx.id_currencyfx, App.Modules.Purchase);
+                        // Value = Value + Brillo.Currency.convert_Value(item_movement_valueLIST.unit_value, app_currencyfx.id_currencyfx, App.Modules.Purchase);
                     }
 
                 }

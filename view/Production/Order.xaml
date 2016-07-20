@@ -17,7 +17,7 @@
       lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US" 
-      MinHeight="800" MinWidth="800" Loaded="Page_Loaded">
+      MinHeight="400" MinWidth="800" Loaded="Page_Loaded">
     <Page.Resources>
         <converter:SecurityConverter x:Key="SecurityConverter"/>
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>

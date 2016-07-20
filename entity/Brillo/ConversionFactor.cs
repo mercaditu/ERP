@@ -67,7 +67,7 @@ namespace entity.Brillo
                     {
                         if (item.item_product.FirstOrDefault().item_conversion_factor.FirstOrDefault().value > 0)
                         {
-                            if (item.item_dimension.Count()>0)
+                            if (BaseDimension > 0)
                             {
                                 //decimal i = 1M;
                                 //foreach (Dimension item_dimension in BaseDimension)

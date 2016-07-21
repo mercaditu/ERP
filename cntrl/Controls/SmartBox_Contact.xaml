@@ -95,7 +95,6 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Binding="{Binding code}" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" Binding="{Binding name}" FontWeight="Bold" Width="auto"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:GovId}" Binding="{Binding gov_code}" Width="auto"/>
-                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Telephone}" Binding="{Binding telephone}" Width="auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

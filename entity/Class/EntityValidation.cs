@@ -23,5 +23,6 @@ namespace entity.Class
             else
                 return new ValidationResult("Invalid branch");
         }
+     
     }
 }

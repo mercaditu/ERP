@@ -7,7 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
     using System.Linq;
-    public partial class item_movement : Audit
+    public partial class item_movement : Audit, IDataErrorInfo
     {
         public item_movement()
         {
@@ -37,7 +37,7 @@ namespace entity
         public int id_location { get; set; }
         public Status.Stock status { get; set; }
         [Required]
-
+     
         public decimal debit
         {
             get
@@ -243,5 +243,38 @@ namespace entity
             return Value;
         }
         #endregion
+        public string Error
+        {
+            get
+            {
+                StringBuilder error = new StringBuilder();
+
+                PropertyDescriptorCollection props = TypeDescriptor.GetProperties(this);
+                foreach (PropertyDescriptor prop in props)
+                {
+                    String propertyError = this[prop.Name];
+                    if (propertyError != string.Empty)
+                    {
+                        error.Append((error.Length != 0 ? ", " : "") + propertyError);
+                    }
+                }
+
+                return error.Length == 0 ? null : error.ToString();
+            }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                // apply property level validation rules
+                if (columnName == "debit" || columnName == "sales_invoice_detail")
+                {
+                    if (debit > sales_invoice_detail.quantity)
+                        return "Quantity is Greater than Sales quantity";
+                }
+                return "";
+            }
+        }
     }
 }

@@ -71,7 +71,7 @@
                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" 
                                     Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
                                     ElementStyle="{StaticResource RightAlignStyle}"/>
-                <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" ElementStyle="{StaticResource RightAlignStyle}"
+                <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" 
                                         SelectedValueBinding="{Binding id_location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat=N2}"
                                         DisplayMemberPath="name" SelectedValuePath="id_location"/>
             </DataGrid.Columns>

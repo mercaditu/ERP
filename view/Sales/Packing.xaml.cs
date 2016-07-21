@@ -51,11 +51,11 @@ namespace Cognitivo.Sales
             cbxLocation.ItemsSource = app_branch.app_location.ToList();
         }
 
-        private async void ListProducts(object sender, EventArgs e)
+        private  void ListProducts(object sender, EventArgs e)
         {
             if (InvoiceCode != string.Empty)
             {
-                List<sales_invoice_detail> sales_invoice_detailLIST = await dbContext.sales_invoice_detail
+                List<sales_invoice_detail> sales_invoice_detailLIST =  dbContext.sales_invoice_detail
                     .Where(x => x.sales_invoice.number.Contains(InvoiceCode) &&
                         //Contado (Cash) + Payment Made
                         (
@@ -64,7 +64,7 @@ namespace Cognitivo.Sales
                         //Credit
                         (x.sales_invoice.app_contract.app_contract_detail.Sum(y => y.interval) > 0)
                         ) &&
-                         x.sales_invoice.status == Status.Documents_General.Approved).ToListAsync();
+                         x.sales_invoice.status == Status.Documents_General.Approved).ToList();
 
                 List<item_movement> item_movementLIST = new List<item_movement>();
 
@@ -173,6 +173,7 @@ namespace Cognitivo.Sales
                 sales_packing_detail.id_location = _item_movement.id_location;
                 sales_packing_detail.id_item = _item_movement.item_product.id_item;
                 sales_packing_detail.quantity = _item_movement.debit;
+                sales_packing_detail.sales_packing = sales_packing;
 
                 //Creates relationship with Sales Invoice.
                 sales_packing_relation sales_packing_relation = new entity.sales_packing_relation();
@@ -186,9 +187,24 @@ namespace Cognitivo.Sales
                 //Relates the Item Movement to Packing
                 _item_movement.sales_packing_detail = sales_packing_detail;
             }
+            if (sales_packing.number == null && sales_packing.id_range > 0)
+            {
+                entity.Brillo.Logic.Range.branch_Code = dbContext.app_branch.Where(x => x.id_branch == sales_packing.id_branch).FirstOrDefault().code;
+                entity.Brillo.Logic.Range.terminal_Code = dbContext.app_terminal.Where(x => x.id_terminal == sales_packing.id_terminal).FirstOrDefault().code;
+                app_document_range app_document_range = dbContext.app_document_range.Where(x => x.id_range == sales_packing.id_range).FirstOrDefault();
+                sales_packing.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
+                sales_packing.RaisePropertyChanged("number");
+                sales_packing.is_issued = true;
 
+                entity.Brillo.Document.Start.Automatic(sales_packing, app_document_range);
+            }
+            else
+            {
+                sales_packing.is_issued = false;
+            }
             dbContext.SaveChanges();
             item_movementViewSource.Source = null;
+
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)

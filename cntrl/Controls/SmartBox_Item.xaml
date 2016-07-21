@@ -25,7 +25,7 @@
         
         <!-- TextBox for Searching -->
         <TextBox x:Name="tbxSearch" Padding="12,0,16,0"
-                 Text="{Binding Path=Text, ElementName=_SmartBox_Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Text, Delay=2000, ElementName=_SmartBox_Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                  metro:ControlsHelper.MouseOverBorderBrush="Silver"
                  metro:TextBoxHelper.SelectAllOnFocus="True"

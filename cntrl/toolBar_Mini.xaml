@@ -7,13 +7,9 @@
                 lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo"
                 lex:ResxLocalizationProvider.DefaultDictionary="strings"
              Height="32" MinWidth="100" Loaded="UserControl_Loaded">
-    <Grid>     
-        <Rectangle Style="{StaticResource line_Bar}"/>
-
-        <Border CornerRadius="10" Background="White" MinWidth="32" Margin="16,1" HorizontalAlignment="Center">
-            <Border.Effect>
-                <DropShadowEffect ShadowDepth="0"/>
-            </Border.Effect>
+    <Grid>
+        <Rectangle Style="{StaticResource line_Bar}" Fill="Gainsboro"/>
+        <Border Background="WhiteSmoke" CornerRadius="8" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="0,1,0,1">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Name="stackMain" Orientation="Horizontal" Margin="4,0"/>
                 <StackPanel Name="stackSide" Orientation="Horizontal" Margin="4,0"/>

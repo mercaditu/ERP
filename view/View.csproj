@@ -522,7 +522,6 @@
     <Compile Include="Project\PrintingPress\Class\Cut.cs" />
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\FinanceDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -531,7 +530,6 @@
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\ProductDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -550,7 +548,6 @@
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reporting\Data\SalesDS.Designer.cs">
       <DependentUpon>SalesDS.xsd</DependentUpon>

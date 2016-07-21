@@ -156,22 +156,25 @@ namespace Cognitivo.Accounting
                 sales_invoice.is_accounted = true;
             }
 
-            try
+            if (Transactions.Commercial_Invoice.Count > 0)
             {
-                ///Serealize SalesInvoiceLIST into Json
-                var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
+                try
+                {
+                    ///Serealize SalesInvoiceLIST into Json
+                    var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
 
-                Send2API(Sales_Json);
-                file_create(Sales_Json as string, "sales_invoice");
-                //Send Sales_Json send it to Server Address specified.
+                    Send2API(Sales_Json);
+                    file_create(Sales_Json as string, "sales_invoice");
+                    //Send Sales_Json send it to Server Address specified.
 
-                //If all success, then SaveChanges.
-                db.SaveChanges();
-                Get_SalesInvoice();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Exception Error: " + ex.Message);
+                    //If all success, then SaveChanges.
+                    db.SaveChanges();
+                    Get_SalesInvoice();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Exception Error: " + ex.Message);
+                }   
             }
         }
 
@@ -224,9 +227,11 @@ namespace Cognitivo.Accounting
             {
                 ///Serealize PurchaseInvoiceLIST into Json
                 var Purchase_Json = new JavaScriptSerializer().Serialize(Transactions);
+                
+                //Save file first in case of API error.
+                file_create(Purchase_Json as string, "purchase_invoice");
 
                 Send2API(Purchase_Json);
-                file_create(Purchase_Json as string, "purchase_invoice");
 
                 //If all success, then SaveChanges.
                 db.SaveChanges();

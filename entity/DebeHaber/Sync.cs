@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entity.DebeHaber
 {
-    public enum TransactionTypes { Sales = 1, Purchase = 1}
+    public enum TransactionTypes { Sales = 1, Purchase = 2}
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
@@ -133,9 +133,16 @@ namespace entity.DebeHaber
             // Finally if all else fails, assume Item being sold is Merchendice.
             else
             {
-                CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
-                CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
-
+                if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
+                {
+                    CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
+                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                }
+                else
+                {
+                    CostCenter.Name = "Mercaderia";
+                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                }
                 //Add CostCenter into Detail.
                 this.CostCenter.Add(CostCenter);
             }
@@ -177,8 +184,16 @@ namespace entity.DebeHaber
                 // Finally if all else fails, assume Item being sold is Merchendice.
                 else
                 {
-                    CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
-                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
+                    {
+                        CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
+                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    }
+                    else
+                    {
+                        CostCenter.Name = "Mercaderia";
+                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    }
 
                     //Add CostCenter into Detail.
                     this.CostCenter.Add(CostCenter);
@@ -245,7 +260,7 @@ namespace entity.DebeHaber
                 this.PaymentType = entity.DebeHaber.PaymentTypes.VATWithHolding;
             }
 
-            this.Parent = schedual.parent.sales_invoice.number;
+            this.Parent = schedual.parent.sales_invoice != null ? schedual.parent.sales_invoice.number : (schedual.parent.purchase_invoice != null ? schedual.parent.purchase_invoice.number : "") ;
             this.CompanyName = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.name : "";
             this.Gov_Code = schedual.payment_detail.payment.contact != null ? schedual.payment_detail.payment.contact.gov_code : "";
             this.DocCode = schedual.payment_detail.payment.app_document_range != null ? schedual.payment_detail.payment.app_document_range.code : "";

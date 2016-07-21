@@ -12,7 +12,9 @@ namespace entity
     {
       public  enum Type
         {
-            
+            DiscountDuringPeriod=1,
+            DiscountOnSecondItem=2,
+            DiscountOnTotal=3
         }
    
         public sales_promotion()
@@ -32,12 +34,17 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sales_promotion { get; set; }
         public Type types { get; set; }
-        public int typeref { get; set; }
+        public string name { get; set; }
+        public int reference { get; set; }
         public DateTime date_start { get; set; }
         public DateTime date_end { get; set; }
-        public bool result_type { get; set; }
-        public decimal result_per { get; set; }
+        public decimal quantity_min { get; set; }
+        public decimal quantity_max { get; set; }
+        public decimal quantity_step { get; set; }
+        public bool is_percentage { get; set; }
         public decimal result_value { get; set; }
+        public decimal result_step { get; set; }
+        public int reference_bonus { get; set; }
 
         public string Error
         {

@@ -375,6 +375,10 @@
     <Compile Include="Migrations\201607081312216_UdateAccounting.Designer.cs">
       <DependentUpon>201607081312216_UdateAccounting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607211124044_AddPromotion.cs" />
+    <Compile Include="Migrations\201607211124044_AddPromotion.Designer.cs">
+      <DependentUpon>201607211124044_AddPromotion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -1100,6 +1104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607081312216_UdateAccounting.resx">
       <DependentUpon>201607081312216_UdateAccounting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607211124044_AddPromotion.resx">
+      <DependentUpon>201607211124044_AddPromotion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

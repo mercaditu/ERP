@@ -21,6 +21,7 @@ namespace entity
         public int id_item { get; set; }
         [Required]
         public int id_tag { get; set; }
+        public bool is_default { get; set; }
     
         public virtual item item { get; set; }
         public virtual item_tag item_tag { get; set; }

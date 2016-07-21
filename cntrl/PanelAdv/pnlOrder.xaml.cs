@@ -56,11 +56,13 @@ namespace cntrl.PanelAdv
                 //Date check. Get the range from task first, if blank get from Project.
                 production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).FirstOrDefault().start_date_est;
                 production_order.end_date_est = project_taskLIST.OrderByDescending(x => x.end_date_est).FirstOrDefault().end_date_est;
+                
                 if (production_order.start_date_est == null || production_order.end_date_est == null)
                 {
                     production_order.start_date_est = project_taskLIST.OrderBy(x => x.start_date_est).FirstOrDefault().project.est_start_date;
                     production_order.end_date_est = project_taskLIST.OrderByDescending(x => x.end_date_est).FirstOrDefault().project.est_end_date;
                 }
+
                 production_order.RaisePropertyChanged("start_date_est");
                 production_order.RaisePropertyChanged("end_date_est");
 
@@ -71,6 +73,8 @@ namespace cntrl.PanelAdv
                     production_order_detail.status = Status.Project.Pending;
                     production_order_detail.id_order_detail = _project_task.id_project_task;
                     production_order_detail.name = _project_task.item_description;
+                    production_order_detail.code = _project_task.code;
+                    //Ref Keys
                     production_order_detail.item = _project_task.items;
                     production_order_detail.id_item = _project_task.id_item;
 
@@ -110,7 +114,6 @@ namespace cntrl.PanelAdv
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             foreach (var item in project_taskLIST)
             {
                 project_task _project_task = (project_task)item;
@@ -140,7 +143,6 @@ namespace cntrl.PanelAdv
             {
                 if (projectViewSource.View != null)
                 {
-
                     projectViewSource.View.Filter = i =>
                     {
                         project_task _project_task = (project_task)i;
@@ -152,20 +154,18 @@ namespace cntrl.PanelAdv
                         }
                     };
                 }
-
             }
-
         }
+
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             production_order production_order = (production_order)production_orderViewSource.View.CurrentItem;
-
             shared_dbContext.db.production_order.Remove(production_order);
+
             foreach (var item in project_taskLIST)
             {
                 project_task _project_task = (project_task)item;
                 _project_task.IsSelected = false;
-
             }
 
             projectViewSource.View.Refresh();

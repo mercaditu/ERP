@@ -82,13 +82,13 @@
                                 <HierarchicalDataTemplate DataType="{x:Type entity:production_order_detail}" 
             							                      ItemsSource="{Binding child,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            								                 IsChecked="{Binding IsSelected,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     Code="{Binding item.code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-            								                 HorizontalAlignment="Stretch"
-            								                 Type_Name="{Binding item.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                                             TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-            								                 QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                                             Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            								             IsChecked="{Binding IsSelected,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         Code="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            								             HorizontalAlignment="Stretch"
+            								             Type_Name="{Binding item.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                                         TaskName="{Binding item.name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+            								             QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                                         Quantity="{Binding quantity,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </HierarchicalDataTemplate>
                             </Grid.Resources>
                             <Grid Grid.Column="0">

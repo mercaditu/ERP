@@ -150,12 +150,14 @@
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource tree}, ConverterParameter={StaticResource IntOne}}">
-                                        <Panels:pnl_TreeView   StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
+                                        <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                              HorizontalAlignment="Stretch"
+                                             Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                             TaskName="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                             TaskName="{Binding item.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                                             Quantity="{Binding quantity, Mode=OneWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                              QuantityExec="{Binding quantity_exe, StringFormat=N2, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
@@ -223,6 +225,7 @@
                                         <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                               HorizontalAlignment="Stretch"
+                                             Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
                                              Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
@@ -300,6 +303,7 @@
                                         <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                                              HorizontalAlignment="Stretch"
+                                                             Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
                                                              Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"
@@ -389,12 +393,13 @@
                                 <Grid.Resources >
                                     <HierarchicalDataTemplate DataType="{x:Type data:production_order_detail}" 
                                               ItemsSource="{Binding child, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource tree},ConverterParameter={StaticResource IntSeven}}">
-                                        <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
-                                              HorizontalAlignment="Stretch"
-                                             Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                                                 TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
-                                             Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
+                                        <Panels:pnl_TreeView StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
+                                                             HorizontalAlignment="Stretch"
+                                                             Code="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                                             Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                                             TaskName="{Binding item.name, Mode=OneWay,  UpdateSourceTrigger=PropertyChanged}" 
+                                                             Quantity="{Binding quantity, Mode=OneWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                                 <cntrl:ExtendedTreeView x:Name="treeServicecontract" ItemsSource="{Binding}" SelectedItemChanged="treeServicecontract_SelectedItemChanged">
@@ -524,9 +529,10 @@
                                         <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             IsChecked="{Binding IsSelected, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ., Converter={StaticResource Type2Enable}}"
                                             HorizontalAlignment="Stretch"
-                                            Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                                                              TaskName="{Binding name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
-                                            Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
+                                            Code="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                            Type_Name="{Binding items.id_item_type, Mode=OneWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
+                                            TaskName="{Binding name, Mode=OneWay,  UpdateSourceTrigger=PropertyChanged}" 
+                                            Quantity="{Binding quantity, Mode=OneWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"/>
                                     </HierarchicalDataTemplate>
                                 </Grid.Resources>
                                 <cntrl:ExtendedTreeView x:Name="treeAsset" ItemsSource="{Binding}" SelectedItemChanged="treecapital_SelectedItemChanged">
@@ -579,6 +585,7 @@
                                         <Panels:pnl_TreeView  StatusColor="{Binding status, Converter={StaticResource ProjectStatus2Color},  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding .,Converter={StaticResource Type2Enable}}"
                                              HorizontalAlignment="Stretch"
+                                             Code="{Binding code, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                              Type_Name="{Binding items.id_item_type, Mode=TwoWay, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                                              TaskName="{Binding item.name, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" 
                                              Quantity="{Binding quantity, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}"

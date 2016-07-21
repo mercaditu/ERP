@@ -101,6 +101,12 @@ namespace entity
         { get; set; }
 
         public Status.Project? status { get; set; }
+        public string code
+        {
+            get { return _code; }
+            set { _code = value; RaisePropertyChanged("code"); }
+        }
+        private string _code;
 
         //[NotMapped]
         //public bool TrickleDown_IsSelected 

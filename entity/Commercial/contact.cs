@@ -280,7 +280,7 @@ namespace entity
         public virtual ICollection<hr_talent_detail> hr_talent_detail { get; set; }
         public virtual IEnumerable<hr_timesheet> hr_timesheet { get; set; }
         public virtual ICollection<item_asset_maintainance_detail> item_asset_maintainance_detail { get; set; }
-
+        public virtual ICollection<item_asset> item_asset { get; set; }
 
         #region Validation
 

@@ -589,6 +589,7 @@
     <Compile Include="Purchase\purchase_tender_dimension.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Sales\sales_promotion.cs" />
     <Compile Include="Sales\sales_packing_relation.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -133,6 +133,7 @@
         public virtual DbSet<sales_invoice_detail> sales_invoice_detail { get; set; }
         public virtual DbSet<sales_rep> sales_rep { get; set; }
         public virtual DbSet<sales_return> sales_return { get; set; }
+        public virtual DbSet<sales_promotion> sales_promotion { get; set; }
         public virtual DbSet<sales_return_detail> sales_return_detail { get; set; }
         public virtual DbSet<security_user> security_user { get; set; }
         public virtual DbSet<security_role> security_role { get; set; }

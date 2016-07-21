@@ -48,6 +48,8 @@ namespace entity.DebeHaber
         public string DocCode { get; set; }
         public DateTime? DocExpiry { get; set; }
 
+        public int PaymentCondition { get; set; }
+
         //Collection Property
         public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
@@ -59,6 +61,9 @@ namespace entity.DebeHaber
             this.Type = entity.DebeHaber.TransactionTypes.Sales;
             this.TransDate = sales_invoice.trans_date;
             this.CompanyName = sales_invoice.contact.name;
+
+            this.PaymentCondition = sales_invoice.app_contract != null ? (sales_invoice.app_contract.app_contract_detail != null ? sales_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
+
             this.Gov_Code = sales_invoice.contact.gov_code;
             this.Comment = sales_invoice.comment;
             this.CurrencyName = sales_invoice.app_currencyfx != null ? sales_invoice.app_currencyfx.app_currency != null ? sales_invoice.app_currencyfx.app_currency.name : "" : "";
@@ -76,7 +81,7 @@ namespace entity.DebeHaber
             this.Gov_Code = purchase_invoice.contact.gov_code;
             this.Comment = purchase_invoice.comment;
             this.CurrencyName = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.name : "" : "";
-
+            this.PaymentCondition = purchase_invoice.app_contract != null ? (purchase_invoice.app_contract.app_contract_detail != null ? purchase_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
             this.DocNumber = purchase_invoice.number;
             this.DocCode = purchase_invoice.code;
             //No Expiry Date for Purchase Code.

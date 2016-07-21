@@ -168,8 +168,40 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <!-- CRUD Modal -->
-                    <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" 
+                    <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
                           Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5"/>
+                    <Grid Name="crud_modalDuePaymnet" Background="{StaticResource Modal_BackgroundColor}" Visibility="Collapsed" 
+                          Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" Height="200" Width="500">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Background="RoyalBlue">
+                                <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="$" FontSize="25" Margin="8,0"
+                   VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Gray"/>
+                                <TextBlock x:Name="lblTitle" Text="{lex:Loc DuePayment}" FontSize="25" Margin="40,3,0,0" Foreground="White"/>
+                                <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
+                     Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+                                <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
+                   HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" Foreground="White"
+                   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                            </Grid>
+                            <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True"
+                      RowDetailsVisibilityMode="VisibleWhenSelected"  CanUserAddRows="False" Grid.Row="1">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding CustName}" 
+                                        Header="{lex:Loc Cognitivo:local:Customer}" Width="auto" IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding AccountReceivableBalance,StringFormat={}{0:N}}" 
+                                        Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
+                                        ElementStyle="{StaticResource RightAlignStyle}"/>
+                                    
+                                    <DataGridTextColumn Binding="{Binding Currency}" 
+                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Grid>
                     <!-- Navigation ListBox -->
                     <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="sales_invoiceDataGrid"
                              ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -364,6 +396,14 @@
                                     </Hyperlink>
                                             </TextBlock>
                                         </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0" >
+                                            <Label Content="$" Style="{StaticResource btn_Label}"/>
+                                            <TextBlock Margin="5,0" VerticalAlignment="Center">
+                                    <Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">
+                                        <Run Text="{lex:Loc DuePayment}"/>
+                                    </Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Content="" Style="{StaticResource btn_Label}"/>
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
@@ -398,7 +438,7 @@
                                             <!-- render each bound item using a TextBlock-->
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                   
+
                                                     <StackPanel>
                                                         <TextBlock VerticalAlignment="Top" Margin="5,0"  Style="{StaticResource text_Label}">
                                                             <Hyperlink PreviewMouseUp="salesorder_PreviewMouseUp" Tag="{Binding sales_order_detail.sales_order}">
@@ -573,7 +613,7 @@
                                 <!--sidepanel-->
                             </Grid>
                         </ScrollViewer>
-                        
+
                         <Grid Grid.ColumnSpan="2" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
                             <Rectangle Height="0.7" Fill="Black" VerticalAlignment="Top" Margin="8,0"/>
                             <StackPanel VerticalAlignment="Top" Margin="8,0" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
@@ -588,7 +628,7 @@
                                              DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              btnClean_Click="btnTotalClean_Click"
                                              VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                            
+
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,0,0">
                                 <Popup x:Name="popupVAT" Placement="Top">
                                     <Grid Background="{StaticResource AccentColor_Introvert}">
@@ -633,7 +673,7 @@
                                                         ElementStyle="{StaticResource RightAlignStyle}" 
                                                         Binding="{Binding unit_price, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}"
                                                         Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATExcluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" >
-                                      
+
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Binding="{Binding discount, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                         Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" Foreground="Crimson" 
@@ -685,7 +725,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        
+
         <cntrl:toolBar x:Name="toolBar" appName="SalesInvoice"
 			           btnNew_Click="btnNew_Click" 
 			           btnDelete_Click="btnDelete_Click" 

@@ -98,14 +98,14 @@
                                 <StackPanel DataContext="{StaticResource itemViewSource}">
                                     <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}"/>
                                     <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}"
-                                      DisplayMemberPath="name" SelectedValuePath="id_brand"
-                                      ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
-                                      SelectedValue="{Binding item.id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
+                                              DisplayMemberPath="name" SelectedValuePath="id_brand"
+                                              ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
+                                              SelectedValue="{Binding id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
                                     <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
                                     <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
-                                                 CollectionViewSource="{StaticResource item_tagViewSource}"
-                                                 focusGrid="True" Height="27" Width="256" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
-                                                 KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
+                                                             CollectionViewSource="{StaticResource item_tagViewSource}"
+                                                             focusGrid="True" Height="27" Width="256" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
+                                                             KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
                                         <cntrl:SearchableTextbox.Columns>
                                             <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
                                                           Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
@@ -128,6 +128,7 @@
 
                                 <Label Style="{StaticResource input_label}" Content="{lex:Loc Employee}" />
                                 <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True"
+                                                           Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                            Select="itemserviceComboBox_MouseDoubleClick"/>
                                 <!-- ="{Binding contacts.name}" -->
                             </StackPanel>

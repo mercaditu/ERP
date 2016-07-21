@@ -48,16 +48,6 @@ namespace entity
             {
                 _debit = value;
                 RaisePropertyChanged("debit");
-
-
-                if (item_product != null)
-                {
-                    if (item_product.item != null)
-                    {
-                        _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, debit, GetDimensionValue());
-                        RaisePropertyChanged("debit_Factored");
-                    }
-                }
             }
         }
         decimal _debit = 0;
@@ -72,64 +62,10 @@ namespace entity
             {
                 _credit = value;
                 RaisePropertyChanged("credit");
-                if (item_product != null)
-                {
-                    if (item_product.item != null)
-                    {
-                        _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, credit, GetDimensionValue());
-                        RaisePropertyChanged("credit_Factored");
-                    }
-                }
             }
         }
         decimal _credit = 0;
-        [NotMapped]
-        public decimal credit_Factored
-        {
-            get { return _credit_Factored; }
-            set
-            {
-                if (_credit_Factored != value)
-                {
-                    _credit_Factored = value;
-                    RaisePropertyChanged("credit_Factored");
 
-                    if (item_product != null)
-                    {
-                        if (item_product.item != null)
-                        {
-                            credit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, credit_Factored, GetDimensionValue());
-
-                        }
-
-                    }
-
-                }
-            }
-        }
-        private decimal _credit_Factored;
-        [NotMapped]
-        public decimal debit_Factored
-        {
-            get { return _debit_Factored; }
-            set
-            {
-                if (_debit_Factored != value)
-                {
-                    _debit_Factored = value;
-                    RaisePropertyChanged("debit_Factored");
-
-                    if (item_product != null)
-                    {
-                        if (item_product.item != null)
-                        {
-                            debit = Brillo.ConversionFactor.Factor_Quantity_Back(item_product.item, debit_Factored, GetDimensionValue());
-                        }
-                    }
-                }
-            }
-        }
-        private decimal _debit_Factored;
         public string comment { get; set; }
         public string code { get; set; }
         public DateTime? expire_date { get; set; }
@@ -178,16 +114,16 @@ namespace entity
                         using (db db = new db())
                         {
                          
-                                _credit_Factored = Brillo.ConversionFactor.Factor_Quantity(db.items.Where(x => x.id_item == _item_product.item.id_item).FirstOrDefault(), credit, GetDimensionValue());
-                                RaisePropertyChanged("credit_Factored");
+                                //_credit_Factored = Brillo.ConversionFactor.Factor_Quantity(db.items.Where(x => x.id_item == _item_product.item.id_item).FirstOrDefault(), credit, GetDimensionValue());
+                                //RaisePropertyChanged("credit_Factored");
                             
                         }
 
 
 
 
-                        _debit_Factored = Brillo.ConversionFactor.Factor_Quantity(_item_product.item, debit, GetDimensionValue());
-                        RaisePropertyChanged("debit_Factored");
+                        //_debit_Factored = Brillo.ConversionFactor.Factor_Quantity(_item_product.item, debit, GetDimensionValue());
+                        //RaisePropertyChanged("debit_Factored");
                     }
                 }
             }

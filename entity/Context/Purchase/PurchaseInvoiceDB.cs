@@ -8,7 +8,6 @@ namespace entity
 {
     public partial class PurchaseInvoiceDB : BaseDB
     {
-  
         public purchase_invoice New()
         {
             purchase_invoice purchase_invoice = new purchase_invoice();
@@ -150,9 +149,10 @@ namespace entity
                         {
                             base.payment_schedual.RemoveRange(payment_schedualList);
                         }
+
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
-                            base.item_movement.RemoveRange(item_movementList);
+                            //base.item_movement.RemoveRange(item_movementList);
                         }
 
                         purchase_invoice.status = Status.Documents_General.Annulled;

@@ -114,6 +114,11 @@ namespace entity
 
                 foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail)
                 {
+                    if (item_inventory_detail.item_product.item.name.Contains("KIT KAT 4 FINGER"))
+                    {
+                        NumberOfRecords = NumberOfRecords;
+                    }
+
                     if (item_inventory_detail.item_inventory_dimension.Count() > 0)
                     {
                         item_movement item_movement = new item_movement();
@@ -159,11 +164,6 @@ namespace entity
                             {
                                 //Negative
                                 delta = item_inventory_detail.value_counted - item_inventory_detail.value_system;
-                            }
-
-                            if (item_inventory_detail.item_product.item.name.Contains("Kinder Bue"))
-                            {
-                                
                             }
 
                             if (delta != 0)

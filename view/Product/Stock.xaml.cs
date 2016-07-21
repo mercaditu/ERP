@@ -84,7 +84,6 @@ namespace Cognitivo.Product
                          location = last.Key.app_location.name,
                          itemid = last.Key.item_product.item.id_item,
                          quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                         Quantity_Factored = last.Sum(x => x.credit_Factored) - last.Sum(x => x.debit_Factored),
                          id_item_product = last.Key.item_product.id_item_product,
                          measurement = last.Key.item_product.item.app_measurement!=null?last.Key.item_product.item.app_measurement.code_iso:"",
                          id_location = last.Key.app_location.id_location
@@ -200,14 +199,16 @@ namespace Cognitivo.Product
 
         private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            //Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
-            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
-            ProductMovementDB.Generate_ProductMovement();
+            Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
         }
 
         private void GenerateParentChildRel_Thread()
         {
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
+
+            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
+            ProductMovementDB.Generate_ProductMovement();
+
             Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }
     }

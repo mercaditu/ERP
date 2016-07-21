@@ -111,7 +111,8 @@ namespace entity
             set
             {
                 _FirstName = value;
-                name = LastName + "," + _FirstName;
+                _FirstName = _FirstName.Replace(",", "");
+                name = _LastName + ", " + _FirstName;
             }
         }
         private string _FirstName;
@@ -133,7 +134,8 @@ namespace entity
             set
             {
                 _LastName = value;
-                name = _LastName + "," + FirstName;
+                _LastName = _LastName.Replace(",", "");
+                name = _LastName + ", " + _FirstName;
             }
         }
         private string _LastName;

@@ -1022,10 +1022,11 @@ namespace Cognitivo.Production
         {
             if (CmbService.ContactID > 0)
             {
-
                 contact contact = OrderDB.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
-                adddatacontact(contact, treeService);
-
+                if (contact != null)
+                {
+                    adddatacontact(contact, treeService);
+                }
             }
         }
         public void adddatacontact(contact Data, cntrl.ExtendedTreeView treeview)
@@ -1085,7 +1086,7 @@ namespace Cognitivo.Production
                             OrderDB.production_execution_detail.Add(_production_execution_detail);
 
 
-                           
+                            production_execution_detailServiceContractViewSource.View.Refresh();
                             production_execution_detailServiceViewSource.View.MoveCurrentToLast();
 
                             loadServiceTotal(production_order_detail);

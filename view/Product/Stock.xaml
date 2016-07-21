@@ -56,9 +56,9 @@
                     <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N2}}" 
                                         ElementStyle="{StaticResource RightAlignStyle}" 
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
-                    <DataGridTextColumn Binding="{Binding Quantity_Factored, StringFormat={}{0:N2}}"
+                    <!--<DataGridTextColumn Binding="{Binding Quantity_Factored, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Factor}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"
-                                      />
+                                      />-->
                     <DataGridTextColumn Binding="{Binding measurement}" Header="{lex:Loc Cognitivo:local:Measurement}" Width="Auto"/>
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
@@ -82,9 +82,7 @@
                                             <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="128"/>
                                             <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="auto"/>
                                             <DataGridTextColumn Binding="{Binding debit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Debit}" Width="128"/>
-                                            <DataGridTextColumn Binding="{Binding debit_Factored, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:DebitConversion}" Width="128"/>
                                             <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128"/>
-                                            <DataGridTextColumn Binding="{Binding credit_Factored, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:CreditConversion}" Width="128"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </StackPanel>
@@ -119,7 +117,7 @@
             </StackPanel>
         </StackPanel>
         <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent" 
-                BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
+                BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
                 <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>
                 <Label Content="Parent / Child Rel" FontSize="18" HorizontalContentAlignment="Center"/>

@@ -70,12 +70,12 @@ namespace entity.DebeHaber
 
         public void Fill_ByPurchase(purchase_invoice purchase_invoice)
         {
-            this.Type = entity.DebeHaber.TransactionTypes.Sales;
+            this.Type = entity.DebeHaber.TransactionTypes.Purchase;
             this.TransDate = purchase_invoice.trans_date;
             this.CompanyName = purchase_invoice.contact.name;
             this.Gov_Code = purchase_invoice.contact.gov_code;
             this.Comment = purchase_invoice.comment;
-            this.CurrencyName = purchase_invoice.app_currencyfx.app_currency.name;
+            this.CurrencyName = purchase_invoice.app_currencyfx != null ? purchase_invoice.app_currencyfx.app_currency != null ? purchase_invoice.app_currencyfx.app_currency.name : "" : "";
 
             this.DocNumber = purchase_invoice.number;
             this.DocCode = purchase_invoice.code;

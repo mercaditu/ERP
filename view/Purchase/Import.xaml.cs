@@ -115,6 +115,13 @@ namespace Cognitivo.Purchase
         {
             impex impex = impexDataGrid.SelectedItem as impex;
 
+            List<impex_expense> impexexpenselist = impex.impex_expense.Where(x => x.value <= 0).ToList();
+            foreach (impex_expense impex_expense in impexexpenselist)
+            {
+                impex.impex_expense.Remove(impex_expense);
+            }
+           
+
             if (ImpexDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ImpexDB.NumberOfRecords);
@@ -143,6 +150,7 @@ namespace Cognitivo.Purchase
         private void impexDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Impex_CostDetailLIST.Clear();
+            Impex_ProductsLIST.Clear();
 
             if (impexDataGrid.SelectedItem != null)
             {

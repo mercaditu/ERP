@@ -25,6 +25,10 @@
           <DataField>AmountWords</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="sales_barcode">
+          <DataField>sales_barcode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="sales_invoice">
           <DataField>sales_invoice</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -1144,6 +1148,38 @@
               <Height>0.6cm</Height>
               <Width>2.5cm</Width>
               <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!sales_barcode.Value, "DataSet1")</Value>
+                      <Style>
+                        <FontFamily>IDAutomationSC128XL</FontFamily>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.86995cm</Top>
+              <Left>20.75204cm</Left>
+              <Height>0.9175cm</Height>
+              <Width>5.57213cm</Width>
+              <ZIndex>12</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>

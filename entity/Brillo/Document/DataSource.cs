@@ -257,6 +257,7 @@ namespace entity.Brillo.Document
                     sales_invoice_contract = g.sales_invoice != null ? g.sales_invoice.app_contract.name : "",
                     sales_invoice_condition = g.sales_invoice != null ? g.sales_invoice.app_contract.app_condition.name : "",
                     sales_number = g.sales_invoice != null ? g.sales_invoice.number : "",
+                    sales_barcode = g.sales_invoice != null ? GetBarcode(g.sales_invoice.number) : "",
                     sales_invoice_Comment = g.sales_invoice != null ? g.sales_invoice.comment : "",
                     packingList = g.sales_invoice != null ? g.sales_packing_relation != null ? GetPacking(g.sales_packing_relation.ToList()) : "" : "",
                     sales_order = g.sales_invoice != null ? g.sales_order_detail != null ? g.sales_order_detail.sales_order.number : "" : "",
@@ -274,7 +275,11 @@ namespace entity.Brillo.Document
                 return reportDataSource;
             }
         }
-
+        private string GetBarcode(string number)
+        {
+            entity.Class.clsBarcode clsbarcode = new Class.clsBarcode();
+           return clsbarcode.ConvertToBarcode(number);
+        }
         private string GetPacking(List<sales_packing_relation> sales_packing_relation)
         {
             string PackingList = "";

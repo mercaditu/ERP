@@ -67,7 +67,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByItem", entity.App.Names.SalesByItem, "Reports", Version.Starter);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByBrand", entity.App.Names.SalesByBrand, "Reports", Version.Starter);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByTag", entity.App.Names.SalesByTag, "Reports", Version.Starter);
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.AvgSales", entity.App.Names.AvgSales, "Reports", Version.Starter);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.CostOfGoodsSold", entity.App.Names.CostOfGoodsSold, "Reports", Version.Starter);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.Contacts", entity.App.Names.Contact, "Reports", Version.Starter);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesBySalesRep", entity.App.Names.SalesbySalesman, "Reports", Version.Starter);
@@ -109,8 +108,6 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Stock, entity.App.Modules.Configuration, "Product.PriceList", entity.App.Names.PriceList, "ProductPriceList", Version.Starter);
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Inventory, "Sales.PackingList", "PackingList", "ProductSend", Version.Medium);
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.Inventory", entity.App.Names.Inventory, "Reports", Version.Starter);
-            //dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Product.ProductBarcode", entity.App.Names.ItemBarcode, "Reports");
-            dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Reports, "Reporting.Views.BranchWalkinsReport", entity.App.Names.FootTraffic, "Reports", Version.Basic);
 
             //Impex
             dtApp.Rows.Add(entity.App.Modules.Impex, Namespace.Exports, "Sales.Export", entity.App.Names.Export, "Export", Version.Medium);

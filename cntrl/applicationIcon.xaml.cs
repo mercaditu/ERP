@@ -52,16 +52,26 @@ namespace cntrl
             }
         }
 
+        public event ClickedFavEventHandler ClickedFav;
+        public delegate void ClickedFavEventHandler(object sender, RoutedEventArgs e);
         private void applicationIcon_ClickFavorites(object sender, RoutedEventArgs e)
         {
-            cntrl.Properties.Settings Settings = new Properties.Settings();
-            string _Tag = this.Tag.ToString();
-
-            if (Settings.AppFavList.Contains(_Tag) == false)
+            if (ClickedFav != null)
             {
-                Settings.AppFavList.Add(_Tag);
-                Settings.Save();
+                ClickedFav(this, e);
             }
         }
+
+        //private void applicationIcon_ClickFavorites(object sender, RoutedEventArgs e)
+        //{
+        //    cntrl.Properties.Settings Settings = new Properties.Settings();
+        //    string _Tag = this.Tag.ToString();
+
+        //    if (Settings.AppFavList.Contains(_Tag) == false)
+        //    {
+        //        Settings.AppFavList.Add(_Tag);
+        //        Settings.Save();
+        //    }
+        //}
     }
 }

@@ -100,7 +100,7 @@ namespace entity
 
                         if (purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected).Count() == 0)
                         {
-                            return;
+                            continue;
                         }
                         foreach (purchase_tender_detail purchase_tender_detail in purchase_tender_contact.purchase_tender_detail.Where(x => x.IsSelected))
                         {

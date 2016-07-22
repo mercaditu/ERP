@@ -2013,7 +2013,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Application\128\AccountingChart.png" />
-    <Resource Include="Images\Application\128\Audit.png" />
     <Resource Include="Images\Application\128\BankAccount.png" />
     <Resource Include="Images\Application\128\BankAccountTrans.png" />
     <Resource Include="Images\Application\128\Beta.png" />
@@ -2025,7 +2024,6 @@
     <Resource Include="Images\Application\128\Contract.png" />
     <Resource Include="Images\Application\128\Currency.png" />
     <Resource Include="Images\Application\128\Document.png" />
-    <Resource Include="Images\Application\128\DocumentDesign.png" />
     <Resource Include="Images\Application\128\DocumentRange.png" />
     <Resource Include="Images\Application\128\EmployeeID.png" />
     <Resource Include="Images\Application\128\EmployeeTalent.png" />

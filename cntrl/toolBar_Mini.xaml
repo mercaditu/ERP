@@ -8,8 +8,7 @@
                 lex:ResxLocalizationProvider.DefaultDictionary="strings"
              Height="32" MinWidth="100" Loaded="UserControl_Loaded">
     <Grid>
-        <Rectangle Style="{StaticResource line_Bar}" Fill="Gainsboro"/>
-        <Border Background="WhiteSmoke" CornerRadius="8" HorizontalAlignment="Center" BorderBrush="Silver" BorderThickness="0,1,0,1">
+        <Border CornerRadius="8" HorizontalAlignment="Center" BorderBrush="DimGray" BorderThickness="0,1.5,0,0">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Name="stackMain" Orientation="Horizontal" Margin="4,0"/>
                 <StackPanel Name="stackSide" Orientation="Horizontal" Margin="4,0"/>

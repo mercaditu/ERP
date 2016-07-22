@@ -392,15 +392,17 @@ namespace Cognitivo.Project.Development
                     {
                         project_task.status = Status.Project.Management_Approved;
                         ProjectTaskDB.NumberOfRecords += 1;
-                        project_task.IsSelected = false;
                     }
+
+                    project_task.IsSelected = false;
                 }
 
                 if (ProjectTaskDB.SaveChanges() > 0)
                 {
                     toolBar.msgApproved(ProjectTaskDB.NumberOfRecords);
-                    filter_task();
                 }
+
+                filter_task();
             }
         }
 
@@ -424,7 +426,6 @@ namespace Cognitivo.Project.Development
                 if (ProjectTaskDB.SaveChanges() > 0)
                 {
                     toolBar.msgAnnulled(ProjectTaskDB.NumberOfRecords);
-                    filter_task();
                 }
 
                 filter_task();

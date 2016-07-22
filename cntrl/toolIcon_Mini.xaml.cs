@@ -26,10 +26,20 @@ namespace cntrl
             set { SetValue(icoNameProperty, value); }
         }
 
-        /// <summary>
-        /// ForeGround control for the Icon
-        /// </summary>
-        public Brush icoColor { get; set; }
+        public static readonly DependencyProperty btnColorProperty = DependencyProperty.Register("btnColor", typeof(Brush), typeof(toolIcon_Mini));
+        public Brush btnColor
+        {
+            get { return (Brush)GetValue(btnColorProperty); }
+            set { SetValue(btnColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty iColorProperty = DependencyProperty.Register("iColor", typeof(Brush), typeof(toolIcon_Mini));
+        public Brush iColor
+        {
+            get { return (Brush)GetValue(iColorProperty); }
+            set { SetValue(iColorProperty, value); }
+        }
+       
 
         public toolIcon_Mini() 
         {

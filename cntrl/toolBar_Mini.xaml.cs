@@ -316,12 +316,16 @@ namespace cntrl
                 var appLocTextExtension = new LocTextExtension("COGNITIVO:local:" + _toolTip + "").SetBinding(ico, toolIcon_Mini.icoNameProperty);
                 ico.imgSource = row["img"].ToString();
                 ico.Cursor = Cursors.Hand;
+                ico.btnColor = Brushes.AliceBlue;
+                ico.iColor = Brushes.RoyalBlue;
                 ico = check_Icons(ico, _toolTip, ref security);
 
                 if (ico != null && row["placement"].ToString() == "m")
                 { 
                     if(_toolTip == "Delete")
                     {
+                        ico.btnColor = Brushes.Silver;
+                        ico.iColor = Brushes.Black;
                         System.Windows.Shapes.Rectangle rect;
                         rect = new System.Windows.Shapes.Rectangle();
                         rect.Fill = new SolidColorBrush(Colors.Gainsboro);
@@ -332,12 +336,21 @@ namespace cntrl
                     }
                     else
                     {
-
                         stackMain.Children.Add(ico);
                     }
                 }
                 else if (ico != null && row["placement"].ToString() == "s")
                 { //Then Secondary Stack
+                    if (_toolTip == "Annul")
+                    {
+                        ico.btnColor = Brushes.Pink;
+                        ico.iColor = Brushes.Crimson;
+                    }
+                    else if (_toolTip == "Approve")
+                    {
+                        ico.btnColor = Brushes.PaleGreen;
+                        ico.iColor = Brushes.Green;
+                    }
                     stackSide.Children.Add(ico);
                 }
             }
@@ -391,13 +404,13 @@ namespace cntrl
             else if (btnApprove_Click != null & iconName == "Approve" && security.approve)
             {
                 toolIcon_Mini.Click += btnApprove_MouseUp;
-                toolIcon_Mini.icoColor = Brushes.PaleGreen;
+                toolIcon_Mini.iColor = Brushes.PaleGreen;
                 toolIcon_Mini = bind_toolIcon(toolIcon_Mini, "Approve_IsEnabled", false);
             }
             else if (btnAnull_Click != null & iconName == "Annul" && security.annul)
             {
                 toolIcon_Mini.Click += btnAnull_MouseUp;
-                toolIcon_Mini.icoColor = Brushes.Crimson;
+                toolIcon_Mini.iColor = Brushes.Crimson;
                 toolIcon_Mini = bind_toolIcon(toolIcon_Mini, "Annul_IsEnabled", false);
             }
             else if (btnParent_Click != null & iconName == "Parent" )
@@ -407,7 +420,7 @@ namespace cntrl
             }
             else
             {
-                toolIcon_Mini.Foreground = Brushes.Gainsboro;
+                //toolIcon_Mini.Foreground = Brushes.Gainsboro;
                 return null;
             }
             return toolIcon_Mini;

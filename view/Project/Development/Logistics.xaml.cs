@@ -195,7 +195,7 @@ namespace Cognitivo.Project.Development
         {
             if (project_taskViewSource.Source != null)
             {
-                if (tabraw.IsFocused)
+                if (tabraw.IsSelected)
                 {
                     List<project_task> productlist = ProjectTaskDB.project_task.ToList();
                     productlist = productlist.Where(x => x.IsSelected == true).ToList();
@@ -508,6 +508,8 @@ namespace Cognitivo.Project.Development
         {
             LoadData();
         }
+
+    
     }
 
     public class Logistic

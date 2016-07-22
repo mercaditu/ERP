@@ -1728,5 +1728,42 @@ namespace Cognitivo.Production
         {
 
         }
+
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as production_execution_detail != null)
+            {
+                e.CanExecute = true;
+            }
+
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                DataGrid exexustiondetail = (DataGrid)e.Source;
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
+                    //DeleteDetailGridRow
+                    exexustiondetail.CancelEdit();
+                    production_execution_detail production_execution_detail = e.Parameter as production_execution_detail;
+                    production_execution_detail.State = EntityState.Deleted;
+                    OrderDB.production_execution_detail.Remove(production_execution_detail);
+                    production_execution_detailAssetViewSource.View.Refresh();
+                    production_execution_detailProductViewSource.View.Refresh();
+                    production_execution_detailServiceViewSource.View.Refresh();
+                    production_order_detaillAssetViewSource.View.Refresh();
+                    production_execution_detailRawViewSource.View.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
     }
 }

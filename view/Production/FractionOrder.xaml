@@ -20,15 +20,15 @@
       lex:ResxLocalizationProvider.DefaultDictionary="local"
       lex:LocalizeDictionary.DesignCulture="en-US" 
       MinHeight="600" MinWidth="800" Loaded="Page_Loaded">
-    <!--<Page.CommandBindings>
+    <Page.CommandBindings>
         <CommandBinding Command="customcmd:CustomCommands.Delete" 
                         CanExecute="DeleteCommandBinding_CanExecute" 
                         Executed="DeleteCommandBinding_Executed"/>
 
-        <CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
+        <!--<CommandBinding x:Name="EditCommand" Command="customcmd:CustomCommands.EditAll" 
                         CanExecute="EditCommand_CanExecute" 
-                        Executed="EditCommand_Executed"/>
-    </Page.CommandBindings>-->
+                        Executed="EditCommand_Executed"/>-->
+    </Page.CommandBindings>
     <Page.Resources>
         <converter:TreeViewchildFilter x:Key="tree"/>
         <converter:Type2Enable x:Key="Type2Enable"/>

@@ -63,6 +63,7 @@ namespace Cognitivo.Project.Development
             filter_task();
 
             entity.Brillo.Security security = new entity.Brillo.Security(entity.App.Names.ActivityPlan);
+            
             if (security.approve)
             {
                 btnapprove.IsEnabled = true;
@@ -83,7 +84,6 @@ namespace Cognitivo.Project.Development
 
             if (ToggleQuantity.IsChecked == true)
             {
-
                 stpexcustion.Visibility = System.Windows.Visibility.Visible;
                 stpestimate.Visibility = System.Windows.Visibility.Collapsed;
             }
@@ -91,7 +91,6 @@ namespace Cognitivo.Project.Development
             {
                 stpestimate.Visibility = System.Windows.Visibility.Visible;
                 stpexcustion.Visibility = System.Windows.Visibility.Collapsed;
-
             }
         }
 

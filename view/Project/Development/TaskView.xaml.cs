@@ -302,17 +302,25 @@ namespace Cognitivo.Project.Development
         private void btnAddParentTask_Click(object sender)
         {
             stpcode.IsEnabled = true;
-
             project project = projectViewSource.View.CurrentItem as project;
-            project_task n_project_task = new project_task();
-            n_project_task.id_project = project.id_project;
-            n_project_task.status = entity.Status.Project.Pending;
-            n_project_task.State = EntityState.Added;
-            ProjectTaskDB.project_task.Add(n_project_task);
+            
+            if (project != null)
+            {
+                project_task n_project_task = new project_task();
+                n_project_task.id_project = project.id_project;
+                n_project_task.status = entity.Status.Project.Pending;
+                n_project_task.State = EntityState.Added;
+                ProjectTaskDB.project_task.Add(n_project_task);
 
-            project_taskViewSource.View.Filter = null;
-            project_taskViewSource.View.MoveCurrentTo(n_project_task);
-            treeProject.SelectedItem_ = n_project_task;
+                project_taskViewSource.View.Filter = null;
+                project_taskViewSource.View.MoveCurrentTo(n_project_task);
+                treeProject.SelectedItem_ = n_project_task;
+            }
+            else
+            {
+                toolBar.msgWarning("Select Project");
+            }
+
             filter_task();
         }
 
@@ -320,7 +328,14 @@ namespace Cognitivo.Project.Development
         {
             stpcode.IsEnabled = true;
             project_task project_task = treeProject.SelectedItem_ as project_task;
-            project_task.State = EntityState.Modified;
+            if (project_task != null)
+            {
+                project_task.State = EntityState.Modified;
+            }
+            else
+            {
+                toolBar.msgWarning("Select Task");
+            }
         }
 
         private void btnSaveTask_Click(object sender)

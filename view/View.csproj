@@ -926,18 +926,6 @@
     <Resource Include="Images\DebeHaber_Logo.png" />
     <Resource Include="Images\space_invaders.png" />
     <Resource Include="bin\Debug\Data.xml" />
-    <EmbeddedResource Include="bin\Debug\Accounting\DiarioGlobal.rdlc">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\Accounting\Diario.rdlc">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="bin\Debug\Accounting\BALANCEGENERAL.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Content Include="bin\Debug\Images\Wallpaper\ElCapitan.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -982,40 +970,7 @@
     <EmbeddedResource Include="bin\Debug\PaymentUtility.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Content Include="bin\Debug\Report\SalesInvoicebyitem.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="bin\Debug\Report\SalesInvoiceDetail.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\SalesInvoiceReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\SalesInvoicebySalesMan.rdlc">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\HistoricStockLevels.rdlc">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\DailyProduction.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\PurchaseInvoiceReport.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\MatrixVat.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\Report\MatrixInventory.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="bin\Debug\PurchaseTender.rdlc" />
-    <Content Include="bin\Debug\Report\CostOfGoodSold.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="bin\Debug\SalesBudget.rdlc" />
     <EmbeddedResource Include="bin\Debug\PurchaseOrder.rdlc" />
     <Content Include="bin\Debug\PackingList.rdlc">

@@ -251,6 +251,7 @@ namespace Cognitivo.Product
                 contact contact = ItemDB.contacts.Where(x => x.id_contact == CmbService.ContactID).FirstOrDefault();
                 item_asset item_asset = itemitem_capitalViewSource.View.CurrentItem as item_asset;
                 item_asset.id_contact = contact.id_contact;
+                item_asset.contact = contact;
                 
             }
 

@@ -92,7 +92,7 @@
                         <Label Content="{lex:Loc OrderNumber}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}" 
                                  metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                 Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" FontFamily="IDAutomationSC128XL"/>
                         <Label Content="{lex:Loc Condition}"  Style="{StaticResource input_label}"/>
 
                         <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxCondition" 

@@ -164,6 +164,7 @@
     <Compile Include="applicationIcon.xaml.cs">
       <DependentUpon>applicationIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsCommon.cs" />
     <Compile Include="Class\CustomCommands.cs" />
     <Compile Include="Controls\AttachmentViewer.xaml.cs">

@@ -27,5 +27,14 @@
                            Margin="0" Style="{StaticResource text_Instructions}" TextTrimming="CharacterEllipsis"/>
             </StackPanel>
         </StackPanel>
+        <metro:Tile.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Favorite" Click="applicationIcon_ClickFavorites">
+                    <MenuItem.Icon>
+                        <Label Content="F" Style="{StaticResource ico_Label}" Foreground="Crimson"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </metro:Tile.ContextMenu>
     </metro:Tile>
 </UserControl>

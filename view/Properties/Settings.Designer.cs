@@ -107,17 +107,6 @@ namespace Cognitivo.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;persistsecurityinfo=True;database=cog" +
-            "nitivogolden")]
-        public string MySQLconnString {
-            get {
-                return ((string)(this["MySQLconnString"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://www.debehaber.com")]
@@ -127,6 +116,43 @@ namespace Cognitivo.Properties {
             }
             set {
                 this["DebeHaberConnString"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=root;password=root;persistsecurityinfo=True;database=Cog" +
+            "nitivo")]
+        public string MySQLconnString {
+            get {
+                return ((string)(this["MySQLconnString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>Fav</string>
+  <string>Purchase</string>
+  <string>Sales</string>
+  <string>Stock</string>
+  <string>Impex</string>
+  <string>Finance</string>
+  <string>HumanResources</string>
+  <string>Accounting</string>
+  <string>Project_Event</string>
+  <string>Project_PrintingPress</string>
+  <string>Project</string>
+  <string>Production</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection ModFavList {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["ModFavList"]));
+            }
+            set {
+                this["ModFavList"] = value;
             }
         }
     }

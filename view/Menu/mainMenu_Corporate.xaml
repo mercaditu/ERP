@@ -48,7 +48,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="WhiteSmoke" Opacity="0.5"/>
             </Grid.Background>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel x:Name="stackModule" Orientation="Horizontal" HorizontalAlignment="Center">
                 <cntrl:moduleIcon imgSource="/Cognitivo;component/Images/Menu/modFav.png"
                                   ModuleName="{lex:Loc Favorite}" 
                                   MouseUp="get_Apps"

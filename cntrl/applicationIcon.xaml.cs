@@ -51,5 +51,17 @@ namespace cntrl
                 Click(this, e);
             }
         }
+
+        private void applicationIcon_ClickFavorites(object sender, RoutedEventArgs e)
+        {
+            cntrl.Properties.Settings Settings = new Properties.Settings();
+            string _Tag = this.Tag.ToString();
+
+            if (Settings.AppFavList.Contains(_Tag) == false)
+            {
+                Settings.AppFavList.Add(_Tag);
+                Settings.Save();
+            }
+        }
     }
 }

@@ -20,14 +20,9 @@ namespace entity
         public sales_promotion()
         {
             is_head = true;
-            
-          
-           
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
-          
-
-           
+                   
         }
 
         [Key]

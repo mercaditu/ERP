@@ -439,6 +439,7 @@ namespace Cognitivo.Sales
 
         private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
             //Contract
             if (cbxCondition.SelectedItem != null)
             {
@@ -446,7 +447,13 @@ namespace Cognitivo.Sales
                 cbxContract.ItemsSource = await SalesInvoiceDB.app_contract.Where(a => a.is_active == true
                                                                         && a.id_company == CurrentSession.Id_Company
                                                                         && a.id_condition == app_condition.id_condition).ToListAsync();
-                cbxContract.SelectedIndex = 0;
+                if (sales_invoice != null)
+                {
+                    if (sales_invoice.id_contract == 0)
+                    {
+                        cbxContract.SelectedIndex = 0;
+                    }
+                }
             }
         }
 

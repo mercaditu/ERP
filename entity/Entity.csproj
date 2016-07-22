@@ -198,6 +198,7 @@
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Class\EnumExtension.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />
+    <Compile Include="Class\Promotion.cs" />
     <Compile Include="Commercial\contact_tag.cs" />
     <Compile Include="Commercial\contact_tag_detail.cs" />
     <Compile Include="Commercial\payment_withholding_details.cs" />

@@ -261,14 +261,24 @@ namespace Cognitivo.Sales
 
         private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
             //Contract
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
                 cbxContract.ItemsSource = await dbContext.app_contract.Where(a => a.is_active == true
                                                                         && a.id_company == CurrentSession.Id_Company
+                 
                                                                         && a.id_condition == app_condition.id_condition).ToListAsync();
-                cbxContract.SelectedIndex = 0;
+
+
+                if (sales_order != null)
+                {
+                    if (sales_order.id_contract == 0)
+                    {
+                        cbxContract.SelectedIndex = 0;
+                    }
+                }
             }
         }
 

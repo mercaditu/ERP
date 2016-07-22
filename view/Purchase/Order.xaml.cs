@@ -272,6 +272,7 @@ namespace Cognitivo.Purchase
 
         private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            purchase_order purchase_order = (purchase_order)purchase_orderDataGrid.SelectedItem;
             //Contract
             if (cbxCondition.SelectedItem != null)
             {
@@ -280,7 +281,13 @@ namespace Cognitivo.Purchase
                                                                         && a.id_company == CurrentSession.Id_Company
                                                                         && a.id_condition == app_condition.id_condition).ToListAsync();
                 //Selects first Item
-                cbxContract.SelectedIndex = 0;
+                if (purchase_order != null)
+                {
+                    if (purchase_order.id_contract == 0)
+                    {
+                        cbxContract.SelectedIndex = 0;
+                    }
+                }
             }
         }
         #endregion

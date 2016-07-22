@@ -163,6 +163,7 @@ namespace Cognitivo.Sales
     
         private void id_conditionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            sales_budget sales_budget = sales_budgetDataGrid.SelectedItem as sales_budget;
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
@@ -176,7 +177,14 @@ namespace Cognitivo.Sales
                     else
                     { return false; }
                 };
-                cbxContract.SelectedIndex = 0;
+                if (sales_budget!=null)
+                {
+                    if (sales_budget.id_contract==0)
+                    {
+                        cbxContract.SelectedIndex = 0;
+                    }
+                }
+               
             }
 
         }

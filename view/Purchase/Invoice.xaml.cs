@@ -256,6 +256,7 @@ namespace Cognitivo.Purchase
 
         private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
             //Contract
             if (cbxCondition.SelectedItem != null)
             {
@@ -264,7 +265,13 @@ namespace Cognitivo.Purchase
                                                                         && a.id_company == CurrentSession.Id_Company
                                                                         && a.id_condition == app_condition.id_condition).ToListAsync();
                 //Selects first Item
-                cbxContract.SelectedIndex = 0;
+                if (purchase_invoice != null)
+                {
+                    if (purchase_invoice.id_contract == 0)
+                    {
+                        cbxContract.SelectedIndex = 0;
+                    }
+                }
             }
         }
 

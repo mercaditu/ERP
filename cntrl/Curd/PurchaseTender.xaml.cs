@@ -102,11 +102,27 @@ namespace cntrl.Curd
                     }
                     ProjectTaskDB.purchase_tender.Add(purchase_tender);
                     CollectionViewSource purchase_tender_itemViewSource = (CollectionViewSource)this.FindResource("purchase_tender_itemViewSource");
-                    purchase_tender_itemViewSource.Source = ProjectTaskDB.purchase_tender_item_detail.Local.Where(x=>x.id_purchase_tender_item==0);
+                     ProjectTaskDB.purchase_tender_item_detail.Load();
+                     purchase_tender_itemViewSource.Source = ProjectTaskDB.purchase_tender_item_detail.Local;
 
-                   
-               
-              
+
+
+                     if (purchase_tender_itemViewSource != null)
+                     {
+                         if (purchase_tender_itemViewSource.View != null)
+                         {
+
+                             purchase_tender_itemViewSource.View.Filter = i =>
+                                 {
+                                     purchase_tender_item purchase_tender_item = (purchase_tender_item)i;
+                                     if (purchase_tender_item.id_purchase_tender_item == 0)
+                                         return true;
+                                     else
+                                         return false;
+                                 };
+                             
+                         }
+                     }
 
                 }
                 catch (Exception ex)

@@ -69,7 +69,7 @@
                             <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" IsReadOnly="True"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
+                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
                             <DataGridComboBoxColumn x:Name="AppMeasurementComboBox"  IsReadOnly="True"
 									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"

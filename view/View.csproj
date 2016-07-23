@@ -581,6 +581,9 @@
     <Compile Include="Reporting\Views\SalesBudgetList.xaml.cs">
       <DependentUpon>SalesBudgetList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\SalesByDate - Copy.xaml.cs">
+      <DependentUpon>SalesByDate - Copy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
     </Compile>
@@ -989,6 +992,7 @@
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CurrentAccount_Customer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\DeliveryByCustomer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PendingSalesDocs.rdlc" />
@@ -1691,6 +1695,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\SalesBudgetList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\SalesByDate - Copy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

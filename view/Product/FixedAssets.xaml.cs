@@ -28,9 +28,9 @@ namespace Cognitivo.Product
             itemitem_tagdetailViewSource = FindResource("itemitem_tagdetailViewSource") as CollectionViewSource;
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            ItemDB.items.Where(i => i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).ToList();
+            ItemDB.items.Where(i => i.id_company == CurrentSession.Id_Company && i.id_item_type == item.item_type.FixedAssets).Load();
             itemViewSource.Source = ItemDB.items.Local;
 
             item_asset_maintainanceViewSource = ((CollectionViewSource)(FindResource("item_asset_maintainanceViewSource")));
@@ -51,40 +51,40 @@ namespace Cognitivo.Product
             cmbdeactive.ItemsSource = Enum.GetValues(typeof(item_asset.DeActiveTypes)).OfType<item_asset.DeActiveTypes>().ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            await ItemDB.app_vat_group
+             ItemDB.app_vat_group
                     .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).LoadAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+                    .OrderBy(a => a.name).Load();
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 app_vat_groupViewSource.Source = ItemDB.app_vat_group.Local;
-            }));
+            //}));
 
             CollectionViewSource item_price_listViewSource = FindResource("item_price_listViewSource") as CollectionViewSource;
-            await ItemDB.item_price_list
+             ItemDB.item_price_list
                    .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                   .OrderBy(a => a.name).LoadAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+                   .OrderBy(a => a.name).Load();
+            //await Dispatcher.InvokeAsync(new Action(() =>
+            //{
                 item_price_listViewSource.Source = ItemDB.item_price_list.Local;
-            }));
+            //}));
 
-            await ItemDB.app_currency
+             ItemDB.app_currency
                     .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).ToListAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+                    .OrderBy(a => a.name).ToList();
+           // await Dispatcher.InvokeAsync(new Action(() =>
+           // {
                 CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
                 app_currencyViewSource.Source = ItemDB.app_currency.Local;
-            }));
+           // }));
 
-            await ItemDB.item_tag
+             ItemDB.item_tag
                 .Where(x => x.id_company == CurrentSession.Id_Company && x.is_active)
-                .OrderBy(x => x.name).LoadAsync();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
+                .OrderBy(x => x.name).Load();
+           // await Dispatcher.InvokeAsync(new Action(() =>
+          //  {
                 CollectionViewSource item_tagViewSource = ((CollectionViewSource)(FindResource("item_tagViewSource")));
                 item_tagViewSource.Source = ItemDB.item_tag.Local;
-            }));
+           // }));
         }
 
         #region Mini ToolBar
@@ -153,6 +153,7 @@ namespace Cognitivo.Product
         {
             item item = ItemDB.New();
             item.id_item_type = entity.item.item_type.FixedAssets;
+        
 
             using (db db = new db())
             { item.id_vat_group = db.app_vat_group.Where(x => x.is_default && x.id_company == CurrentSession.Id_Company).FirstOrDefault().id_vat_group; }

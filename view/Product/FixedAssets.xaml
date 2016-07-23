@@ -77,7 +77,7 @@
                                 <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}" />
                                 <TextBox Text="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
                                 <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}" />
-                                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_textbox}"/>
+                                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" Style="{StaticResource input_textbox}"/>
                                 <CheckBox Content="{lex:Loc Active}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="5"
                                           IsChecked="{Binding is_active, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}" />

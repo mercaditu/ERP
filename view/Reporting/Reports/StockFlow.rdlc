@@ -494,6 +494,7 @@
                               <Value>=Fields!trans_date.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>=IIf((Fields!credit.Value &gt; 0.00), "Bold", "Default")</FontWeight>
                                 <Format>d</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -528,6 +529,7 @@
                               <Value>=Fields!name1.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>=IIf((Fields!credit.Value &gt; 0.00), "Bold", "Default")</FontWeight>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -561,6 +563,7 @@
                               <Value>=Fields!comment.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>=IIf((Fields!credit.Value &gt; 0.00), "Bold", "Default")</FontWeight>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -630,6 +633,7 @@
                               <Value>=Sum(Fields!credit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>=IIf((Fields!credit.Value &gt; 0.00), "Bold", "Default")</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -666,6 +670,7 @@
                               <Value>=Sum(Fields!value.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>=IIf((Fields!credit.Value &gt; 0.00), "Bold", "Default")</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -932,7 +937,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>1.15104in</Size>
                 <CellContents>
                   <Textbox Name="Textbox15">
                     <CanGrow>true</CanGrow>
@@ -985,7 +990,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>1.15104in</Size>
                 <CellContents>
                   <Textbox Name="name">
                     <CanGrow>true</CanGrow>
@@ -1035,7 +1040,7 @@
             </TablixMember>
             <TablixMember>
               <TablixHeader>
-                <Size>1in</Size>
+                <Size>1.15104in</Size>
                 <CellContents>
                   <Textbox Name="Textbox17">
                     <CanGrow>true</CanGrow>
@@ -1076,7 +1081,7 @@
         </TablixRowHierarchy>
         <DataSetName>StockFlow</DataSetName>
         <Height>1in</Height>
-        <Width>8in</Width>
+        <Width>8.15104in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1087,7 +1092,7 @@
     <Height>1in</Height>
     <Style />
   </Body>
-  <Width>8in</Width>
+  <Width>8.15104in</Width>
   <Page>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>

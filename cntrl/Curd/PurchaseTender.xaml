@@ -13,7 +13,7 @@
              VerticalAlignment="Center"
              xmlns:local="clr-namespace:Cognitivo.Converters"
              xmlns:entity="clr-namespace:entity;assembly=entity" 
-             mc:Ignorable="d" Width="360" Loaded="UserControl_Loaded">
+             mc:Ignorable="d" Width="512" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="purchase_tender_itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_tender_item}, CreateList=True}"/>
@@ -39,11 +39,12 @@
                        FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
             </Grid>
             <!--<TextBlock Text="{lex:Loc desc_company}" Style="{StaticResource text_Instructions}"/>-->
-            <StackPanel x:Name="stpDisplay" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+            <StackPanel x:Name="stpDisplay" HorizontalAlignment="Left">
                
                 <DataGrid  AutoGenerateColumns="False"  ItemsSource="{Binding Source={StaticResource purchase_tender_itemViewSource}}"  >
                     <DataGrid.Columns>
-                        <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Task}" Width="50"
+                        <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Task}" Width="100"
 					                     x:Name="cmbtask"
                                                 DisplayMemberPath="items.name" SelectedValuePath="id_project_task" 
 					                            SelectedValueBinding="{Binding id_project_task, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
@@ -74,6 +75,27 @@
               
              
 
+            </StackPanel>
+            <StackPanel x:Name="stpDisplayDimension" >
+
+                    <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+							        ItemsSource="{Binding Source={StaticResource purchase_tender_itempurchase_tender_dimensionViewSource}}" 
+							        RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" 
+									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
+									                        SelectedValueBinding="{Binding id_dimension, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
+                            <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
+									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
+									                        SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
+
+                </StackPanel>
             </StackPanel>
 
             <Grid Background="WhiteSmoke">

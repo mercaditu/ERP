@@ -93,7 +93,7 @@ namespace cntrl.Curd
                     }
                     ProjectTaskDB.purchase_tender.Add(purchase_tender);
                     CollectionViewSource purchase_tender_itemViewSource = (CollectionViewSource)this.FindResource("purchase_tender_itemViewSource");
-                    purchase_tender_itemViewSource.Source = ProjectTaskDB.purchase_tender_item_detail.Local;
+                    purchase_tender_itemViewSource.Source = ProjectTaskDB.purchase_tender_item_detail.Local.Where(x=>x.id_purchase_tender_item==0);
 
                    
                

@@ -38,3 +38,10 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
     public partial class SalesByDateTableAdapter {
     }
 }
+
+namespace Cognitivo.SalesDSTableAdapters {
+    
+    
+    public partial class SalesByTagTableAdapter {
+    }
+}

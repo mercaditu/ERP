@@ -12,10 +12,6 @@
     <Grid Background="Gainsboro">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
             <StackPanel>
-                <Label Content="Branch" Style="{StaticResource input_label}"/>
-                <ComboBox x:Name="cbxBranch" SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_branch" DisplayMemberPath="name" Style="{StaticResource input_combobox}" Width="128"/>
-            </StackPanel>
-            <StackPanel>
                 <Label Content="Item" Style="{StaticResource input_label}"/>
                 <cntrl:SmartBox_Item x:Name="sbxItem" Select="SmartBox_Item_Select"/>
             </StackPanel>

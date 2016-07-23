@@ -581,8 +581,11 @@
     <Compile Include="Reporting\Views\SalesBudgetList.xaml.cs">
       <DependentUpon>SalesBudgetList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\SalesByDate - Copy.xaml.cs">
-      <DependentUpon>SalesByDate - Copy.xaml</DependentUpon>
+    <Compile Include="Reporting\Views\DeliveryByCustomer.xaml.cs">
+      <DependentUpon>DeliveryByCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\DeliveryByZone.xaml.cs">
+      <DependentUpon>DeliveryByZone.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
@@ -993,6 +996,7 @@
     <EmbeddedResource Include="Reporting\Reports\CurrentAccount_Customer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\DeliveryByCustomer.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\DeliveryByZone.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PendingSalesDocs.rdlc" />
@@ -1698,7 +1702,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\SalesByDate - Copy.xaml">
+    <Page Include="Reporting\Views\DeliveryByCustomer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\DeliveryByZone.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

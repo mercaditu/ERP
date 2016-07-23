@@ -44,7 +44,7 @@
                
                 <DataGrid  AutoGenerateColumns="False"  ItemsSource="{Binding Source={StaticResource purchase_tender_itemViewSource}}"  >
                     <DataGrid.Columns>
-                        <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Task}" Width="100"
+                        <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Task}" Width="100" IsReadOnly="True"
 					                     x:Name="cmbtask"
                                                 DisplayMemberPath="items.name" SelectedValuePath="id_project_task" 
 					                            SelectedValueBinding="{Binding id_project_task, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, 
@@ -53,24 +53,7 @@
                                             Header="{lex:Loc Cognitivo:local:quantity}" Width="auto" />
                        
                     </DataGrid.Columns>
-                    <DataGrid.RowDetailsTemplate>
-                        <DataTemplate>
-                            <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-							        ItemsSource="{Binding Source={StaticResource purchase_tender_itempurchase_tender_dimensionViewSource}}" 
-							        RowDetailsVisibilityMode="VisibleWhenSelected">
-                                <DataGrid.Columns>
-                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" 
-									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
-									                        SelectedValueBinding="{Binding id_dimension, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
-                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
-									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-									                        SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </DataTemplate>
-                    </DataGrid.RowDetailsTemplate>
+                    
                 </DataGrid>
               
              
@@ -82,11 +65,12 @@
 							        ItemsSource="{Binding Source={StaticResource purchase_tender_itempurchase_tender_dimensionViewSource}}" 
 							        RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" 
+                            <!--<DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
+                            <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" IsReadOnly="True"
 									                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
 									                        SelectedValueBinding="{Binding id_dimension, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Header="value" />
-                            <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
+                            <DataGridComboBoxColumn x:Name="AppMeasurementComboBox"  IsReadOnly="True"
 									                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
 									                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
 									                        SelectedValueBinding="{Binding id_measurement, UpdateSourceTrigger=PropertyChanged}" Header="Measurement" />

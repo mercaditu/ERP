@@ -68,6 +68,11 @@ namespace Cognitivo.Reporting.Views
             //}
         }
 
+        private void SmartBox_Geography_Select(object sender, RoutedEventArgs e)
+        {
+
+        }
+
        
     }
 }

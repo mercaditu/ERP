@@ -104,7 +104,7 @@
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                 <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-                <DatePicker Style="{StaticResource input_datepicker}"/>
+                <DatePicker Style="{StaticResource input_datepicker}" SelectedDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Line}" Style="{StaticResource input_label}"/>
                 <ComboBox  Style="{DynamicResource input_combobox}" 
 					DisplayMemberPath="name" SelectedValue="{Binding id_production_line, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

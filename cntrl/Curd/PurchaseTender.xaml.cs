@@ -70,26 +70,35 @@ namespace cntrl.Curd
 
 
 
-
-
-                        purchase_tender.id_project = project_task.id_project;
-                        purchase_tender_item purchase_tender_item = new purchase_tender_item();
-                        purchase_tender_item.id_item = project_task.id_item;
-                        purchase_tender_item.id_project_task = project_task.id_project_task;
-                        purchase_tender_item.item_description = project_task.item_description;
-                        purchase_tender_item.quantity = (decimal)project_task.quantity_est;
-
-                        foreach (project_task_dimension project_task_dimension in project_task.project_task_dimension)
+                        if (purchase_tender.purchase_tender_item_detail.Where(x => x.id_item == project_task.id_item).Count() == 0)
                         {
-                            purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
-                            purchase_tender_dimension.id_dimension = project_task_dimension.id_dimension;
-                            purchase_tender_dimension.id_measurement = project_task_dimension.id_measurement;
-                            purchase_tender_dimension.value = project_task_dimension.value;
-                            purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
+
+
+
+                            purchase_tender.id_project = project_task.id_project;
+                            purchase_tender_item purchase_tender_item = new purchase_tender_item();
+                            purchase_tender_item.id_item = project_task.id_item;
+                            purchase_tender_item.id_project_task = project_task.id_project_task;
+                            purchase_tender_item.item_description = project_task.item_description;
+                            purchase_tender_item.quantity = (decimal)project_task.quantity_est;
+
+                            foreach (project_task_dimension project_task_dimension in project_task.project_task_dimension)
+                            {
+                                purchase_tender_dimension purchase_tender_dimension = new purchase_tender_dimension();
+                                purchase_tender_dimension.id_dimension = project_task_dimension.id_dimension;
+                                purchase_tender_dimension.id_measurement = project_task_dimension.id_measurement;
+                                purchase_tender_dimension.value = 0;
+                                purchase_tender_item.purchase_tender_dimension.Add(purchase_tender_dimension);
+                            }
+
+                            purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
                         }
-
-                        purchase_tender.purchase_tender_item_detail.Add(purchase_tender_item);
-
+                        else
+                        {
+                            purchase_tender_item purchase_tender_item = purchase_tender.purchase_tender_item_detail.Where(x => x.id_item == project_task.id_item).FirstOrDefault();
+                            purchase_tender_item.quantity = purchase_tender_item.quantity + (decimal)project_task.quantity_est;
+                           
+                        }
                     }
                     ProjectTaskDB.purchase_tender.Add(purchase_tender);
                     CollectionViewSource purchase_tender_itemViewSource = (CollectionViewSource)this.FindResource("purchase_tender_itemViewSource");
@@ -127,6 +136,7 @@ namespace cntrl.Curd
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            
             ProjectTaskDB.SaveChanges();
             Grid parentGrid = (Grid)this.Parent;
             parentGrid.Children.Clear();

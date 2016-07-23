@@ -266,7 +266,6 @@ namespace entity
             DebeHaberIntegration = 102,
             [LocalizedDescription("DeliveryByCustomer")]
             DeliveryByCustomer = 105
-
         }
     }
 }

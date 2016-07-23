@@ -590,7 +590,7 @@ namespace entity.Brillo.Logic
                     item_movement.credit = 0;
                     item_movement.status = Status;
                     item_movement.id_location = app_location.id_location;
-                    item_movement._parent = null;
+                    item_movement._parent = parent_Movement;
 
                     if (ApplicationID == App.Names.Transfer)
                     {

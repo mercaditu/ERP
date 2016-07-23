@@ -263,7 +263,10 @@ namespace entity
             [LocalizedDescription("ProductionbyFraction")]
             ProductionbyFraction = 100,
             [LocalizedDescription("DebeHaberIntegration")]
-            DebeHaberIntegration = 102
+            DebeHaberIntegration = 102,
+            [LocalizedDescription("DeliveryByCustomer")]
+            DeliveryByCustomer = 105
+
         }
     }
 }

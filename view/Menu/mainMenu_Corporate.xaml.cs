@@ -110,6 +110,11 @@ namespace Cognitivo.Menu
             Properties.Settings Settings = new Properties.Settings();
             foreach (string _Icon in Settings.AppFavList)
             {
+                if (_Icon.Contains("Blank"))
+                {
+                    continue;
+                }
+
                 string Ico = _Icon.Replace("Cognitivo.", "");
                 string SearchBy = "app like '%" + Ico + "%'";
 

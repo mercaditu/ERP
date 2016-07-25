@@ -87,7 +87,20 @@ namespace entity
         public short? id_name_template { get; set; }
 
         [Required]
-        public string name { get { return _name; } set { _name = value; RaisePropertyChanged("name"); } }
+        public string name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                RaisePropertyChanged("name");
+                if (code=="" || code==null)
+                {
+                    _code = value;
+                }
+                RaisePropertyChanged("code");
+            }
+        }
         string _name;
         [Required]
         public string code { get { return _code; } set { _code = value; RaisePropertyChanged("code"); } }

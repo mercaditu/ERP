@@ -165,6 +165,8 @@ namespace Cognitivo.Product
 
             itemViewSource.View.Refresh();
             itemViewSource.View.MoveCurrentTo(item);
+            itemitem_capitalViewSource.View.Refresh();
+            itemitem_capitalViewSource.View.MoveCurrentTo(item_asset);
         }
 
         private void toolBar_btnCancel_Click(object sender)

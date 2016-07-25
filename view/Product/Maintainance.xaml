@@ -55,90 +55,98 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Grid Grid.Column="1" Grid.Row="1" DataContext="{StaticResource item_asset_maintainanceViewSource}">
-            <StackPanel 
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" DataContext="{StaticResource item_asset_maintainanceViewSource}">
+            <TabControl>
+                <TabItem Header="{lex:Loc FixedAssets}">
+                    <StackPanel 
                             Background="White"   HorizontalAlignment="Left" Width="450">
-                <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
-                <DatePicker x:Name="start_dateDatePicker" Style="{StaticResource input_datepicker}"
-					            SelectedDate="{Binding start_date, Mode=TwoWay, NotifyOnValidationError=true, 
-                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
-                <DatePicker x:Name="end_dateDatePicker" Style="{StaticResource input_datepicker}"
-					            SelectedDate="{Binding end_date, Mode=TwoWay, NotifyOnValidationError=true, 
-                                ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
-                <Controls:SmartBox_Item x:Name="sbxFixedasset" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
-                                        IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
-                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 
+                        <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
+                        <DatePicker x:Name="start_dateDatePicker" Style="{StaticResource input_datepicker}"
+					                SelectedDate="{Binding start_date, Mode=TwoWay, NotifyOnValidationError=true, 
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
+                        <DatePicker x:Name="end_dateDatePicker" Style="{StaticResource input_datepicker}"
+					                SelectedDate="{Binding end_date, Mode=TwoWay, NotifyOnValidationError=true, 
+                                    ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        <Label Content="{lex:Loc FixedAssets}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
+                        <Controls:SmartBox_Item x:Name="sbxFixedasset" item_types="FixedAssets" HorizontalAlignment="Left" 
+                                                Width="256" Height="26" Select="item_Select"
+                                                IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
+                        <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                        <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="128" 
                                  Style="{StaticResource input_textbox}" HorizontalAlignment="Stretch" Width="Auto" TextWrapping="Wrap"/>
-            </StackPanel>
-        
-        </Grid>
-        <StackPanel  Grid.Row="2" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc StartDate}" />
-                <DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
-                <toolkit:TimePicker x:Name="dtpstarttime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="{lex:Loc Maintainance}">
+                    <StackPanel  Grid.Row="2" Grid.Column="1">
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc StartDate}" />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <DatePicker x:Name="dtpstartdate"  Width="150" Height="27"/>
+                            <toolkit:TimePicker x:Name="dtpstarttime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                        </StackPanel>
 
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc EndDate}" />
-                <DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
-                <toolkit:TimePicker x:Name="dtpendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
-            </StackPanel>
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc EndDate}" />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <DatePicker x:Name="dtpenddate"  Width="150" Height="27" />
+                            <toolkit:TimePicker x:Name="dtpendtime"  Width="85" Height="27" Format="Custom" FormatString="HH:mm" />
+                        </StackPanel>
 
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
-                <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" />
-            </StackPanel>
-            <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
-            <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select"/>
-            <Controls:NotificationButton Text="{lex:Loc RequestResource}" 
+                        <Label Style="{StaticResource input_label}" Content="{lex:Loc Employee}" />
+                        <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" />
+
+                        <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" HorizontalAlignment="Left"/>
+                        <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select"/>
+                        <Controls:NotificationButton Text="{lex:Loc RequestResource}" 
                                                              Number="{Binding SelectedCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              Icon="" Click="btnRequestResource_Click" 
                                                              VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <DataGrid x:Name="dgvMaintainceDetail"
-                          VerticalScrollBarVisibility="Auto" Height="Auto"
-                          AutoGenerateColumns="False"
+                        <DataGrid x:Name="dgvMaintainceDetail"
+                                  VerticalScrollBarVisibility="Auto" Height="Auto"
+                                  AutoGenerateColumns="False"
                        
-				          EnableRowVirtualization="True"
-                          ItemsSource="{Binding Source={StaticResource item_asset_maintainanceitem_asset_maintainance_detailViewSource}}" 
-                          RowDetailsVisibilityMode="VisibleWhenSelected">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+				                  EnableRowVirtualization="True"
+                                  ItemsSource="{Binding Source={StaticResource item_asset_maintainanceitem_asset_maintainance_detailViewSource}}" 
+                                  RowDetailsVisibilityMode="VisibleWhenSelected">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24" 
                                                                 EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"/>
-                    <DataGridTextColumn Binding="{Binding id_maintainance_detail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                <DataGridTextColumn Binding="{Binding id_maintainance_detail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                         Header="ID" Width="64" IsReadOnly="True"
                                         />
-                    <DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                                <DataGridTextColumn Binding="{Binding contact.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:contact}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
 
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" 
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" 
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" 
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" 
                                         Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                                <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
 
-                    <DataGridTextColumn Binding="{Binding hours, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
+                                <DataGridTextColumn Binding="{Binding hours, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}"
                                         Header="{lex:Loc Cognitivo:local:Hour}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
-                    <!-- UnitPrice -->
-                    <DataGridTextColumn Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
+                                <!-- UnitPrice -->
+                                <DataGridTextColumn Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
                                         Header="{lex:Loc Cognitivo:local:Price}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
                                         />
-                    <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
+                                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
                                                     SelectedValueBinding="{Binding id_currencyfx,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                     DisplayMemberPath="app_currency.name" 
                                                     SelectedValuePath="id_currencyfx" Header="{lex:Loc Cognitivo:local:Currency}" Width="64"/>
-                    <!-- UnitPrice_Vat -->
+                                <!-- UnitPrice_Vat -->
 
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            
+        
+        </Grid>
+        
 
         <cntrl:toolBar x:Name="toolBar" Grid.Row="0" Grid.ColumnSpan="2" btnEdit_Click="toolBar_btnEdit_Click"
                        btnSave_Click="toolBar_btnSave_Click"

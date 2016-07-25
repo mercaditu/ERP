@@ -116,7 +116,7 @@
                        HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent"
+        <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent" Visibility="Collapsed"
                 BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
                 <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>

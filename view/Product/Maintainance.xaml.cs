@@ -64,6 +64,8 @@ namespace Cognitivo.Product
 
         private void toolBar_btnCancel_Click(object sender)
         {
+            item_asset_maintainance item_asset_maintainance = item_asset_maintainanceViewSource.View.CurrentItem as item_asset_maintainance;
+          item_asset_maintainance.State = EntityState.Unchanged;
             db.CancelChanges();
         }
 
@@ -112,7 +114,16 @@ namespace Cognitivo.Product
                     item_asset_maintainance_detail item_asset_maintainance_detail = new item_asset_maintainance_detail();
                     item_asset_maintainance_detail.item = item;
                     item_asset_maintainance_detail.id_item = item.id_item;
+                    if (dtpstartdate.Text=="")
+                    {
+                        dtpstartdate.Text = DateTime.Now.ToString();
+                    }
+                    if (dtpenddate.Text == "")
+                    {
+                        dtpenddate.Text = DateTime.Now.ToString();
+                    }   
                     string start_date = string.Format("{0} {1}", dtpstartdate.Text, dtpstarttime.Text);
+                  
                     item_asset_maintainance_detail.start_date = Convert.ToDateTime(start_date);
                     string end_date = string.Format("{0} {1}", dtpenddate.Text, dtpendtime.Text);
                     item_asset_maintainance_detail.end_date = Convert.ToDateTime(end_date);

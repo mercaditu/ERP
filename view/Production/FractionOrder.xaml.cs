@@ -709,6 +709,24 @@ namespace Cognitivo.Production
                 filter_task();
                 toolBar.msgSaved(OrderDB.NumberOfRecords);
             }
+            try
+            {
+                production_orderViewSource.View.Refresh();
+                production_orderViewSource.View.MoveCurrentToFirst();
+                production_orderViewSource.View.MoveCurrentTo(production_order);
+                production_order_detaillRawViewSource.View.Refresh();
+                production_order_detaillProductViewSource.View.Refresh();
+                production_order_detaillServiceViewSource.View.Refresh();
+                production_order_detaillRawViewSource.View.Refresh();
+                treeRaw.UpdateLayout();
+                treeAsset.UpdateLayout();
+                treeService.UpdateLayout();
+                treeProduct.UpdateLayout();
+            }
+            catch
+            {
+
+            }
         }
 
         private void toolIcon_Click_1(object sender)
@@ -1745,6 +1763,52 @@ namespace Cognitivo.Production
             catch (Exception ex)
             {
                 toolBar.msgError(ex);
+            }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (production_executionViewSource != null)
+            {
+
+
+                if (production_executionViewSource.View != null)
+                {
+                    if (production_execution_detailAssetViewSource!=null)
+                    {
+                        if (production_execution_detailAssetViewSource.View != null)
+                        {
+                            production_execution_detailAssetViewSource.View.Refresh();
+                        }
+                    }
+                    if (production_execution_detailProductViewSource != null)
+                    {
+                        if (production_execution_detailProductViewSource.View != null)
+                        {
+                            production_execution_detailProductViewSource.View.Refresh();
+                        }
+                    }
+                    if (production_execution_detailServiceViewSource!=null)
+                    {
+                        if (production_execution_detailServiceViewSource.View != null)
+                        {
+                            production_execution_detailServiceViewSource.View.Refresh();
+
+                        }
+                    }
+
+                    if (production_execution_detailRawViewSource!=null)
+                    {
+                        if (production_execution_detailRawViewSource.View != null)
+                        {
+                            production_execution_detailRawViewSource.View.Refresh();
+                        }
+                    }
+                   
+               
+                 
+                 
+                }
             }
         }
 

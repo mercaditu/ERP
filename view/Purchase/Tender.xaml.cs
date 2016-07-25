@@ -30,6 +30,9 @@ namespace Cognitivo.Purchase
         private void toolBar_btnCancel_Click(object sender)
         {
             PurchaseTenderDB.CancelAllChanges();
+            purchase_tender purchase_tender_old = (purchase_tender)purchase_tenderDataGrid.SelectedItem;
+            purchase_tender_old.State = EntityState.Unchanged;
+          //  
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -97,8 +100,8 @@ namespace Cognitivo.Purchase
             PurchaseTenderDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxDepartment.ItemsSource = PurchaseTenderDB.app_department.Local;
 
-            PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
-            cbxProject.ItemsSource = PurchaseTenderDB.projects.Local;
+            //PurchaseTenderDB.projects.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            //cbxProject.ItemsSource = PurchaseTenderDB.projects.Local;
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 

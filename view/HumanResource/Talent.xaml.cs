@@ -45,7 +45,46 @@ namespace Cognitivo.HumanResource
 
         private void toolBar_btnSearch_Click(object sender, string query)
         {
-         
+            if (!string.IsNullOrEmpty(query) && hr_talentViewSource != null)
+            {
+                try
+                {
+                    hr_talentViewSource.View.Filter = i =>
+                    {
+                        hr_talent hr_talent = i as hr_talent;
+
+                        if (hr_talent != null)
+                        {
+                            //Protect the code against null values.
+                          
+                            string customer = hr_talent.name;
+
+                            if ((customer.ToLower().Contains(query.ToLower()))
+                                )
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            else
+            {
+                hr_talentViewSource.View.Filter = null;
+            }         
         }
 
         private void Save_Click(object sender)

@@ -143,19 +143,20 @@
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
                             <Label Content="Y" Style="{StaticResource ico_Label}"/>
                             <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
-                            <ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
+                            <TextBlock Text="{Binding project.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Label}"/>
+                            <!--<ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
                                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                      metro:ControlsHelper.MouseOverBorderBrush="Silver"
 						             DisplayMemberPath="name" Width="Auto"
 						             SelectedValuePath="id_project" 
 						             SelectedValue="{Binding id_project, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                                <!--ItemsSource="{Binding Source={StaticResource projectViewSource}}"-->
+                                --><!--ItemsSource="{Binding Source={StaticResource projectViewSource}}"--><!--
                                 <ComboBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel/>
                                     </ItemsPanelTemplate>
                                 </ComboBox.ItemsPanel>
-                            </ComboBox>
+                            </ComboBox>-->
                         </StackPanel>
                         <StackPanel VerticalAlignment="Center" Margin="2">
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>

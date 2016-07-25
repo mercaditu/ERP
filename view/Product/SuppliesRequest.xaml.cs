@@ -74,7 +74,7 @@ namespace Cognitivo.Product
 
             item_requestViewSource = (CollectionViewSource)this.FindResource("item_requestViewSource");
             item_requestViewSource.Source = ItemDB.item_request.Local;
-            sbxItem.item_types = entity.item.item_type.Supplies;
+            //sbxItem.item_types = entity.item.item_type.Supplies;
         }
 
         private void btnApprove_Click(object sender, RoutedEventArgs e)

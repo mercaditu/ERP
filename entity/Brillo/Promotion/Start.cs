@@ -45,6 +45,46 @@ namespace entity.Brillo.Promotion
             {
                 if (Promo.types == sales_promotion.Type.Discount_onGrandTotal)
                 {
+                    if (Promo.types == sales_promotion.Type.BuyThis_GetThat)
+                    {
+                        if (Invoice.Details.Where(x => x.Item.id_item == Promo.reference && x.Quantity >= Promo.quantity_step).Count() > 0)
+                        {
+                            foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.id_item == Promo.reference))
+                            {
+                                if (Promo.quantity_step > 0)
+                                {
+                                    Promo _Promo = new Promo();
+                                    _Promo.Type = sales_promotion.Type.BuyThis_GetThat;
+                                    _Promo.Shared = true;
+
+                                    //using (db db = new db())
+                                    //{
+                                    //    _Promo.DiscountValue = db.item_price.Where(x => x.id_item == _Detail.Item.id_item).FirstOrDefault().value;
+                                    //}
+                                    _Detail.Promos.Add(_Promo);
+
+                                    sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                                    sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
+                                    sales_invoice_detail.unit_price = 0;
+                                    sales_invoice_detail.id_item = Promo.reference_bonus;
+
+                                    SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);   
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        private void Calculate(ref Invoice Invoice)
+        {
+            foreach (var Promo in SalesPromotionLIST)
+            {
+                if (Promo.types == sales_promotion.Type.Discount_onGrandTotal)
+                {
                     if (Promo.quantity_max >= Invoice.GrandTotal && Promo.quantity_min <= Invoice.GrandTotal)
                     {
                         Promo _Promo = new Promo();
@@ -70,13 +110,13 @@ namespace entity.Brillo.Promotion
                     if (Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference).Count() > 0)
                     {
                         foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference))
-	                    {
+                        {
                             Promo _Promo = new Promo();
                             _Promo.Type = sales_promotion.Type.Discount_onBrand;
                             _Promo.Shared = true;
                             _Promo.DiscountValue = _Detail.PriceVAT - (Promo.is_percentage == false ? Promo.result_value : (_Detail.PriceVAT * (Promo.result_value)));
                             _Detail.Promos.Add(_Promo);
-	                    }
+                        }
                     }
                 }
 
@@ -94,16 +134,12 @@ namespace entity.Brillo.Promotion
                             {
                                 _Promo.DiscountValue = db.item_price.Where(x => x.id_item == _Detail.Item.id_item).FirstOrDefault().value;
                             }
-                            
+
                             _Detail.Promos.Add(_Promo);
                         }
                     }
                 }
             }
-            //Finish ForEach
-
-
-            //Calculate
         }
     }
 

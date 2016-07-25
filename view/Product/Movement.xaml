@@ -207,6 +207,7 @@
                       IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
                       ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" Width="300">
                         <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                         </DataGrid.Columns>

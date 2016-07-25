@@ -173,6 +173,7 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 

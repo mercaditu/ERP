@@ -65,8 +65,8 @@ namespace entity
             PurchaseInvoice = 7,
             [LocalizedDescription("PurchaseReturn")]
             PurchaseReturn = 8,
-            [LocalizedDescription("PurchasePacking")]
-            PurchasePacking = 105,
+            [LocalizedDescription("PackingList")]
+            PurchasePacking = 106,
 
             //Commercial
             [LocalizedDescription("FiscalPeriod")]

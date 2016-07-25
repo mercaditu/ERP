@@ -75,14 +75,13 @@ namespace Cognitivo.Menu
 
             //Purchase        //Module                 //Namespace      //App                 //Name                   //Img
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Form, "Commercial.Contact", entity.App.Names.Contact, "Contact", Version.Starter);
-            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Transaction, "Purchase.PackingList", entity.App.Names.PurchasePacking, "ProductSend", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Inventory, "Purchase.PackingList", entity.App.Names.PurchasePacking, "ProductSend", Version.Medium);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Transaction, "Purchase.Tender", entity.App.Names.PurchaseTender, "PurchaseTender", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Transaction, "Purchase.Order", entity.App.Names.PurchaseOrder, "PurchaseOrder", Version.Medium);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Transaction, "Purchase.Invoice", entity.App.Names.PurchaseInvoice, "Purchase", Version.Starter);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Transaction, "Purchase.Return", entity.App.Names.PurchaseReturn, "PurchaseReturn", Version.Basic);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "BankAccountTrans", Version.Basic);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Financial, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", Version.Basic);
-            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Inventory, "Purchase.PackingList", "PackingList", "ProductRecieve", Version.Medium);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Reports, "Reporting.Views.Contacts", entity.App.Names.Contact, "Reports", Version.Starter);
 
             //Human Resources        //Module                 //Namespace      //App                 //Name                   //Img

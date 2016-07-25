@@ -98,8 +98,12 @@ namespace entity.Brillo.Promotion
                             _Detail.Promos.Add(_Promo);
                         }
                     }
-                } 
+                }
             }
+            //Finish ForEach
+
+
+            //Calculate
         }
     }
 

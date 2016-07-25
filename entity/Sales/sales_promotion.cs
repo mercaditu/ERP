@@ -12,17 +12,19 @@ namespace entity
     {
       public  enum Type
         {
-            DiscountDuringPeriod=1,
-            DiscountOnSecondItem=2,
-            DiscountOnTotal=3
+            Discount_onGrandTotal = 1,
+            Discount_onQuantityTotal = 2,
+            Discount_onQuantityRow = 3,
+            Discount_onTag = 4,
+            Discount_onBrand = 5,
+            Discount_onItem = 6
         }
    
         public sales_promotion()
         {
             is_head = true;
             id_company = CurrentSession.Id_Company;
-            id_user = CurrentSession.Id_User;
-                   
+            id_user = CurrentSession.Id_User;   
         }
 
         [Key]

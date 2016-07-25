@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="Brillo\Logic\Range.cs" />
     <Compile Include="Brillo\Document\Reciept.cs" />
+    <Compile Include="Brillo\Promotion\Start.cs" />
     <Compile Include="Brillo\Seed Data\ChartOfAccounts.cs" />
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />

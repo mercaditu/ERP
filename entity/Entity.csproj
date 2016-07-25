@@ -229,6 +229,7 @@
     <Compile Include="Context\Project\ProjectTaskDB.cs" />
     <Compile Include="Context\Project\ProjectDB.cs" />
     <Compile Include="Context\Project\ProjectTemplateDB.cs" />
+    <Compile Include="Context\Purchase\PurchasePackingListDB.cs" />
     <Compile Include="DataConfiguration.cs" />
     <Compile Include="DebeHaber\Sync.cs" />
     <Compile Include="Execustionstrategy.cs" />

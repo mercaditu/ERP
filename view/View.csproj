@@ -520,6 +520,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Project\PrintingPress\Class\Cut.cs" />
+    <Compile Include="Purchase\PackingList.xaml.cs">
+      <DependentUpon>PackingList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Data\FinanceDS.cs">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -864,9 +867,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>OrderSetting.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Purchase\PackingList.xaml.cs">
-      <DependentUpon>PackingList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Purchase\PurchaseSetting.cs" />
     <Compile Include="Purchase\InvoiceSetting.Designer.cs">
@@ -1670,6 +1670,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Purchase\PackingList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\Contacts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1949,10 +1953,6 @@
     <Page Include="Purchase\Order.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Purchase\PackingList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Purchase\Return.xaml">
       <SubType>Designer</SubType>

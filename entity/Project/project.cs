@@ -99,6 +99,7 @@ namespace entity
         public virtual IEnumerable<item_request> item_request { get; set; }
         public virtual ICollection<project_task> project_task { get; set; }
         public virtual ICollection<project_tag_detail> project_tag_detail { get; set; }
+        public virtual ICollection<production_order> production_order { get; set; }
 
         public string Error
         {

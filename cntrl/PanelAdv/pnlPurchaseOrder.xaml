@@ -33,7 +33,7 @@
                 <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnSave_MouseUp"/>
             </StackPanel>
         </Grid>
-        <DataGrid x:Name="purchase_orderDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails"
+        <DataGrid x:Name="purchase_orderDatagrid" AutoGenerateColumns="False" Margin="8" 
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="" 

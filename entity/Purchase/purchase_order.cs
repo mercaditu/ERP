@@ -154,6 +154,7 @@ namespace entity
         }
         private decimal _DiscountWithoutPercentage;
 
+
         //TimeCapsule
         public ICollection<purchase_order> older { get; set; }
         public purchase_order newer { get; set; }

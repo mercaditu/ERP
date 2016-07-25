@@ -142,5 +142,17 @@ namespace Cognitivo.Purchase {
                 this["ShowFactorQty"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DiscountStock_Packing {
+            get {
+                return ((bool)(this["DiscountStock_Packing"]));
+            }
+            set {
+                this["DiscountStock_Packing"] = value;
+            }
+        }
     }
 }

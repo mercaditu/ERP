@@ -135,29 +135,31 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{lex:Loc Expenses}">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel IsEnabled="{Binding ElementName=pageExport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}">
-                            <TextBlock>
-                                <Hyperlink PreviewMouseUp="GetExpences_PreviewMouseUp">
-                                    <Run Text="Extract"></Run>
-                                </Hyperlink>
-                            </TextBlock>
-                            <DataGrid x:Name="impeximpex_expenseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                                      ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}" 
-                                      RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,4">
+                    <Grid IsEnabled="{Binding ElementName=pageImport, Path=SetIsEnable, UpdateSourceTrigger=PropertyChanged}"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <TextBlock VerticalAlignment="Top" Style="{StaticResource text_HyperLinks}" Text="{lex:Loc Extract}" MouseUp="GetExpenses_PreviewMouseUp"/>
+                        <Grid Margin="0,25,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid  x:Name="impeximpex_expenseDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                                  ItemsSource="{Binding Source={StaticResource impeximpex_expenseViewSource}}" 
+                                  RowDetailsVisibilityMode="VisibleWhenSelected" Margin="4" >
                                 <DataGrid.Columns>
-                                    <!--<DataGridTextColumn Binding="{Binding id_currencyfx}" Header="Currency" Width="SizeToHeader"/>-->
-                                    <DataGridComboBoxColumn Header="Currency" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource currencyfxViewSource}}"
-                                                            DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
-                                                            SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
-                                    <!--<DataGridTextColumn Binding="{Binding id_incoterm_condition}" Header="Incoterm condition" Width="*"/>-->
-                                    <DataGridComboBoxColumn Header="IncotermCondition" Width="*" ItemsSource="{Binding Source={StaticResource incotermconditionViewSource}}"
+                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:IncotermCondition}" Width="*" ItemsSource="{Binding Source={StaticResource incotermconditionViewSource}}"
                                                             DisplayMemberPath="name" SelectedValuePath="id_incoterm_condition"
                                                             SelectedValueBinding="{Binding id_incoterm_condition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                    <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
-                                                        Header="Value" Width="100"/>
-                                    <DataGridTemplateColumn Width="25" Header="">
+                                    <!--<DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:PurchaseInvoice}" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource purchase_invoiceViewSource}}"
+                                                            DisplayMemberPath="number" SelectedValuePath="id_purchase_invoice"
+                                                            SelectedValueBinding="{Binding number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>-->
+                                    <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
+                                                        Header="Value" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                    <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="SizeToHeader" ItemsSource="{Binding Source={StaticResource currencyfxViewSource}}"
+                                                            DisplayMemberPath="app_currency.name" SelectedValuePath="id_currencyfx"
+                                                            SelectedValueBinding="{Binding id_currencyfx, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                    <DataGridTemplateColumn Width="25">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
@@ -166,10 +168,19 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Style="{StaticResource btn_green}" Content="{lex:Loc Calculate}" Click="Calculate_Click"
+                            <DataGrid x:Name="productDataGrid" AutoGenerateColumns="False" Grid.Column="1"
+                                EnableRowVirtualization="True" Height="Auto" Margin="0,4,4,38"
+                                RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto" SelectionChanged="productDataGrid_SelectionChanged">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" Binding="{Binding item}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+
+                        <Button Style="{StaticResource btn_green}" Content="{lex:Loc Calculate}" Click="Calculate_Click"
                                     HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"/>
-                        </StackPanel>
-                    </ScrollViewer>
+                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>

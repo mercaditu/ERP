@@ -35,24 +35,35 @@ namespace Cognitivo.Project
 
         private void btnProductionOrder(object sender, RoutedEventArgs e)
         {
-            if(project_taskViewSource.View != null)
+            project project = projectViewSource.View.CurrentItem as project;
+            if (project.production_order.Count() == 0)
             {
-              
-                project_taskViewSource.View.Filter = null;
-                project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-                project_task = project_task.Where(x => x.IsSelected == true && (x.status == Status.Project.Approved)).ToList();
 
-                crud_modal.Visibility = Visibility.Visible;
 
-                cntrl.PanelAdv.pnlOrder pnlOrder = new cntrl.PanelAdv.pnlOrder();
-                pnlOrder.project_taskLIST = project_task;
-                pnlOrder.projectViewSource = project_taskViewSource;
+                if (project_taskViewSource.View != null)
+                {
 
-                pnlOrder.shared_dbContext = dbContext;
-                crud_modal.Children.Add(pnlOrder);
+                    project_taskViewSource.View.Filter = null;
+                    project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+                    project_task = project_task.Where(x => x.IsSelected == true && (x.status == Status.Project.Approved)).ToList();
 
-                filter_task();
+                    crud_modal.Visibility = Visibility.Visible;
+
+                    cntrl.PanelAdv.pnlOrder pnlOrder = new cntrl.PanelAdv.pnlOrder();
+                    pnlOrder.project_taskLIST = project_task;
+                    pnlOrder.projectViewSource = project_taskViewSource;
+
+                    pnlOrder.shared_dbContext = dbContext;
+                    crud_modal.Children.Add(pnlOrder);
+
+                    filter_task();
+                }
             }
+            else
+            {
+                toolBar.msgWarning("Production Oreder Already Generated");
+            }
+
         }
 
         public void filter_task()

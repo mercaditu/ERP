@@ -7,6 +7,7 @@ namespace entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+    using System.Linq;
 
     public partial class purchase_order_detail : CommercialPurchaseDetail, IDataErrorInfo
     {
@@ -17,6 +18,7 @@ namespace entity
             is_head = true;
           //  quantity = 1;
             purchase_order_dimension = new List<purchase_order_dimension>();
+            purchase_invoice_detail = new List<purchase_invoice_detail>();
         }
 
         [Key]
@@ -89,7 +91,7 @@ namespace entity
         public virtual purchase_tender_detail purchase_tender_detail { get; set; }
 
         public virtual IEnumerable<purchase_packing_detail> purchase_packing_detail { get; set; }
-        public virtual IEnumerable<purchase_invoice_detail> purchase_invoice_detail { get; set; }
+        public virtual ICollection<purchase_invoice_detail> purchase_invoice_detail { get; set; }
         public virtual ICollection<purchase_order_dimension> purchase_order_dimension { get; set; }
 
         #endregion
@@ -108,6 +110,24 @@ namespace entity
 
             return Dimension;
         }
+        [NotMapped]
+        public decimal balance
+        {
+            get
+            {
+                if (purchase_invoice_detail!=null)
+                {
+                    _balance = quantity - purchase_invoice_detail.Sum(x => x.quantity != null ? x.quantity : 0);
+                    return _balance;
+                }
+                return 0;
+            }
+            set
+            {
+                _balance = value;
+            }
+        }
+        decimal _balance;
         #region "Validation"
         public string Error
         {

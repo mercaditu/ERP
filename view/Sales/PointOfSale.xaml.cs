@@ -112,7 +112,7 @@ namespace Cognitivo.Sales
         {
             ///Creating new SALES INVOICE for upcomming sale. 
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-            sales_invoice sales_invoice = SalesInvoiceDB.New(0);
+            sales_invoice sales_invoice = SalesInvoiceDB.New(0, false);
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
             sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));

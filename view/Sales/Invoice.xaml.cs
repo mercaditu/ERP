@@ -310,7 +310,7 @@ namespace Cognitivo.Sales
         private void btnNew_Click(object sender)
         {
             Settings SalesSettings = new Settings();
-            sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset);
+            sales_invoice sales_invoice = SalesInvoiceDB.New(SalesSettings.TransDate_Offset, false);
             cbxCurrency.get_DefaultCurrencyActiveRate();
 
             SalesInvoiceDB.sales_invoice.Add(sales_invoice);

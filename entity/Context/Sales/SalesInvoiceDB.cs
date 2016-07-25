@@ -9,7 +9,7 @@ namespace entity
 {
     public partial class SalesInvoiceDB : BaseDB
     {
-        public sales_invoice New(int TransDate_OffSet)
+        public sales_invoice New(int TransDate_OffSet, bool IsMigration)
         {
             sales_invoice sales_invoice = new sales_invoice();
             sales_invoice.State = EntityState.Added;
@@ -23,18 +23,22 @@ namespace entity
             sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
 
-            if (entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault()!=null)
+            //This is to skip query code in case of Migration. Helps speed up migrations.
+            if (IsMigration == false)
             {
-                //Gets List of Ranges avaiable for this Document.
-                sales_invoice.id_range = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
-            }
-
-            if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault() != null)
-            {
-                if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
+                if (entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault() != null)
                 {
-                    sales_invoice.app_condition = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition;
-                    sales_invoice.app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
+                    //Gets List of Ranges avaiable for this Document.
+                    sales_invoice.id_range = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
+                }
+
+                if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault() != null)
+                {
+                    if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition != null)
+                    {
+                        sales_invoice.app_condition = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault().app_condition;
+                        sales_invoice.app_contract = app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default).FirstOrDefault();
+                    }
                 }
             }
 

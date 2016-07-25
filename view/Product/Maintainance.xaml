@@ -130,7 +130,7 @@
                                         Header="{lex:Loc Cognitivo:local:Hour}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
                                 <!-- UnitPrice -->
                                 <DataGridTextColumn Binding="{Binding unit_cost, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N2}}" 
-                                        Header="{lex:Loc Cognitivo:local:Price}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
+                                        Header="{lex:Loc Cognitivo:local:Cost}" ElementStyle="{StaticResource RightAlignStyle}" Width="Auto"
                                         />
                                 <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource app_currencyfxViewSource}}" 
                                                     SelectedValueBinding="{Binding id_currencyfx,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 

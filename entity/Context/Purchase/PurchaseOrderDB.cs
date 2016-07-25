@@ -150,7 +150,7 @@ namespace entity
             {
                 if (purchase_order.IsSelected && purchase_order.Error == null)
                 {
-                    if (purchase_order.purchase_invoice == null)
+                    if (purchase_order.purchase_invoice.Count() == 0)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();

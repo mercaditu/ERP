@@ -352,7 +352,6 @@ namespace entity
                     {
                         PriceList_ID = 0;
                     }
-
                 }
 
                 //Step 1. If 'PriceList_ID' is 0, Get Default PriceList.
@@ -381,8 +380,7 @@ namespace entity
                         //Check if we have available Price for this Product, Currency, and List.
                         item_price item_price = db.item_price.Where(x => x.id_item == id_item
                                                                  && x.id_currency == app_currencyfx.id_currency
-                                                                 && x.id_price_list == PriceList_ID)
-                                                                 .FirstOrDefault();
+                                                                 && x.id_price_list == PriceList_ID).FirstOrDefault();
 
                         if (item_price != null)
                         {   //Return Perfect Value
@@ -409,12 +407,8 @@ namespace entity
                                 app_currencyfx = db.app_currencyfx.Where(x => x.id_currency == item_price.id_currency && x.is_active == true).FirstOrDefault();
                                 return Currency.convert_Values(item_price.value, app_currencyfx.id_currencyfx, CurrencyFX_ID, App.Modules.Sales);
                             }
-                            
-
-
                         }
                     }
-
                 }
             }
 

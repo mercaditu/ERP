@@ -115,17 +115,19 @@ namespace entity
                     {
                         if (this.items.item_recepie != null)
                         {
-
-
                             if (this.items.item_recepie.Count > 0)
                             {
                                 item_recepie recepie = items.item_recepie.FirstOrDefault();
                                 if (child.Count > 0)
                                 {
-                                    foreach (project_task _child in child.Where(x => x.status == Status.Project.Pending || x.status == Status.Project.Approved))
+                                    foreach (project_task _child in child.Where(x => x.status == null || x.status == Status.Project.Pending || x.status == Status.Project.Approved))
                                     {
                                         item_recepie_detail item_recepie_detail = _child.items.item_recepie_detail.Where(x => x.item_recepie.id_recepie == recepie.id_recepie).FirstOrDefault();
-                                        _child.quantity_est = item_recepie_detail.quantity * this.quantity_est;
+                                        if (item_recepie_detail != null)
+                                        {
+                                            _child.quantity_est = item_recepie_detail.quantity * this.quantity_est;
+                                            _child.RaisePropertyChanged("quantity_est");                      
+                                        }
                                     }
                                 }
                             }

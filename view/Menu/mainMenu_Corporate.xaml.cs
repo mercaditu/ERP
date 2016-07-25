@@ -53,6 +53,11 @@ namespace Cognitivo.Menu
                 Settings.AppFavList.Add(_Tag);
                 Settings.Save();
             }
+            else if (Settings.AppFavList.Contains(_Tag))
+            {
+                Settings.AppFavList.Remove(_Tag);
+                Settings.Save();
+            }
         }
 
         private void tbxSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -126,6 +131,8 @@ namespace Cognitivo.Menu
                     {
                         cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                         appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
+                        appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
+
                         stck.Children.Add(appIcon);
                     }
                     else
@@ -145,6 +152,7 @@ namespace Cognitivo.Menu
                         var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _namespace + "").SetBinding(lbl, Label.ContentProperty);
                         cntrl.applicationIcon appIcon = appList.get_AppIcon(app);
                         appIcon.Click += new cntrl.applicationIcon.ClickedEventHandler(open_App);
+                        appIcon.ClickedFav += new cntrl.applicationIcon.ClickedFavEventHandler(Add2Favorites);
 
                         stck.Children.Add(appIcon);
                         wrapApps.Children.Add(stck);

@@ -230,6 +230,11 @@ namespace Cognitivo.Production
                         _production_execution_detail.is_input = true;
                         _production_execution_detail.name = contact.name + ": " + production_order_detail.name;
 
+                        if (production_order_detail.id_project_task > 0)
+                        {
+                            _production_execution_detail.id_project_task = production_order_detail.id_project_task;
+                        }
+
                         //Gets the Employee's contracts Hourly Rate.
                         hr_contract contract = ExecutionDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
                         if (contract != null)

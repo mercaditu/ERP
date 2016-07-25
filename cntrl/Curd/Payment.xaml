@@ -51,15 +51,15 @@
             <ScrollViewer Margin="0,0,0,30">
                 <StackPanel>
                     <Label Content="{lex:Loc Header}" Style="{StaticResource H3}"/>
-                    
                     <!-- Header -->
-                    <WrapPanel Height="120">
+                    <WrapPanel Height="120" DataContext="{StaticResource paymentViewSource}">
                         <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
                             <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
                             <DatePicker Style="{DynamicResource input_datepicker}"
 					    	            SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=true}"     />
                             <Label Content="{lex:Loc Contact}" Style="{DynamicResource input_label}"/>
-                            <Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Controls:SmartBox_Contact x:Name="sbxContact" 
+                                                       Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel x:Name="stpDocument" Background="WhiteSmoke">
                             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>

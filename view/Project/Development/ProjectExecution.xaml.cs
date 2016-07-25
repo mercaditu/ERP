@@ -35,18 +35,15 @@ namespace Cognitivo.Project
 
         private void btnProductionOrder(object sender, RoutedEventArgs e)
         {
-            project project = projectViewSource.View.CurrentItem as project;
-            if (project.production_order.Count() == 0)
+            if (project_taskViewSource.View != null)
             {
+                project_taskViewSource.View.Filter = null;
+                project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
+                project_task = project_task.Where(x => x.IsSelected == true && 
+                    x.status == Status.Project.Approved).ToList();
 
-
-                if (project_taskViewSource.View != null)
+                if (project_task.Count() > 0)
                 {
-
-                    project_taskViewSource.View.Filter = null;
-                    project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
-                    project_task = project_task.Where(x => x.IsSelected == true && (x.status == Status.Project.Approved)).ToList();
-
                     crud_modal.Visibility = Visibility.Visible;
 
                     cntrl.PanelAdv.pnlOrder pnlOrder = new cntrl.PanelAdv.pnlOrder();
@@ -54,16 +51,15 @@ namespace Cognitivo.Project
                     pnlOrder.projectViewSource = project_taskViewSource;
 
                     pnlOrder.shared_dbContext = dbContext;
-                    crud_modal.Children.Add(pnlOrder);
-
-                    filter_task();
+                    crud_modal.Children.Add(pnlOrder);   
                 }
-            }
-            else
-            {
-                toolBar.msgWarning("Production Oreder Already Generated");
-            }
+                else
+                {
+                    toolBar.msgWarning("No Approved items Selected");
+                }
 
+                filter_task();
+            }
         }
 
         public void filter_task()

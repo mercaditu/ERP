@@ -18,7 +18,6 @@
       mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="600" Loaded="Page_Loaded">
 
     <Page.Resources>
-        <converter:TrueToFalseConverter x:Key="TrueToFalse"/>
         <CollectionViewSource x:Key="app_currencyfxViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currencyfx}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_asset_maintainanceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset_maintainance}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_asset_maintainanceitem_asset_maintainance_detailViewSource" Source="{Binding item_asset_maintainance_detail, Source={StaticResource item_asset_maintainanceViewSource}}"/>
@@ -69,8 +68,8 @@
 					                SelectedDate="{Binding end_date, Mode=TwoWay, NotifyOnValidationError=true, 
                                     ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         <Label Content="{lex:Loc FixedAssets}" Style="{StaticResource input_label}" Width="150" HorizontalAlignment="Left"/>
-                        <Controls:SmartBox_Item x:Name="sbxFixedasset" item_types="FixedAssets" HorizontalAlignment="Left" 
-                                                Width="256" Height="26" Select="item_Select"
+                        <Controls:SmartBox_Item x:Name="sbxFixedasset" HorizontalAlignment="Left" 
+                                                Width="256" Height="26" Select="item_Select" Text="{Binding items.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                 IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>
                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                         <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="128" 
@@ -92,7 +91,7 @@
                         </StackPanel>
 
                         <Label Style="{StaticResource input_label}" Content="{lex:Loc Employee}" />
-                        <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" />
+                        <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="256" HorizontalAlignment="Left"/>
 
                         <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}" HorizontalAlignment="Left"/>
                         <Controls:SmartBox_Item x:Name="sbxitem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxitem_Select"/>
@@ -149,10 +148,10 @@
         
 
         <cntrl:toolBar x:Name="toolBar" Grid.Row="0" Grid.ColumnSpan="2" btnEdit_Click="toolBar_btnEdit_Click"
-                       btnSave_Click="toolBar_btnSave_Click"
+                       btnSave_Click="toolBar_btnSave_Click" appName="Maintainance"
                        btnCancel_Click="toolBar_btnCancel_Click"
                        btnApprove_Click="toolBar_btnApprove_Click"
-                       Status="{Binding status,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       Status="{Binding status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

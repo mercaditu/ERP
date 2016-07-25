@@ -43,19 +43,24 @@ namespace Cognitivo.Product
 
         private void sbxItem_Select(object sender, RoutedEventArgs e)
         {
-            if (sbxItem.ItemID>0)
+            if (sbxItem.ItemID > 0)
             {
                 item item = ItemDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-                item_request item_request = item_requestViewSource.View.CurrentItem as item_request;
-                item_request_detail item_request_detail = new item_request_detail();
-                item_request_detail.id_item = sbxItem.ItemID;
-                item_request_detail.item = item;
-                item_request_detail.quantity = 1;
-                item_request_detail.urgency = entity.item_request_detail.Urgencies.Medium;
-                item_request.item_request_detail.Add(item_request_detail);
-                item_requestitem_request_detailViewSource.View.Refresh();
+                if (item != null)
+                {
+                    item_request item_request = item_requestViewSource.View.CurrentItem as item_request;
+                    if (item_request != null)
+                    {
+                        item_request_detail item_request_detail = new item_request_detail();
+                        item_request_detail.id_item = sbxItem.ItemID;
+                        item_request_detail.item = item;
+                        item_request_detail.quantity = 1;
+                        item_request_detail.urgency = entity.item_request_detail.Urgencies.Medium;
+                        item_request.item_request_detail.Add(item_request_detail);
+                        item_requestitem_request_detailViewSource.View.Refresh();
+                    }
+                }
             }
-         
         }
 
         #endregion

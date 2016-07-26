@@ -65,7 +65,8 @@ namespace entity.Brillo.Promotion
 
                                 sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
                                 sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
-                                sales_invoice_detail.unit_price = 0;
+                                sales_invoice_detail.unit_price = _Detail.Price;
+                                sales_invoice_detail.discount = _Detail.Price;
                                 sales_invoice_detail.id_item = Promo.reference_bonus;
 
                                 SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);

@@ -79,30 +79,15 @@
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="113*"/>
-                <RowDefinition Height="67*"/>
+                <RowDefinition Height="271*"/>
+                <RowDefinition Height="289*"/>
             </Grid.RowDefinitions>
-            <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1" Margin="7.85,0,68,0">
+            <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1" Margin="8,0,68,0" Width="264">
                 <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
                 <DatePicker Style="{StaticResource input_datepicker }"
                             SelectedDate="{Binding trans_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
-                <ComboBox x:Name="id_location_originComboBox" Grid.Column="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_location" Grid.Row="2" 
-                          ItemsSource="{Binding Source={StaticResource location_originViewSource}}" 
-                          SelectedItem="{Binding app_location_origin, 
-                                                  Mode=TwoWay, ValidatesOnExceptions=True, 
-                                                  NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                          Style="{StaticResource input_combobox}"/>
-                <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
-                <ComboBox x:Name="id_location_destinationComboBox" Grid.Column="1" Grid.Row="1" DisplayMemberPath="name" 
-                          SelectedValuePath="id_location" ItemsSource="{Binding Source={StaticResource location_destViewSource}}" 
-                          SelectedItem="{Binding app_location_destination, 
-                                                  Mode=TwoWay, 
-                                                  ValidatesOnExceptions=True, 
-                                                  NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
-                          Style="{StaticResource input_combobox}"/>
+
                 <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                 <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
 
@@ -117,10 +102,30 @@
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                 metro:ControlsHelper.MouseOverBorderBrush="Silver"
                              Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                <Grid>
-                    <Label Content="{lex:Loc Employee}" Style="{StaticResource input_label}"/>
-
-                </Grid>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Label Content="{lex:Loc Origin}" Style="{DynamicResource input_label}"/>
+                        <ComboBox x:Name="id_location_originComboBox" Grid.Column="1" DisplayMemberPath="name" 
+                          SelectedValuePath="id_location" Grid.Row="2" Width="111"
+                          ItemsSource="{Binding Source={StaticResource location_originViewSource}}" 
+                          SelectedItem="{Binding app_location_origin, 
+                                                  Mode=TwoWay, ValidatesOnExceptions=True, 
+                                                  NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                          Style="{StaticResource input_combobox}"/>
+                    </StackPanel>
+                    <Label Content="" Style="{StaticResource ico_Label}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <StackPanel>
+                        <Label Content="{lex:Loc Destination}" Style="{DynamicResource input_label}"/>
+                        <ComboBox x:Name="id_location_destinationComboBox" Grid.Column="1" Grid.Row="1" DisplayMemberPath="name" Width="111"
+                          SelectedValuePath="id_location" ItemsSource="{Binding Source={StaticResource location_destViewSource}}" 
+                          SelectedItem="{Binding app_location_destination, 
+                                                  Mode=TwoWay, 
+                                                  ValidatesOnExceptions=True, 
+                                                  NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}" 
+                          Style="{StaticResource input_combobox}"/>
+                    </StackPanel>
+                </StackPanel>
+                <Label Content="{lex:Loc Employee}" Style="{StaticResource input_label}"/>
                 <AdornerDecorator>
                     <Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" Select="set_ContactPref"
                                                    Text="{Binding employee.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -208,10 +213,11 @@
                       ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" Width="300">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
-                            <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" Width="Auto"/>
+                            <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128"/>
                             <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Rectangle Width="1" Margin="6" Fill="Silver"/>
                     <DataGrid x:Name="project_task_dimensionDataGrid" AutoGenerateColumns="False" 
                                                       EnableRowVirtualization="True" IsReadOnly="True" CanUserAddRows="False"
                                                       ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailitem_transfer_dimensionViewSource}}" 
@@ -223,11 +229,11 @@
                             <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
                                                                         Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
                                                                         Width="auto"/>
-                         
+
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
-               
+
             </Grid>
 
 

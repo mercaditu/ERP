@@ -23,7 +23,8 @@
                         Executed="DeleteCommandBinding_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
-        <converter:Status2ColorConverter x:Key="Status2ColorConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <converter:Status2ColorConverter x:Key="Status2ColorConverter"/>
         <CollectionViewSource x:Key="security_userViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:security_user}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferitem_transfer_detailViewSource" Source="{Binding item_transfer_detail, Source={StaticResource item_transferViewSource}}"/>
@@ -107,6 +108,13 @@
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
+                    <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
+                    <StackPanel Orientation="Horizontal" Margin="4,0" 
+                                                Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
+
+                        <TextBlock Text="" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Crimson"/>
+                        <TextBlock Text="Truck" Style="{StaticResource text_Label}"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" >
                         <Label Content="" Style="{StaticResource btn_Label}"/>
                         <TextBlock Margin="5,0" VerticalAlignment="Center">
@@ -116,7 +124,7 @@
                         </TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">
-                        <Label Content="A" Style="{StaticResource btn_Label}"/>
+                        <Label Content="A" Style="{StaticResource btn_Label}" Margin="0,0,4,0"/>
                         <TextBlock MouseUp="tbCustomize_MouseUp" VerticalAlignment="Center">
                                     <Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
                         <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
@@ -127,7 +135,7 @@
                                     <WrapPanel>
                                         <CheckBox Margin="6,0,0,0" x:Name="chkDiscountStock" 
                                                   IsChecked="{Binding Source={x:Static pref:TransferSetting.Default}, Path=movebytruck, Mode=TwoWay}">
-                                            <Label Content="{lex:Loc Truck}" Style="{StaticResource generic_Label}"/>
+                                            <Label Content="Truck" Style="{StaticResource generic_Label}"/>
                                         </CheckBox>
 
                                     </WrapPanel>
@@ -223,6 +231,8 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="True" Width="Auto"/>
                                 <DataGridTextColumn Binding="{Binding quantity_destination, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 

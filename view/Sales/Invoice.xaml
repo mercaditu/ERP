@@ -300,10 +300,15 @@
                                     <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <StackPanel Orientation="Horizontal" Margin="4,0" 
                                                 Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
+                                        
                                         <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
                                         <TextBlock Text="{lex:Loc Stock}" Style="{StaticResource text_Label}"/>
                                     </StackPanel>
-
+                                    <StackPanel Orientation="Horizontal" Margin="4,0" 
+                                                Visibility="{Binding is_accounted, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibility}}">
+                                        <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
+                                        <TextBlock Text="{lex:Loc Accounting}" Style="{StaticResource text_Label}"/>
+                                    </StackPanel>
                                     <Label Content="{lex:Loc QuickActions}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
                                         <StackPanel Orientation="Horizontal"  Margin="3,2,0,0">

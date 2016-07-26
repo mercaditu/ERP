@@ -978,7 +978,11 @@ namespace Cognitivo.Production
             {
                 if (production_order_detail.is_input)
                 {
-                    if (production_order_detail != null && Quantity > 0 && (itemMovementFraction.type == Configs.itemMovementFraction.Types.Product || itemMovementFraction.type == Configs.itemMovementFraction.Types.RawMaterial || itemMovementFraction.type == Configs.itemMovementFraction.Types.Supplier))
+                    if (production_order_detail != null && Quantity > 0 && (
+                        itemMovementFraction.type == Configs.itemMovementFraction.Types.Product || 
+                        itemMovementFraction.type == Configs.itemMovementFraction.Types.RawMaterial || 
+                        itemMovementFraction.type == Configs.itemMovementFraction.Types.Supplier)
+                        )
                     {
                         production_execution _production_execution = production_executionViewSource.View.CurrentItem as production_execution;
 
@@ -1042,6 +1046,7 @@ namespace Cognitivo.Production
                 loadServiceContractTotal(itemMovementFraction.production_order_detail);
             }
         }
+
         private void Insert_IntoDetail(production_order_detail production_order_detail, decimal Quantity)
         {
             production_execution _production_execution = production_executionViewSource.View.CurrentItem as production_execution;

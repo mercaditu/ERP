@@ -281,6 +281,29 @@ namespace entity.DebeHaber
         }
     }
 
+    public class FixedAsset
+    {
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public DateTime PurchaseDate { get; set; }
+        public decimal PurchaseCost { get; set; }
+        public string CurrencyName { get; set; }
+        public virtual FixedAssetGroup FixedAssetGroup { get; set; }
+    }
+
+    public class FixedAssetGroup
+    {
+        public FixedAssetGroup()
+        {
+            FixedAssets = new List<FixedAsset>();
+        }
+
+        public string Name { get; set; }
+        public string Lifespan { get; set; }
+
+        public virtual List<FixedAsset> FixedAssets {get;set;}
+    }
+
     public class Vat
     {
         public int Type { get; set; }

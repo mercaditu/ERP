@@ -164,7 +164,7 @@ namespace Cognitivo.Accounting
                     var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
 
                     Send2API(Sales_Json);
-                    file_create(Sales_Json as string, "sales_invoice");
+                    file_create(Sales_Json, "sales_invoice");
                     //Send Sales_Json send it to Server Address specified.
 
                     //If all success, then SaveChanges.
@@ -229,7 +229,7 @@ namespace Cognitivo.Accounting
                 var Purchase_Json = new JavaScriptSerializer().Serialize(Transactions);
                 
                 //Save file first in case of API error.
-                file_create(Purchase_Json as string, "purchase_invoice");
+                file_create(Purchase_Json, "purchase_invoice");
 
                 Send2API(Purchase_Json);
 
@@ -369,7 +369,7 @@ namespace Cognitivo.Accounting
         }
         #endregion
 
-        private void Send2API(string Json)
+        private void Send2API(object Json)
         {
             var webAddr = Cognitivo.Properties.Settings.Default.DebeHaberConnString + "/api/transactions";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);

@@ -594,9 +594,9 @@ namespace entity.Brillo.Document
                                   AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
                      // Text -> Words
-                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.payment_detail.Sum(x => x.value) : 0))
+                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
                      :
-                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.payment_detail.Sum(x => x.value) : 0))) : "" : "" : "",
+                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "" : "",
 
                                   HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false : false
 

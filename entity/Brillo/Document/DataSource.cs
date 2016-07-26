@@ -578,7 +578,6 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = payment_detail
                               .Select(g => new
                               {
-                                  total = g.payment.payment_detail.Sum(x => x.value),
                                   id_company = g.id_company,
                                   payment_type = g.payment_type != null ? g.payment_type.name : "",
                                   comments = g.comment,
@@ -587,16 +586,17 @@ namespace entity.Brillo.Document
                                   contact_name = g.payment.contact != null ? g.payment.contact.name : "Not Ref",
                                   gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
                                   payment_name = g.payment_type != null ? g.payment_type.name : "",
-                                  trans_date = g.trans_date,
+                                  trans_date = g.payment != null ? g.payment.trans_date : DateTime.Now,
                                   currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
                                   currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
                                   number = g.payment != null ? g.payment.number : "Not Ref",
+                                  SalesNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().sales_invoice != null ? g.payment_schedual.FirstOrDefault().sales_invoice.number : "" : "",
                                   AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
                      // Text -> Words
-                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
+                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.payment_detail.Sum(x => x.value) : 0))
                      :
-                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
+                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.payment_detail.Sum(x => x.value) : 0))) : "" : "" : "",
 
                                   HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false : false
 

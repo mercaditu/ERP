@@ -47,10 +47,10 @@ namespace Cognitivo.Production
             production_order_detaillServiceContractViewSource,
             production_order_dimensionViewSource;
 
-        cntrl.Curd.ItemRequest ItemRequest;
+        //cntrl.Curd.ItemRequest ItemRequest;
         Cognitivo.Configs.itemMovementFraction itemMovementFraction;
 
-        pnl_FractionOrder objpnl_FractionOrder;
+        //pnl_FractionOrder objpnl_FractionOrder;
         public FractionOrder()
         {
             InitializeComponent();
@@ -998,7 +998,6 @@ namespace Cognitivo.Production
                     itemMovementFraction.production_order_detail = production_order_detail;
                     RefeshData();
                 }
-
             }
             catch (Exception ex)
             {

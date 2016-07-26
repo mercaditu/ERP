@@ -17,6 +17,7 @@
       d:DesignHeight="600" d:DesignWidth="800" Loaded="Page_Loaded">
 
     <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_transferViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_transfer}, CreateList=True}"/>
@@ -79,8 +80,8 @@
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="271*"/>
-                <RowDefinition Height="289*"/>
+                <RowDefinition Height="111*"/>
+                <RowDefinition Height="169*"/>
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1" Margin="8,0,68,0" Width="264">
                 <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
@@ -125,14 +126,15 @@
                           Style="{StaticResource input_combobox}"/>
                     </StackPanel>
                 </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="2" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                 <Label Content="{lex:Loc Employee}" Style="{StaticResource input_label}"/>
                 <AdornerDecorator>
                     <Controls:SmartBox_Contact x:Name="sbxContact" Get_Employees="True" Select="set_ContactPref"
-                                                   Text="{Binding employee.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                               Text="{Binding employee.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </AdornerDecorator>
-            </StackPanel>
-            <StackPanel Grid.Column="2" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                <Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Margin="5,5,5,1"/>
+                <Label HorizontalAlignment="Left" Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                 <TextBox Grid.Column="1" Grid.Row="0" TextWrapping="WrapWithOverflow" Height="46"
                          Text="{Binding comment, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}" 
                          Margin="5,1,5,5"/>
@@ -174,12 +176,11 @@
                     <Label Content="Y" Style="{StaticResource ico_Label}"/>
                     <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
                     <ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
-                                     metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                                     metro:ControlsHelper.MouseOverBorderBrush="Silver"
-						             DisplayMemberPath="name" Width="Auto"
-						             SelectedValuePath="id_project" 
-						             SelectedValue="{Binding id_project, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        <!--ItemsSource="{Binding Source={StaticResource projectViewSource}}"-->
+                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
+                              metro:ControlsHelper.MouseOverBorderBrush="Silver"
+						      DisplayMemberPath="name" Width="Auto"
+						      SelectedValuePath="id_project" IsReadOnly="True"
+						      SelectedValue="{Binding id_project, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel/>
@@ -187,24 +188,21 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
                 </StackPanel>
-                <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
-                    <Label Content="Y" Style="{StaticResource ico_Label}"/>
-                    <TextBlock Text="{lex:Loc Line}" Style="{StaticResource text_Label}"/>
-                    <Label Content="{project}" Style="{StaticResource input_label}"/>
-                </StackPanel>-->
             </StackPanel>
             <Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
-                <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
-                <cntrl:SearchableTextbox x:Name="cbxItem" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"
-                                         CollectionViewSource="{StaticResource itemViewSource}" Height="26"  
+                <StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                    <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
+                    <cntrl:SearchableTextbox x:Name="cbxItem" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"
+                                         CollectionViewSource="{StaticResource itemViewSource}" Height="26"
                                          KeyDown="cbxItem_KeyDown" MouseDoubleClick="cbxItem_MouseDoubleClick"
                                          IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                    <cntrl:SearchableTextbox.Columns>
-                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Code}" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
-                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Product}" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
-                        <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:ID}" ForProperty="id_item" Binding="{Binding id_item, Mode=Default}" Hide="True" EnableSearch="False"/>
-                    </cntrl:SearchableTextbox.Columns>
-                </cntrl:SearchableTextbox>
+                        <cntrl:SearchableTextbox.Columns>
+                            <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Code}" ForProperty="code" Binding="{Binding code, Mode=Default}" EnableSearch="True"/>
+                            <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Product}" ForProperty="name" Binding="{Binding name, Mode=Default}" EnableSearch="True"/>
+                            <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:ID}" ForProperty="id_item" Binding="{Binding id_item, Mode=Default}" Hide="True" EnableSearch="False"/>
+                        </cntrl:SearchableTextbox.Columns>
+                    </cntrl:SearchableTextbox>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,36,0,0">
                     <DataGrid  x:Name="item_transfer_detailDataGrid" 
                       AutoGenerateColumns="False" 

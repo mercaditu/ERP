@@ -20,7 +20,7 @@ namespace Cognitivo.Sales
         /// </summary>
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         PaymentDB PaymentDB = new PaymentDB();
-
+       entity.Brillo.Promotion.Start StartPromo= new entity.Brillo.Promotion.Start(true);
         /// <summary>
         /// CollectionViewSource
         /// </summary>
@@ -407,6 +407,11 @@ namespace Cognitivo.Sales
                     }
                 }
             }
+        }
+        private void btnPromotion_Click(object sender, EventArgs e)
+        {
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            StartPromo.Calculate_SalesInvoice(ref sales_invoice);
         }
     }
 }

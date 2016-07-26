@@ -16,6 +16,11 @@
       lex:LocalizeDictionary.DesignCulture="en-US" 
       mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="800"
 	  Title="{lex:Loc RequestResource}" Loaded="Page_Loaded">
+    <Page.CommandBindings>
+        <CommandBinding Command="customcmd:CustomCommands.Delete" 
+                        CanExecute="DeleteCommandBinding_CanExecute" 
+                        Executed="DeleteCommandBinding_Executed"/>
+    </Page.CommandBindings>
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <CollectionViewSource x:Key="item_requestViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_request}, CreateList=True}" />
@@ -66,7 +71,14 @@
                                             Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
                                             Header="{lex:Loc Cognitivo:local:Quantity}" Width="100" ElementStyle="{StaticResource RightAlignStyle}" />
-
+                    <DataGridTemplateColumn Width="Auto" Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+               
                 </DataGrid.Columns>
             </DataGrid>
             <!-- Approve -->

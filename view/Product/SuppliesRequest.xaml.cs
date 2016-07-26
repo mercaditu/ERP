@@ -107,5 +107,38 @@ namespace Cognitivo.Product
             ItemDB.item_request.Add(item_request_New);
             item_requestViewSource.View.MoveCurrentTo(item_request_New);
         }
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Parameter as item_request_detail != null)
+            {
+                e.CanExecute = true;
+            }
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+
+                MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
+                    //DeleteDetailGridRow
+                    dgvSalesDetail.CancelEdit();
+                    //item_request_detail.item_request_decision.Remove(e.Parameter as item_request_decision);
+                    ItemDB.item_request_detail.Remove(e.Parameter as item_request_detail);
+                    item_requestitem_request_detailViewSource.View.Refresh();
+               
+                    //calculate_total(sender, e);
+                    item_request_detail.item_request.GetTotalDecision();
+                }
+            }
+            catch (Exception ex)
+            {
+               // toolBar.msgError(ex);
+            }
+        }
+
     }
 }

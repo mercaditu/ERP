@@ -126,6 +126,7 @@ namespace Cognitivo.Product
 
                              }).ToList();
 
+
                 List<desion> list_desion = new List<desion>();
                 foreach (dynamic item in movement)
                 {

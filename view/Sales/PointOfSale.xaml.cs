@@ -199,11 +199,11 @@ namespace Cognitivo.Sales
                 }
             }
 
-            app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-            if (app_branch != null)
-            {
-                cbxLocation.ItemsSource = app_branch.app_location.ToList();
-            }
+            //app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+            //if (app_branch != null)
+            //{
+            //    cbxLocation.ItemsSource = app_branch.app_location.ToList();
+            //}
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -411,7 +411,11 @@ namespace Cognitivo.Sales
         private void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            StartPromo.Calculate_SalesInvoice(ref sales_invoice);
+            StartPromo.Calculate_SalesInvoice(ref sales_invoice, ref SalesInvoiceDB);
+            CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
+
+            sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            
         }
     }
 }

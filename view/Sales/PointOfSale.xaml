@@ -184,8 +184,8 @@
                                                 Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True" Width="100"/>
                             <DataGridTextColumn Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Items}" IsReadOnly="True" Width="*"/>
-                            <DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                            DisplayMemberPath="name" SelectedValuePath="id_location"/>
+                            <!--<DataGridComboBoxColumn x:Name="cbxLocation" Header="{lex:Loc Cognitivo:local:Location}" SelectedValueBinding="{Binding id_location,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                            DisplayMemberPath="name" SelectedValuePath="id_location"/>-->
                             <DataGridTextColumn Binding="{Binding vat_group.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold"
                                                 Header="{lex:Loc Cognitivo:local:VAT}" IsReadOnly="True" Width="*" Visibility="Hidden"/>
                             <DataGridTextColumn Binding="{Binding quantity, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}, ValidatesOnDataErrors=True}" 
@@ -238,12 +238,12 @@
                                 <SolidColorBrush Color="#FF004867" Opacity="0.32"/>
                             </Border.Background>
                             <StackPanel Orientation="Horizontal" Margin="2,0,32,0">
-                                <Label Content="{lex:Loc Promotion}" Style="{StaticResource input_label}" Foreground="WhiteSmoke"/>
+                                <Label Content="Promotion" Style="{StaticResource input_label}" Foreground="WhiteSmoke"/>
                             </StackPanel>
                         </Border>
                         <Border CornerRadius="32" Background="#FF004867" Width="32" Height="32" VerticalAlignment="Top" HorizontalAlignment="Right"
                         BorderBrush="White" BorderThickness="1">
-                            <Label Content="M" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15" 
+                            <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" FontSize="15" 
                            VerticalAlignment="Center" HorizontalAlignment="Center" 
                            Foreground="White"/>
                         </Border>

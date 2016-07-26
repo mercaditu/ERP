@@ -16,12 +16,12 @@ namespace entity.Brillo.Promotion
             {
                 using (db db = new db())
                 {
-                    SalesPromotionLIST = db.sales_promotion.Where(x => x.date_start >= DateTime.Now && x.date_end <= DateTime.Now).ToList();
+                    SalesPromotionLIST = db.sales_promotion.Where(x => x.date_start <= DateTime.Now && x.date_end >= DateTime.Now).ToList();
                 }
             }
         }
 
-        public void Calculate_SalesInvoice(ref sales_invoice SalesInvoice)
+        public void Calculate_SalesInvoice(ref sales_invoice SalesInvoice, ref SalesInvoiceDB SalesInvoiceDB)
         {
             Invoice Invoice = new Invoice();
             Invoice.Contact = SalesInvoice.contact;
@@ -57,19 +57,25 @@ namespace entity.Brillo.Promotion
                                 _Promo.Type = sales_promotion.Type.BuyThis_GetThat;
                                 _Promo.Shared = true;
 
-                                //using (db db = new db())
-                                //{
-                                //    _Promo.DiscountValue = db.item_price.Where(x => x.id_item == _Detail.Item.id_item).FirstOrDefault().value;
-                                //}
                                 _Detail.Promos.Add(_Promo);
 
-                                sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-                                sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
-                                sales_invoice_detail.unit_price = _Detail.Price;
-                                sales_invoice_detail.discount = _Detail.Price;
-                                sales_invoice_detail.id_item = Promo.reference_bonus;
+                                //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
+                                foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus))
+                                {
+                                    SalesInvoice.sales_invoice_detail.Remove(_Detail_);
+                                }
 
+                                sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
+                                //sales_invoice_detail.CurrencyFX_ID = SalesInvoice.id_currencyfx;
+                                //sales_invoice_detail.Contact = SalesInvoice.contact;
+
+                                sales_invoice_detail.item = SalesInvoiceDB.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                                sales_invoice_detail.id_item = Promo.reference_bonus;
+                                sales_invoice_detail.item_description = sales_invoice_detail.item.name;
+                                sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
+                                sales_invoice_detail.discount = sales_invoice_detail.unit_price;
                                 SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+                                
                             }
                         }
                     }
@@ -146,6 +152,12 @@ namespace entity.Brillo.Promotion
 
     public class Invoice
     {
+        public Invoice()
+        {
+            Details = new List<Detail>();
+            Promos = new List<Promo>();
+        }
+
         public contact Contact { get; set; }
         public DateTime Date { get; set; }
         public decimal GrandTotal { get; set; }
@@ -156,6 +168,10 @@ namespace entity.Brillo.Promotion
 
     public class Detail
     {
+        public Detail()
+        {
+            Promos = new List<Promo>();
+        }
         public item Item { get; set; }
 
         public decimal Quantity { get; set; }

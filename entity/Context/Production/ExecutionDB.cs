@@ -28,56 +28,21 @@ namespace entity
                 {
                     if (production_execution.State == EntityState.Added)
                     {
-                        //Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        //List<item_movement> item_movementList = new List<item_movement>();
-                        //item_movementList = _Stock.insert_Stock(this, production_execution);
-
-                        //if (item_movementList != null && item_movementList.Count > 0)
-                        //{
-                        //    item_movement.AddRange(item_movementList);
-                        //}
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         Entry(production_execution).State = EntityState.Added;
-                        //foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
-                        //{
-                        //    production_execution_detail.State = EntityState.Unchanged;
-                        //}
-
                     }
                     else if (production_execution.State == EntityState.Modified)
                     {
-                        //Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        //List<item_movement> item_movementList = new List<item_movement>();
-                        //item_movementList = _Stock.insert_Stock(this, production_execution);
-
-                        //if (item_movementList != null && item_movementList.Count > 0)
-                        //{
-                        //    item_movement.AddRange(item_movementList);
-                        //}
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         Entry(production_execution).State = EntityState.Modified;
-                        //foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
-                        //{
-                        //    production_execution_detail.State = EntityState.Unchanged;
-                        //}
-
                     }
                     else if (production_execution.State == EntityState.Deleted)
                     {
-                        //Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                        //List<item_movement> item_movementList = new List<item_movement>();
-                        //item_movementList = _Stock.insert_Stock(this, production_execution);
-
-                        //if (item_movementList != null && item_movementList.Count > 0)
-                        //{
-                        //    item_movement.AddRange(item_movementList);
-                        //}
                         production_execution.timestamp = DateTime.Now;
                         production_execution.State = EntityState.Unchanged;
                         base.production_execution.Remove(production_execution);
-
                     }
                 }
                 else if (production_execution.State > 0)
@@ -92,7 +57,6 @@ namespace entity
 
         public void Approve()
         {
-
             foreach (production_execution production_execution in base.production_execution.Local.Where(x =>
                                                                   x.IsSelected && x.Error == null))
             {
@@ -110,16 +74,15 @@ namespace entity
                 {
                     item_movement.AddRange(item_movementList);
                 }
+                
                 production_execution.status = Status.Documents_General.Approved;
+                
                 foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
                 {
                     production_execution_detail.State = EntityState.Unchanged;
                 }
+
                 SaveChanges();
-
-
-
-
             }
         }
         public void Anull()

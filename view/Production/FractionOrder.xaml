@@ -440,27 +440,7 @@
                                     <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                                 </Grid>
                                 <StackPanel Grid.Column="1"  VerticalAlignment="Top" Background="WhiteSmoke" DataContext="{StaticResource production_execution_detailRawViewSource}" IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
-                                    <!--<DataGrid x:Name="Production_execution_detailRaw_dimensionDataGrid" AutoGenerateColumns="False" 
-                                                      EnableRowVirtualization="True"  IsReadOnly="True" CanUserAddRows="False"
-                                                   
-                                                      RowDetailsVisibilityMode="VisibleWhenSelected">
-                                        <DataGrid.Columns>
-                                            <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Dimension}" Width="auto"
-									                                        ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" 
-                                                                            DisplayMemberPath="name" SelectedValuePath="id_dimension"
-									                                        SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <DataGridTextColumn  Binding="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0:N}}" 
-                                                                        Header="{lex:Loc Cognitivo:local:Quantity}" ElementStyle="{StaticResource RightAlignStyle}"
-                                                                        Width="auto"/>
-                                            <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-									                                        DisplayMemberPath="name" SelectedValuePath="id_measurement"  
-									                                        ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-									                                        SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                                            Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>-->
                                     <StackPanel Orientation="Horizontal" Margin="0,4">
-
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
                                         <TextBox  x:Name="txtRaw" Width="64" KeyUp="btnInsert_KeyDown" Margin="8,0" VerticalAlignment="Top" />
                                         <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>

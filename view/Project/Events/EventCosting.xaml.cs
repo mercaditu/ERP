@@ -234,7 +234,7 @@ namespace Cognitivo.Project
                                     {
                                         project_event_fixed services_per_event_details = project_event.project_event_fixed.Where(x => x.id_item == tag_detail.item.id_item).FirstOrDefault();
 
-                                        services_per_event_details.consumption = 1;
+                                        services_per_event_details.consumption = services_per_event_details.consumption;
 
                                     }
                                     else

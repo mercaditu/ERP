@@ -123,8 +123,7 @@ namespace Cognitivo.Product
                                  id_location = last.Key.app_location.id_location,
                                  location = last.Key.app_location.name,
                                  quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
-
-                             }).ToList();
+                     }).ToList();
 
 
                 List<desion> list_desion = new List<desion>();

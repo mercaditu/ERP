@@ -257,7 +257,7 @@ namespace entity
                             production_order_detail.is_input = false;
                             production_order_detail.id_item = item_request_detail.item.id_item;
 
-                            if (item.item_request_detail.project_task != null)
+                            if (item.item_request_detail.id_project_task != null)
                             {
                                 production_order_detail.id_project_task = item.item_request_detail.id_project_task;
                          

@@ -707,6 +707,7 @@ namespace entity.Brillo.Logic
                         }
 
                     }
+                   
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);
@@ -801,6 +802,7 @@ namespace entity.Brillo.Logic
                     }
 
                 }
+               
                 Final_ItemMovementLIST.Add(item_movement);
             }
             //}
@@ -875,7 +877,10 @@ namespace entity.Brillo.Logic
 
                         item_movement_value.unit_value = DefaultCurrency_Cost;
                         item_movement_value.id_currencyfx = ID_CurrencyFX_Default;
+                        item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
 
+                        //Adding Value into Movement
+                        item_movement.item_movement_value.Add(item_movement_value);
                     }
                 }
                 else
@@ -884,17 +889,23 @@ namespace entity.Brillo.Logic
                     ///In most cases, item_unit_cost will be zero, but in case it is not, we can use it as a reference.
                     ///Also we are assuming item.unit_cost is in default currency. But if this transaction is in a different currency
                     ///we can have mis-guided information.
-                    item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
-                    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+
+                    if (item_product.item.unit_cost!=null)
+                    {
+                        item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
+                        item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                        item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
+
+                        //Adding Value into Movement
+                        item_movement.item_movement_value.Add(item_movement_value);
+                    }
+                 
 
                 }
 
 
 
-                item_movement_value.comment = Brillo.Localize.StringText("DirectCost");
-
-                //Adding Value into Movement
-                item_movement.item_movement_value.Add(item_movement_value);
+              
 
 
                 if (DimensionList != null)

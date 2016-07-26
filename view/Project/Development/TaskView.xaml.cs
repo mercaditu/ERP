@@ -157,18 +157,19 @@ namespace Cognitivo.Project.Development
                 project_taskViewSource.View.Filter = null;
                 List<project_task> _project_task = treeProject.ItemsSource.Cast<project_task>().ToList();
                 _project_task = _project_task.Where(x => x.IsSelected == true).ToList();
-                string number = entity.Brillo.Logic.Range.calc_Range(_project_task.FirstOrDefault().app_document_range, true);
+                app_document_range app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                string number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
                 foreach (project_task project_task in _project_task)
                 {
                     project_task.project.code = Project_TaskApprove.code;
                     if (Project_TaskApprove.id_range != null)
                     {
                         project_task.id_range = Project_TaskApprove.id_range;
-                        app_document_range app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
+                       // app_document_range = ProjectTaskDB.app_document_range.Where(x => x.id_range == Project_TaskApprove.id_range).FirstOrDefault();
                         if (app_document_range != null)
                         {
                             project_task.app_document_range = app_document_range;
-                            project_task.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, false);
+                            project_task.number = number;
                         }
 
 

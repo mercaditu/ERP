@@ -33,7 +33,7 @@
                 <Button Content="{lex:Loc Extract}" Background="PaleGreen" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnSave_MouseUp"/>
             </StackPanel>
         </Grid>
-        <DataGrid x:Name="purchase_orderDatagrid" AutoGenerateColumns="False" Margin="8" 
+        <DataGrid x:Name="purchase_orderDatagrid" AutoGenerateColumns="False" Margin="8" LoadingRowDetails="sales_orderDatagrid_LoadingRowDetails"
                   EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn x:Name="selectedColumn" Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="" 
@@ -47,16 +47,15 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <Grid Background="{StaticResource AccentColor_Introvert}">
-                        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" Margin="4" ItemsSource="{Binding}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding item_description}" Header="{lex:Loc Cognitivo:local:Items}" Width="SizeToHeader" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="SizeToHeader" IsReadOnly="True"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
+                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" Margin="4" ItemsSource="{Binding}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding quantity, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding item.name}" Header="{lex:Loc Cognitivo:local:Items}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding UnitCost_Vat, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:PricewithVAT}" Width="SizeToHeader" IsReadOnly="True"/>
+                            <DataGridTextColumn Binding="{Binding SubTotal_Vat, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:SubTotalwithVAT}" Width="SizeToHeader" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>

@@ -198,7 +198,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="1"
-                                    DataContext="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" >
+                                    DataContext="{Binding Source={StaticResource item_transferViewSource}}" >
                             <cntrl:toolBar_Mini btnApprove_Click="toolBar_btnApproveDestination_Click" Status="{Binding status}"/>
                             <ToggleButton Content="Check All" Margin="8" Click="btnCheckDestination_Click"/>
                         </StackPanel>

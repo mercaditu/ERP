@@ -76,45 +76,32 @@ namespace cntrl.PanelAdv
             }
         }
 
-        //private void sales_orderDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
-        //{
-        //    if (_entity.purchase_order_detail.Count() > 0)
-        //    {
-        //        purchase_order _purchase_order = ((System.Windows.Controls.DataGrid)sender).SelectedItem as purchase_order;
-        //        int id_purchase_order = _purchase_order.id_purchase_order;
-        //        Task task_PrimaryData = Task.Factory.StartNew(() => LoadOrderDetail(id_purchase_order, e));
-        //    }
-        //}
-        //private void LoadOrderDetail(int id, DataGridRowDetailsEventArgs e)
-        //{
-        //    if (_entity.purchase_order_detail.Count() > 0)
-        //    {
+        private void sales_orderDatagrid_LoadingRowDetails(object sender, DataGridRowDetailsEventArgs e)
+        {
+            if (_entity.purchase_order_detail.Count() > 0)
+            {
+                purchase_order _purchase_order = ((System.Windows.Controls.DataGrid)sender).SelectedItem as purchase_order;
+                Task task_PrimaryData = Task.Factory.StartNew(() => LoadOrderDetail(_purchase_order, e));
+            }
+        }
+        private void LoadOrderDetail(purchase_order purchase_order, DataGridRowDetailsEventArgs e)
+        {
+            if (_entity.purchase_order_detail.Count() > 0)
+            {
 
 
-        //       var order = (from purchase_order_detail in _entity.purchase_order_detail
-        //                 where purchase_order_detail.purchase_order.id_contact == id
-        //                 join purchase_invoice_detail in _entity.purchase_invoice_detail
-        //           on purchase_order_detail.id_purchase_order_detail equals purchase_invoice_detail.id_purchase_order_detail into lst
-        //                 from list in lst.DefaultIfEmpty()
-        //                 group list by new
-        //                 {
-        //                     purchase_order_detail = purchase_order_detail,
-
-        //                 }
-        //                     into grouped
-        //                     select new
-        //                     {
-        //                         id_purchase_order = grouped.Key.purchase_order_detail.purchase_order.id_purchase_order,
-        //                         purchaseOrder = grouped.Key.purchase_order_detail.purchase_order,
-        //                         balance = grouped.Key.purchase_order_detail.quantity != null ? grouped.Key.purchase_order_detail.quantity : 0 - grouped.Sum(x => x.quantity != null ? x.quantity : 0)
-        //                     }).ToList().Where(x => x.balance > 0).ToList();       
-        //        Dispatcher.Invoke(new Action(() =>
-        //        {
-        //            System.Windows.Controls.DataGrid RowDataGrid = e.DetailsElement as System.Windows.Controls.DataGrid;
-        //            RowDataGrid.ItemsSource = order;
-        //        }));
-        //    }
-        //}
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    
+                    System.Windows.Controls.DataGrid RowDataGrid = e.DetailsElement as System.Windows.Controls.DataGrid;
+                    if (RowDataGrid!=null)
+                    {
+                        RowDataGrid.ItemsSource = purchase_order.purchase_order_detail;
+                    }
+                   
+                }));
+            }
+        }
      
         private void ContactPref(object sender, RoutedEventArgs e)
         {

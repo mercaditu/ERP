@@ -81,9 +81,9 @@ namespace entity
                 {
                     production_execution_detail.State = EntityState.Unchanged;
                 }
-
-                SaveChanges();
             }
+
+            SaveChanges();
         }
         public void Anull()
         {

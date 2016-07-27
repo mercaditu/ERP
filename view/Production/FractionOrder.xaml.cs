@@ -213,6 +213,8 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
+            int intarary = 1;
+
             foreach (production_execution production_execution in OrderDB.production_execution.Local.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
             {
                 toolBar_btnSave_Click(sender);

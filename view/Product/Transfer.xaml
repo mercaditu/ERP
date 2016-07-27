@@ -152,7 +152,7 @@
                          Margin="5,1,5,5"/>
             </StackPanel>
 
-            <TabControl Grid.Row="1" Grid.ColumnSpan="2">
+            <TabControl Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,-5">
                 <TabItem Header="{lex:Loc Origin}">
                     <Grid     IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                         <Grid.ColumnDefinitions>

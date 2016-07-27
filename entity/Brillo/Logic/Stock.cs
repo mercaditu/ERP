@@ -609,6 +609,7 @@ namespace entity.Brillo.Logic
 
 
 
+
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
                     {
@@ -707,7 +708,7 @@ namespace entity.Brillo.Logic
                         }
 
                     }
-                   
+
 
                     //Adding into List
                     Final_ItemMovementLIST.Add(item_movement);
@@ -736,6 +737,18 @@ namespace entity.Brillo.Logic
                 {
                     item_movement.id_execution_detail = TransactionDetailID;
 
+                    if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
+                    {
+                        production_execution_detail production_execution_detail = db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault();
+                        foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
+                        {
+                            item_movement_dimension _item_movement_dimension = new item_movement_dimension();
+                            _item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
+                            _item_movement_dimension.value = production_execution_dimension.value;
+                            //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
+                            item_movement.item_movement_dimension.Add(_item_movement_dimension);
+                        }
+                    }
                     //if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
                     //{
                     //    id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
@@ -785,24 +798,8 @@ namespace entity.Brillo.Logic
                     //Adding into List
 
                 }
-                if (id_movement > 0)
-                {
-
-                    if (db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault() != null)
-                    {
-                        item_movement Execustionitem_movement = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
-                        foreach (item_movement_dimension item_movement_dimension in Execustionitem_movement.item_movement_dimension)
-                        {
-                            item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                            _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                            _item_movement_dimension.value = item_movement_dimension.value;
-                            //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
-                            item_movement.item_movement_dimension.Add(_item_movement_dimension);
-                        }
-                    }
-
-                }
                
+
                 Final_ItemMovementLIST.Add(item_movement);
             }
             //}
@@ -890,7 +887,7 @@ namespace entity.Brillo.Logic
                     ///Also we are assuming item.unit_cost is in default currency. But if this transaction is in a different currency
                     ///we can have mis-guided information.
 
-                    if (item_product.item.unit_cost!=null)
+                    if (item_product.item.unit_cost != null)
                     {
                         item_movement_value.unit_value = (decimal)item_product.item.unit_cost;
                         item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
@@ -899,13 +896,13 @@ namespace entity.Brillo.Logic
                         //Adding Value into Movement
                         item_movement.item_movement_value.Add(item_movement_value);
                     }
-                 
+
 
                 }
 
 
 
-              
+
 
 
                 if (DimensionList != null)

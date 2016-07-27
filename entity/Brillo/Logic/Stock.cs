@@ -265,7 +265,7 @@ namespace entity.Brillo.Logic
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
 
-                        if (detail.is_input)
+                        if (detail.is_input && detail.item_movement.Count()==0)
                         {
                             if (detail.quantity > 0)
                             {
@@ -314,7 +314,7 @@ namespace entity.Brillo.Logic
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
 
-                        if (detail.is_input == false)
+                        if (detail.is_input == false && detail.item_movement.Count() == 0)
                         {
                             if (detail.quantity > 0)
                             {

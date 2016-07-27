@@ -137,12 +137,7 @@ namespace entity
         
         public string project_cost_center { get; set; }
 
-        public Status.Production? status
-        {
-            get { return _status; }
-            set { _status = (Status.Production) value; RaisePropertyChanged("status"); }
-        }
-        Status.Production _status;
+        public Status.Production? status { get; set; }
 
         
         public string name { get; set; }

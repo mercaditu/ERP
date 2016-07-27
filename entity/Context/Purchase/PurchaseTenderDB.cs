@@ -121,15 +121,7 @@ namespace entity
                             }
 
                             purchase_order_detail.quantity = purchase_tender_detail.quantity;
-
-                            if (base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault() != null)
-                            {
-                                purchase_order_detail.id_vat_group = base.app_vat_group.Where(x => x.is_default == true).FirstOrDefault().id_vat_group;
-                            }
-                            else
-                            {
-                                purchase_order_detail.id_vat_group = base.app_vat_group.Where(x => x.is_active == true).FirstOrDefault().id_vat_group;
-                            }
+                            purchase_order_detail.id_vat_group = purchase_tender_detail.id_vat_group;
 
                             purchase_order_detail.id_cost_center = base.app_cost_center.Where(x => x.is_active == true).FirstOrDefault().id_cost_center;
 

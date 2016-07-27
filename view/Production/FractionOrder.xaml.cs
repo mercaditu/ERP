@@ -224,6 +224,7 @@ namespace Cognitivo.Production
                     if (production_order.IsSelected)
                     {
                         production_order.status = Status.Production.Executed;
+                        production_order.RaisePropertyChanged("status");
                         production_order.State = EntityState.Modified;
 
                         if (production_execution != null)
@@ -238,6 +239,7 @@ namespace Cognitivo.Production
                             }
 
                             production_order.status = Status.Production.Approved;
+                            production_order.RaisePropertyChanged("status");
                             production_order.State = EntityState.Modified;
 
                             production_execution.State = EntityState.Modified;

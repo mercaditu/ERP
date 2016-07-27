@@ -514,12 +514,16 @@ namespace entity.Brillo.Logic
                     {
                         item_movement.id_execution_detail = TransactionDetailID;
 
-                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null &&
-                            db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id != null)
+                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id!=null)
                         {
                             id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
                             item_movement._parent = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
+
                         }
+
+
+
+
                     }
                     else if (ApplicationID == App.Names.PurchaseInvoice)
                     {
@@ -740,7 +744,7 @@ namespace entity.Brillo.Logic
                     item_movement.id_execution_detail = TransactionDetailID;
                     using (db db = new db())
                     {
-                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
+                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id!=null)
                         {
                             id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
                         }

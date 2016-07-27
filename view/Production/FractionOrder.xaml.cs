@@ -1092,14 +1092,15 @@ namespace Cognitivo.Production
             _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
 
-            if (production_order_detail.item.is_autorecepie)
-            {
-                _production_execution_detail.is_input = false;
-            }
-            else
-            {
-                _production_execution_detail.is_input = true;
-            }
+            //if (production_order_detail.item.is_autorecepie)
+            //{
+            //    _production_execution_detail.is_input = false;
+            //}
+            //else
+            //{
+            //    _production_execution_detail.is_input = true;
+            //}
+            _production_execution_detail.is_input = production_order_detail.is_input;
             foreach (production_order_dimension production_order_dimension in production_order_detail.production_order_dimension)
             {
                 production_execution_dimension production_execution_dimension = new production_execution_dimension();

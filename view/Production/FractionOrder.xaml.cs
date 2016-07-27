@@ -25,7 +25,7 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource,
             production_order_detaillServiceViewSource,
             item_movementViewSource,
-             item_movementrawViewSource,
+            item_movementrawViewSource,
             production_executionViewSource,
             production_executionproduction_execustion_detailViewSource,
             item_movementitem_movement_dimensionViewSource;
@@ -213,32 +213,36 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            int intarary = 1;
+            toolBar_btnSave_Click(sender);
 
-            foreach (production_execution production_execution in OrderDB.production_execution.Local.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
+            foreach (production_execution production_execution in OrderDB.production_execution.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
-                toolBar_btnSave_Click(sender);
-
                 production_order production_order = production_execution.production_execution_detail.FirstOrDefault().production_order_detail.production_order;
-                production_order.status = Status.Production.Executed;
-                production_order.State = EntityState.Modified;
-
-                if (production_execution != null)
+                if (production_order != null)
                 {
-                    entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
-                    List<item_movement> item_movementList = new List<item_movement>();
-                    item_movementList = _Stock.insert_Stock(OrderDB, production_execution);
-
-                    if (item_movementList != null && item_movementList.Count > 0)
+                    if (production_order.IsSelected)
                     {
-                        OrderDB.item_movement.AddRange(item_movementList);
-                    }
+                        production_order.status = Status.Production.Executed;
+                        production_order.State = EntityState.Modified;
 
-                    production_order.status = Status.Production.Approved;
-                    production_order.State = EntityState.Modified;
+                        if (production_execution != null)
+                        {
+                            entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
+                            List<item_movement> item_movementList = new List<item_movement>();
+                            item_movementList = _Stock.insert_Stock(OrderDB, production_execution);
 
-                    production_execution.State = EntityState.Modified;
-                    production_execution.status = Status.Documents_General.Approved;
+                            if (item_movementList != null && item_movementList.Count > 0)
+                            {
+                                OrderDB.item_movement.AddRange(item_movementList);
+                            }
+
+                            production_order.status = Status.Production.Approved;
+                            production_order.State = EntityState.Modified;
+
+                            production_execution.State = EntityState.Modified;
+                            production_execution.status = Status.Documents_General.Approved;
+                        }
+                    }   
                 }
             }
 
@@ -1436,16 +1440,6 @@ namespace Cognitivo.Production
 
         }
         #endregion
-
-        private void btnapprove_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnanull_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void item_movement_detailDataGridraw_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

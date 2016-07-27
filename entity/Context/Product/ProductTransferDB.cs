@@ -209,9 +209,11 @@ namespace entity
             {
                 //Credit Destination.
                 item_movement item_movement_dest;
-                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_item_product == item_transfer_detail.id_item_product
-                                                      && x.status == entity.Status.Stock.InStock && x.id_transfer_detail == item_transfer_detail.id_transfer_detail
-                                                      && x.debit > 0).ToList();
+                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => 
+                                                            x.id_item_product == item_transfer_detail.id_item_product && 
+                                                            x.status == entity.Status.Stock.InStock && 
+                                                            x.id_transfer_detail == item_transfer_detail.id_transfer_detail && 
+                                                            x.debit > 0).ToList();
 
                 item_movement parent_item_movement = Items_InStockLIST.FirstOrDefault()._parent;
                 if (parent_item_movement!=null)
@@ -220,6 +222,7 @@ namespace entity
                     {
                         app_currencyfx = parent_item_movement.purchase_invoice_detail.purchase_invoice.app_currencyfx;
                     }
+
                     if (parent_item_movement.id_inventory_detail > 0)
                     {
                         item_inventory_detail item_inventory_detail = base.item_inventory_detail.Where(x => x.id_inventory_detail == parent_item_movement.id_inventory_detail).FirstOrDefault();

@@ -265,11 +265,8 @@ namespace entity.Brillo.Logic
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
 
-                        if ((detail.is_input && (detail.State == EntityState.Added)) //|| 
-                            //(!detail.is_input && production_execution.State == System.Data.Entity.EntityState.Deleted)
-                            )
+                        if (detail.is_input)
                         {
-
                             if (detail.quantity > 0)
                             {
                                 List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == production_execution.production_line.id_location
@@ -305,48 +302,8 @@ namespace entity.Brillo.Logic
                                            0,
                                            comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), ""), null)
                                        );
-
                             }
                         }
-                        //else if ( //(detail.is_input && production_execution.State == System.Data.Entity.EntityState.Deleted) || 
-                        //            (detail.is_input == false && (detail.State == EntityState.Added)))
-                        //{
-                        //    if (detail.quantity > 0)
-                        //    {
-                        //        item_movementList.Add(
-                        //                CreditOnly_Movement(entity.Status.Stock.InStock,
-                        //                                App.Names.ProductionExecution,
-                        //                                detail.id_production_execution,
-                        //                                Currency.get_Default(db,CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
-                        //                                item_product,
-                        //                                production_execution.production_line.app_location,
-                        //                                detail.quantity,
-                        //                                production_execution.trans_date,
-                        //                                //Pankeel -> this needs to be fixed. I need the sum of all child.
-                        //                                0,
-                        //                                comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
-                        //                                )           
-                        //                            );
-                        //    }
-                        //    else
-                        //    {
-                        //        List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == production_execution.production_line.id_location
-                        //                                           && x.id_item_product == item_product.id_item_product
-                        //                                           && x.status == entity.Status.Stock.InStock
-                        //                                           && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-                        //        item_movementList.AddRange(DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
-                        //                                                        App.Names.ProductionExecution,
-                        //                                                        detail.id_production_execution,
-                        //                                                        Currency.get_Default(db, CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
-                        //                                                        item_product,
-                        //                                                        production_execution.production_line.app_location,
-                        //                                                        detail.quantity,
-                        //                                                        production_execution.trans_date,
-                        //                                                        comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
-                        //                                                      )
-                        //                                  );
-                        //    }
-                        //}
                     }
                 }
 
@@ -357,50 +314,7 @@ namespace entity.Brillo.Logic
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
 
-                        //if ((detail.is_input && (detail.State == EntityState.Added)) //|| 
-                        //    //(!detail.is_input && production_execution.State == System.Data.Entity.EntityState.Deleted)
-                        //    )
-                        //{
-
-                        //    if (detail.quantity > 0)
-                        //    {
-                        //        List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == production_execution.production_line.id_location
-                        //                                            && x.id_item_product == item_product.id_item_product
-                        //                                            && x.status == entity.Status.Stock.InStock
-                        //                                            && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-
-                        //        item_movementList.AddRange(
-                        //            DebitOnly_MovementLIST(Items_InStockLIST, entity.Status.Stock.InStock,
-                        //                                App.Names.ProductionExecution,
-                        //                       detail.id_production_execution,
-                        //                    Currency.get_Default(db, CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
-                        //                                item_product,
-                        //                                production_execution.production_line.app_location,
-                        //                       detail.quantity,
-                        //                                production_execution.trans_date,
-                        //                                comment_Generator(App.Names.ProductionExecution,
-                        //                                production_execution.id_production_execution.ToString(), "")
-                        //                       ));
-                        //    }
-                        //    else
-                        //    {
-                        //        item_movementList.Add(CreditOnly_Movement(entity.Status.Stock.InStock,
-                        //                   App.Names.ProductionExecution,
-                        //                   detail.id_production_execution,
-                        //                   Currency.get_Default(db, CurrentSession.Id_Company).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
-                        //                   item_product,
-                        //                   production_execution.production_line.app_location,
-                        //                   detail.quantity,
-                        //                   production_execution.trans_date,
-                        //                   0,
-                        //                   comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
-                        //               ));
-
-                        //    }
-                        //}
-                        //else 
-                        if ( //(detail.is_input && production_execution.State == System.Data.Entity.EntityState.Deleted) || 
-                                    (detail.is_input == false && (detail.State == EntityState.Added)))
+                        if (detail.is_input == false)
                         {
                             if (detail.quantity > 0)
                             {

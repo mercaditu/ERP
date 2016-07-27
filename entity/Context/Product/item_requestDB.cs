@@ -299,6 +299,7 @@ namespace entity
 
                                 purchase_tender.app_branch = item_request.sales_order.app_branch;
                             }
+
                             if (item_request_detail.id_order_detail != null)
                             {
                                 if (base.production_order_detail.Where(x => x.id_order_detail == item_request_detail.id_order_detail).FirstOrDefault()!=null)
@@ -309,8 +310,10 @@ namespace entity
                                         if (base.projects.Where(x => x.id_project == id_project).FirstOrDefault()!=null)
                                         {
                                             int id_branch = (int)base.projects.Where(x => x.id_project == id_project).FirstOrDefault().id_branch;
+
                                             if (base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault()!=null)
                                             {
+                                                purchase_tender.id_project = item_request_detail.project_task.id_project;
                                                 purchase_tender.app_branch = base.app_branch.Where(x => x.id_branch == id_branch).FirstOrDefault();
                                             }
                                            
@@ -319,12 +322,13 @@ namespace entity
                                         
                                     }
                                 }
-                             
-                              
+                            }
+                            else
+                            {
+                                purchase_tender.app_branch = base.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
                             }
 
-
-                            purchase_tender.id_project = item_request_detail.project_task.id_project;
+                            
                             purchase_tender_item purchase_tender_item = new purchase_tender_item();
                             purchase_tender_item.id_item = item_request_detail.id_item;
                             purchase_tender_item.item_description = item_request_detail.comment;

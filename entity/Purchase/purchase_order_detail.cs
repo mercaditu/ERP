@@ -28,42 +28,42 @@ namespace entity
         public int? id_purchase_tender_detail { get; set; }     
         //public int? id_sales_budget_detail { get; set; }
 
-        [Required]
-        public new decimal quantity
-        {
-            get { return _quantity; }
-            set
-            {
-                if (_quantity != value)
-                {
-                    _quantity = value;
-                    RaisePropertyChanged("quantity");
-                    //update quantity
-                    quantity = value;
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
-                    RaisePropertyChanged("_Quantity_Factored");
-                }
-            }
-        }
-        private decimal _quantity;
+        //[Required]
+        //public new decimal quantity
+        //{
+        //    get { return _quantity; }
+        //    set
+        //    {
+        //        if (_quantity != value)
+        //        {
+        //            _quantity = value;
+        //            RaisePropertyChanged("quantity");
+        //            //update quantity
+        //            quantity = value;
+        //            _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+        //            RaisePropertyChanged("_Quantity_Factored");
+        //        }
+        //    }
+        //}
+        //private decimal _quantity;
 
-        [NotMapped]
-        public new decimal Quantity_Factored
-        {
-            get { return _Quantity_Factored; }
-            set
-            {
-                if (_Quantity_Factored != value)
-                {
-                    _Quantity_Factored = value;
-                    RaisePropertyChanged("Quantity_Factored");
+        //[NotMapped]
+        //public new decimal Quantity_Factored
+        //{
+        //    get { return _Quantity_Factored; }
+        //    set
+        //    {
+        //        if (_Quantity_Factored != value)
+        //        {
+        //            _Quantity_Factored = value;
+        //            RaisePropertyChanged("Quantity_Factored");
 
-                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
-                    RaisePropertyChanged("quantity");
-                }
-            }
-        }
-        private decimal _Quantity_Factored;
+        //            quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
+        //            RaisePropertyChanged("quantity");
+        //        }
+        //    }
+        //}
+        //private decimal _Quantity_Factored;
 
         #region "Navigation Properties"
         

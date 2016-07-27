@@ -13,7 +13,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
-            //  quantity = 1;
+            quantity = 1;
             purchase_invoice_dimension = new List<purchase_invoice_dimension>();
             item_movement = new List<item_movement>();
         }
@@ -24,44 +24,44 @@ namespace entity
         public int id_purchase_invoice { get; set; }
         public int? id_purchase_order_detail { get; set; }
 
-        [Required]
-        public new decimal quantity
-        {
-            get { return _quantity; }
-            set
-            {
-                if (_quantity != value)
-                {
-                    _quantity = value;
-                    RaisePropertyChanged("quantity");
-                    //update quantity
-                    quantity = value;
+        //[Required]
+        //public new decimal quantity
+        //{
+        //    get { return _quantity; }
+        //    set
+        //    {
+        //        if (_quantity != value)
+        //        {
+        //            _quantity = value;
+        //            RaisePropertyChanged("quantity");
+        //            //update quantity
+        //            quantity = value;
 
                     
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
-                    RaisePropertyChanged("Quantity_Factored");
-                }
-            }
-        }
-        private decimal _quantity;
+        //            _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+        //            RaisePropertyChanged("Quantity_Factored");
+        //        }
+        //    }
+        //}
+        //private decimal _quantity;
 
-        [NotMapped]
-        public new decimal Quantity_Factored
-        {
-            get { return _Quantity_Factored; }
-            set
-            {
-                if (_Quantity_Factored != value)
-                {
-                    _Quantity_Factored = value;
-                    RaisePropertyChanged("Quantity_Factored");
+        //[NotMapped]
+        //public new decimal Quantity_Factored
+        //{
+        //    get { return _Quantity_Factored; }
+        //    set
+        //    {
+        //        if (_Quantity_Factored != value)
+        //        {
+        //            _Quantity_Factored = value;
+        //            RaisePropertyChanged("Quantity_Factored");
 
-                    quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
-                    RaisePropertyChanged("quantity");
-                }
-            }
-        }
-        private decimal _Quantity_Factored;
+        //            quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
+        //            RaisePropertyChanged("quantity");
+        //        }
+        //    }
+        //}
+        //private decimal _Quantity_Factored;
 
         #region "Navigation Properties"
         public virtual purchase_order_detail purchase_order_detail { get; set; }

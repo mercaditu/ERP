@@ -217,7 +217,8 @@ namespace Cognitivo.Production
 
             foreach (production_execution production_execution in OrderDB.production_execution.Local.Where(x => x.status != Status.Documents_General.Approved))
             {
-                production_order production_order = production_execution.production_execution_detail.FirstOrDefault().production_order_detail.production_order;
+                production_order production_order = production_execution.production_order;
+
                 if (production_order != null)
                 {
                     if (production_order.IsSelected)

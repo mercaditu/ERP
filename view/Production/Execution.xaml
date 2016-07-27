@@ -81,7 +81,7 @@
                     <cntrl:navList recordCode="{Binding production_line.name, StringFormat=d}" 
 						           recordSecondaryName="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    recordName="{Binding production_order.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                    Status="{Binding status,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                 </DataTemplate>

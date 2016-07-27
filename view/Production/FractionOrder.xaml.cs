@@ -213,29 +213,33 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-
-            production_execution production_execution = production_executionViewSource.View.CurrentItem as production_execution;
-
-            toolBar_btnSave_Click(sender);
-
-            production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
-            production_order.status = Status.Production.Executed;
-            production_order.State = EntityState.Modified;
-
-            if (production_execution != null)
+            foreach (production_execution production_execution in OrderDB.production_execution.Local.Where(x => x.IsSelected && x.status != Status.Documents_General.Approved))
             {
-                entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
-                List<item_movement> item_movementList = new List<item_movement>();
-                item_movementList = _Stock.insert_Stock(OrderDB, production_execution);
+                toolBar_btnSave_Click(sender);
 
-                if (item_movementList != null && item_movementList.Count > 0)
+                production_order production_order = production_execution.production_execution_detail.FirstOrDefault().production_order_detail.production_order;
+                production_order.status = Status.Production.Executed;
+                production_order.State = EntityState.Modified;
+
+                if (production_execution != null)
                 {
-                    OrderDB.item_movement.AddRange(item_movementList);
-                }
-                production_execution.State = EntityState.Modified;
-                production_execution.status = Status.Documents_General.Approved;
+                    entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
+                    List<item_movement> item_movementList = new List<item_movement>();
+                    item_movementList = _Stock.insert_Stock(OrderDB, production_execution);
 
+                    if (item_movementList != null && item_movementList.Count > 0)
+                    {
+                        OrderDB.item_movement.AddRange(item_movementList);
+                    }
+
+                    production_order.status = Status.Production.Approved;
+                    production_order.State = EntityState.Modified;
+
+                    production_execution.State = EntityState.Modified;
+                    production_execution.status = Status.Documents_General.Approved;
+                }
             }
+
             if (OrderDB.SaveChanges() > 0)
             {
                 toolBar.msgApproved(1);

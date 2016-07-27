@@ -265,7 +265,8 @@ namespace entity.Brillo.Logic
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
 
-                        if (detail.is_input && detail.item_movement.Count()==0)
+                        //INPUT (DISCOUNT)
+                        if (detail.is_input)
                         {
                             if (detail.quantity > 0)
                             {
@@ -277,44 +278,30 @@ namespace entity.Brillo.Logic
                                 item_movementinput.AddRange(
                                     DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
-                                               detail.id_production_execution,
-                                               detail.id_execution_detail,
-                                               Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
+                                                        detail.id_production_execution,
+                                                        detail.id_execution_detail,
+                                                        Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                                         item_product,
                                                         production_execution.production_line.app_location,
                                                         detail.quantity,
                                                         DateTime.Now,
-                                                        comment_Generator(App.Names.ProductionExecution,
-                                                        production_execution.id_production_execution.ToString(), "")
-                                               ));
-                            }
-                            else
-                            {
-                                item_movementinput.Add(CreditOnly_Movement(entity.Status.Stock.InStock,
-                                           App.Names.ProductionExecution,
-                                           detail.id_production_execution,
-                                           detail.id_execution_detail,
-                                           Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
-                                           item_product,
-                                           production_execution.production_line.app_location,
-                                           detail.quantity,
-                                           DateTime.Now,
-                                           0,
-                                           comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), ""), null)
-                                       );
+                                                        comment_Generator
+                                                        (App.Names.ProductionExecution,
+                                                        (production_execution.production_order != null ? production_execution.production_order.work_number : ""),
+                                                        "")));
                             }
                         }
                     }
                 }
 
-                foreach (production_execution_detail detail in production_execution.production_execution_detail
-                    .Where(x => x.item.item_product.Count() > 0))
+                foreach (production_execution_detail detail in production_execution.production_execution_detail.Where(x => x.item.item_product.Count() > 0))
                 {
                     if (detail.item.id_item_type == item.item_type.Product || detail.item.id_item_type == item.item_type.RawMaterial || detail.item.id_item_type == item.item_type.Supplies)
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
 
-                        if (detail.is_input == false && detail.item_movement.Count() == 0)
+                        //OUTPUT. CREDIT
+                        if (detail.is_input == false)
                         {
                             if (detail.quantity > 0)
                             {
@@ -328,30 +315,13 @@ namespace entity.Brillo.Logic
                                                         production_execution.production_line.app_location,
                                                         detail.quantity,
                                                         production_execution.trans_date,
-                                    //Pankeel -> this needs to be fixed. I need the sum of all child.
                                                         Convert.ToDecimal(item_movementinput.Sum(x => x.item_movement_value.Sum(y => y.unit_value))),
-                                                        comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), ""),
+                                                        comment_Generator
+                                                        (App.Names.ProductionExecution,
+                                                        (production_execution.production_order != null ? production_execution.production_order.work_number : ""),
+                                                        ""),
                                                         null)
                                                     );
-                            }
-                            else
-                            {
-                                List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == production_execution.production_line.id_location
-                                                                   && x.id_item_product == item_product.id_item_product
-                                                                   && x.status == entity.Status.Stock.InStock
-                                                                   && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-                                item_movementoutput.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
-                                                                                App.Names.ProductionExecution,
-                                                                                detail.id_production_execution,
-                                                                                detail.id_execution_detail,
-                                                                                Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
-                                                                                item_product,
-                                                                                production_execution.production_line.app_location,
-                                                                                detail.quantity,
-                                                                                production_execution.trans_date,
-                                                                                comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), "")
-                                                                              )
-                                                          );
                             }
                         }
                     }
@@ -810,14 +780,7 @@ namespace entity.Brillo.Logic
                         //Adding Value into Movement
                         item_movement.item_movement_value.Add(item_movement_value);
                     }
-
-
                 }
-
-
-
-
-
 
                 if (DimensionList != null)
                 {
@@ -825,26 +788,9 @@ namespace entity.Brillo.Logic
                     {
                         item_movement.item_movement_dimension.Add(item_movement_dimension);
                     }
-
-                    //using (db db = new db())
-                    //{
-                    //    if (db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault() != null)
-                    //    {
-                    //        item_movement Execustionitem_movement = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
-                    //        foreach (item_movement_dimension item_movement_dimension in Execustionitem_movement.item_movement_dimension)
-                    //        {
-                    //            item_movement_dimension _item_movement_dimension = new item_movement_dimension();
-                    //            _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
-                    //            _item_movement_dimension.value = item_movement_dimension.id_dimension;
-                    //            item_movement.item_movement_dimension.Add(_item_movement_dimension);
-                    //        }
-                    //    }
-                    //}
                 }
-
                 return item_movement;
             }
-
             return null;
         }
 

@@ -282,8 +282,8 @@ namespace entity.Brillo.Logic
                                                Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                                         item_product,
                                                         production_execution.production_line.app_location,
-                                               detail.quantity,
-                                                        production_execution.trans_date,
+                                                        detail.quantity,
+                                                        DateTime.Now,
                                                         comment_Generator(App.Names.ProductionExecution,
                                                         production_execution.id_production_execution.ToString(), "")
                                                ));
@@ -298,7 +298,7 @@ namespace entity.Brillo.Logic
                                            item_product,
                                            production_execution.production_line.app_location,
                                            detail.quantity,
-                                           production_execution.trans_date,
+                                           DateTime.Now,
                                            0,
                                            comment_Generator(App.Names.ProductionExecution, production_execution.id_production_execution.ToString(), ""), null)
                                        );

@@ -124,11 +124,11 @@
             </StackPanel>
         </Grid>
 
-        <cntrl:toolBar x:Name="toolBar" appName="PaymentUtility"
+        <!--<cntrl:toolBar x:Name="toolBar" appName="PaymentUtility"
 			           btnSave_Click="btnSave_Click" 
                        btnEdit_Click="toolBar_btnEdit_Click"
 			           btnCancel_Click="toolBar_btnCancel_Click"
-			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>-->
     </Grid>
     
 </Page>

@@ -35,7 +35,7 @@ namespace entity
                     _quantity = value;
                     RaisePropertyChanged("quantity");
                     //update quantity
-                    base.quantity = value;
+                    quantity = value;
 
                     
                     _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());

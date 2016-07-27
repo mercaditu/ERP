@@ -713,7 +713,7 @@ namespace Cognitivo.Purchase
                         purchase_invoice_detail.id_item = _purchase_order_detail.id_item;
                         purchase_invoice_detail.quantity = _purchase_order_detail.quantity - PurchaseInvoiceDB.purchase_invoice_detail
                                                                     .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
-                                                                    .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(); ;
+                                                                    .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(); 
                         purchase_invoice_detail.unit_cost = _purchase_order_detail.unit_cost;
 
                         foreach (purchase_order_dimension purchase_order_dimension in _purchase_order_detail.purchase_order_dimension)

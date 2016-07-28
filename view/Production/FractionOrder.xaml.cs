@@ -268,7 +268,6 @@ namespace Cognitivo.Production
             //Update_request();
             filter_task();
 
-
             filter_order(production_order_detaillProductViewSource, item.item_type.Product);
             filter_order(production_order_detaillRawViewSource, item.item_type.RawMaterial);
             filter_order(production_order_detaillSupplyViewSource, item.item_type.Supplies);
@@ -276,14 +275,12 @@ namespace Cognitivo.Production
             filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
             filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
 
-
             filter_execution(production_execution_detailProductViewSource, item.item_type.Product);
             filter_execution(production_execution_detailRawViewSource, item.item_type.RawMaterial);
             filter_execution(production_execution_detailSupplyViewSource, item.item_type.Supplies);
             filter_execution(production_execution_detailServiceViewSource, item.item_type.Service);
             filter_execution(production_execution_detailAssetViewSource, item.item_type.FixedAssets);
             filter_execution(production_execution_detailServiceContractViewSource, item.item_type.ServiceContract);
-
 
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             if (production_order.production_execution.FirstOrDefault() != null)

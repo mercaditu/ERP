@@ -33,7 +33,7 @@ namespace Cognitivo.Commercial
         CollectionViewSource payment_schedualViewSource;
 
         cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountPayable);
-        cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
+        //cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
 
      
 
@@ -192,17 +192,17 @@ namespace Cognitivo.Commercial
 
             if (PaymentSchedualList.Count > 0)
             {
-                purchase_invoice  purchase_invoice=PaymentSchedualList.FirstOrDefault().purchase_invoice;
+                purchase_invoice purchase_invoice=PaymentSchedualList.FirstOrDefault().purchase_invoice;
                 if (purchase_invoice.payment_withholding_details.Count()==0)
                 {
+                    cntrl.VATWithholding VATWithholding = new cntrl.VATWithholding();
                     VATWithholding.invoiceList = new List<object>();
                     VATWithholding.invoiceList.Add(purchase_invoice);
                     VATWithholding.objEntity = PaymentDB;
                     VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
                     VATWithholding.percentage = PaymentSetting.Default.vatwithholdingpercent;
                     crud_modal.Visibility = System.Windows.Visibility.Visible;
-                    crud_modal.Children.Add(VATWithholding);   
-                    
+                    crud_modal.Children.Add(VATWithholding);                
                 }
                 else
                 {

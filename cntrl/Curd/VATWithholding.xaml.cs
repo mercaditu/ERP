@@ -44,8 +44,6 @@ namespace cntrl
                     stackMain.DataContext = invoiceViewSource;
                     DtpTransdate.SelectedDate = DateTime.Now;
 
-
-
                     if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
                     {
                         sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
@@ -118,7 +116,6 @@ namespace cntrl
                 else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
                 {
                     _payment_schedual.debit = Convert.ToDecimal(lbltotalvat.Content);
-
                 }
 
                 _payment_schedual.parent = payment_schedual;
@@ -136,16 +133,11 @@ namespace cntrl
 
                 objEntity.payment_schedual.Add(_payment_schedual);
 
-                IEnumerable<DbEntityValidationResult> validationresult = objEntity.GetValidationErrors();
+                objEntity.SaveChanges();
 
-                if (validationresult.Count() == 0)
-                {
-                    objEntity.SaveChanges();
-                    entity.Properties.Settings.Default.company_ID = objEntity.app_company.FirstOrDefault().id_company;
-                    entity.Properties.Settings.Default.company_Name = objEntity.app_company.FirstOrDefault().alias;
-                    entity.Properties.Settings.Default.Save();
-                    btnCancel_Click(sender, e);
-                }
+                Grid parentGrid = (Grid)this.Parent;
+                parentGrid.Children.Clear();
+                parentGrid.Visibility = System.Windows.Visibility.Hidden;
             }
             catch (Exception ex)
             {

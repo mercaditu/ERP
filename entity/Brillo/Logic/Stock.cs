@@ -22,8 +22,7 @@ namespace entity.Brillo.Logic
             {
                 sales_invoice sales_invoice = (sales_invoice)obj_entity;
 
-                foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail
-                    )
+                foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
                 {
 
                     if (detail.item.is_autorecepie)
@@ -629,16 +628,9 @@ namespace entity.Brillo.Logic
                             item_movement_dimension _item_movement_dimension = new item_movement_dimension();
                             _item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
                             _item_movement_dimension.value = production_execution_dimension.value;
-                            //  _item_movement_dimension.id_measurement = item_movement_dimension.id_measurement;
                             item_movement.item_movement_dimension.Add(_item_movement_dimension);
                         }
                     }
-                    //if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
-                    //{
-                    //    id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
-                    //    item_movement._parent = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
-
-                    //}
                 }
                 else if (ApplicationID == App.Names.PurchaseInvoice)
                 {

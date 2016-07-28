@@ -80,8 +80,8 @@
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="111*"/>
-                <RowDefinition Height="169*"/>
+                <RowDefinition Height="220"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.Column="1" Margin="8,0,68,0" Width="264">
                 <Label Content="{lex:Loc Date}" Style="{DynamicResource input_label}"/>
@@ -203,7 +203,7 @@
                         </cntrl:SearchableTextbox.Columns>
                     </cntrl:SearchableTextbox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,36,0,0">
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,64,0,0">
                     <DataGrid  x:Name="item_transfer_detailDataGrid" 
                       AutoGenerateColumns="False" 
                       EnableRowVirtualization="True" 
@@ -231,7 +231,6 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
-
             </Grid>
 
 

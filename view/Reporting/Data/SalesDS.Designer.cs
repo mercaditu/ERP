@@ -7961,7 +7961,7 @@ GROUP BY s.id_sales_invoice, s.trans_date";
     round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
     
 ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as Margin,
-    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
+    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount 
 from sales_invoice as s 
 inner join sales_invoice_detail as sd
  on s.id_sales_invoice = sd.id_sales_invoice 
@@ -7969,21 +7969,21 @@ inner join sales_invoice_detail as sd
 left join items as i
 on i.id_item = sd.id_item 
 LEFT JOIN
-	
+ 	
 (SELECT app_vat_group.id_vat_group,SUM(app_vat.coefficient) + 1 as coef
     FROM app_vat_group 
-	LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
-	LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco
+LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group
+ LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco
  ON vatco.id_vat_group = sd.id_vat_group
-
+ 
 right join item_tag_detail as itd 
 on itd.id_item = i.id_item
-
+ 
 right join item_tag as tag 
-on tag.id_tag = itd.id_tag 
+on tag.id_tag = itd.id_tag  
 where s.status = 2 and s.trans_date >= @StartDate and s.trans_date <= @EndDate and s.id_branch = @BranchID 
  
-Group by i.id_item";
+Group by i.id_item ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";

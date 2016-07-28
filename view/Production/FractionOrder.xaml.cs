@@ -1015,7 +1015,7 @@ namespace Cognitivo.Production
                     {
                         production_execution _production_execution = production_executionViewSource.View.CurrentItem as production_execution;
 
-                        if (production_order_detail.production_order_dimension.Count() > 0)
+                        if (production_order_detail.item.item_dimension.Count() > 0)
                         {
                             itemMovementFraction.id_item = (int)production_order_detail.id_item;
                             itemMovementFraction.OrderDB = OrderDB;

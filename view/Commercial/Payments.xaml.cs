@@ -35,8 +35,8 @@ namespace Cognitivo.Commercial
                 _PaymentDate = value;
                 RaisePropertyChanged("PaymentDate");
 
-                slider.Maximum = DateTime.DaysInMonth(PaymentDate.Year, _PaymentDate.Month);
-                slider.Value = PaymentDate.Day;
+                //slider.Maximum = DateTime.DaysInMonth(PaymentDate.Year, _PaymentDate.Month);
+                //slider.Value = PaymentDate.Day;
 
                 FilterPaymentsPaid(0);
                 FilterPaymentsRecieved(0);

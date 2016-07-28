@@ -103,12 +103,12 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <Grid VerticalAlignment="Top" Height="40" Grid.ColumnSpan="2" Background="White">
+        <!--<Grid VerticalAlignment="Top" Height="40" Grid.ColumnSpan="2" Background="White">
             <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Center">
                 <TextBlock Text="{Binding ElementName=PaymentPage, Path=PaymentDate,
                                       StringFormat=D, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                       MouseDown="Today_MouseDown" HorizontalAlignment="Center" Margin="0,2,0,0" Foreground="Gray"/>
-                <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                --><!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRMonth_MouseDown"
                        HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
                     <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="RRDay_MouseDown"
@@ -120,9 +120,9 @@
                        HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
                     <Label Content="" Style="{StaticResource ico_Label}" Cursor="Hand" MouseDown="FFMonth_MouseDown"
                        HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
-                </StackPanel>-->
+                </StackPanel>--><!--
             </StackPanel>
-        </Grid>
+        </Grid>-->
 
         <cntrl:toolBar x:Name="toolBar" appName="PaymentUtility"
 			           btnSave_Click="btnSave_Click" 

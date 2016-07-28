@@ -223,6 +223,64 @@ namespace Cognitivo.Commercial
             }
         }
 
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query) && contactViewSource != null)
+            {
+                try
+                {
+                    contactViewSource.View.Filter = i =>
+                    {
+                        contact contact = i as contact;
+                        if (contact != null)
+                        {
+                            string name = "";
+                            string code = "";
+                            string gov_code = "";
+
+                            if (contact.name != null)
+                            {
+                                name = contact.name.ToLower();
+                            }
+
+                            if (contact.code != null)
+                            {
+                                code = contact.code.ToLower();
+                            }
+
+                            if (contact.gov_code != null)
+                            {
+                                gov_code = contact.gov_code.ToLower();
+                            }
+
+                            if (name.Contains(query.ToLower())
+                                || code.Contains(query.ToLower())
+                                || gov_code.Contains(query.ToLower()))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch (Exception ex)
+                {
+                    toolBar.msgError(ex);
+                }
+            }
+            else
+            {
+                contactViewSource.View.Filter = null;
+            }
+        }
+
         //private void FFMonth_MouseDown(object sender, MouseButtonEventArgs e)
         //{
         //    PaymentDate = PaymentDate.AddMonths(1);

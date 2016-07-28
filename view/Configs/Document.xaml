@@ -167,7 +167,7 @@
         </StackPanel>
         
         <cntrl:toolBar x:Name="toolBar" HorizontalAlignment="Stretch" VerticalAlignment="Top" 
-                       btnEdit_Click="toolBar_btnEdit_Click"
+                       btnEdit_Click="toolBar_btnEdit_Click" btnSearch_Click="toolBar_btnSearch_Click"
                        btnSave_Click="toolBar_btnSave_Click"
                        btnDelete_Click="toolBar_btnDelete_Click"
                        btnCancel_Click="toolBar_btnCancel_Click"

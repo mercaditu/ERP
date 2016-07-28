@@ -51,10 +51,8 @@ namespace Cognitivo.Commercial
 
                         if (payment_promissory_note != null)
                         {
-
                             if ((payment_promissory_note.contact != null ? payment_promissory_note.contact.name.ToLower().Contains(query.ToLower()) : false)
-                                || payment_promissory_note.note_number.Contains(query)
-                                || (payment_promissory_note.trans_date != null ? payment_promissory_note.trans_date.ToString() == query : false))
+                                || payment_promissory_note.note_number.Contains(query))
                             {
                                 return true;
                             }

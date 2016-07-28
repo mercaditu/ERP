@@ -124,7 +124,7 @@
             </StackPanel>
         </Grid>-->
 
-        <cntrl:toolBar x:Name="toolBar" appName="PaymentUtility"
+        <cntrl:toolBar x:Name="toolBar" appName="PaymentUtility" btnSearch_Click="toolBar_btnSearch_Click"
 			           btnSave_Click="btnSave_Click" State="{Binding State,Source={StaticResource payment_detailReceive},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        btnEdit_Click="toolBar_btnEdit_Click"
 			           btnCancel_Click="toolBar_btnCancel_Click"

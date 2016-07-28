@@ -523,52 +523,52 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource.View.Filter = null;
 
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
-            _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true).ToList();
+            _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true && x.status != entity.Status.Project.Approved).ToList();
 
-            foreach (production_order_detail production_order_detail in _production_order_detail)
+            if (_production_order_detail.Count > 0)
             {
-                if (production_order_detail.parent != null)
+                foreach (production_order_detail production_order_detail in _production_order_detail)
                 {
-                    production_order_detail.parent.status = entity.Status.Project.Approved;
+                    if (production_order_detail.parent != null)
+                    {
+                        production_order_detail.parent.status = entity.Status.Project.Approved;
+                    }
+
+                    production_order_detail.status = entity.Status.Project.Approved;
                 }
 
-                production_order_detail.status = entity.Status.Project.Approved;
-            }
+                if (production_order.production_execution.Count() == 0)
+                {
+                    production_execution production_execution = new production_execution();
+                    production_execution.production_order = production_order;
+                    production_execution.id_production_line = production_order.id_production_line;
+                    production_execution.trans_date = DateTime.Now;
+                    OrderDB.production_execution.Add(production_execution);
+                    production_executionViewSource.View.Refresh();
+                    production_executionViewSource.View.MoveCurrentToLast();
+                }
 
-            if (production_order.production_execution.Count() == 0)
-            {
-                production_execution production_execution = new production_execution();
-                production_execution.production_order = production_order;
-                production_execution.id_production_line = production_order.id_production_line;
-                production_execution.trans_date = DateTime.Now;
-                OrderDB.production_execution.Add(production_execution);
-                production_executionViewSource.View.Refresh();
-                production_executionViewSource.View.MoveCurrentToLast();
-            }
+                if (OrderDB.SaveChanges() > 0)
+                {
+                    filter_task();
+                    toolBar.msgSaved(OrderDB.NumberOfRecords);
+                }
 
-            if (OrderDB.SaveChanges() > 0)
-            {
-                filter_task();
-                toolBar.msgSaved(OrderDB.NumberOfRecords);
-            }
-
-            try
-            {
-                production_orderViewSource.View.Refresh();
-                production_orderViewSource.View.MoveCurrentToFirst();
-                production_orderViewSource.View.MoveCurrentTo(production_order);
-                production_order_detaillRawViewSource.View.Refresh();
-                production_order_detaillProductViewSource.View.Refresh();
-                production_order_detaillServiceViewSource.View.Refresh();
-                production_order_detaillRawViewSource.View.Refresh();
-                treeRaw.UpdateLayout();
-                treeAsset.UpdateLayout();
-                treeService.UpdateLayout();
-                treeProduct.UpdateLayout();
-            }
-            catch
-            {
-
+                try
+                {
+                    production_orderViewSource.View.Refresh();
+                    production_orderViewSource.View.MoveCurrentToFirst();
+                    production_orderViewSource.View.MoveCurrentTo(production_order);
+                    production_order_detaillRawViewSource.View.Refresh();
+                    production_order_detaillProductViewSource.View.Refresh();
+                    production_order_detaillServiceViewSource.View.Refresh();
+                    production_order_detaillRawViewSource.View.Refresh();
+                    treeRaw.UpdateLayout();
+                    treeAsset.UpdateLayout();
+                    treeService.UpdateLayout();
+                    treeProduct.UpdateLayout();
+                }
+                catch { }
             }
         }
 

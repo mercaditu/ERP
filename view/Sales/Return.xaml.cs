@@ -401,7 +401,7 @@ namespace Cognitivo.Sales
                 calculate_vat(null, null);
             }));
         }
-        private void salesorder_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void salesinvoice_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             Hyperlink Hyperlink = (Hyperlink)sender;
             sales_invoice sales_invoice = (sales_invoice)Hyperlink.Tag;
@@ -409,8 +409,6 @@ namespace Cognitivo.Sales
             {
                 entity.Brillo.Document.Start.Automatic(sales_invoice, sales_invoice.app_document_range);
             }
-
-
         }
         private void sales_return_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {

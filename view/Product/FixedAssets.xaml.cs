@@ -293,5 +293,52 @@ namespace Cognitivo.Product
                 }
             }
         }
+
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query) && itemViewSource != null)
+            {
+                try
+                {
+                    itemViewSource.View.Filter = i =>
+                    {
+                        item item = i as item;
+                        if (item != null)
+                        {
+                            string name = "";
+                            string code = "";
+
+                            if (item.name != null)
+                            {
+                                name = item.name.ToLower();
+                            }
+
+                            if (item.code != null)
+                            {
+                                code = item.code.ToLower();
+                            }
+
+                            if (name.Contains(query.ToLower()) || code.Contains(query.ToLower()))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch { }
+            }
+            else
+            {
+                itemViewSource.View.Filter = null;
+            }
+        }
     }
 }

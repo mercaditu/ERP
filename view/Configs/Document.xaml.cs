@@ -116,5 +116,49 @@ namespace Cognitivo.Configs
         {
             rtfrow.Text += lstfield.SelectedItem.ToString();
         }
+
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            if (!string.IsNullOrEmpty(query) && app_documentViewSource != null)
+            {
+                try
+                {
+                    app_documentViewSource.View.Filter = i =>
+                    {
+                        app_document app_document = i as app_document;
+                        if (app_document != null)
+                        {
+                            string name = "";
+
+                            if (app_document.name != null)
+                            {
+                                name = app_document.name.ToLower();
+                            }
+
+                            if (name.Contains(query.ToLower()))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                catch (Exception ex)
+                {
+                    toolBar.msgError(ex);
+                }
+            }
+            else
+            {
+                app_documentViewSource.View.Filter = null;
+            }
+        }
     }
 }

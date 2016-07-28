@@ -19,7 +19,7 @@ namespace Cognitivo.Purchase
             purchaseInvoiceViewSource,
             purchase_returnpurchase_return_detailViewSource;
         entity.Properties.Settings _entity = new entity.Properties.Settings();
-
+        cntrl.PanelAdv.pnlPurchaseInvoice pnlPurchaseInvoice;
         public Return()
         {
             InitializeComponent();
@@ -104,35 +104,35 @@ namespace Cognitivo.Purchase
             dbContext.CancelAllChanges();
         }
 
-        private void ButtonImport_Click(object sender, RoutedEventArgs e)
-        {
-            if (cbxPurchaseInvoice.SelectedItem != null)
-            {
-                purchase_invoice purchase_invoice = cbxPurchaseInvoice.SelectedItem as purchase_invoice;
-                if (purchase_returnDataGrid.SelectedItem != null)
-                {
-                    purchase_return purchase_return = purchase_returnDataGrid.SelectedItem as purchase_return;
-                    foreach (var item in purchase_invoice.purchase_invoice_detail)
-                    {
-                        purchase_return_detail purchase_return_detail = new purchase_return_detail();
-                        purchase_return_detail.purchase_return = purchase_return;
-                        purchase_return_detail.id_cost_center = item.id_cost_center;
-                        purchase_return_detail.item = item.item;
-                        purchase_return_detail.id_item = item.id_item;
-                        purchase_return_detail.item_description = item.item_description;
-                        purchase_return_detail.unit_cost = item.unit_cost;
-                        purchase_return_detail.id_vat_group = item.id_vat_group;
-                        purchase_return_detail.expiration_date = item.expiration_date;
-                        purchase_return_detail.id_purchase_invoice_detail = (int)item.id_purchase_invoice_detail;
-                        purchase_return_detail.quantity = item.quantity;
-                        purchase_return.purchase_return_detail.Add(purchase_return_detail);
-                    }
-                    //calculate_total(sender, e);
-                    calculate_vat(sender, e);
-                    purchase_returnpurchase_return_detailViewSource.View.Refresh();
-                }
-            }
-        }
+        //private void ButtonImport_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (cbxPurchaseInvoice.SelectedItem != null)
+        //    {
+        //        purchase_invoice purchase_invoice = cbxPurchaseInvoice.SelectedItem as purchase_invoice;
+        //        if (purchase_returnDataGrid.SelectedItem != null)
+        //        {
+        //            purchase_return purchase_return = purchase_returnDataGrid.SelectedItem as purchase_return;
+        //            foreach (var item in purchase_invoice.purchase_invoice_detail)
+        //            {
+        //                purchase_return_detail purchase_return_detail = new purchase_return_detail();
+        //                purchase_return_detail.purchase_return = purchase_return;
+        //                purchase_return_detail.id_cost_center = item.id_cost_center;
+        //                purchase_return_detail.item = item.item;
+        //                purchase_return_detail.id_item = item.id_item;
+        //                purchase_return_detail.item_description = item.item_description;
+        //                purchase_return_detail.unit_cost = item.unit_cost;
+        //                purchase_return_detail.id_vat_group = item.id_vat_group;
+        //                purchase_return_detail.expiration_date = item.expiration_date;
+        //                purchase_return_detail.id_purchase_invoice_detail = (int)item.id_purchase_invoice_detail;
+        //                purchase_return_detail.quantity = item.quantity;
+        //                purchase_return.purchase_return_detail.Add(purchase_return_detail);
+        //            }
+        //            //calculate_total(sender, e);
+        //            calculate_vat(sender, e);
+        //            purchase_returnpurchase_return_detailViewSource.View.Refresh();
+        //        }
+        //    }
+        //}
 
         #region Datagrid Events
         private void calculate_vat(object sender, EventArgs e)
@@ -472,5 +472,75 @@ namespace Cognitivo.Purchase
             //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
+
+        private void btnPurchaseInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            crud_modal.Visibility = Visibility.Visible;
+            pnlPurchaseInvoice = new cntrl.PanelAdv.pnlPurchaseInvoice();
+            pnlPurchaseInvoice._entity = new ImpexDB();
+            //    pnlSalesInvoice.contactViewSource = contactViewSource;
+            if (sbxContact.ContactID > 0)
+            {
+                contact contact = dbContext.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                pnlPurchaseInvoice._contact = contact;
+            }
+
+            pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
+            crud_modal.Children.Add(pnlPurchaseInvoice);
+        }
+        public void PurchaseInvoice_Click(object sender)
+        {
+            purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;
+
+            sbxContact.Text = pnlPurchaseInvoice.selected_purchase_invoice.FirstOrDefault().contact.name;
+            foreach (purchase_invoice item in pnlPurchaseInvoice.selected_purchase_invoice)
+            {
+                _purchase_return.State = EntityState.Modified;
+                _purchase_return.id_condition = item.id_condition;
+                _purchase_return.id_contract = item.id_contract;
+                _purchase_return.id_currencyfx = item.id_currencyfx;
+                _purchase_return.id_purchase_invoice = item.id_purchase_invoice;
+
+                foreach (purchase_invoice_detail _purchase_invoice_detail in item.purchase_invoice_detail)
+                {
+                    if (_purchase_return.purchase_return_detail.Where(x => x.id_item == _purchase_invoice_detail.id_item).Count() == 0)
+                    {
+                        purchase_return_detail purchase_return_detail = new purchase_return_detail();
+                        purchase_return_detail.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
+                        purchase_return_detail.id_cost_center = _purchase_invoice_detail.id_cost_center;
+                        purchase_return_detail.id_location = _purchase_invoice_detail.id_location;
+                        if (dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault() != null)
+                        {
+                            purchase_return_detail.app_location = dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault();
+                        }
+                        purchase_return_detail.purchase_return = _purchase_return;
+                        if (dbContext.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault() != null)
+                        {
+                            purchase_return_detail.item = dbContext.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault();
+                        }
+                 
+                        purchase_return_detail.id_item = _purchase_invoice_detail.id_item;
+
+                        purchase_return_detail.quantity = _purchase_invoice_detail.quantity - dbContext.purchase_return_detail
+                                                                                     .Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail)
+                                                                                     .GroupBy(x => x.id_purchase_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
+
+                        purchase_return_detail.unit_cost = _purchase_invoice_detail.unit_cost;
+                        purchase_return_detail.CurrencyFX_ID = _purchase_return.id_currencyfx;
+                        _purchase_return.purchase_return_detail.Add(purchase_return_detail);
+                    }
+                    dbContext.Entry(_purchase_return).Entity.State = EntityState.Added;
+                    crud_modal.Children.Clear();
+                    crud_modal.Visibility = Visibility.Collapsed;
+                    purchaseReturnViewSource.View.Refresh();
+
+                    purchase_returnpurchase_return_detailViewSource.View.Refresh();
+
+
+                }
+            }
+        }
+
+     
     }
 }

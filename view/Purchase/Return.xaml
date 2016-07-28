@@ -91,8 +91,8 @@
                     <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseReturn"
                                           SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                           LostFocus="cbxCurrency_LostFocus" Width="256" HorizontalAlignment="Left" MouseEnter="cbxCurrency_MouseEnter" />
-                    <Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource input_label}"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <!--<Label Content="{lex:Loc PurchaseInvoice}" Style="{StaticResource input_label}"/>-->
+                    <!--<StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <ComboBox x:Name="cbxPurchaseInvoice" Style="{StaticResource input_combobox}" 
                                   ItemsSource="{Binding Source={StaticResource purchase_invoiceViewSource}}"
                                   DisplayMemberPath="number" SelectedValuePath="id_purchase_invoice"
@@ -100,13 +100,22 @@
                                   ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
 
                         <Button Content="O" FontSize="10" FontFamily="/Cognitivo;component/Resources/#cognitivo" Click="ButtonImport_Click"/>
-                    </StackPanel>
+                    </StackPanel>-->
                 </StackPanel>
                 <StackPanel Grid.Column="1"
                            IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Grid.ColumnSpan="2">
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                     >
                         <CheckBox IsChecked="{Binding is_impex, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource input_checkbox}" Width="61" Content="Impex"/>
+                    </StackPanel>
+                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="" Style="{StaticResource ico_Label}" 
+                                FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
+                        <TextBlock Style="{StaticResource text_Data}">
+                            <Hyperlink PreviewMouseUp="btnPurchaseInvoice_Click">
+                                <Run Text="{lex:Loc PurchaseInvoice}"/>
+                            </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
                     <Label Content="{lex:Loc Type}" Style="{StaticResource input_label}"/>
                     <ComboBox Grid.Column="1" Style="{StaticResource input_combobox}" Width="140"

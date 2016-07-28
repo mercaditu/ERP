@@ -183,35 +183,50 @@ namespace Cognitivo.Commercial
 
         }
 
-        private void FFMonth_MouseDown(object sender, MouseButtonEventArgs e)
+        private void toolBar_btnEdit_Click(object sender)
         {
-            PaymentDate = PaymentDate.AddMonths(1);
+
         }
 
-        private void FFDay_MouseDown(object sender, MouseButtonEventArgs e)
+        private void btnSave_Click(object sender)
         {
-            PaymentDate = PaymentDate.AddDays(1);
+
         }
 
-        private void RRDay_MouseDown(object sender, MouseButtonEventArgs e)
+        private void toolBar_btnCancel_Click(object sender)
         {
-            PaymentDate = PaymentDate.AddDays(-1);
+
         }
 
-        private void RRMonth_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            PaymentDate = PaymentDate.AddMonths(-1);
-        }
+        //private void FFMonth_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    PaymentDate = PaymentDate.AddMonths(1);
+        //}
 
-        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            PaymentDate = PaymentDate.AddDays(slider.Value - PaymentDate.Day);
-        }
+        //private void FFDay_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    PaymentDate = PaymentDate.AddDays(1);
+        //}
 
-        private void Today_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            PaymentDate = DateTime.Now;
-        }
+        //private void RRDay_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    PaymentDate = PaymentDate.AddDays(-1);
+        //}
+
+        //private void RRMonth_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    PaymentDate = PaymentDate.AddMonths(-1);
+        //}
+
+        //private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    PaymentDate = PaymentDate.AddDays(slider.Value - PaymentDate.Day);
+        //}
+
+        //private void Today_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    PaymentDate = DateTime.Now;
+        //}
      
     }
 }

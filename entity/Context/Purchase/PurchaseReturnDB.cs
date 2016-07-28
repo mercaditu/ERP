@@ -100,6 +100,47 @@ namespace entity
                             item_movement.AddRange(item_movementList);
                         }
 
+
+                        if (purchase_return.purchase_invoice != null)
+                        {
+
+
+                            payment payment = new payment();
+                            payment.id_contact = purchase_return.id_contact;
+                            payment_detail payment_detailreturn = new payment_detail();
+                            // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
+                            payment_detailreturn.id_currencyfx = purchase_return.id_currencyfx;
+                            if (base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault() != null)
+                            {
+                                payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("Please add crditnote payment type...");
+                                return;
+                            }
+
+
+                            payment_detailreturn.id_sales_return = purchase_return.id_purchase_return;
+
+                            payment_detailreturn.value = purchase_return.GrandTotal;
+
+                            payment_schedual payment_schedualReturn = new payment_schedual();
+                            payment_schedualReturn.debit = 0;
+                            payment_schedualReturn.credit = purchase_return.GrandTotal;
+                            payment_schedualReturn.id_currencyfx = purchase_return.id_currencyfx;
+                            payment_schedualReturn.purchase_return = purchase_return;
+                            payment_schedualReturn.trans_date = purchase_return.trans_date;
+                            payment_schedualReturn.expire_date = purchase_return.trans_date;
+                            payment_schedualReturn.status = entity.Status.Documents_General.Approved;
+                            payment_schedualReturn.id_contact = purchase_return.id_contact;
+                            payment_schedualReturn.can_calculate = true;
+                            payment_schedualReturn.parent = purchase_return.purchase_invoice.payment_schedual.FirstOrDefault();
+
+                            payment_detailreturn.payment_schedual.Add(payment_schedualReturn);
+                            payment.payment_detail.Add(payment_detailreturn);
+                            base.payments.Add(payment);
+                        }
                         purchase_return.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }

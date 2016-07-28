@@ -748,9 +748,13 @@ namespace Cognitivo.Production
                             {
                                 if (production_order != null)
                                 {
-                                    if (objproduction_execution_detail.production_order_detail.production_order == production_order)
+                                    if(objproduction_execution_detail.production_order_detail!=null)
                                     {
-                                        return true;
+                                        if (objproduction_execution_detail.production_order_detail.production_order == production_order)
+                                        {
+                                            return true;
+                                        }
+                                        
                                     }
                                     return false;
                                 }
@@ -1553,5 +1557,7 @@ namespace Cognitivo.Production
                 }
             }
         }
+
+      
     }
 }

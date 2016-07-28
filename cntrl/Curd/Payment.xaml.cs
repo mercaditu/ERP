@@ -169,6 +169,7 @@ namespace cntrl.Curd
 
         private void cbxPamentType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
             payment payment = paymentViewSource.View.CurrentItem as payment;
             if (cbxPamentType.SelectedItem != null)
             {
@@ -194,7 +195,7 @@ namespace cntrl.Curd
                             stpcreditsales.Visibility = Visibility.Collapsed;
                             stpcreditpurchase.Visibility = Visibility.Visible;
 
-                            CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
+                           
                             PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Load();
                             purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.purchase_invoice.GrandTotal - x.GrandTotal) > 0);
                         }

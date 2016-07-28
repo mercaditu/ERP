@@ -203,6 +203,8 @@ namespace Cognitivo.Commercial
 
         private void btnSave_Click(object sender)
         {
+            payment payment = payment_detailReceive.View.CurrentItem as payment;
+            payment.State = EntityState.Unchanged;
             PaymentDB.SaveChanges();
         }
 

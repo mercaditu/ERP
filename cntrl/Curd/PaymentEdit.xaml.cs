@@ -38,7 +38,7 @@ namespace cntrl.Curd
 
 
             paymentViewSource.Source = PaymentDB.payments.Local;
-          
+
 
             if (paymentViewSource != null)
             {
@@ -96,6 +96,26 @@ namespace cntrl.Curd
 
         private void SaveChanges()
         {
+            payment payment = paymentViewSource.View.CurrentItem as payment;
+            foreach (payment_detail payment_detail in payment.payment_detail)
+            {
+                if (PaymentDB.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault() != null)
+                {
+                    payment_schedual payment_schedual=PaymentDB.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
+                    if (payment_detail.value != payment_schedual.credit)
+                    {
+                        payment_schedual.credit = payment_detail.value;
+                    }
+                }
+                if (PaymentDB.app_account_detail.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault() != null)
+                {
+                    app_account_detail app_account_detail = PaymentDB.app_account_detail.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
+                    if (payment_detail.value != app_account_detail.credit)
+                    {
+                        app_account_detail.credit = payment_detail.value;
+                    }
+                }
+            }
 
             lblCancel_MouseDown(null, null);
 

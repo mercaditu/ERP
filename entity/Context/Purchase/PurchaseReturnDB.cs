@@ -126,8 +126,8 @@ namespace entity
                             payment_detailreturn.value = purchase_return.GrandTotal;
 
                             payment_schedual payment_schedualReturn = new payment_schedual();
-                            payment_schedualReturn.debit = 0;
-                            payment_schedualReturn.credit = purchase_return.GrandTotal;
+                            payment_schedualReturn.debit = purchase_return.GrandTotal;
+                            payment_schedualReturn.credit =0 ;
                             payment_schedualReturn.id_currencyfx = purchase_return.id_currencyfx;
                             payment_schedualReturn.purchase_return = purchase_return;
                             payment_schedualReturn.trans_date = purchase_return.trans_date;

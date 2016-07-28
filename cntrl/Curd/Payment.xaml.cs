@@ -196,7 +196,7 @@ namespace cntrl.Curd
 
                             CollectionViewSource purchase_returnViewSource = this.FindResource("purchase_returnViewSource") as CollectionViewSource;
                             PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Load();
-                            purchase_returnViewSource.Source = PaymentDB.purchase_return.Local;
+                            purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.purchase_invoice.GrandTotal - x.GrandTotal) > 0);
                         }
                         else
                         {
@@ -246,11 +246,36 @@ namespace cntrl.Curd
         {
             try
             {
-                if (purchasereturnComboBox.Data != null)
+                try
                 {
-                    purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
-                    purchasereturnComboBox.Text = purchase_return.number;
+
+                    if (purchasereturnComboBox.Data != null)
+                    {
+                        CollectionViewSource paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
+                        payment_detail payment_detail = paymentpayment_detailViewSource.View.CurrentItem as payment_detail;
+                        purchase_return purchase_return = (purchase_return)purchasereturnComboBox.Data;
+                        purchasereturnComboBox.Text = purchase_return.number;
+                        decimal return_value = (purchase_return.GrandTotal - purchase_return.payment_schedual.Where(x => x.id_purchase_return == purchase_return.id_purchase_return).Sum(x => x.debit));
+                        payment_detail.id_purchase_return = purchase_return.id_purchase_return;
+
+                        if (payment_detail.value > return_value)
+                        {
+
+                            payment_detail.value = return_value;
+                            payment_detail.RaisePropertyChanged("value");
+                        }
+                        else
+                        {
+                            payment_detail.value = payment_detail.value;
+                            payment_detail.RaisePropertyChanged("value");
+                        }
+                    }
                 }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+               
             }
             catch (Exception ex)
             {

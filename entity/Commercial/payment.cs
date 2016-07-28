@@ -129,6 +129,27 @@ namespace entity
         private decimal _GrandTotalDetail;
 
         [NotMapped]
+        public decimal GrandTotalDetailValue
+        {
+            get
+            {
+                _GrandTotalDetailValue = 0;
+                foreach (payment_detail _payment_detail in payment_detail)
+                {
+                    _GrandTotalDetailValue += _payment_detail.value;
+                }
+                return Math.Round(_GrandTotalDetailValue, 2);
+            }
+            set
+            {
+                _GrandTotalDetailValue = value;
+                RaisePropertyChanged("GrandTotalDetailValue");
+            }
+        }
+        private decimal _GrandTotalDetailValue;
+    
+
+        [NotMapped]
         public int id_currencyfx
         {
             get
@@ -138,10 +159,12 @@ namespace entity
             set
             {
                 _id_currencyfx = value;
-                RaisePropertyChanged("GrandTotal");
+                RaisePropertyChanged("id_currencyfx");
             }
         }
         private int _id_currencyfx;
+
+      
 
         /// <summary>
         /// 

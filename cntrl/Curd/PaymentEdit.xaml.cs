@@ -12,7 +12,7 @@ namespace cntrl.Curd
 {
     public partial class PaymentEdit : UserControl
     {
-        PaymentDB PaymentDB = new PaymentDB();
+        //  PaymentDB PaymentDB = new PaymentDB();
 
         public enum Modes
         {
@@ -23,20 +23,40 @@ namespace cntrl.Curd
         private Modes Mode;
         CollectionViewSource paymentpayment_detailViewSource;
         CollectionViewSource paymentViewSource;
-        public List<payment> paymentList { get; set; }
 
-        public PaymentEdit(Modes App_Mode, List<payment> _paymentList)
+        public PaymentDB PaymentDB { get; set; }
+
+        public PaymentEdit(Modes App_Mode, payment _payment, PaymentDB _PaymentDB)
         {
             InitializeComponent();
 
             //Setting the Mode for this Window. Result of this variable will determine logic of the certain Behaviours.
             Mode = App_Mode;
-
+            PaymentDB = _PaymentDB;
             paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
-            paymentList = _paymentList;
 
-            paymentViewSource.Source = paymentList;
+
+            paymentViewSource.Source = PaymentDB.payments.Local;
+          
+
+            if (paymentViewSource != null)
+            {
+                if (paymentViewSource.View != null)
+                {
+
+                    paymentViewSource.View.Filter = i =>
+                    {
+                        int id_payment = _payment.id_payment;
+                        payment payment = (payment)i;
+                        if (payment.id_payment == id_payment)
+                            return true;
+                        else
+                            return false;
+                    };
+
+                }
+            }
 
 
 
@@ -76,12 +96,6 @@ namespace cntrl.Curd
 
         private void SaveChanges()
         {
-            paymentpayment_detailViewSource.View.Refresh();
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-
-
-
-            PaymentDB.SaveChanges();
 
             lblCancel_MouseDown(null, null);
 

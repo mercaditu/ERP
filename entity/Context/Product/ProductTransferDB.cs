@@ -168,15 +168,13 @@ namespace entity
 
             if (MoveByTruck)
             {
-                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location_dest.id_location
-                                                        && x.id_item_product == item_transfer_detail.id_item_product
-                                                        && x.status == entity.Status.Stock.InStock
-                                                        && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail &&
+                    x.id_item_product == item_transfer_detail.id_item_product && x.debit > 0).ToList();
 
-                List<item_movement> item_movement_LIST = new List<item_movement>();
+                List<item_movement> item_movement_LIST = new List<entity.item_movement>();
                 ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
                 item_movement_LIST =
-                    stock.DebitOnly_MovementLIST(this,Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail,
+                    stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail,
                     app_currencyfx, item_transfer_detail.item_product, app_location_dest, item_transfer_detail.quantity_destination,
                     item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
@@ -209,34 +207,10 @@ namespace entity
             {
                 //Credit Destination.
                 item_movement item_movement_dest;
-                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => 
-                                                            x.id_item_product == item_transfer_detail.id_item_product && 
-                                                            x.status == entity.Status.Stock.InStock && 
-                                                            x.id_transfer_detail == item_transfer_detail.id_transfer_detail && 
-                                                            x.debit > 0).ToList();
+                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail &&
+                    x.id_item_product == item_transfer_detail.id_item_product && x.debit > 0).ToList();
 
-                item_movement parent_item_movement = Items_InStockLIST.FirstOrDefault()._parent;
-                if (parent_item_movement!=null)
-                {
-                    if (parent_item_movement.id_purchase_invoice_detail > 0)
-                    {
-                        app_currencyfx = parent_item_movement.purchase_invoice_detail.purchase_invoice.app_currencyfx;
-                    }
-
-                    if (parent_item_movement.id_inventory_detail > 0)
-                    {
-                        item_inventory_detail item_inventory_detail = base.item_inventory_detail.Where(x => x.id_inventory_detail == parent_item_movement.id_inventory_detail).FirstOrDefault();
-                        if (item_inventory_detail != null)
-                        {
-                            app_currencyfx currencyfx = base.app_currencyfx.Where(x => x.id_currencyfx == item_inventory_detail.id_currencyfx).FirstOrDefault();
-                            if (currencyfx != null)
-                            {
-                                app_currencyfx = currencyfx;
-                            }
-                        }
-                    }
-                }
-               
+                item_movement parent_item_movement = Items_InStockLIST.FirstOrDefault();
 
                 item_movement_dest =
                             stock.CreditOnly_Movement(

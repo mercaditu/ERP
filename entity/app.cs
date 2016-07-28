@@ -261,7 +261,7 @@ namespace entity
             [LocalizedDescription("SalesbySalesman")]
             SalesbySalesman = 92,
             [LocalizedDescription("EmployeesInProduction")]
-            EmployeesInProduction = 93,
+            EmployeesInProduction = 107,
             [LocalizedDescription("ProductionbyFraction")]
             ProductionbyFraction = 100,
             [LocalizedDescription("DebeHaberIntegration")]

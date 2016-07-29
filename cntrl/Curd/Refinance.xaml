@@ -19,6 +19,7 @@
         <BooleanToVisibilityConverter x:Key="bool2visibility"/>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
+        <CollectionViewSource x:Key="payment_schedualViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>
     </UserControl.Resources>
     <UserControl.Effect>
         <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.75"/>
@@ -66,14 +67,14 @@
                             <DataGridTemplateColumn x:Name="dateColumn" Header="{lex:Loc Cognitivo:local:Date}" Width="auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true,UpdateSourceTrigger=PropertyChanged}"/>
+                                        <DatePicker SelectedDate="{Binding expire_date, Mode=TwoWay, NotifyOnValidationError=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=true}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                            Header="{lex:Loc Cognitivo:local:Receivable}" Width="auto" Visibility="{Binding ElementName=_Refinance, Path=Recievable, Converter={StaticResource bool2visibility}}"/>
-                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                            Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" Visibility="{Binding ElementName=_Refinance, Path=Payable, Converter={StaticResource bool2visibility}}"/>
+                            <DataGridTextColumn Binding="{Binding debit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        		Header="{lex:Loc Cognitivo:local:Receivable}" Width="auto" Visibility="{Binding Recievable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource bool2visibility}, ElementName=_Refinance}"/>
+                            <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        		Header="{lex:Loc Cognitivo:local:Payable}" Width="auto" Visibility="{Binding Payable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource bool2visibility}, ElementName=_Refinance}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label Content="Balance" Style="{StaticResource input_label}"/>

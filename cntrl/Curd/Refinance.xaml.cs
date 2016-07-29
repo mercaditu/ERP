@@ -36,8 +36,7 @@ namespace cntrl.Curd
             }
             set
             {
-                if (_WinMode != value)
-                {
+               
                     _WinMode = value;
                     if (_WinMode == Mode.AccountPayable)
                     {
@@ -53,7 +52,7 @@ namespace cntrl.Curd
                         Recievable = true;
                         RaisePropertyChanged("Recievable");
                     }
-                }
+               
             }
         }
         private Mode _WinMode;
@@ -73,8 +72,9 @@ namespace cntrl.Curd
 
         public Refinance(Mode Mode)
         {
-            InitializeComponent();
             WindowsMode = Mode;
+            InitializeComponent();
+          
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -89,18 +89,7 @@ namespace cntrl.Curd
                     app_currencyViewSource.Source = objEntity.app_currency.Local;
 
                     lbldiff.Content = 0;
-                    payment_schedualViewSource.View.Filter = i =>
-                    {
-                        payment_schedual payment_schedual = i as payment_schedual;
-                        if (payment_schedual.id_contact == id_contact && payment_schedual.app_currencyfx.id_currency == id_currency)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    };
+                  
                     stackMain.DataContext = payment_schedualViewSource;
                     decimal amount = 0;
                  
@@ -212,18 +201,18 @@ namespace cntrl.Curd
         {
             id_currency=(int)cbxCurrency.SelectedValue;
 
-            payment_schedualViewSource.View.Filter = i =>
-            {
-                payment_schedual payment_schedual = i as payment_schedual;
-                if (payment_schedual.id_contact == id_contact && payment_schedual.app_currencyfx.id_currency == id_currency)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            };
+            //payment_schedualViewSource.View.Filter = i =>
+            //{
+            //    payment_schedual payment_schedual = i as payment_schedual;
+            //    if (payment_schedual.id_contact == id_contact && payment_schedual.app_currencyfx.id_currency == id_currency)
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        return false;
+            //    }
+            //};
         }
 
 

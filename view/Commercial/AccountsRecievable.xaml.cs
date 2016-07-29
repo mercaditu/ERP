@@ -195,8 +195,24 @@ namespace Cognitivo.Commercial
         private void Refince_Click(object sender, RoutedEventArgs e)
         {
             payment_schedual PaymentSchedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
-            cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountReceivable);
 
+            cntrl.Curd.Refinance Refinance = new cntrl.Curd.Refinance(cntrl.Curd.Refinance.Mode.AccountReceivable);
+            if (payment_schedualViewSource != null)
+            {
+                if (payment_schedualViewSource.View != null)
+                {
+
+                    payment_schedualViewSource.View.Filter = i =>
+                        {
+                            payment_schedual payment_schedual = (payment_schedual)i;
+                            if (payment_schedual.IsSelected == true)
+                                return true;
+                            else
+                                return false;
+                        };
+                    
+                }
+            }
             Refinance.objEntity = PaymentDB;
             Refinance.payment_schedualViewSource = payment_schedualViewSource;
             Refinance.id_contact = PaymentSchedual.id_contact;

@@ -288,6 +288,7 @@ namespace entity.Brillo.Logic
                                                         (App.Names.ProductionExecution,
                                                         (production_execution.production_order != null ? production_execution.production_order.work_number : ""),
                                                         "")));
+                                detail.unit_cost = item_movementinput.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
                             }
                         }
                     }
@@ -321,6 +322,7 @@ namespace entity.Brillo.Logic
                                                         ""),
                                                         null)
                                                     );
+                                detail.unit_cost = item_movementoutput.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
                             }
                         }
                     }

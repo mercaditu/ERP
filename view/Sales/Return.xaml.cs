@@ -553,7 +553,11 @@ namespace Cognitivo.Sales
                     {
                         sales_return_detail sales_return_detail = new sales_return_detail();
                         sales_return_detail.id_sales_invoice_detail = _sales_invoice_detail.id_sales_invoice_detail;
-                       // sales_return_detail.sales_invoice_detail = _sales_invoice_detail;
+                        if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
+                        {
+                            sales_return_detail.sales_invoice_detail = SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                        }
+                    
                         sales_return_detail.sales_return = _sales_return;
                         if (SalesReturnDB.items.Where(x=>x.id_item== _sales_invoice_detail.id_item).FirstOrDefault()!=null)
                         {
@@ -612,6 +616,7 @@ namespace Cognitivo.Sales
             popupCustomize.IsOpen = true;
         }
 
+       
       
 
         

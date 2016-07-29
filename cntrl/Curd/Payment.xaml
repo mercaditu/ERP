@@ -61,19 +61,19 @@
                             <Controls:SmartBox_Contact x:Name="sbxContact" 
                                                        Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
-                        <StackPanel x:Name="stpDocument" Background="WhiteSmoke">
+                        <StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource paymentViewSource}">
                             <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                             <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                       metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
                                       metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                       Style="{StaticResource input_combobox}"
-                                      SelectedValue="{Binding payment.id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                                      SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                             <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
-                            <TextBox metro:TextBoxHelper.Watermark="{Binding payment.NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
+                            <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
                                      metro:TextBoxHelper.SelectAllOnFocus="True"
                                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                      metro:ControlsHelper.MouseOverBorderBrush="Silver"
-                                     Text="{Binding payment.number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                                     Text="{Binding number, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         </StackPanel>
                     </WrapPanel>
                     

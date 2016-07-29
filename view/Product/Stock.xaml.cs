@@ -166,7 +166,7 @@ namespace Cognitivo.Product
                         {
                             if (!(item_movement.comment.Contains(item_movement_dimension.app_dimension.name)))
                             {
-                                item_movement.comment += " " + item_movement_dimension.app_dimension.name + " : " + item_movement_dimension.value + ",";
+                                item_movement.comment += " " + item_movement_dimension.app_dimension.name + " : " + Math.Round(item_movement_dimension.value,2) + ",";
                             }
 
                         }

@@ -92,12 +92,12 @@ namespace cntrl
 
 
                 payment_withholding_details payment_withholding_details = new payment_withholding_details();
-                if (_invoiceList.FirstOrDefault().GetType() == typeof(sales_invoice))
+                if (_invoiceList.FirstOrDefault().GetType() == typeof(sales_invoice) || _invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
                 {
                     sales_invoice sales_invoice = (sales_invoice)_invoiceList.FirstOrDefault();
-                    payment_withholding_details.id_purchase_invoice = sales_invoice.id_sales_invoice;
+                    payment_withholding_details.id_sales_invoice = sales_invoice.id_sales_invoice;
                 }
-                else if (_invoiceList.FirstOrDefault().GetType() == typeof(purchase_invoice))
+                else if (_invoiceList.FirstOrDefault().GetType() == typeof(purchase_invoice) || _invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
                 {
                     purchase_invoice purchase_invoice = (purchase_invoice)_invoiceList.FirstOrDefault();
                     payment_withholding_details.id_purchase_invoice = purchase_invoice.id_purchase_invoice;

@@ -709,6 +709,23 @@ namespace entity.Brillo.Logic
                         if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id!=null)
                         {
                             id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
+
+                        }
+                        if (DimensionList == null)
+                        {
+
+
+                            if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null)
+                            {
+                                production_execution_detail production_execution_detail = db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault();
+                                foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
+                                {
+                                    item_movement_dimension _item_movement_dimension = new item_movement_dimension();
+                                    _item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
+                                    _item_movement_dimension.value = production_execution_dimension.value;
+                                    item_movement.item_movement_dimension.Add(_item_movement_dimension);
+                                }
+                            }
                         }
 
                     }

@@ -28,10 +28,12 @@ namespace Cognitivo.Product
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
             dbContext.item_request.Include("item_request_detail").Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             item_requestViewSource.Source = dbContext.item_request.Local;
+            
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detailitem_request_decisionViewSource = ((CollectionViewSource)(FindResource("item_request_detailitem_request_decisionViewSource")));
+            
             CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
-            dbContext.app_branch.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
+            dbContext.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
             app_branchViewSource.Source = dbContext.app_branch.Local;
 
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
@@ -40,12 +42,6 @@ namespace Cognitivo.Product
 
             CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
             app_currencyViewSource.Source = dbContext.app_currency.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-
-            CollectionViewSource projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-            projectViewSource.Source = dbContext.projects.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
-
-            CollectionViewSource sales_orderViewSource = ((CollectionViewSource)(FindResource("sales_orderViewSource")));
-            sales_orderViewSource.Source = dbContext.sales_order.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource production_orderViewSource = ((CollectionViewSource)(FindResource("production_orderViewSource")));
             production_orderViewSource.Source = dbContext.production_order.Where(x => x.id_company == CurrentSession.Id_Company).ToList();

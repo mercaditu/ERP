@@ -876,6 +876,12 @@ namespace Cognitivo.Production
                         _production_execution_detail.movement_id = production_order_detail.movement_id;
                         _production_execution.RaisePropertyChanged("quantity");
 
+                        hr_contract contract = OrderDB.hr_contract.Where(x => x.id_contact == id && x.is_active).FirstOrDefault();
+                        if (contract != null)
+                        {
+                            _production_execution_detail.unit_cost = contract.Hourly;
+                        }
+
                         if (production_order_detail.item.id_item_type == item.item_type.Service)
                         {
                             if (cmbcoefficient.SelectedValue != null)
@@ -1097,7 +1103,7 @@ namespace Cognitivo.Production
             _production_execution_detail.quantity = Quantity;
             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
             _production_execution_detail.movement_id = production_order_detail.movement_id;
-
+             
             if (production_order_detail.item.unit_cost != null)
             {
                 _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
@@ -1557,6 +1563,8 @@ namespace Cognitivo.Production
                 }
             }
         }
+
+      
 
       
     }

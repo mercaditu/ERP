@@ -7,19 +7,59 @@ using System.Windows.Data;
 using entity;
 using System.Data.Entity.Validation;
 using System.Data.Entity;
+using System.ComponentModel;
 
 namespace cntrl.Curd
 {
-    public partial class Refinance : UserControl
+    public partial class Refinance : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string prop)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
+        }
+
         public enum Mode
 	    {
             AccountReceivable,
             AccountPayable
 	    }
 
-        private Mode WindowsMode { get; set; }
+        public Mode WindowsMode
+        {
+            get
+            {
+                return _WinMode;
+            }
+            set
+            {
+                if (_WinMode != value)
+                {
+                    _WinMode = value;
+                    if (_WinMode == Mode.AccountPayable)
+                    {
+                        Payable = true;
+                        RaisePropertyChanged("Payable");
+                        Recievable = false;
+                        RaisePropertyChanged("Recievable");
+                    }
+                    else
+                    {
+                        Payable = false;
+                        RaisePropertyChanged("Payable");
+                        Recievable = true;
+                        RaisePropertyChanged("Recievable");
+                    }
+                }
+            }
+        }
+        private Mode _WinMode;
 
+        public bool Payable { get; set; }
+        public bool Recievable { get; set; }
 
         CollectionViewSource _payment_schedualViewSource = null;
         public CollectionViewSource payment_schedualViewSource { get { return _payment_schedualViewSource; } set { _payment_schedualViewSource = value; } }
@@ -118,10 +158,7 @@ namespace cntrl.Curd
             payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
             if (payment_schedual.id_payment_schedual == 0)
             {
-            
                 payment_schedual Firstpayment_schedual = payment_schedualViewSource.View.OfType<payment_schedual>().ToList().FirstOrDefault() as payment_schedual;
-
-
                 
                 if (WindowsMode == Mode.AccountPayable)
                 {
@@ -139,8 +176,6 @@ namespace cntrl.Curd
                     payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
                     payment_schedual.id_contact = Firstpayment_schedual.purchase_invoice.id_contact;
                     payment_schedual.contact = Firstpayment_schedual.purchase_invoice.contact;
-                 
-                   
                 }
                 else
                 {
@@ -157,15 +192,12 @@ namespace cntrl.Curd
                     payment_schedual.app_currencyfx = Firstpayment_schedual.app_currencyfx;
                     payment_schedual.id_currencyfx = Firstpayment_schedual.id_currencyfx;
                     payment_schedual.id_contact = Firstpayment_schedual.sales_invoice.id_contact;
-                    payment_schedual.contact = Firstpayment_schedual.sales_invoice.contact;
-
-                  
+                    payment_schedual.contact = Firstpayment_schedual.sales_invoice.contact; 
                 }
-
- 
              
                 payment_schedual.RaisePropertyChanged("contact");
             }
+
             if (WindowsMode == Mode.AccountPayable)
             {
                 lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.credit);
@@ -174,10 +206,6 @@ namespace cntrl.Curd
             { 
                 lbldiff.Content = Convert.ToDecimal(lblBalance.Content) - payment_schedualViewSource.View.OfType<payment_schedual>().Sum(x => x.debit); 
             }
-        
-            
-        
-         
         }
 
         private void cbxCurrency_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -192,8 +192,6 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item_request_detail.item.name_full, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Items}" Width="Auto" IsReadOnly="True"/>
-                            <!--<DataGridTextColumn Binding="{Binding item_request_detail.comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                                Header="{lex:Loc Cognitivo:local:Comment}" Width="Auto"/>-->
                             <DataGridTextColumn Binding="{Binding decision, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Module}" Width="*" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding app_location.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

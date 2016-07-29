@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V575\</PublishUrl>
+    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V577\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>577</ApplicationRevision>
+    <ApplicationRevision>578</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -546,6 +546,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductionDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Data\ProjectDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1000,6 +1005,7 @@
     <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PendingSalesDocs.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\Project_VS_Production.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBudgetList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\AvgSales.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByBrand.rdlc" />
@@ -1317,6 +1323,17 @@
     </None>
     <None Include="Reporting\Data\ProductionDS.xss">
       <DependentUpon>ProductionDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\ProjectDS.xsc">
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\ProjectDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProjectDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporting\Data\ProjectDS.xss">
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
     </None>
     <None Include="Reporting\Data\PurchaseDS.xsc">
       <DependentUpon>PurchaseDS.xsd</DependentUpon>

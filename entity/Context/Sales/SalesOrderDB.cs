@@ -14,7 +14,14 @@ namespace entity
             sales_order.State = EntityState.Added;
             sales_order.id_range = Brillo.GetDefault.Return_RangeID(App.Names.SalesOrder);
             sales_order.status = Status.Documents_General.Pending;
-            
+
+            security_user security_user = base.security_user.Where(x => x.id_user == sales_order.id_user).FirstOrDefault();
+
+            if (security_user != null)
+            {
+                sales_order.security_user = security_user;
+            } 
+
             sales_order.State = EntityState.Added;
             sales_order.IsSelected = true;
 

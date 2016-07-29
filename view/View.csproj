@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>579</ApplicationRevision>
+    <ApplicationRevision>581</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -598,6 +598,9 @@
     <Compile Include="Reporting\Views\DeliveryByZone.xaml.cs">
       <DependentUpon>DeliveryByZone.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\SalesReturnDetail.xaml.cs">
+      <DependentUpon>SalesReturnDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
     </Compile>
@@ -1022,6 +1025,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\SalesBySalesRep.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>
@@ -1739,6 +1743,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\DeliveryByZone.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\SalesReturnDetail.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

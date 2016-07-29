@@ -15,13 +15,11 @@ namespace Cognitivo.Menu
 
         public enum Version
         {
-            Starter,
-            Basic,
-            Medium,
-            Full,
-            Enterprise,
-            EventManagement,
-            PrintingPress
+            Starter,    //     0 USD
+            Basic,      // 3,200 USD
+            Medium,     // 5,500 USD
+            Full,       // 8,500 USD
+            Enterprise  //12,000 USD
         }
 
         enum Namespace
@@ -131,21 +129,21 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Finance, Namespace.Reports, "Reporting.Views.AccountsRecievableAnalisys", entity.App.Names.AnalisysofAccountsReceivable, "Reports", Version.Medium);
 
             //Projects Printing Press
-            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Form, "Project.PrintingPress.Template", entity.App.Names.Template, "ProjectCategory", Version.PrintingPress);
-            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Transaction, "Project.PrintingPress.Estimate", "Costing", "ProjectTaskWizard", Version.PrintingPress);
-            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", Version.Enterprise);
-            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", Version.Enterprise);
+            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Form, "Project.PrintingPress.Template", entity.App.Names.Template, "ProjectCategory", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Transaction, "Project.PrintingPress.Estimate", "Costing", "ProjectTaskWizard", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_PrintingPress, Namespace.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", Version.Medium);
 
             //Projects Event
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Form, "Project.EventType", entity.App.Names.Template, "ProjectCategory", Version.EventManagement);
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transaction, "Project.EventCosting", entity.App.Names.EventManagement, "ProjectTaskWizard", Version.EventManagement);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Form, "Project.EventType", entity.App.Names.Template, "ProjectCategory", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transaction, "Project.EventCosting", entity.App.Names.EventManagement, "ProjectTaskWizard", Version.Medium);
 
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transaction, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask", Version.EventManagement);
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Inventory, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics", Version.EventManagement);
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder", Version.EventManagement);
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "", Version.EventManagement);
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", Version.Enterprise);
-            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", Version.Enterprise);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transaction, "Project.Development.TaskView", entity.App.Names.ActivityPlan, "ProjectTask", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Inventory, "Project.Development.Logistics", entity.App.Names.Logistics, "Logistics", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Financial, "Project.ProjectFinance", entity.App.Names.ProjectFinance, "ProjectSalesOrder", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Transaction, "Project.ProjectExecution", entity.App.Names.ProjectExecution, "", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Reports, "Reporting.Views.Project", entity.App.Names.ActivityPlan, "Reports", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Project_Event, Namespace.Reports, "Reporting.Views.ProjectExecution", entity.App.Names.ProjectExecution, "Reports", Version.Medium);
 
             //Projects Plain
             dtApp.Rows.Add(entity.App.Modules.Project_Dev, Namespace.Form, "Project.Development.ProjectType", entity.App.Names.Template, "ProjectCategory", Version.Enterprise);
@@ -159,10 +157,10 @@ namespace Cognitivo.Menu
 
             //Production
             dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Form, "Production.Line", entity.App.Names.Line, "", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Reports, "Reporting.Views.EmployeesInProduction", entity.App.Names.EmployeesInProduction, "Reports", Version.Full);
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.Order", entity.App.Names.ProductionOrder, "ProductionOrder", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.FractionOrder", entity.App.Names.ProductionbyFraction, "", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Transaction, "Production.Execution", entity.App.Names.ProductionExecution, "ProductionExecution", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Production, Namespace.Reports, "Reporting.Views.EmployeesInProduction", entity.App.Names.EmployeesInProduction, "Reports", Version.Medium);
 
             //Accounting
             dtApp.Rows.Add(entity.App.Modules.Accounting, Namespace.Transaction, "Accounting.DebeHaberLogin", entity.App.Names.DebeHaberIntegration, "", Version.Starter);

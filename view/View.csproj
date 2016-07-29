@@ -586,6 +586,9 @@
     <Compile Include="Reporting\Views\EmployeesInProduction.xaml.cs">
       <DependentUpon>EmployeesInProduction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\Project.xaml.cs">
+      <DependentUpon>Project.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesBudgetList.xaml.cs">
       <DependentUpon>SalesBudgetList.xaml</DependentUpon>
     </Compile>
@@ -600,6 +603,9 @@
     </Compile>
     <Compile Include="Reporting\Views\SalesByBrand.xaml.cs">
       <DependentUpon>SalesByBrand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\ProjectExecution.xaml.cs">
+      <DependentUpon>ProjectExecution.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\StockFlow.xaml.cs">
       <DependentUpon>StockFlow.xaml</DependentUpon>
@@ -1005,6 +1011,7 @@
     <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\PendingSalesDocs.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\Project.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project_VS_Production.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBudgetList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\AvgSales.rdlc" />
@@ -1719,6 +1726,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Reporting\Views\Project.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\SalesBudgetList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1736,6 +1747,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\SalesByBrand.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\ProjectExecution.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

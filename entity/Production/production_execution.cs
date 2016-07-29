@@ -18,7 +18,6 @@ namespace entity
             trans_date = DateTime.Now;
             production_execution_detail = new List<production_execution_detail>();
             status = Status.Documents_General.Pending;
-            
         }
 
         [Key]

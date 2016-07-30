@@ -314,13 +314,13 @@ namespace entity.Brillo.Logic
                                 foreach (item_movement_dimension item_movement_dimension in item_movementinput.FirstOrDefault().item_movement_dimension)
                                 {
                                     CostDimension = true;
-                                    InputDimension = InputDimension * item_movement_dimension.value;
+                                    InputDimension *= item_movement_dimension.value;
                                 }
 
                                 foreach (production_execution_dimension production_execution_dimension in detail.production_execution_dimension)
                                 {
                                     CostDimension = true;
-                                    OutPutDimension = OutPutDimension * production_execution_dimension.value;
+                                    OutPutDimension *= production_execution_dimension.value;
                                 }
 
                                 if (CostDimension)

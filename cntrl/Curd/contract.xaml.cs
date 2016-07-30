@@ -77,6 +77,13 @@ namespace cntrl
 
                     app_contract app_contract = app_contractViewSource.View.CurrentItem as app_contract;
 
+                    //Coefficient must always equal 1.
+                    if (app_contract.app_contract_detail.Sum(x=> x.coefficient) != 1)
+                    {
+                        //Play Animation
+                        return;
+                    }
+
                     if (app_contract.is_default == true)
                     {
                         //Checks if any other Contract within same company has the same Default.
@@ -142,7 +149,5 @@ namespace cntrl
             else
             { contract_detail.coefficient = 1; }
         }
-
-       
     }
 }

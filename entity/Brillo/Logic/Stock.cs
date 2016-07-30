@@ -305,28 +305,30 @@ namespace entity.Brillo.Logic
                         {
                             if (detail.quantity > 0)
                             {
+                                bool CostDimension = false;
                                 decimal InputDimension = 1;
                                 decimal OutPutDimension = 1;
-                                decimal Percentage = 0;
+                                
                                 decimal Cost = Convert.ToDecimal(item_movementinput.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
+                                
                                 foreach (item_movement_dimension item_movement_dimension in item_movementinput.FirstOrDefault().item_movement_dimension)
                                 {
+                                    CostDimension = true;
                                     InputDimension = InputDimension * item_movement_dimension.value;
                                 }
+
                                 foreach (production_execution_dimension production_execution_dimension in detail.production_execution_dimension)
                                 {
+                                    CostDimension = true;
                                     OutPutDimension = OutPutDimension * production_execution_dimension.value;
                                 }
 
-                                if (OutPutDimension > 1 && InputDimension > 1)
+                                if (CostDimension)
                                 {
-                                    Percentage = ((OutPutDimension * 100) / InputDimension) / 100;
-                                }
-
-                                if (Percentage > 0)
-                                {
+                                    decimal Percentage = ((OutPutDimension * 100) / InputDimension) / 100;
                                     Cost = Cost * Percentage;
                                 }
+                                
                                 item_movementoutput.Add(
                                         CreditOnly_Movement(entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
@@ -337,7 +339,7 @@ namespace entity.Brillo.Logic
                                                         production_execution.production_line.app_location,
                                                         detail.quantity,
                                                         production_execution.trans_date,
-                                                       Cost,
+                                                        Cost,
                                                         comment_Generator
                                                         (App.Names.ProductionExecution,
                                                         (production_execution.production_order != null ? production_execution.production_order.work_number : ""),

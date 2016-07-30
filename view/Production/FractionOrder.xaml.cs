@@ -945,12 +945,9 @@ namespace Cognitivo.Production
         {
             if (CmbServicecontract.ContactID > 0)
             {
-
                 contact contact = OrderDB.contacts.Where(x => x.id_contact == CmbServicecontract.ContactID).FirstOrDefault();
                 adddatacontact(contact, treeServicecontract);
-
             }
-
         }
 
         private void btnInsert_KeyDown(object sender, KeyEventArgs e)
@@ -1035,7 +1032,6 @@ namespace Cognitivo.Production
                             itemMovementFraction.production_order_detail = production_order_detail;
                             RefeshData();
                         }
-
                     }
                 }
                 else
@@ -1094,6 +1090,15 @@ namespace Cognitivo.Production
             production_execution _production_execution = production_executionViewSource.View.CurrentItem as production_execution;
             production_execution_detail _production_execution_detail = new entity.production_execution_detail();
 
+            //Adds Parent so that during approval, because it is needed for approval.
+            if (production_order_detail.parent != null)
+            {
+                if (production_order_detail.parent.production_execution_detail.Count() > 0)
+                {
+                    _production_execution_detail.parent = production_order_detail.parent.production_execution_detail.FirstOrDefault();
+                }
+            }
+
             _production_execution_detail.State = EntityState.Added;
             _production_execution_detail.id_item = production_order_detail.id_item;
             _production_execution_detail.item = production_order_detail.item;
@@ -1108,16 +1113,8 @@ namespace Cognitivo.Production
 
             _production_execution_detail.production_execution = _production_execution;
             _production_execution_detail.id_order_detail = production_order_detail.id_order_detail;
-
-            //if (production_order_detail.item.is_autorecepie)
-            //{
-            //    _production_execution_detail.is_input = false;
-            //}
-            //else
-            //{
-            //    _production_execution_detail.is_input = true;
-            //}
             _production_execution_detail.is_input = production_order_detail.is_input;
+
             foreach (production_order_dimension production_order_dimension in production_order_detail.production_order_dimension)
             {
                 production_execution_dimension production_execution_dimension = new production_execution_dimension();
@@ -1559,14 +1556,6 @@ namespace Cognitivo.Production
                     }
                 }
             }
-        }
-
-        
-
-       
-
-      
-
-      
+        }      
     }
 }

@@ -100,7 +100,7 @@ namespace entity
         public decimal? quantity_exe
         { get; set; }
 
-        public Status.Project? status { get; set; }
+        public Status.Production? status { get; set; }
         public string code
         {
             get { return _code; }

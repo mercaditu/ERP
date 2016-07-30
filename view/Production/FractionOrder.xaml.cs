@@ -215,45 +215,46 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
 
-            foreach (production_execution production_execution in OrderDB.production_execution.Local.Where(x => x.status != Status.Documents_General.Approved))
+            foreach (production_order_detail production_order_detail in OrderDB.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Project.Approved))
             {
-                production_order production_order = production_execution.production_order;
+                //production_order production_order = production_execution.production_order;
 
-                if (production_order != null)
+                if (production_order_detail.production_order != null)
                 {
-                    if (production_order.IsSelected)
+                    production_order_detail.status = Status.Project.Executed;
+                    production_order_detail.RaisePropertyChanged("status");
+                    production_order_detail.State = EntityState.Modified;
+
+                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail)
                     {
-                        production_order.status = Status.Production.Executed;
-                        production_order.RaisePropertyChanged("status");
-                        production_order.State = EntityState.Modified;
+                        entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.insert_Stock(OrderDB, production_execution_detail);
 
-                        if (production_execution != null)
+                        if (item_movementList != null && item_movementList.Count > 0)
                         {
-                            entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
-                            List<item_movement> item_movementList = new List<item_movement>();
-                            item_movementList = _Stock.insert_Stock(OrderDB, production_execution);
-
-                            if (item_movementList != null && item_movementList.Count > 0)
-                            {
-                                OrderDB.item_movement.AddRange(item_movementList);
-                            }
-
-                            production_order.status = Status.Production.Approved;
-                            production_order.RaisePropertyChanged("status");
-                            production_order.State = EntityState.Modified;
-
-                            production_execution.State = EntityState.Modified;
-                            production_execution.status = Status.Documents_General.Approved;
+                            OrderDB.item_movement.AddRange(item_movementList);
                         }
-                    }   
-                }
+
+                        production_order_detail.status = Status.Project.Executed;
+                        production_order_detail.RaisePropertyChanged("status");
+                        production_order_detail.State = EntityState.Modified;
+
+                        production_execution_detail.State = EntityState.Modified;
+                        production_execution_detail.status = Status.Project.Executed;
+
+                        if (production_execution_detail.project_task != null)
+	                    {
+		                    production_execution_detail.project_task.status = Status.Project.Executed;
+	                    }
+                    }
+                }   
             }
 
-            if (OrderDB.SaveChanges() > 0)
+            if(OrderDB.SaveChanges() > 0)
             {
                 toolBar.msgApproved(1);
             }
-
         }
 
         private void toolBar_btnAnull_Click(object sender)

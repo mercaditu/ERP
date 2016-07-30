@@ -34,7 +34,7 @@ namespace entity
         public int? id_item { get; set; }
         public int? movement_id { get; set; }
         public string name { get; set; }
-        public Status.Project? status { get; set; }
+        public Status.Production? status { get; set; }
 
         [Required]
         public decimal quantity { get; set; }

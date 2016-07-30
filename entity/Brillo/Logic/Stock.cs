@@ -305,6 +305,28 @@ namespace entity.Brillo.Logic
                         {
                             if (detail.quantity > 0)
                             {
+                                decimal InputDimension = 1;
+                                decimal OutPutDimension = 1;
+                                decimal Percentage = 0;
+                                decimal Cost = Convert.ToDecimal(item_movementinput.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
+                                foreach (item_movement_dimension item_movement_dimension in item_movementinput.FirstOrDefault().item_movement_dimension)
+                                {
+                                    InputDimension = InputDimension * item_movement_dimension.value;
+                                }
+                                foreach (production_execution_dimension production_execution_dimension in detail.production_execution_dimension)
+                                {
+                                    OutPutDimension = OutPutDimension * production_execution_dimension.value;
+                                }
+
+                                if (OutPutDimension > 1 && InputDimension > 1)
+                                {
+                                    Percentage = ((OutPutDimension * 100) / InputDimension) / 100;
+                                }
+
+                                if (Percentage > 0)
+                                {
+                                    Cost = Cost * Percentage;
+                                }
                                 item_movementoutput.Add(
                                         CreditOnly_Movement(entity.Status.Stock.InStock,
                                                         App.Names.ProductionExecution,
@@ -315,14 +337,15 @@ namespace entity.Brillo.Logic
                                                         production_execution.production_line.app_location,
                                                         detail.quantity,
                                                         production_execution.trans_date,
-                                                        Convert.ToDecimal(item_movementinput.Sum(x => x.item_movement_value.Sum(y => y.unit_value))),
+                                                       Cost,
                                                         comment_Generator
                                                         (App.Names.ProductionExecution,
                                                         (production_execution.production_order != null ? production_execution.production_order.work_number : ""),
                                                         ""),
                                                         null)
                                                     );
-                                detail.unit_cost = item_movementoutput.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
+
+                                detail.unit_cost = item_movementoutput.Sum(x => x.item_movement_value.Sum(y => y.unit_value)) * Percentage;
                             }
                         }
                     }
@@ -485,7 +508,7 @@ namespace entity.Brillo.Logic
                     {
                         item_movement.id_execution_detail = TransactionDetailID;
 
-                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id!=null)
+                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id != null)
                         {
                             id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
                             item_movement._parent = db.item_movement.Where(x => x.id_movement == id_movement).FirstOrDefault();
@@ -676,7 +699,7 @@ namespace entity.Brillo.Logic
                     //Adding into List
 
                 }
-               
+
 
                 Final_ItemMovementLIST.Add(item_movement);
             }
@@ -708,7 +731,7 @@ namespace entity.Brillo.Logic
                     item_movement.id_execution_detail = TransactionDetailID;
                     using (db db = new db())
                     {
-                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id!=null)
+                        if (db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault() != null && db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id != null)
                         {
                             id_movement = (int)db.production_execution_detail.Where(x => x.id_execution_detail == TransactionDetailID).FirstOrDefault().movement_id;
 

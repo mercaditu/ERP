@@ -9,6 +9,7 @@ using System.Data;
 using entity;
 using System.Data.Entity.Validation;
 using System.Windows.Input;
+using entity.Brillo;
 
 namespace Cognitivo.Product
 {
@@ -162,7 +163,7 @@ namespace Cognitivo.Product
                 if (item_transfer_detail.item_product.id_item_product != 0)
                 {
                     item_movement_origin.id_item_product = item_transfer_detail.item_product.id_item_product;
-                }
+                 }
 
                 foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
                 {
@@ -186,6 +187,17 @@ namespace Cognitivo.Product
                 if (item_transfer_detail.item_product.id_item_product != 0)
                 {
                     item_movement_dest.id_item_product = item_transfer_detail.item_product.id_item_product;
+                    //if (item_transfer_detail.item_product.item.unit_cost != null)
+                    //{
+                    //    app_currencyfx app_currencyfx = ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+                    //    item_movement_value item_movement_value = new item_movement_value();
+                    //    item_movement_value.unit_value = (decimal)item_transfer_detail.item_product.item.unit_cost;
+                    //    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                    //    item_movement_value.comment = entity.Brillo.Localize.StringText("DirectCost");
+
+                    //    //Adding Value into Movement
+                    //    item_movement_dest.item_movement_value.Add(item_movement_value);
+                    //}
                 }
 
                 foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
@@ -196,6 +208,10 @@ namespace Cognitivo.Product
                     item_movement_dest.item_movement_dimension.Add(item_movement_dimension);
                 }
 
+
+             
+                
+               
                 ProductMovementDB.item_movement.Add(item_movement_dest);
                 item_transfer.status = Status.Transfer.Approved;
             }

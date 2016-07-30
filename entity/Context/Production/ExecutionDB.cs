@@ -64,22 +64,44 @@ namespace entity
                 {
                     SaveChanges();
                 }
-
-                //Logic
-                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                List<item_movement> item_movementList = new List<item_movement>();
-                item_movementList = _Stock.insert_Stock(this, production_execution);
-
-                if (item_movementList != null && item_movementList.Count > 0)
-                {
-                    item_movement.AddRange(item_movementList);
-                }
-                
-                production_execution.status = Status.Documents_General.Approved;
-                
                 foreach (production_execution_detail production_execution_detail in production_execution.production_execution_detail)
                 {
+                    if (production_execution_detail.production_order_detail != null)
+                    {
+
+                        if (production_execution_detail.production_order_detail.status == Status.Production.Approved)
+                        {
+                            if (production_execution_detail.production_order_detail.production_order != null)
+                            {
+                                //Logic
+                                Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
+                                List<item_movement> item_movementList = new List<item_movement>();
+                                item_movementList = _Stock.insert_Stock(this, production_execution_detail);
+
+                                if (item_movementList != null && item_movementList.Count > 0)
+                                {
+                                    item_movement.AddRange(item_movementList);
+                                }
+                                production_execution_detail.production_order_detail.status = Status.Production.Executed;
+                                production_execution_detail.production_order_detail.RaisePropertyChanged("status");
+                               production_execution_detail.production_order_detail.State = EntityState.Modified;
+
+                                production_execution_detail.State = EntityState.Modified;
+                                production_execution_detail.status = Status.Production.Executed;
+
+                                if (production_execution_detail.project_task != null)
+                                {
+                                    production_execution_detail.project_task.status = Status.Project.Executed;
+                                }
+                            }
+                        }
+                    }
+                   
+
+
+
                     production_execution_detail.State = EntityState.Unchanged;
+
                 }
             }
 

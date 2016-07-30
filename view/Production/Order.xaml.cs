@@ -574,7 +574,7 @@ namespace Cognitivo.Production
                         n_production_order_detail.production_order = production_order;
                         n_production_order_detail.production_order.status = Status.Production.Pending;
                         n_production_order_detail.quantity = 0;
-                        n_production_order_detail.status = Status.Project.Pending;
+                        n_production_order_detail.status = Status.Production.Pending;
                         production_order_detail.child.Add(n_production_order_detail);
                         OrderDB.production_order_detail.Add(n_production_order_detail);
                         production_orderproduction_order_detailViewSource.View.Refresh();
@@ -587,7 +587,7 @@ namespace Cognitivo.Production
             {
                 //Adding First Item
                 production_order_detail n_production_order_detail = new production_order_detail();
-                n_production_order_detail.status = Status.Project.Pending;
+                n_production_order_detail.status = Status.Production.Pending;
                 production_order.production_order_detail.Add(n_production_order_detail);
 
                 production_orderproduction_order_detailViewSource.View.Refresh();
@@ -624,7 +624,7 @@ namespace Cognitivo.Production
                 OrderDB.NumberOfRecords = 0;
                 foreach (production_order_detail production_order_detail in _production_order_detail.Where(x => x.IsSelected == true))
                 {
-                    if (production_order_detail.status == Status.Project.Pending)
+                    if (production_order_detail.status == Status.Production.Pending)
                     {
                         using (db db = new db())
                         {
@@ -697,10 +697,10 @@ namespace Cognitivo.Production
             {
                 if (production_order_detail.parent != null)
                 {
-                    production_order_detail.parent.status = entity.Status.Project.Approved;
+                    production_order_detail.parent.status = entity.Status.Production.Approved;
                 }
-                
-                production_order_detail.status = entity.Status.Project.Approved;
+
+                production_order_detail.status = entity.Status.Production.Approved;
             }
 
             if (production_order.production_execution.Count() == 0)
@@ -726,7 +726,7 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in _production_order_detail)
             {
-                production_order_detail.status = entity.Status.Project.Rejected;
+                production_order_detail.status = entity.Status.Production.QA_Rejected;
 
             }
             OrderDB.SaveChanges();
@@ -756,7 +756,7 @@ namespace Cognitivo.Production
 
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order_detail n_production_order_detail = new production_order_detail();
-            n_production_order_detail.status = Status.Project.Pending;
+            n_production_order_detail.status = Status.Production.Pending;
             production_order.production_order_detail.Add(n_production_order_detail);
 
             production_orderproduction_order_detailViewSource.View.Refresh();

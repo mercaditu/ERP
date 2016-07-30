@@ -255,11 +255,11 @@ namespace entity.Brillo.Logic
             {
                 List<item_movement> item_movementinput = new List<item_movement>();
                 List<item_movement> item_movementoutput = new List<item_movement>();
-                production_execution production_execution = (production_execution)obj_entity;
+                production_execution_detail detail = (production_execution_detail)obj_entity;
 
-                foreach (production_execution_detail detail in production_execution.production_execution_detail
-                    .Where(x => x.item.item_product.Count() > 0))
-                {
+                //foreach (production_execution_detail detail in production_execution.production_execution_detail
+                //    .Where(x => x.item.item_product.Count() > 0))
+                //{
                     if (detail.item.id_item_type == item.item_type.Product || detail.item.id_item_type == item.item_type.RawMaterial || detail.item.id_item_type == item.item_type.Supplies)
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
@@ -269,7 +269,7 @@ namespace entity.Brillo.Logic
                         {
                             if (detail.quantity > 0)
                             {
-                                List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == production_execution.production_line.id_location
+                                List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.production_execution.production_line.id_location
                                                                     && x.id_item_product == item_product.id_item_product
                                                                     && x.status == entity.Status.Stock.InStock
                                                                     && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
@@ -281,21 +281,21 @@ namespace entity.Brillo.Logic
                                                         detail.id_execution_detail,
                                                         Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                                         item_product,
-                                                        production_execution.production_line.app_location,
+                                                        detail.production_execution.production_line.app_location,
                                                         detail.quantity,
                                                         DateTime.Now,
                                                         comment_Generator
                                                         (App.Names.ProductionExecution,
-                                                        (production_execution.production_order != null ? production_execution.production_order.work_number : ""),
+                                                        (detail.production_execution.production_order != null ? detail.production_execution.production_order.work_number : ""),
                                                         "")));
                                 detail.unit_cost = item_movementinput.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
                             }
                         }
                     }
-                }
+               // }
 
-                foreach (production_execution_detail detail in production_execution.production_execution_detail.Where(x => x.item.item_product.Count() > 0))
-                {
+                //foreach (production_execution_detail detail in production_execution.production_execution_detail.Where(x => x.item.item_product.Count() > 0))
+                //{
                     if (detail.item.id_item_type == item.item_type.Product || detail.item.id_item_type == item.item_type.RawMaterial || detail.item.id_item_type == item.item_type.Supplies)
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
@@ -336,13 +336,13 @@ namespace entity.Brillo.Logic
                                                         detail.id_execution_detail,
                                                         Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
                                                         item_product,
-                                                        production_execution.production_line.app_location,
+                                                        detail.production_execution.production_line.app_location,
                                                         detail.quantity,
-                                                        production_execution.trans_date,
+                                                            detail.production_execution.trans_date,
                                                         Cost,
                                                         comment_Generator
                                                         (App.Names.ProductionExecution,
-                                                        (production_execution.production_order != null ? production_execution.production_order.work_number : ""),
+                                                        (detail.production_execution.production_order != null ? detail.production_execution.production_order.work_number : ""),
                                                         ""),
                                                         null)
                                                     );
@@ -350,7 +350,7 @@ namespace entity.Brillo.Logic
                                 detail.unit_cost = Cost;
                             }
                         }
-                    }
+                   // }
                 }
                 item_movementList.AddRange(item_movementinput);
                 item_movementList.AddRange(item_movementoutput);

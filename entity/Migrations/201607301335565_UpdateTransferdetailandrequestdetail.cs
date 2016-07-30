@@ -7,6 +7,7 @@ namespace entity.Migrations
     {
         public override void Up()
         {
+            AddColumn("production_execution_detail", "status", c => c.Int());
             AddColumn("item_transfer_detail", "movement_id", c => c.Int());
             AddColumn("item_request_decision", "movement_id", c => c.Int());
         }
@@ -15,6 +16,7 @@ namespace entity.Migrations
         {
             DropColumn("item_request_decision", "movement_id");
             DropColumn("item_transfer_detail", "movement_id");
+            DropColumn("production_execution_detail", "status");
         }
     }
 }

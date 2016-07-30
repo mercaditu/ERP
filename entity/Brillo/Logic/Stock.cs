@@ -347,7 +347,7 @@ namespace entity.Brillo.Logic
                                                         null)
                                                     );
 
-                                detail.unit_cost = item_movementoutput.Sum(x => x.item_movement_value.Sum(y => y.unit_value)) * Percentage;
+                                detail.unit_cost = Cost;
                             }
                         }
                     }

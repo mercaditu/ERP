@@ -152,7 +152,7 @@ namespace Cognitivo.Production
 
                 List<production_order_detail> _production_order_detail =
                     ExecutionDB.production_order_detail.Where(a =>
-                           a.status == Status.Project.Approved
+                           a.status == Status.Production.Approved
                         && (a.item.id_item_type == item_type || a.item.id_item_type == item.item_type.Task)
                         && a.id_production_order == id_production_order)
                          .ToList();

@@ -215,16 +215,12 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
 
-            foreach (production_order_detail production_order_detail in OrderDB.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Project.Approved))
+            foreach (production_order_detail production_order_detail in OrderDB.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved))
             {
                 //production_order production_order = production_execution.production_order;
 
                 if (production_order_detail.production_order != null)
                 {
-                    production_order_detail.status = Status.Project.Executed;
-                    production_order_detail.RaisePropertyChanged("status");
-                    production_order_detail.State = EntityState.Modified;
-
                     foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail)
                     {
                         entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
@@ -236,12 +232,12 @@ namespace Cognitivo.Production
                             OrderDB.item_movement.AddRange(item_movementList);
                         }
 
-                        production_order_detail.status = Status.Project.Executed;
+                        production_order_detail.status = Status.Production.Executed;
                         production_order_detail.RaisePropertyChanged("status");
                         production_order_detail.State = EntityState.Modified;
 
                         production_execution_detail.State = EntityState.Modified;
-                        production_execution_detail.status = Status.Project.Executed;
+                        production_execution_detail.status = Status.Production.Executed;
 
                         if (production_execution_detail.project_task != null)
 	                    {
@@ -444,7 +440,7 @@ namespace Cognitivo.Production
                     n_production_order_detail.production_order = production_order;
                     n_production_order_detail.production_order.status = Status.Production.Pending;
                     n_production_order_detail.quantity = 0;
-                    n_production_order_detail.status = Status.Project.Pending;
+                    n_production_order_detail.status = Status.Production.Pending;
                     if (production_order_detail.item != null)
                     {
                         foreach (item_dimension item_dimension in production_order_detail.item.item_dimension)
@@ -473,7 +469,7 @@ namespace Cognitivo.Production
             {
                 //Adding First Item
                 production_order_detail n_production_order_detail = new production_order_detail();
-                n_production_order_detail.status = Status.Project.Pending;
+                n_production_order_detail.status = Status.Production.Pending;
                 production_order.production_order_detail.Add(n_production_order_detail);
 
                 production_orderproduction_order_detailViewSource.View.Refresh();
@@ -507,7 +503,7 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in production_order_detailLIST)
             {
-                production_order_detail.status = Status.Project.Rejected;
+                production_order_detail.status = Status.Production.QA_Rejected;
                 production_order_detail.IsSelected = false;
             }
 
@@ -524,7 +520,7 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource.View.Filter = null;
 
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
-            _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true && x.status != entity.Status.Project.Approved).ToList();
+            _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true && x.status != entity.Status.Production.Approved).ToList();
 
             if (_production_order_detail.Count > 0)
             {
@@ -532,10 +528,10 @@ namespace Cognitivo.Production
                 {
                     if (production_order_detail.parent != null)
                     {
-                        production_order_detail.parent.status = entity.Status.Project.Approved;
+                        production_order_detail.parent.status = entity.Status.Production.Approved;
                     }
 
-                    production_order_detail.status = entity.Status.Project.Approved;
+                    production_order_detail.status = entity.Status.Production.Approved;
                 }
 
                 if (production_order.production_execution.Count() == 0)
@@ -580,7 +576,7 @@ namespace Cognitivo.Production
 
             foreach (production_order_detail production_order_detail in _production_order_detail)
             {
-                production_order_detail.status = entity.Status.Project.Rejected;
+                production_order_detail.status = entity.Status.Production.QA_Rejected;
 
             }
             OrderDB.SaveChanges();
@@ -592,7 +588,7 @@ namespace Cognitivo.Production
 
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             production_order_detail n_production_order_detail = new production_order_detail();
-            n_production_order_detail.status = Status.Project.Pending;
+            n_production_order_detail.status = Status.Production.Pending;
             production_order.production_order_detail.Add(n_production_order_detail);
 
             production_orderproduction_order_detailViewSource.View.Refresh();
@@ -697,7 +693,7 @@ namespace Cognitivo.Production
                     n_production_order_detail.production_order = production_order;
                     n_production_order_detail.production_order.status = Status.Production.Pending;
                     n_production_order_detail.quantity = 0;
-                    n_production_order_detail.status = Status.Project.Pending;
+                    n_production_order_detail.status = Status.Production.Pending;
                     n_production_order_detail.child.Add(production_order_detail);
                     //   production_order_detail.child.Add(n_production_order_detail);
                     OrderDB.production_order_detail.Add(n_production_order_detail);
@@ -794,7 +790,7 @@ namespace Cognitivo.Production
 
                 List<production_order_detail> _production_order_detail =
                     OrderDB.production_order_detail.Where(a =>
-                           a.status == Status.Project.Approved
+                           a.status == Status.Production.Approved
                         && (a.item.id_item_type == item_type || a.item.id_item_type == item.item_type.Task)
                         && a.id_production_order == id_production_order)
                          .ToList();

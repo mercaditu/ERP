@@ -8,6 +8,7 @@
                    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:cntrl="clr-namespace:cntrl"
              xmlns:my="clr-namespace:entity.Properties;assembly=entity"
+             xmlns:Convert="clr-namespace:cntrl.Converters"
              lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
              lex:ResxLocalizationProvider.DefaultDictionary="local"
              lex:LocalizeDictionary.DesignCulture="en-US" 
@@ -16,7 +17,7 @@
              xmlns:entity="clr-namespace:entity;assembly=entity" 
              mc:Ignorable="d" Width="420" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="bool2visibility"/>
+        <Convert:Bool2Collapsed x:Key="bool2visibility"/>
         <local:ActiveValueConverter x:Key="ActiveValueConverter"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
         <CollectionViewSource x:Key="payment_schedualViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_schedual}, CreateList=True}"/>

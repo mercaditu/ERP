@@ -151,67 +151,106 @@ namespace Cognitivo.Product
 
                 item_transfer_detail item_transfer_detail = (item_transfer_detail)item_transfer_detailDataGrid.Items[i];
 
-                item_movement item_movement_origin = new item_movement();
-                item_movement_origin.debit = item_transfer_detail.quantity_origin;
-                item_movement_origin.credit = 0;
-                item_movement_origin.id_location = item_transfer_detail.item_transfer.app_location_origin.id_location;
-                item_movement_origin.status = Status.Stock.InStock;
-                item_movement_origin.trans_date = item_transfer_detail.item_transfer.trans_date;
+                //item_movement item_movement_origin = new item_movement();
+                //item_movement_origin.debit = item_transfer_detail.quantity_origin;
+                //item_movement_origin.credit = 0;
+                //item_movement_origin.id_location = item_transfer_detail.item_transfer.app_location_origin.id_location;
+                //item_movement_origin.status = Status.Stock.InStock;
+                //item_movement_origin.trans_date = item_transfer_detail.item_transfer.trans_date;
 
-                item_movement_origin.comment = stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number, "");
+                //item_movement_origin.comment = stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number, "");
 
-                if (item_transfer_detail.item_product.id_item_product != 0)
-                {
-                    item_movement_origin.id_item_product = item_transfer_detail.item_product.id_item_product;
-                 }
+                //if (item_transfer_detail.item_product.id_item_product != 0)
+                //{
+                //    item_movement_origin.id_item_product = item_transfer_detail.item_product.id_item_product;
+                // }
 
-                foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
-                {
-                    item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                    item_movement_dimension.id_dimension = item_transfer_dimension.id_dimension;
-                    item_movement_dimension.value = item_transfer_dimension.value;
-                    item_movement_origin.item_movement_dimension.Add(item_movement_dimension);
-                }
+                //foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
+                //{
+                //    item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                //    item_movement_dimension.id_dimension = item_transfer_dimension.id_dimension;
+                //    item_movement_dimension.value = item_transfer_dimension.value;
+                //    item_movement_origin.item_movement_dimension.Add(item_movement_dimension);
+                //}
 
-                ProductMovementDB.item_movement.Add(item_movement_origin);
+                app_currencyfx app_currencyfx = ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
+                app_location app_location = item_transfer_detail.item_transfer.app_location_origin;
 
-                item_movement item_movement_dest = new item_movement();
-                item_movement_dest.debit = 0;
-                item_movement_dest.credit = item_transfer_detail.quantity_destination;
-                item_movement_dest.id_location = item_transfer_detail.item_transfer.app_location_destination.id_location;
-                item_movement_dest.status = Status.Stock.InStock;
-                item_movement_dest.trans_date = item_transfer_detail.item_transfer.trans_date;
+                List<item_movement> Items_InStockLIST = ProductMovementDB.item_movement.Where(x => x.id_location == app_location.id_location
+                                                        && x.id_item_product == item_transfer_detail.id_item_product
+                                                        && x.status == entity.Status.Stock.InStock
+                                                        && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                ///Debit Movement from Origin.
+                List<item_movement> item_movement_originList;
+                item_movement_originList = stock.DebitOnly_MovementLIST(ProductMovementDB, Items_InStockLIST, Status.Stock.InStock, entity.App.Names.Movement, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
+                        item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
-                item_movement_dest.comment = stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number, "");
+                ProductMovementDB.item_movement.AddRange(item_movement_originList);
 
-                if (item_transfer_detail.item_product.id_item_product != 0)
-                {
-                    item_movement_dest.id_item_product = item_transfer_detail.item_product.id_item_product;
-                    //if (item_transfer_detail.item_product.item.unit_cost != null)
-                    //{
-                    //    app_currencyfx app_currencyfx = ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
-                    //    item_movement_value item_movement_value = new item_movement_value();
-                    //    item_movement_value.unit_value = (decimal)item_transfer_detail.item_product.item.unit_cost;
-                    //    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
-                    //    item_movement_value.comment = entity.Brillo.Localize.StringText("DirectCost");
+               
 
-                    //    //Adding Value into Movement
-                    //    item_movement_dest.item_movement_value.Add(item_movement_value);
-                    //}
-                }
+                //item_movement item_movement_dest = new item_movement();
+                //item_movement_dest.debit = 0;
+                //item_movement_dest.credit = item_transfer_detail.quantity_destination;
+                //item_movement_dest.id_location = item_transfer_detail.item_transfer.app_location_destination.id_location;
+                //item_movement_dest.status = Status.Stock.InStock;
+                //item_movement_dest.trans_date = item_transfer_detail.item_transfer.trans_date;
 
-                foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
-                {
-                    item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                    item_movement_dimension.id_dimension = item_transfer_dimension.id_dimension;
-                    item_movement_dimension.value = item_transfer_dimension.value;
-                    item_movement_dest.item_movement_dimension.Add(item_movement_dimension);
-                }
+                //item_movement_dest.comment = stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number, "");
+
+                //if (item_transfer_detail.item_product.id_item_product != 0)
+                //{
+                //    item_movement_dest.id_item_product = item_transfer_detail.item_product.id_item_product;
+                //    //if (item_transfer_detail.item_product.item.unit_cost != null)
+                //    //{
+                //    //    app_currencyfx app_currencyfx = ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_priority && x.is_active).FirstOrDefault();
+                //    //    item_movement_value item_movement_value = new item_movement_value();
+                //    //    item_movement_value.unit_value = (decimal)item_transfer_detail.item_product.item.unit_cost;
+                //    //    item_movement_value.id_currencyfx = app_currencyfx.id_currencyfx;
+                //    //    item_movement_value.comment = entity.Brillo.Localize.StringText("DirectCost");
+
+                //    //    //Adding Value into Movement
+                //    //    item_movement_dest.item_movement_value.Add(item_movement_value);
+                //    //}
+                //}
+
+                //foreach (item_transfer_dimension item_transfer_dimension in item_transfer_detail.item_transfer_dimension)
+                //{
+                //    item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                //    item_movement_dimension.id_dimension = item_transfer_dimension.id_dimension;
+                //    item_movement_dimension.value = item_transfer_dimension.value;
+                //    item_movement_dest.item_movement_dimension.Add(item_movement_dimension);
+                //}
 
 
              
                 
                
+                //ProductMovementDB.item_movement.Add(item_movement_dest);
+
+
+                item_movement item_movement_dest;
+                 Items_InStockLIST = ProductMovementDB.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail &&
+                    x.id_item_product == item_transfer_detail.id_item_product && x.debit > 0).ToList();
+
+                item_movement parent_item_movement = Items_InStockLIST.FirstOrDefault();
+
+                item_movement_dest =
+                            stock.CreditOnly_Movement(
+                                Status.Stock.InStock,
+                                entity.App.Names.Movement,
+                                item_transfer_detail.id_transfer,
+                                item_transfer_detail.id_transfer_detail,
+                                app_currencyfx,
+                                item_transfer_detail.item_product,
+                               item_transfer_detail.item_transfer.app_location_destination,
+                                item_transfer_detail.quantity_destination,
+                                item_transfer_detail.item_transfer.trans_date,
+                                Items_InStockLIST.Sum(x => (x.item_movement_value.Sum(y => y.unit_value) / (x.item_movement_value.Count() != 0 ? x.item_movement_value.Count() : 1))),
+                                stock.comment_Generator(entity.App.Names.Movement, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""),
+                                null
+                                );
+                item_movement_dest._parent = Items_InStockLIST.FirstOrDefault();
                 ProductMovementDB.item_movement.Add(item_movement_dest);
                 item_transfer.status = Status.Transfer.Approved;
             }

@@ -57,9 +57,10 @@ namespace cntrl.Curd
         }
         private Mode _WinMode;
 
-        public bool Payable { get; set; }
-        public bool Recievable { get; set; }
-
+        public bool Payable { get { return _Payable; } set { _Payable=value; } }
+        bool _Payable;
+        public bool Recievable { get { return _Recievable; } set { _Recievable = value; } }
+        bool _Recievable;
         CollectionViewSource _payment_schedualViewSource = null;
         public CollectionViewSource payment_schedualViewSource { get { return _payment_schedualViewSource; } set { _payment_schedualViewSource = value; } }
 

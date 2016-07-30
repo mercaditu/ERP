@@ -72,9 +72,10 @@
                                         <Label Style="{StaticResource H3}" Content="{Binding name}"/>
                                         <Label Style="{StaticResource generic_Label}" Content="{Binding code}"/>
                                     </StackPanel>
+                                    <ScrollViewer VerticalScrollBarVisibility="Visible">
                                     <DataGrid x:Name="itemmovementDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
-                                          ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionMode="Single"
-                                          IsReadOnly="True" HorizontalAlignment="Stretch" FontSize="10" RowDetailsVisibilityMode="Visible" >
+                                          ItemsSource="{Binding Source={StaticResource item_movementViewSource}}" SelectionMode="Single"  Height="200"
+                                       IsReadOnly="True" HorizontalAlignment="Stretch" FontSize="10" RowDetailsVisibilityMode="Visible" >
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Binding="{Binding trans_date}" Header="{lex:Loc Cognitivo:local:Date}" Width="128"/>
                                             <DataGridTextColumn Binding="{Binding comment}" Header="{lex:Loc Cognitivo:local:Comment}" MinWidth="256" Width="auto"/>
@@ -82,6 +83,7 @@
                                             <DataGridTextColumn Binding="{Binding credit, StringFormat={}{0:N2}}" ElementStyle="{StaticResource RightAlignStyle}" Header="{lex:Loc Cognitivo:local:Credit}" Width="128"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
+                                    </ScrollViewer>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>

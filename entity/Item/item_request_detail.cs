@@ -39,7 +39,7 @@ namespace entity
         public int id_item { get; set; }
         public decimal max_value { get; set; }
         public decimal quantity { get; set; }
-
+    
         [NotMapped]
         public decimal balance
         {

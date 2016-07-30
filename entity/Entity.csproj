@@ -383,6 +383,10 @@
     <Compile Include="Migrations\201607211124044_AddPromotion.Designer.cs">
       <DependentUpon>201607211124044_AddPromotion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607301259180_UpdateTransferdetailandrequestdetail.cs" />
+    <Compile Include="Migrations\201607301259180_UpdateTransferdetailandrequestdetail.Designer.cs">
+      <DependentUpon>201607301259180_UpdateTransferdetailandrequestdetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -1111,6 +1115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607211124044_AddPromotion.resx">
       <DependentUpon>201607211124044_AddPromotion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607301259180_UpdateTransferdetailandrequestdetail.resx">
+      <DependentUpon>201607301259180_UpdateTransferdetailandrequestdetail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

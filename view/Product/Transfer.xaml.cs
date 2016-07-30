@@ -22,7 +22,8 @@ namespace Cognitivo.Product
 
         CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
         List<Class.transfercost> clsTotalGrid = null;
-
+        Configs.itemMovement itemMovement = new Configs.itemMovement();
+        item_movement Selecteditem_movement;
         public Transfer()
         {
             InitializeComponent();
@@ -109,34 +110,56 @@ namespace Cognitivo.Product
 
         private void SmartBox_Item_Select(object sender, RoutedEventArgs e)
         {
-            item_transfer item_transfer = (item_transfer)item_transferViewSource.View.CurrentItem;
+            item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-            
-            if (item != null && 
-                item.item_product != null && 
-                item_transfer != null &&
-                item.id_item_type != entity.item.item_type.Task && 
-                item.id_item_type != entity.item.item_type.Service &&
-                item.id_item_type != entity.item.item_type.ServiceContract)
+
+            if (item != null)
             {
-                item_transfer_detail item_transfer_detail = new item_transfer_detail();
+                if (item.item_dimension.Count() > 0)
+                {
+                    crud_modal.Children.Clear();
+                    itemMovement.id_item = item.id_item;
+                    itemMovement.id_location = item_transfer.app_branch_origin.app_location.FirstOrDefault().id_location;
+                    itemMovement.db = ProductTransferDB;
 
-                item_transfer_detail.status = Status.Documents_General.Pending;
-                item_transfer_detail.quantity_origin = 1;
-                item_transfer_detail.timestamp = DateTime.Now;
-                item_transfer_detail.item_product = item.item_product.FirstOrDefault();
-                item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
-                item_transfer_detail.RaisePropertyChanged("item_product");
+                    crud_modal.Visibility = Visibility.Visible;
+                    crud_modal.Children.Add(itemMovement);
+                }
+                else
+                {
 
-                item_transfer.item_transfer_detail.Add(item_transfer_detail);
+                   
+                    
+
+                    if (item != null &&
+                        item.item_product != null &&
+                        item_transfer != null &&
+                        item.id_item_type != entity.item.item_type.Task &&
+                        item.id_item_type != entity.item.item_type.Service &&
+                        item.id_item_type != entity.item.item_type.ServiceContract)
+                    {
+                        item_transfer_detail item_transfer_detail = new item_transfer_detail();
+
+                        item_transfer_detail.status = Status.Documents_General.Pending;
+                        item_transfer_detail.quantity_origin = 1;
+                        item_transfer_detail.timestamp = DateTime.Now;
+                        item_transfer_detail.item_product = item.item_product.FirstOrDefault();
+                        item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
+                        item_transfer_detail.RaisePropertyChanged("item_product");
+
+                        item_transfer.item_transfer_detail.Add(item_transfer_detail);
+                    }
+                    else
+                    {
+                        toolBar.msgWarning("Item Error");
+                    }
+
+                    item_transferViewSource.View.Refresh();
+                    item_transferitem_transfer_detailViewSource.View.Refresh();
+                }
             }
-            else
-            {
-                toolBar.msgWarning("Item Error");
-            }
 
-            item_transferViewSource.View.Refresh();
-            item_transferitem_transfer_detailViewSource.View.Refresh();
+           
         }
 
         private void toolBar_btnApproveOrigin_Click(object sender)
@@ -257,6 +280,56 @@ namespace Cognitivo.Product
                         item_transfer_detail.IsSelected = false;
                     }
                 }
+            }
+        }
+
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+            item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
+            Selecteditem_movement = itemMovement.item_movement;
+            if (crud_modal.Visibility == Visibility.Hidden)
+            {
+
+                if (item != null &&
+                          item.item_product != null &&
+                          item_transfer != null &&
+                          item.id_item_type != entity.item.item_type.Task &&
+                          item.id_item_type != entity.item.item_type.Service &&
+                          item.id_item_type != entity.item.item_type.ServiceContract)
+                {
+                    item_transfer_detail item_transfer_detail = new item_transfer_detail();
+
+                    item_transfer_detail.status = Status.Documents_General.Pending;
+                    item_transfer_detail.quantity_origin = 1;
+                    item_transfer_detail.timestamp = DateTime.Now;
+                    item_transfer_detail.movement_id = (int)Selecteditem_movement.id_movement;
+                    item_transfer_detail.item_product = item.item_product.FirstOrDefault();
+                    item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
+                    item_transfer_detail.RaisePropertyChanged("item_product");
+                    foreach (item_movement_dimension item_movement_dimension in Selecteditem_movement.item_movement_dimension)
+                    {
+                        item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
+                        item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
+                        item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
+                        if (ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
+                        {
+                            item_transfer_dimension.app_dimension = ProductTransferDB.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
+
+                        }
+                        item_transfer_dimension.value = item_movement_dimension.value;
+                        item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
+                    }
+                    item_transfer.item_transfer_detail.Add(item_transfer_detail);
+
+                }
+                else
+                {
+                    toolBar.msgWarning("Item Error");
+                }
+
+                item_transferViewSource.View.Refresh();
+                item_transferitem_transfer_detailViewSource.View.Refresh();
             }
         }
     }

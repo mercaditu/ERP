@@ -48,7 +48,10 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" 
+              Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
+        <Grid x:Name="crud_modalTransfer" Background="{StaticResource Modal_BackgroundColor}" 
+              Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modalTransfer_IsVisibleChanged"/>
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="item_requestDataGrid"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -198,6 +201,8 @@
                                                 Header="{lex:Loc Cognitivo:local:Origin}" Width="*" IsReadOnly="True"/>
                             <DataGridTextColumn Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                 Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                             <DataGridTemplateColumn Width="Auto" Header="">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>

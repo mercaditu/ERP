@@ -152,7 +152,7 @@ namespace entity
                             item_transfer_detail.item_product = base.item_product.Where(x => x.id_item_product == item_transfer_detail.id_item_product).FirstOrDefault();
                             item_transfer_detail.quantity_origin = item.quantity;
                             item_transfer_detail.quantity_destination = item.quantity;
-
+                            item_transfer_detail.movement_id = item.movement_id;
 
                             if (item_request_detail.id_project_task != null)
                             {
@@ -243,6 +243,7 @@ namespace entity
                             }
                             item_transfer_detail.quantity_origin = item.quantity;
                             item_transfer_detail.quantity_destination = item.quantity;
+                            item_transfer_detail.movement_id = item.movement_id;
                             item_transfertrans.item_transfer_detail.Add(item_transfer_detail);
 
                             item_transfertrans.transfer_type = entity.item_transfer.Transfer_type.transfer;

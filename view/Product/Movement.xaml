@@ -41,7 +41,8 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        <Grid x:Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" 
+              Visibility="Hidden" Grid.RowSpan="2" Grid.ColumnSpan="2" Panel.ZIndex="5" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
         <!--<DataGrid x:Name="item_transferDataGrid" ItemsSource="{Binding}"
                   Style="{StaticResource main_Datagrid}"
                   Grid.Row="1">
@@ -213,6 +214,8 @@
                             <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128"/>
                             <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Quantity}" Width="Auto"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Rectangle Width="1" Margin="6" Fill="Silver"/>

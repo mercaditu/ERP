@@ -28,6 +28,7 @@ namespace entity
         public int? id_location { get; set; }
         public Decisions decision { get; set; }
         public decimal quantity { get; set; }
+        public int? movement_id { get; set; }
 
         public virtual item_request_detail item_request_detail { get; set; }
         public virtual app_location app_location { get; set; }

@@ -247,10 +247,25 @@ namespace entity
                 {
                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                     app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
-                    List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
-                                                            && x.id_item_product == item_transfer_detail.id_item_product
-                                                            && x.status == entity.Status.Stock.InStock
-                                                            && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                     List<item_movement> Items_InStockLIST;
+                    if (item_transfer_detail.movement_id != null)
+                    {
+                        Items_InStockLIST = new List<item_movement>();
+                        item_movement parent_movement = base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault();
+                        if (parent_movement!=null)
+                        {
+                            Items_InStockLIST.Add(parent_movement);
+                        }
+                    }
+                    else
+                    {
+
+
+                        Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
+                                                                && x.id_item_product == item_transfer_detail.id_item_product
+                                                                && x.status == entity.Status.Stock.InStock
+                                                                && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                    }
 
                     List<item_movement> item_movement_originList;
                     item_movement_originList = stock.DebitOnly_MovementLIST(this,Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
@@ -282,11 +297,27 @@ namespace entity
                 {
                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                     app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
+                    List<item_movement> Items_InStockLIST;
+                    if (item_transfer_detail.movement_id != null)
+                    {
+                        Items_InStockLIST = new List<item_movement>();
+                        item_movement parent_movement = base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault();
+                        if (parent_movement != null)
+                        {
+                            Items_InStockLIST.Add(parent_movement);
+                        }
+                    }
+                    else
+                    {
 
-                    List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
-                                                            && x.id_item_product == item_transfer_detail.id_item_product
-                                                            && x.status == entity.Status.Stock.InStock
-                                                            && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+
+                        Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
+                                                                && x.id_item_product == item_transfer_detail.id_item_product
+                                                                && x.status == entity.Status.Stock.InStock
+                                                                && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                    }
+
+               
                     ///Debit Movement from Origin.
                     List<item_movement> item_movement_originList;
                     item_movement_originList = stock.DebitOnly_MovementLIST(this,Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,

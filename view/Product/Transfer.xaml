@@ -44,7 +44,7 @@
         </Grid.RowDefinitions>
 
         <Grid Name="crud_modal" Background="{StaticResource Modal_BackgroundColor}" Visibility="Hidden" Margin="0,-36,0,0"
-              Grid.ColumnSpan="2" Grid.RowSpan="2" Panel.ZIndex="10"/>
+              Grid.ColumnSpan="2" Grid.RowSpan="2" Panel.ZIndex="10" IsVisibleChanged="crud_modal_IsVisibleChanged"/>
 
         <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="itemDataGrid" DataContext="{Binding}"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
@@ -186,6 +186,8 @@
                                                     Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
+                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

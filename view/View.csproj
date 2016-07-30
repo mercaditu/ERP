@@ -370,6 +370,9 @@
     <Compile Include="Configs\ItemBrand.xaml.cs">
       <DependentUpon>ItemBrand.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configs\itemMovement.xaml.cs">
+      <DependentUpon>itemMovement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Configs\itemMovementFraction.xaml.cs">
       <DependentUpon>itemMovementFraction.xaml</DependentUpon>
     </Compile>
@@ -1569,6 +1572,10 @@
     <Page Include="Configs\ItemBrand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Configs\itemMovement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\itemMovementFraction.xaml">
       <SubType>Designer</SubType>

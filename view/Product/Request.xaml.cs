@@ -17,7 +17,8 @@ namespace Cognitivo.Product
         CollectionViewSource item_requestViewSource;
         CollectionViewSource item_movementViewSource;
         CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
-        
+        Configs.itemMovement itemMovement = new Configs.itemMovement();
+        item_movement Selecteditem_movement;
         public Request()
         {
             InitializeComponent();
@@ -28,10 +29,10 @@ namespace Cognitivo.Product
             item_requestViewSource = ((CollectionViewSource)(FindResource("item_requestViewSource")));
             dbContext.item_request.Include("item_request_detail").Where(x => x.id_company == CurrentSession.Id_Company).ToList();
             item_requestViewSource.Source = dbContext.item_request.Local;
-            
+
             item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detailitem_request_decisionViewSource = ((CollectionViewSource)(FindResource("item_request_detailitem_request_decisionViewSource")));
-            
+
             CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
             dbContext.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
             app_branchViewSource.Source = dbContext.app_branch.Local;
@@ -99,7 +100,7 @@ namespace Cognitivo.Product
         private void item_request_detailMovementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             entity.Properties.Settings setting = new entity.Properties.Settings();
-           int id_branch=setting.branch_ID;
+            int id_branch = setting.branch_ID;
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             if (item_request_detail != null)
@@ -111,7 +112,7 @@ namespace Cognitivo.Product
                         (from items in dbContext.item_movement
                          where items.status == Status.Stock.InStock
                          && items.item_product.id_item == item_request_detail.id_item
-                         && items.app_location.id_branch==id_branch
+                         && items.app_location.id_branch == id_branch
                          group items by new { items.app_location }
                              into last
                              select new
@@ -119,7 +120,7 @@ namespace Cognitivo.Product
                                  id_location = last.Key.app_location.id_location,
                                  location = last.Key.app_location.name,
                                  quntitiy = last.Sum(x => x.credit != null ? x.credit : 0) - last.Sum(x => x.debit != null ? x.debit : 0),
-                     }).ToList();
+                             }).ToList();
 
 
                 List<desion> list_desion = new List<desion>();
@@ -140,15 +141,15 @@ namespace Cognitivo.Product
 
 
                 var transfer =
-                      //(from items in dbContext.item_transfer_detail
-                      // where items.item_product.id_item == item_request_detail.id_item
-                      // group items by new { items.item_transfer.app_branch_destination }
-                      //     into last
-                      //     select new
-                      //     {
-                      //         id_location = last.Key.app_branch_destination.app_location.Where(x => x.is_default).FirstOrDefault().id_location,
-                      //         branch = last.Key.app_branch_destination.name,
-                      //         quntitiy = last.Sum(x => x.quantity_destination != null ? x.quantity_destination : 0),
+                    //(from items in dbContext.item_transfer_detail
+                    // where items.item_product.id_item == item_request_detail.id_item
+                    // group items by new { items.item_transfer.app_branch_destination }
+                    //     into last
+                    //     select new
+                    //     {
+                    //         id_location = last.Key.app_branch_destination.app_location.Where(x => x.is_default).FirstOrDefault().id_location,
+                    //         branch = last.Key.app_branch_destination.name,
+                    //         quntitiy = last.Sum(x => x.quantity_destination != null ? x.quantity_destination : 0),
 
                       //     }).ToList();
 
@@ -211,21 +212,35 @@ namespace Cognitivo.Product
                     toolBar.msgWarning("quantity is greater than available quantity");
                     return;
                 }
+
                 if (desion.decisionState == state.added)
                 {
+                    if (dbContext.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
+                    {
+                        crud_modal.Children.Clear();
+                        itemMovement.id_item = item_request_detail.id_item;
+                        itemMovement.id_location = desion.id_location;
+                        itemMovement.db = dbContext;
 
-                    desion.decisionState = state.modified;
-                    item_request_decision item_request_decision = new global::entity.item_request_decision();
-                    item_request_decision.IsSelected = true;
-                    item_request_decision.id_location = desion.id_location;
-                    item_request_decision.quantity = desion.decisionqty;
-                    item_request_decision.decision = global::entity.item_request_decision.Decisions.Movement;
-                    item_request_detail.item_request_decision.Add(item_request_decision);
+                        crud_modal.Visibility = Visibility.Visible;
+                        crud_modal.Children.Add(itemMovement);
+                    }
+                    else
+                    {
+                        desion.decisionState = state.modified;
+                        item_request_decision item_request_decision = new global::entity.item_request_decision();
+                        item_request_decision.IsSelected = true;
+                        item_request_decision.id_location = desion.id_location;
+                        item_request_decision.quantity = desion.decisionqty;
+                        item_request_decision.decision = global::entity.item_request_decision.Decisions.Movement;
+                        item_request_detail.item_request_decision.Add(item_request_decision);
+                    }
                 }
                 else
                 {
 
                 }
+
             }
 
             item_request_detail.item_request.GetTotalDecision();
@@ -280,7 +295,7 @@ namespace Cognitivo.Product
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
-            
+
             if (item_request_decisiontransferDataGrid.SelectedItem != null)
             {
                 desion desion = (desion)item_request_decisiontransferDataGrid.SelectedItem;
@@ -291,14 +306,30 @@ namespace Cognitivo.Product
                 }
                 if (desion.decisionState == state.added)
                 {
+                    if (dbContext.items.Where(x => x.id_item == item_request_detail.id_item).FirstOrDefault().item_dimension.Count() > 0)
+                    {
+                        crud_modalTransfer.Children.Clear();
+                        itemMovement.id_item = item_request_detail.id_item;
+                        itemMovement.id_location = desion.id_location;
+                        itemMovement.db = dbContext;
 
-                    desion.decisionState = state.modified;
-                    item_request_decision item_request_decision = new global::entity.item_request_decision();
-                    item_request_decision.IsSelected = true;
-                    item_request_decision.id_location = desion.id_location;
-                    item_request_decision.quantity = desion.decisionqty;
-                    item_request_decision.decision = global::entity.item_request_decision.Decisions.Transfer;
-                    item_request_detail.item_request_decision.Add(item_request_decision);
+                        crud_modalTransfer.Visibility = Visibility.Visible;
+                        crud_modalTransfer.Children.Add(itemMovement);
+                    }
+                    else
+                    {
+
+                        desion.decisionState = state.modified;
+                        item_request_decision item_request_decision = new global::entity.item_request_decision();
+                        item_request_decision.IsSelected = true;
+                        item_request_decision.id_location = desion.id_location;
+                        item_request_decision.quantity = desion.decisionqty;
+                        item_request_decision.decision = global::entity.item_request_decision.Decisions.Transfer;
+                        item_request_detail.item_request_decision.Add(item_request_decision);
+                    }
+                }
+                else
+                {
                 }
             }
 
@@ -315,11 +346,11 @@ namespace Cognitivo.Product
         {
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = item_requestitem_request_detailViewSource.View.CurrentItem as item_request_detail;
-            
+
             if (item_request_decisionpurchaseDataGrid.SelectedItem != null)
             {
                 desion desion = (desion)item_request_decisionpurchaseDataGrid.SelectedItem;
-           
+
                 if (desion.decisionState == state.added)
                 {
                     desion.decisionState = state.modified;
@@ -370,9 +401,9 @@ namespace Cognitivo.Product
             CollectionViewSource item_requestitem_request_detailViewSource = ((CollectionViewSource)(FindResource("item_requestitem_request_detailViewSource")));
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             CollectionViewSource project_task_dimensionViewSource = ((CollectionViewSource)(FindResource("project_task_dimensionViewSource")));
-            if (item_request_detail!=null)
+            if (item_request_detail != null)
             {
-                if (item_request_detail.id_project_task>0)
+                if (item_request_detail.id_project_task > 0)
                 {
                     project_task_dimensionViewSource.Source = dbContext.project_task_dimension.Where(x => x.id_project_task == item_request_detail.id_project_task).ToList();
                 }
@@ -414,7 +445,7 @@ namespace Cognitivo.Product
             //if (item_requestDataGrid.SelectedItem != null)
             //{
             //    item_request item_request = (item_request)item_requestDataGrid.SelectedItem;
-            
+
             //    item_request.State = EntityState.Unchanged;
             //    dbContext.Entry(item_request).State = EntityState.Unchanged;
             //}
@@ -422,6 +453,62 @@ namespace Cognitivo.Product
             //{
             //    toolBar.msgWarning("Please Select an Item");
             //}
+        }
+
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Selecteditem_movement = itemMovement.item_movement; 
+            item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
+            if (crud_modal.Visibility == Visibility.Hidden)
+            {
+              
+                desion desion = (desion)item_request_decisionmovementDataGrid.SelectedItem;
+                desion.decisionState = state.modified;
+                item_request_decision item_request_decision = new global::entity.item_request_decision();
+                item_request_decision.movement_id = (int)Selecteditem_movement.id_movement;
+                item_request_decision.IsSelected = true;
+                item_request_decision.id_location = desion.id_location;
+                item_request_decision.quantity = desion.decisionqty;
+                item_request_decision.decision = global::entity.item_request_decision.Decisions.Movement;
+                item_request_detail.item_request_decision.Add(item_request_decision);
+
+
+                item_request_detail.item_request.GetTotalDecision();
+
+                dbContext.SaveChanges();
+                item_requestViewSource.View.MoveCurrentToLast();
+                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                item_request_detailitem_request_decisionViewSource.View.Refresh();
+                toolBar_btnEdit_Click(sender);
+            }
+        }
+
+        private void crud_modalTransfer_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Selecteditem_movement = itemMovement.item_movement;
+            item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
+            if (crud_modal.Visibility == Visibility.Hidden)
+            {
+
+                desion desion = (desion)item_request_decisionmovementDataGrid.SelectedItem;
+                desion.decisionState = state.modified;
+                item_request_decision item_request_decision = new global::entity.item_request_decision();
+                item_request_decision.movement_id = (int)Selecteditem_movement.id_movement;
+                item_request_decision.IsSelected = true;
+                item_request_decision.id_location = desion.id_location;
+                item_request_decision.quantity = desion.decisionqty;
+                item_request_decision.decision = global::entity.item_request_decision.Decisions.Transfer;
+                item_request_detail.item_request_decision.Add(item_request_decision);
+
+
+                item_request_detail.item_request.GetTotalDecision();
+
+                dbContext.SaveChanges();
+                item_requestViewSource.View.MoveCurrentToLast();
+                item_requestViewSource.View.MoveCurrentTo(item_request_detail.item_request);
+                item_request_detailitem_request_decisionViewSource.View.Refresh();
+                toolBar_btnEdit_Click(sender);
+            }
         }
     }
 }

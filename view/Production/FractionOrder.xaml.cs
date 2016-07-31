@@ -215,10 +215,8 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
 
-            foreach (production_order_detail production_order_detail in OrderDB.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved))
+            foreach (production_order_detail production_order_detail in OrderDB.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
             {
-                //production_order production_order = production_execution.production_order;
-
                 if (production_order_detail.production_order != null)
                 {
                     foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail)
@@ -230,6 +228,7 @@ namespace Cognitivo.Production
                         if (item_movementList != null && item_movementList.Count > 0)
                         {
                             OrderDB.item_movement.AddRange(item_movementList);
+                            OrderDB.SaveChanges();
                         }
 
                         production_order_detail.status = Status.Production.Executed;
@@ -1093,7 +1092,7 @@ namespace Cognitivo.Production
             //Adds Parent so that during approval, because it is needed for approval.
             if (production_order_detail.parent != null)
             {
-                if (production_order_detail.parent.production_execution_detail.Count() > 0)
+                if (production_order_detail.parent.production_execution_detail != null)
                 {
                     _production_execution_detail.parent = production_order_detail.parent.production_execution_detail.FirstOrDefault();
                 }

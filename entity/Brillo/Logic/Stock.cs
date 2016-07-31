@@ -300,10 +300,11 @@ namespace entity.Brillo.Logic
                     {
                         if (detail.quantity > 0)
                         {
-                            item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_production_execution == detail.parent.id_production_execution).ToList(); //detail.parent.id_production_execution
+                            item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
 
                             if (item_movementINPUT.Count() > 0)
                             {
+
                                 bool CostDimension = false;
                                 decimal InputDimension = 1;
                                 decimal OutPutDimension = 1;
@@ -316,10 +317,16 @@ namespace entity.Brillo.Logic
                                     InputDimension *= item_movement_dimension.value;
                                 }
 
+                                List<item_movement_dimension> MovementDimensionLIST = null;
                                 foreach (production_execution_dimension production_execution_dimension in detail.production_execution_dimension)
                                 {
                                     CostDimension = true;
                                     OutPutDimension *= production_execution_dimension.value;
+
+                                    item_movement_dimension item_movement_dimension = new item_movement_dimension();
+                                    item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
+                                    item_movement_dimension.value = production_execution_dimension.value;
+                                    MovementDimensionLIST.Add(item_movement_dimension);
                                 }
 
                                 if (CostDimension)
@@ -343,7 +350,7 @@ namespace entity.Brillo.Logic
                                                         (App.Names.ProductionExecution,
                                                         (detail.production_execution.production_order != null ? detail.production_execution.production_order.work_number : ""),
                                                         ""),
-                                                        null)
+                                                        MovementDimensionLIST)
                                                     );
 
                                 detail.unit_cost = Cost;   

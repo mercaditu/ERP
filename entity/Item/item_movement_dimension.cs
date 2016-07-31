@@ -1,5 +1,6 @@
 namespace entity
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ namespace entity
             id_company = CurrentSession.Id_Company;
             id_user = CurrentSession.Id_User;
             is_head = true;
+            timestamp = DateTime.Now;
         }
 
         [Key]

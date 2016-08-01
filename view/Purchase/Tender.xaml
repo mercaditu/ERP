@@ -85,7 +85,7 @@
                         <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                         <TextBox Style="{StaticResource input_textbox}" Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
-                        <DatePicker Style="{StaticResource input_datepicker}" IsEnabled="False" SelectedDate="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <DatePicker Style="{StaticResource input_datepicker}" IsEnabled="False" SelectedDate="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                   metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"

@@ -201,11 +201,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
-                            </DataGrid >
-                            <StackPanel>
-                                <Label x:Name="lblProjectedProductQty" Content="Total" />
-                                <Label x:Name="lblTotalProduct" Content="Total" />
-                            </StackPanel>
+                            </DataGrid>
                         </StackPanel>
                     </Grid>
 
@@ -283,8 +279,6 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Label x:Name="lblProjectedRawQty" Content="Total" VerticalAlignment="Bottom"/>
-                            <Label x:Name="lblTotalRaw" Content="Total" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Grid>
 
@@ -325,7 +319,7 @@
                                  DataContext="{StaticResource production_execution_detailServiceViewSource}">
 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Factor}" />
+                                <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Coeficient}" />
                                 <ComboBox x:Name="cmbcoefficient" Width="235" 
                                           DisplayMemberPath="name" SelectedValuePath="id_time_coefficient" 
                                           ItemsSource="{Binding Source={StaticResource hr_time_coefficientViewSource}}"/>
@@ -347,7 +341,7 @@
                                 <controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
                             </StackPanel>
                         </WrapPanel>
-                            <DataGrid x:Name="dgService" Grid.Column="1" 
+                        <DataGrid x:Name="dgService" Grid.Column="1" 
                                       ItemsSource="{Binding Source={StaticResource production_execution_detailServiceViewSource}}" 
                                       Margin="0,145,0,50" AutoGenerateColumns="False">
                             <DataGrid.Columns>
@@ -374,10 +368,6 @@
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                            <Label x:Name="lblProjectedempqty" Grid.Column="1"  Content="Total"/>
-                            <Label x:Name="lblTotalemp" Grid.Column="1"  Content="Total"/>
-                        </StackPanel>
                     </Grid>
                 </TabItem>
                 <TabItem Header="{lex:Loc ServiceContract}">
@@ -507,10 +497,6 @@
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                                    <Label x:Name="lblProjectedservicecontrcthourqty" Grid.Column="1"  Content="Total"/>
-                                    <Label x:Name="lblTotalservicecontracthour" Grid.Column="1"  Content="Total"/>
-                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
@@ -565,8 +551,6 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Label x:Name="lblProjectedassetqty" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
-                            <Label x:Name="lblTotalasset" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </Grid>
                 </TabItem>

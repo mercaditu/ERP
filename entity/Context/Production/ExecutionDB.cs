@@ -53,6 +53,38 @@ namespace entity
                     }
                 }
             }
+
+            foreach (production_execution production_execution in base.production_execution.Local)
+            {
+                if (production_execution.IsSelected && production_execution.Error == null)
+                {
+                    if (production_execution.State == EntityState.Added)
+                    {
+                        production_execution.timestamp = DateTime.Now;
+                        production_execution.State = EntityState.Unchanged;
+                        Entry(production_execution).State = EntityState.Added;
+                    }
+                    else if (production_execution.State == EntityState.Modified)
+                    {
+                        production_execution.timestamp = DateTime.Now;
+                        production_execution.State = EntityState.Unchanged;
+                        Entry(production_execution).State = EntityState.Modified;
+                    }
+                    else if (production_execution.State == EntityState.Deleted)
+                    {
+                        production_execution.timestamp = DateTime.Now;
+                        production_execution.State = EntityState.Unchanged;
+                        base.production_execution.Remove(production_execution);
+                    }
+                }
+                else if (production_execution.State > 0)
+                {
+                    if (production_execution.State != EntityState.Unchanged)
+                    {
+                        Entry(production_execution).State = EntityState.Unchanged;
+                    }
+                }
+            }
         }
 
         public int Approve(entity.production_execution_detail.Types Type)
@@ -61,7 +93,7 @@ namespace entity
             {
                 if (production_order_detail.production_order != null)
                 {
-                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail)
+                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.IsSelected && x.status == Status.Production.Approved))
                     {
                         ///Assign this so that inside Stock Brillo we can run special logic required for Production or Fraction.
                         ///Production: Sums all input Childs to the Cost.

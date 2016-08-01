@@ -299,71 +299,28 @@
                                         <TextBox x:Name="txtProduct" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" />
                                         <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
-                                      <DataGrid  Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 
+                                    <DataGrid  Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 
                                       ItemsSource="{Binding Source={StaticResource production_execution_detailProductViewSource}}" 
                                       SelectionChanged="dgproduct_SelectionChanged">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
                                                         Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="Auto"/>
-                                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="*"
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Width="*"
                                                         Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}"/>
-                                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True"
                                                         Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
                                                         Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                             <DataGridTemplateColumn Width="Auto" Header="">
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="customcmd:CustomCommands.Delete"
-                                                        CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid >
-                                        <!--<StackPanel x:Name="StpMovement" Grid.Column="1">
-                                            <Label Content="Stock"/>
-                                            <DataGrid Height="Auto" x:Name="item_movement_detailDataGrid" Width="340" SelectionChanged="item_movement_detailDataGrid_SelectionChanged"
-                              AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementViewSource}}"
-                              EnableRowVirtualization="True" 
-                              RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
-                                                <DataGrid.Columns>
-                                                                                                      <DataGridTextColumn Binding="{Binding item_product.item.name, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Name}" Width="100" IsReadOnly="True"/>
-                                                    <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}" 
-                        		Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*"/>
-                                                </DataGrid.Columns>
-                                                <DataGrid.RowDetailsTemplate>
+                                                <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Grid Background="{StaticResource AccentColor_Introvert}">
-                                                            <DataGrid x:Name="item_inventory_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" Margin="4" IsReadOnly="True"
-                            			EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource item_movementitem_movement_dimensionViewSource}}"
-                            			RowDetailsVisibilityMode="VisibleWhenSelected" CanUserDeleteRows="False">
-                                                                <DataGrid.Columns>
-                                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto" 
-                            					ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
-                            					SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ElementStyle="{StaticResource RightAlignStyle}" Header="value" Width="auto"/>
-                                                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-                            					DisplayMemberPath="name" SelectedValuePath="id_measurement"  
-                            					ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-                            					SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                            					Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
-                                                                </DataGrid.Columns>
-                                                            </DataGrid>
-                                                        </Grid>
+                                                        <Button Command="customcmd:CustomCommands.Delete"
+                                                        CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
                                                     </DataTemplate>
-                                                </DataGrid.RowDetailsTemplate>
-                                            </DataGrid>
-                                        </StackPanel>-->
-                                 
-
-
-
-                                    <StackPanel>
-                                        <Label x:Name="lblProjectedProductQty" Content="Total" />
-                                        <Label x:Name="lblTotalProduct" Content="Total" />
-                                    </StackPanel>
-
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid >
                                 </StackPanel>
                             </Grid>
                         </TabItem>
@@ -405,60 +362,22 @@
                                         <TextBox  x:Name="txtRaw" Width="64" KeyUp="btnInsert_KeyDown" Margin="8,0" VerticalAlignment="Top" />
                                         <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
-                                    
-                                        <DataGrid Margin="0" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailRawViewSource}}" SelectionChanged="dgRaw_SelectionChanged">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
-                                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+
+                                    <DataGrid Margin="0" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailRawViewSource}}" SelectionChanged="dgRaw_SelectionChanged">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
+                                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
                                                         Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                             <DataGridTemplateColumn Width="32" Header="">
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                        <!--<StackPanel x:Name="StpMovementraw" Grid.Column="1">
-                                            <Label Content="Stock"/>
-                                            <DataGrid Height="Auto" x:Name="item_movement_detailDataGridraw" Width="340" SelectionChanged="item_movement_detailDataGridraw_SelectionChanged"
-                                                      AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource item_movementrawViewSource}}"
-                                                      EnableRowVirtualization="True" 
-                                                      RowDetailsVisibilityMode="VisibleWhenSelected" HeadersVisibility="All">
-                                                <DataGrid.Columns>
-                                                    <DataGridTextColumn Binding="{Binding item_product.item.name, UpdateSourceTrigger=PropertyChanged}"  Header="{lex:Loc Cognitivo:local:Name}" Width="100" IsReadOnly="True"/>
-                                                    <DataGridTextColumn Binding="{Binding credit, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource RightAlignStyle}" 
-                        		Header="{lex:Loc Cognitivo:local:Quantity}" IsReadOnly="True" Width="*"/>
-                                                </DataGrid.Columns>
-                                                <DataGrid.RowDetailsTemplate>
+                                                <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Grid Background="{StaticResource AccentColor_Introvert}">
-                                                            <DataGrid x:Name="item_inventory_dimentionDataGrid" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" Margin="4" IsReadOnly="True"
-                            			EnableRowVirtualization="True" Height="Auto" ItemsSource="{Binding Source={StaticResource item_movementrawitem_movement_dimensionViewSource}}"
-                            			RowDetailsVisibilityMode="VisibleWhenSelected" CanUserDeleteRows="False">
-                                                                <DataGrid.Columns>
-                                                                    <DataGridComboBoxColumn x:Name="dimentionComboCol" Header="Dimension" Width="auto" 
-                            					ItemsSource="{Binding Source={StaticResource app_dimensionViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_dimension"
-                            					SelectedValueBinding="{Binding id_dimension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                                    <DataGridTextColumn x:Name="valueColumn2" Binding="{Binding value, Mode=TwoWay, StringFormat=\{0:N\}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ElementStyle="{StaticResource RightAlignStyle}" Header="value" Width="auto"/>
-                                                                    <DataGridComboBoxColumn x:Name="AppMeasurementComboBox" 
-                            					DisplayMemberPath="name" SelectedValuePath="id_measurement"  
-                            					ItemsSource="{Binding Source={StaticResource app_measurementViewSource}}"
-                            					SelectedValueBinding="{Binding id_measurement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                            					Header="{lex:Loc Cognitivo:local:Measurement}" Width="auto"/>
-                                                                </DataGrid.Columns>
-                                                            </DataGrid>
-                                                        </Grid>
+                                                        <Button Command="customcmd:CustomCommands.Delete" CommandParameter="{Binding}" Style="{StaticResource btnDeleteChildStyle}"/>
                                                     </DataTemplate>
-                                                </DataGrid.RowDetailsTemplate>
-                                            </DataGrid>
-                                        </StackPanel>-->
-                                  
-                                 
-                                    <Label x:Name="lblProjectedRawQty" Content="Total" VerticalAlignment="Bottom"/>
-                                    <Label x:Name="lblTotalRaw" Content="Total" VerticalAlignment="Bottom"/>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
                                 </StackPanel>
                             </Grid>
 
@@ -547,10 +466,6 @@
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                                    <Label x:Name="lblProjectedempqty" Grid.Column="1"  Content="Total"/>
-                                    <Label x:Name="lblTotalemp" Grid.Column="1"  Content="Total"/>
-                                </StackPanel>
                             </Grid>
                         </TabItem>
                         <TabItem Header="{lex:Loc ServiceContract}">
@@ -679,10 +594,6 @@
                                                 </DataGridTemplateColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                                            <Label x:Name="lblProjectedservicecontrcthourqty" Grid.Column="1"  Content="Total"/>
-                                            <Label x:Name="lblTotalservicecontracthour" Grid.Column="1"  Content="Total"/>
-                                        </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
@@ -736,8 +647,6 @@
                                             </DataGridTemplateColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Label x:Name="lblProjectedassetqty" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
-                                    <Label x:Name="lblTotalasset" Grid.Column="1"  Content="Total" VerticalAlignment="Bottom"/>
                                 </StackPanel>
                             </Grid>
                         </TabItem>
@@ -802,12 +711,6 @@
                                             </DataGridTemplateColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <StackPanel>
-                                        <Label x:Name="lblProjectedSuppliesqty" 
-                                       Grid.Column="1" Content="Total"/>
-                                        <Label x:Name="lblTotalsupplies" 
-                                       Grid.Column="1" Content="Total"/>
-                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </TabItem>

@@ -1062,8 +1062,9 @@ namespace Cognitivo.Production
                 production_execution_dimension.id_measurement = production_order_dimension.id_measurement;
                 _production_execution_detail.production_execution_dimension.Add(production_execution_dimension);
             }
-            _production_execution.production_execution_detail.Add(_production_execution_detail);
 
+            _production_execution.production_execution_detail.Add(_production_execution_detail);
+            ExecutionDB.SaveChanges();
         }
 
         private void dgServicecontract_SelectionChanged(object sender, SelectionChangedEventArgs e)

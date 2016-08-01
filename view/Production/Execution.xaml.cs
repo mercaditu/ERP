@@ -264,8 +264,6 @@ namespace Cognitivo.Production
 
                             production_execution_detailServiceViewSource.View.Refresh();
                             production_execution_detailServiceViewSource.View.MoveCurrentToLast();
-
-                            RefreshData();
                         }
                         else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
                         {
@@ -289,10 +287,7 @@ namespace Cognitivo.Production
 
                             production_execution_detailServiceContractViewSource.View.Refresh();
                             production_execution_detailServiceContractViewSource.View.MoveCurrentToLast();
-
-                            RefreshData();
                         }
-
                     }
                 }
             }
@@ -389,8 +384,6 @@ namespace Cognitivo.Production
                     else { return false; }
                 };
 
-                RefreshData();
-
                 if (production_order_detail != null)
                 {
                     if (production_order_detail.project_task != null)
@@ -419,9 +412,6 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
-
-                RefreshData();
-
             }
         }
 
@@ -439,10 +429,6 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
-
-
-                RefreshData();
-
                 production_execution_detailProductViewSource.View.Filter = null;
             }
         }
@@ -587,10 +573,6 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
-
-
-                RefreshData();
-
             }
         }
 
@@ -612,9 +594,6 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
-
-                RefreshData();
-
             }
         }
 
@@ -874,8 +853,6 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
-
-                RefreshData();
             }
         }
 
@@ -905,7 +882,6 @@ namespace Cognitivo.Production
                                 }
                             };
                         }
-
                     }
                 }
             }
@@ -915,30 +891,13 @@ namespace Cognitivo.Production
         {
             if (CmbServicecontract.ContactID > 0)
             {
-
                 contact contact = ExecutionDB.contacts.Where(x => x.id_contact == CmbServicecontract.ContactID).FirstOrDefault();
                 adddatacontact(contact, treeServicecontract);
-
             }
-
         }
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             crud_modal.Children.Clear();
-            production_execution_detailRawViewSource.View.Refresh();
-            production_execution_detailRawViewSource.View.MoveCurrentToLast();
-
-            production_execution_detailSupplyViewSource.View.Refresh();
-            production_execution_detailSupplyViewSource.View.MoveCurrentToLast();
-
-            production_execution_detailProductViewSource.View.Refresh();
-            production_execution_detailProductViewSource.View.MoveCurrentToLast();
-
-            production_execution_detailAssetViewSource.View.Refresh();
-            production_execution_detailAssetViewSource.View.MoveCurrentToLast();
-            production_execution_detailServiceContractViewSource.View.Refresh();
-            production_execution_detailServiceContractViewSource.View.MoveCurrentToLast();
-            
             RefreshData();
         }
     }

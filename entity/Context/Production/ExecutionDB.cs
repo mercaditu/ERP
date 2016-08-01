@@ -93,7 +93,7 @@ namespace entity
             {
                 if (production_order_detail.production_order != null)
                 {
-                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.IsSelected && x.status == Status.Production.Approved))
+                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail.Where(x => x.status == null || x.status < Status.Production.Approved))
                     {
                         ///Assign this so that inside Stock Brillo we can run special logic required for Production or Fraction.
                         ///Production: Sums all input Childs to the Cost.
@@ -129,6 +129,7 @@ namespace entity
                 }
             }
 
+            base.SaveChanges();
             return NumberOfRecords;
         }
 

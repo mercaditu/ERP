@@ -315,8 +315,10 @@
                             <Rectangle Width="1" Fill="Silver" HorizontalAlignment="Right"/>
                         </Grid>
                         
-                            <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" IsEnabled="{Binding SelectedItem,ElementName=treeService, Converter={StaticResource Type2Enable}}" VerticalAlignment="Top" Background="WhiteSmoke" 
-                                 DataContext="{StaticResource production_execution_detailServiceViewSource}">
+                            <WrapPanel Orientation="Horizontal" Grid.Column="1" ItemHeight="36" 
+                                       IsEnabled="{Binding SelectedItem, ElementName=treeService, Converter={StaticResource Type2Enable}}" 
+                                       VerticalAlignment="Top" Background="WhiteSmoke" 
+                                       DataContext="{StaticResource production_execution_detailServiceViewSource}">
 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Coeficient}" />
@@ -342,8 +344,9 @@
                             </StackPanel>
                         </WrapPanel>
                         <DataGrid x:Name="dgService" Grid.Column="1" 
-                                      ItemsSource="{Binding Source={StaticResource production_execution_detailServiceViewSource}}" 
-                                      Margin="0,145,0,50" AutoGenerateColumns="False">
+                                  IsEnabled="{Binding SelectedItem, ElementName=treeService, Converter={StaticResource Type2Enable}}" 
+                                  ItemsSource="{Binding Source={StaticResource production_execution_detailServiceViewSource}}" 
+                                  Margin="0,145,0,50" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Employee}" IsReadOnly="True" 
                                                     Binding="{Binding contact.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

@@ -136,6 +136,7 @@ namespace Cognitivo.Production
             production_executionViewSource = ((CollectionViewSource)(FindResource("production_executionViewSource")));
             ExecutionDB.production_execution.Where(a => a.id_company == CurrentSession.Id_Company && a.production_order.types == production_order.ProductionOrderTypes.Fraction).Load();
             production_executionViewSource.Source = ExecutionDB.production_execution.Local;
+            
             production_executionproduction_execustion_detailViewSource = ((CollectionViewSource)(FindResource("production_executionproduction_execustion_detailViewSource")));
 
             production_orderproduction_order_detailViewSource = ((CollectionViewSource)(FindResource("production_orderproduction_order_detailViewSource")));
@@ -155,7 +156,7 @@ namespace Cognitivo.Production
                 filter_task();
             }
 
-            #region execustion
+            #region Execution
 
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
             ExecutionDB.hr_time_coefficient.Where(x => x.id_company == CurrentSession.Id_Company).Load();
@@ -504,17 +505,14 @@ namespace Cognitivo.Production
 
                 try
                 {
-                    production_orderViewSource.View.Refresh();
-                    production_orderViewSource.View.MoveCurrentToFirst();
-                    production_orderViewSource.View.MoveCurrentTo(production_order);
-                    production_order_detaillRawViewSource.View.Refresh();
-                    production_order_detaillProductViewSource.View.Refresh();
-                    production_order_detaillServiceViewSource.View.Refresh();
-                    production_order_detaillRawViewSource.View.Refresh();
-                    treeRaw.UpdateLayout();
-                    treeAsset.UpdateLayout();
-                    treeService.UpdateLayout();
-                    treeProduct.UpdateLayout();
+                    //filter_order(production_order_detaillProductViewSource, item.item_type.Product);
+                    //filter_order(production_order_detaillRawViewSource, item.item_type.RawMaterial);
+                    //filter_order(production_order_detaillSupplyViewSource, item.item_type.Supplies);
+                    //filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
+                    //filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
+                    //filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
+                    RefreshData();
+                    RefreshTree();
                 }
                 catch { }
             }
@@ -913,6 +911,12 @@ namespace Cognitivo.Production
 
         public void RefreshData()
         {
+            production_orderViewSource.View.Refresh();
+            production_orderViewSource.View.MoveCurrentToFirst();
+            production_order_detaillRawViewSource.View.Refresh();
+            production_order_detaillProductViewSource.View.Refresh();
+            production_order_detaillServiceViewSource.View.Refresh();
+
             production_execution_detailProductViewSource.View.Refresh();
             production_execution_detailProductViewSource.View.MoveCurrentToLast();
 
@@ -928,13 +932,19 @@ namespace Cognitivo.Production
             production_execution_detailServiceContractViewSource.View.Refresh();
             production_execution_detailServiceContractViewSource.View.MoveCurrentToLast();
 
-
-
             production_order production_order = production_orderViewSource.View.CurrentItem as production_order;
             foreach (production_order_detail production_order_detail in production_order.production_order_detail)
             {
                 production_order_detail.CalcExecutedQty_TimerTaks();
             }
+        }
+
+        public void RefreshTree()
+        {
+            treeRaw.UpdateLayout();
+            treeAsset.UpdateLayout();
+            treeService.UpdateLayout();
+            treeProduct.UpdateLayout();
         }
 
         private void btnInsert_Click(object sender, EventArgs e)

@@ -505,12 +505,12 @@ namespace Cognitivo.Production
 
                 try
                 {
-                    //filter_order(production_order_detaillProductViewSource, item.item_type.Product);
-                    //filter_order(production_order_detaillRawViewSource, item.item_type.RawMaterial);
-                    //filter_order(production_order_detaillSupplyViewSource, item.item_type.Supplies);
-                    //filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
-                    //filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
-                    //filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
+                    filter_order(production_order_detaillProductViewSource, item.item_type.Product);
+                    filter_order(production_order_detaillRawViewSource, item.item_type.RawMaterial);
+                    filter_order(production_order_detaillSupplyViewSource, item.item_type.Supplies);
+                    filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
+                    filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
+                    filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
                     RefreshData();
                     RefreshTree();
                 }
@@ -736,7 +736,7 @@ namespace Cognitivo.Production
             {
                 List<production_order_detail> _production_order_detail =
                     ExecutionDB.production_order_detail.Where(a =>
-                           (a.status > Status.Production.Approved)
+                           (a.status >= Status.Production.Approved)
                         && (a.item.id_item_type == item_type || a.item.id_item_type == item.item_type.Task)
                         && a.id_production_order == id_production_order)
                          .ToList();

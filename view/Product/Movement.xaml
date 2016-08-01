@@ -192,7 +192,7 @@
             </StackPanel>
             <Grid IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}" Margin="8" Grid.Row="1" Grid.ColumnSpan="3" >
                 <StackPanel Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
-                    <Label Content="{lex:Loc Item}" Style="{StaticResource input_label}"/>
+                    <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
                     <cntrl:SearchableTextbox x:Name="cbxItem" Margin="0,0,8,0" HorizontalAlignment="Left" Width="256" VerticalAlignment="Top"
                                          CollectionViewSource="{StaticResource itemViewSource}" Height="26"
                                          KeyDown="cbxItem_KeyDown" MouseDoubleClick="cbxItem_MouseDoubleClick"
@@ -209,7 +209,7 @@
                       AutoGenerateColumns="False" 
                       EnableRowVirtualization="True" 
                       IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
-                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" Width="300">
+                      ItemsSource="{Binding Source={StaticResource item_transferitem_transfer_detailViewSource}}" Width="350">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding item_product.item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Code}" Width="Auto"/>
                             <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="{lex:Loc Cognitivo:local:Items}" MinWidth="128"/>

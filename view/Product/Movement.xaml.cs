@@ -253,7 +253,6 @@ namespace Cognitivo.Product
                 }
                 else
                 {
-                   
                     if (item_transfer != null)
                     {
                         item_transfer_detail item_transfer_detail = new item_transfer_detail();
@@ -271,11 +270,12 @@ namespace Cognitivo.Product
                                     item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
                                     item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
                                     item_transfer_dimension.id_dimension = item_movement_dimension.id_dimension;
+                                    
                                     if (dbContext.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault() != null)
                                     {
                                         item_transfer_dimension.app_dimension = dbContext.app_dimension.Where(x => x.id_dimension == item_movement_dimension.id_dimension).FirstOrDefault();
-
                                     }
+
                                     item_transfer_dimension.value = item_movement_dimension.value;
                                     item_transfer_detail.item_transfer_dimension.Add(item_transfer_dimension);
                                 }   

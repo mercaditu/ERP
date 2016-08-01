@@ -58,7 +58,6 @@
         <CollectionViewSource x:Key="production_execution_detailSupplyViewSource" Source="{Binding production_execution_detail, Source={StaticResource production_executionViewSource}}"/>
         <CollectionViewSource x:Key="production_order_dimensionViewSource" Source="{Binding production_order_dimension, Source={StaticResource production_orderproduction_order_detailViewSource}}"/>
         <CollectionViewSource x:Key="project_task_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project_task_dimension}, CreateList=True}"/>
-       
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_movementitem_movement_dimensionViewSource" Source="{Binding item_movement_dimension, Source={StaticResource item_movementViewSource}}"/>
         <CollectionViewSource x:Key="item_movementrawViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
@@ -155,10 +154,8 @@
                             <Label Content="{Binding project.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-
-
-                            <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc CostCenter}"/>
-                            <TextBlock Text="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}" Width="55"/>
+                            <Label Style="{StaticResource input_label}" Content="{lex:Loc CostCenter}"/>
+                            <Label Content="{Binding project_cost_center, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="55"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

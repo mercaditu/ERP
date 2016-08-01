@@ -161,6 +161,8 @@ namespace Cognitivo.Purchase
     
             PurchaseOrderDB.Entry(purchase_order).State = EntityState.Added;
             purchase_orderViewSource.View.MoveCurrentToLast();
+
+            sbxContact.Text = "";
         }
 
         private void toolBar_btnEdit_Click(object sender)
@@ -203,7 +205,6 @@ namespace Cognitivo.Purchase
                 toolBar.msgSaved(PurchaseOrderDB.NumberOfRecords);
 
                 purchase_orderViewSource.View.Refresh();
-                sbxContact.Text = "";
             }
             
         }

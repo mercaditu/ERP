@@ -365,7 +365,7 @@
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
-                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                                                        Binding="{Binding parent_id_execution_detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                             <DataGridTemplateColumn Width="32" Header="">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>

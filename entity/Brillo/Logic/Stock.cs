@@ -314,14 +314,18 @@ namespace entity.Brillo.Logic
                         {
                             if (detail.Type == production_execution_detail.Types.Fraction)
                             {
-                                item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
-
+                                if (detail.parent != null)
+                                {
+                                    item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
+                                }
+                                else
+                                {
+                                    //what to do???
+                                }
                             }
-
 
                             if (item_movementINPUT.Count() > 0)
                             {
-
                                 bool CostDimension = false;
                                 decimal InputDimension = 1;
                                 decimal OutPutDimension = 1;
@@ -357,7 +361,7 @@ namespace entity.Brillo.Logic
                                                         App.Names.ProductionExecution,
                                                         detail.id_production_execution,
                                                         detail.id_execution_detail,
-                                                        Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault(),
+                                                        Currency.get_Default(db).app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault(),
                                                         item_product,
                                                         detail.production_execution.production_line.app_location,
                                                         detail.quantity,

@@ -23,7 +23,6 @@ namespace Cognitivo.Configs
     public partial class itemMovementFraction : UserControl
     {
         CollectionViewSource item_movementViewSource;
-        public OrderDB OrderDB { get; set; }
         public ExecutionDB ExecutionDB { get; set; }
         public int id_item { get; set; }
         public long id_movement { get; set; }
@@ -62,32 +61,13 @@ namespace Cognitivo.Configs
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             List<item_movement> Items_InStockLIST = null;
 
-            if (mode == modes.Execution)
-            {
-                app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-                app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_dimensionViewSource.Source = ExecutionDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
+            app_measurementViewSource.Source = ExecutionDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
 
-                //Items_InStockLIST = ExecutionDB.item_movement.ToList();
-                Items_InStockLIST = ExecutionDB.item_movement.Where(x => x.id_location == _production_execution.production_line.id_location &&
-                                                                         x.item_product.id_item == id_item
-                                                                         && x.status == entity.Status.Stock.InStock
-                                                                         && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-
-            }
-            else
-            {
-                app_dimensionViewSource.Source = OrderDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-
-
-                app_measurementViewSource.Source = OrderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).ToList();
-                //Items_InStockLIST = OrderDB.item_movement.ToList();
-                Items_InStockLIST = OrderDB.item_movement.Where(x => x.id_location == _production_execution.production_line.id_location &&
-                                                                           x.item_product.id_item == id_item
-                                                                           && x.status == entity.Status.Stock.InStock
-                                                                           && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
-
-            }
-
+            Items_InStockLIST = ExecutionDB.item_movement.Where(x => x.id_location == _production_execution.production_line.id_location &&
+                                                                     x.item_product.id_item == id_item && 
+                                                                     x.status == entity.Status.Stock.InStock && 
+                                                                    (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
 
             if (Items_InStockLIST.Count() > 0)
             {
@@ -128,9 +108,16 @@ namespace Cognitivo.Configs
             {
                 if (production_order_detail != null)
                 {
-
-
                     production_execution_detail _production_execution_detail = new entity.production_execution_detail();
+
+                    //Adds Parent so that during approval, because it is needed for approval.
+                    if (production_order_detail.parent != null)
+                    {
+                        if (production_order_detail.parent.production_execution_detail != null)
+                        {
+                            _production_execution_detail.parent = production_order_detail.parent.production_execution_detail.FirstOrDefault();
+                        }
+                    }
 
                     _production_execution_detail.State = EntityState.Added;
                     _production_execution_detail.id_item = production_order_detail.id_item;

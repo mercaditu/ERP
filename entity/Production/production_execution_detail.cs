@@ -8,6 +8,12 @@ namespace entity
 
     public partial class production_execution_detail : Audit
     {
+        public enum Types
+        {
+            Production,
+            Fraction
+        }
+
         public production_execution_detail()
         {
             id_company = CurrentSession.Id_Company;
@@ -96,6 +102,9 @@ namespace entity
             }
         }
         decimal _hour;
+
+        [NotMapped]
+        public Types Type { get; set; }
 
         [Required]
         public bool is_input { get; set; }

@@ -267,10 +267,20 @@ namespace entity.Brillo.Logic
                     {
                         if (detail.quantity > 0)
                         {
-                            List<item_movement> Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.production_execution.production_line.id_location
-                                                                && x.id_item_product == item_product.id_item_product
-                                                                && x.status == entity.Status.Stock.InStock
-                                                                && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                            List<item_movement> Items_InStockLIST = null;
+
+                            //If Detail has an associated Id Movement. Use it, else List FIFO.
+                            if (detail.movement_id != null && detail.movement_id > 0)
+                            {
+                                Items_InStockLIST = db.item_movement.Where(x => x.id_movement == detail.movement_id).ToList();
+                            }
+                            else
+                            {
+                                Items_InStockLIST = db.item_movement.Where(x => x.id_location == detail.production_execution.production_line.id_location
+                                    && x.id_item_product == item_product.id_item_product
+                                    && x.status == entity.Status.Stock.InStock
+                                    && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
+                            }
 
                             item_movementINPUT.AddRange(
                                 DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
@@ -286,6 +296,8 @@ namespace entity.Brillo.Logic
                                                     (App.Names.ProductionExecution,
                                                     (detail.production_execution.production_order != null ? detail.production_execution.production_order.work_number : ""),
                                                     "")));
+
+                            item_movementList.AddRange(item_movementINPUT);
                             detail.unit_cost = item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
                         }
                     }
@@ -300,7 +312,12 @@ namespace entity.Brillo.Logic
                     {
                         if (detail.quantity > 0)
                         {
-                            item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
+                            if (detail.Type == production_execution_detail.Types.Fraction)
+                            {
+                                item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
+
+                            }
+
 
                             if (item_movementINPUT.Count() > 0)
                             {
@@ -310,29 +327,29 @@ namespace entity.Brillo.Logic
                                 decimal OutPutDimension = 1;
 
                                 decimal Cost = Convert.ToDecimal(item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
-
-                                foreach (item_movement_dimension item_movement_dimension in item_movementINPUT.FirstOrDefault().item_movement_dimension)
-                                {
-                                    CostDimension = true;
-                                    InputDimension *= item_movement_dimension.value;
-                                }
-
                                 List<item_movement_dimension> MovementDimensionLIST = null;
-                                foreach (production_execution_dimension production_execution_dimension in detail.production_execution_dimension)
-                                {
-                                    CostDimension = true;
-                                    OutPutDimension *= production_execution_dimension.value;
 
-                                    item_movement_dimension item_movement_dimension = new item_movement_dimension();
-                                    item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
-                                    item_movement_dimension.value = production_execution_dimension.value;
-                                    MovementDimensionLIST.Add(item_movement_dimension);
-                                }
-
-                                if (CostDimension)
+                                if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
                                 {
-                                    decimal Percentage = ((OutPutDimension * 100) / InputDimension) / 100;
-                                    Cost = Cost * Percentage;
+                                    foreach (item_movement_dimension item_movement_dimension in item_movementINPUT.FirstOrDefault().item_movement_dimension)
+                                    {
+                                        CostDimension = true;
+                                        InputDimension *= item_movement_dimension.value;
+                                    }
+
+                                    MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
+
+                                    foreach (production_execution_dimension production_execution_dimension in detail.production_execution_dimension)
+                                    {
+                                        CostDimension = true;
+                                        OutPutDimension *= production_execution_dimension.value;
+                                    }
+
+                                    if (CostDimension)
+                                    {
+                                        decimal Percentage = ((OutPutDimension * 100) / InputDimension) / 100;
+                                        Cost = Cost * Percentage;
+                                    }   
                                 }
 
                                 item_movementOUTPUT.Add(
@@ -352,14 +369,13 @@ namespace entity.Brillo.Logic
                                                         ""),
                                                         MovementDimensionLIST)
                                                     );
+                                item_movementList.AddRange(item_movementOUTPUT);
 
                                 detail.unit_cost = Cost;   
                             }
                         }
                     }
                 }
-                item_movementList.AddRange(item_movementINPUT);
-                item_movementList.AddRange(item_movementOUTPUT);
                 //Return List so we can save into context.
                 return item_movementList;
             }

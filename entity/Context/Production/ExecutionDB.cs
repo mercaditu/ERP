@@ -22,80 +22,82 @@ namespace entity
 
         private void validate_Execution()
         {
-            foreach (production_execution production_execution in base.production_execution.Local)
+            foreach (production_order production_order in base.production_order.Local)
             {
-                if (production_execution.IsSelected && production_execution.Error == null)
+                if (production_order.IsSelected && production_order.Error == null)
                 {
-                    if (production_execution.State == EntityState.Added)
+                    if (production_order.State == EntityState.Added)
                     {
-                        production_execution.timestamp = DateTime.Now;
-                        production_execution.State = EntityState.Unchanged;
-                        Entry(production_execution).State = EntityState.Added;
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        Entry(production_order).State = EntityState.Added;
                     }
-                    else if (production_execution.State == EntityState.Modified)
+                    else if (production_order.State == EntityState.Modified)
                     {
-                        production_execution.timestamp = DateTime.Now;
-                        production_execution.State = EntityState.Unchanged;
-                        Entry(production_execution).State = EntityState.Modified;
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        Entry(production_order).State = EntityState.Modified;
                     }
-                    else if (production_execution.State == EntityState.Deleted)
+                    else if (production_order.State == EntityState.Deleted)
                     {
-                        production_execution.timestamp = DateTime.Now;
-                        production_execution.State = EntityState.Unchanged;
-                        base.production_execution.Remove(production_execution);
+                        production_order.timestamp = DateTime.Now;
+                        production_order.State = EntityState.Unchanged;
+                        base.production_order.Remove(production_order);
                     }
                 }
-                else if (production_execution.State > 0)
+                else if (production_order.State > 0)
                 {
-                    if (production_execution.State != EntityState.Unchanged)
+                    if (production_order.State != EntityState.Unchanged)
                     {
-                        Entry(production_execution).State = EntityState.Unchanged;
+                        Entry(production_order).State = EntityState.Unchanged;
                     }
                 }
             }
         }
 
-        public void Approve()
+        public int Approve(entity.production_execution_detail.Types Type)
         {
-            foreach (production_order_detail production_order_detail in base.production_order_detail.Local.Where(x => x.IsSelected))
+            foreach (production_order_detail production_order_detail in base.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
             {
-                SaveChanges();
-
-                foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail)
+                if (production_order_detail.production_order != null)
                 {
-                    if (production_execution_detail.production_order_detail.status == Status.Production.Approved)
+                    foreach (production_execution_detail production_execution_detail in production_order_detail.production_execution_detail)
                     {
-                        if (production_execution_detail.production_order_detail.production_order != null)
+                        ///Assign this so that inside Stock Brillo we can run special logic required for Production or Fraction.
+                        ///Production: Sums all input Childs to the Cost.
+                        ///Fraction: Takes a Fraction of the parent. 
+                        ///TODO: Fraction only takes cost of parent. We need to include other things as well.
+
+                        production_execution_detail.Type = Type;
+
+                        entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
+                        List<item_movement> item_movementList = new List<item_movement>();
+                        item_movementList = _Stock.insert_Stock(this, production_execution_detail);
+
+                        if (item_movementList != null && item_movementList.Count > 0)
                         {
-                            //Logic
-                            Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
-                            List<item_movement> item_movementList = new List<item_movement>();
-                            item_movementList = _Stock.insert_Stock(this, production_execution_detail);
-
-                            if (item_movementList != null && item_movementList.Count > 0)
-                            {
-                                item_movement.AddRange(item_movementList);
-                            }
-
-                            production_execution_detail.production_order_detail.status = Status.Production.Executed;
-                            production_execution_detail.production_order_detail.RaisePropertyChanged("status");
-                            production_execution_detail.production_order_detail.State = EntityState.Modified;
-
-                            production_execution_detail.State = EntityState.Modified;
-                            production_execution_detail.status = Status.Production.Executed;
-
-                            if (production_execution_detail.project_task != null)
-                            {
-                                production_execution_detail.project_task.status = Status.Project.Executed;
-                            }
+                            base.item_movement.AddRange(item_movementList);
+                            base.SaveChanges();
                         }
-                    }
 
-                    production_execution_detail.State = EntityState.Unchanged;
+                        production_order_detail.status = Status.Production.Executed;
+                        production_order_detail.RaisePropertyChanged("status");
+                        production_order_detail.State = EntityState.Modified;
+
+                        production_execution_detail.State = EntityState.Modified;
+                        production_execution_detail.status = Status.Production.Executed;
+
+                        if (production_execution_detail.project_task != null)
+                        {
+                            production_execution_detail.project_task.status = Status.Project.Executed;
+                        }
+
+                        NumberOfRecords += 1;
+                    }
                 }
             }
 
-            SaveChanges();
+            return NumberOfRecords;
         }
 
         public void Anull()
@@ -111,6 +113,7 @@ namespace entity
                 {
                     item_movement.RemoveRange(item_movementList);
                 }
+
                 production_execution.status = Status.Documents_General.Annulled;
             }
         }

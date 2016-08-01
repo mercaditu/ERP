@@ -349,24 +349,22 @@ namespace Cognitivo.Production
 
         private void toolBar_btnApprove_Click(object sender)
         {
-            ExecutionDB.Approve();
-        }
+            toolBar_btnSave_Click(sender);
 
-        private void toolBar_btnAnull_Click(object sender)
-        {
-
+            if (ExecutionDB.Approve(entity.production_execution_detail.Types.Production) > 0)
+            {
+                toolBar.msgApproved(1);
+            }
         }
 
         private void projectDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             filter_order(production_order_detaillProductViewSource, item.item_type.Product);
             filter_order(production_order_detaillRawViewSource, item.item_type.RawMaterial);
             filter_order(production_order_detaillSupplyViewSource, item.item_type.Supplies);
             filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
             filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
             filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
-
 
             filter_execution(production_execution_detailProductViewSource, item.item_type.Product);
             filter_execution(production_execution_detailRawViewSource, item.item_type.RawMaterial);
@@ -391,11 +389,7 @@ namespace Cognitivo.Production
                     else { return false; }
                 };
 
-
-
                 loadRawTotal(production_order_detail);
-
-
 
                 if (production_order_detail != null)
                 {

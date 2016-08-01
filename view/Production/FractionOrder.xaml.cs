@@ -155,7 +155,6 @@ namespace Cognitivo.Production
                 filter_task();
             }
 
-
             #region execustion
 
             CollectionViewSource hr_time_coefficientViewSource = FindResource("hr_time_coefficientViewSource") as CollectionViewSource;
@@ -182,7 +181,6 @@ namespace Cognitivo.Production
             filter_order(production_order_detaillServiceViewSource, item.item_type.Service);
             filter_order(production_order_detaillAssetViewSource, item.item_type.FixedAssets);
             filter_order(production_order_detaillServiceContractViewSource, item.item_type.ServiceContract);
-
 
             filter_execution(production_execution_detailProductViewSource, item.item_type.Product);
             filter_execution(production_execution_detailRawViewSource, item.item_type.RawMaterial);
@@ -384,8 +382,6 @@ namespace Cognitivo.Production
                 //Adding a Child Item.
                 if (production_order_detail.item != null)
                 {
-                    //if (production_order_detail.item.id_item_type == entity.item.item_type.Task)
-                    //{
                     production_order_detail n_production_order_detail = new production_order_detail();
                     n_production_order_detail.is_input = false;
                     n_production_order_detail.id_item = production_order_detail.id_item;
@@ -407,9 +403,9 @@ namespace Cognitivo.Production
                             production_order_dimension.app_measurement = item_dimension.app_measurement;
                             production_order_dimension.value = 0;
                             n_production_order_detail.production_order_dimension.Add(production_order_dimension);
-
                         }
                     }
+
                     production_order_detail.child.Add(n_production_order_detail);
 
                     ExecutionDB.production_order_detail.Add(n_production_order_detail);
@@ -417,7 +413,6 @@ namespace Cognitivo.Production
 
                     production_orderproduction_order_detailViewSource.View.Refresh();
                     production_orderproduction_order_detailViewSource.View.MoveCurrentTo(n_production_order_detail);
-                    //  }
                 }
             }
             else
@@ -475,13 +470,13 @@ namespace Cognitivo.Production
             production_orderproduction_order_detailViewSource.View.Filter = null;
 
             List<production_order_detail> _production_order_detail = treeProject.ItemsSource.Cast<production_order_detail>().ToList();
-            _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true && x.status != entity.Status.Production.Approved).ToList();
+            _production_order_detail = _production_order_detail.Where(x => x.IsSelected == true && (x.status == entity.Status.Production.Pending || x.status == null)).ToList();
 
             if (_production_order_detail.Count > 0)
             {
                 foreach (production_order_detail production_order_detail in _production_order_detail)
                 {
-                    if (production_order_detail.parent != null)
+                    if (production_order_detail.parent != null && production_order_detail.parent.status == entity.Status.Production.Pending)
                     {
                         production_order_detail.parent.status = entity.Status.Production.Approved;
                     }
@@ -495,6 +490,7 @@ namespace Cognitivo.Production
                     production_execution.production_order = production_order;
                     production_execution.id_production_line = production_order.id_production_line;
                     production_execution.trans_date = DateTime.Now;
+
                     ExecutionDB.production_execution.Add(production_execution);
                     production_executionViewSource.View.Refresh();
                     production_executionViewSource.View.MoveCurrentToLast();
@@ -532,8 +528,8 @@ namespace Cognitivo.Production
             foreach (production_order_detail production_order_detail in _production_order_detail)
             {
                 production_order_detail.status = entity.Status.Production.QA_Rejected;
-
             }
+
             ExecutionDB.SaveChanges();
         }
 

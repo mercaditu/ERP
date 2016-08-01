@@ -36,7 +36,7 @@
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>582</ApplicationRevision>
+    <ApplicationRevision>583</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -941,6 +941,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\Application\128\Accounts.png" />
+    <Resource Include="Images\Application\128\Fraction.png" />
+    <Resource Include="Images\Application\128\IncotermContract.png" />
+    <Resource Include="Images\Application\128\FootTraffic.png" />
+    <Resource Include="Images\Application\128\Item.png" />
+    <Resource Include="Images\Application\128\FixedAsset.png" />
+    <Resource Include="Images\Application\128\IOU.png" />
+    <Resource Include="Images\Application\128\Line.png" />
+    <Resource Include="Images\Application\128\Maintainance.png" />
     <Resource Include="Resources\Entypo-license.txt" />
     <Resource Include="Resources\WindowsIcons-license.txt" />
     <Resource Include="Images\DebeHaber_Logo.png" />

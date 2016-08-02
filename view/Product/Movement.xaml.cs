@@ -20,7 +20,7 @@ namespace Cognitivo.Product
         CollectionViewSource item_transferViewSource;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
 
-        item_movement Selecteditem_movement;
+      //  item_movement Selecteditem_movement;
 
         public Movement()
         {
@@ -157,10 +157,10 @@ namespace Cognitivo.Product
                 app_currencyfx app_currencyfx = ProductMovementDB.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                 app_location app_location = item_transfer_detail.item_transfer.app_location_origin;
 
-                if (Selecteditem_movement != null)
+                if (itemMovement.item_movement != null)
                 {
                     Items_InStockLIST = new List<item_movement>();
-                    Items_InStockLIST.Add(Selecteditem_movement);
+                    Items_InStockLIST.Add(itemMovement.item_movement);
                 }
                 else
                 {
@@ -187,7 +187,15 @@ namespace Cognitivo.Product
 
                 if (item_movement_originList.FirstOrDefault().item_movement_dimension.Count() > 0)
                 {
-                    DimensionList = item_movement_originList.FirstOrDefault().item_movement_dimension.ToList();
+                    DimensionList = new List<item_movement_dimension>();
+                    foreach (item_movement_dimension item_movement_dimension in item_movement_originList.FirstOrDefault().item_movement_dimension)
+                    {
+                        item_movement_dimension _item_movement_dimension = new item_movement_dimension();
+                        _item_movement_dimension.id_dimension = item_movement_dimension.id_dimension;
+                        _item_movement_dimension.value = item_movement_dimension.value;
+                        DimensionList.Add(_item_movement_dimension);
+                    }
+                  
                 }
                     
                 item_movement_dest =
@@ -218,6 +226,8 @@ namespace Cognitivo.Product
             if (ProductMovementDB.SaveChanges() > 0)
             {
                 toolBar.msgSaved(ProductMovementDB.NumberOfRecords);
+                itemMovement   = new Configs.itemMovement();
+                
             }
         }
 
@@ -261,11 +271,11 @@ namespace Cognitivo.Product
                         item_transfer_detail.quantity_destination = 1;
                         item_transfer_detail.quantity_origin = 1;
 
-                        if (Selecteditem_movement != null)
+                        if (itemMovement.item_movement != null)
                         {
-                            if (Selecteditem_movement.item_movement_dimension != null)
+                            if (itemMovement.item_movement.item_movement_dimension != null)
                             {
-                                foreach (item_movement_dimension item_movement_dimension in Selecteditem_movement.item_movement_dimension)
+                                foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                                 {
                                     item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
                                     item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;
@@ -334,7 +344,7 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Selecteditem_movement = itemMovement.item_movement;
+           // Selecteditem_movement = itemMovement.item_movement;
             if (crud_modal.Visibility == Visibility.Hidden)
             {
                 item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
@@ -343,11 +353,11 @@ namespace Cognitivo.Product
                     item_transfer_detail item_transfer_detail = new item_transfer_detail();
                     item_transfer_detail.id_item_product = ((item)cbxItem.Data).item_product.FirstOrDefault().id_item_product;
                     item_transfer_detail.item_product = ((item)cbxItem.Data).item_product.FirstOrDefault();
-                    item_transfer_detail.movement_id = (int)Selecteditem_movement.id_movement;
+                    item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
                     item_transfer_detail.quantity_destination = 1;
                     item_transfer_detail.quantity_origin = 1;
                     item item = ((item)cbxItem.Data);
-                    foreach (item_movement_dimension item_movement_dimension in Selecteditem_movement.item_movement_dimension)
+                    foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                     {
                         item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
                         item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;

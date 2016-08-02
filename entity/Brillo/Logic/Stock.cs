@@ -320,18 +320,25 @@ namespace entity.Brillo.Logic
                                 }
                                 else
                                 {
+                                    item_movementINPUT = db.item_movement.Where(x => x.id_location == detail.production_execution.production_line.id_location
+                                      && x.id_item_product == item_product.id_item_product
+                                      && x.status == entity.Status.Stock.InStock
+                                      && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                                     //what to do???
+
                                 }
                             }
 
+                            decimal Cost = 0;
+                            List<item_movement_dimension> MovementDimensionLIST = null;
                             if (item_movementINPUT.Count() > 0)
                             {
                                 bool CostDimension = false;
                                 decimal InputDimension = 1;
                                 decimal OutPutDimension = 1;
 
-                                decimal Cost = Convert.ToDecimal(item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
-                                List<item_movement_dimension> MovementDimensionLIST = null;
+                                Cost = Convert.ToDecimal(item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
+
 
                                 if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
                                 {
@@ -353,30 +360,36 @@ namespace entity.Brillo.Logic
                                     {
                                         decimal Percentage = ((OutPutDimension * 100) / InputDimension) / 100;
                                         Cost = Cost * Percentage;
-                                    }   
+                                    }
                                 }
 
-                                item_movementOUTPUT.Add(
-                                        CreditOnly_Movement(entity.Status.Stock.InStock,
-                                                        App.Names.ProductionExecution,
-                                                        detail.id_production_execution,
-                                                        detail.id_execution_detail,
-                                                        Currency.get_Default(db).app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault(),
-                                                        item_product,
-                                                        detail.production_execution.production_line.app_location,
-                                                        detail.quantity,
-                                                        detail.production_execution.trans_date,
-                                                        Cost,
-                                                        comment_Generator
-                                                        (App.Names.ProductionExecution,
-                                                        (detail.production_execution.production_order != null ? detail.production_execution.production_order.work_number : ""),
-                                                        ""),
-                                                        MovementDimensionLIST)
-                                                    );
-                                item_movementList.AddRange(item_movementOUTPUT);
-
-                                detail.unit_cost = Cost;   
                             }
+                            else
+                            {
+                                Cost = (decimal)item_product.item.unit_cost;
+                            }
+
+                            item_movementOUTPUT.Add(
+                                    CreditOnly_Movement(entity.Status.Stock.InStock,
+                                                    App.Names.ProductionExecution,
+                                                    detail.id_production_execution,
+                                                    detail.id_execution_detail,
+                                                    Currency.get_Default(db).app_currencyfx.Where(x => x.is_active && x.app_currency.is_priority).FirstOrDefault(),
+                                                    item_product,
+                                                    detail.production_execution.production_line.app_location,
+                                                    detail.quantity,
+                                                    detail.production_execution.trans_date,
+                                                    Cost,
+                                                    comment_Generator
+                                                    (App.Names.ProductionExecution,
+                                                    (detail.production_execution.production_order != null ? detail.production_execution.production_order.work_number : ""),
+                                                    ""),
+                                                    MovementDimensionLIST)
+                                                );
+                            item_movementList.AddRange(item_movementOUTPUT);
+
+                            detail.unit_cost = item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
+
                         }
                     }
                 }

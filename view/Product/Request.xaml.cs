@@ -18,7 +18,7 @@ namespace Cognitivo.Product
         CollectionViewSource item_movementViewSource;
         CollectionViewSource item_requestitem_request_detailViewSource, item_request_detailitem_request_decisionViewSource;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
-        item_movement Selecteditem_movement;
+      //  item_movement Selecteditem_movement;
         public Request()
         {
             InitializeComponent();
@@ -56,7 +56,9 @@ namespace Cognitivo.Product
 
         private void toolBar_btnApprove_Click(object sender)
         {
+            itemMovement = new Configs.itemMovement();
             dbContext.Approve();
+           
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -457,7 +459,7 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Selecteditem_movement = itemMovement.item_movement; 
+            //Selecteditem_movement = itemMovement.item_movement; 
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             if (crud_modal.Visibility == Visibility.Hidden)
             {
@@ -465,7 +467,7 @@ namespace Cognitivo.Product
                 desion desion = (desion)item_request_decisionmovementDataGrid.SelectedItem;
                 desion.decisionState = state.modified;
                 item_request_decision item_request_decision = new global::entity.item_request_decision();
-                item_request_decision.movement_id = (int)Selecteditem_movement.id_movement;
+                item_request_decision.movement_id = (int)itemMovement.item_movement.id_movement;
                 item_request_decision.IsSelected = true;
                 item_request_decision.id_location = desion.id_location;
                 item_request_decision.quantity = desion.decisionqty;
@@ -485,7 +487,7 @@ namespace Cognitivo.Product
 
         private void crud_modalTransfer_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Selecteditem_movement = itemMovement.item_movement;
+           // Selecteditem_movement = itemMovement.item_movement;
             item_request_detail item_request_detail = (item_request_detail)item_requestitem_request_detailViewSource.View.CurrentItem;
             if (crud_modal.Visibility == Visibility.Hidden)
             {
@@ -493,7 +495,7 @@ namespace Cognitivo.Product
                 desion desion = (desion)item_request_decisionmovementDataGrid.SelectedItem;
                 desion.decisionState = state.modified;
                 item_request_decision item_request_decision = new global::entity.item_request_decision();
-                item_request_decision.movement_id = (int)Selecteditem_movement.id_movement;
+                item_request_decision.movement_id = (int)itemMovement.item_movement.id_movement;
                 item_request_decision.IsSelected = true;
                 item_request_decision.id_location = desion.id_location;
                 item_request_decision.quantity = desion.decisionqty;

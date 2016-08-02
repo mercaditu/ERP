@@ -23,7 +23,7 @@ namespace Cognitivo.Product
         CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
         List<Class.transfercost> clsTotalGrid = null;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
-        item_movement Selecteditem_movement;
+      //  item_movement Selecteditem_movement;
         public Transfer()
         {
             InitializeComponent();
@@ -196,7 +196,10 @@ namespace Cognitivo.Product
             int NumberOfRecords = ProductTransferDB.ApproveDestination((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
             if (NumberOfRecords > 0)
             {
+                itemMovement = new Configs.itemMovement();
                 toolBar.msgSaved(NumberOfRecords);
+
+               
             }
         }
 
@@ -287,7 +290,7 @@ namespace Cognitivo.Product
         {
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            Selecteditem_movement = itemMovement.item_movement;
+            //Selecteditem_movement = itemMovement.item_movement;
             if (crud_modal.Visibility == Visibility.Hidden)
             {
 
@@ -303,11 +306,11 @@ namespace Cognitivo.Product
                     item_transfer_detail.status = Status.Documents_General.Pending;
                     item_transfer_detail.quantity_origin = 1;
                     item_transfer_detail.timestamp = DateTime.Now;
-                    item_transfer_detail.movement_id = (int)Selecteditem_movement.id_movement;
+                    item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
                     item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
                     item_transfer_detail.RaisePropertyChanged("item_product");
-                    foreach (item_movement_dimension item_movement_dimension in Selecteditem_movement.item_movement_dimension)
+                    foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                     {
                         item_transfer_dimension item_transfer_dimension = new item_transfer_dimension();
                         item_transfer_dimension.id_transfer_detail = item_transfer_detail.id_transfer_detail;

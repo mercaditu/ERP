@@ -19,6 +19,7 @@ namespace entity
             is_head = true;
             child = new List<production_order_detail>();
             production_order_dimension = new List<production_order_dimension>();
+            production_execution_detail = new List<production_execution_detail>();
             item_request_detail = new List<item_request_detail>();
             trans_date = DateTime.Now;
 

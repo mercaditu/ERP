@@ -617,6 +617,7 @@ namespace Cognitivo.Production
                     n_production_order_detail.production_order.status = Status.Production.Pending;
                     n_production_order_detail.quantity = 0;
                     n_production_order_detail.status = Status.Production.Pending;
+                    production_order_detail.parent = n_production_order_detail;
                     n_production_order_detail.child.Add(production_order_detail);
                     ExecutionDB.production_order_detail.Add(n_production_order_detail);
                     production_orderproduction_order_detailViewSource.View.Refresh();

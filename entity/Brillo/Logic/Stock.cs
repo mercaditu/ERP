@@ -302,27 +302,24 @@ namespace entity.Brillo.Logic
                 {
                     item_product item_product = FindNFix_ItemProduct(production_execution_detail.item);
                     List<item_movement_dimension> MovementDimensionLIST = null;
+                    decimal Cost = 0;
 
                     //OUTPUT. CREDIT Stock.
                     if (production_execution_detail.is_input == false)
                     {
                         if (production_execution_detail.quantity > 0)
                         {
-                            decimal Cost = 0;
+                            decimal PercentOfTotal = 0M;
 
                             if (production_execution_detail.production_order_detail.production_order.types == production_order.ProductionOrderTypes.Fraction)
                             {
-                                if (production_execution_detail.parent != null)
-                                {
-                                    item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == production_execution_detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
-                                }
-
-                                decimal PercentOfTotal = 0M;
-
-                                //Percentage of Dimension
-                                //If
                                 if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
                                 {
+                                    if (production_execution_detail.parent != null)
+                                    {
+                                        item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == production_execution_detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
+                                    }
+
                                     bool CostDimension = false;
                                     decimal InputDimension = 1;
                                     decimal OutPutDimension = 1;
@@ -343,35 +340,30 @@ namespace entity.Brillo.Logic
 
                                     if (CostDimension)
                                     {
-                                        PercentOfTotal = ((OutPutDimension * 100) / InputDimension) / 100;
+                                        PercentOfTotal = (OutPutDimension / InputDimension);
                                     }
-                                }
-
-                                PercentOfTotal = app_dimension
-
-                                if (item_movementINPUT.Count() > 0)
-                                {
-                                    Cost = Convert.ToDecimal(item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
-                                    Cost *= PercentOfTotal;
-
-                                    //In case of wrong configuration.
-                                    production_execution_detail.unit_cost = item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value));
-                                }
-                                else
-                                {
-                                    Cost = (decimal)item_product.item.unit_cost;
                                 }
                             }
                             //Else for Normal Production.
                             else
                             {
-                                //
-                                if (production_execution_detail.child.Count() > 0)
+                                PercentOfTotal = 1;
+                            }
+
+                            //For things that don't have Dimension.
+                            production_order_detail parent_order_detail = production_execution_detail.production_order_detail.parent;
+                            if (parent_order_detail != null)
+                            {
+                                List<production_order_detail> production_order_detailLIST = parent_order_detail.child.ToList();
+
+                                foreach (production_order_detail order_detail in production_order_detailLIST)
                                 {
-                                    List<production_execution_detail> child_execution_detail = db.production_execution_detail.Where(x => x.parent.id_execution_detail == production_execution_detail.id_execution_detail).ToList(); //detail.parent.id_production_execution
-                                    production_execution_detail.unit_cost = child_execution_detail.Sum(x => x.unit_cost);
+                                    Cost = order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
                                 }
                             }
+
+                            //In case of wrong configuration.
+                            production_execution_detail.unit_cost = Cost;
 
                             item_movementOUTPUT.Add(
                                     CreditOnly_Movement(entity.Status.Stock.InStock,

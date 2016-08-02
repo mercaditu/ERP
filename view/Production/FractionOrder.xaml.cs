@@ -210,7 +210,7 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
 
-            if (ExecutionDB.Approve(entity.production_execution_detail.Types.Fraction) > 0)
+            if (ExecutionDB.Approve(entity.production_order.ProductionOrderTypes.Fraction) > 0)
             {
                 toolBar.msgApproved(1);
             }
@@ -1053,7 +1053,7 @@ namespace Cognitivo.Production
                 }
             }
 
-            _production_execution_detail.Type = production_execution_detail.Types.Fraction;
+           // _production_execution_detail.Type = production_execution_detail.Types.Fraction;
             _production_execution_detail.State = EntityState.Added;
             _production_execution_detail.id_item = production_order_detail.id_item;
             _production_execution_detail.item = production_order_detail.item;

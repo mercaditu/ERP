@@ -58,7 +58,7 @@ namespace entity
 
         public void Approve()
         {
-
+            OrderDB orderdb= new OrderDB();
             foreach (item_request item_request in base.item_request.Local.Where(x =>
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected))
@@ -102,16 +102,16 @@ namespace entity
                 purchase_tender.trans_date = item_request.request_date;
                 purchase_tender.comment = item_request.comment;
 
-
-                production_order production_order = new production_order();
-                production_order.types = entity.production_order.ProductionOrderTypes.Fraction;
-                production_order.status = Status.Production.Pending;
-                production_order.name = item_request.name;
-                production_order.id_project = item_request.id_project;
+                int Line = 0;
                 if (production_line.FirstOrDefault() != null)
                 {
-                    production_order.id_production_line = production_line.FirstOrDefault().id_production_line;
+                  Line = production_line.FirstOrDefault().id_production_line;
                 }
+
+                production_order production_order = orderdb.New(item_request.name,production_order.ProductionOrderTypes.Fraction, Line);
+              
+                production_order.id_project = item_request.id_project;
+              
                 production_execution production_execution = new production_execution();
 
 
@@ -369,10 +369,11 @@ namespace entity
                 }
                 if (production_order.production_order_detail.Count() > 0)
                 {
-                    base.production_order.Add(production_order);
-                    base.production_execution.Add(production_execution);
+                    orderdb.production_order.Add(production_order);
+                    orderdb.production_execution.Add(production_execution);
                 }
             }
+            orderdb.SaveChanges();
             SaveChanges();
         }
     }

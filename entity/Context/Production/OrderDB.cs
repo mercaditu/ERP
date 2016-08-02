@@ -7,6 +7,19 @@ namespace entity
 {
     public partial class OrderDB : BaseDB
     {
+        public production_order New(string name, production_order.ProductionOrderTypes Type, int Line)
+        {
+            production_order production_order = new production_order();
+            production_order.id_production_line = Line;
+            production_order.types = Type;
+            production_order.trans_date = DateTime.Now;
+            production_order.status = Status.Production.Pending;
+            production_order.name = name;
+            production_order.IsSelected = true;
+            return production_order;
+        }
+
+
         public override int SaveChanges()
         {
             validate_order();

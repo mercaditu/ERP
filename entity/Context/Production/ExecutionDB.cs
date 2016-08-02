@@ -8,13 +8,25 @@ namespace entity
 {
     public partial class ExecutionDB : BaseDB
     {
-        public production_order New(string Name, production_order.ProductionOrderTypes Type, production_line Line, )
+        public production_order New(string name, production_order.ProductionOrderTypes Type, int Line)
         {
             production_order production_order = new production_order();
-            production_order.id_production_line = Line.id_production_line;
+            production_order.id_production_line = Line;
             production_order.types = Type;
             production_order.trans_date = DateTime.Now;
             production_order.status = Status.Production.Pending;
+            production_order.name = name;
+            return production_order;
+        }
+
+             public production_execution NewExecustion()
+        {
+            production_execution production_execution = new production_execution();
+            production_execution.id_production_line = base.production_line.FirstOrDefault().id_production_line;
+        
+            production_execution.trans_date = DateTime.Now;
+            production_execution.status = Status.Documents_General.Pending;
+            return production_execution;
         }
 
         public override int SaveChanges()

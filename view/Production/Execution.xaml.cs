@@ -292,10 +292,9 @@ namespace Cognitivo.Production
 
         private void toolBar_btnNew_Click(object sender)
         {
-            production_execution production_execution = new production_execution();
-            production_execution.State = System.Data.Entity.EntityState.Added;
-            production_execution.IsSelected = true;
-            ExecutionDB.Entry(production_execution).State = EntityState.Added;
+            production_execution production_execution =ExecutionDB.NewExecustion();
+     
+           
 
             production_executionViewSource.View.MoveCurrentToLast();
         }
@@ -337,7 +336,7 @@ namespace Cognitivo.Production
         {
             toolBar_btnSave_Click(sender);
 
-            if (ExecutionDB.Approve(entity.production_execution_detail.Types.Production) > 0)
+            if (ExecutionDB.Approve(entity.production_order.ProductionOrderTypes.Production) > 0)
             {
                 toolBar.msgApproved(1);
             }

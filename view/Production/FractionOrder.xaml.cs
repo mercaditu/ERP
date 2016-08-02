@@ -645,7 +645,7 @@ namespace Cognitivo.Production
                     }
                     else { return false; }
                 };
-                RefreshData();
+                RefreshExecution();
             }
         }
 
@@ -817,7 +817,7 @@ namespace Cognitivo.Production
 
                             production_execution_detailServiceContractViewSource.View.Refresh();
                             production_execution_detailServiceViewSource.View.MoveCurrentToLast();
-                            RefreshData();
+                            RefreshExecution();
 
                         }
                         else if (production_order_detail.item.id_item_type == item.item_type.ServiceContract)
@@ -840,7 +840,7 @@ namespace Cognitivo.Production
 
                             ExecutionDB.production_execution_detail.Add(_production_execution_detail);
                             production_execution_detailServiceContractViewSource.View.Refresh();
-                            RefreshData();
+                            RefreshExecution();
                         }
                     }
                 }
@@ -896,6 +896,15 @@ namespace Cognitivo.Production
             }
         }
 
+        private void RefreshExecution()
+        {
+            RefreshCollection(production_execution_detailProductViewSource);
+            RefreshCollection(production_execution_detailRawViewSource);
+            RefreshCollection(production_execution_detailSupplyViewSource);
+            RefreshCollection(production_execution_detailAssetViewSource);
+            RefreshCollection(production_execution_detailServiceContractViewSource);
+        }
+
         public void RefreshData()
         {
             RefreshCollection(production_orderViewSource);
@@ -903,12 +912,6 @@ namespace Cognitivo.Production
             RefreshCollection(production_order_detaillRawViewSource);
             RefreshCollection(production_order_detaillProductViewSource);
             RefreshCollection(production_order_detaillServiceViewSource);
-
-            RefreshCollection(production_execution_detailProductViewSource);
-            RefreshCollection(production_execution_detailRawViewSource);
-            RefreshCollection(production_execution_detailSupplyViewSource);
-            RefreshCollection(production_execution_detailAssetViewSource);
-            RefreshCollection(production_execution_detailServiceContractViewSource);
 
             if (production_orderViewSource != null)
             {
@@ -1311,7 +1314,7 @@ namespace Cognitivo.Production
             }
 
             RefreshData();
-
+            RefreshExecution();
         }
 
         private void btnItemSelect_Click(object sender, RoutedEventArgs e)
@@ -1325,7 +1328,6 @@ namespace Cognitivo.Production
             {
                 e.CanExecute = true;
             }
-
         }
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -1347,7 +1349,7 @@ namespace Cognitivo.Production
                         production_execution_detail.State = EntityState.Deleted;
                         ExecutionDB.production_execution_detail.Remove(production_execution_detail);
 
-                        RefreshData();
+                        RefreshExecution();
                     }
 
                 }
@@ -1361,6 +1363,7 @@ namespace Cognitivo.Production
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefreshData();
+            RefreshExecution();
         }
     }
 }

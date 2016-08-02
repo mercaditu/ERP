@@ -313,13 +313,13 @@ namespace entity.Brillo.Logic
 
                             if (production_execution_detail.production_order_detail.production_order.types == production_order.ProductionOrderTypes.Fraction)
                             {
+                                if (production_execution_detail.parent != null)
+                                {
+                                    item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == production_execution_detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
+                                }
+
                                 if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
                                 {
-                                    if (production_execution_detail.parent != null)
-                                    {
-                                        item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == production_execution_detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
-                                    }
-
                                     bool CostDimension = false;
                                     decimal InputDimension = 1;
                                     decimal OutPutDimension = 1;

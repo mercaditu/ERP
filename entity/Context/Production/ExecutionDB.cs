@@ -8,6 +8,15 @@ namespace entity
 {
     public partial class ExecutionDB : BaseDB
     {
+        public production_order New(string Name, production_order.ProductionOrderTypes Type, production_line Line, )
+        {
+            production_order production_order = new production_order();
+            production_order.id_production_line = Line.id_production_line;
+            production_order.types = Type;
+            production_order.trans_date = DateTime.Now;
+            production_order.status = Status.Production.Pending;
+        }
+
         public override int SaveChanges()
         {
             validate_Execution();
@@ -87,7 +96,7 @@ namespace entity
             }
         }
 
-        public int Approve(entity.production_execution_detail.Types Type)
+        public int Approve(entity.production_execution.Types Type)
         {
             foreach (production_order_detail production_order_detail in base.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
             {
@@ -99,8 +108,6 @@ namespace entity
                         ///Production: Sums all input Childs to the Cost.
                         ///Fraction: Takes a Fraction of the parent. 
                         ///TODO: Fraction only takes cost of parent. We need to include other things as well.
-
-                        production_execution_detail.Type = Type;
 
                         entity.Brillo.Logic.Stock _Stock = new entity.Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();

@@ -10,6 +10,7 @@ namespace entity
 
     public partial class production_execution : Audit
     {
+
         public production_execution()
         {
             id_company = CurrentSession.Id_Company;

@@ -8,12 +8,6 @@ namespace entity
 
     public partial class production_execution_detail : Audit
     {
-        public enum Types
-        {
-            Production,
-            Fraction
-        }
-
         public production_execution_detail()
         {
             id_company = CurrentSession.Id_Company;
@@ -21,7 +15,7 @@ namespace entity
             is_head = true;
             trans_date = DateTime.Now;
             is_input = false;
-            child = child = new List<production_execution_detail>();
+            child = new List<production_execution_detail>();
             production_execution_dimension = new List<production_execution_dimension>();
             start_date = DateTime.Now;
             end_date = DateTime.Now;
@@ -102,9 +96,6 @@ namespace entity
             }
         }
         decimal _hour;
-
-        [NotMapped]
-        public Types Type { get; set; }
 
         [Required]
         public bool is_input { get; set; }

@@ -293,6 +293,7 @@ namespace Cognitivo.Production
         private void toolBar_btnNew_Click(object sender)
         {
             production_execution production_execution = new production_execution();
+            production_execution.type = entity.production_execution.Types.Production;
             production_execution.State = System.Data.Entity.EntityState.Added;
             production_execution.IsSelected = true;
             ExecutionDB.Entry(production_execution).State = EntityState.Added;

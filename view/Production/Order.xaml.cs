@@ -386,10 +386,11 @@ namespace Cognitivo.Production
               
                 item_request.id_department = ItemRequest.id_department;
                 item_request.id_production_order = id_production_order;
-                if (production_order.project!=null)
+                if (production_order.id_project != null)
                 {
-                    item_request.id_project = production_order.project.id_project;
-                    item_request.id_branch = production_order.project.id_branch;
+                    project project = OrderDB.projects.Where(x => x.id_project == production_order.id_project).FirstOrDefault();
+                    item_request.id_project = production_order.id_project;
+                    item_request.id_branch = production_order.id_branch;
                 }
             
                 item_request.request_date = DateTime.Now;

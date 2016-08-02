@@ -430,6 +430,7 @@ namespace Cognitivo.Purchase
                     //Item DOES NOT Exist in Context
                     purchase_invoice_detail.item = item;
                     purchase_invoice_detail.id_item = item.id_item;
+                    purchase_invoice_detail.item_description = item.name;
                     purchase_invoice_detail.quantity = 1;
                     purchase_invoice_detail.RaisePropertyChanged("quantity");
                 }
@@ -451,7 +452,7 @@ namespace Cognitivo.Purchase
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    purchase_invoice_detail.item_description = item.name;
+                    purchase_invoice_detail.item_description = sbxItem.Text;
                 }));
             }
 

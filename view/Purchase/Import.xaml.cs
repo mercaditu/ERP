@@ -100,6 +100,11 @@ namespace Cognitivo.Purchase
             purchase_invoiceViewSource.Source = ImpexDB.purchase_invoice.Where(a => a.id_company == CurrentSession.Id_Company && a.id_contact == 0 && a.is_issued == true).OrderByDescending(a => a.trans_date).ToList();
             impex impex = new impex();
             impex.impex_type = entity.impex._impex_type.Import;
+            if (ImpexDB.impex_incoterm.Where(x=>x.is_priority).FirstOrDefault()!=null)
+            {
+                impex.id_incoterm = ImpexDB.impex_incoterm.Where(x => x.is_priority).FirstOrDefault().id_incoterm;
+            }
+            
             impex.eta = DateTime.Now;
             impex.etd = DateTime.Now;
             impex.is_active = true;

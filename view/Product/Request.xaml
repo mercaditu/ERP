@@ -103,7 +103,7 @@
                 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{lex:Loc User}" Style="{StaticResource input_label}"/>
-                    <Label Content="{Binding security_user.name}" Style="{StaticResource generic_Label}"/>
+                    <Label Content="{Binding request_user.name}" Style="{StaticResource generic_Label}"/>
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal">

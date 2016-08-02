@@ -96,7 +96,7 @@ namespace entity
             }
         }
 
-        public int Approve(entity.production_execution.Types Type)
+        public int Approve(entity.production_order.ProductionOrderTypes Type)
         {
             foreach (production_order_detail production_order_detail in base.production_order_detail.Local.Where(x => x.IsSelected && x.status == Status.Production.Approved).OrderByDescending(x => x.is_input))
             {

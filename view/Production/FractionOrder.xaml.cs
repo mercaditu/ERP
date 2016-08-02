@@ -907,12 +907,7 @@ namespace Cognitivo.Production
 
         public void RefreshData()
         {
-            RefreshCollection(production_orderViewSource);
-
-            RefreshCollection(production_order_detaillRawViewSource);
-            RefreshCollection(production_order_detaillProductViewSource);
-            RefreshCollection(production_order_detaillServiceViewSource);
-
+            //RefreshCollection(production_orderViewSource);
             if (production_orderViewSource != null)
             {
                 if (production_orderViewSource.View != null)
@@ -924,6 +919,13 @@ namespace Cognitivo.Production
                     }
                 }
             }
+
+            RefreshCollection(production_order_detaillRawViewSource);
+            RefreshCollection(production_order_detaillProductViewSource);
+            RefreshCollection(production_order_detaillSupplyViewSource);
+            RefreshCollection(production_order_detaillAssetViewSource);
+            RefreshCollection(production_order_detaillServiceViewSource);
+            RefreshCollection(production_order_detaillServiceContractViewSource);
         }
 
         public void RefreshTree()

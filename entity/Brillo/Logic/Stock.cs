@@ -318,30 +318,38 @@ namespace entity.Brillo.Logic
                                     item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == production_execution_detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
                                 }
 
-                                if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
+                                if (item_movementINPUT.Count() > 0)
                                 {
-                                    bool CostDimension = false;
-                                    decimal InputDimension = 1;
-                                    decimal OutPutDimension = 1;
 
-                                    foreach (item_movement_dimension item_movement_dimension in item_movementINPUT.FirstOrDefault().item_movement_dimension)
+                                    if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
                                     {
-                                        CostDimension = true;
-                                        InputDimension *= item_movement_dimension.value;
-                                    }
+                                        bool CostDimension = false;
+                                        decimal InputDimension = 1;
+                                        decimal OutPutDimension = 1;
 
-                                    MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
+                                        foreach (item_movement_dimension item_movement_dimension in item_movementINPUT.FirstOrDefault().item_movement_dimension)
+                                        {
+                                            CostDimension = true;
+                                            InputDimension *= item_movement_dimension.value;
+                                        }
 
-                                    foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
-                                    {
-                                        CostDimension = true;
-                                        OutPutDimension *= production_execution_dimension.value;
-                                    }
+                                        MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
 
-                                    if (CostDimension)
-                                    {
-                                        PercentOfTotal = (OutPutDimension / InputDimension);
+                                        foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
+                                        {
+                                            CostDimension = true;
+                                            OutPutDimension *= production_execution_dimension.value;
+                                        }
+
+                                        if (CostDimension)
+                                        {
+                                            PercentOfTotal = (OutPutDimension / InputDimension);
+                                        }
                                     }
+                                }
+                                else
+                                {
+                                    PercentOfTotal = 1;
                                 }
                             }
                             //Else for Normal Production.

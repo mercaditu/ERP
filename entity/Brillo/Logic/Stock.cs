@@ -21,10 +21,8 @@ namespace entity.Brillo.Logic
             if (obj_entity.GetType().BaseType == typeof(sales_invoice) || obj_entity.GetType() == typeof(sales_invoice))
             {
                 sales_invoice sales_invoice = (sales_invoice)obj_entity;
-
                 foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
                 {
-
                     if (detail.item.is_autorecepie)
                     {
                         item_product item_product = FindNFix_ItemProduct(detail.item);
@@ -32,11 +30,9 @@ namespace entity.Brillo.Logic
                         {
                             foreach (item_recepie_detail item_recepie_detail in detail.item.item_recepie.FirstOrDefault().item_recepie_detail)
                             {
-
                                 item_product item_productSub = FindNFix_ItemProduct(item_recepie_detail.item);
                                 if (item_productSub != null)
                                 {
-
                                     if (detail.id_location == null)
                                     {
                                         detail.id_location = FindNFix_Location(item_productSub, detail.app_location, sales_invoice.app_branch);
@@ -63,7 +59,6 @@ namespace entity.Brillo.Logic
                                 }
                             }
                         }
-
                     }
                     else
                     {

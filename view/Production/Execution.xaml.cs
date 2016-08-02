@@ -781,6 +781,11 @@ namespace Cognitivo.Production
                             RefreshData();
                         }
                     }
+                    else
+                    {
+                        Insert_IntoDetail(production_order_detail, Quantity);
+                        RefreshData();
+                    }
                 }
                 else
                 {

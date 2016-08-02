@@ -667,7 +667,7 @@ namespace Cognitivo.Production
                             {
                                 if (production_order != null)
                                 {
-                                    if(objproduction_execution_detail.production_order_detail != null)
+                                    if (objproduction_execution_detail.production_order_detail != null)
                                     {
                                         if (objproduction_execution_detail.production_order_detail.production_order == production_order)
                                         {
@@ -880,7 +880,7 @@ namespace Cognitivo.Production
                 if (Collection.View != null)
                 {
                     Collection.View.Refresh();
-                } 
+                }
             }
         }
 
@@ -1025,12 +1025,17 @@ namespace Cognitivo.Production
                                 RefreshData();
                             }
                         }
+                        else
+                        {
+                            Insert_IntoDetail(production_order_detail, Quantity);
+                            RefreshData();
+                        }
                     }
                     else
                     {
                         Insert_IntoDetail(production_order_detail, Quantity);
                         RefreshData();
-                    }   
+                    }
                 }
             }
             catch (Exception ex)
@@ -1053,14 +1058,14 @@ namespace Cognitivo.Production
                 }
             }
 
-           // _production_execution_detail.Type = production_execution_detail.Types.Fraction;
+            // _production_execution_detail.Type = production_execution_detail.Types.Fraction;
             _production_execution_detail.State = EntityState.Added;
             _production_execution_detail.id_item = production_order_detail.id_item;
             _production_execution_detail.item = production_order_detail.item;
             _production_execution_detail.quantity = Quantity;
             _production_execution_detail.id_project_task = production_order_detail.id_project_task;
             _production_execution_detail.movement_id = production_order_detail.movement_id;
-             
+
             if (production_order_detail.item.unit_cost != null)
             {
                 _production_execution_detail.unit_cost = (decimal)production_order_detail.item.unit_cost;
@@ -1356,6 +1361,6 @@ namespace Cognitivo.Production
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RefreshData();
-        }      
+        }
     }
 }

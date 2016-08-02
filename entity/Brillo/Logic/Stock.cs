@@ -315,7 +315,7 @@ namespace entity.Brillo.Logic
                         {
                             decimal Cost = 0;
 
-                            if (production_execution_detail.Type == production_execution_detail.Types.Fraction)
+                            if (production_execution_detail.production_order_detail.production_order.types == production_order.ProductionOrderTypes.Fraction)
                             {
                                 if (production_execution_detail.parent != null)
                                 {

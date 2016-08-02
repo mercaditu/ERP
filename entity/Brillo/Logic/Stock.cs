@@ -317,37 +317,42 @@ namespace entity.Brillo.Logic
                                     item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == production_execution_detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
                                 }
 
-                                if (item_movementINPUT.Count() > 0)
+                                decimal PercentOfTotal = 0M;
+
+                                //Percentage of Dimension
+                                //If
+                                if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
                                 {
                                     bool CostDimension = false;
                                     decimal InputDimension = 1;
                                     decimal OutPutDimension = 1;
 
-                                    Cost = Convert.ToDecimal(item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
-
-
-                                    if (item_movementINPUT.FirstOrDefault().item_movement_dimension.Count > 0)
+                                    foreach (item_movement_dimension item_movement_dimension in item_movementINPUT.FirstOrDefault().item_movement_dimension)
                                     {
-                                        foreach (item_movement_dimension item_movement_dimension in item_movementINPUT.FirstOrDefault().item_movement_dimension)
-                                        {
-                                            CostDimension = true;
-                                            InputDimension *= item_movement_dimension.value;
-                                        }
-
-                                        MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
-
-                                        foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
-                                        {
-                                            CostDimension = true;
-                                            OutPutDimension *= production_execution_dimension.value;
-                                        }
-
-                                        if (CostDimension)
-                                        {
-                                            decimal Percentage = ((OutPutDimension * 100) / InputDimension) / 100;
-                                            Cost = Cost * Percentage;
-                                        }
+                                        CostDimension = true;
+                                        InputDimension *= item_movement_dimension.value;
                                     }
+
+                                    MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
+
+                                    foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
+                                    {
+                                        CostDimension = true;
+                                        OutPutDimension *= production_execution_dimension.value;
+                                    }
+
+                                    if (CostDimension)
+                                    {
+                                        PercentOfTotal = ((OutPutDimension * 100) / InputDimension) / 100;
+                                    }
+                                }
+
+                                PercentOfTotal = app_dimension
+
+                                if (item_movementINPUT.Count() > 0)
+                                {
+                                    Cost = Convert.ToDecimal(item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value)));
+                                    Cost *= PercentOfTotal;
 
                                     //In case of wrong configuration.
                                     production_execution_detail.unit_cost = item_movementINPUT.Sum(x => x.item_movement_value.Sum(y => y.unit_value));

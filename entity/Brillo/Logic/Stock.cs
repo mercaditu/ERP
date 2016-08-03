@@ -312,10 +312,10 @@ namespace entity.Brillo.Logic
                         if (production_execution_detail.quantity > 0)
                         {
                             decimal PercentOfTotal = 0M;
+                            List<item_movement_dimension> OutputMovementDimensionLIST = new List<item_movement_dimension>();
 
                             if (production_execution_detail.production_order_detail.production_order.types == production_order.ProductionOrderTypes.Fraction)
                             {
-
                                 if (production_execution_detail.production_order_detail.parent != null)
                                 {
                                     production_order_detail _parent_order_detail = production_execution_detail.production_order_detail.parent;
@@ -338,9 +338,6 @@ namespace entity.Brillo.Logic
                                             CostDimension = true;
                                             InputDimension *= item_movement_dimension.value;
                                         }
-
-                                        //
-                                        List<item_movement_dimension> OutputMovementDimensionLIST = new List<item_movement_dimension>();
 
                                         foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
                                         {

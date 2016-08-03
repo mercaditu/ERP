@@ -146,7 +146,7 @@
                             <Label Content="+" HorizontalAlignment="Left" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
                                    Style="{StaticResource btn_Label}"/>
                         </StackPanel>
-                        <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}" Height="150">
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel/>

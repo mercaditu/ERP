@@ -58,7 +58,7 @@ namespace cntrl.PanelAdv
                 if (_contact != null)
                 {
                     sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
-                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
+                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact && x.sales_return.Count()==0).ToList();
 
 
 
@@ -103,7 +103,7 @@ namespace cntrl.PanelAdv
                 {
                     contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                     sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
-                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact).ToList();
+                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact && x.sales_return.Count() == 0).ToList();
                 }
             }
             catch (Exception ex)

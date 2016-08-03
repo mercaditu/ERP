@@ -245,8 +245,6 @@ namespace Cognitivo.Menu
                 appIcon.IsEnabled = false;
             }
 
-            if (_description != "")
-            { var appLocApplicationDescription = new LocTextExtension("Cognitivo:local:" + _description + "").SetBinding(appIcon, cntrl.applicationIcon.ApplicationDescriptionProperty); }
             var appLocApplicationName = new LocTextExtension("Cognitivo:local:" + _name + "").SetBinding(appIcon, cntrl.applicationIcon.ApplicationNameProperty);
 
             //Incase img is not set, set it to DefaultIcon

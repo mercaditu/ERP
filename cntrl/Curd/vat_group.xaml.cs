@@ -46,7 +46,7 @@ namespace cntrl.Curd
                 if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
                 {
                     app_vatViewSource = this.FindResource("app_vatViewSource") as CollectionViewSource;
-                    app_vatViewSource.Source = _entity.db.app_vat.Where(a => a.is_active == true && a.id_company == entity.Properties.Settings.Default.company_ID).OrderBy(a => a.name).ToList();
+                    app_vatViewSource.Source = _entity.db.app_vat.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
                     if (!isExternalCall)
                     {
@@ -103,6 +103,7 @@ namespace cntrl.Curd
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 if (!isExternalCall)

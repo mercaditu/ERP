@@ -23,8 +23,6 @@
             <StackPanel VerticalAlignment="Center" Margin="4,0" Width="184">
                 <TextBlock MaxWidth="180" Text="{Binding ApplicationName, ElementName=_applicationIcon}" 
                            Foreground="Black" FontWeight="Thin" FontSize="18" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
-                <TextBlock MaxWidth="237" Foreground="Silver" Text="{Binding ApplicationDescription, ElementName=_applicationIcon}" 
-                           Margin="0" Style="{StaticResource text_Instructions}" TextTrimming="CharacterEllipsis"/>
             </StackPanel>
         </StackPanel>
         <metro:Tile.ContextMenu>

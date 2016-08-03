@@ -27,16 +27,6 @@ namespace cntrl
             set { SetValue(ApplicationNameProperty, value); }
         }
 
-        //ApplicationDescriptionProperty
-        public static readonly DependencyProperty ApplicationDescriptionProperty =
-            DependencyProperty.Register("ApplicationDescription", typeof(string), typeof(applicationIcon),
-            new FrameworkPropertyMetadata(string.Empty));
-        public string ApplicationDescription
-        {
-            get { return Convert.ToString(GetValue(ApplicationDescriptionProperty)); }
-            set { SetValue(ApplicationDescriptionProperty, value); }
-        }
-
         public applicationIcon()
         {
             InitializeComponent();

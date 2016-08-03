@@ -110,8 +110,6 @@
                     		     Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}" />
                         <CheckBox x:Name="chbxIsPerson" Content="Is Person?" Style="{StaticResource input_checkbox}"
                     		      IsChecked="{Binding is_person, FallbackValue=False}"/>
-                        <CheckBox x:Name="chbxIsActive" Content="Is Active?" Style="{StaticResource input_checkbox}"
-                    		      IsChecked="{Binding is_active, FallbackValue=False}"/>
                         <StackPanel Visibility="{Binding IsChecked, Converter={StaticResource BoolToVisibility}, ElementName=chbxIsPerson}">
                             <Label Content="{lex:Loc Gender}" 
                     			Style="{StaticResource input_label}"/>
@@ -159,10 +157,10 @@
                                 <DataTemplate>
                                     <StackPanel>
                                         <ComboBox x:Name="cbxFieldType" Style="{StaticResource ComboToLabelStyle}"
-                                         ItemsSource="{Binding Source={StaticResource app_fieldViewSource}}"
-						                  DisplayMemberPath="name" Width="Auto"
-						                  SelectedValuePath="id_field" 
-						                  SelectedValue="{Binding id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"  >
+                                                  ItemsSource="{Binding Source={StaticResource app_fieldViewSource}}"
+						                          DisplayMemberPath="name" Width="Auto"
+						                          SelectedValuePath="id_field" 
+						                          SelectedValue="{Binding id_field, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel/>
@@ -170,7 +168,7 @@
                                             </ComboBox.ItemsPanel>
                                         </ComboBox>
                                         <TextBox Style="{StaticResource input_textbox}"
-                                                Text="{Binding value, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
+                                                 Text="{Binding value, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -179,8 +177,9 @@
 
                     <StackPanel Margin="16,0" HorizontalAlignment="Center" Width="264" 
                                 IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                        <Label Content="{lex:Loc Extras}" Style="{StaticResource H2}"/>
                         <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
-                        <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
+                        <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
                                                  CollectionViewSource="{StaticResource contact_tagViewSource}"
                                                  focusGrid="True" Height="27" Width="256"
                                                  KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
@@ -210,6 +209,11 @@
                         <TextBox x:Name="txtComment"
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
+                        <DatePicker Style="{StaticResource input_datepicker}"
+                                    SelectedDate="{Binding timestamp, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox x:Name="chbxIsActive" Content="Is Active?" Style="{StaticResource input_checkbox}"
+                    		      IsChecked="{Binding is_active, FallbackValue=False}"/>
                     </StackPanel>
 
                 </WrapPanel>

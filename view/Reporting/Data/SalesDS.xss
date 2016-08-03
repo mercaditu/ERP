@@ -7,14 +7,13 @@
 <DiagramLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ex:showrelationlabel="False" ViewPortX="-10" ViewPortY="-10" xmlns:ex="urn:schemas-microsoft-com:xml-msdatasource-layout-extended" xmlns="urn:schemas-microsoft-com:xml-msdatasource-layout">
   <Shapes>
     <Shape ID="DesignTable:SalesByDate" ZOrder="5" X="354" Y="102" Height="440" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="357" />
-    <Shape ID="DesignTable:SalesByItem" ZOrder="9" X="702" Y="103" Height="405" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="322" />
-    <Shape ID="DesignTable:CostOfGoodsSold" ZOrder="13" X="0" Y="111" Height="370" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="287" />
+    <Shape ID="DesignTable:SalesByItem" ZOrder="8" X="702" Y="103" Height="405" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="322" />
+    <Shape ID="DesignTable:CostOfGoodsSold" ZOrder="12" X="0" Y="111" Height="370" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="287" />
     <Shape ID="DesignTable:CustomerList" ZOrder="3" X="704" Y="536" Height="335" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="252" />
-    <Shape ID="DesignTable:SalesBySalesRep" ZOrder="12" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
-    <Shape ID="DesignTable:SalesBudgetList" ZOrder="11" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
-    <Shape ID="DesignTable:SalesByBrand" ZOrder="10" X="1039" Y="104" Height="405" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="24" OldDataTableHeight="0" SplitterPosition="322" />
-    <Shape ID="DesignTable:SalesByTag" ZOrder="4" X="352" Y="560" Height="279" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="163" />
-    <Shape ID="DesignTable:AvgSales" ZOrder="8" X="2" Y="510" Height="315" Width="284" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="199" />
+    <Shape ID="DesignTable:SalesBySalesRep" ZOrder="11" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
+    <Shape ID="DesignTable:SalesBudgetList" ZOrder="10" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
+    <Shape ID="DesignTable:SalesByBrand" ZOrder="9" X="1039" Y="104" Height="405" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="24" OldDataTableHeight="0" SplitterPosition="322" />
+    <Shape ID="DesignTable:SalesByTag" ZOrder="4" X="352" Y="560" Height="561" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="445" />
     <Shape ID="DesignTable:DeliveryByCustomer" ZOrder="2" X="1040" Y="541" Height="440" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="357" />
     <Shape ID="DesignTable:DeliveryByZone" ZOrder="7" X="0" Y="0" Height="90" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="0" />
     <Shape ID="DesignTable:CreditNoteByTag" ZOrder="6" X="1370" Y="104" Height="370" Width="274" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="287" />

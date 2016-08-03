@@ -113,12 +113,15 @@ namespace Cognitivo.Accounting
      
         private void Sales_Sync()
         {
-            entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            Transactions.HashIntegration = RelationshipHash;
+            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            entity.DebeHaber.Transactions SalesError = new entity.DebeHaber.Transactions();
 
             //Loop through
             foreach (entity.sales_invoice sales_invoice in db.sales_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
             {
+                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                Transactions.HashIntegration = RelationshipHash;
+
                 entity.DebeHaber.Commercial_Invoice Sales = new entity.DebeHaber.Commercial_Invoice();
 
                 //Loads Data from Sales
@@ -134,12 +137,9 @@ namespace Cognitivo.Accounting
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual.Where(x => 
-                    x.id_payment_detail > 0 
-                    && x.parent != null 
-                    && x.payment_detail.payment.is_accounted == false))
-                {         
-                    if (schedual.parent.sales_invoice != null && schedual.payment_detail != null)
+                foreach (entity.payment_schedual schedual in sales_invoice.payment_schedual)
+                {
+                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
                     {
                         entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
                         //Fill and Add Payments
@@ -152,29 +152,22 @@ namespace Cognitivo.Accounting
                 }
 
                 Transactions.Commercial_Invoice.Add(Sales);
-                //This will make the Sales Invoice hide from the next load.
-                sales_invoice.is_accounted = true;
-            }
 
-            if (Transactions.Commercial_Invoice.Count > 0)
-            {
                 try
                 {
-                    ///Serealize SalesInvoiceLIST into Json
                     var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
-
                     Send2API(Sales_Json);
-                    file_create(Sales_Json, "sales_invoice");
-                    //Send Sales_Json send it to Server Address specified.
-
-                    //If all success, then SaveChanges.
-                    db.SaveChanges();
-                    Get_SalesInvoice();
+                    sales_invoice.is_accounted = true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show("Exception Error: " + ex.Message);
-                }   
+                    SalesError.Commercial_Invoice.Add(Sales);
+                    sales_invoice.is_accounted = false;
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -201,12 +194,9 @@ namespace Cognitivo.Accounting
                 }
 
                 //Loop through payments made.
-                foreach (entity.payment_schedual schedual in purchase_invoice.payment_schedual.Where(x =>
-                    x.id_payment_detail > 0
-                    && x.parent != null
-                    && x.payment_detail.payment.is_accounted == false))
+                foreach (entity.payment_schedual schedual in purchase_invoice.payment_schedual)
                 {
-                    if (schedual.parent.purchase_invoice != null && schedual.payment_detail != null)
+                    if (schedual.payment_detail != null)
                     {
                         entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
                         //Fill and Add Payments

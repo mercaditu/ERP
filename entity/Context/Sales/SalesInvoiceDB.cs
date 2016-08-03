@@ -384,7 +384,7 @@ namespace entity
                 {
                     if (sales_invoice.sales_invoice_detail.Where(x => x.sales_return_detail == null).Count() > 0 
                         &&
-                        sales_invoice.accounting_journal == null)
+                        sales_invoice.is_accounted == false)
                     {
                         List<payment_schedual> payment_schedualList = new List<payment_schedual>();
                         Brillo.Logic.Payment _Payment = new Brillo.Logic.Payment();

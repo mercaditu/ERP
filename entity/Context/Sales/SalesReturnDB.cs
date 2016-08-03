@@ -79,19 +79,20 @@ namespace entity
 
         private void add_CRM(sales_return sales_return)
         {
-            if (sales_return.id_sales_invoice == 0 || sales_return.id_sales_invoice == null)
+            sales_invoice_detail sales_invoice_detail = sales_return.sales_return_detail.FirstOrDefault().sales_invoice_detail;
+            if (sales_invoice_detail == null)
             {
                 crm_opportunity crm_opportunity = new crm_opportunity();
                 crm_opportunity.id_contact = sales_return.id_contact;
                 crm_opportunity.id_currency = sales_return.id_currencyfx;
-                crm_opportunity.value = sales_return.sales_return_detail.Sum(x => x.SubTotal_Vat);
+                crm_opportunity.value = sales_return.GrandTotal;
 
                 crm_opportunity.sales_return.Add(sales_return);
                 base.crm_opportunity.Add(crm_opportunity);
             }
             else
             {
-                crm_opportunity crm_opportunity = sales_invoice.Where(x => x.id_sales_invoice == sales_return.id_sales_invoice).FirstOrDefault().crm_opportunity;
+                crm_opportunity crm_opportunity = sales_invoice.Where(x => x.id_sales_invoice == sales_invoice_detail.id_sales_invoice).FirstOrDefault().crm_opportunity;
                 crm_opportunity.sales_return.Add(sales_return);
                 base.crm_opportunity.Attach(crm_opportunity);
             }

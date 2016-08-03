@@ -45,7 +45,7 @@
             </StackPanel>
         </TabItem>
         <TabItem x:Name="tabUpLoad" Focusable="False">
-            <Frame Source="/Cognitivo;component/Accounting/DebeHaberSync.xaml" NavigationUIVisibility="Hidden" Focusable="True"/>
+            <Frame x:Name="frameDebeHaberIntg" Source="/Cognitivo;component/Accounting/DebeHaberSync.xaml" NavigationUIVisibility="Hidden" Focusable="True"/>
         </TabItem>
     </TabControl>
 </Page>

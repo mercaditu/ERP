@@ -116,6 +116,7 @@ namespace Cognitivo.Accounting
                 }
 
                 tabUpLoad.IsSelected = true;
+                frameDebeHaberIntg.Refresh();
             }
             catch (Exception ex)
             {

@@ -93,13 +93,40 @@ namespace cntrl.Curd
         {
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             PaymentDB.payment_type.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
+            //Fix if Payment Type not inserted.
+            if (PaymentDB.payment_type.Local.Count == 0)
+            {
+                entity.payment_type payment_type = new entity.payment_type();
+                payment_type.name = "Cash";
+                payment_type.is_active = true;
+                payment_type.is_default = true;
+
+                PaymentDB.payment_type.Add(payment_type);
+            }
             payment_typeViewSource.Source = PaymentDB.payment_type.Local;
 
             CollectionViewSource app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
             PaymentDB.app_account.Where(a => a.is_active && a.id_company == CurrentSession.Id_Company).Load();
+
+            //Fix if Payment Type not inserted.
+            if (PaymentDB.app_account.Local.Count == 0)
+            {
+                entity.app_account app_account = new entity.app_account();
+                app_account.name = "CashBox";
+                app_account.code = "Generic";
+                app_account.id_account_type = entity.app_account.app_account_type.Terminal;
+                app_account.id_terminal = CurrentSession.Id_Terminal;
+                app_account.is_active = true;
+
+                PaymentDB.app_account.Add(app_account);
+            }
             app_accountViewSource.Source = PaymentDB.app_account.Local;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+            if (Mode == Modes.Recievable)
+            {
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+                stackDocument.Visibility = System.Windows.Visibility.Visible;
+            }
 
             paymentViewSource.View.Refresh();
             paymentpayment_detailViewSource.View.Refresh();
@@ -114,7 +141,6 @@ namespace cntrl.Curd
                         payment_detail.id_account = app_account.id_account;
                     }
                 }
-               
             }
             paymentpayment_detailViewSource.View.Refresh();
         }
@@ -139,13 +165,7 @@ namespace cntrl.Curd
 
             if (payment.payment_detail.Where(x=>x.IsSelected).Count()>0)
             {
-                //List<payment_detail> payment_detailList = payment.payment_detail.Where(x => x.IsSelected == false).ToList();
                 PaymentDB.payment_detail.RemoveRange(payment.payment_detail.Where(x => x.IsSelected == false));
-                //foreach (payment_detail payment_detail in payment_detailList)
-                //{
-                //    payment.payment_detail.Remove(payment_detail);
-
-                //}
                 PaymentDB.SaveChanges();
                 foreach (payment_detail payment_detail in payment.payment_detail.Where(x => x.IsSelected))
                 {

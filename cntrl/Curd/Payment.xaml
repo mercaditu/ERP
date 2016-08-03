@@ -62,12 +62,14 @@
                                                        Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel x:Name="stpDocument" Background="WhiteSmoke" DataContext="{StaticResource paymentViewSource}">
-                            <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
-                            <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
+                            <StackPanel x:Name="stackDocument" Visibility="Collapsed">
+                                <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
+                                <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 
                                       metro:ControlsHelper.FocusBorderBrush="RoyalBlue" SelectedIndex="0"
                                       metro:ControlsHelper.MouseOverBorderBrush="Silver"
                                       Style="{StaticResource input_combobox}"
                                       SelectedValue="{Binding id_range, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                            </StackPanel>
                             <Label Content="{lex:Loc Number}" Style="{StaticResource input_label}"/>
                             <TextBox metro:TextBoxHelper.Watermark="{Binding NumberWatermark, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource input_textbox}"
                                      metro:TextBoxHelper.SelectAllOnFocus="True"

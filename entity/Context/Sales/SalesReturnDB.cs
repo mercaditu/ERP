@@ -177,7 +177,6 @@ namespace entity
                             }
                     
                             payment_detailreturn.id_sales_return = sales_return.id_sales_return;
-
                             payment_detailreturn.value = sales_return.GrandTotal;
 
                             payment_schedual payment_schedualReturn = new payment_schedual();

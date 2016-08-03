@@ -447,12 +447,6 @@ namespace Cognitivo.Commercial
         private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             Add_field();
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Add_field();
         }
 
         private void MapsDropPin_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -486,17 +480,17 @@ namespace Cognitivo.Commercial
             contact contact = contactViewSource.View.CurrentItem as contact;
             if (contact != null)
             {
-                using (db db = new db())
+                //using (db db = new db())
+                //{
+                if (ContactDB.app_field.Where(x => x.field_type == app_field.field_types.Account).Count() == 0)
                 {
-                    if (db.app_field.Where(x => x.field_type == app_field.field_types.Account).Count() == 0)
-                    {
-                        app_field app_field = new app_field();
-                        app_field.field_type = entity.app_field.field_types.Account;
-                        app_field.name = "Account";
-                        db.app_field.Add(app_field);
-                        db.SaveChanges();
-                    }
+                    app_field app_field = new app_field();
+                    app_field.field_type = entity.app_field.field_types.Account;
+                    app_field.name = "Account";
+                    ContactDB.app_field.Add(app_field);
+                    ContactDB.SaveChanges();
                 }
+                //}
 
                 contact_field_value contact_field_value = new contact_field_value();
                 contact.contact_field_value.Add(contact_field_value);

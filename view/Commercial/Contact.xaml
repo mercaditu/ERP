@@ -141,7 +141,6 @@
                         <TextBox x:Name="txtAddress"
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Content="{lex:Loc Geography}" Style="{StaticResource input_label}"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
                             <Label Content="+" HorizontalAlignment="Left" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 

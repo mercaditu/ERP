@@ -61,7 +61,15 @@ namespace Cognitivo.Reporting.Views
                 SalesDB.BeginInit();
 
                 Data.SalesDSTableAdapters.SalesByDateTableAdapter SalesByDateTableAdapter = new Data.SalesDSTableAdapters.SalesByDateTableAdapter();
-                DataTable dt = SalesByDateTableAdapter.GetData(StartDate, EndDate, app_branch.id_branch);
+                
+                if (true)
+                {
+                    DataTable dt = SalesByDateTableAdapter.GetDataByBranch(StartDate, EndDate, app_branch.id_branch);
+                }
+                else
+                {
+                    DataTable dt = SalesByDateTableAdapter.GetDataByGeneral(StartDate, EndDate);
+                }
 
                 reportDataSource1.Name = "SalesByDate"; //Name of the report dataset in our .RDLC file
                 reportDataSource1.Value = dt; //SalesDB.SalesByDate;

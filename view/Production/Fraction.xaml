@@ -635,7 +635,7 @@
                                         <TextBox  x:Name="txtAsset" Width="64" KeyUp="btnInsert_KeyDown" VerticalAlignment="Top" Margin="4"/>
                                         <Button x:Name="btnInsert_FixedAsset" Content="{lex:Loc Insert}" VerticalAlignment="Center" Click="btnInsert_Click"/>
                                     </StackPanel>
-                                    <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgCapital"  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailAssetViewSource}}" SelectionChanged="dgCapital_SelectionChanged">
+                                    <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgCapital" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailAssetViewSource}}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="100"/>

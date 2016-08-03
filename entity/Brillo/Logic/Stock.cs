@@ -276,6 +276,8 @@ namespace entity.Brillo.Logic
                                     && x.status == entity.Status.Stock.InStock
                                     && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                             }
+                            
+                            //MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
 
                             item_movementINPUT.AddRange(
                                 DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
@@ -316,17 +318,11 @@ namespace entity.Brillo.Logic
 
                                 if (production_execution_detail.production_order_detail.parent != null)
                                 {
-                                    production_order_detail _production_order_detail = production_execution_detail.production_order_detail.parent;
-                                    production_execution_detail _production_execution_detail = _production_order_detail.production_execution_detail.FirstOrDefault();
+                                    production_order_detail _parent_order_detail = production_execution_detail.production_order_detail.parent;
+                                    production_execution_detail _parent_execution_detail = _parent_order_detail.production_execution_detail.FirstOrDefault();
 
-                                    item_movementINPUT = db.item_movement.Where(x => x.id_execution_detail == _production_execution_detail.id_execution_detail).ToList(); //detail.parent.id_production_execution
+                                    item_movementINPUT = db.item_movement.Where(x => x.id_execution_detail == _parent_execution_detail.id_execution_detail).ToList();
                                 }
-
-
-                                //if (production_execution_detail.parent != null)
-                                //{
-                                //    item_movementINPUT = db.item_movement.Where(x => x.production_execution_detail.id_execution_detail == production_execution_detail.parent.id_execution_detail).ToList(); //detail.parent.id_production_execution
-                                //}
 
                                 if (item_movementINPUT.Count() > 0)
                                 {
@@ -343,10 +339,16 @@ namespace entity.Brillo.Logic
                                             InputDimension *= item_movement_dimension.value;
                                         }
 
-                                        MovementDimensionLIST = item_movementINPUT.FirstOrDefault().item_movement_dimension.ToList();
+                                        //
+                                        List<item_movement_dimension> OutputMovementDimensionLIST = new List<item_movement_dimension>();
 
                                         foreach (production_execution_dimension production_execution_dimension in production_execution_detail.production_execution_dimension)
                                         {
+                                            item_movement_dimension item_movement_dimension = new entity.item_movement_dimension();
+                                            item_movement_dimension.id_dimension = production_execution_dimension.id_dimension;
+                                            item_movement_dimension.value = production_execution_dimension.value;
+                                            OutputMovementDimensionLIST.Add(item_movement_dimension);
+
                                             CostDimension = true;
                                             OutPutDimension *= production_execution_dimension.value;
                                         }
@@ -368,27 +370,10 @@ namespace entity.Brillo.Logic
                                 PercentOfTotal = 1;
                             }
 
-                            //For things that don't have Dimension.
-                            //production_order_detail parent_order_detail = production_execution_detail.production_order_detail.parent;
-                            //if (parent_order_detail != null)
-                            //{
-                            //    List<production_order_detail> production_order_detailLIST = parent_order_detail.child.ToList();
-
-                            //    foreach (production_order_detail order_detail in production_order_detailLIST)
-                            //    {
-                            //        Cost = order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
-                            //    }
-                            //}
-
                             production_order_detail parent_order_detail = production_execution_detail.production_order_detail.parent;
                             if (parent_order_detail != null)
                             {
-                                //List<production_order_detail> production_order_detailLIST = parent_order_detail.child.ToList();
-
-                                //foreach (production_order_detail order_detail in production_order_detailLIST)
-                                //{
                                 Cost = parent_order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
-                               // }
                             }
 
                             //In case of wrong configuration.
@@ -409,7 +394,7 @@ namespace entity.Brillo.Logic
                                                     (App.Names.ProductionExecution,
                                                     (production_execution_detail.production_execution.production_order != null ? production_execution_detail.production_execution.production_order.work_number : ""),
                                                     ""),
-                                                    MovementDimensionLIST)
+                                                    OutputMovementDimensionLIST)
                                                 );
                             item_movementList.AddRange(item_movementOUTPUT);
                         }

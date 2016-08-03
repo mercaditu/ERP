@@ -188,13 +188,15 @@ namespace Cognitivo.Purchase
             {
                 purchase_invoiceViewSource.View.Refresh();
                 toolBar.msgSaved(PurchaseInvoiceDB.NumberOfRecords);
-                sbxContact.Text = "";
+                
             }
         }
 
         private void toolBar_btnCancel_Click(object sender)
         {
             PurchaseInvoiceDB.CancelAllChanges();
+            purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
+            purchase_invoice.State = EntityState.Unchanged;
         }
 
         private void toolBar_btnApprove_Click(object sender)

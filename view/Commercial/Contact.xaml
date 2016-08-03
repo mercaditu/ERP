@@ -143,7 +143,7 @@
                                  Text="{Binding address, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{lex:Loc Account}" Style="{StaticResource input_label}"/>
-                            <Label Content="+" HorizontalAlignment="Left" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
+                            <Label Content="+" HorizontalAlignment="Left" VerticalAlignment="Bottom" PreviewMouseUp="hrefAddCust_PreviewMouseUp" 
                                    Style="{StaticResource btn_Label}"/>
                         </StackPanel>
                         <ItemsControl ItemsSource="{Binding Source={StaticResource contactcontact_field_valueViewSource}}">

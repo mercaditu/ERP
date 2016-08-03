@@ -160,7 +160,7 @@
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
-            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" SelectionChanged="TabControl_SelectionChanged"
+            <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True"
                         Grid.Row="2" Grid.ColumnSpan="2" Margin="8">
                 <TabItem Header="{lex:Loc Order}">
                     <Grid Grid.Row="1" Background="White" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}"
@@ -204,7 +204,7 @@
                         </Grid>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1">
                             <StackPanel DataContext="{Binding SelectedItem_, ElementName=treeProject}">
-                                <Button Content="{lex:Loc Fraction}" Click="Button_Click" Style="{StaticResource btn_green}" Margin="16"/>
+                                <Button Content="{lex:Loc Fraction}" Click="btnFraction" Style="{StaticResource btn_green}" Margin="16"/>
                                 <cntrl:toolBar_Mini appName="ProductionOrder" State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
                                                     Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                     btnParent_Click="toolBar_Mini_btnParent_Click"
@@ -224,7 +224,8 @@
 
                                         <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
                                         <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxItem_Select_1" />
-                                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc Input}" OnLabel="{lex:Loc Output}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked"/>
+                                        <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc Input}" OnLabel="{lex:Loc Output}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" 
+                                                            Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked"/>
 
                                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
                                         <TextBox x:Name="txtqty" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ProjectPending2Bool}}"
@@ -298,8 +299,7 @@
                                         <Button x:Name="btnInsert_Product" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
                                     <DataGrid  Margin="4,0" x:Name="dgproduct" Background="WhiteSmoke" AutoGenerateColumns="False" 
-                                      ItemsSource="{Binding Source={StaticResource production_execution_detailProductViewSource}}" 
-                                      SelectionChanged="dgproduct_SelectionChanged">
+                                      ItemsSource="{Binding Source={StaticResource production_execution_detailProductViewSource}}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True"
                                                         Binding="{Binding trans_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="Auto"/>
@@ -362,7 +362,7 @@
                                         <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
 
-                                    <DataGrid Margin="0" x:Name="dgRaw"  AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailRawViewSource}}" SelectionChanged="dgRaw_SelectionChanged">
+                                    <DataGrid Margin="0" x:Name="dgRaw" AutoGenerateColumns="False" ItemsSource="{Binding Source={StaticResource production_execution_detailRawViewSource}}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="100"/>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Quantity}" Binding="{Binding quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
@@ -514,8 +514,7 @@
                                             <Button x:Name="btnInsert_ServiceContract" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                         </StackPanel>
                                         <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgServicecontract" AutoGenerateColumns="False" 
-                                      ItemsSource="{Binding Source={StaticResource production_execution_detailServiceContractViewSource}}" 
-                                      SelectionChanged="dgServicecontract_SelectionChanged">
+                                                  ItemsSource="{Binding Source={StaticResource production_execution_detailServiceContractViewSource}}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" 
                                                         Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
@@ -693,8 +692,7 @@
                                         <Button x:Name="btnInsert_Supplies" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
                                     <DataGrid Grid.Column="1" Margin="4,0" x:Name="dgSupplier" AutoGenerateColumns="False" 
-                                      ItemsSource="{Binding Source={StaticResource production_execution_detailSupplyViewSource}}" 
-                                      SelectionChanged="dgSupplier_SelectionChanged">
+                                      ItemsSource="{Binding Source={StaticResource production_execution_detailSupplyViewSource}}">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" 
                                                         Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  

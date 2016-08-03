@@ -129,5 +129,45 @@ namespace Cognitivo.Production
         {
 
         }
+
+        private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void btnFraction(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void ToggleQuantity_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ToggleQuantity_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void productionorderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

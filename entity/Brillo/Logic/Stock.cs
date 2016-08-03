@@ -369,15 +369,26 @@ namespace entity.Brillo.Logic
                             }
 
                             //For things that don't have Dimension.
+                            //production_order_detail parent_order_detail = production_execution_detail.production_order_detail.parent;
+                            //if (parent_order_detail != null)
+                            //{
+                            //    List<production_order_detail> production_order_detailLIST = parent_order_detail.child.ToList();
+
+                            //    foreach (production_order_detail order_detail in production_order_detailLIST)
+                            //    {
+                            //        Cost = order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
+                            //    }
+                            //}
+
                             production_order_detail parent_order_detail = production_execution_detail.production_order_detail.parent;
                             if (parent_order_detail != null)
                             {
-                                List<production_order_detail> production_order_detailLIST = parent_order_detail.child.ToList();
+                                //List<production_order_detail> production_order_detailLIST = parent_order_detail.child.ToList();
 
-                                foreach (production_order_detail order_detail in production_order_detailLIST)
-                                {
-                                    Cost = order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
-                                }
+                                //foreach (production_order_detail order_detail in production_order_detailLIST)
+                                //{
+                                Cost = parent_order_detail.production_execution_detail.Sum(x => x.unit_cost) * PercentOfTotal;
+                               // }
                             }
 
                             //In case of wrong configuration.

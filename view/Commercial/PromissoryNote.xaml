@@ -18,7 +18,7 @@
     <Page.Resources>
         <CollectionViewSource x:Key="payment_promissory_noteViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment_promissory_note}, CreateList=True}"/>
     </Page.Resources>
-    <Grid>
+    <Grid DataContext="{Binding Source={StaticResource payment_promissory_noteViewSource}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -30,7 +30,7 @@
 
         <ListBox Background="{StaticResource AccentColor_Brush}" 
 			     ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
-			     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Source={StaticResource payment_promissory_noteViewSource}}"
+			     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}"
 			     ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -45,7 +45,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}" DataContext="{Binding Source={StaticResource payment_promissory_noteViewSource}}">
+        <Grid Grid.Row="1" Grid.Column="1" Background="{StaticResource winBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
@@ -78,7 +78,7 @@
                         <Label Content="{Binding payment_schedual.purchase_invoice.number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                     </StackPanel>
                 </StackPanel>
-                <Label Content="{lex:Loc ExpiryDate}" Style="{StaticResource input_label}"/>
+                <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                 <DatePicker SelectedDate="{Binding expiry_date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             Style="{StaticResource input_datepicker}"/>
                 <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
@@ -92,11 +92,10 @@
                        btnEdit_Click="toolbar_btnEdit_Click"
                        btnSave_Click="toolbar_btnSave_Click"
                        btnCancel_Click="toolbar_btnCancel_Click"
-                       
 			           btnApprove_Click="toolBar_btnApprove_Click"
 			           btnAnull_Click="toolBar_btnAnull_Click"
                        btnSearch_Click="toolBar_btnSearch_Click"
-                        State="{Binding State,Source={StaticResource payment_promissory_noteViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                   Status="{Binding status,Source={StaticResource payment_promissory_noteViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                       State="{Binding State, Source={StaticResource payment_promissory_noteViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       Status="{Binding status, Source={StaticResource payment_promissory_noteViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Page>

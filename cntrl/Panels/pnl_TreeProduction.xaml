@@ -13,11 +13,12 @@
         <convert:Bool2Collapsed x:Key="BoolToVisibility"/>
         <convertView:InitialsConverter x:Key="InitialsConverter"/>
         <convertView:Decimal2Visibility x:Key="Decimal2Visibility"/>
+        <convertView:Bool2InputProduction x:Key="Bool2InputProduction"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
             <Grid>
-                <Label Content="" FontSize="16" FontFamily="/cntrl;component/Resources/#cognitivo"
+                <Label Content="{Binding ElementName=pnl_Treeview, Path=IsInput, Converter={StaticResource Bool2InputProduction}}" FontSize="16" FontFamily="/cntrl;component/Resources/#cognitivo"
                        Foreground="{Binding StatusColor, ElementName=pnl_Treeview, FallbackValue=Gainsboro}">
                     <Label.Effect>
                         <DropShadowEffect ShadowDepth="0" BlurRadius="1"/>

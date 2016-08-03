@@ -24,5 +24,45 @@ namespace Cognitivo.Production
         {
             InitializeComponent();
         }
+
+        private void toolBar_Mini_btnAnull_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnApprove_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnDelete_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnSave_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnEdit_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnNew_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_Mini_btnParent_Click(object sender)
+        {
+
+        }
+
+        private void sbxItem_Select(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -206,6 +206,7 @@
     <Compile Include="Controls\Totals.xaml.cs">
       <DependentUpon>Totals.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\Bool2InputProduction.cs" />
     <Compile Include="Converters\sbxItem_CheckType.cs" />
     <Compile Include="Converters\Security2Decimal.cs" />
     <Compile Include="Converters\Security2Boolean.cs" />

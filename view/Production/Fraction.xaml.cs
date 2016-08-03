@@ -64,5 +64,70 @@ namespace Cognitivo.Production
         {
 
         }
+
+        private void CmbServicecontract_Select(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CmbService_Select(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void sbxItem_Select_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnInsert_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnInsert_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void toolBar_btnDelete_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnNew_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnEdit_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnSave_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnCancel_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnApprove_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnAnull_Click(object sender)
+        {
+
+        }
+
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+
+        }
     }
 }

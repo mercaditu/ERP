@@ -223,7 +223,7 @@
 							                        DisplayMemberPath="name" SelectedValuePath="id_order_detail"    />
 
                                         <Label Content="{lex:Loc Items}" Style="{StaticResource input_label}"/>
-                                        <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxItem_Select" />
+                                        <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="sbxItem_Select_1" />
                                         <metro:ToggleSwitch x:Name="ToggleQuantity" OffLabel="{lex:Loc Input}" OnLabel="{lex:Loc Output}" HorizontalAlignment="Right" OffSwitchBrush="Silver" OnSwitchBrush="Gray" UseLayoutRounding="False" ThumbIndicatorWidth="16" ThumbIndicatorBrush="{StaticResource AccentColor_Introvert}" Checked="ToggleQuantity_Checked" Unchecked="ToggleQuantity_Unchecked"/>
 
                                         <Label Content="{lex:Loc Quantity}" Style="{StaticResource input_label}"/>
@@ -358,7 +358,7 @@
                                             IsEnabled="{Binding SelectedItem, ElementName=treeRaw, Converter={StaticResource Type2Enable}}">
                                     <StackPanel Orientation="Horizontal" Margin="0,4">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Quantity}" />
-                                        <TextBox  x:Name="txtRaw" Width="64" KeyUp="btnInsert_KeyDown" Margin="8,0" VerticalAlignment="Top" />
+                                        <TextBox  x:Name="txtRaw" Width="64" KeyUp="btnInsert_KeyDown"  Margin="8,0" VerticalAlignment="Top" />
                                         <Button x:Name="btnInsert_RawMaterial" Content="{lex:Loc Insert}" Click="btnInsert_Click"/>
                                     </StackPanel>
 
@@ -436,7 +436,7 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Label Style="{StaticResource generic_Label}" Content="{lex:Loc Employee}" />
-                                        <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="itemserviceComboBox_MouseDoubleClick"/>
+                                        <Controls:SmartBox_Contact x:Name="CmbService" Get_Employees="True" Width="226" Select="CmbService_Select"/>
                                     </StackPanel>
                                 </WrapPanel>
                                 <DataGrid x:Name="dgService" Grid.Column="1" 

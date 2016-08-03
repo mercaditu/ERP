@@ -63,7 +63,7 @@ namespace Cognitivo.Reporting.Views
             SalesByItemTableAdapter.ClearBeforeFill = true;
             DataTable dt = new DataTable();
 
-            if (true)
+            if (chbxBranch.IsChecked == true)
             {
                 app_branch app_branch = cbxBranch.SelectedItem as app_branch;
                 if (app_branch != null)

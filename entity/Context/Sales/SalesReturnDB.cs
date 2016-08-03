@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using WPFLocalizeExtension.Extensions;
 
 namespace entity 
 {
@@ -152,24 +153,29 @@ namespace entity
 
                         if (sales_return.sales_invoice != null)
                         {
-
-
                             payment payment = new payment();
                             payment.id_contact = sales_return.id_contact;
                             payment_detail payment_detailreturn = new payment_detail();
                             // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
                             payment_detailreturn.id_currencyfx = sales_return.id_currencyfx;
+                            
+                            //Check for Credit Note PaymentType.
                             if ( base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault()!=null)
                             {
+                                //Gets Payment Type form Database.
                                 payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show("Please add crditnote payment type...");
-                                return;
-                            }
-                         
+                                //In case Payment type doesn not exist, this will create it and try to fix the error.
+                                payment_type payment_type = new payment_type();
+                                payment_type.payment_behavior = entity.payment_type.payment_behaviours.CreditNote;
+                                payment_type.name = LocExtension.GetLocalizedValue<string>("Cognitivo:local:SalesReturn");
+                                base.payment_type.Add(payment_type);
 
+                                payment_detailreturn.payment_type = payment_type;
+                            }
+                    
                             payment_detailreturn.id_sales_return = sales_return.id_sales_return;
 
                             payment_detailreturn.value = sales_return.GrandTotal;
@@ -193,9 +199,6 @@ namespace entity
 
                         sales_return.status = Status.Documents_General.Approved;
                         SaveChanges();
-
-                      
-                            
                     }
                        
                     else if (sales_return.Error != null)

@@ -135,8 +135,23 @@ namespace Cognitivo.Product
             if ((item_transfer.number == null || item_transfer.number == string.Empty) && item_transfer.app_document_range != null)
             {
                 entity.Brillo.Logic.Document _Document = new entity.Brillo.Logic.Document();
-                entity.Brillo.Logic.Range.branch_Code = String.Empty;
-                entity.Brillo.Logic.Range.terminal_Code = String.Empty;
+                if (dbContext.app_branch.Where(x => x.id_branch == item_transfer.id_branch).FirstOrDefault() != null)
+                {
+                    entity.Brillo.Logic.Range.branch_Code = dbContext.app_branch.Where(x => x.id_branch ==item_transfer. id_branch).FirstOrDefault().code;
+                }
+                if (dbContext.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault() != null)
+                {
+                    entity.Brillo.Logic.Range.terminal_Code = dbContext.app_terminal.Where(x => x.id_terminal == item_transfer.id_terminal).FirstOrDefault().code;
+                }
+                if (dbContext.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault() != null)
+                {
+                    entity.Brillo.Logic.Range.user_Code = dbContext.security_user.Where(x => x.id_user == item_transfer.id_user).FirstOrDefault().code;
+                }
+                if (dbContext.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault() != null)
+                {
+                    entity.Brillo.Logic.Range.project_Code = dbContext.projects.Where(x => x.id_project == item_transfer.id_project).FirstOrDefault().code;
+                }
+          
                 app_document_range app_document_range = item_transfer.app_document_range;
                 item_transfer.number = entity.Brillo.Logic.Range.calc_Range(app_document_range, true);
             }

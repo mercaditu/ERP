@@ -227,10 +227,10 @@
 
                             Detail = Detail +
                                 ""
-                                + "Descripcion, Cantiad, Codigo" + "\n"
+                                + "Cantiad, Codigo,Descripcion" + "\n"
                                 + "-------------------------------" + "\n"
-                                + ItemCode + "\t" + ItemName + "\n"
-                                + Qty.ToString() + "\n";
+                                + ItemName + "\t" + Qty.ToString() + "\n"
+                                + ItemCode  + "\n";
 
                             if (d.item_transfer_dimension.Count() > 0)
                             {

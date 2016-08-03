@@ -1027,19 +1027,19 @@ namespace Cognitivo.Production
                             else
                             {
                                 Insert_IntoDetail(production_order_detail, Quantity);
-                                RefreshData();
+                                RefreshExecution();
                             }
                         }
                         else
                         {
                             Insert_IntoDetail(production_order_detail, Quantity);
-                            RefreshData();
+                            RefreshExecution();
                         }
                     }
                     else
                     {
                         Insert_IntoDetail(production_order_detail, Quantity);
-                        RefreshData();
+                        RefreshExecution();
                     }
                 }
             }
@@ -1364,8 +1364,12 @@ namespace Cognitivo.Production
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RefreshData();
-            RefreshExecution();
+            if (e.Source.GetType()==typeof(TabControl))
+            {
+                RefreshData();
+                RefreshExecution();
+            }
+           
         }
     }
 }

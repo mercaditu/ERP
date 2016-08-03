@@ -49,38 +49,40 @@ namespace Cognitivo.Reporting.Views
 
         public void Fill(object sender, EventArgs e)
         {
-            app_branch app_branch = cbxBranch.SelectedItem as app_branch;
+            this.reportViewer.Reset();
 
-            if (app_branch != null)
-            {
-                this.reportViewer.Reset();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Data.SalesDS SalesDB = new Data.SalesDS();
 
-                Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-                Data.SalesDS SalesDB = new Data.SalesDS();
+            SalesDB.BeginInit();
 
-                SalesDB.BeginInit();
-
-                Data.SalesDSTableAdapters.SalesByDateTableAdapter SalesByDateTableAdapter = new Data.SalesDSTableAdapters.SalesByDateTableAdapter();
+            Data.SalesDSTableAdapters.SalesByDateTableAdapter SalesByDateTableAdapter = new Data.SalesDSTableAdapters.SalesByDateTableAdapter();
                 
-                if (true)
+            DataTable dt = new DataTable();
+
+            if (chbxBranch.IsChecked == true)
+            {
+                app_branch app_branch = cbxBranch.SelectedItem as app_branch;
+                if (app_branch == null)
                 {
-                    DataTable dt = SalesByDateTableAdapter.GetDataByBranch(StartDate, EndDate, app_branch.id_branch);
+                    return;
                 }
-                else
-                {
-                    DataTable dt = SalesByDateTableAdapter.GetDataByGeneral(StartDate, EndDate);
-                }
-
-                reportDataSource1.Name = "SalesByDate"; //Name of the report dataset in our .RDLC file
-                reportDataSource1.Value = dt; //SalesDB.SalesByDate;
-                this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-                this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByDate.rdlc";
-
-                SalesDB.EndInit();
-
-                this.reportViewer.Refresh();
-                this.reportViewer.RefreshReport();   
+                dt = SalesByDateTableAdapter.GetDataByBranch(StartDate, EndDate, app_branch.id_branch);
             }
+            else
+            {
+                dt = SalesByDateTableAdapter.GetDataByGeneral(StartDate, EndDate);
+            }
+
+            reportDataSource1.Name = "SalesByDate"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Value = dt; //SalesDB.SalesByDate;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesByDate.rdlc";
+
+            SalesDB.EndInit();
+
+            this.reportViewer.Refresh();
+            this.reportViewer.RefreshReport();
         }
     }
 }

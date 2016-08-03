@@ -7,6 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="SalesByDate">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+    </Page.Resources>
     <Grid Background="Gainsboro">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
             <StackPanel>
@@ -19,7 +22,9 @@
                 <DatePicker SelectedDate="{Binding ElementName=_SalesByDate, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Style="{StaticResource input_datepicker}"/>
             </StackPanel>
-            <StackPanel>
+            
+            <CheckBox x:Name="chbxBranch" Content="Branch" Style="{StaticResource input_checkbox}" VerticalAlignment="Center" Width="auto"/>
+            <StackPanel Visibility="{Binding ElementName=chbxBranch, Path=IsChecked, Converter={StaticResource Bool2Visibility}}">
                 <Label Content="Branch" Style="{StaticResource input_label}"/>
                 <ComboBox x:Name="cbxBranch" SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_branch" DisplayMemberPath="name" Style="{StaticResource input_combobox}" Width="128"/>
             </StackPanel>

@@ -68,7 +68,7 @@ namespace Cognitivo.Sales
 
                 List<item_movement> item_movementLIST = new List<item_movement>();
 
-                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice_detailLIST.Where(x => x.item.item_product != null))
+                foreach (sales_invoice_detail sales_invoice_detail in sales_invoice_detailLIST.Where(x => x.item.item_product.Count>0))
                 {
                     item_movement item_movement = new entity.item_movement();
 
@@ -110,6 +110,7 @@ namespace Cognitivo.Sales
 
                 dbContext.item_movement.AddRange(item_movementLIST);
                 item_movementViewSource.Source = item_movementLIST;
+                item_movementViewSource.View.Refresh(); 
             }
         }
 

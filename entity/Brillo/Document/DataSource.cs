@@ -645,7 +645,9 @@ namespace entity.Brillo.Document
                 reportDataSource.Value = item_inventory_detail
                     .Select(g => new
                     {
-
+                        date=g.item_inventory.trans_date,
+                        branch=g.item_inventory.app_branch.name,
+                        comment=g.item_inventory.comment,
                         id_inventory_detail = g.id_inventory_detail,
                         id_company = g.id_company,
                         item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code != null ? g.item_product.item.code : "" : "" : "",

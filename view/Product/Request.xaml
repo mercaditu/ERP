@@ -168,11 +168,11 @@
                         		RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding app_dimension.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                        Header="Dimension" Width="100"/>
+                                                        Header="Dimension" Width="100" FontWeight="Bold"/>
                                     <DataGridTextColumn Binding="{Binding value, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                        Header="value" Width="100"/>
+                                                        Header="value" Width="100" FontWeight="Bold"/>
                                     <DataGridTextColumn Binding="{Binding app_measurement.name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                                        Header="Measurement" Width="100"/>
+                                                        Header="Measurement" Width="100" FontWeight="Bold"/>
 
                                 </DataGrid.Columns>
                             </DataGrid>

@@ -94,10 +94,7 @@ namespace Cognitivo.Product
                 TextBox_TextChanged(null, null);
             }
         }
-        //string factor(item item,decimal qty)
-        //{
-        //    return entity.Brillo.ConversionFactor.Factor_Quantity(item,qty).ToString();
-        //}
+
         private void itemDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             calc_Inventory();
@@ -159,17 +156,19 @@ namespace Cognitivo.Product
                                                         && x.status == Status.Stock.InStock
                                                         && x.trans_date <= InventoryDate
                                                         ).OrderByDescending(x => x.trans_date).ToListAsync();
+
                     foreach (item_movement item_movement in item_movementViewSource.View.Cast<item_movement>().ToList())
                     {
-                        foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
+                        if (item_movement.item_movement_dimension.Count() > 0)
                         {
-                            if (!(item_movement.comment.Contains(item_movement_dimension.app_dimension.name)))
+                            foreach (item_movement_dimension item_movement_dimension in item_movement.item_movement_dimension)
                             {
-                                item_movement.comment += " " + item_movement_dimension.app_dimension.name + " : " + Math.Round(item_movement_dimension.value,2) + ",";
+                                if (!(item_movement.comment.Contains(item_movement_dimension.app_dimension.name)))
+                                {
+                                    item_movement.comment += " " + item_movement_dimension.app_dimension.name + " : " + Math.Round(item_movement_dimension.value, 2) + ",";
+                                }
                             }
-
                         }
-
                     }
                 }
             }

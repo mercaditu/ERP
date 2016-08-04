@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace entity
 {
     public static class CurrentSession
     {
+
         public static int Id_Company
         {
             get
@@ -119,7 +121,6 @@ namespace entity
                                 branch.id_branch == Properties.Settings.Default.branch_ID)
                                 .FirstOrDefault() != null)
                 {
-                    //Set Branch
                     Id_Branch = User.app_company.app_branch.Where(branch =>
                                 branch.id_company == Id_Company &&
                                 branch.id_branch == Properties.Settings.Default.branch_ID)
@@ -132,7 +133,6 @@ namespace entity
                                 terminal.id_terminal == Properties.Settings.Default.terminal_ID)
                                 .FirstOrDefault() != null)
                 {
-                    //Set Terminal
                     Id_Terminal = db.app_terminal.Where(terminal =>
                                     terminal.id_branch == Id_Branch &&
                                     terminal.id_terminal == Properties.Settings.Default.terminal_ID)
@@ -142,6 +142,9 @@ namespace entity
 
                 //Setting Security, once CurrentSession Data is set.
                 Refresh_Security();
+
+                //Basic Data like Salesman, Contracts, VAT, Currencies, etc to speed up Window Load.
+                Task taskAuth = Task.Factory.StartNew(() => Load_BasicData());
             }
         }
 
@@ -156,6 +159,46 @@ namespace entity
                 //Privilage
                 _Security_role_privilageList.Clear();
                 _Security_role_privilageList = db.security_role_privilage.Where(x => x.id_role == security_user.id_role).ToList();
+        }
+
+        public static void Load_BasicData()
+        {
+            db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+        }
+
+        public static List<sales_rep> Get_SalesRep()
+        {
+            return db.sales_rep.Local.ToList();
+        }
+
+        public static List<app_contract> Get_Contract()
+        {
+            return db.app_contract.Local.ToList();
+        }
+
+        public static List<app_condition> Get_Condition()
+        {
+            return db.app_condition.Local.ToList();
+        }
+
+        public static List<app_vat_group> Get_VAT_Group()
+        {
+            return db.app_vat_group.Local.ToList();
+        }
+
+        public static List<app_branch> Get_Branch()
+        {
+            return db.app_branch.Local.ToList();
+        }
+
+        public static List<app_terminal> Get_Terminal()
+        {
+            return db.app_terminal.Local.ToList();
         }
     }
 }

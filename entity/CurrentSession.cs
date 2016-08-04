@@ -169,36 +169,47 @@ namespace entity
             db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
         }
 
         public static List<sales_rep> Get_SalesRep()
         {
-            return db.sales_rep.Local.ToList();
+            return db.sales_rep.Local.OrderBy(x => x.name).ToList();
         }
 
         public static List<app_contract> Get_Contract()
         {
-            return db.app_contract.Local.ToList();
+            return db.app_contract.Local.OrderBy(x => x.name).ToList();
         }
 
         public static List<app_condition> Get_Condition()
         {
-            return db.app_condition.Local.ToList();
+            return db.app_condition.Local.OrderBy(x => x.name).ToList();
         }
 
         public static List<app_vat_group> Get_VAT_Group()
         {
-            return db.app_vat_group.Local.ToList();
+            return db.app_vat_group.Local.OrderBy(x => x.name).ToList();
         }
 
         public static List<app_branch> Get_Branch()
         {
-            return db.app_branch.Local.ToList();
+            return db.app_branch.Local.OrderBy(x => x.name).ToList();
         }
 
         public static List<app_terminal> Get_Terminal()
         {
-            return db.app_terminal.Local.ToList();
+            return db.app_terminal.Local.OrderBy(x => x.name).ToList();
+        }
+
+        public static List<app_currency> Get_Currency()
+        {
+            return db.app_currency.Local.OrderBy(x => x.name).ToList();
+        }
+
+        public static app_currency Get_DefaultCurrency()
+        {
+            return db.app_currency.Local.Where(x => x.is_priority).FirstOrDefault();
         }
     }
 }

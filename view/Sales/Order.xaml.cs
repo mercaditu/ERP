@@ -74,47 +74,29 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            dbContext.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-           
-                cbxCondition.ItemsSource = dbContext.app_condition.Local;
-          
-            dbContext.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-
-            cbxContract.ItemsSource = dbContext.app_contract.Local;
-
-
-        
+            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
+            cbxContract.ItemsSource = CurrentSession.Get_Contract();
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
-            dbContext.app_branch.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxBranch.ItemsSource = dbContext.app_branch.Local;
+                cbxBranch.ItemsSource = CurrentSession.Get_Branch();
             }));
 
-            dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = dbContext.app_vat_group.Local;
+                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
             }));
 
-            dbContext.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxSalesRep.ItemsSource = dbContext.sales_rep.Local;
+                cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep();
             }));
-
-            dbContext.projects.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
-            await Dispatcher.InvokeAsync(new Action(() =>
-            {
-                cbxProject.ItemsSource = dbContext.projects.Local;
-            }));
-
         }
 
         #endregion
@@ -250,27 +232,20 @@ namespace Cognitivo.Sales
                     if (objContact.sales_rep != null)
                         cbxSalesRep.SelectedValue = objContact.sales_rep.id_sales_rep;
                 }));
-
-                await dbContext.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToListAsync();
-                await Dispatcher.InvokeAsync(new Action(() =>
-                {
-                    cbxProject.ItemsSource = dbContext.projects.Local;
-                }));
             }
         }
 
-        private async void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbxCondition_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             sales_order sales_order = (sales_order)sales_orderDataGrid.SelectedItem;
             //Contract
             if (cbxCondition.SelectedItem != null)
             {
                 app_condition app_condition = cbxCondition.SelectedItem as app_condition;
-                cbxContract.ItemsSource = await dbContext.app_contract.Where(a => a.is_active == true
-                                                                        && a.id_company == CurrentSession.Id_Company
-                 
-                                                                        && a.id_condition == app_condition.id_condition).ToListAsync();
-
+                if (app_condition != null)
+                {
+                    cbxContract.ItemsSource = CurrentSession.Get_Contract().Where(x => x.id_condition == app_condition.id_condition).ToList();
+                }
 
                 if (sales_order != null)
                 {

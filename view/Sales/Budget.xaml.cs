@@ -47,36 +47,24 @@ namespace Cognitivo.Sales
                 sales_budgetsales_budget_detailViewSource = FindResource("sales_budgetsales_budget_detailViewSource") as CollectionViewSource;
 
                 CollectionViewSource branchViewSource = ((CollectionViewSource)(FindResource("branchViewSource")));
-                branchViewSource.Source = SalesBudgetDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == entity.CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+                branchViewSource.Source = CurrentSession.Get_Branch();
 
                 CollectionViewSource contractViewSource = ((CollectionViewSource)(FindResource("contractViewSource")));
-                // Load data by setting the CollectionViewSource.Source property:
-                SalesBudgetDB.app_contract.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-                contractViewSource.Source = SalesBudgetDB.app_contract.Local;
+                contractViewSource.Source = CurrentSession.Get_Contract();
 
                 CollectionViewSource conditionViewSource = ((CollectionViewSource)(FindResource("conditionViewSource")));
-                // Load data by setting the CollectionViewSource.Source property:
-                SalesBudgetDB.app_condition.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-                conditionViewSource.Source = SalesBudgetDB.app_condition.Local;
+                conditionViewSource.Source = CurrentSession.Get_Condition();
 
-                projectViewSource = ((CollectionViewSource)(FindResource("projectViewSource")));
-                // Load data by setting the CollectionViewSource.Source property:
-                SalesBudgetDB.projects.Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company).OrderBy(a => a.name).Load();
-                projectViewSource.Source = SalesBudgetDB.projects.Local;
-
-                SalesBudgetDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
                 await Dispatcher.InvokeAsync(new Action(() =>
                 {
-                    cbxSalesRep.ItemsSource = SalesBudgetDB.sales_rep.Local;
+                    cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep();
                 }));
 
                 CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
                 app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, entity.CurrentSession.Id_Branch, entity.CurrentSession.Id_Terminal);
 
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = await SalesBudgetDB.app_vat_group
-                    .Where(a => a.is_active == true && a.id_company == entity.CurrentSession.Id_Company)
-                    .OrderBy(a => a.name).ToListAsync();
+                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
                 
             }
             catch (Exception ex)

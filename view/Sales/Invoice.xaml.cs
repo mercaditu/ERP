@@ -44,7 +44,7 @@ namespace Cognitivo.Sales
                 }
             }
         }
-        private DateTime _start_Range = DateTime.Now.AddMonths(-1);
+        private DateTime _start_Range = DateTime.Now.AddDays(-7);
 
 
         public DateTime end_Range
@@ -249,31 +249,31 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            cbxContract.ItemsSource = CurrentSession.Get_Contract().OrderBy(x => x.name);
+            cbxContract.ItemsSource = CurrentSession.Get_Contract();
 
-            cbxCondition.ItemsSource = CurrentSession.Get_Condition().OrderBy(x => x.name);
+            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep().OrderBy(x => x.name);
+                cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep();
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxBranch.ItemsSource = CurrentSession.Get_Branch().OrderBy(x => x.name);
+                cbxBranch.ItemsSource = CurrentSession.Get_Branch();
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxTerminal.ItemsSource = CurrentSession.Get_Terminal().OrderBy(x => x.name);
+                cbxTerminal.ItemsSource = CurrentSession.Get_Terminal();
             }));
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group().OrderBy(x => x.name);
+                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
             }));
 
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));

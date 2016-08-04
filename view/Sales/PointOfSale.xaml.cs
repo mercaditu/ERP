@@ -62,7 +62,6 @@ namespace Cognitivo.Sales
             tabPayment.IsSelected = true;
         }
 
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
@@ -125,7 +124,6 @@ namespace Cognitivo.Sales
             payment.id_currencyfx = sales_invoice.id_currencyfx;
             PaymentDB.payments.Add(payment);
 
-
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
             paymentViewSource.Source = PaymentDB.payments.Local;
             paymentViewSource.View.MoveCurrentTo(payment);
@@ -178,16 +176,14 @@ namespace Cognitivo.Sales
 
             //PAYMENT TYPE
             SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
-            //CURRENCY LIST
-            SalesInvoiceDB.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
 
-            cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList();
+            cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep();
 
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
             app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
-            app_currencyViewSource.Source = SalesInvoiceDB.app_currency.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).ToList();
+            app_currencyViewSource.Source = CurrentSession.Get_Currency();
 
             int Id_Account = CurrentSession.Id_Account;
             if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
@@ -198,12 +194,6 @@ namespace Cognitivo.Sales
                     frmaccount.Refresh();
                 }
             }
-
-            //app_branch app_branch = SalesInvoiceDB.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
-            //if (app_branch != null)
-            //{
-            //    cbxLocation.ItemsSource = app_branch.app_location.ToList();
-            //}
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)

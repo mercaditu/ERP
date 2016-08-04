@@ -33,7 +33,6 @@
         <CollectionViewSource x:Key="contractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_currencyViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_currency}, CreateList=True}"/>
         <CollectionViewSource x:Key="currencyfxViewSource" Source="{Binding app_currencyfx, Source={StaticResource sales_budgetViewSource}}"/>
-        <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
   
         <CollectionViewSource x:Key="sales_budgetsales_budget_detailViewSource" Source="{Binding sales_budget_detail, Source={StaticResource sales_budgetViewSource}}"/>
         <CollectionViewSource x:Key="app_document_rangeViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_document_range}, CreateList=True}"/>
@@ -160,23 +159,23 @@
                                                     <Label Content="Available Credit" Style="{StaticResource generic_Label}"/>
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkField"
-                                            IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=Telephone, Mode=TwoWay}">
+                                                          IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=Telephone, Mode=TwoWay}">
                                                     <Label Content="{lex:Loc Telephone}" Style="{StaticResource generic_Label}"/>
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkProject"
-                                            IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=Project, Mode=TwoWay}">
+                                                          IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=Project, Mode=TwoWay}">
                                                     <Label Content="{lex:Loc Projects}" Style="{StaticResource generic_Label}"/>
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkBranch"
-                                            IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Mode=TwoWay}">
+                                                          IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Mode=TwoWay}">
                                                     <Label Content="{lex:Loc Branch}" Style="{StaticResource generic_Label}"/>
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkDuplicateItem" 
-                                          IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=AllowDuplicateItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                          IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=AllowDuplicateItem, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                                     <Label Content="{lex:Loc AllowDuplicateItem}" Foreground="MediumVioletRed"/>
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkfilterByBranch" 
-                                          IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=FilterByBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                          IsChecked="{Binding Source={x:Static pref:Settings.Default}, Path=FilterByBranch, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                                     <Label Content="{lex:Loc FilterByBranch}" Foreground="MediumVioletRed"/>
                                                 </CheckBox>
                                                 <CheckBox Margin="6,0,0,0" x:Name="chkSalesRep"
@@ -252,9 +251,7 @@
                                     <StackPanel Orientation="Horizontal" Margin="2" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Project, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                         <Label Content="Y" FontSize="16" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                                         <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
-                                        <ComboBox DisplayMemberPath="name" SelectedValuePath="id_project" Width="Auto" Style="{StaticResource ComboToLabelStyle}"
-                                              SelectedValue="{Binding id_project, Source={StaticResource sales_budgetViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                                              ItemsSource="{Binding Source={StaticResource projectViewSource}}"/>
+                                        <Label Content="{Binding project.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="16" Style="{StaticResource generic_Label}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Margin="2" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Branch, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                         <Label Content="" FontSize="16" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>

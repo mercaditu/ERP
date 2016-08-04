@@ -30,11 +30,10 @@
        
         <CollectionViewSource x:Key="sales_orderViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:sales_order}, CreateList=True}" />
         <CollectionViewSource x:Key="sales_ordersales_order_detailViewSource" Source="{Binding sales_order_detail, Source={StaticResource sales_orderViewSource}}"/>
-        <CollectionViewSource x:Key="sales_ordersales_order_detailGroupViewSource"  Source="{Binding sales_order_detail, Source={StaticResource sales_orderViewSource}}">
-        
-        </CollectionViewSource>
+        <CollectionViewSource x:Key="sales_ordersales_order_detailGroupViewSource"  Source="{Binding sales_order_detail, Source={StaticResource sales_orderViewSource}}"/>
+
+
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
-        <CollectionViewSource x:Key="app_cost_centerViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_cost_center}, CreateList=True}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource sales_orderViewSource}">
         <Grid.ColumnDefinitions>
@@ -303,9 +302,7 @@
                             <StackPanel Orientation="Horizontal" Margin="2" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Project, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                 <Label Content="Y" FontSize="16" FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                                 <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
-                                <ComboBox x:Name="cbxProject" DisplayMemberPath="name" SelectedValuePath="id_project" Width="Auto" Style="{StaticResource ComboToLabelStyle}"
-                              SelectedValue="{Binding id_project, Source={StaticResource sales_orderViewSource}, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                             />
+                                <Label Content="{Binding project.name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="16" Style="{StaticResource generic_Label}"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Center" Margin="2">
                                 <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>

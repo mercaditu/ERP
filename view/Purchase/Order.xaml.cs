@@ -660,44 +660,6 @@ namespace Cognitivo.Purchase
             calculate_vat(sender, e);
         }
 
-        private void lblEditProduct_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            //using (db db = new db())
-            //{
-            //    CollectionViewSource itemViewSource = ((CollectionViewSource)(FindResource("itemViewSource")));
-            //    itemViewSource.Source = db.items.Local.Where(x => x.is_active == true);
-            //    //No Aditional Filter for Detail
-
-            //    item _item;
-            //    _item = (item)itemComboBox.Data;
-            //    if (_item != null)
-            //    {
-            //        dbContext entity = new dbContext();
-                 
-            //        crud_modal.Visibility = Visibility.Visible;
-                  
-            //        cntrl.Curd.item item = new cntrl.Curd.item();
-            //        item.itemViewSource = itemViewSource;
-            //        item.MainViewSource = purchase_orderViewSource;
-            //        item.curObject = purchase_orderViewSource.View.CurrentItem;
-            //        item._entity = entity;
-            //        item.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-            //        item.STbox = itemComboBox;
-            //        item.itemobject = _item;
-            //        crud_modal.Children.Add(item);
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Please select item first.", "Cognitivo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            //    }
-            //}
-        }
-
-        private void cbxCurrency_MouseEnter(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
         {
             purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;

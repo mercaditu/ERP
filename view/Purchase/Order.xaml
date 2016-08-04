@@ -84,24 +84,24 @@
                     <Label Content="A" Style="{StaticResource btn_Label}" 
                                FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                     <TextBlock x:Name="tbCustomize" VerticalAlignment="Center"
-                                   MouseUp="tbCustomize_MouseUp" Margin="5,0"><Hyperlink x:Name="hrefCustomize"><Run Text="Key: Customize"/></Hyperlink></TextBlock>
+                                   MouseUp="tbCustomize_MouseUp" Margin="5,0"><Hyperlink x:Name="hrefCustomize"><Run Text="{lex:Loc Customize}"/></Hyperlink></TextBlock>
                     <Popup x:Name="popupCustomize" IsOpen="False" Closed="popupCustomize_Closed"
                                PlacementTarget="{Binding ElementName=stackpnlCustomize}" Placement="Mouse">
                         <Border BorderThickness="1" BorderBrush="Gray">
                             <StackPanel Background="WhiteSmoke" Width="180">
-                                <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                <Label Content="{lex:Loc Header}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                 <WrapPanel>
                                     <TextBox Width="30" HorizontalAlignment="Left" 
                                              Text="{Binding Source={x:Static pref:OrderSetting.Default}, Path=TransDate_OffSet, Mode=TwoWay}"
                                              Margin="6,2,2,2"></TextBox>
                                     <Label Content="{lex:Loc DifferenceinDate}" Style="{StaticResource generic_Label}"/>
                                 </WrapPanel>
-                                <Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                <Label Content="{lex:Loc Details}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                 <CheckBox Content="{lex:Loc VATIncluded}" Style="{StaticResource input_checkbox}"
                                               IsChecked="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Included, Mode=TwoWay}"/>
                                 <CheckBox Content="{lex:Loc VATExcluded}" Style="{StaticResource input_checkbox}"
                                               IsChecked="{Binding Source={x:Static pref:OrderSetting.Default}, Path=VAT_Excluded, Mode=TwoWay}"/>
-                                <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="MediumVioletRed"/>
+                                <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                 <CheckBox Content="Available Credit" Style="{StaticResource input_checkbox}"
                                               IsChecked="{Binding Source={x:Static pref:OrderSetting.Default}, Path=quicklook_AvailableCredit, Mode=TwoWay}"/>
                                 <CheckBox Content="{lex:Loc Telephone}" Style="{StaticResource input_checkbox}"
@@ -188,17 +188,17 @@
                         <Label Content="Y" Style="{StaticResource ico_Label}" 
                                 FontFamily="/Cognitivo;component/Resources/#cognitivo"/>
                         <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Project}"/>
-                        <ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
+                        <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
+                        <!--<ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
                                     DisplayMemberPath="name"
 					                SelectedValue="{Binding id_project, Source={StaticResource purchase_orderViewSource}, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-					                SelectedValuePath="id_project"
-					              >
+					                SelectedValuePath="id_project" >
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel/>
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
-                        </ComboBox>
+                        </ComboBox>-->
                     </StackPanel>
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding Source={x:Static pref:OrderSetting.Default}, 
@@ -289,7 +289,7 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
                     <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
-                    <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseOrder" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus" MouseEnter="cbxCurrency_MouseEnter"/>
+                    <Controls:CurrencyBox x:Name="cbxCurrency" appName="PurchaseOrder" SelectedValue="{Binding id_currencyfx, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" LostFocus="cbxCurrency_LostFocus"/>
                 </StackPanel>
             </ScrollViewer>
             <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="4" Background="{StaticResource winBackground}">

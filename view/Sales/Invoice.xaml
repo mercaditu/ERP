@@ -179,25 +179,25 @@
                             </Grid.RowDefinitions>
                             <Grid Background="RoyalBlue">
                                 <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="$" FontSize="25" Margin="8,0"
-                   VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Gray"/>
+                                       VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Gray"/>
                                 <TextBlock x:Name="lblTitle" Text="{lex:Loc DuePayment}" FontSize="25" Margin="40,3,0,0" Foreground="White"/>
                                 <Polygon HorizontalAlignment="Right" Points="-24,0,0,0,0,24" 
-                     Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
+                                         Fill="{Binding is_active, Converter={StaticResource ActiveValueConverter}}"/>
                                 <Label x:Name="lblCancel" Content="c" FontSize="18" VerticalAlignment="Center" Margin="5"
-                   HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" Foreground="White"
-                   FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
+                                       HorizontalAlignment="Right" MouseDown="lblCancel_MouseDown" Foreground="White"
+                                       FontFamily="/cntrl;component/Resources/#cognitivo" Cursor="Hand"/>
                             </Grid>
                             <DataGrid x:Name="payment_schedualDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" IsReadOnly="True"
-                      RowDetailsVisibilityMode="VisibleWhenSelected"  CanUserAddRows="False" Grid.Row="1">
+                                      RowDetailsVisibilityMode="VisibleWhenSelected"  CanUserAddRows="False" Grid.Row="1">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding CustName}" 
-                                        Header="{lex:Loc Cognitivo:local:Customer}" Width="auto" IsReadOnly="True"/>
+                                                        Header="{lex:Loc Cognitivo:local:Customer}" Width="auto" IsReadOnly="True"/>
                                     <DataGridTextColumn Binding="{Binding AccountReceivableBalance,StringFormat={}{0:N}}" 
-                                        Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
-                                        ElementStyle="{StaticResource RightAlignStyle}"/>
+                                                        Header="{lex:Loc Cognitivo:local:AccountsReceivable}" Width="auto" IsReadOnly="True" 
+                                                        ElementStyle="{StaticResource RightAlignStyle}"/>
                                     
                                     <DataGridTextColumn Binding="{Binding Currency}" 
-                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
+                                                        Header="{lex:Loc Cognitivo:local:Currency}" Width="auto" IsReadOnly="True"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -307,7 +307,7 @@
                                     <StackPanel Orientation="Horizontal" Margin="4,0" 
                                                 Visibility="{Binding is_accounted, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibility}}">
                                         <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
-                                        <TextBlock Text="{lex:Loc Accounting}" Style="{StaticResource text_Label}"/>
+                                        <TextBlock Text="{lex:Loc Accounted}" Style="{StaticResource text_Label}"/>
                                     </StackPanel>
                                     <Label Content="{lex:Loc QuickActions}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
@@ -393,32 +393,34 @@
                                                 </Border>
                                             </Popup>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0" IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource Status2Enable}}">
+                                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0" 
+                                                    IsEnabled="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource Status2Enable}}">
                                             <Label Content="$" Style="{StaticResource btn_Label}"/>
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                    <Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp">
-                                        <Run Text="{lex:Loc RecievePayment}"/>
-                                    </Hyperlink>
+                                                <Hyperlink PreviewMouseUp="btnRecivePayment_PreviewMouseUp">
+                                                    <Run Text="{lex:Loc Payment}"/>
+                                                </Hyperlink>
                                             </TextBlock>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0" >
+                                        <StackPanel Orientation="Horizontal" Margin="3,0,0,0"
+                                                    IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}">
                                             <Label Content="$" Style="{StaticResource btn_Label}"/>
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                    <Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">
-                                        <Run Text="{lex:Loc Payment}"/>
-                                    </Hyperlink>
+                                                <Hyperlink PreviewMouseUp="btnAccountsRecievable_PreviewMouseUp">
+                                                    <Run Text="{lex:Loc AccountsReceivable}"/>
+                                                </Hyperlink>
                                             </TextBlock>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <Label Content="" Style="{StaticResource btn_Label}"/>
                                             <TextBlock Margin="5,0" VerticalAlignment="Center">
-                                    <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
-                                        <Run Text="{lex:Loc Document}"/>
-                                    </Hyperlink>
+                                                <Hyperlink PreviewMouseUp="toolBar_btnPrint_Click">
+                                                    <Run Text="{lex:Loc Document}"/>
+                                                </Hyperlink>
                                             </TextBlock>
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable, UpdateSourceTrigger=PropertyChanged}"
-                                       Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                                    Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=SalesLink, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                             <Label Content="" Style="{StaticResource btn_Label}"/>
                                             <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
                                     <Hyperlink PreviewMouseUp="btnSalesOrder_Click">

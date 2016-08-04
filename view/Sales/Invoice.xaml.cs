@@ -658,11 +658,6 @@ namespace Cognitivo.Sales
             calculate_vat(sender, e);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            calculate_vat(sender, e);
-        }
-
         private void btnPackingList_Click(object sender, RoutedEventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
@@ -846,7 +841,6 @@ namespace Cognitivo.Sales
 
             }
             calculate_vat(sender,e);
-
         }
 
         private void btnRecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -854,11 +848,32 @@ namespace Cognitivo.Sales
             sales_invoice sales_invoice = sales_invoiceDataGrid.SelectedItem as sales_invoice;
             if (sales_invoice != null)
             {
-                crud_modal.Visibility = System.Windows.Visibility.Visible;
-                cntrl.Curd.receive_payment recive_payment = new cntrl.Curd.receive_payment();
-                recive_payment.sales_invoice = sales_invoice;
-                crud_modal.Children.Add(recive_payment);
+                entity.Brillo.Security Security = new entity.Brillo.Security(entity.App.Names.AccountsReceivable);
+                if (Security.create)
+	            {
+                    crud_modal.Visibility = System.Windows.Visibility.Visible;
+                    cntrl.Curd.receive_payment recive_payment = new cntrl.Curd.receive_payment();
+                    recive_payment.sales_invoice = sales_invoice;
+                    crud_modal.Children.Add(recive_payment);
+	            }
+                else
+                {
+                    toolBar.msgWarning("Access Denied. Please contact your Administrator.");
+                }
             }
+        }
+
+        private void btnAccountsRecievable_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            List<payment_schedual> payment_schedualList = SalesInvoiceDB.payment_schedual
+                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company && x.id_contact == sales_invoice.id_contact
+                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0) && x.id_note == null
+                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
+                         .OrderBy(x => x.expire_date).ToList();
+
+            payment_schedualDataGrid.ItemsSource = payment_schedualList.GroupBy(x => x.id_currencyfx).Select(x => new { CustName = x.Max(s => s.contact.name), AccountReceivableBalance = x.Sum(y => y.AccountReceivableBalance), Currency = x.Max(z => z.app_currencyfx.app_currency.name) });
+            crud_modalDuePaymnet.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void btnGridSearch(object sender, RoutedEventArgs e)
@@ -883,33 +898,12 @@ namespace Cognitivo.Sales
             {
                 app_branch app_branch = cbxBranch.SelectedItem as app_branch;
                 cbxLocation.ItemsSource = app_branch.app_location.ToList();
-                
             }
-        }
-
-        private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            List<payment_schedual> payment_schedualList = SalesInvoiceDB.payment_schedual
-                     .Where(x => x.id_payment_detail == null && x.id_company == CurrentSession.Id_Company && x.id_contact == sales_invoice.id_contact
-                         && (x.id_sales_invoice > 0 || x.id_sales_order > 0) && x.id_note == null
-                         && (x.debit - (x.child.Count() > 0 ? x.child.Sum(y => y.credit) : 0)) > 0)
-                         .OrderBy(x => x.expire_date).ToList();
-
-            payment_schedualDataGrid.ItemsSource = payment_schedualList.GroupBy(x => x.id_currencyfx).Select(x => new { CustName=x.Max(s=>s.contact.name),AccountReceivableBalance=x.Sum(y=>y.AccountReceivableBalance),Currency=x.Max(z=>z.app_currencyfx.app_currency.name) });
-            crud_modalDuePaymnet.Visibility = System.Windows.Visibility.Visible;
-
         }
 
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             crud_modalDuePaymnet.Visibility = System.Windows.Visibility.Collapsed;
         }
-
-      
-
-      
-
-        
     }
 }

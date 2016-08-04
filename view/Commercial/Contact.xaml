@@ -180,7 +180,7 @@
                         <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
                         <cntrl:SearchableTextbox x:Name="cbxTag" HorizontalAlignment="Center" 
                                                  CollectionViewSource="{StaticResource contact_tagViewSource}"
-                                                 focusGrid="True" Height="27" Width="256"
+                                                 focusGrid="True" Width="256"
                                                  KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
                             <cntrl:SearchableTextbox.Columns>
                                 <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
@@ -205,13 +205,13 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                        <TextBox x:Name="txtComment"
+                        <TextBox TextWrapping="Wrap"
                                  Style="{StaticResource input_textbox}"
                                  Text="{Binding comment, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Content="{lex:Loc Date}" Style="{StaticResource input_label}"/>
                         <DatePicker Style="{StaticResource input_datepicker}"
                                     SelectedDate="{Binding timestamp, Mode=TwoWay, ValidatesOnDataErrors=true, UpdateSourceTrigger=PropertyChanged}"/>
-                        <CheckBox x:Name="chbxIsActive" Content="Is Active?" Style="{StaticResource input_checkbox}"
+                        <CheckBox x:Name="chbxIsActive" Content="{lex:Loc Active}" Style="{StaticResource input_checkbox}"
                     		      IsChecked="{Binding is_active, FallbackValue=False}"/>
                     </StackPanel>
 

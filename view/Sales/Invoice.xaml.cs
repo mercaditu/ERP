@@ -234,13 +234,11 @@ namespace Cognitivo.Sales
             if (SalesSettings.FilterByBranch)
             {
                 await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
-
             }
             else
             {
                 await SalesInvoiceDB.sales_invoice.Where(predicate).OrderByDescending(x => x.trans_date).LoadAsync();
             }
-
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -279,7 +277,6 @@ namespace Cognitivo.Sales
             }));
 
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));
-
         }
         #endregion
 
@@ -292,7 +289,6 @@ namespace Cognitivo.Sales
             load_PrimaryData();
 
             filter_sales();
-           
         }
 
         #region "Action Events"

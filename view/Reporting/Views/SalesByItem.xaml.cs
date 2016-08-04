@@ -43,6 +43,9 @@ namespace Cognitivo.Reporting.Views
             {
                 db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
                 cbxBranch.ItemsSource = db.app_branch.Local;
+
+                db.item_tag.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
+                cbxTag.ItemsSource = db.item_tag.Local;
             }
 
             Fill(null, null);
@@ -63,14 +66,31 @@ namespace Cognitivo.Reporting.Views
             SalesByItemTableAdapter.ClearBeforeFill = true;
             DataTable dt = new DataTable();
 
-            if (chbxBranch.IsChecked == true)
+            if (chbxBranch.IsChecked == true && chbxTag.IsChecked == true)
+            {
+                app_branch app_branch = cbxBranch.SelectedItem as app_branch;
+                item_tag item_tag = cbxTag.SelectedItem as item_tag;
+                if (app_branch != null && item_tag != null)
+                {
+                    dt = SalesByItemTableAdapter.GetDataByBranchNTag(StartDate, EndDate, app_branch.id_branch, item_tag.id_tag);
+                }   
+            }
+            else if (chbxBranch.IsChecked == false && chbxTag.IsChecked == true)
+            {
+                item_tag item_tag = cbxTag.SelectedItem as item_tag;
+                if (item_tag != null)
+                {
+                    dt = SalesByItemTableAdapter.GetDataByTag(StartDate, EndDate, item_tag.id_tag);
+                }   
+            }
+            else if (chbxBranch.IsChecked == true && chbxTag.IsChecked == false)
             {
                 app_branch app_branch = cbxBranch.SelectedItem as app_branch;
                 if (app_branch != null)
                 {
                     dt = SalesByItemTableAdapter.GetDataByBranch(StartDate, EndDate, app_branch.id_branch);
-                }   
-            }
+                }
+            }  
             else
             {
                 dt = SalesByItemTableAdapter.GetDataByGeneral(StartDate, EndDate);

@@ -244,8 +244,6 @@ namespace entity
             SalesByItem = 103,
             [LocalizedDescription("SalesByBrand")]
             SalesByBrand = 97,
-            [LocalizedDescription("SalesByTag")]
-            SalesByTag = 98,
             [LocalizedDescription("AvgSales")]
             AvgSales = 99,
             [LocalizedDescription("CostOfGoodsSold")]

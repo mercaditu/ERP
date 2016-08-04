@@ -601,9 +601,6 @@
     <Compile Include="Reporting\Views\StockFlow.xaml.cs">
       <DependentUpon>StockFlow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\SalesByTag.xaml.cs">
-      <DependentUpon>SalesByTag.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Views\SalesBySalesRep.xaml.cs">
       <DependentUpon>SalesBySalesRep.xaml</DependentUpon>
     </Compile>
@@ -1018,9 +1015,6 @@
     <EmbeddedResource Include="Reporting\Reports\SalesByBrand.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\SalesByTag.rdlc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />
@@ -1744,10 +1738,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\StockFlow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\SalesByTag.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

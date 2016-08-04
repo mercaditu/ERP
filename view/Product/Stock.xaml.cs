@@ -13,7 +13,7 @@ namespace Cognitivo.Product
 {
     public partial class Stock : Page, INotifyPropertyChanged
     {
-        StockDB StockDB;
+        StockDB StockDB = new StockDB();
 
         CollectionViewSource item_movementViewSource, inventoryViewSource;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -41,13 +41,12 @@ namespace Cognitivo.Product
 
         private async void StockPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            StockDB = new StockDB();
-            await StockDB.app_branch.Include(x => x.app_location)
-                .Where(a => a.can_stock == true
-                         && a.is_active == true
-                         && a.id_company == entity.CurrentSession.Id_Company)
-                         .OrderBy(a => a.name).ToListAsync();
-            dgvBranch.ItemsSource = StockDB.app_branch.Local;
+            //await StockDB.app_branch.Include(x => x.app_location)
+            //    .Where(a => a.can_stock == true
+            //             && a.is_active == true
+            //             && a.id_company == entity.CurrentSession.Id_Company)
+            //             .OrderBy(a => a.name).ToListAsync();
+            dgvBranch.ItemsSource = CurrentSession.Get_Branch(); //StockDB.app_branch.Local;
 
             InventoryDate = DateTime.Now;
         }

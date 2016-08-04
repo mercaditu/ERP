@@ -105,9 +105,9 @@ namespace Cognitivo.Sales
             else
             {
                 toolBar.msgWarning("Please Select A Record");
-
             }
         }
+
         private void toolBar_btnNew_Click(object sender)
         {
             ReturnSetting _pref_SalesReturn = new ReturnSetting();
@@ -116,10 +116,12 @@ namespace Cognitivo.Sales
             SalesReturnDB.sales_return.Add(objSalRtn);
             salesReturnViewSource.View.MoveCurrentToLast();
         }
+
         private void toolBar_btnSave_Click(object sender)
         {
             SalesReturnDB.SaveChanges();
         }
+
         #endregion
 
         private void calculate_vat(object sender, EventArgs e)
@@ -339,66 +341,80 @@ namespace Cognitivo.Sales
 
         private void btnSalesInvoice_Click(object sender, RoutedEventArgs e)
         {
-            crud_modal.Visibility = Visibility.Visible;
-            pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
-            pnlSalesInvoice._entity = new ImpexDB();
-            if (sbxContact.ContactID > 0)
+            sales_return _sales_return = (sales_return)salesReturnViewSource.View.CurrentItem;
+
+            if (_sales_return != null)
             {
-                contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                 pnlSalesInvoice._contact = contact;
+                crud_modal.Visibility = Visibility.Visible;
+                pnlSalesInvoice = new cntrl.PanelAdv.pnlSalesInvoice();
+                pnlSalesInvoice._entity = new ImpexDB();
+
+                if (sbxContact.ContactID > 0)
+                {
+                    contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                    pnlSalesInvoice._contact = contact;
+                }
+
+                pnlSalesInvoice.SalesInvoice_Click += SalesInvoice_Click;
+                crud_modal.Children.Add(pnlSalesInvoice);
             }
-          
-            pnlSalesInvoice.SalesInvoice_Click += SalesInvoice_Click;
-            crud_modal.Children.Add(pnlSalesInvoice);
         }
 
         public void SalesInvoice_Click(object sender)
         {
             sales_return _sales_return = (sales_return)salesReturnViewSource.View.CurrentItem;
-
-            sbxContact.Text = pnlSalesInvoice.selected_sales_invoice.FirstOrDefault().contact.name;
-            foreach (sales_invoice item in pnlSalesInvoice.selected_sales_invoice)
+            if (_sales_return != null)
             {
-                _sales_return.State = EntityState.Modified;
-                _sales_return.id_condition = item.id_condition;
-                _sales_return.id_contract = item.id_contract;
-                _sales_return.id_currencyfx = item.id_currencyfx;
-                _sales_return.id_sales_invoice= item.id_sales_invoice;
-
-                foreach (sales_invoice_detail _sales_invoice_detail in item.sales_invoice_detail)
+                sbxContact.Text = pnlSalesInvoice.selected_sales_invoice.FirstOrDefault().contact.name;
+                foreach (sales_invoice sales_invoice in pnlSalesInvoice.selected_sales_invoice)
                 {
-                    if (_sales_return.sales_return_detail.Where(x => x.id_item == _sales_invoice_detail.id_item).Count() == 0)
-                    {
-                        sales_return_detail sales_return_detail = new sales_return_detail();
-                        sales_return_detail.id_sales_invoice_detail = _sales_invoice_detail.id_sales_invoice_detail;
-                        if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
-                        {
-                            sales_return_detail.sales_invoice_detail = SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
-                        }
-                    
-                        sales_return_detail.sales_return = _sales_return;
-                        if (SalesReturnDB.items.Where(x=>x.id_item== _sales_invoice_detail.id_item).FirstOrDefault()!=null)
-                        {
-                            sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
-                        }
-                       // sales_return_detail.item = _sales_invoice_detail.item;
-                        sales_return_detail.id_item = _sales_invoice_detail.id_item;
+                    _sales_return.State = EntityState.Modified;
+                    _sales_return.id_condition = sales_invoice.id_condition;
+                    _sales_return.id_contract = sales_invoice.id_contract;
+                    _sales_return.id_currencyfx = sales_invoice.id_currencyfx;
+                    _sales_return.id_sales_invoice = sales_invoice.id_sales_invoice;
 
-                        sales_return_detail.quantity = _sales_invoice_detail.quantity - SalesReturnDB.sales_return_detail
-                                                                                     .Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
-                                                                                     .GroupBy(x => x.id_sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
-                        sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
-                        sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
-                        _sales_return.sales_return_detail.Add(sales_return_detail);
+                    contact contact = SalesReturnDB.contacts.Where(x => x.id_contact == sales_invoice.id_contact).FirstOrDefault();
+                    _sales_return.id_contact = contact.id_contact;
+                    _sales_return.contact = contact;
+                    sbxContact.Text = contact.name;
+
+                    foreach (sales_invoice_detail _sales_invoice_detail in sales_invoice.sales_invoice_detail)
+                    {
+                        if (_sales_return.sales_return_detail.Where(x => x.id_item == _sales_invoice_detail.id_item).Count() == 0)
+                        {
+                            sales_return_detail sales_return_detail = new sales_return_detail();
+                            sales_return_detail.id_sales_invoice_detail = _sales_invoice_detail.id_sales_invoice_detail;
+
+                            if (SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault() != null)
+                            {
+                                sales_return_detail.sales_invoice_detail = SalesReturnDB.sales_invoice_detail.Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail).FirstOrDefault();
+                            }
+
+                            sales_return_detail.sales_return = _sales_return;
+
+                            if (SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
+                            {
+                                sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
+                            }
+
+                            sales_return_detail.id_item = _sales_invoice_detail.id_item;
+                            sales_return_detail.quantity = _sales_invoice_detail.quantity - SalesReturnDB.sales_return_detail
+                                                                .Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
+                                                                .GroupBy(x => x.id_sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
+
+                            sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
+                            sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
+                            _sales_return.sales_return_detail.Add(sales_return_detail);
+                        }
+
+                        SalesReturnDB.Entry(_sales_return).Entity.State = EntityState.Added;
+                        crud_modal.Children.Clear();
+                        crud_modal.Visibility = Visibility.Collapsed;
+                        salesReturnViewSource.View.Refresh();
+
+                        sales_returnsales_return_detailViewSource.View.Refresh();
                     }
-                    SalesReturnDB.Entry(_sales_return).Entity.State = EntityState.Added;
-                    crud_modal.Children.Clear();
-                    crud_modal.Visibility = Visibility.Collapsed;
-                    salesReturnViewSource.View.Refresh();
-                
-                   sales_returnsales_return_detailViewSource.View.Refresh();
-                   
-                   
                 }
             }
         }

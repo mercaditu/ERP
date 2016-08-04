@@ -102,8 +102,11 @@ namespace cntrl.PanelAdv
                 if (sbxContact.ContactID > 0)
                 {
                     contact contact = _entity.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                    sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
-                    sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == _contact.id_contact && x.sales_return.Count() == 0).ToList();
+                    if (contact != null)
+                    {
+                        sales_invoiceViewSource = (CollectionViewSource)Resources["sales_invoiceViewSource"];
+                        sales_invoiceViewSource.Source = _entity.sales_invoice.Where(x => x.id_contact == contact.id_contact && x.sales_return.Count() == 0).ToList();   
+                    }
                 }
             }
             catch (Exception ex)

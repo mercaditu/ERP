@@ -66,12 +66,7 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-
-            PurchaseInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            cbxContract.ItemsSource = PurchaseInvoiceDB.app_contract.Local;
-            //}));
+            cbxContract.ItemsSource = CurrentSession.Get_Contract();
 
 
             PurchaseInvoiceDB.app_department.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
@@ -80,24 +75,17 @@ namespace Cognitivo.Purchase
                 cbxDepartment.ItemsSource = PurchaseInvoiceDB.app_department.Local;
             }));
 
-
-            PurchaseInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            //await Dispatcher.InvokeAsync(new Action(() =>
-            //{
-            cbxCondition.ItemsSource = PurchaseInvoiceDB.app_condition.Local;
-            //}));
-
-            PurchaseInvoiceDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
+            cbxCondition.ItemsSource = CurrentSession.Get_Condition();
+            
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxBranch.ItemsSource = PurchaseInvoiceDB.app_branch.Local;
+                cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseInvoiceDB.app_branch.Local;
             }));
 
-            PurchaseInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = PurchaseInvoiceDB.app_vat_group.Local;
+                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //PurchaseInvoiceDB.app_vat_group.Local;
             }));
 
             PurchaseInvoiceDB.app_dimension.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
@@ -111,11 +99,8 @@ namespace Cognitivo.Purchase
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
-
                 app_measurementViewSource.Source = PurchaseInvoiceDB.app_measurement.Local;
             }));
-
-
 
             PurchaseInvoiceDB.app_cost_center.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>

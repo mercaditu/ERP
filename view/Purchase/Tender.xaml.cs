@@ -94,7 +94,6 @@ namespace Cognitivo.Purchase
             purchase_tenderpurchase_tender_itemViewSource = FindResource("purchase_tenderpurchase_tender_itemViewSource") as CollectionViewSource;
             purchase_tenderpurchase_tender_item_detailViewSource = FindResource("purchase_tenderpurchase_tender_item_detailViewSource") as CollectionViewSource;
 
-            //PurchaseTenderDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             cbxBranch.ItemsSource = CurrentSession.Get_Branch(); //PurchaseTenderDB.app_branch.Local;
 
             PurchaseTenderDB.app_department.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
@@ -102,12 +101,8 @@ namespace Cognitivo.Purchase
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseTender, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
-            //PurchaseTenderDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-
             app_conditionViewSource = FindResource("app_conditionViewSource") as CollectionViewSource;
             app_conditionViewSource.Source = CurrentSession.Get_Condition();
-
-            //PurchaseTenderDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
             app_contractViewSource = FindResource("app_contractViewSource") as CollectionViewSource;
             app_contractViewSource.Source = CurrentSession.Get_Contract();
@@ -115,8 +110,6 @@ namespace Cognitivo.Purchase
             PurchaseTenderDB.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
             app_currencyfxViewSource = FindResource("app_currencyfxViewSource") as CollectionViewSource;
             app_currencyfxViewSource.Source = PurchaseTenderDB.app_currencyfx.Local;
-
-            //PurchaseTenderDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
             app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
@@ -128,8 +121,6 @@ namespace Cognitivo.Purchase
             CollectionViewSource app_measurementViewSource = ((CollectionViewSource)(FindResource("app_measurementViewSource")));
             PurchaseTenderDB.app_measurement.Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_measurementViewSource.Source = PurchaseTenderDB.app_measurement.Local;
-
-           
         }
 
 

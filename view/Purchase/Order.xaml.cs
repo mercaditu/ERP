@@ -265,12 +265,6 @@ namespace Cognitivo.Purchase
                     //Currency
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
                 }));
-
-                await PurchaseOrderDB.projects.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToListAsync();
-                await Dispatcher.InvokeAsync(new Action(() =>
-                {
-                    cbxProject.ItemsSource = PurchaseOrderDB.projects.Local;
-                }));
             }
         }
 

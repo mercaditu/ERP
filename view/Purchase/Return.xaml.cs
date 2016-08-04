@@ -37,21 +37,15 @@ namespace Cognitivo.Purchase
             purchaseInvoiceViewSource = (CollectionViewSource)FindResource("purchase_invoiceViewSource");
             purchaseInvoiceViewSource.Source = dbContext.purchase_invoice.Where(a => a.id_company == _entity.company_ID).ToList();
 
-
-
             CollectionViewSource currencyfxViewSource = (CollectionViewSource)FindResource("currencyfxViewSource");
             dbContext.app_currencyfx.Include("app_currency").Where(x => x.app_currency.id_company == _entity.company_ID).Load();
             currencyfxViewSource.Source = dbContext.app_currencyfx.Local;
-            //cbxCurrency.entity = entity;
 
-
-
-            //app_cost_centerViewSource
             CollectionViewSource app_cost_centerViewSource = (CollectionViewSource)FindResource("app_cost_centerViewSource");
             app_cost_centerViewSource.Source = dbContext.app_cost_center.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
+            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //dbContext.app_vat_group.Where(a => a.is_active == true && a.id_company == _entity.company_ID).OrderBy(a => a.name).ToList();
 
             cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
         }
@@ -104,55 +98,11 @@ namespace Cognitivo.Purchase
             dbContext.CancelAllChanges();
         }
 
-        //private void ButtonImport_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (cbxPurchaseInvoice.SelectedItem != null)
-        //    {
-        //        purchase_invoice purchase_invoice = cbxPurchaseInvoice.SelectedItem as purchase_invoice;
-        //        if (purchase_returnDataGrid.SelectedItem != null)
-        //        {
-        //            purchase_return purchase_return = purchase_returnDataGrid.SelectedItem as purchase_return;
-        //            foreach (var item in purchase_invoice.purchase_invoice_detail)
-        //            {
-        //                purchase_return_detail purchase_return_detail = new purchase_return_detail();
-        //                purchase_return_detail.purchase_return = purchase_return;
-        //                purchase_return_detail.id_cost_center = item.id_cost_center;
-        //                purchase_return_detail.item = item.item;
-        //                purchase_return_detail.id_item = item.id_item;
-        //                purchase_return_detail.item_description = item.item_description;
-        //                purchase_return_detail.unit_cost = item.unit_cost;
-        //                purchase_return_detail.id_vat_group = item.id_vat_group;
-        //                purchase_return_detail.expiration_date = item.expiration_date;
-        //                purchase_return_detail.id_purchase_invoice_detail = (int)item.id_purchase_invoice_detail;
-        //                purchase_return_detail.quantity = item.quantity;
-        //                purchase_return.purchase_return_detail.Add(purchase_return_detail);
-        //            }
-        //            //calculate_total(sender, e);
-        //            calculate_vat(sender, e);
-        //            purchase_returnpurchase_return_detailViewSource.View.Refresh();
-        //        }
-        //    }
-        //}
-
         #region Datagrid Events
         private void calculate_vat(object sender, EventArgs e)
         {
             purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
             purchase_return.RaisePropertyChanged("GrandTotal");
-            //List<purchase_return_vat> deletepurchase_return_detail_vat = entity.db.purchase_return_detail_vat.Local.Where(x => x.purchase_return_detail == null).ToList();
-            //List<purchase_return_vat> purchase_return_detail_vat = entity.db.purchase_return_detail_vat.Local.Where(x => x.purchase_return_detail != null && x.id_purchase_return_vat == 0).ToList();
-            //entity.db.purchase_return_detail_vat.RemoveRange(deletepurchase_return_detail_vat);
-            //purchase_return_detail_vat = purchase_return_detail_vat.Where(x => x.purchase_return_detail.purchase_return == purchase_return).ToList();
-            //dgvvat.ItemsSource = purchase_return_detail_vat
-            //                        .Join(entity.db.app_vat, ad => ad.id_vat, cfx => cfx.id_vat
-            //       , (ad, cfx) => new { name = cfx.name, value = ad.unit_value, id_vat = ad.id_vat, ad.purchase_return_detail })
-            //       .GroupBy(a => new { a.name, a.id_vat, a.purchase_return_detail })
-            //       .Select(g => new
-            //       {
-            //           id_vat = g.Key.id_vat,
-            //           name = g.Key.name,
-            //           value = g.Sum(a => a.value * a.purchase_return_detail.quantity)
-            //       }).ToList();
             List<purchase_return_detail> purchase_return_detail = purchase_return.purchase_return_detail.ToList();
             dgvvat.ItemsSource = purchase_return_detail
                  .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
@@ -166,52 +116,17 @@ namespace Cognitivo.Purchase
                }).ToList();
         }
 
-        //private void calculate_total(object sender, EventArgs e)
-        //{
-        //    purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-        //    if (purchase_return != null)
-        //    {
-        //        purchase_return.get_Puchase_Total();
-        //    }
-        //}
-
         private void purchase_return_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            //calculate_total(sender, e);
             calculate_vat(sender, e);
         }
-        private void purchase_returnDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-            if (purchase_return != null)
-            {
-                //dgvvat.ItemsSource = entity.db.purchase_return_detail_vat
-                //    .Where(x => x.purchase_return_detail.id_purchase_return == purchase_return.id_purchase_return)
-                //    .Join(entity.db.app_vat, ad => ad.id_vat, cfx => cfx.id_vat
-                //    , (ad, cfx) => new { name = cfx.name, value = ad.unit_value, id_vat = ad.id_vat })
-                //    .GroupBy(a => new { a.name, a.id_vat })
-                //    .Select(g => new
-                //    {
-                //        id_vat = g.Key.id_vat,
-                //        name = g.Key.name,
-                //        value = g.Sum(a => a.value)
-                //    }).ToList();
-
-            }
-            //calculate_total(sender, e);
-        }
-
-        //private void purchase_returnDataGrid_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    calculate_total(sender, e);
-        //}
 
         private void purchase_return_detailDataGrid_InitializingNewItem(object sender, InitializingNewItemEventArgs e)
         {
             purchase_return_detail purchase_return_detail = (purchase_return_detail)e.NewItem;
             purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-            //purchase_return_detail.id_branch = (int)purchase_return.id_branch;
         }
+
         #endregion
 
         private void toolBar_btnSearch_Click(object sender, string query)
@@ -262,7 +177,6 @@ namespace Cognitivo.Purchase
                     purchase_return_detailDataGrid.CancelEdit();
                     dbContext.purchase_return_detail.Remove(e.Parameter as purchase_return_detail);
                     purchase_returnpurchase_return_detailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
                 }
             }
             catch (Exception ex)
@@ -279,8 +193,6 @@ namespace Cognitivo.Purchase
                 purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
                 purchase_return.id_contact = contact.id_contact;
                 purchase_return.contact = contact;
-
-
             }
         }
 
@@ -290,11 +202,8 @@ namespace Cognitivo.Purchase
         {
             try
             {
-
                 if (sbxItem.ItemID > 0)
                 {
-                    //Product
-
                     item item = dbContext.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
                     purchase_return purchase_return = purchase_returnDataGrid.SelectedItem as purchase_return;
                     purchase_return_detail purchase_return_detail = purchase_return.purchase_return_detail.Where(a => a.id_item == sbxItem.ItemID).FirstOrDefault();
@@ -416,9 +325,7 @@ namespace Cognitivo.Purchase
 
                     }
                     purchase_returnpurchase_return_detailViewSource.View.Refresh();
-                    //calculate_total(sender, e);
                     calculate_vat(sender, e);
-
                 }
 
             }
@@ -535,14 +442,8 @@ namespace Cognitivo.Purchase
                     purchaseReturnViewSource.View.Refresh();
 
                     purchase_returnpurchase_return_detailViewSource.View.Refresh();
-
-
                 }
             }
         }
-
-        
-
-     
     }
 }

@@ -145,12 +145,12 @@ namespace Cognitivo.Product
                 app_propertyViewSource.Source = ItemDB.app_property.Local;
             }));
 
-            await ItemDB.app_vat_group
-                .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).LoadAsync();
+            //await ItemDB.app_vat_group
+            //    .Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company)
+            //    .OrderBy(a => a.name).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                app_vat_groupViewSource.Source = ItemDB.app_vat_group.Local;
+                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group(); //ItemDB.app_vat_group.Local;
             }));
 
             await ItemDB.item_tag
@@ -171,13 +171,13 @@ namespace Cognitivo.Product
                 item_templateViewSource.Source = ItemDB.item_template.Local;
             }));
 
-            await ItemDB.app_currency
-                .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
-                .OrderBy(a => a.name).ToListAsync();
+            //await ItemDB.app_currency
+            //    .Where(a => a.is_active && a.id_company == CurrentSession.Id_Company)
+            //    .OrderBy(a => a.name).ToListAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_currencyViewSource = ((CollectionViewSource)(FindResource("app_currencyViewSource")));
-                app_currencyViewSource.Source = ItemDB.app_currency.Local;
+                app_currencyViewSource.Source = CurrentSession.Get_Currency(); //ItemDB.app_currency.Local;
             }));
 
             await ItemDB.hr_talent

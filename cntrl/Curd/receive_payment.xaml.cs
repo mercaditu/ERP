@@ -179,9 +179,12 @@ namespace cntrl.Curd
             }
             if (sales_invoice != null)
             {
-                if (dbContext.db.payment_schedual.Where(a => a.id_sales_invoice == sales_invoice.id_sales_invoice && a.id_contact == sales_invoice.id_contact).FirstOrDefault() != null)
+                PaymentDB PaymentDB = new entity.PaymentDB();
+
+                if (PaymentDB.payment_schedual.Where(a => a.id_sales_invoice == sales_invoice.id_sales_invoice && a.id_contact == sales_invoice.id_contact).FirstOrDefault() != null)
                 {
-                    payment_schedual payment_schedual = dbContext.db.payment_schedual.Where(a => a.id_sales_invoice == sales_invoice.id_sales_invoice && a.id_contact == sales_invoice.id_contact).FirstOrDefault();
+                    payment_schedual payment_schedual = PaymentDB.payment_schedual.Where(a => a.id_sales_invoice == sales_invoice.id_sales_invoice && a.id_contact == sales_invoice.id_contact).FirstOrDefault();
+              
                     if (invoice_total > 0)
                     {
                         payment_detail payment_detail = new payment_detail();
@@ -193,9 +196,9 @@ namespace cntrl.Curd
                             payment.id_contact = payment_schedual.id_contact;
                             payment.contact = payment_schedual.contact;
                             payment_detail.id_currencyfx = payment_schedual.id_currencyfx;
-                            if (dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
+                            if (PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault() != null)
                             {
-                                payment_detail.id_payment_type = dbContext.db.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
+                                payment_detail.id_payment_type = PaymentDB.payment_type.Where(x => x.is_default).FirstOrDefault().id_payment_type;
                             }
                             else
                             {
@@ -205,47 +208,41 @@ namespace cntrl.Curd
 
                         }
 
+                        payment_detail.IsSelected = true;
                         payment_detail.App_Name = global::entity.App.Names.SalesInvoice;
-
-                        payment_schedual _payment_schedual = new payment_schedual();
-                        _payment_schedual.credit = invoice_total;
-                        _payment_schedual.parent = payment_schedual;
-                        _payment_schedual.expire_date = payment_schedual.expire_date;
-                        _payment_schedual.status = payment_schedual.status;
-                        _payment_schedual.id_contact = payment_schedual.id_contact;
-                        _payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
-                        _payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
-                        _payment_schedual.trans_date = payment_schedual.trans_date;
-                        _payment_schedual.AccountReceivableBalance = invoice_total;
-
-                        payment_detail.payment_schedual.Add(_payment_schedual);
                         payment.payment_detail.Add(payment_detail);
 
-                        //Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
-                        app_account_detail app_account_detail = new app_account_detail();
-                        if (dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
-                        {
-                            app_account_detail.id_session = dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
-                        }
-                        app_account_detail.id_account = (int)payment_detail.id_account;
-                        app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
-                        app_account_detail.id_payment_type = payment_detail.id_payment_type;
-                        app_account_detail.debit = 0;
-                        app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
-                        dbContext.db.app_account_detail.Add(app_account_detail);
+                        //payment_schedual _payment_schedual = new payment_schedual();
+                        //_payment_schedual.credit = invoice_total;
+                        //_payment_schedual.parent = payment_schedual;
+                        //_payment_schedual.expire_date = payment_schedual.expire_date;
+                        //_payment_schedual.status = payment_schedual.status;
+                        //_payment_schedual.id_contact = payment_schedual.id_contact;
+                        //_payment_schedual.id_currencyfx = payment_schedual.id_currencyfx;
+                        //_payment_schedual.id_sales_invoice = payment_schedual.id_sales_invoice;
+                        //_payment_schedual.trans_date = payment_schedual.trans_date;
+                        //_payment_schedual.AccountReceivableBalance = invoice_total;
 
-                        dbContext.db.payments.Add(payment);
+                        //payment_detail.payment_schedual.Add(_payment_schedual);
+                        //payment.payment_detail.Add(payment_detail);
 
-                        IEnumerable<DbEntityValidationResult> validationresult = dbContext.db.GetValidationErrors();
-                        if (validationresult.Count() == 0)
-                        {
-                            dbContext.db.SaveChanges();
+                        ////Add Account Logic. With IF FUnction if payment type is Basic Behaviour. If not ignore.
+                        //app_account_detail app_account_detail = new app_account_detail();
+                        //if (dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
+                        //{
+                        //    app_account_detail.id_session = dbContext.db.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault().id_session;
+                        //}
+                        //app_account_detail.id_account = (int)payment_detail.id_account;
+                        //app_account_detail.id_currencyfx = payment_schedual.id_currencyfx;
+                        //app_account_detail.id_payment_type = payment_detail.id_payment_type;
+                        //app_account_detail.debit = 0;
+                        //app_account_detail.credit = Convert.ToDecimal(payment_detail.value);
+                        //dbContext.db.app_account_detail.Add(app_account_detail);
 
-                            entity.Brillo.Logic.Document Document = new entity.Brillo.Logic.Document();
-                            Document.Document_PrintPaymentReceipt(payment);
-
-                            imgCancel_MouseDown(null, null);
-                        }
+                        PaymentDB.payments.Add(payment);
+                        PaymentDB.MakePayment(payment_schedual, payment, true);
+                        imgCancel_MouseDown(null, null);
+                   
                     }
                 }
                 else

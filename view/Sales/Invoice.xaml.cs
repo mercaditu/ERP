@@ -251,37 +251,31 @@ namespace Cognitivo.Sales
 
         private async void load_SecondaryDataThread()
         {
-            SalesInvoiceDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
-            cbxContract.ItemsSource = SalesInvoiceDB.app_contract.Local;
+            cbxContract.ItemsSource = CurrentSession.Get_Contract().OrderBy(x => x.name);
 
-            SalesInvoiceDB.app_condition.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            cbxCondition.ItemsSource = SalesInvoiceDB.app_condition.Local;
+            cbxCondition.ItemsSource = CurrentSession.Get_Condition().OrderBy(x => x.name);
 
             cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
-            SalesInvoiceDB.sales_rep.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Local;
+                cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep().OrderBy(x => x.name);
             }));
 
-            SalesInvoiceDB.app_branch.Where(b => b.can_invoice == true && b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxBranch.ItemsSource = SalesInvoiceDB.app_branch.Local;
+                cbxBranch.ItemsSource = CurrentSession.Get_Branch().OrderBy(x => x.name);
             }));
 
-            SalesInvoiceDB.app_terminal.Where(b => b.is_active == true && b.id_company == CurrentSession.Id_Company).OrderBy(b => b.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxTerminal.ItemsSource = SalesInvoiceDB.app_terminal.Local;
+                cbxTerminal.ItemsSource = CurrentSession.Get_Terminal().OrderBy(x => x.name);
             }));
 
-            SalesInvoiceDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-                app_vat_groupViewSource.Source = SalesInvoiceDB.app_vat_group.Local;
+                app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group().OrderBy(x => x.name);
             }));
 
             cbxTransType.ItemsSource = Enum.GetValues(typeof(Status.TransactionTypes));

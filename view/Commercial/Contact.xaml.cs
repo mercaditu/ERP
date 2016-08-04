@@ -508,8 +508,5 @@ namespace Cognitivo.Commercial
                 contactViewSource.View.Refresh();
             }
         }
-
-
-
     }
 }

@@ -67,6 +67,7 @@ namespace cntrl.Curd
                 if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
                 {
                     payment_detail.id_currencyfx = id_currencyfx;
+                    payment_detail.payment.id_currencyfx = id_currencyfx;
                     payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
                 }
                 if (Mode == Modes.Recievable)
@@ -357,15 +358,24 @@ namespace cntrl.Curd
 
         private void btnAddDetail_Click(object sender, RoutedEventArgs e)
         {
+          
+           
+
+          
+       
+
             payment payment = paymentViewSource.View.CurrentItem as payment;
             payment_detail payment_detail = new payment_detail();
+            payment_detail.id_payment = payment.id_payment;
             payment_detail.payment = payment;
-            payment_detail.value = 0;
+            payment_detail.IsSelected = true;
+        
 
 
             int id_currencyfx = payment_schedualList.FirstOrDefault().id_currencyfx;
             if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
             {
+                payment_detail.id_currency = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault().id_currency;
                 payment_detail.id_currencyfx = id_currencyfx;
                 payment_detail.app_currencyfx = PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault();
             }
@@ -376,7 +386,7 @@ namespace cntrl.Curd
                 payment_detail.payment_schedual.Add(_payment_schedual);
 
             }
-
+            payment_detail.value = payment_detail.ValueInDefaultCurrency;
             payment.payment_detail.Add(payment_detail);
             paymentpayment_detailViewSource.View.Refresh();
         }

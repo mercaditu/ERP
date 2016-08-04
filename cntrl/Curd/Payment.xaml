@@ -105,16 +105,16 @@
                                     <DataTemplate>
                                         <cntrl:navList recordCode="{Binding id_currencyfx.app_currency.name, FallbackValue=Currency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" 
                                                        recordSecondaryName="{Binding id_payment_type, FallbackValue=Payment, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-					                                   recordName="{Binding value, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
+					                                   recordName="{Binding value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" 
                                                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                                                        IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <!--<StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
                                 <Label Content="{lex:Loc Total}" VerticalContentAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
-                                <Label Content="{Binding GrandTotalDetail,Source={StaticResource paymentViewSource}, StringFormat=N2, FallbackValue=0, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource H3}"/>
-                            </StackPanel>-->
+                                <Label Content="{Binding GrandTotalDetail,Source={StaticResource paymentViewSource}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{StaticResource H3}"/>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel x:Name="stppaymentdetail" >
                             <!--<Label Content="{lex:Loc SalesInvoice}" Style="{DynamicResource input_label}"/>

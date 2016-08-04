@@ -170,6 +170,7 @@ namespace entity
                 if (_value != value)
                 {
                     _value = value;
+                    RaisePropertyChanged("value");
 
                     if (payment != null)
                     {

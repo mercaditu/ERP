@@ -39,7 +39,7 @@ namespace Cognitivo.Product
             InitializeComponent();
         }
 
-        private async void StockPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void StockPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             //await StockDB.app_branch.Include(x => x.app_location)
             //    .Where(a => a.can_stock == true

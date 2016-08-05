@@ -101,19 +101,19 @@ namespace Cognitivo.Purchase
         #region Datagrid Events
         private void calculate_vat(object sender, EventArgs e)
         {
-            purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-            purchase_return.RaisePropertyChanged("GrandTotal");
-            List<purchase_return_detail> purchase_return_detail = purchase_return.purchase_return_detail.ToList();
-            dgvvat.ItemsSource = purchase_return_detail
-                 .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                      , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
-                      .GroupBy(a => new { a.name, a.id_vat, a.ad })
-               .Select(g => new
-               {
-                   id_vat = g.Key.id_vat,
-                   name = g.Key.name,
-                   value = g.Sum(a => a.value * a.ad.quantity)
-               }).ToList();
+            //purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
+            //purchase_return.RaisePropertyChanged("GrandTotal");
+            //List<purchase_return_detail> purchase_return_detail = purchase_return.purchase_return_detail.ToList();
+            //dgvvat.ItemsSource = purchase_return_detail
+            //     .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+            //          , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_cost * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
+            //          .GroupBy(a => new { a.name, a.id_vat, a.ad })
+            //   .Select(g => new
+            //   {
+            //       id_vat = g.Key.id_vat,
+            //       name = g.Key.name,
+            //       value = g.Sum(a => a.value * a.ad.quantity)
+            //   }).ToList();
         }
 
         private void purchase_return_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

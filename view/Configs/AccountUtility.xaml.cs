@@ -20,8 +20,6 @@ namespace Cognitivo.Configs
             , app_accountapp_account_detailViewSource
             , amount_transferViewSource = null;
         List<Class.clsTransferAmount> listTransferAmt = null;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
-        List<Class.clsTransferAmount> listOpenAmt = null;
         
         public AccountUtility()
         {
@@ -33,30 +31,28 @@ namespace Cognitivo.Configs
             //Main Account DataGrid.
             app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
             entity.db.app_account.Include("app_account_detail")
-                .Where(a => a.id_company == _entity.company_ID).Load();
+                .Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_accountViewSource.Source = entity.db.app_account.Local;
             app_accountapp_account_detailViewSource = this.FindResource("app_accountapp_account_detailViewSource") as CollectionViewSource;
 
             app_account_listViewSource = this.FindResource("app_account_listViewSource") as CollectionViewSource;
             app_account_listViewSource.Source =
-                entity.db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal && a.id_company == _entity.company_ID).ToList();
-
-           // getInitialAmount();
+                entity.db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal && a.id_company == CurrentSession.Id_Company).ToList();
 
             CollectionViewSource app_accountDestViewSource = this.FindResource("app_accountDestViewSource") as CollectionViewSource;
-            app_accountDestViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_company == _entity.company_ID).ToList();
+            app_accountDestViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
             //Payment Type 
             CollectionViewSource payment_typeViewSource = this.FindResource("payment_typeViewSource") as CollectionViewSource;
-            payment_typeViewSource.Source = entity.db.payment_type.Where(a => a.is_active == true).ToList();
+            payment_typeViewSource.Source = entity.db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
 
             //CurrencyFx
             CollectionViewSource app_currencyfxViewSource = this.FindResource("app_currencyfxViewSource") as CollectionViewSource;
-            entity.db.app_currencyfx.Include("app_currency").Where(a => a.is_active == true).Load();
+            entity.db.app_currencyfx.Include("app_currency").Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             app_currencyfxViewSource.Source = entity.db.app_currencyfx.Local;
 
             //For Adjust Tab.
             app_account_detail_adjustViewSource = this.FindResource("app_account_detail_adjustViewSource") as CollectionViewSource;
-            entity.db.app_account_detail.Where(a => a.id_company == _entity.company_ID).Load();
+            entity.db.app_account_detail.Where(a => a.id_company == CurrentSession.Id_Company && a.id_company == CurrentSession.Id_Company).Load();
             app_account_detail_adjustViewSource.Source = entity.db.app_account_detail.Local;
             app_account_detail_adjustViewSource.View.Filter = item =>
             {
@@ -72,42 +68,6 @@ namespace Cognitivo.Configs
             amount_transferViewSource = this.FindResource("amount_transferViewSource") as CollectionViewSource;
             amount_transferViewSource.Source = listTransferAmt;
         }
-
-        //private void getInitialAmount()
-        //{
-        //    app_account objAccount = (app_account)app_accountDataGrid.SelectedItem;
-        //    var app_account_detailList = objAccount.app_account_detail
-        // .GroupBy(ad => new { ad.id_currencyfx })
-        // .Select(s => new
-        // {
-        //     id_currencyfx = s.Max(ad => ad.app_currencyfx.id_currencyfx),
-        //     id_paymenttype = s.Max(ad => ad.id_payment_type),
-        //     cur = s.Max(ad => ad.app_currencyfx.app_currency.name),
-        //     payType = s.Max(ad => ad.payment_type.name),
-        //     amount = s.Sum(ad => ad.credit) - s.Sum(ad => ad.debit)
-        // }).ToList();
-
-        //    var app_account_detailFinalList = app_account_detailList.GroupBy(x => x.cur).Select(s => new
-        //    {
-        //        id_currencyfx=s.Max(x=>x.id_currencyfx),
-        //        id_paymenttype = s.Max(x => x.id_paymenttype),
-        //        cur = s.Max(ad => ad.cur),
-        //        payType = s.Max(ad => ad.payType),
-        //        amount = s.Sum(ad => ad.amount)
-        //    }).ToList();
-        //    listOpenAmt = new List<Class.clsTransferAmount>();
-        //    foreach (dynamic item in app_account_detailFinalList)
-        //    {
-        //        Class.clsTransferAmount clsTransferAmount = new Class.clsTransferAmount();
-        //        clsTransferAmount.PaymentTypeName = item.payType;
-        //        clsTransferAmount.amount = item.amount;
-        //        clsTransferAmount.Currencyfxname = item.cur;
-        //        clsTransferAmount.id_payment_type = item.id_paymenttype;
-        //        clsTransferAmount.id_currencyfx = item.id_currencyfx;
-        //        listOpenAmt.Add(clsTransferAmount);
-        //    }
-        //    CashDataGrid.ItemsSource = listOpenAmt;
-        //}
 
         private void app_accountDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -132,57 +92,6 @@ namespace Cognitivo.Configs
             frmActive.Children.Add(AccountActive);
         }
         #endregion
-
-        //private void btnActivateAccount_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (app_accountDataGrid.SelectedItem != null)
-        //    {
-        //        app_account app_account = app_accountDataGrid.SelectedItem as app_account;
-        //        foreach (Class.clsTransferAmount list in listOpenAmt)
-        //        {
-        //            app_account_detail app_account_detail = new global::entity.app_account_detail();
-                  
-        //            if (app_account.is_active == true)
-        //            {
-        //                //Make Inactive
-        //                app_account_detail.debit = list.amountCounted;
-        //            }
-        //            else
-        //            {
-        //                //Make Active
-        //                app_account_detail.credit = list.amountCounted;
-        //            }
-
-        //            app_account_detail.id_account = app_account.id_account;
-        //            app_account_detail.id_currencyfx = list.id_currencyfx;
-        //            app_account_detail.id_payment_type = list.id_payment_type;
-        //            app_account_detail.comment = "For Opening or closing Cash.";
-        //            app_account_detail.trans_date = DateTime.Now;
-        //            entity.db.app_account_detail.Add(app_account_detail);
-        //        }
-
-        //        if (app_account.is_active == true)
-        //        {
-        //            //Make Inactive
-        //            entity.db.Entry(app_account).Entity.is_active = false;
-        //        }
-        //        else
-        //        {
-        //            //Make Active
-        //            entity.db.Entry(app_account).Entity.is_active = true;
-        //        }
-        //        // entity.db.Entry(app_account).Entity.initial_amount = Convert.ToDecimal(txtInitialAmount.Text.Trim());
-        //        entity.db.Entry(app_account).State = EntityState.Modified;
-
-        //        entity.SaveChanges();
-
-        //        //Reload Data
-        //        entity.db.Entry(app_account).Reload();
-        //        app_accountViewSource.View.Refresh();
-        //        app_account_listViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal).ToList();
-        //        app_account_listViewSource.View.Refresh();
-        //    }
-        //}
 
         private void btnAdjust_Click(object sender, RoutedEventArgs e)
         {
@@ -209,6 +118,7 @@ namespace Cognitivo.Configs
                         {
                             objOriginAcDetail.id_session = entity.db.app_account_session.Where(x => x.id_account == idOriginAccount.id_account && x.is_active).FirstOrDefault().id_session;
                         }
+
                         objOriginAcDetail.id_account = idOriginAccount.id_account;
                         objOriginAcDetail.id_currencyfx = listTransferAmt[0].id_currencyfx;
                         objOriginAcDetail.id_payment_type = listTransferAmt[0].id_payment_type;
@@ -279,13 +189,6 @@ namespace Cognitivo.Configs
                 app_account_listViewSource.Source = entity.db.app_account.Where(a => a.is_active == true && a.id_account_type == app_account.app_account_type.Terminal).ToList();
                 app_account_listViewSource.View.Refresh();
             }
-            //if (tabAccount.SelectedIndex==1)
-            //{
-            //    Configs.AccountActive AccountActive = new AccountActive();
-            //    AccountActive.app_accountViewSource = app_accountViewSource;
-            //    frmActive.Children.Add(AccountActive);
-            //}
         }
     }
-
 }

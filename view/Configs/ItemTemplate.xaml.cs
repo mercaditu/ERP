@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Data.Entity;
@@ -17,7 +16,6 @@ namespace Cognitivo.Product
         dbContext entity = new dbContext();
         CollectionViewSource item_templateViewSource = null;
         CollectionViewSource item_templateitem_template_detailViewSource = null;
-        entity.Properties.Settings _entity = new entity.Properties.Settings();
 
         public ItemTemplate()
         {
@@ -27,7 +25,7 @@ namespace Cognitivo.Product
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             item_templateViewSource = (CollectionViewSource)Resources["item_templateViewSource"];
-            entity.db.item_template.Where(a => a.id_company == _entity.company_ID && a.is_active == true).OrderBy(a => a.name).Load();
+            entity.db.item_template.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).Load();
             item_templateViewSource.Source = entity.db.item_template.Local;
             item_templateitem_template_detailViewSource = (CollectionViewSource)Resources["item_templateitem_template_detailViewSource"];
         }

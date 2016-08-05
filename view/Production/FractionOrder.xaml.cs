@@ -27,8 +27,7 @@ namespace Cognitivo.Production
             item_movementViewSource,
             item_movementrawViewSource,
             production_executionViewSource,
-            production_executionproduction_execustion_detailViewSource,
-            item_movementitem_movement_dimensionViewSource;
+            production_executionproduction_execustion_detailViewSource;
 
         CollectionViewSource
          production_execution_detailProductViewSource,

@@ -138,7 +138,8 @@ namespace Cognitivo.Setup.Migration
                                    contacts.parent = db.contacts.Where(x => x.name == name).FirstOrDefault();
                                }
                         }
-                        int SEXO = Convert.ToInt32((reader[33] is DBNull) ? null : reader[33].ToString());
+                        
+                        var SEXO = Convert.ToInt32((reader[33] is DBNull) ? null : reader[33].ToString());
                         if (SEXO != null)
                         {
                             if (SEXO == 0)
@@ -193,13 +194,6 @@ namespace Cognitivo.Setup.Migration
                         }
                     }
                     
-                    //Contact Relationship
-                    //1) Find & Insert Type
-                    //if customfiled.isnumeric == main contact
-                    //end
-                    //if customfield.isnumeric != lookup customfield in contact_relation
-                    //2) Find Parent and Link
-
                     //db Related Insertion.
                     if (!(reader[1] is DBNull))
                     {

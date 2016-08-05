@@ -19,8 +19,7 @@ namespace Cognitivo.Sales
         SalesBudgetDB SalesBudgetDB = new SalesBudgetDB();
 
         CollectionViewSource sales_budgetViewSource,
-            sales_budgetsales_budget_detailViewSource,
-            projectViewSource;
+            sales_budgetsales_budget_detailViewSource;
 
         public Budget()
         {
@@ -379,10 +378,6 @@ namespace Cognitivo.Sales
                     //SalesMan
                     if (objContact.sales_rep != null)
                         cbxCondition.SelectedValue = objContact.sales_rep.id_sales_rep;
-
-                    projectViewSource.Source = SalesBudgetDB.projects.Where(a => a.is_active == true
-                                 && a.id_company == entity.Properties.Settings.Default.company_ID
-                                 && a.id_contact == objContact.id_contact).OrderBy(a => a.name).ToList();
                 }));
             }
         }

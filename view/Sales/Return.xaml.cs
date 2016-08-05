@@ -21,7 +21,7 @@ namespace Cognitivo.Sales
     {
         SalesReturnDB SalesReturnDB = new SalesReturnDB();
 
-        CollectionViewSource salesReturnViewSource, sales_invoiceViewSource, sales_returnsales_return_detailViewSource;
+        CollectionViewSource salesReturnViewSource, sales_returnsales_return_detailViewSource;
         cntrl.PanelAdv.pnlSalesInvoice pnlSalesInvoice;
      
         public Return()
@@ -126,19 +126,19 @@ namespace Cognitivo.Sales
 
         private void calculate_vat(object sender, EventArgs e)
         {
-            sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
-            sales_return.RaisePropertyChanged("GrandTotal");
-            List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
-            dgvvat.ItemsSource = sales_return_detail
-                 .Join(SalesReturnDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
-                      , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
-                      .GroupBy(a => new { a.name, a.id_vat, a.ad })
-               .Select(g => new
-               {
-                   id_vat = g.Key.id_vat,
-                   name = g.Key.name,
-                   value = g.Sum(a => a.value * a.ad.quantity)
-               }).ToList();
+            //sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
+            //sales_return.RaisePropertyChanged("GrandTotal");
+            //List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
+            //dgvvat.ItemsSource = sales_return_detail
+            //     .Join(SalesReturnDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group
+            //          , (ad, cfx) => new { name = cfx.app_vat.name, value = ad.unit_price * cfx.app_vat.coefficient, id_vat = cfx.app_vat.id_vat, ad })
+            //          .GroupBy(a => new { a.name, a.id_vat, a.ad })
+            //   .Select(g => new
+            //   {
+            //       id_vat = g.Key.id_vat,
+            //       name = g.Key.name,
+            //       value = g.Sum(a => a.value * a.ad.quantity)
+            //   }).ToList();
         }
 
         private void sales_return_detailDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

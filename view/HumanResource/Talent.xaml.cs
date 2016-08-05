@@ -93,7 +93,7 @@ namespace Cognitivo.HumanResource
             {
                 dbContext.SaveChanges();
             }
-            catch(Exception ex)
+            catch
             {
                 //toolBar.msgError(ex);
             }

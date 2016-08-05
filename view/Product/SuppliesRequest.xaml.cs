@@ -134,7 +134,7 @@ namespace Cognitivo.Product
                     item_request_detail.item_request.GetTotalDecision();
                 }
             }
-            catch (Exception ex)
+            catch
             {
                // toolBar.msgError(ex);
             }

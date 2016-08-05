@@ -221,8 +221,10 @@ namespace entity
             Salesman = 69,
             [LocalizedDescription("Location")]
             Location = 70,
-            [LocalizedDescription("Measurement")]
+            [LocalizedDescription("MeasurementType")]
             Measurement = 71,
+            [LocalizedDescription("MeasurementType")]
+            MeasurementType = 106,
             [LocalizedDescription("Brand")]
             Brand = 72,
             [LocalizedDescription("Tags")]

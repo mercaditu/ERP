@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      
+       xmlns:pref="clr-namespace:Cognitivo.Sales"
       xmlns:entity="clr-namespace:entity;assembly=entity" mc:Ignorable="d"
       MinWidth="800" MinHeight="600" Loaded="StockPage_Loaded"
       xmlns:lex="http://wpflocalizeextension.codeplex.com" 
@@ -13,6 +13,7 @@
         lex:LocalizeDictionary.DesignCulture="en-US" 
 	  Title="{lex:Loc Stock}" >
     <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility" />
         <CollectionViewSource x:Key="app_branchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_branch}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_branchapp_locationViewSource" Source="{Binding app_location, Source={StaticResource app_branchViewSource}}"/>
         <CollectionViewSource x:Key="item_movementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_movement}, CreateList=True}"/>
@@ -115,8 +116,8 @@
                        HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent" Visibility="Visible"
-                BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2">
+        <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent" 
+                BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=DeveloperMode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Visibility}}">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="246">
                 <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}"/>
                 <Label Content="Parent / Child Rel" FontSize="18" HorizontalContentAlignment="Center"/>

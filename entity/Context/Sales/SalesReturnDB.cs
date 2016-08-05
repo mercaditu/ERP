@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WPFLocalizeExtension.Extensions;
 
-namespace entity 
+namespace entity
 {
-    public partial class SalesReturnDB:BaseDB
+    public partial class SalesReturnDB : BaseDB
     {
         public sales_return New()
         {
@@ -18,7 +18,7 @@ namespace entity
             sales_return.trans_date = DateTime.Now;
 
             sales_return.id_branch = CurrentSession.Id_Branch;
-
+            sales_return.app_branch = base.app_branch.Where(x => x.id_branch == sales_return.id_branch).FirstOrDefault();
             sales_return.State = EntityState.Added;
             sales_return.IsSelected = true;
 
@@ -44,7 +44,7 @@ namespace entity
         {
             foreach (sales_return sales_return in base.sales_return.Local)
             {
-              
+
                 if (sales_return.IsSelected && sales_return.Error == null)
                 {
                     if (sales_return.State == EntityState.Added)
@@ -123,7 +123,7 @@ namespace entity
                             sales_return.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                             sales_return.RaisePropertyChanged("number");
                             sales_return.is_issued = true;
-                            
+
                             //Save values bofore printing.
                             SaveChanges();
 
@@ -140,7 +140,7 @@ namespace entity
 
                         Brillo.Logic.Stock _Stock = new Brillo.Logic.Stock();
                         List<item_movement> item_movementList = new List<item_movement>();
-                        item_movementList = _Stock.insert_Stock(this,sales_return);
+                        item_movementList = _Stock.insert_Stock(this, sales_return);
 
                         if (payment_schedualList != null && payment_schedualList.Count > 0)
                         {
@@ -158,9 +158,9 @@ namespace entity
                             payment_detail payment_detailreturn = new payment_detail();
                             // payment_detailreturn.id_account = payment_quick.payment_detail.id_account;
                             payment_detailreturn.id_currencyfx = sales_return.id_currencyfx;
-                            
+
                             //Check for Credit Note PaymentType.
-                            if ( base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault()!=null)
+                            if (base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault() != null)
                             {
                                 //Gets Payment Type form Database.
                                 payment_detailreturn.id_payment_type = base.payment_type.Where(x => x.payment_behavior == entity.payment_type.payment_behaviours.CreditNote).FirstOrDefault().id_payment_type;
@@ -175,7 +175,7 @@ namespace entity
 
                                 payment_detailreturn.payment_type = payment_type;
                             }
-                    
+
                             payment_detailreturn.id_sales_return = sales_return.id_sales_return;
                             payment_detailreturn.value = sales_return.GrandTotal;
 
@@ -199,7 +199,7 @@ namespace entity
                         sales_return.status = Status.Documents_General.Approved;
                         SaveChanges();
                     }
-                       
+
                     else if (sales_return.Error != null)
                     {
                         sales_return.HasErrors = true;

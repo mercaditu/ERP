@@ -8,9 +8,9 @@
     xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:Converter ="clr-namespace:Cognitivo.Converters"  
-    xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"
     xmlns:mainpref="clr-namespace:Cognitivo.Properties"
     mc:Ignorable="d" 
+    xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
     xmlns:lex="http://wpflocalizeextension.codeplex.com" 
     lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
     lex:ResxLocalizationProvider.DefaultDictionary="local"
@@ -260,23 +260,12 @@
                 
                 
                 <Grid Grid.ColumnSpan="2" Grid.Row="1">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
-                        <TextBlock x:Name="lblTotal" Text="{Binding GrandTotal, Source={StaticResource sales_returnViewSource}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" Style="{StaticResource TextAreaH2}"/>
-                        <Label Content="{Binding app_currencyfx.app_currency.name}" Style="{StaticResource H3}" ContentStringFormat="{}{0:N}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}" />
-                        <Label x:Name="lblVAT" Foreground="RoyalBlue" Content="{lex:Loc VAT}" VerticalAlignment="Center"/>
-                        <Popup x:Name="popupVAT" IsOpen="{Binding ElementName=lblVAT, Path=IsMouseOver, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                               PlacementTarget="{Binding ElementName=gridvat}" Placement="Top">
-                            <DataGrid x:Name="dgvvat" AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                              RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding id_vat}" Header="Id" Width="SizeToHeader" 
-                                                        Visibility="{Binding Source={x:Static mainpref:Settings.Default}, Path=Developer_Option, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                    <DataGridTextColumn Binding="{Binding name}" Header="{lex:Loc Cognitivo:local:Name}" Width="150"/>
-                                    <DataGridTextColumn Binding="{Binding value, StringFormat={}{0:N}}" Header="{lex:Loc Cognitivo:local:Value}" Width="SizeToHeader"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Popup>
-                    </StackPanel>
+                    <Controls:Totals GrandTotal="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource sales_invoiceViewSource}, StringFormat={}{0:N}}"
+                                             Currency="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             DiscountPercentage="{Binding DiscountPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                             DiscountValue="{Binding DiscountWithoutPercentage, StringFormat={}{0:N}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             btnClean_Click="btnTotalClean_Click"
+                                             VerticalAlignment="Top" HorizontalAlignment="Right"/>
                     <StackPanel  MinHeight="100" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}">
                         <Controls:SmartBox_Item x:Name="sbxItem" HorizontalAlignment="Left" Width="256" Height="26" Select="item_Select"
                                                  IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}"/>

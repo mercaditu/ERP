@@ -30,27 +30,26 @@ namespace entity
             get { return _id_item; }
             set
             {
-                //if (State > 0)
-                //{
                 if (value > 0 && value != _id_item)
                 {
                     _id_item = value;
                     RaisePropertyChanged("id_item");
 
-                    using (db db = new db())
+                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
-                        item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
+                        using (db db = new db())
+                        {
+                            item _item = db.items.Where(x => x.id_item == _id_item).FirstOrDefault();
 
-                        id_vat_group = Vat.getItemVat(_item);
-                        RaisePropertyChanged("id_vat_group");
-                        item_description = _item.name;
-                        RaisePropertyChanged("item_description");
+                            id_vat_group = Vat.getItemVat(_item);
+                            RaisePropertyChanged("id_vat_group");
+                            item_description = _item.name;
+                            RaisePropertyChanged("item_description");
+                        }
+
+                        update_UnitPrice();
                     }
-
-                    update_UnitPrice();
-                    update_UnitCost();
                 }
-                //}
             }
         }
         private int _id_item;
@@ -143,8 +142,6 @@ namespace entity
                     {
                         unit_price = Currency.convert_Values(unit_price, _CurrencyFX_ID, value, App.Modules.Sales);
                         RaisePropertyChanged("unit_price");
-
-
                     }
                     _CurrencyFX_ID = value;
                 }
@@ -263,27 +260,6 @@ namespace entity
         public void Item_Select()
         {
 
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void update_UnitCost()
-        {
-            if (State != System.Data.Entity.EntityState.Unchanged)
-            {
-                if (item != null && item.unit_cost != null)
-                {
-                    unit_cost = (decimal)item.unit_cost;
-                    using (db db = new db())
-                    {
-                        unit_cost = Currency.convert_Values((decimal)item.unit_cost, Currency.get_DefaultFX(db).id_currencyfx, CurrencyFX_ID, App.Modules.Sales);
-                        RaisePropertyChanged("unit_cost");
-                    }
-
-
-                }
-            }
         }
 
         /// <summary>

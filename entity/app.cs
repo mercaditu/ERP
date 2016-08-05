@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 110
+            /// Last Used : 111
             /// </summary>
 
 
@@ -152,7 +152,9 @@ namespace entity
              [LocalizedDescription("ItemTemplate")]
             ItemTemplate = 108,
              [LocalizedDescription("ItemProperty")]
-             ItemProperty = 109,
+             Property = 109,
+             [LocalizedDescription("ItemAssetGroup")]
+             ItemAssetGroup = 112,
 
             //Production
             [LocalizedDescription("ProductionExecution")]
@@ -183,6 +185,9 @@ namespace entity
             PrintingPresstemplate = 40,
             [LocalizedDescription("ProjectFinance")]
             ProjectFinance = 53,
+             [LocalizedDescription("ProjectTag")]
+            ProjectTag = 111,
+            
 
             //HR
             [LocalizedDescription("Employee")]
@@ -190,7 +195,7 @@ namespace entity
             [LocalizedDescription("Talent")]
             Talent = 36,
             [LocalizedDescription("HourCoeficient")]
-            HourCoeficient = 48,
+            Hr_coefficient = 48,
             [LocalizedDescription("EmpRecievable")]
             EmpRecievable = 101,
 

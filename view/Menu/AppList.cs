@@ -88,7 +88,7 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Transaction, "HumanResource.Talent", entity.App.Names.Talent, "EmployeeTalent", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Form, "HumanResource.Employee", entity.App.Names.Employee, "EmployeeID", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "HumanResource.Payroll", "Payroll", "Money", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Configs.Hr_coefficient", entity.App.Names.HourCoeficient, "EntryExit", Version.Full);
+            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Configs.Hr_coefficient", entity.App.Names.Hr_coefficient, "EntryExit", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Commercial.EmpRecievable", entity.App.Names.AccountsReceivable, "Money", Version.Full);
 
             //Stock

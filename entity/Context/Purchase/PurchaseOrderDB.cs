@@ -15,7 +15,7 @@ namespace entity
             purchase_order.id_range = Brillo.GetDefault.Return_RangeID(App.Names.PurchaseOrder);
             purchase_order.status = Status.Documents_General.Pending;
             purchase_order.trans_date = DateTime.Now;
-          
+            purchase_order.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
             purchase_order.IsSelected = true;
             
             return purchase_order;

@@ -39,8 +39,12 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 105
+            /// Last Used : 110
             /// </summary>
+
+
+            [LocalizedDescription("DocumentRange")]
+            DocumentRange = 110,
 
             //Sales
             [LocalizedDescription("SalesOrder")]
@@ -145,6 +149,10 @@ namespace entity
             ItemBarcode = 94,
             [LocalizedDescription("FootTraffic")]
             FootTraffic = 96,
+             [LocalizedDescription("ItemTemplate")]
+            ItemTemplate = 108,
+             [LocalizedDescription("ItemProperty")]
+             ItemProperty = 109,
 
             //Production
             [LocalizedDescription("ProductionExecution")]
@@ -221,10 +229,10 @@ namespace entity
             Salesman = 69,
             [LocalizedDescription("Location")]
             Location = 70,
-            [LocalizedDescription("MeasurementType")]
+            [LocalizedDescription("Measurement")]
             Measurement = 71,
             [LocalizedDescription("MeasurementType")]
-            MeasurementType = 106,
+            MeasurementType = 107,
             [LocalizedDescription("Brand")]
             Brand = 72,
             [LocalizedDescription("Tags")]

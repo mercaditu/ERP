@@ -18,6 +18,7 @@ namespace entity
 
             purchase_invoice.State = EntityState.Added;
             purchase_invoice.IsSelected = true;
+            purchase_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
             base.Entry(purchase_invoice).State = EntityState.Added;
             return purchase_invoice;
         }

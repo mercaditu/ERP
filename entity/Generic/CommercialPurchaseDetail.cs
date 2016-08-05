@@ -43,17 +43,20 @@ namespace entity
                     _id_item = value;
                     RaisePropertyChanged("id_item");
 
-                    //If Item Exist, then load up Data.
-                    if (item != null)
+                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
                     {
-                        id_vat_group = Vat.getItemVat(item);
-                        RaisePropertyChanged("id_vat_group");
-                        item_description = item.name;
-                        RaisePropertyChanged("item_description");
-                    }
+                        //If Item Exist, then load up Data.
+                        if (item != null)
+                        {
+                            id_vat_group = Vat.getItemVat(item);
+                            RaisePropertyChanged("id_vat_group");
+                            item_description = item.name;
+                            RaisePropertyChanged("item_description");
+                        }
 
-                    //Update Cost based
-                    update_UnitCost(_CurrencyFX_ID);
+                        //Update Cost based
+                        update_UnitCost(_CurrencyFX_ID);
+                    }
                 }
             }
         }

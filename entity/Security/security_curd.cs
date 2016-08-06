@@ -82,7 +82,40 @@ namespace entity
         public bool can_delete { get; set; }
 
         public bool can_approve { get; set; }
-        public bool can_annul { get; set; }
+        public bool can_annul
+        {
+            get
+            {
+                return _can_annul;
+            }
+            set
+            {
+                if (value != _can_annul)
+                {
+                    _can_annul = value;
+                    RaisePropertyChanged("can_annul");
+
+                    if (_can_annul == true)
+                    {
+                        can_create = true;
+                        RaisePropertyChanged("can_create");
+
+                        can_update = true;
+                        RaisePropertyChanged("can_update");
+
+                        can_delete = true;
+                        RaisePropertyChanged("can_delete");
+
+                        can_approve = true;
+                        RaisePropertyChanged("can_approve");
+
+                        can_annul = true;
+                        RaisePropertyChanged("can_annul");
+                    }
+                }
+            }
+        }
+        bool _can_annul = false;
 
         public virtual security_role security_role { get; set; }
     }

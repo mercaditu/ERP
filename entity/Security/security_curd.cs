@@ -26,7 +26,22 @@ namespace entity
         public int id_curd { get; set; }
         public int id_role { get; set; }
         public App.Names id_application { get; set; }
-        public bool can_create { get; set; }
+        public bool can_create
+        {
+            get
+            {
+                return _can_create;
+            }
+            set
+            {
+                if (value != _can_create)
+                {
+                    _can_create = value;
+                    RaisePropertyChanged("can_create");
+                }
+            }
+        }
+        bool _can_create = false;
 
         public bool can_read
         {
@@ -41,20 +56,23 @@ namespace entity
                     _can_read = value;
                     RaisePropertyChanged("can_read");
 
-                    can_create = _can_read;
-                    RaisePropertyChanged("can_create");
+                    if (_can_read == false)
+                    {
+                        can_create = false;
+                        RaisePropertyChanged("can_create");
 
-                    can_update = _can_read;
-                    RaisePropertyChanged("can_update");
+                        can_update = false;
+                        RaisePropertyChanged("can_update");
 
-                    can_delete = _can_read;
-                    RaisePropertyChanged("can_delete");
+                        can_delete = false;
+                        RaisePropertyChanged("can_delete");
 
-                    can_approve = _can_read;
-                    RaisePropertyChanged("can_approve");
+                        can_approve = false;
+                        RaisePropertyChanged("can_approve");
 
-                    can_annul = _can_read;
-                    RaisePropertyChanged("can_annul");
+                        can_annul = false;
+                        RaisePropertyChanged("can_annul");
+                    }
                 }
             }
         }

@@ -208,8 +208,8 @@ namespace Cognitivo.Purchase
                         purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
                     }
 
-                    purchase_tender_contact.app_contract = (app_contract)cbxContract.SelectedItem;
-                    purchase_tender_contact.app_condition = (app_condition)cbxCondition.SelectedItem;
+                    purchase_tender_contact.id_contract = (cbxContract.SelectedItem as app_contract).id_contract;
+                    purchase_tender_contact.id_condition = (cbxCondition.SelectedItem as app_condition).id_condition;
 
                     if (purchase_tender != null)
                     {
@@ -328,8 +328,17 @@ namespace Cognitivo.Purchase
                     if (dg.Name == "purchase_tender_contact_detailDataGrid")
                     {
                         purchase_tender_contact_detailDataGrid.CancelEdit();
-                        PurchaseTenderDB.purchase_tender_contact_detail.Remove(e.Parameter as purchase_tender_contact);
-                        purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
+                        purchase_tender_contact purchase_tender_contact = e.Parameter as entity.purchase_tender_contact;
+
+                        if (purchase_tender_contact != null)
+                        {
+                            PurchaseTenderDB.purchase_tender_contact_detail.Remove(purchase_tender_contact);
+                            purchase_tenderpurchase_tender_contact_detailViewSource.View.Refresh();
+                        }
+                        else
+                        {
+                            toolBar.msgWarning("Please Contact Admin.");
+                        }
                     }
                     else if (dg.Name == "purchase_tender_itemDataGrid")
                     {

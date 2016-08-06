@@ -150,7 +150,10 @@ namespace Cognitivo.Commercial
         private void toolBar_btnCancel_Click(object sender)
         {
             ContactDB.CancelAllChanges();
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            contact.State = EntityState.Unchanged;
         }
+
         #endregion
 
         private void cbxContactRole_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Data.Entity;
 using entity;
+using System.Threading.Tasks;
 
 namespace Cognitivo.Purchase
 {
@@ -193,10 +194,38 @@ namespace Cognitivo.Purchase
                 purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
                 purchase_return.id_contact = contact.id_contact;
                 purchase_return.contact = contact;
+
+                if (purchase_return == null)
+                {
+                    ///Start Thread to get Data.
+                    Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));
+                }
             }
         }
 
+        private async void set_ContactPref_Thread(contact objContact)
+        {
 
+            if (objContact != null)
+            {
+                await Dispatcher.InvokeAsync(new Action(() =>
+                {
+                    //cbxContactRelation.ItemsSource = SalesInvoiceDB.contacts.Where(x => x.parent.id_contact == objContact.id_contact).ToList();
+
+                    //if (objContact.id_sales_rep != null)
+                    //    cbxs.SelectedValue = Convert.ToInt32(objContact.id_sales_rep);
+                    ////Condition
+                    //if (objContact.app_contract != null)
+                    //    cbxCondition.SelectedValue = objContact.app_contract.id_condition;
+                    ////Contract
+                    //if (objContact.id_contract != null)
+                    //    cbxContract.SelectedValue = Convert.ToInt32(objContact.id_contract);
+                    ////Currency
+
+                    cbxCurrency.get_ActiveRateXContact(ref objContact);
+                }));
+            }
+        }
 
         private void item_Select(object sender, EventArgs e)
         {
@@ -395,7 +424,7 @@ namespace Cognitivo.Purchase
             pnlPurchaseInvoice.PurchaseInvoice_Click += PurchaseInvoice_Click;
             crud_modal.Children.Add(pnlPurchaseInvoice);
         }
-        public void PurchaseInvoice_Click(object sender)
+        public async void PurchaseInvoice_Click(object sender)
         {
             purchase_return _purchase_return = (purchase_return)purchaseReturnViewSource.View.CurrentItem;
 
@@ -416,17 +445,21 @@ namespace Cognitivo.Purchase
                         purchase_return_detail.id_purchase_invoice_detail = _purchase_invoice_detail.id_purchase_invoice_detail;
                         purchase_return_detail.id_cost_center = _purchase_invoice_detail.id_cost_center;
                         purchase_return_detail.id_location = _purchase_invoice_detail.id_location;
+
                         if (dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault() != null)
                         {
                             purchase_return_detail.app_location = dbContext.app_location.Where(x => x.id_location == _purchase_invoice_detail.id_location).FirstOrDefault();
                         }
+
                         purchase_return_detail.purchase_return = _purchase_return;
+
                         if (dbContext.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault() != null)
                         {
+                            purchase_return_detail.id_item = _purchase_invoice_detail.id_item;
                             purchase_return_detail.item = dbContext.items.Where(x => x.id_item == _purchase_invoice_detail.id_item).FirstOrDefault();
                         }
                  
-                        purchase_return_detail.id_item = _purchase_invoice_detail.id_item;
+                        purchase_return_detail.item_description = _purchase_invoice_detail.item_description;
 
                         purchase_return_detail.quantity = _purchase_invoice_detail.quantity - dbContext.purchase_return_detail
                                                                                      .Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail)

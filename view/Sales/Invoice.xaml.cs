@@ -349,6 +349,8 @@ namespace Cognitivo.Sales
         private void toolBar_btnCancel_Click(object sender)
         {
             SalesInvoiceDB.CancelAllChanges();
+            sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
+            sales_invoice.State = EntityState.Unchanged;
         }
 
         private void btnApprove_Click(object sender)
@@ -410,16 +412,6 @@ namespace Cognitivo.Sales
 
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
                 }));
-
-                //await SalesInvoiceDB.projects.Where(a => a.is_active == true
-                //                                    && a.id_company == CurrentSession.Id_Company
-                //                                    && a.id_contact == objContact.id_contact)
-                //                            .OrderBy(a => a.name)
-                //                            .ToListAsync();
-                //await Dispatcher.InvokeAsync(new Action(() =>
-                //{
-                //    cbxProject.ItemsSource = SalesInvoiceDB.projects.Local;
-                //}));
             }
         }
 

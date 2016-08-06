@@ -464,7 +464,8 @@ namespace Cognitivo.Purchase
                         purchase_return_detail.quantity = _purchase_invoice_detail.quantity - dbContext.purchase_return_detail
                                                                                      .Where(x => x.id_purchase_invoice_detail == _purchase_invoice_detail.id_purchase_invoice_detail)
                                                                                      .GroupBy(x => x.id_purchase_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
-
+                        
+                        purchase_return_detail.id_vat_group = _purchase_invoice_detail.id_vat_group;
                         purchase_return_detail.unit_cost = _purchase_invoice_detail.unit_cost;
                         purchase_return_detail.CurrencyFX_ID = _purchase_return.id_currencyfx;
                         _purchase_return.purchase_return_detail.Add(purchase_return_detail);

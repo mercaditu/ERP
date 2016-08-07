@@ -232,8 +232,6 @@ namespace Cognitivo.Purchase
                     //Currency
                     cbxCurrency.get_ActiveRateXContact(ref objContact);
                 }));
-
-                cbxCurrency.get_ActiveRateXContact(ref objContact);
             }
         }
 

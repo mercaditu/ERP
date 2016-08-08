@@ -2600,8 +2600,8 @@ inner join items as item on prod.id_item = item.id_item
  left join app_measurement as measure on item.id_measurement = measure.id_measurement 
 where mov.id_company = @CompanyID and branch.id_branch = @BranchID and mov.trans_date <= @EndDate 
 
-group by mov.id_movement
-order by mov.trans_date, mov.id_movement";
+group by prod.id_item_product
+ order by mov.trans_date, mov.id_movement";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@CompanyID";
@@ -2637,7 +2637,7 @@ inner join items as item on prod.id_item = item.id_item
 where mov.id_company = @CompanyID and loc.id_location = @LocationID and mov.trans_date <= @EndDate  and  item.id_item=@ItemID
  
 
-group by mov.id_movement
+group by prod.id_item_product 
 order by mov.trans_date, mov.id_movement";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
@@ -2680,10 +2680,8 @@ inner join items as item on prod.id_item = item.id_item
  left join app_measurement as measure on item.id_measurement = measure.id_measurement 
 where mov.id_company = @CompanyID and branch.id_branch = @BranchID and mov.trans_date <= @EndDate and item.id_item = @ItemID
 
- 
-
-group by mov.id_movement
-order by mov.trans_date, mov.id_movement";
+ group by prod.id_item_product
+ order by mov.trans_date, mov.id_movement";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@CompanyID";
@@ -2723,9 +2721,7 @@ inner join app_location as loc on mov.id_location = loc.id_location
  inner join item_product as prod on mov.id_item_product = prod.id_item_product 
 inner join items as item on prod.id_item = item.id_item
  left join app_measurement as measure on item.id_measurement = measure.id_measurement 
-where mov.id_company = @CompanyID and loc.id_location= @LocationID and mov.trans_date <= @EndDate 
-
-group by mov.id_movement
+where mov.id_company = @CompanyID and loc.id_location= @LocationID and mov.trans_date <= @EndDate group by prod.id_item_product 
 order by mov.trans_date, mov.id_movement";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();

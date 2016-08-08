@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace entity.DebeHaber
 {
-    public enum TransactionTypes { Sales = 1, Purchase = 2}
+    public enum TransactionTypes { Sales = 1, Purchase = 2, SalesReturn = 3, PurchaseReturn = 4}
     public enum CostCenterTypes { Expense = 1, Merchendice = 2, FixedAsset = 3, Income = 4 }
     public enum PaymentTypes { Normal = 1, CreditNote = 2, VATWithHolding = 3 }
 
@@ -15,7 +15,6 @@ namespace entity.DebeHaber
         public Transactions()
         {
             Commercial_Invoice = new List<Commercial_Invoice>();
-            Commercial_Return = new List<Commercial_Return>();
             Payments = new List<Payments>();
         }
 
@@ -23,7 +22,6 @@ namespace entity.DebeHaber
 
         public virtual ICollection<Commercial_Invoice> Commercial_Invoice { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
-        public virtual ICollection<Commercial_Return> Commercial_Return { get; set; }
     }
 
     public class Commercial_Invoice
@@ -31,7 +29,6 @@ namespace entity.DebeHaber
         public Commercial_Invoice()
         {
             CommercialInvoice_Detail = new List<CommercialInvoice_Detail>();
-            Commercial_Return = new List<Commercial_Return>();
             Payments = new List<Payments>();
         }
         
@@ -53,7 +50,6 @@ namespace entity.DebeHaber
         //Collection Property
         public virtual ICollection<CommercialInvoice_Detail> CommercialInvoice_Detail { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
-        public virtual ICollection<Commercial_Return> Commercial_Return { get; set; }
 
         //Fill Methods
         public void Fill_BySales(sales_invoice sales_invoice)
@@ -73,6 +69,21 @@ namespace entity.DebeHaber
             this.DocExpiry = (sales_invoice.app_document_range != null ? (DateTime)sales_invoice.app_document_range.expire_date : DateTime.Now);
         }
 
+        public void Fill_BySalesReturn(sales_return sales_return)
+        {
+            this.Type = entity.DebeHaber.TransactionTypes.SalesReturn;
+            this.TransDate = sales_return.trans_date;
+            this.CompanyName = sales_return.contact.name;
+
+            this.Gov_Code = sales_return.contact.gov_code;
+            this.Comment = sales_return.comment;
+            this.CurrencyName = sales_return.app_currencyfx != null ? sales_return.app_currencyfx.app_currency != null ? sales_return.app_currencyfx.app_currency.name : "" : "";
+
+            this.DocNumber = sales_return.number;
+            this.DocCode = sales_return.app_document_range != null ? sales_return.app_document_range.code : "";
+            this.DocExpiry = (sales_return.app_document_range != null ? (DateTime)sales_return.app_document_range.expire_date : DateTime.Now);
+        }
+
         public void Fill_ByPurchase(purchase_invoice purchase_invoice)
         {
             this.Type = entity.DebeHaber.TransactionTypes.Purchase;
@@ -84,7 +95,21 @@ namespace entity.DebeHaber
             this.PaymentCondition = purchase_invoice.app_contract != null ? (purchase_invoice.app_contract.app_contract_detail != null ? purchase_invoice.app_contract.app_contract_detail.Max(x => x.interval) : 0) : 0;
             this.DocNumber = purchase_invoice.number;
             this.DocCode = purchase_invoice.code;
-            //No Expiry Date for Purchase Code.
+        }
+
+        public void Fill_ByPurchaseReturn(purchase_return purchase_return)
+        {
+            this.Type = entity.DebeHaber.TransactionTypes.SalesReturn;
+            this.TransDate = purchase_return.trans_date;
+            this.CompanyName = purchase_return.contact.name;
+
+            this.Gov_Code = purchase_return.contact.gov_code;
+            this.Comment = purchase_return.comment;
+            this.CurrencyName = purchase_return.app_currencyfx != null ? purchase_return.app_currencyfx.app_currency != null ? purchase_return.app_currencyfx.app_currency.name : "" : "";
+
+            this.DocNumber = purchase_return.number;
+            this.DocCode = purchase_return.app_document_range != null ? purchase_return.app_document_range.code : "";
+            this.DocExpiry = (purchase_return.app_document_range != null ? (DateTime)purchase_return.app_document_range.expire_date : DateTime.Now);
         }
     }
 
@@ -106,6 +131,54 @@ namespace entity.DebeHaber
 
         //Methods
         public void Fill_BySales(sales_invoice_detail Detail, db db)
+        {
+            this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+            this.UnitValue_WithVAT = Detail.SubTotal_Vat;
+            this.Comment = Detail.item_description;
+
+            entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
+
+            // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
+            if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
+            {
+                CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
+                CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+
+                //Add CostCenter into Detail.
+                this.CostCenter.Add(CostCenter);
+            }
+            // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
+            else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
+            {
+                if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                else
+                { CostCenter.Name = Detail.item_description; }
+
+                CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+
+                //Add CostCenter into Detail.
+                this.CostCenter.Add(CostCenter);
+            }
+            // Finally if all else fails, assume Item being sold is Merchendice.
+            else
+            {
+                if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
+                {
+                    CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
+                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                }
+                else
+                {
+                    CostCenter.Name = "Mercaderia";
+                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                }
+                //Add CostCenter into Detail.
+                this.CostCenter.Add(CostCenter);
+            }
+        }
+
+        public void Fill_BySalesReturn(sales_return_detail Detail, db db)
         {
             this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
             this.UnitValue_WithVAT = Detail.SubTotal_Vat;
@@ -213,6 +286,67 @@ namespace entity.DebeHaber
                 this.CostCenter.Add(CostCenter);
             }
         }
+
+        public void Fill_ByPurchase(purchase_return_detail Detail, db db)
+        {
+            this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
+            this.UnitValue_WithVAT = Detail.SubTotal_Vat;
+            this.Comment = Detail.item_description;
+
+            entity.DebeHaber.CostCenter CostCenter = new entity.DebeHaber.CostCenter();
+
+            //Check if Purchase has Item. If not its an expense.
+            if (Detail.item != null)
+            {
+                // If Item being sold is FixedAsset, get Cost Center will be the GroupName.
+                if (Detail.item.id_item_type == entity.item.item_type.FixedAssets)
+                {
+                    CostCenter.Name = db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group != null ? db.item_asset.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_asset_group.name : "";
+                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.FixedAsset;
+
+                    //Add CostCenter into Detail.
+                    this.CostCenter.Add(CostCenter);
+                }
+                // If Item being sold is a Service, Contract, or Task. Take it as Direct Revenue.
+                else if (Detail.item.id_item_type == entity.item.item_type.Service || Detail.item.id_item_type == entity.item.item_type.Task || Detail.item.id_item_type == entity.item.item_type.ServiceContract)
+                {
+                    if (db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault() != null)
+                    { CostCenter.Name = db.items.Where(x => x.id_item == Detail.id_item).FirstOrDefault().item_tag_detail.FirstOrDefault().item_tag.name; }
+                    else
+                    { CostCenter.Name = Detail.item_description; }
+
+                    CostCenter.Type = entity.DebeHaber.CostCenterTypes.Income;
+
+                    //Add CostCenter into Detail.
+                    this.CostCenter.Add(CostCenter);
+                }
+                // Finally if all else fails, assume Item being sold is Merchendice.
+                else
+                {
+                    if (db.app_cost_center.Where(x => x.is_product).FirstOrDefault() != null)
+                    {
+                        CostCenter.Name = db.app_cost_center.Where(x => x.is_product).FirstOrDefault().name;
+                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    }
+                    else
+                    {
+                        CostCenter.Name = "Mercaderia";
+                        CostCenter.Type = entity.DebeHaber.CostCenterTypes.Merchendice;
+                    }
+
+                    //Add CostCenter into Detail.
+                    this.CostCenter.Add(CostCenter);
+                }
+            }
+            else
+            {
+                CostCenter.Name = db.app_cost_center.Where(x => x.is_administrative).FirstOrDefault().name;
+                CostCenter.Type = entity.DebeHaber.CostCenterTypes.Expense;
+
+                //Add CostCenter into Detail.
+                this.CostCenter.Add(CostCenter);
+            }
+        }
     }
 
     public class CostCenter
@@ -221,20 +355,6 @@ namespace entity.DebeHaber
         public string Name { get; set; }
 
         public CommercialInvoice_Detail CommercialInvoice_Detail { get; set; }
-    }
-
-    public class Commercial_Return
-    {
-        //Return Data
-        public TransactionTypes Type { get; set; }
-        public DateTime Date { get; set; }
-        public string CompanyName { get; set; }
-        public string Gov_Code { get; set; }
-
-        //Invoice Documents
-        public string DocNumber { get; set; }
-        public string DocCode { get; set; }
-        public DateTime? DocExpiry { get; set; }
     }
 
     public class Payments

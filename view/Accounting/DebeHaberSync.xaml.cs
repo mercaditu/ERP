@@ -173,22 +173,25 @@ namespace Cognitivo.Accounting
 
         private void Purchase_Sync()
         {
-            entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
-            Transactions.HashIntegration = RelationshipHash;
+            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            entity.DebeHaber.Transactions PurchaseError = new entity.DebeHaber.Transactions();
 
             //Loop through
-            foreach (entity.purchase_invoice purchase_invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))// && x.is_accounted == false))
+            foreach (entity.purchase_invoice purchase_invoice in db.purchase_invoice.Local.Where(x => x.IsSelected))
             {
+                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                Transactions.HashIntegration = RelationshipHash;
+
                 entity.DebeHaber.Commercial_Invoice Purchase = new entity.DebeHaber.Commercial_Invoice();
 
-                //Loads Data from Purchase
+                //Loads Data from Sales
                 Purchase.Fill_ByPurchase(purchase_invoice);
 
                 ///Loop through Details.
                 foreach (entity.purchase_invoice_detail Detail in purchase_invoice.purchase_invoice_detail)
                 {
                     entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
-                    //Fill and Detail PurchaseDetail
+                    //Fill and Detail SalesDetail
                     CommercialInvoice_Detail.Fill_ByPurchase(Detail, db);
                     Purchase.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
@@ -196,41 +199,103 @@ namespace Cognitivo.Accounting
                 //Loop through payments made.
                 foreach (entity.payment_schedual schedual in purchase_invoice.payment_schedual)
                 {
-                    if (schedual.payment_detail != null)
+                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
                     {
                         entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
                         //Fill and Add Payments
                         Payments.FillPayments(schedual);
                         Purchase.Payments.Add(Payments);
 
-                        //This will make the Purchase Invoice hide from the next load.
+                        //This will make the Sales Invoice hide from the next load.
                         schedual.payment_detail.payment.is_accounted = true;
                     }
                 }
 
                 Transactions.Commercial_Invoice.Add(Purchase);
-                //This will make the Purchase Invoice hide from the next load.
-                purchase_invoice.is_accounted = true;
-            }
 
-            try
+                try
+                {
+                    var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
+                    Send2API(Sales_Json);
+                    purchase_invoice.is_accounted = true;
+                }
+                catch (Exception)
+                {
+                    PurchaseError.Commercial_Invoice.Add(Purchase);
+                    purchase_invoice.is_accounted = false;
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        private void SalesReturn_Sync()
+        {
+            //remember to clean out those that are already accounted from SalesSync.
+            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            entity.DebeHaber.Transactions SalesReturnError = new entity.DebeHaber.Transactions();
+
+            //Loop through
+            foreach (entity.sales_return sales_return in db.sales_return.Local.Where(x => x.IsSelected && x.is_accounted == false))// && x.is_accounted == false))
             {
-                ///Serealize PurchaseInvoiceLIST into Json
-                var Purchase_Json = new JavaScriptSerializer().Serialize(Transactions);
-                
-                //Save file first in case of API error.
-                file_create(Purchase_Json, "purchase_invoice");
+                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                Transactions.HashIntegration = RelationshipHash;
 
-                Send2API(Purchase_Json);
+                entity.DebeHaber.Commercial_Invoice SalesReturn = new entity.DebeHaber.Commercial_Invoice();
 
-                //If all success, then SaveChanges.
-                db.SaveChanges();
-                Get_SalesInvoice();
+                //Loads Data from Sales
+                SalesReturn.Fill_BySalesReturn(sales_return);
+
+                ///Loop through Details.
+                foreach (entity.sales_return_detail Detail in sales_return.sales_return_detail)
+                {
+                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    //Fill and Detail SalesDetail
+                    CommercialInvoice_Detail.Fill_BySales(Detail, db);
+                    SalesReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+                }
+
+                //Loop through payments made.
+                foreach (entity.payment_schedual schedual in sales_return.payment_schedual)
+                {
+                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                    {
+                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        //Fill and Add Payments
+                        Payments.FillPayments(schedual);
+                        SalesReturn.Payments.Add(Payments);
+
+                        //This will make the Sales Invoice hide from the next load.
+                        schedual.payment_detail.payment.is_accounted = true;
+                    }
+                }
+
+                Transactions.Commercial_Invoice.Add(SalesReturn);
+
+                try
+                {
+                    var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
+                    Send2API(Sales_Json);
+                    sales_return.is_accounted = true;
+                }
+                catch (Exception)
+                {
+                    SalesReturnError.Commercial_Invoice.Add(SalesReturn);
+                    sales_return.is_accounted = false;
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Exception Error: " + ex.Message);
-            }
+        }
+
+        private void PaymentSync()
+        {
+            //remember to clean out those that are already accounted from SalesSync.
+
         }
 
         #region CheckBox Check/UnCheck Methods

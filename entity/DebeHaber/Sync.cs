@@ -37,6 +37,8 @@ namespace entity.DebeHaber
         public DateTime TransDate { get; set; }
         public string CompanyName {get;set;}
         public string Gov_Code { get; set; }
+        public string BranchName { get; set; }
+
         public string Comment { get; set; }
         public string CurrencyName { get; set; }
 

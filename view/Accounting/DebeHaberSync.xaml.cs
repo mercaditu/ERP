@@ -253,7 +253,7 @@ namespace Cognitivo.Accounting
                 {
                     entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
                     //Fill and Detail SalesDetail
-                    CommercialInvoice_Detail.Fill_BySales(Detail, db);
+                    CommercialInvoice_Detail.Fill_BySalesReturn(Detail, db);
                     SalesReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
                 }
 
@@ -276,8 +276,8 @@ namespace Cognitivo.Accounting
 
                 try
                 {
-                    var Sales_Json = new JavaScriptSerializer().Serialize(Transactions);
-                    Send2API(Sales_Json);
+                    var Json = new JavaScriptSerializer().Serialize(Transactions);
+                    Send2API(Json);
                     sales_return.is_accounted = true;
                 }
                 catch (Exception)
@@ -294,8 +294,42 @@ namespace Cognitivo.Accounting
 
         private void PaymentSync()
         {
-            //remember to clean out those that are already accounted from SalesSync.
+            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            entity.DebeHaber.Transactions PaymentError = new entity.DebeHaber.Transactions();
 
+            //Loop through
+            foreach (entity.payment payments in db.payments.Local.Where(x => x.IsSelected && x.is_accounted == false))
+            {
+                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                Transactions.HashIntegration = RelationshipHash;
+
+                foreach (entity.payment_detail payment_detail in payments.payment_detail.ToList())
+                {
+                    entity.DebeHaber.Payments Payment = new entity.DebeHaber.Payments();
+
+                    //Loads Data from Sales
+                    entity.payment_schedual schedual = db.payment_schedual.Where(x => x.id_payment_detail == payment_detail.id_payment_detail).FirstOrDefault();
+                    Payment.FillPayments(schedual);
+
+                    Transactions.Payments.Add(Payment);
+                }
+
+                try
+                {
+                    var Json = new JavaScriptSerializer().Serialize(Transactions);
+                    Send2API(Json);
+                    payments.is_accounted = true;
+                }
+                catch (Exception)
+                {
+                    PaymentError.Payments.Add(Payment);
+                    payments.is_accounted = false;
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
+            }
         }
 
         #region CheckBox Check/UnCheck Methods

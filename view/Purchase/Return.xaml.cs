@@ -102,8 +102,8 @@ namespace Cognitivo.Purchase
         #region Datagrid Events
         private void calculate_vat(object sender, EventArgs e)
         {
-            //purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
-            //purchase_return.RaisePropertyChanged("GrandTotal");
+            purchase_return purchase_return = (purchase_return)purchase_returnDataGrid.SelectedItem;
+            purchase_return.RaisePropertyChanged("GrandTotal");
             //List<purchase_return_detail> purchase_return_detail = purchase_return.purchase_return_detail.ToList();
             //dgvvat.ItemsSource = purchase_return_detail
             //     .Join(dbContext.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group

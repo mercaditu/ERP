@@ -126,8 +126,8 @@ namespace Cognitivo.Sales
 
         private void calculate_vat(object sender, EventArgs e)
         {
-            //sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
-            //sales_return.RaisePropertyChanged("GrandTotal");
+            sales_return sales_return = (sales_return)sales_returnDataGrid.SelectedItem;
+            sales_return.RaisePropertyChanged("GrandTotal");
             //List<sales_return_detail> sales_return_detail = sales_return.sales_return_detail.ToList();
             //dgvvat.ItemsSource = sales_return_detail
             //     .Join(SalesReturnDB.app_vat_group_details, ad => ad.id_vat_group, cfx => cfx.id_vat_group

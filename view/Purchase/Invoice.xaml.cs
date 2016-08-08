@@ -691,10 +691,12 @@ namespace Cognitivo.Purchase
                         purchase_invoice.State = EntityState.Modified;
                         purchase_invoice_detail.purchase_invoice = purchase_invoice;
                         purchase_invoice_detail.id_purchase_order_detail = _purchase_order_detail.id_purchase_order_detail;
+                        purchase_invoice_detail.id_vat_group = _purchase_order_detail.id_vat_group;
                         purchase_invoice_detail.app_cost_center = _purchase_order_detail.app_cost_center;
                         purchase_invoice_detail.id_cost_center = _purchase_order_detail.id_cost_center;
                         purchase_invoice_detail.item = _purchase_order_detail.item;
                         purchase_invoice_detail.id_item = _purchase_order_detail.id_item;
+                        purchase_invoice_detail.item_description = _purchase_order_detail.item_description;
                         purchase_invoice_detail.quantity = _purchase_order_detail.quantity - PurchaseInvoiceDB.purchase_invoice_detail
                                                                     .Where(x => x.id_purchase_order_detail == _purchase_order_detail.id_purchase_order_detail)
                                                                     .GroupBy(x => x.id_purchase_order_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault(); 

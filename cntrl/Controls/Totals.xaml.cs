@@ -59,7 +59,9 @@ namespace cntrl.Controls
         public bool CanOpen { get; set; }
         public Totals()
         {
+            CanOpen = true;
             InitializeComponent();
+          
         }
 
         private void lblTotal_TargetUpdated(object sender, DataTransferEventArgs e)

@@ -88,11 +88,9 @@ namespace entity
         {
             get
             {
-                _GrandTotal = 0;
-                foreach (purchase_return_detail _purchase_return_detail in purchase_return_detail)
-                {
-                    _GrandTotal += _purchase_return_detail.SubTotal_Vat;
-                }
+                
+                _GrandTotal = purchase_return_detail.Sum(x => x.SubTotal_Vat);
+               
                 return Math.Round(_GrandTotal, 2);
             }
             set

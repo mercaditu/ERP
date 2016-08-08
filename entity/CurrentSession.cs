@@ -166,6 +166,7 @@ namespace entity
             db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
             db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();

@@ -66,7 +66,7 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-            cbxContract.ItemsSource = CurrentSession.Get_Contract();
+           
 
 
             PurchaseInvoiceDB.app_department.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
@@ -76,6 +76,7 @@ namespace Cognitivo.Purchase
             }));
 
             cbxCondition.ItemsSource = CurrentSession.Get_Condition();
+            cbxContract.ItemsSource = CurrentSession.Get_Contract();
             
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -252,6 +253,7 @@ namespace Cognitivo.Purchase
                     {
                         cbxContract.SelectedIndex = 0;
                     }
+                  
                 }
             }
         }

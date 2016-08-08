@@ -115,7 +115,7 @@
                     <AdornerDecorator>
                         <ComboBox Style="{StaticResource input_combobox}" x:Name="cbxContract"
 					          DisplayMemberPath="name" SelectedValuePath="id_contract" 
-					          SelectedValue="{Binding id_contract, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+					          SelectedValue="{Binding id_contract, Source={StaticResource purchase_invoiceViewSource}, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel/>

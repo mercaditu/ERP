@@ -109,6 +109,11 @@ namespace Cognitivo.Accounting
             Sales_Sync();
             //Purchase
             Purchase_Sync();
+
+            SalesReturn_Sync();
+            PurchaseReturn_Sync();
+            
+            PaymentSync();
         }
      
         private void Sales_Sync()
@@ -292,6 +297,67 @@ namespace Cognitivo.Accounting
             }
         }
 
+        private void PurchaseReturn_Sync()
+        {
+            //remember to clean out those that are already accounted from SalesSync.
+            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            entity.DebeHaber.Transactions PurchaseReturnError = new entity.DebeHaber.Transactions();
+
+            //Loop through
+            foreach (entity.purchase_return purchase_return in db.purchase_return.Local.Where(x => x.IsSelected && x.is_accounted == false))
+            {
+                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                Transactions.HashIntegration = RelationshipHash;
+
+                entity.DebeHaber.Commercial_Invoice PurchaseReturn = new entity.DebeHaber.Commercial_Invoice();
+
+                //Loads Data from Sales
+                PurchaseReturn.Fill_ByPurchaseReturn(purchase_return);
+
+                ///Loop through Details.
+                foreach (entity.purchase_return_detail Detail in purchase_return.purchase_return_detail)
+                {
+                    entity.DebeHaber.CommercialInvoice_Detail CommercialInvoice_Detail = new entity.DebeHaber.CommercialInvoice_Detail();
+                    //Fill and Detail SalesDetail
+                    CommercialInvoice_Detail.Fill_ByPurchaseReturn(Detail, db);
+                    PurchaseReturn.CommercialInvoice_Detail.Add(CommercialInvoice_Detail);
+                }
+
+                //Loop through payments made.
+                foreach (entity.payment_schedual schedual in purchase_return.payment_schedual)
+                {
+                    if (schedual.payment_detail != null && schedual.payment_detail.payment.is_accounted == false)
+                    {
+                        entity.DebeHaber.Payments Payments = new entity.DebeHaber.Payments();
+                        //Fill and Add Payments
+                        Payments.FillPayments(schedual);
+                        PurchaseReturn.Payments.Add(Payments);
+
+                        //This will make the Sales Invoice hide from the next load.
+                        schedual.payment_detail.payment.is_accounted = true;
+                    }
+                }
+
+                Transactions.Commercial_Invoice.Add(PurchaseReturn);
+
+                try
+                {
+                    var Json = new JavaScriptSerializer().Serialize(Transactions);
+                    Send2API(Json);
+                    purchase_return.is_accounted = true;
+                }
+                catch (Exception)
+                {
+                    PurchaseReturnError.Commercial_Invoice.Add(PurchaseReturn);
+                    purchase_return.is_accounted = false;
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
+            }
+        }
+
         private void PaymentSync()
         {
             //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
@@ -322,7 +388,6 @@ namespace Cognitivo.Accounting
                 }
                 catch (Exception)
                 {
-                    PaymentError.Payments.Add(Payment);
                     payments.is_accounted = false;
                 }
                 finally

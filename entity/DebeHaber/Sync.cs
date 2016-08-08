@@ -287,7 +287,7 @@ namespace entity.DebeHaber
             }
         }
 
-        public void Fill_ByPurchase(purchase_return_detail Detail, db db)
+        public void Fill_ByPurchaseReturn(purchase_return_detail Detail, db db)
         {
             this.VAT_Coeficient = Detail.app_vat_group.app_vat_group_details.Sum(x => x.app_vat.coefficient);
             this.UnitValue_WithVAT = Detail.SubTotal_Vat;

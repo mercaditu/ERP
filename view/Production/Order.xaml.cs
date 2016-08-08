@@ -355,6 +355,7 @@ namespace Cognitivo.Production
 
                 if (production_order_detaillist.Count() > 0)
                 {
+                 
                     ItemRequest = new cntrl.Curd.ItemRequest();
                     crud_modal_request.Visibility = Visibility.Visible;
                     ItemRequest.listdepartment = OrderDB.app_department.ToList();
@@ -650,11 +651,10 @@ namespace Cognitivo.Production
                 OrderDB.production_order.Where(a => a.id_company == CurrentSession.Id_Company && a.types == production_order.ProductionOrderTypes.Production).Load();
                 production_orderViewSource.Source = OrderDB.production_order.Local;
 
-                if (OrderDB.NumberOfRecords > 0)
-                {
+                
                     toolBar.msgSaved(OrderDB.NumberOfRecords);
                     filter_task();
-                }
+                
                 treeProject.UpdateLayout();
             }
 

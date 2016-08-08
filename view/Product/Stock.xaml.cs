@@ -58,38 +58,40 @@ namespace Cognitivo.Product
             if (app_branch != null && app_branch.id_branch > 0)
             {
                 int id_branch = app_branch.id_branch;
-                List<item> itemlist = StockDB.items.ToList();
-                List<item_product> item_productlist = StockDB.item_product.ToList();
-                List<app_branch> app_branchlist = StockDB.app_branch.ToList();
-                List<item_movement> item_movementlist = StockDB.item_movement.ToList();
-                var movement =
-                (from items in itemlist
-                 join item_product in item_productlist on items.id_item equals item_product.id_item
-                     into its
-                 from p in its
-                 join item_movement in item_movementlist on p.id_item_product equals item_movement.id_item_product
-                 into IMS
-                 from a in IMS
-                 join AM in app_branchlist on a.app_location.id_branch equals AM.id_branch
-                 where a.status == Status.Stock.InStock
-                 && a.trans_date <= InventoryDate
-                 && a.app_location.id_branch == id_branch
-                 group a by new { a.item_product, a.app_location }
-                     into last
-                     select new
-                     {
-                         code = last.Key.item_product.item.code,
-                         name = last.Key.item_product.item.name,
-                         location = last.Key.app_location.name,
-                         itemid = last.Key.item_product.item.id_item,
-                         quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
-                         id_item_product = last.Key.item_product.id_item_product,
-                         measurement = last.Key.item_product.item.app_measurement!=null?last.Key.item_product.item.app_measurement.code_iso:"",
-                         id_location = last.Key.app_location.id_location
-                     }).ToList().OrderBy(y => y.name);
+                //List<item> itemlist = StockDB.items.ToList();
+                //List<item_product> item_productlist = StockDB.item_product.ToList();
+                //List<app_branch> app_branchlist = StockDB.app_branch.ToList();
+                //List<item_movement> item_movementlist = StockDB.item_movement.ToList();
 
+                //var movement =
+                //(from items in itemlist
+                // join item_product in item_productlist on items.id_item equals item_product.id_item
+                //     into its
+                // from p in its
+                // join item_movement in item_movementlist on p.id_item_product equals item_movement.id_item_product
+                // into IMS
+                // from a in IMS
+                // join AM in app_branchlist on a.app_location.id_branch equals AM.id_branch
+                // where a.status == Status.Stock.InStock
+                // && a.trans_date <= InventoryDate
+                // && a.app_location.id_branch == id_branch
+                // group a by new { a.item_product, a.app_location }
+                //     into last
+                //     select new
+                //     {
+                //         code = last.Key.item_product.item.code,
+                //         name = last.Key.item_product.item.name,
+                //         location = last.Key.app_location.name,
+                //         //itemid = last.Key.item_product.item.id_item,
+                //         quantity = last.Sum(x => x.credit) - last.Sum(x => x.debit),
+                //         id_item_product = last.Key.item_product.id_item_product,
+                //         measurement = last.Key.item_product.item.app_measurement!=null?last.Key.item_product.item.app_measurement.code_iso:"",
+                //         id_location = last.Key.app_location.id_location
+                //     }).ToList().OrderBy(y => y.name);
+
+                Class.StockCalculations StockCalculations = new Class.StockCalculations();
                 inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
-                inventoryViewSource.Source = movement;
+                inventoryViewSource.Source = StockCalculations.CalculateStock_ByBranch(id_branch, InventoryDate);
 
                 TextBox_TextChanged(null, null);
             }
@@ -140,13 +142,13 @@ namespace Cognitivo.Product
 
         private async void item_movementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dynamic _item_movement = item_inventoryDataGrid.SelectedItem;
+            Class.StockList _item_movement = item_inventoryDataGrid.SelectedItem as Class.StockList;
 
             if (_item_movement != null)
             {
-                int id_item_product = _item_movement.id_item_product;
+                int id_item_product = _item_movement.ProductID;
 
-                int id_location = _item_movement.id_location;
+                int id_location = _item_movement.LocationID;
                 using (db db = new db())
                 {
                     item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
@@ -172,6 +174,20 @@ namespace Cognitivo.Product
                     }
                 }
             }
+
+
+            //app_branch app_branch = (app_branch)dgvBranch.SelectedItem;
+
+
+            //if (_item_movement != null)
+            //{
+            //    int id_item_product = _item_movement.ProductID;
+            //    Class.StockCalculations StockCalculations = new Class.StockCalculations();
+            //    item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
+            //    item_movementViewSource.Source = StockCalculations.CalculateProduct_InItemLocation(_item_movement.LocationID, id_item_product, InventoryDate);
+            //}
+
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

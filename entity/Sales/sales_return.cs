@@ -177,7 +177,7 @@ namespace entity
         public sales_return newer { get; set; }
 
         public virtual accounting_journal accounting_journal { get; set; }
-        public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
+        public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual ICollection<sales_return_detail> sales_return_detail { get; set; }
         public virtual sales_invoice sales_invoice { get; set; }
         public virtual crm_opportunity crm_opportunity { get; set; }

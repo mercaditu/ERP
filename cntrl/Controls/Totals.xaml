@@ -42,7 +42,7 @@
         <Label Content="{Binding Currency, FallbackValue=Currency, ElementName=_Total, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
                Style="{StaticResource H3}" VerticalAlignment="Center" Foreground="{StaticResource Label_ImportantColor}"/>
         <Button Style="{StaticResource btnDeleteChildStyle}" Content="i" Click="btnInformation_Click"/>
-        <Popup x:Name="popup" StaysOpen="False" Placement="Top" HorizontalOffset="56" >
+        <Popup x:Name="popup" StaysOpen="False" Placement="Top" HorizontalOffset="56"   >
             <Border CornerRadius="10,10,0,10" Width="150" Background="{StaticResource AccentColor_Introvert}">
                 <StackPanel>
                     <Label Style="{StaticResource generic_Label}" Content="{lex:Loc VAT}" Foreground="White" HorizontalAlignment="Center"/>

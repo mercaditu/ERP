@@ -181,7 +181,7 @@ namespace entity
         public purchase_return newer { get; set; }
 
         public virtual ICollection<purchase_return_detail> purchase_return_detail { get; set; }
-        public virtual IEnumerable<payment_schedual> payment_schedual { get; set; }
+        public virtual ICollection<payment_schedual> payment_schedual { get; set; }
         public virtual purchase_invoice purchase_invoice { get; set; }
         
         

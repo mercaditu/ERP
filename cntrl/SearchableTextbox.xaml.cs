@@ -184,7 +184,8 @@ namespace cntrl
                 else
                 {
                     Object2View = (dynamic)Grid.SelectedItem;
-                    if (Object2View != null && Object2View.name != null)
+                    
+                    if (Object2View != null)
                     {
                         SetValue(DataProperty, Object2View);
                       //  SetValue(TextProperty, Object2View.name);

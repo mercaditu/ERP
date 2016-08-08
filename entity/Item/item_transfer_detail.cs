@@ -41,6 +41,9 @@ namespace entity
         }
         decimal _quantity_origin;
 
+        [NotMapped]
+        public decimal Quantity_InStock { get; set; }
+
         public decimal quantity_destination 
         {
             get { return _quantity_destination; }
@@ -60,6 +63,11 @@ namespace entity
         public virtual project_task project_task { get; set; }
         public virtual ICollection<item_movement> item_movement { get; set; }
         public virtual ICollection<item_transfer_dimension> item_transfer_dimension { get; set; }
+
+        public void Calulate_Stock()
+        {
+            //entity.Brillo.
+        }
    
     }
 }

@@ -217,8 +217,15 @@ namespace cntrl.Curd
                             stpcreditpurchase.Visibility = Visibility.Visible;
 
                            
-                            PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Load();
-                            purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.purchase_invoice.GrandTotal - x.GrandTotal) > 0);
+                            PaymentDB.purchase_return.Where(x => x.id_contact == payment.id_contact).Include(x=>x.payment_schedual).Load();
+                            purchase_returnViewSource.Source = PaymentDB.purchase_return.Local.Where(x => (x.payment_schedual.Where(z => z.can_calculate).Sum(y => y.debit) < x.GrandTotal));
+                            //List<payment_schedual> payment_schedualList = PaymentDB.payment_schedual.Where(x => x.purchase_return != null && x.can_calculate && x.credit > x.purchase_return.GrandTotal).Include(x=>x.purchase_return).ToList();
+                            //List<purchase_return> purchase_returnList = new List<purchase_return>();
+                            //foreach (payment_schedual payment_schedual in payment_schedualList)
+                            //{
+                            //    purchase_returnList.Add(payment_schedual.purchase_return);
+                            //}
+                            //purchase_returnViewSource.Source = purchase_returnList;
                         }
                         else
                         {
@@ -227,8 +234,8 @@ namespace cntrl.Curd
                             stpcreditsales.Visibility = Visibility.Visible;
                            
                             CollectionViewSource sales_returnViewSource = this.FindResource("sales_returnViewSource") as CollectionViewSource;
-                            PaymentDB.sales_return.Where(x => x.id_contact == payment.id_contact).Load();
-                            sales_returnViewSource.Source = PaymentDB.sales_return.Local.Where(x=>(x.sales_invoice.GrandTotal - x.GrandTotal) > 0);
+                            PaymentDB.sales_return.Where(x => x.id_contact == payment.id_contact).Include(x => x.payment_schedual).Load();
+                            sales_returnViewSource.Source = PaymentDB.sales_return.Local.Where(x => (x.payment_schedual.Where(z => z.can_calculate).Sum(y => y.credit) < x.GrandTotal)); ;
                         }
                     }
                     else

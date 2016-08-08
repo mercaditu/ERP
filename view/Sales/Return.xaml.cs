@@ -334,10 +334,7 @@ namespace Cognitivo.Sales
             calculate_vat(sender, e);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            calculate_vat(sender, e);
-        }
+  
 
         private void btnSalesInvoice_Click(object sender, RoutedEventArgs e)
         {
@@ -396,6 +393,8 @@ namespace Cognitivo.Sales
                             if (SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault() != null)
                             {
                                 sales_return_detail.item = SalesReturnDB.items.Where(x => x.id_item == _sales_invoice_detail.id_item).FirstOrDefault();
+                                sales_return_detail.item_description =_sales_invoice_detail.item_description;
+                               
                             }
 
                             sales_return_detail.id_item = _sales_invoice_detail.id_item;
@@ -403,6 +402,7 @@ namespace Cognitivo.Sales
                                                                 .Where(x => x.id_sales_invoice_detail == _sales_invoice_detail.id_sales_invoice_detail)
                                                                 .GroupBy(x => x.id_sales_invoice_detail).Select(x => x.Sum(y => y.quantity)).FirstOrDefault();
 
+                            sales_return_detail.id_vat_group = _sales_invoice_detail.id_vat_group;
                             sales_return_detail.unit_price = _sales_invoice_detail.unit_price;
                             sales_return_detail.CurrencyFX_ID = _sales_return.id_currencyfx;
                             _sales_return.sales_return_detail.Add(sales_return_detail);
@@ -448,5 +448,7 @@ namespace Cognitivo.Sales
             popupCustomize.StaysOpen = false;
             popupCustomize.IsOpen = true;
         }
+
+      
     }
 }

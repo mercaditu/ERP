@@ -195,7 +195,7 @@ namespace Cognitivo.Purchase
                 purchase_return.id_contact = contact.id_contact;
                 purchase_return.contact = contact;
 
-                if (purchase_return == null)
+                if (purchase_return != null)
                 {
                     ///Start Thread to get Data.
                     Task thread_SecondaryData = Task.Factory.StartNew(() => set_ContactPref_Thread(contact));

@@ -56,6 +56,7 @@ namespace cntrl.Controls
             set { SetValue(AppNameProperty, value); }
         }
 
+        public bool CanOpen { get; set; }
         public Totals()
         {
             InitializeComponent();
@@ -69,7 +70,11 @@ namespace cntrl.Controls
 
         private void btnInformation_Click(object sender, RoutedEventArgs e)
         {
-            popup.IsOpen = true;
+            if (CanOpen)
+            {
+                popup.IsOpen = true;
+            }
+         
         }
 
 

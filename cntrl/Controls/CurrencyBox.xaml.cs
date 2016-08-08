@@ -203,7 +203,8 @@ namespace cntrl.Controls
             }
 
             if (app_currencyfx != null && app_currencyfx.id_currencyfx > 0)
-            { SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
+            { 
+                SelectedValue = Convert.ToInt32(app_currencyfx.id_currencyfx); }
             else
             {
                 SelectedValue = 1;

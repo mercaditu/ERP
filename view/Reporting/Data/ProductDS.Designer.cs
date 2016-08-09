@@ -1217,6 +1217,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Check_InStockRow FindByLocationIDProductID(int LocationID, int ProductID) {
+                return ((Check_InStockRow)(this.Rows.Find(new object[] {
+                            LocationID,
+                            ProductID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 Check_InStockDataTable cln = ((Check_InStockDataTable)(base.Clone()));
                 cln.InitVars();
@@ -1258,6 +1266,9 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnMeasurement);
                 this.columnLocationID = new global::System.Data.DataColumn("LocationID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLocationID);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnLocationID,
+                                this.columnProductID}, true));
                 this.columnLocation.AllowDBNull = false;
                 this.columnItemCode.AllowDBNull = false;
                 this.columnItemName.AllowDBNull = false;
@@ -2601,7 +2612,7 @@ inner join items as item on prod.id_item = item.id_item
 where mov.id_company = @CompanyID and branch.id_branch = @BranchID and mov.trans_date <= @EndDate 
 
 group by prod.id_item_product
- order by mov.trans_date, mov.id_movement";
+  order by mov.trans_date, mov.id_movement";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@CompanyID";

@@ -126,6 +126,9 @@ namespace entity
         public virtual app_branch app_branch { get; set; }
         #endregion
 
+    
+        
+
         public virtual ICollection<item_transfer_detail> item_transfer_detail { get; set; }
 
         public virtual app_document_range app_document_range { get; set; }

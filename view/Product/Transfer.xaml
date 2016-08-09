@@ -186,6 +186,9 @@
                                                     Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                <DataGridTextColumn Binding="{Binding Quantity_InStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
+                                                    Header="{lex:Loc Cognitivo:local:Stock}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
                                                         Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">

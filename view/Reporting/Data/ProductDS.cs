@@ -32,3 +32,11 @@ namespace Cognitivo.Reporting.Data.ProductDSTableAdapters
     public partial class Check_InStockTableAdapter {
     }
 }
+
+namespace Cognitivo.Reporting.Data.ProductDSTableAdapters
+{
+    
+    
+    public partial class Check_InStockTableAdapter {
+    }
+}

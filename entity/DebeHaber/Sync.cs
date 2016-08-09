@@ -373,6 +373,7 @@ namespace entity.DebeHaber
 
         public string  Account { get; set; }
         public decimal Value { get; set; }
+        public string Currency { get; set; }
 
         public void FillPayments(entity.payment_schedual schedual)
         {
@@ -396,6 +397,7 @@ namespace entity.DebeHaber
 
             this.Account = schedual.payment_detail.app_account != null ? schedual.payment_detail.app_account.name : "";
             this.Value = schedual.payment_detail.value;
+            this.Currency = schedual.payment_detail.app_currencyfx.app_currency.name;
 
             this.TransDate = schedual.payment_detail.payment.trans_date;
             this.Account = schedual.payment_detail.app_account.name;

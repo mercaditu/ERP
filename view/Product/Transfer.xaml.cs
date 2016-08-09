@@ -19,7 +19,7 @@ namespace Cognitivo.Product
     public partial class Transfer : Page
     {
         ProductTransferDB ProductTransferDB = new ProductTransferDB();
-
+        Class.StockCalculations StockCalculations = new Class.StockCalculations();
         CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
         List<Class.transfercost> clsTotalGrid = null;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
@@ -110,6 +110,7 @@ namespace Cognitivo.Product
 
         private void SmartBox_Item_Select(object sender, RoutedEventArgs e)
         {
+            
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
@@ -142,6 +143,8 @@ namespace Cognitivo.Product
 
                         item_transfer_detail.status = Status.Documents_General.Pending;
                         item_transfer_detail.quantity_origin = 1;
+
+                        item_transfer_detail.Quantity_InStock =StockCalculations.CalculateStock_ByBranch((int)id_branch_originComboBox.SelectedValue,DateTime.Now).FirstOrDefault().Quantity ;
                         item_transfer_detail.timestamp = DateTime.Now;
                         item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                         item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
@@ -288,6 +291,7 @@ namespace Cognitivo.Product
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+         
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
             //Selecteditem_movement = itemMovement.item_movement;
@@ -305,10 +309,12 @@ namespace Cognitivo.Product
 
                     item_transfer_detail.status = Status.Documents_General.Pending;
                     item_transfer_detail.quantity_origin = 1;
+                  
                     item_transfer_detail.timestamp = DateTime.Now;
                     item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
                     item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
+                    item_transfer_detail.Quantity_InStock = StockCalculations.CalculateProduct_InItemBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now).FirstOrDefault().Quantity;
                     item_transfer_detail.RaisePropertyChanged("item_product");
                     foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                     {

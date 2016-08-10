@@ -84,41 +84,44 @@ namespace entity
                 {
                     PurchaseDB.Insert_Items_2_Movement(purchase);
                     PurchaseDB.SaveChanges();
-
-                    foreach (purchase_invoice_detail purchase_invoice_detail in purchase.purchase_invoice_detail)
+                    
+                    if (purchase.is_impex)
                     {
-                        decimal itemTotal = purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost;
-
-                        purchase_invoice _purchase_invoice = purchase_invoice_detail.purchase_invoice;
-                        item_movement item_movement = PurchaseDB.item_movement.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
-
-                        foreach (impex_expense _impex_expense in _purchase_invoice.impex_expense)
+                        foreach (purchase_invoice_detail purchase_invoice_detail in purchase.purchase_invoice_detail)
                         {
-                            decimal condition_value = _impex_expense.value;
+                            decimal itemTotal = purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost;
 
-                            if (condition_value != 0 && itemTotal != 0)
+                            purchase_invoice _purchase_invoice = purchase_invoice_detail.purchase_invoice;
+                            item_movement item_movement = PurchaseDB.item_movement.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
+
+                            foreach (impex_expense _impex_expense in _purchase_invoice.impex_expense)
                             {
-                                //Coeficient is used to get prorated cost of one item
-                                item_movement_value item_movement_detail = new item_movement_value();
+                                decimal condition_value = _impex_expense.value;
 
-                                decimal Cost = Math.Round(_impex_expense.value / _purchase_invoice.purchase_invoice_detail.Sum(x => x.quantity), 2);
-
-                                //decimal Cost = Impex_CostDetail.unit_cost * coeficient;
-
-                                //Improve this in future. For now take from Purchase
-                                using (db db = new db())
+                                if (condition_value != 0 && itemTotal != 0)
                                 {
-                                    int ID_CurrencyFX_Default = Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
-                                    decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, _purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+                                    //Coeficient is used to get prorated cost of one item
+                                    item_movement_value item_movement_detail = new item_movement_value();
 
-                                    item_movement_detail.unit_value = DefaultCurrency_Cost;
-                                    item_movement_detail.id_currencyfx = ID_CurrencyFX_Default;
+                                    decimal Cost = Math.Round(_impex_expense.value / _purchase_invoice.purchase_invoice_detail.Sum(x => x.quantity), 2);
+
+                                    //decimal Cost = Impex_CostDetail.unit_cost * coeficient;
+
+                                    //Improve this in future. For now take from Purchase
+                                    using (db db = new db())
+                                    {
+                                        int ID_CurrencyFX_Default = Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
+                                        decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, _purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
+
+                                        item_movement_detail.unit_value = DefaultCurrency_Cost;
+                                        item_movement_detail.id_currencyfx = ID_CurrencyFX_Default;
+                                    }
+
+                                    item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
+                                    item_movement.item_movement_value.Add(item_movement_detail);
                                 }
-
-                                item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
-                                item_movement.item_movement_value.Add(item_movement_detail);
                             }
-                        }
+                        }   
                     }
                     PurchaseDB.SaveChanges();
                 }
@@ -129,7 +132,7 @@ namespace entity
             
 
 
-            DateTime StartDate = DateTime.Now.AddMonths(-5);
+            DateTime StartDate = DateTime.Now.AddMonths(-6);
             DateTime EndDate = DateTime.Now;
 
             foreach (DateTime day in EachDay(StartDate, EndDate))

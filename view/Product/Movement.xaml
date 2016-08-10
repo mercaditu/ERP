@@ -156,9 +156,8 @@
                             </ComboBox.ItemsPanel>
                         </ComboBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2"
-                                       >
-                        <Label Content="Y" Style="{StaticResource ico_Label}"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2">
+                        <Label Content="" Style="{StaticResource ico_Label}"/>
                         <TextBlock Text="{lex:Loc Department}" Style="{StaticResource text_Label}"/>
                         <ComboBox x:Name="cbxDepartment" Style="{StaticResource ComboToLabelStyle}"
                                      metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
@@ -178,18 +177,6 @@
                         <Label Content="Y" Style="{StaticResource ico_Label}"/>
                         <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
                         <Label Content="{Binding project.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
-                        <!--<ComboBox x:Name="cbxProject" Style="{StaticResource ComboToLabelStyle}"
-                              metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
-                              metro:ControlsHelper.MouseOverBorderBrush="Silver"
-						      DisplayMemberPath="name" Width="Auto"
-						      SelectedValuePath="id_project" IsReadOnly="True"
-						      SelectedValue="{Binding id_project, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>-->
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>

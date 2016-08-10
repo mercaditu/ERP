@@ -25,12 +25,14 @@
         <converter:Status_Project_2ColorConverter x:Key="ProjectStatus2Color"/>
         <converter:Status2Enable x:Key="Status2Enable"/>
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        
         <CollectionViewSource x:Key="app_dimensionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_dimension}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_measurementViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_measurement}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="itemSearchViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item}, CreateList=True}"/>
         <CollectionViewSource x:Key="projectViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:project}, CreateList=True}"/>
         <CollectionViewSource x:Key="projectproject_taskViewSource" Source="{Binding project_task, Source={StaticResource projectViewSource}}"/>
+        <CollectionViewSource x:Key="Projectproject_tag_detail" Source="{Binding project_tag_detail, Source={StaticResource projectViewSource}}"/>
         <CollectionViewSource x:Key="projectproject_taskproject_task_dimensionViewSource" Source="{Binding project_task_dimension, Source={StaticResource projectproject_taskViewSource}}"/>
     </Page.Resources>
     <Grid DataContext="{StaticResource projectViewSource}">
@@ -91,8 +93,36 @@
                     </TreeView.ItemContainerStyle>
                 </cntrl:ExtendedTreeView>
             </Grid>
-            <Button Content="{lex:Loc ProductionOrder}" Margin="16" Grid.Column="2" VerticalAlignment="Top"
-                    Style="{StaticResource btn_green}" Click="btnProductionOrder"/>
+            
+            <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding name}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding code}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                <Label Content="{Binding comment}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}"/>
+                <DataGrid AutoGenerateColumns="False" 
+                          EnableRowVirtualization="True" Margin="4" HeadersVisibility="None" 
+                          ItemsSource="{Binding Source={StaticResource Projectproject_tag_detail}}" 
+                          RowDetailsVisibilityMode="VisibleWhenSelected">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding project_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding est_start_date, StringFormat=d}" Style="{StaticResource generic_Label}"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="{lex:Loc EndDate}" Style="{StaticResource input_label}"/>
+                        <Label Content="{Binding est_end_date, StringFormat=d}" Style="{StaticResource generic_Label}"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Content="{lex:Loc ProductionOrder}" Margin="16" Grid.Column="2" VerticalAlignment="Top"
+                        Style="{StaticResource btn_green}" Click="btnProductionOrder"/>
+            </StackPanel>
 
         </Grid>
         <cntrl:toolBar x:Name="toolBar" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" appName="ProjectExecution"

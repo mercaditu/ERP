@@ -63,6 +63,11 @@
                 <ComboBox x:Name="cbxTemplate" Style="{StaticResource input_combobox}" ItemsSource="{Binding Source={StaticResource project_templateViewSource}}"
                           DisplayMemberPath="name" SelectedValuePath="id_project_template" 
                           SelectedValue="{Binding id_project_template, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                         TextWrapping="Wrap" Height="64"
+                         Style="{StaticResource input_textbox}"/>
+
                 <Label Content="{lex:Loc Branch}" Style="{StaticResource input_label}"/>
                 <ComboBox Style="{StaticResource input_combobox}"  ItemsSource="{Binding Source={StaticResource branchViewSource}}"
                           DisplayMemberPath="name" SelectedValuePath="id_branch" 

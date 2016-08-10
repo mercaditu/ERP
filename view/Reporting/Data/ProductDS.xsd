@@ -207,7 +207,7 @@ order by mov.trans_date, mov.id_movement</CommandText>
   <xs:element name="ProductDS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msdata:EnforceConstraints="False" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ProductDS" msprop:Generator_UserDSName="ProductDS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="inventory" msprop:Generator_TableClassName="inventoryDataTable" msprop:Generator_TableVarName="tableinventory" msprop:Generator_RowChangedName="inventoryRowChanged" msprop:Generator_TablePropName="inventory" msprop:Generator_RowDeletingName="inventoryRowDeleting" msprop:Generator_RowChangingName="inventoryRowChanging" msprop:Generator_RowEvHandlerName="inventoryRowChangeEventHandler" msprop:Generator_RowDeletedName="inventoryRowDeleted" msprop:Generator_RowClassName="inventoryRow" msprop:Generator_UserTableName="inventory" msprop:Generator_RowEvArgName="inventoryRowChangeEvent">
+        <xs:element name="inventory" msprop:Generator_TableClassName="inventoryDataTable" msprop:Generator_TableVarName="tableinventory" msprop:Generator_TablePropName="inventory" msprop:Generator_RowDeletingName="inventoryRowDeleting" msprop:Generator_RowChangingName="inventoryRowChanging" msprop:Generator_RowEvHandlerName="inventoryRowChangeEventHandler" msprop:Generator_RowDeletedName="inventoryRowDeleted" msprop:Generator_UserTableName="inventory" msprop:Generator_RowChangedName="inventoryRowChanged" msprop:Generator_RowEvArgName="inventoryRowChangeEvent" msprop:Generator_RowClassName="inventoryRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="depositio" msprop:Generator_ColumnVarNameInTable="columndepositio" msprop:Generator_ColumnPropNameInRow="depositio" msprop:Generator_ColumnPropNameInTable="depositioColumn" msprop:Generator_UserColumnName="depositio" type="xs:string" minOccurs="0" />
@@ -219,7 +219,7 @@ order by mov.trans_date, mov.id_movement</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="stockflow" msprop:Generator_TableClassName="stockflowDataTable" msprop:Generator_TableVarName="tablestockflow" msprop:Generator_TablePropName="stockflow" msprop:Generator_RowDeletingName="stockflowRowDeleting" msprop:Generator_RowChangingName="stockflowRowChanging" msprop:Generator_RowEvHandlerName="stockflowRowChangeEventHandler" msprop:Generator_RowDeletedName="stockflowRowDeleted" msprop:Generator_UserTableName="stockflow" msprop:Generator_RowChangedName="stockflowRowChanged" msprop:Generator_RowEvArgName="stockflowRowChangeEvent" msprop:Generator_RowClassName="stockflowRow">
+        <xs:element name="stockflow" msprop:Generator_TableClassName="stockflowDataTable" msprop:Generator_TableVarName="tablestockflow" msprop:Generator_RowChangedName="stockflowRowChanged" msprop:Generator_TablePropName="stockflow" msprop:Generator_RowDeletingName="stockflowRowDeleting" msprop:Generator_RowChangingName="stockflowRowChanging" msprop:Generator_RowEvHandlerName="stockflowRowChangeEventHandler" msprop:Generator_RowDeletedName="stockflowRowDeleted" msprop:Generator_RowClassName="stockflowRow" msprop:Generator_UserTableName="stockflow" msprop:Generator_RowEvArgName="stockflowRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id_movement" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnid_movement" msprop:Generator_ColumnPropNameInRow="id_movement" msprop:Generator_ColumnPropNameInTable="id_movementColumn" msprop:Generator_UserColumnName="id_movement" type="xs:long" />
@@ -235,7 +235,7 @@ order by mov.trans_date, mov.id_movement</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Check_InStock" msprop:Generator_TableClassName="Check_InStockDataTable" msprop:Generator_TableVarName="tableCheck_InStock" msprop:Generator_RowChangedName="Check_InStockRowChanged" msprop:Generator_TablePropName="Check_InStock" msprop:Generator_RowDeletingName="Check_InStockRowDeleting" msprop:Generator_RowChangingName="Check_InStockRowChanging" msprop:Generator_RowEvHandlerName="Check_InStockRowChangeEventHandler" msprop:Generator_RowDeletedName="Check_InStockRowDeleted" msprop:Generator_RowClassName="Check_InStockRow" msprop:Generator_UserTableName="Check_InStock" msprop:Generator_RowEvArgName="Check_InStockRowChangeEvent">
+        <xs:element name="Check_InStock" msprop:Generator_TableClassName="Check_InStockDataTable" msprop:Generator_TableVarName="tableCheck_InStock" msprop:Generator_TablePropName="Check_InStock" msprop:Generator_RowDeletingName="Check_InStockRowDeleting" msprop:Generator_RowChangingName="Check_InStockRowChanging" msprop:Generator_RowEvHandlerName="Check_InStockRowChangeEventHandler" msprop:Generator_RowDeletedName="Check_InStockRowDeleted" msprop:Generator_UserTableName="Check_InStock" msprop:Generator_RowChangedName="Check_InStockRowChanged" msprop:Generator_RowEvArgName="Check_InStockRowChangeEvent" msprop:Generator_RowClassName="Check_InStockRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Location" msprop:Generator_ColumnVarNameInTable="columnLocation" msprop:Generator_ColumnPropNameInRow="Location" msprop:Generator_ColumnPropNameInTable="LocationColumn" msprop:Generator_UserColumnName="Location" type="xs:string" />
@@ -253,11 +253,6 @@ order by mov.trans_date, mov.id_movement</CommandText>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:stockflow" />
       <xs:field xpath="mstns:id_movement" />
-    </xs:unique>
-    <xs:unique name="Check_InStock_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:Check_InStock" />
-      <xs:field xpath="mstns:LocationID" />
-      <xs:field xpath="mstns:ProductID" />
     </xs:unique>
   </xs:element>
 </xs:schema>

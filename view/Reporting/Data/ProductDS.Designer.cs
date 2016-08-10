@@ -1217,14 +1217,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public Check_InStockRow FindByLocationIDProductID(int LocationID, int ProductID) {
-                return ((Check_InStockRow)(this.Rows.Find(new object[] {
-                            LocationID,
-                            ProductID})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 Check_InStockDataTable cln = ((Check_InStockDataTable)(base.Clone()));
                 cln.InitVars();
@@ -1266,9 +1258,6 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnMeasurement);
                 this.columnLocationID = new global::System.Data.DataColumn("LocationID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLocationID);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnLocationID,
-                                this.columnProductID}, true));
                 this.columnLocation.AllowDBNull = false;
                 this.columnItemCode.AllowDBNull = false;
                 this.columnItemName.AllowDBNull = false;

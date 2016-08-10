@@ -509,7 +509,8 @@ namespace Cognitivo.Purchase
                     purchase_invoiceViewSource.View.Filter = i =>
                     {
                         purchase_invoice purchase_invoice = i as purchase_invoice;
-                        if (purchase_invoice.contact.name.ToLower().Contains(query.ToLower()))
+                        string number = purchase_invoice.number != null ? purchase_invoice.number : "";
+                        if (purchase_invoice.contact.name.ToLower().Contains(query.ToLower()) || number.ToLower().Contains(query.ToLower()))
                         {
                             return true;
                         }
@@ -611,24 +612,6 @@ namespace Cognitivo.Purchase
                 crud_modal.Children.Add(recive_payment);
             }
         }
-
-        //private void txtTotal_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        txtTotal.Background = Brushes.White;
-        //        purchase_invoice purchase_invoice = (purchase_invoice)purchase_invoiceDataGrid.SelectedItem;
-        //        BindingExpression binding = txtTotal.GetBindingExpression(TextBox.TextProperty);
-        //        binding.UpdateSource();
-        //    }
-        //    else
-        //    {
-        //        if(txtTotal.Background != Brushes.Beige)
-        //        {
-        //            txtTotal.Background = Brushes.Beige;
-        //        }
-        //    }
-        //}
 
         private void purchase_invoice_detailDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -777,24 +760,5 @@ namespace Cognitivo.Purchase
                 purchase_invoice.DiscountWithoutPercentage += TrailingDecimals;
             }
         }
-
-      
-
-
-
-
-        //private void toolBar_btnPrint_Click(object sender, MouseButtonEventArgs e)
-        //{
-        //    purchase_invoice purchase_invoice = purchase_invoiceDataGrid.SelectedItem as purchase_invoice;
-        //    if (purchase_invoice != null)
-        //    {
-        //        entity.Brillo.Document.Start.Manual(purchase_invoice, purchase_invoice.app_document_range);
-        //    }
-        //    else
-        //    {
-        //        toolBar.msgWarning("Please select");
-        //    }
-        //}
-
     }
 }

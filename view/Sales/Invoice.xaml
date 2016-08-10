@@ -460,11 +460,14 @@
                                        UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{StaticResource text_Data}"/>
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"
-                                    Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Telephone, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                                                    Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=Telephone, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                             <Label Content="P" Style="{StaticResource ico_Label}"/>
                                             <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Telephone}"/>
-                                            <TextBlock Text="{Binding contact.telephone, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}" Width="55"/>
-
+                                            <TextBlock Text="{Binding contact.telephone, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="U" Style="{StaticResource ico_Label}"/>
+                                            <TextBlock Text="{Binding security_user.name, IsAsync=True, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
                                             <Label Content="U" Style="{StaticResource ico_Label}"/>

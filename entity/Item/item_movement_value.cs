@@ -1,6 +1,7 @@
 
 namespace entity
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     
@@ -13,6 +14,7 @@ namespace entity
             is_head = true;
             is_estimate = false;
             is_read = false;
+            timestamp = DateTime.Now;
         }
 
         [Key]

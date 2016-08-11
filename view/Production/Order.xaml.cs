@@ -26,6 +26,8 @@ namespace Cognitivo.Production
         /// Property used by Open TreeView Button.
         /// </summary>
         public bool ViewAll { get; set; }
+
+        public bool is_request { get; set; }
         public Order()
         {
             InitializeComponent();
@@ -281,6 +283,10 @@ namespace Cognitivo.Production
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.Product && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
                 lblTotalRequest.Content = list.Sum(x => x.item_request_detail.Sum(y => y.quantity));
+                if (list.Sum(x=>x.quantity)<=list.Sum(x => x.item_request_detail.Sum(y => y.quantity)))
+                {
+                    is_request = true;
+                }
             }
         }
 
@@ -296,6 +302,10 @@ namespace Cognitivo.Production
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.RawMaterial && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
                 lblTotalRequest.Content = list.Sum(x => x.item_request_detail.Sum(y => y.quantity));
+                if (list.Sum(x => x.quantity) <= list.Sum(x => x.item_request_detail.Sum(y => y.quantity)))
+                {
+                    is_request = true;
+                }
             }
         }
 
@@ -343,6 +353,10 @@ namespace Cognitivo.Production
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.FixedAssets && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
                 lblTotalRequest.Content = list.Sum(x => x.item_request_detail.Sum(y => y.quantity));
+                if (list.Sum(x => x.quantity) <= list.Sum(x => x.item_request_detail.Sum(y => y.quantity)))
+                {
+                    is_request = true;
+                }
             }
         }
 
@@ -489,6 +503,7 @@ namespace Cognitivo.Production
                 int _id_item = obj._id_item;
                 List<production_order_detail> list = OrderDB.production_order_detail.Where(IT => IT.item.id_item_type == item.item_type.Supplies && (IT.production_order.status != Status.Production.Pending || IT.production_order.status != null) && IT.id_production_order == _id_production_order && IT.id_item == _id_item).ToList();
                 itemDataGrid.ItemsSource = list.ToList();
+                
             }
         }
 

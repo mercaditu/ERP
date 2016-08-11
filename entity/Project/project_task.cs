@@ -99,7 +99,7 @@ namespace entity
                     RaisePropertyChanged("quantity_est");
 
                     //Sum Parent, check if not recepie so as not to create an infinite loop.
-                    if (parent != null && parent.items != null && parent.items.item_recepie == null)
+                    if (parent != null && parent.items != null && parent.items.item_recepie.Count()==0)
                     {
                         //This stops the Recepie from Adding
                         //Also stops the Rejecte Tasks from Adding

@@ -101,6 +101,8 @@ namespace entity
         public decimal? quantity_exe
         { get; set; }
 
+   
+
         public Status.Production? status { get; set; }
         public string code
         {

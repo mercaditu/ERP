@@ -29,6 +29,7 @@ namespace Cognitivo.Accounting
         CollectionViewSource purchase_invoiceViewSource;
         CollectionViewSource purchase_returnViewSource;
         CollectionViewSource paymentViewSource;
+        CollectionViewSource item_assetViewSource;
 
         entity.db db = new entity.db();
 
@@ -43,6 +44,7 @@ namespace Cognitivo.Accounting
             purchase_invoiceViewSource = ((CollectionViewSource)(FindResource("purchase_invoiceViewSource")));
             purchase_returnViewSource = ((CollectionViewSource)(FindResource("purchase_returnViewSource")));
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+            item_assetViewSource = ((CollectionViewSource)(FindResource("item_assetViewSource")));
 
             RelationshipHash = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault().domain;
         }
@@ -54,6 +56,7 @@ namespace Cognitivo.Accounting
             Get_PurchaseReturnInvoice();
             Get_SalesReturn();
             Get_Payment();
+            Get_ItemAsset();
         }
 
         #region LoadData
@@ -101,6 +104,13 @@ namespace Cognitivo.Accounting
                 x.is_accounted == false &&
                 x.status == entity.Status.Documents_General.Approved).ToList();
         }
+        public void Get_ItemAsset()
+        {
+            //x.Is Head replace with Is_Accounted = True.
+            item_assetViewSource.Source = db.item_asset.Where(x =>
+                x.id_company == entity.CurrentSession.Id_Company &&
+                x.item.is_active == true).ToList();
+        }
         #endregion
 
         private void btnData_Sync(object sender, RoutedEventArgs e)
@@ -114,6 +124,7 @@ namespace Cognitivo.Accounting
             PurchaseReturn_Sync();
             
             PaymentSync();
+            
         }
      
         private void Sales_Sync()

@@ -17,6 +17,7 @@
         <CollectionViewSource x:Key="purchase_invoiceViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_invoice}, CreateList=True}" />
         <CollectionViewSource x:Key="purchase_returnViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:purchase_return}, CreateList=True}" />
         <CollectionViewSource x:Key="paymentViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:payment}, CreateList=True}" />
+        <CollectionViewSource x:Key="item_assetViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_asset}, CreateList=True}" />
     </Page.Resources>
     <Grid>
         <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
@@ -92,6 +93,21 @@
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contact}" Binding="{Binding contact.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Number}" Binding="{Binding number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Total}" Binding="{Binding GrandTotal,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{lex:Loc FixedAsset}">
+                <Grid Background="White" DataContext="{StaticResource sales_invoiceViewSource}">
+                    <CheckBox Style="{StaticResource input_checkbox}" Content="Select All" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                    <DataGrid Margin="0,32,0,0" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Date}" IsReadOnly="True" Binding="{Binding trans_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Name}" IsReadOnly="True" Binding="{Binding item.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Group}" IsReadOnly="True" Binding="{Binding item_asset_group.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:PurchaseDate}" IsReadOnly="True" Binding="{Binding purchase_date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="{lex:Loc Cognitivo:local:CurrentValue}" IsReadOnly="True" Binding="{Binding current_value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

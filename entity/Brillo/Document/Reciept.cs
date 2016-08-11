@@ -140,7 +140,7 @@
 
             Header =
                 CompanyName + "\n"
-                + "Registro de PND. Transaccion: " + TransNumber + "\n"
+                + "Registro de PMD. Transaccion: " + TransNumber + "\n"
                 + "Fecha y Hora: " + TransDate.ToString() + "\n"
                 + "Local Expendido: " + BranchName + "\n"
                 + "\n"
@@ -148,7 +148,8 @@
                 + "Sector: " + DepartmentName + "\n"
                 + "Project: " + ProjectCode + " - " + ProjectName + "\n"
                 + "-------------------------------"
-                + "\n";
+                + "\n"
+                + "Cantiad, Codigo, Description" + "\n";
 
             foreach (item_transfer_detail d in i.item_transfer_detail)
             {
@@ -156,7 +157,7 @@
                 {
                     if (d.project_task.parent != null)
                     {
-                        Detail = "ACTIV. : " + d.project_task.parent.item_description + "\n";
+                        Detail += "ACTIV. : " + d.project_task.parent.item_description + "\n";
                     }
 
                     foreach (project_task project_task in d.project_task.child)
@@ -177,16 +178,13 @@
 
                         Detail = Detail +
                             ""
-                            + "Descripcion, Cantiad, Codigo" + "\n"
                             + "-------------------------------" + "\n"
-                            + ItemCode + "\t" + ItemName + "\n"
-                            + Qty.ToString() + "\n";
+                            + Qty.ToString() + ItemCode + "\n"
+                            + ItemName;
 
                         if (d.project_task.project_task_dimension.Count() > 0)
                         {
-                            Detail = Detail +
-                         ""
-                         + "Dimension, Value, Measurement" + "\n";
+                            Detail = Detail + "Dimension, Value, Measurement" + "\n";
                         }
                         foreach (project_task_dimension project_task_dimension in d.project_task.project_task_dimension)
                         {
@@ -211,7 +209,7 @@
                     {
                         if (d.item_product.item != null)
                         {
-                            Detail = "ACTIV. : " + d.item_product.item.description + "\n";
+                            Detail += "ACTIV. : " + d.item_product.item.description + "\n";
                             string ItemName = string.Empty;
                             string ItemCode = string.Empty;
 
@@ -225,12 +223,10 @@
                             decimal? Qty = d.quantity_destination;
 
 
-                            Detail = Detail +
-                                ""
-                                + "Cantiad, Codigo,Descripcion" + "\n"
+                            Detail = Detail
                                 + "-------------------------------" + "\n"
-                                + ItemName + "\t" + Qty.ToString() + "\n"
-                                + ItemCode  + "\n";
+                            + Qty.ToString() + ItemCode + "\n"
+                            + ItemName;
 
                             if (d.item_transfer_dimension.Count() > 0)
                             {

@@ -84,52 +84,19 @@ namespace entity
                 {
                     PurchaseDB.Insert_Items_2_Movement(purchase);
                     PurchaseDB.SaveChanges();
-                    
-                    if (purchase.is_impex)
-                    {
-                        foreach (purchase_invoice_detail purchase_invoice_detail in purchase.purchase_invoice_detail)
-                        {
-                            decimal itemTotal = purchase_invoice_detail.quantity * purchase_invoice_detail.unit_cost;
 
-                            purchase_invoice _purchase_invoice = purchase_invoice_detail.purchase_invoice;
-                            item_movement item_movement = PurchaseDB.item_movement.Where(x => x.id_purchase_invoice_detail == purchase_invoice_detail.id_purchase_invoice_detail).FirstOrDefault();
 
-                            foreach (impex_expense _impex_expense in _purchase_invoice.impex_expense)
-                            {
-                                decimal condition_value = _impex_expense.value;
-
-                                if (condition_value != 0 && itemTotal != 0)
-                                {
-                                    //Coeficient is used to get prorated cost of one item
-                                    item_movement_value item_movement_detail = new item_movement_value();
-
-                                    decimal Cost = Math.Round(_impex_expense.value / _purchase_invoice.purchase_invoice_detail.Sum(x => x.quantity), 2);
-
-                                    //decimal Cost = Impex_CostDetail.unit_cost * coeficient;
-
-                                    //Improve this in future. For now take from Purchase
-                                    using (db db = new db())
-                                    {
-                                        int ID_CurrencyFX_Default = Currency.get_Default(db).app_currencyfx.Where(x => x.is_active).FirstOrDefault().id_currencyfx;
-                                        decimal DefaultCurrency_Cost = Currency.convert_Values(Cost, _purchase_invoice.id_currencyfx, ID_CurrencyFX_Default, null);
-
-                                        item_movement_detail.unit_value = DefaultCurrency_Cost;
-                                        item_movement_detail.id_currencyfx = ID_CurrencyFX_Default;
-                                    }
-
-                                    item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
-                                    item_movement.item_movement_value.Add(item_movement_detail);
-                                }
-                            }
-                        }   
-                    }
-                    PurchaseDB.SaveChanges();
                 }
-               
 
-              
+                using (ImpexDB ImpexDB = new ImpexDB())
+                {
+                    ImpexDB.impex.Load();
+                    ImpexDB.ApproveImport();
+                }
+
+
             }
-            
+
 
 
             DateTime StartDate = DateTime.Now.AddMonths(-6);
@@ -162,11 +129,11 @@ namespace entity
                     }
                 }
 
-                
+
                 ///Transfers & Movement
                 using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
                 {
-                    List<item_transfer> item_transferLIST = ProductTransferDB.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company 
+                    List<item_transfer> item_transferLIST = ProductTransferDB.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company
                         && x.trans_date.Day == day.Day && x.trans_date.Month == day.Month
                         && x.status == Status.Transfer.Approved).ToList();
                     foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))

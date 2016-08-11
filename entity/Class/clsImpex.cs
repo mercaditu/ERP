@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace Cognitivo.Class
+namespace entity.Class
 {
     public class Impex_CostDetail : INotifyPropertyChanged
     {

@@ -196,6 +196,7 @@
     <Compile Include="Brillo\Promotion\Start.cs" />
     <Compile Include="Brillo\Seed Data\ChartOfAccounts.cs" />
     <Compile Include="Class\clsBarcode.cs" />
+    <Compile Include="Class\clsImpex.cs" />
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />
     <Compile Include="Class\EnumExtension.cs" />
     <Compile Include="Class\LocalizedDescriptionAttribute.cs" />

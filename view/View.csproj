@@ -692,7 +692,6 @@
     <Compile Include="Converters\Text2Visibility.cs" />
     <Compile Include="Class\clsaccesories.cs" />
     <Compile Include="Class\clsAccountUtility.cs" />
-    <Compile Include="Class\clsImpex.cs" />
     <Compile Include="Class\clsinputdata.cs" />
     <Compile Include="Class\Clsinputdimension.cs" />
     <Compile Include="Class\clsLogic.cs" />

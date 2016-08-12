@@ -84,6 +84,7 @@ namespace cntrl
                     foreach (project_task _project_task in project_taskLIST)
                     {
                         sales_budget_detail sales_budget_detail = new sales_budget_detail();
+                        sales_budget_detail.State = EntityState.Added;
                         sales_budget_detail.id_sales_budget = sales_budget.id_sales_budget;
                         sales_budget_detail.sales_budget = sales_budget;
                         sales_budget_detail.id_item = (int)_project_task.id_item;
@@ -185,6 +186,7 @@ namespace cntrl
                         if (_project_task.items.id_item_type == item.item_type.Task || _project_task.sales_detail == null)
                         {
                             sales_order_detail = new sales_order_detail();
+                            sales_order_detail.State = EntityState.Added;
                             sales_order_detail.id_sales_order = sales_order.id_sales_order;
                             sales_order_detail.sales_order = sales_order;
                             if (Convert.ToInt16(_project_task.id_item) > 0)
@@ -232,6 +234,7 @@ namespace cntrl
                         {
                             SalesOrderDB.Approve();
                             sales_invoice sales_invoice = new entity.sales_invoice();
+                        
                             if (SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == App.Names.SalesBudget).FirstOrDefault() != null)
                             {
                                 sales_invoice.id_range = SalesOrderDB.app_document_range.Where(x => x.app_document.id_application == App.Names.SalesInvoice).FirstOrDefault().id_range;
@@ -250,6 +253,7 @@ namespace cntrl
                             foreach (project_task _project_task in project_taskLIST)
                             {
                                 sales_invoice_detail = new sales_invoice_detail();
+                                sales_invoice_detail.State = EntityState.Added;
                                 sales_invoice_detail.id_sales_invoice = sales_invoice.id_sales_invoice;
                                 sales_invoice_detail.sales_invoice = sales_invoice;
                                 sales_invoice_detail.id_item = (int)_project_task.id_item;

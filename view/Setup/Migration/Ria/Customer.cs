@@ -49,13 +49,17 @@ namespace Cognitivo.Setup.Migration
             + " CLIENTES.CUSTOMFIELD, "
             + " CLIENTES.CODCLIENTE, "
             + " CLIENTES.SEXO, "
-            + " CLIENTES.FECHANACIMIENTO"
+            + " CLIENTES.FECHANACIMIENTO,"
+            + " CLIENTES.FECHAINGRESO," //35
+            + " PRODUCTOS.DESPRODUCTO,"
+            + " CLIENTES.EMPPRESACLIENTE" //35
             + " FROM VENDEDOR "
             + " RIGHT OUTER JOIN  CIUDAD RIGHT OUTER JOIN ZONA ON CIUDAD.CODCIUDAD = ZONA.CODCIUDAD RIGHT OUTER JOIN"
             + " TIPOCLIENTE RIGHT OUTER JOIN CLIENTES LEFT OUTER JOIN CATEGORIACLIENTE ON CLIENTES.CODCATEGORIACLIENTE = CATEGORIACLIENTE.CODCATEGORIACLIENTE ON "
             + " TIPOCLIENTE.CODTIPOCLIENTE = CLIENTES.CODTIPOCLIENTE ON ZONA.CODZONA = CLIENTES.CODZONA ON "
             + " VENDEDOR.CODVENDEDOR = CLIENTES.CODVENDEDOR LEFT OUTER JOIN"
-            + " PAIS ON CIUDAD.CODPAIS = PAIS.CODPAIS";
+            + " PAIS ON CIUDAD.CODPAIS = PAIS.CODPAIS  LEFT OUTER JOIN"
+            + " PRODUCTOS ON CLIENTES.PROVEEDOR_ID = PRODUCTOS.CODPRODUCTO ";
 
             SqlConnection conn = new SqlConnection(_connString);
 
@@ -106,19 +110,24 @@ namespace Cognitivo.Setup.Migration
                     contacts.email = (reader[12] is DBNull) ? null : reader[12].ToString();
                     contacts.alias = (reader[30] is DBNull) ? null : reader[30].ToString();
 
-                     int _dias = Convert.ToInt32((reader["DIASVENCIMIENTO"] is DBNull) ? 0 : reader["DIASVENCIMIENTO"]);
-                    string contrat_name=_dias + " " + "Días";
-                    if (db.app_contract.Where(x=>x.name==contrat_name).FirstOrDefault()!=null)
+                    int _dias = Convert.ToInt32((reader["DIASVENCIMIENTO"] is DBNull) ? 0 : reader["DIASVENCIMIENTO"]);
+                    string contrat_name = _dias + " " + "Días";
+                    if (db.app_contract.Where(x => x.name == contrat_name).FirstOrDefault() != null)
                     {
-                        app_contract app_contract=db.app_contract.Where(x => x.name == contrat_name).FirstOrDefault();
+                        app_contract app_contract = db.app_contract.Where(x => x.name == contrat_name).FirstOrDefault();
                         contacts.id_contract = app_contract.id_contract;
                         contacts.app_contract = app_contract;
                     }
-                   
+
                     contacts.id_contact_role = db.contact_role.Where(x => x.is_principal == true && x.id_company == id_company).FirstOrDefault().id_contact_role;
 
                     if (_connString.Contains("Angelius"))
                     {
+                        if (!(reader[18] is DBNull))
+                        {
+                            contacts.timestamp = Convert.ToDateTime(reader[35]);
+                        }
+
                         contacts.is_person = true;
 
                         string role_name = (reader[31] is DBNull) ? null : reader[31].ToString();
@@ -126,19 +135,31 @@ namespace Cognitivo.Setup.Migration
                         {
                             contacts.id_contact_role = db.contact_role.Where(x => x.name == role_name && x.id_company == id_company).FirstOrDefault().id_contact_role;
                         }
-
-                        int relationid =Convert.ToInt32((reader[18] is DBNull) ? null : reader[18].ToString());
-                        int code=Convert.ToInt32((reader[32] is DBNull) ? null : reader[32].ToString());
-                        if (relationid!=code)
+                        else
                         {
-                               DataTable dt_newcustomer = exeDT("select NOMBRE from CLIENTES where CODCLIENTE="+ relationid);
-                               string name=(dt_newcustomer.Rows[0][0]).ToString();
-                               if (db.contacts.Where(x=>x.name==name).FirstOrDefault()!=null)
-                               {
-                                   contacts.parent = db.contacts.Where(x => x.name == name).FirstOrDefault();
-                               }
+                            if (db.app_field.Where(x => x.field_type == app_field.field_types.Account).FirstOrDefault() != null)
+                            {
+                                app_field app_field = db.app_field.Where(x => x.field_type == app_field.field_types.Account).FirstOrDefault();
+                                contact_field_value contact_field_value = new entity.contact_field_value();
+                                contact_field_value.contact = contacts;
+                                contact_field_value.value = role_name;
+                                contact_field_value.id_field = app_field.id_field;
+                                contacts.contact_field_value.Add(contact_field_value);
+                            }
                         }
-                        
+
+                        int relationid = Convert.ToInt32((reader[18] is DBNull) ? null : reader[18].ToString());
+                        int code = Convert.ToInt32((reader[32] is DBNull) ? null : reader[32].ToString());
+                        if (relationid != code)
+                        {
+                            DataTable dt_newcustomer = exeDT("select NOMBRE from CLIENTES where CODCLIENTE=" + relationid);
+                            string name = (dt_newcustomer.Rows[0][0]).ToString();
+                            if (db.contacts.Where(x => x.name == name).FirstOrDefault() != null)
+                            {
+                                contacts.parent = db.contacts.Where(x => x.name == name).FirstOrDefault();
+                            }
+                        }
+
                         var SEXO = Convert.ToInt32((reader[33] is DBNull) ? null : reader[33].ToString());
                         if (SEXO != null)
                         {
@@ -156,32 +177,106 @@ namespace Cognitivo.Setup.Migration
 
                         if (FECHANACIMINETO != null)
                         {
-                            if (FECHANACIMINETO.Year <2014 )
+                            if (FECHANACIMINETO.Year < 2014)
                             {
                                 contacts.date_birth = FECHANACIMINETO;
                             }
                         }
+                        contact_subscription contact_subscription = new contact_subscription();
+                        if (!(reader[33] is DBNull))
+                        {
+                            if (Convert.ToInt32((reader[33])) > 0)
+                            {
+                                contact_subscription.unit_price = Convert.ToInt32((reader[33]));
+                            }
+                        }
+
+                        if (!(reader[25] is DBNull))
+                        {
+                            string name = reader[36].ToString();
+                            if (db.items.Where(x => x.name == name).FirstOrDefault() != null)
+                            {
+                                contact_subscription.id_item = db.items.Where(x => x.name == name).FirstOrDefault().id_item;
+                                if (db.items.Where(x => x.name == name).FirstOrDefault() != null)
+                                {
+                                    contact_subscription.id_vat_group = db.items.Where(x => x.name == name).FirstOrDefault().id_vat_group;
+                                }
+                                else
+                                {
+                                    if (db.app_vat_group.Where(x => x.is_default).FirstOrDefault() != null)
+                                    {
+                                        contact_subscription.id_vat_group = db.app_vat_group.Where(x => x.is_default).FirstOrDefault().id_vat_group;
+                                    }
+
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            if (contacts.parent != null)
+                            {
+                                contact_subscription.id_item = contacts.parent.contact_subscription.FirstOrDefault().id_item;
+
+                                contact_subscription.id_vat_group = contacts.parent.contact_subscription.FirstOrDefault().id_vat_group;
+                            }
+                        }
+                        if (db.app_contract.Where(x => x.is_active).FirstOrDefault() != null)
+                        {
+                            contact_subscription.id_contract = db.app_contract.Where(x => x.is_active).FirstOrDefault().id_contract;
+                        }
+                        contacts.contact_subscription.Add(contact_subscription);
+
+                        if (!(reader[37] is DBNull))
+                        {
+                            string name = reader[37].ToString();
+                            if (db.contact_tag.Local.Where(x => x.name == name).FirstOrDefault() == null)
+                            {
+
+                                if (reader[37].ToString() != "")
+                                {
+                                    contact_tag contact_tag = new contact_tag();
+                                    contact_tag.name = reader[37].ToString();
+                                    db.contact_tag.Add(contact_tag);
+                                    contact_tag_detail contact_tag_detail = new contact_tag_detail();
+                                    contact_tag_detail.contact = contacts;
+                                    contact_tag_detail.contact_tag = contact_tag;
+                                    db.contact_tag_detail.Add(contact_tag_detail);
+
+                                }
+
+                            }
+                            else
+                            {
+                                contact_tag_detail contact_tag_detail = new contact_tag_detail();
+                                contact_tag_detail.contact = contacts;
+                                contact_tag_detail.contact_tag = db.contact_tag.Local.Where(x => x.name == name).FirstOrDefault();
+                                db.contact_tag_detail.Add(contact_tag_detail);
+                            }
+                        }
+
+
                     }
 
                     if (!(reader["DESZONA"] is DBNull))
                     {
                         string name = (string)reader["DESZONA"];
-                          app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
-                          if (_app_geography != null)
-                          {
-                              contacts.app_geography = _app_geography;
-                              contacts.id_geography = _app_geography.id_geography;
-                          }
+                        app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                        if (_app_geography != null)
+                        {
+                            contacts.app_geography = _app_geography;
+                            contacts.id_geography = _app_geography.id_geography;
+                        }
                     }
                     else if (!(reader["DESCIUDAD"] is DBNull))
                     {
                         string name = (string)reader["DESCIUDAD"];
-                          app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
-                          if (_app_geography != null)
-                          {
-                              contacts.app_geography = _app_geography;
-                              contacts.id_geography = _app_geography.id_geography;
-                          }
+                        app_geography _app_geography = db.app_geography.Where(x => x.name == name).FirstOrDefault();
+                        if (_app_geography != null)
+                        {
+                            contacts.app_geography = _app_geography;
+                            contacts.id_geography = _app_geography.id_geography;
+                        }
                     }
                     else if (!(reader["DESPAIS"] is DBNull))
                     {
@@ -193,7 +288,7 @@ namespace Cognitivo.Setup.Migration
                             contacts.id_geography = _app_geography.id_geography;
                         }
                     }
-                    
+
                     //db Related Insertion.
                     if (!(reader[1] is DBNull))
                     {
@@ -212,7 +307,14 @@ namespace Cognitivo.Setup.Migration
                     if (contacts.Error == null)
                     {
                         db.contacts.Add(contacts);
-                        db.SaveChanges();
+                        try
+                        {
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
                         value += 1;
                         Dispatcher.BeginInvoke((Action)(() => progCustomer.Value = value));
                         Dispatcher.BeginInvoke((Action)(() => customerValue.Text = value.ToString()));

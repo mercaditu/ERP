@@ -70,7 +70,7 @@ namespace entity
             hr_timesheet = new List<hr_timesheet>();
             hr_family = new List<hr_family>();
             hr_talent_detail = new List<hr_talent_detail>();
-
+            contact_field_value = new List<contact_field_value>();
 
         }
 

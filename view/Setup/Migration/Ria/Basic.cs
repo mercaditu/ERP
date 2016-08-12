@@ -95,6 +95,11 @@ namespace Cognitivo.Setup.Migration
                 }   
             }
 
+            app_field app_field = new entity.app_field();
+            app_field.name = "Account";
+            app_field.field_type = entity.app_field.field_types.Account;
+            dbContext.app_field.Add(app_field);
+            dbContext.SaveChanges();
             Dispatcher.BeginInvoke((Action)(() => progBasic.IsIndeterminate = false));
         }
 

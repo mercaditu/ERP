@@ -23,7 +23,7 @@ namespace entity
             is_active = true;
             start_date = DateTime.Now;
             end_date = DateTime.Now.AddDays(365);
-
+            unit_price = 0;
             quantity = 1;
         }
 

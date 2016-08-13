@@ -68,15 +68,15 @@ namespace entity
         }
         static int _Id_Account;
 
-        public static List<security_curd> Security_CurdList
-        {
-            get
-            {
-                return _Security_CurdList;
-            }
-            set { _Security_CurdList = value; }
-        }
-        static List<security_curd> _Security_CurdList = new List<security_curd>();
+        public static List<security_curd> Security_CurdList { get; set; }
+        //{
+        //    get
+        //    {
+        //        return _Security_CurdList;
+        //    }
+        //    set { _Security_CurdList = value; }
+        //}
+        //static List<security_curd> _Security_CurdList = new List<security_curd>();
 
         public static List<security_role_privilage> Security_role_privilageList
         {
@@ -150,62 +150,80 @@ namespace entity
 
         public static void Refresh_Security()
         {
-            _Security_CurdList.Clear();
+            Security_CurdList.Clear();
+            _Security_role_privilageList.Clear();
+
+            using (db cntx = new db())
+            {
+                cntx.Configuration.LazyLoadingEnabled = false;
+                cntx.Configuration.AutoDetectChangesEnabled = false;
 
                 //Curd
-                security_user security_user = db.security_user.Where(x => x.id_user == Id_User).FirstOrDefault();
-                _Security_CurdList = db.security_curd.Where(x => x.id_role == security_user.id_role).ToList();
+                Security_CurdList = db.security_curd.Where(x => x.id_role == User.id_role).ToList();
 
                 //Privilage
-                _Security_role_privilageList.Clear();
-                _Security_role_privilageList = db.security_role_privilage.Where(x => x.id_role == security_user.id_role).ToList();
+                _Security_role_privilageList = db.security_role_privilage.Where(x => x.id_role == User.id_role).ToList();
+            }
         }
 
         public static void Load_BasicData()
         {
-            db.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-            db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-            db.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-            db.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-            db.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-            db.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-            db.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
-            db.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            using (db cntx = new db())
+            {
+                cntx.Configuration.LazyLoadingEnabled = false;
+                cntx.Configuration.AutoDetectChangesEnabled = false;
+
+                SalesRep = cntx.sales_rep.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Contract = cntx.app_contract.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Condition = cntx.app_condition.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                VAT_G = cntx.app_vat_group.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Branch = cntx.app_branch.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Terminal = cntx.app_terminal.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+                Currency = cntx.app_currency.Where(x => x.id_company == Id_Company && x.is_active).ToList();
+            }
         }
+
+        private static List<entity.sales_rep> SalesRep { get; set; }
+        private static List<entity.app_contract> Contract { get; set; }
+        private static List<entity.app_condition> Condition { get; set; }
+        private static List<entity.app_vat_group> VAT_G { get; set; }
+        private static List<entity.app_branch> Branch { get; set; }
+        private static List<entity.app_terminal> Terminal { get; set; }
+        private static List<entity.app_currency> Currency { get; set; }
 
         public static List<sales_rep> Get_SalesRep()
         {
-            return db.sales_rep.Local.OrderBy(x => x.name).ToList();
+            return SalesRep;
         }
 
         public static List<app_contract> Get_Contract()
         {
-            return db.app_contract.Local.OrderBy(x => x.name).ToList();
+            return Contract;
         }
 
         public static List<app_condition> Get_Condition()
         {
-            return db.app_condition.Local.OrderBy(x => x.name).ToList();
+            return Condition;
         }
 
         public static List<app_vat_group> Get_VAT_Group()
         {
-            return db.app_vat_group.Local.OrderBy(x => x.name).ToList();
+            return VAT_G;
         }
 
         public static List<app_branch> Get_Branch()
         {
-            return db.app_branch.Local.OrderBy(x => x.name).ToList();
+            return Branch;
         }
 
         public static List<app_terminal> Get_Terminal()
         {
-            return db.app_terminal.Local.OrderBy(x => x.name).ToList();
+            return Terminal;
         }
 
         public static List<app_currency> Get_Currency()
         {
-            return db.app_currency.Local.OrderBy(x => x.name).ToList();
+            return Currency;
         }
 
         public static app_currency Get_DefaultCurrency()

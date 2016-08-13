@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              xmlns:Controls="clr-namespace:cntrl.Controls"
              d:DesignHeight="600" d:DesignWidth="300">
@@ -63,6 +64,13 @@
                     <Controls:SmartBox_Contact x:Name="sbxCustomer" Select="Data_Update"
                       Visibility="{Binding ElementName=cbxCustomer, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       Margin="4" Width="128"/>
+                </StackPanel>
+                
+                <Rectangle Style="{StaticResource line_Bar}"/>
+                
+                <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
+                <StackPanel>
+                    <Label Content="Columns" Style="{StaticResource input_label}"/>
                 </StackPanel>
             </StackPanel>
         </Border>

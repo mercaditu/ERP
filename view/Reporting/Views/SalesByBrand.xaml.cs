@@ -56,5 +56,10 @@ namespace Cognitivo.Reporting.Views
                 this.reportViewer.RefreshReport();   
             }
         }
+
+        private void reportViewer_Layout(object sender, System.Windows.Forms.LayoutEventArgs e)
+        {
+
+        }
     }
 }

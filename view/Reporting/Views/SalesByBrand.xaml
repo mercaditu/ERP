@@ -22,7 +22,7 @@
             Update="Fill"
             Grid.Column="0"/>
         <WindowsFormsHost Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <rv:ReportViewer x:Name="reportViewer"/>
+            <rv:ReportViewer x:Name="reportViewer" WaitControlDisplayAfter="0"/>
         </WindowsFormsHost>
     </Grid>
 </Page>

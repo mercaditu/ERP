@@ -2,6 +2,10 @@
     
     
     public partial class SalesDS {
+        partial class DeliveryByZoneDataTable
+        {
+        }
+    
         partial class AvgSalesDataTable
         {
         }
@@ -13,8 +17,8 @@
         partial class SalesByItemDataTable
         {
         }
-    
-        partial class SalesByDateDataTable
+
+        partial class SalesInvoiceSummaryDataTable
         {
         }
     
@@ -33,9 +37,10 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
     partial class SalesByBrandTableAdapter
     {
     }
-    
-    
-    public partial class SalesByDateTableAdapter {
+
+
+    public partial class SalesInvoiceSummaryTableAdapter
+    {
     }
 }
 

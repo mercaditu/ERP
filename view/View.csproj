@@ -1013,9 +1013,9 @@
     <EmbeddedResource Include="Reporting\Reports\SalesBudgetList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\AvgSales.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByBrand.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\SalesByDate.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBySalesRep.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesInvoiceSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />
     <EmbeddedResource Include="Resources\local.ar.resx">

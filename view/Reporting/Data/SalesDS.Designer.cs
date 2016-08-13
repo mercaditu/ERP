@@ -24,7 +24,7 @@ namespace Cognitivo.Reporting.Data {
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class SalesDS : global::System.Data.DataSet {
         
-        private SalesByDateDataTable tableSalesByDate;
+        private SalesInvoiceSummaryDataTable tableSalesInvoiceSummary;
         
         private SalesByItemDataTable tableSalesByItem;
         
@@ -74,8 +74,8 @@ namespace Cognitivo.Reporting.Data {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["SalesByDate"] != null)) {
-                    base.Tables.Add(new SalesByDateDataTable(ds.Tables["SalesByDate"]));
+                if ((ds.Tables["SalesInvoiceSummary"] != null)) {
+                    base.Tables.Add(new SalesInvoiceSummaryDataTable(ds.Tables["SalesInvoiceSummary"]));
                 }
                 if ((ds.Tables["SalesByItem"] != null)) {
                     base.Tables.Add(new SalesByItemDataTable(ds.Tables["SalesByItem"]));
@@ -129,9 +129,9 @@ namespace Cognitivo.Reporting.Data {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SalesByDateDataTable SalesByDate {
+        public SalesInvoiceSummaryDataTable SalesInvoiceSummary {
             get {
-                return this.tableSalesByDate;
+                return this.tableSalesInvoiceSummary;
             }
         }
         
@@ -302,8 +302,8 @@ namespace Cognitivo.Reporting.Data {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["SalesByDate"] != null)) {
-                    base.Tables.Add(new SalesByDateDataTable(ds.Tables["SalesByDate"]));
+                if ((ds.Tables["SalesInvoiceSummary"] != null)) {
+                    base.Tables.Add(new SalesInvoiceSummaryDataTable(ds.Tables["SalesInvoiceSummary"]));
                 }
                 if ((ds.Tables["SalesByItem"] != null)) {
                     base.Tables.Add(new SalesByItemDataTable(ds.Tables["SalesByItem"]));
@@ -368,10 +368,10 @@ namespace Cognitivo.Reporting.Data {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableSalesByDate = ((SalesByDateDataTable)(base.Tables["SalesByDate"]));
+            this.tableSalesInvoiceSummary = ((SalesInvoiceSummaryDataTable)(base.Tables["SalesInvoiceSummary"]));
             if ((initTable == true)) {
-                if ((this.tableSalesByDate != null)) {
-                    this.tableSalesByDate.InitVars();
+                if ((this.tableSalesInvoiceSummary != null)) {
+                    this.tableSalesInvoiceSummary.InitVars();
                 }
             }
             this.tableSalesByItem = ((SalesByItemDataTable)(base.Tables["SalesByItem"]));
@@ -444,8 +444,8 @@ namespace Cognitivo.Reporting.Data {
             this.Namespace = "http://tempuri.org/SalesDB.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableSalesByDate = new SalesByDateDataTable();
-            base.Tables.Add(this.tableSalesByDate);
+            this.tableSalesInvoiceSummary = new SalesInvoiceSummaryDataTable();
+            base.Tables.Add(this.tableSalesInvoiceSummary);
             this.tableSalesByItem = new SalesByItemDataTable();
             base.Tables.Add(this.tableSalesByItem);
             this.tableCostOfGoodsSold = new CostOfGoodsSoldDataTable();
@@ -470,7 +470,7 @@ namespace Cognitivo.Reporting.Data {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeSalesByDate() {
+        private bool ShouldSerializeSalesInvoiceSummary() {
             return false;
         }
         
@@ -590,7 +590,7 @@ namespace Cognitivo.Reporting.Data {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void SalesByDateRowChangeEventHandler(object sender, SalesByDateRowChangeEvent e);
+        public delegate void SalesInvoiceSummaryRowChangeEventHandler(object sender, SalesInvoiceSummaryRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void SalesByItemRowChangeEventHandler(object sender, SalesByItemRowChangeEvent e);
@@ -627,30 +627,44 @@ namespace Cognitivo.Reporting.Data {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SalesByDateDataTable : global::System.Data.TypedTableBase<SalesByDateRow> {
-            
-            private global::System.Data.DataColumn columnname;
-            
-            private global::System.Data.DataColumn columnnumber;
-            
-            private global::System.Data.DataColumn columnquantity;
-            
-            private global::System.Data.DataColumn columnid_branch;
-            
-            private global::System.Data.DataColumn columnTotal;
-            
-            private global::System.Data.DataColumn columnCost;
+        public partial class SalesInvoiceSummaryDataTable : global::System.Data.TypedTableBase<SalesInvoiceSummaryRow> {
             
             private global::System.Data.DataColumn columnMargin;
             
-            private global::System.Data.DataColumn columnDiscount;
+            private global::System.Data.DataColumn columnBranch;
             
-            private global::System.Data.DataColumn columntrans_date;
+            private global::System.Data.DataColumn columnStatus;
+            
+            private global::System.Data.DataColumn columnInvoiceDate;
+            
+            private global::System.Data.DataColumn columnCustomer;
+            
+            private global::System.Data.DataColumn columnInvoice;
+            
+            private global::System.Data.DataColumn columnQuantity;
+            
+            private global::System.Data.DataColumn columnSubTotalVAT;
+            
+            private global::System.Data.DataColumn columnSubTotalDiscountVAT;
+            
+            private global::System.Data.DataColumn columnSubTotalCostVAT;
+            
+            private global::System.Data.DataColumn columnVAT_SubTotal;
+            
+            private global::System.Data.DataColumn columnSubTotalCost;
+            
+            private global::System.Data.DataColumn columnSubTotal;
+            
+            private global::System.Data.DataColumn columnPaymentBalance;
+            
+            private global::System.Data.DataColumn columnMarkUp;
+            
+            private global::System.Data.DataColumn columnProfit;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateDataTable() {
-                this.TableName = "SalesByDate";
+            public SalesInvoiceSummaryDataTable() {
+                this.TableName = "SalesInvoiceSummary";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -658,7 +672,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal SalesByDateDataTable(global::System.Data.DataTable table) {
+            internal SalesInvoiceSummaryDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -675,57 +689,9 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected SalesByDateDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected SalesInvoiceSummaryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn nameColumn {
-                get {
-                    return this.columnname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn numberColumn {
-                get {
-                    return this.columnnumber;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn quantityColumn {
-                get {
-                    return this.columnquantity;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn id_branchColumn {
-                get {
-                    return this.columnid_branch;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TotalColumn {
-                get {
-                    return this.columnTotal;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn CostColumn {
-                get {
-                    return this.columnCost;
-                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -738,17 +704,121 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn DiscountColumn {
+            public global::System.Data.DataColumn BranchColumn {
                 get {
-                    return this.columnDiscount;
+                    return this.columnBranch;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn trans_dateColumn {
+            public global::System.Data.DataColumn StatusColumn {
                 get {
-                    return this.columntrans_date;
+                    return this.columnStatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn InvoiceDateColumn {
+                get {
+                    return this.columnInvoiceDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CustomerColumn {
+                get {
+                    return this.columnCustomer;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn InvoiceColumn {
+                get {
+                    return this.columnInvoice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn QuantityColumn {
+                get {
+                    return this.columnQuantity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SubTotalVATColumn {
+                get {
+                    return this.columnSubTotalVAT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SubTotalDiscountVATColumn {
+                get {
+                    return this.columnSubTotalDiscountVAT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SubTotalCostVATColumn {
+                get {
+                    return this.columnSubTotalCostVAT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VAT_SubTotalColumn {
+                get {
+                    return this.columnVAT_SubTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SubTotalCostColumn {
+                get {
+                    return this.columnSubTotalCost;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SubTotalColumn {
+                get {
+                    return this.columnSubTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PaymentBalanceColumn {
+                get {
+                    return this.columnPaymentBalance;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MarkUpColumn {
+                get {
+                    return this.columnMarkUp;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ProfitColumn {
+                get {
+                    return this.columnProfit;
                 }
             }
             
@@ -763,53 +833,76 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRow this[int index] {
+            public SalesInvoiceSummaryRow this[int index] {
                 get {
-                    return ((SalesByDateRow)(this.Rows[index]));
+                    return ((SalesInvoiceSummaryRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByDateRowChangeEventHandler SalesByDateRowChanging;
+            public event SalesInvoiceSummaryRowChangeEventHandler SalesInvoiceSummaryRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByDateRowChangeEventHandler SalesByDateRowChanged;
+            public event SalesInvoiceSummaryRowChangeEventHandler SalesInvoiceSummaryRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByDateRowChangeEventHandler SalesByDateRowDeleting;
+            public event SalesInvoiceSummaryRowChangeEventHandler SalesInvoiceSummaryRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SalesByDateRowChangeEventHandler SalesByDateRowDeleted;
+            public event SalesInvoiceSummaryRowChangeEventHandler SalesInvoiceSummaryRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddSalesByDateRow(SalesByDateRow row) {
+            public void AddSalesInvoiceSummaryRow(SalesInvoiceSummaryRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRow AddSalesByDateRow(string name, string number, decimal quantity, int id_branch, decimal Total, decimal Cost, decimal Margin, decimal Discount, string trans_date) {
-                SalesByDateRow rowSalesByDateRow = ((SalesByDateRow)(this.NewRow()));
+            public SalesInvoiceSummaryRow AddSalesInvoiceSummaryRow(
+                        decimal Margin, 
+                        string Branch, 
+                        int Status, 
+                        string InvoiceDate, 
+                        string Customer, 
+                        string Invoice, 
+                        decimal Quantity, 
+                        decimal SubTotalVAT, 
+                        decimal SubTotalDiscountVAT, 
+                        decimal SubTotalCostVAT, 
+                        decimal VAT_SubTotal, 
+                        decimal SubTotalCost, 
+                        decimal SubTotal, 
+                        decimal PaymentBalance, 
+                        decimal MarkUp, 
+                        decimal Profit) {
+                SalesInvoiceSummaryRow rowSalesInvoiceSummaryRow = ((SalesInvoiceSummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        name,
-                        number,
-                        quantity,
-                        id_branch,
-                        Total,
-                        Cost,
                         Margin,
-                        Discount,
-                        trans_date};
-                rowSalesByDateRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowSalesByDateRow);
-                return rowSalesByDateRow;
+                        Branch,
+                        Status,
+                        InvoiceDate,
+                        Customer,
+                        Invoice,
+                        Quantity,
+                        SubTotalVAT,
+                        SubTotalDiscountVAT,
+                        SubTotalCostVAT,
+                        VAT_SubTotal,
+                        SubTotalCost,
+                        SubTotal,
+                        PaymentBalance,
+                        MarkUp,
+                        Profit};
+                rowSalesInvoiceSummaryRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowSalesInvoiceSummaryRow);
+                return rowSalesInvoiceSummaryRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                SalesByDateDataTable cln = ((SalesByDateDataTable)(base.Clone()));
+                SalesInvoiceSummaryDataTable cln = ((SalesInvoiceSummaryDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -817,73 +910,95 @@ namespace Cognitivo.Reporting.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new SalesByDateDataTable();
+                return new SalesInvoiceSummaryDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnname = base.Columns["name"];
-                this.columnnumber = base.Columns["number"];
-                this.columnquantity = base.Columns["quantity"];
-                this.columnid_branch = base.Columns["id_branch"];
-                this.columnTotal = base.Columns["Total"];
-                this.columnCost = base.Columns["Cost"];
                 this.columnMargin = base.Columns["Margin"];
-                this.columnDiscount = base.Columns["Discount"];
-                this.columntrans_date = base.Columns["trans_date"];
+                this.columnBranch = base.Columns["Branch"];
+                this.columnStatus = base.Columns["Status"];
+                this.columnInvoiceDate = base.Columns["InvoiceDate"];
+                this.columnCustomer = base.Columns["Customer"];
+                this.columnInvoice = base.Columns["Invoice"];
+                this.columnQuantity = base.Columns["Quantity"];
+                this.columnSubTotalVAT = base.Columns["SubTotalVAT"];
+                this.columnSubTotalDiscountVAT = base.Columns["SubTotalDiscountVAT"];
+                this.columnSubTotalCostVAT = base.Columns["SubTotalCostVAT"];
+                this.columnVAT_SubTotal = base.Columns["VAT_SubTotal"];
+                this.columnSubTotalCost = base.Columns["SubTotalCost"];
+                this.columnSubTotal = base.Columns["SubTotal"];
+                this.columnPaymentBalance = base.Columns["PaymentBalance"];
+                this.columnMarkUp = base.Columns["MarkUp"];
+                this.columnProfit = base.Columns["Profit"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname);
-                this.columnnumber = new global::System.Data.DataColumn("number", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnnumber);
-                this.columnquantity = new global::System.Data.DataColumn("quantity", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnquantity);
-                this.columnid_branch = new global::System.Data.DataColumn("id_branch", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnid_branch);
-                this.columnTotal = new global::System.Data.DataColumn("Total", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTotal);
-                this.columnCost = new global::System.Data.DataColumn("Cost", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCost);
                 this.columnMargin = new global::System.Data.DataColumn("Margin", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMargin);
-                this.columnDiscount = new global::System.Data.DataColumn("Discount", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDiscount);
-                this.columntrans_date = new global::System.Data.DataColumn("trans_date", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntrans_date);
-                this.columnname.AllowDBNull = false;
-                this.columnid_branch.AllowDBNull = false;
-                this.columntrans_date.MaxLength = 38;
+                this.columnBranch = new global::System.Data.DataColumn("Branch", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBranch);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
+                this.columnInvoiceDate = new global::System.Data.DataColumn("InvoiceDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnInvoiceDate);
+                this.columnCustomer = new global::System.Data.DataColumn("Customer", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCustomer);
+                this.columnInvoice = new global::System.Data.DataColumn("Invoice", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnInvoice);
+                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQuantity);
+                this.columnSubTotalVAT = new global::System.Data.DataColumn("SubTotalVAT", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubTotalVAT);
+                this.columnSubTotalDiscountVAT = new global::System.Data.DataColumn("SubTotalDiscountVAT", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubTotalDiscountVAT);
+                this.columnSubTotalCostVAT = new global::System.Data.DataColumn("SubTotalCostVAT", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubTotalCostVAT);
+                this.columnVAT_SubTotal = new global::System.Data.DataColumn("VAT_SubTotal", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVAT_SubTotal);
+                this.columnSubTotalCost = new global::System.Data.DataColumn("SubTotalCost", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubTotalCost);
+                this.columnSubTotal = new global::System.Data.DataColumn("SubTotal", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSubTotal);
+                this.columnPaymentBalance = new global::System.Data.DataColumn("PaymentBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPaymentBalance);
+                this.columnMarkUp = new global::System.Data.DataColumn("MarkUp", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMarkUp);
+                this.columnProfit = new global::System.Data.DataColumn("Profit", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProfit);
+                this.columnBranch.AllowDBNull = false;
+                this.columnStatus.AllowDBNull = false;
+                this.columnInvoiceDate.MaxLength = 38;
+                this.columnCustomer.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRow NewSalesByDateRow() {
-                return ((SalesByDateRow)(this.NewRow()));
+            public SalesInvoiceSummaryRow NewSalesInvoiceSummaryRow() {
+                return ((SalesInvoiceSummaryRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new SalesByDateRow(builder);
+                return new SalesInvoiceSummaryRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(SalesByDateRow);
+                return typeof(SalesInvoiceSummaryRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.SalesByDateRowChanged != null)) {
-                    this.SalesByDateRowChanged(this, new SalesByDateRowChangeEvent(((SalesByDateRow)(e.Row)), e.Action));
+                if ((this.SalesInvoiceSummaryRowChanged != null)) {
+                    this.SalesInvoiceSummaryRowChanged(this, new SalesInvoiceSummaryRowChangeEvent(((SalesInvoiceSummaryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -891,8 +1006,8 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.SalesByDateRowChanging != null)) {
-                    this.SalesByDateRowChanging(this, new SalesByDateRowChangeEvent(((SalesByDateRow)(e.Row)), e.Action));
+                if ((this.SalesInvoiceSummaryRowChanging != null)) {
+                    this.SalesInvoiceSummaryRowChanging(this, new SalesInvoiceSummaryRowChangeEvent(((SalesInvoiceSummaryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -900,8 +1015,8 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.SalesByDateRowDeleted != null)) {
-                    this.SalesByDateRowDeleted(this, new SalesByDateRowChangeEvent(((SalesByDateRow)(e.Row)), e.Action));
+                if ((this.SalesInvoiceSummaryRowDeleted != null)) {
+                    this.SalesInvoiceSummaryRowDeleted(this, new SalesInvoiceSummaryRowChangeEvent(((SalesInvoiceSummaryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -909,14 +1024,14 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.SalesByDateRowDeleting != null)) {
-                    this.SalesByDateRowDeleting(this, new SalesByDateRowChangeEvent(((SalesByDateRow)(e.Row)), e.Action));
+                if ((this.SalesInvoiceSummaryRowDeleting != null)) {
+                    this.SalesInvoiceSummaryRowDeleting(this, new SalesInvoiceSummaryRowChangeEvent(((SalesInvoiceSummaryRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveSalesByDateRow(SalesByDateRow row) {
+            public void RemoveSalesInvoiceSummaryRow(SalesInvoiceSummaryRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -943,7 +1058,7 @@ namespace Cognitivo.Reporting.Data {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "SalesByDateDataTable";
+                attribute2.FixedValue = "SalesInvoiceSummaryDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -4445,101 +4560,15 @@ namespace Cognitivo.Reporting.Data {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class SalesByDateRow : global::System.Data.DataRow {
+        public partial class SalesInvoiceSummaryRow : global::System.Data.DataRow {
             
-            private SalesByDateDataTable tableSalesByDate;
+            private SalesInvoiceSummaryDataTable tableSalesInvoiceSummary;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal SalesByDateRow(global::System.Data.DataRowBuilder rb) : 
+            internal SalesInvoiceSummaryRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableSalesByDate = ((SalesByDateDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string name {
-                get {
-                    return ((string)(this[this.tableSalesByDate.nameColumn]));
-                }
-                set {
-                    this[this.tableSalesByDate.nameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string number {
-                get {
-                    try {
-                        return ((string)(this[this.tableSalesByDate.numberColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'number\' in table \'SalesByDate\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByDate.numberColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal quantity {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByDate.quantityColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'quantity\' in table \'SalesByDate\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByDate.quantityColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int id_branch {
-                get {
-                    return ((int)(this[this.tableSalesByDate.id_branchColumn]));
-                }
-                set {
-                    this[this.tableSalesByDate.id_branchColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Total {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByDate.TotalColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Total\' in table \'SalesByDate\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByDate.TotalColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Cost {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesByDate.CostColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Cost\' in table \'SalesByDate\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesByDate.CostColumn] = value;
-                }
+                this.tableSalesInvoiceSummary = ((SalesInvoiceSummaryDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4547,131 +4576,397 @@ namespace Cognitivo.Reporting.Data {
             public decimal Margin {
                 get {
                     try {
-                        return ((decimal)(this[this.tableSalesByDate.MarginColumn]));
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.MarginColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Margin\' in table \'SalesByDate\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Margin\' in table \'SalesInvoiceSummary\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalesByDate.MarginColumn] = value;
+                    this[this.tableSalesInvoiceSummary.MarginColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Discount {
+            public string Branch {
+                get {
+                    return ((string)(this[this.tableSalesInvoiceSummary.BranchColumn]));
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.BranchColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Status {
+                get {
+                    return ((int)(this[this.tableSalesInvoiceSummary.StatusColumn]));
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.StatusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string InvoiceDate {
                 get {
                     try {
-                        return ((decimal)(this[this.tableSalesByDate.DiscountColumn]));
+                        return ((string)(this[this.tableSalesInvoiceSummary.InvoiceDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Discount\' in table \'SalesByDate\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'InvoiceDate\' in table \'SalesInvoiceSummary\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalesByDate.DiscountColumn] = value;
+                    this[this.tableSalesInvoiceSummary.InvoiceDateColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string trans_date {
+            public string Customer {
+                get {
+                    return ((string)(this[this.tableSalesInvoiceSummary.CustomerColumn]));
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.CustomerColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Invoice {
                 get {
                     try {
-                        return ((string)(this[this.tableSalesByDate.trans_dateColumn]));
+                        return ((string)(this[this.tableSalesInvoiceSummary.InvoiceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'trans_date\' in table \'SalesByDate\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Invoice\' in table \'SalesInvoiceSummary\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSalesByDate.trans_dateColumn] = value;
+                    this[this.tableSalesInvoiceSummary.InvoiceColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsnumberNull() {
-                return this.IsNull(this.tableSalesByDate.numberColumn);
+            public decimal Quantity {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.QuantityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Quantity\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.QuantityColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetnumberNull() {
-                this[this.tableSalesByDate.numberColumn] = global::System.Convert.DBNull;
+            public decimal SubTotalVAT {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.SubTotalVATColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SubTotalVAT\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.SubTotalVATColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsquantityNull() {
-                return this.IsNull(this.tableSalesByDate.quantityColumn);
+            public decimal SubTotalDiscountVAT {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.SubTotalDiscountVATColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SubTotalDiscountVAT\' in table \'SalesInvoiceSummary\' is DBNu" +
+                                "ll.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.SubTotalDiscountVATColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetquantityNull() {
-                this[this.tableSalesByDate.quantityColumn] = global::System.Convert.DBNull;
+            public decimal SubTotalCostVAT {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.SubTotalCostVATColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SubTotalCostVAT\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.SubTotalCostVATColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTotalNull() {
-                return this.IsNull(this.tableSalesByDate.TotalColumn);
+            public decimal VAT_SubTotal {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.VAT_SubTotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VAT_SubTotal\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.VAT_SubTotalColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTotalNull() {
-                this[this.tableSalesByDate.TotalColumn] = global::System.Convert.DBNull;
+            public decimal SubTotalCost {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.SubTotalCostColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SubTotalCost\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.SubTotalCostColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCostNull() {
-                return this.IsNull(this.tableSalesByDate.CostColumn);
+            public decimal SubTotal {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.SubTotalColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SubTotal\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.SubTotalColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCostNull() {
-                this[this.tableSalesByDate.CostColumn] = global::System.Convert.DBNull;
+            public decimal PaymentBalance {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.PaymentBalanceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PaymentBalance\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.PaymentBalanceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal MarkUp {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.MarkUpColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MarkUp\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.MarkUpColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Profit {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSalesInvoiceSummary.ProfitColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Profit\' in table \'SalesInvoiceSummary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSalesInvoiceSummary.ProfitColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsMarginNull() {
-                return this.IsNull(this.tableSalesByDate.MarginColumn);
+                return this.IsNull(this.tableSalesInvoiceSummary.MarginColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetMarginNull() {
-                this[this.tableSalesByDate.MarginColumn] = global::System.Convert.DBNull;
+                this[this.tableSalesInvoiceSummary.MarginColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDiscountNull() {
-                return this.IsNull(this.tableSalesByDate.DiscountColumn);
+            public bool IsInvoiceDateNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.InvoiceDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDiscountNull() {
-                this[this.tableSalesByDate.DiscountColumn] = global::System.Convert.DBNull;
+            public void SetInvoiceDateNull() {
+                this[this.tableSalesInvoiceSummary.InvoiceDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Istrans_dateNull() {
-                return this.IsNull(this.tableSalesByDate.trans_dateColumn);
+            public bool IsInvoiceNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.InvoiceColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Settrans_dateNull() {
-                this[this.tableSalesByDate.trans_dateColumn] = global::System.Convert.DBNull;
+            public void SetInvoiceNull() {
+                this[this.tableSalesInvoiceSummary.InvoiceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsQuantityNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.QuantityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetQuantityNull() {
+                this[this.tableSalesInvoiceSummary.QuantityColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSubTotalVATNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.SubTotalVATColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSubTotalVATNull() {
+                this[this.tableSalesInvoiceSummary.SubTotalVATColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSubTotalDiscountVATNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.SubTotalDiscountVATColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSubTotalDiscountVATNull() {
+                this[this.tableSalesInvoiceSummary.SubTotalDiscountVATColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSubTotalCostVATNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.SubTotalCostVATColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSubTotalCostVATNull() {
+                this[this.tableSalesInvoiceSummary.SubTotalCostVATColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVAT_SubTotalNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.VAT_SubTotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVAT_SubTotalNull() {
+                this[this.tableSalesInvoiceSummary.VAT_SubTotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSubTotalCostNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.SubTotalCostColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSubTotalCostNull() {
+                this[this.tableSalesInvoiceSummary.SubTotalCostColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSubTotalNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.SubTotalColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSubTotalNull() {
+                this[this.tableSalesInvoiceSummary.SubTotalColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPaymentBalanceNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.PaymentBalanceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPaymentBalanceNull() {
+                this[this.tableSalesInvoiceSummary.PaymentBalanceColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMarkUpNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.MarkUpColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMarkUpNull() {
+                this[this.tableSalesInvoiceSummary.MarkUpColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsProfitNull() {
+                return this.IsNull(this.tableSalesInvoiceSummary.ProfitColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetProfitNull() {
+                this[this.tableSalesInvoiceSummary.ProfitColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -6605,22 +6900,22 @@ namespace Cognitivo.Reporting.Data {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class SalesByDateRowChangeEvent : global::System.EventArgs {
+        public class SalesInvoiceSummaryRowChangeEvent : global::System.EventArgs {
             
-            private SalesByDateRow eventRow;
+            private SalesInvoiceSummaryRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRowChangeEvent(SalesByDateRow row, global::System.Data.DataRowAction action) {
+            public SalesInvoiceSummaryRowChangeEvent(SalesInvoiceSummaryRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesByDateRow Row {
+            public SalesInvoiceSummaryRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -6988,7 +7283,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class SalesByDateTableAdapter : global::System.ComponentModel.Component {
+    public partial class SalesInvoiceSummaryTableAdapter : global::System.ComponentModel.Component {
         
         private global::MySql.Data.MySqlClient.MySqlDataAdapter _adapter;
         
@@ -7002,7 +7297,7 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public SalesByDateTableAdapter() {
+        public SalesInvoiceSummaryTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -7099,16 +7394,23 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             this._adapter = new global::MySql.Data.MySqlClient.MySqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "SalesByDate";
-            tableMapping.ColumnMappings.Add("name", "name");
-            tableMapping.ColumnMappings.Add("number", "number");
-            tableMapping.ColumnMappings.Add("quantity", "quantity");
-            tableMapping.ColumnMappings.Add("id_branch", "id_branch");
-            tableMapping.ColumnMappings.Add("Total", "Total");
-            tableMapping.ColumnMappings.Add("Cost", "Cost");
+            tableMapping.DataSetTable = "SalesInvoiceSummary";
             tableMapping.ColumnMappings.Add("Margin", "Margin");
-            tableMapping.ColumnMappings.Add("Discount", "Discount");
-            tableMapping.ColumnMappings.Add("trans_date", "trans_date");
+            tableMapping.ColumnMappings.Add("Branch", "Branch");
+            tableMapping.ColumnMappings.Add("Status", "Status");
+            tableMapping.ColumnMappings.Add("InvoiceDate", "InvoiceDate");
+            tableMapping.ColumnMappings.Add("Customer", "Customer");
+            tableMapping.ColumnMappings.Add("Invoice", "Invoice");
+            tableMapping.ColumnMappings.Add("Quantity", "Quantity");
+            tableMapping.ColumnMappings.Add("SubTotalVAT", "SubTotalVAT");
+            tableMapping.ColumnMappings.Add("SubTotalDiscountVAT", "SubTotalDiscountVAT");
+            tableMapping.ColumnMappings.Add("SubTotalCostVAT", "SubTotalCostVAT");
+            tableMapping.ColumnMappings.Add("VAT_SubTotal", "VAT_SubTotal");
+            tableMapping.ColumnMappings.Add("SubTotalCost", "SubTotalCost");
+            tableMapping.ColumnMappings.Add("SubTotal", "SubTotal");
+            tableMapping.ColumnMappings.Add("PaymentBalance", "PaymentBalance");
+            tableMapping.ColumnMappings.Add("MarkUp", "MarkUp");
+            tableMapping.ColumnMappings.Add("Profit", "Profit");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -7125,24 +7427,35 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT DATE_FORMAT(s.trans_date,'%d %b %y') as trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, 
-    round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
-    round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
-    ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,
-    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
-
-
-FROM  sales_invoice s INNER JOIN
-         contacts contact ON s.id_contact = contact.id_contact INNER JOIN
-         sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice LEFT OUTER JOIN
-         items i ON i.id_item = sd.id_item LEFT OUTER JOIN
-             (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef
-            FROM  app_vat_group LEFT OUTER JOIN
-                     app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN
-                     app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
-            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group
-WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) AND s.id_branch = @BranchID
-GROUP BY s.id_sales_invoice, s.trans_date";
+            this._commandCollection[0].CommandText = "SELECT \n\tbranch.name as Branch,\n    s.status as Status,\n\tDATE_FORMAT(s.trans_date" +
+                ",\'%d %b %y\') as InvoiceDate, \n    contact.name as Customer, \n    s.number as Inv" +
+                "oice, \n\tsum(sd.quantity) AS Quantity, \n    \n    round(sum(sd.quantity * sd.unit_" +
+                "price * vatco.coef),4) as SubTotalVAT,\n\tround(sum(sd.quantity * sd.discount * va" +
+                "tco.coef),4) as SubTotalDiscountVAT,\n    round(sum(sd.quantity * sd.unit_cost * " +
+                "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_cost * vatco" +
+                ".vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as S" +
+                "ubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\tround((su" +
+                "m(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum(s" +
+                "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
+                "o.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum(s" +
+                "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
+                "o.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(sd" +
+                ".quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco" +
+                ".coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contacts as con" +
+                "tact ON s.id_contact = contact.id_contact \n         INNER JOIN \n         app_bra" +
+                "nch as branch on s.id_branch = branch.id_branch\n         inner join \n         sa" +
+                "les_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n         LEFT" +
+                " OUTER JOIN \n         items i ON i.id_item = sd.id_item \n         left outer joi" +
+                "n\n         payment_schedual as schedual on s.id_sales_invoice = schedual.id_sale" +
+                "s_invoice\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_gr" +
+                "oup, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n     " +
+                "       FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_d" +
+                "etails ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT O" +
+                "UTER JOIN \n                     app_vat ON app_vat_group_details.id_vat = app_va" +
+                "t.id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_" +
+                "group = sd.id_vat_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <=" +
+                " @EndDate) AND s.id_branch = @BranchID \ngroup by s.id_sales_invoice\norder by s.t" +
+                "rans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -7167,21 +7480,34 @@ GROUP BY s.id_sales_invoice, s.trans_date";
             this._commandCollection[0].Parameters.Add(param);
             this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT DATE_FORMAT(s.trans_date,'%d %b %y') as trans_date, s.id_branch, contact.name, s.number, SUM(sd.quantity) AS quantity, 
-    round(sum(sd.quantity * sd.unit_price * vatco.coef),4) as Total,
-    round(sum(sd.quantity * sd.unit_cost * vatco.coef),4) as Cost,
-    ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,
-    round(sum(sd.quantity * sd.discount * vatco.coef),4) as Discount
-FROM  sales_invoice s INNER JOIN
-         contacts contact ON s.id_contact = contact.id_contact INNER JOIN
-         sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice LEFT OUTER JOIN
-         items i ON i.id_item = sd.id_item LEFT OUTER JOIN
-             (SELECT app_vat_group.id_vat_group, SUM(app_vat.coefficient) + 1 AS coef
-            FROM  app_vat_group LEFT OUTER JOIN
-                     app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN
-                     app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
-            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group
-WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) GROUP BY s.id_sales_invoice, s.trans_date";
+            this._commandCollection[1].CommandText = "SELECT \n\tbranch.name as Branch,\n    s.status as Status,\n\tDATE_FORMAT(s.trans_date" +
+                ",\'%d %b %y\') as InvoiceDate, \n    contact.name as Customer, \n    s.number as Inv" +
+                "oice, \n\tsum(sd.quantity) AS Quantity, \n    \n    round(sum(sd.quantity * sd.unit_" +
+                "price * vatco.coef),4) as SubTotalVAT,\n\tround(sum(sd.quantity * sd.discount * va" +
+                "tco.coef),4) as SubTotalDiscountVAT,\n    round(sum(sd.quantity * sd.unit_cost * " +
+                "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_cost * vatco" +
+                ".vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as S" +
+                "ubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\tround((su" +
+                "m(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum(s" +
+                "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
+                "o.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum(s" +
+                "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
+                "o.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(sd" +
+                ".quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco" +
+                ".coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contacts as con" +
+                "tact ON s.id_contact = contact.id_contact \n         INNER JOIN \n         app_bra" +
+                "nch as branch on s.id_branch = branch.id_branch\n         inner join \n         sa" +
+                "les_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n         LEFT" +
+                " OUTER JOIN \n         items i ON i.id_item = sd.id_item \n         left outer joi" +
+                "n\n         payment_schedual as schedual on s.id_sales_invoice = schedual.id_sale" +
+                "s_invoice\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_gr" +
+                "oup, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n     " +
+                "       FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_d" +
+                "etails ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT O" +
+                "UTER JOIN \n                     app_vat ON app_vat_group_details.id_vat = app_va" +
+                "t.id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_" +
+                "group = sd.id_vat_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <=" +
+                " @EndDate) \ngroup by s.id_sales_invoice\norder by s.trans_date";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -7203,7 +7529,7 @@ WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndD
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillByBranch(SalesDS.SalesByDateDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
+        public virtual int FillByBranch(SalesDS.SalesInvoiceSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
@@ -7219,12 +7545,12 @@ WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndD
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual SalesDS.SalesByDateDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
+        public virtual SalesDS.SalesInvoiceSummaryDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
-            SalesDS.SalesByDateDataTable dataTable = new SalesDS.SalesByDateDataTable();
+            SalesDS.SalesInvoiceSummaryDataTable dataTable = new SalesDS.SalesInvoiceSummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -7233,20 +7559,10 @@ WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndD
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByGeneral(SalesDS.SalesByDateDataTable dataTable, global::System.Nullable<global::System.DateTime> StartDate, global::System.Nullable<global::System.DateTime> EndDate) {
+        public virtual int FillBy(SalesDS.SalesInvoiceSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            if ((StartDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            if ((EndDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -7258,21 +7574,11 @@ WHERE (s.status = 2) AND (s.trans_date >= @StartDate) AND (s.trans_date <= @EndD
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual SalesDS.SalesByDateDataTable GetDataByGeneral(global::System.Nullable<global::System.DateTime> StartDate, global::System.Nullable<global::System.DateTime> EndDate) {
+        public virtual SalesDS.SalesInvoiceSummaryDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            if ((StartDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            if ((EndDate.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            SalesDS.SalesByDateDataTable dataTable = new SalesDS.SalesByDateDataTable();
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            SalesDS.SalesInvoiceSummaryDataTable dataTable = new SalesDS.SalesInvoiceSummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }

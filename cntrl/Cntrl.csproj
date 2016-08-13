@@ -460,6 +460,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ReportPanel.xaml.cs">
+      <DependentUpon>ReportPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchableTextbox.xaml.cs">
       <DependentUpon>SearchableTextbox.xaml</DependentUpon>
     </Compile>
@@ -948,6 +951,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Curd\ProjectTag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

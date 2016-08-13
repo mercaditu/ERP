@@ -18,8 +18,8 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\abhi\Desktop\ERP602\</PublishUrl>
+    <TargetFrameworkProfile/>
+    <PublishUrl>C:\Users\abhi\Desktop\ERP604\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -29,14 +29,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>http://www.cogentpotential.com/COGENT/Developer/publish.htm/</UpdateUrl>
+    <UpdateUrl>http://10.50.0.3/actualizacion/publish.htm/</UpdateUrl>
     <TargetCulture>en-US</TargetCulture>
     <ProductName>Cognitivo ERP</ProductName>
     <PublisherName>Cognitivo Paraguay</PublisherName>
     <SuiteName>Cognitivo</SuiteName>
     <MinimumRequiredVersion>2.0.0.106</MinimumRequiredVersion>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>603</ApplicationRevision>
+    <ApplicationRevision>606</ApplicationRevision>
     <ApplicationVersion>2.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -598,6 +598,9 @@
     </Compile>
     <Compile Include="Reporting\Views\ProjectExecution.xaml.cs">
       <DependentUpon>ProjectExecution.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\SalesViewer.xaml.cs">
+      <DependentUpon>SalesViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\StockFlow.xaml.cs">
       <DependentUpon>StockFlow.xaml</DependentUpon>
@@ -1736,6 +1739,10 @@
     <Page Include="Reporting\Views\ProjectExecution.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\SalesViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\StockFlow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -68,29 +68,17 @@ namespace cntrl
 
         public DateTime StartDate
         {
-            get 
-            {
-                _StartDate = Convert.ToDateTime(_StartDate.Date.ToString() + " 00:00:00");
-                return _StartDate; 
-            }
-            set 
-            { 
-                _StartDate = value; 
-            }
+            get { return _StartDate; }
+            set { _StartDate = value; }
         }
-        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
+        private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
         public DateTime EndDate
         {
-            get 
-            {
-                _EndDate = Convert.ToDateTime(_EndDate.Date.ToString() + " 23:59:59");
-                return _EndDate; 
-            }
+            get { return _EndDate;  }
             set { _EndDate = value; }
         }
-        private DateTime _EndDate = DateTime.Now;
-
+        private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
         public entity.app_branch Branch
         { 
@@ -161,6 +149,25 @@ namespace cntrl
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Data_Update(null, null);
+        }
+    }
+
+    public static class AbsoluteDate
+    {
+        /// <summary>
+        /// Gets the 12:00:00 instance of a DateTime
+        /// </summary>
+        public static DateTime Start(this DateTime dateTime)
+        {
+            return dateTime.Date;
+        }
+
+        /// <summary>
+        /// Gets the 11:59:59 instance of a DateTime
+        /// </summary>
+        public static DateTime End(this DateTime dateTime)
+        {
+            return Start(dateTime).AddDays(1).AddTicks(-1);
         }
     }
 }

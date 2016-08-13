@@ -9,7 +9,7 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="Sales By Brand">
 
-    <Grid Background="Gainsboro">
+    <Grid Background="{DynamicResource {x:Static SystemColors.AppWorkspaceBrushKey}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
@@ -19,6 +19,7 @@
             ReportTitle="{Binding ElementName=_SalesByBrand, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
             ReportDescription="Get List of Sales per Brand. Helps calculate which brand offer the best returns."
             ShowBranch="True"
+            Update="Fill"
             Grid.Column="0"/>
         <WindowsFormsHost Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <rv:ReportViewer x:Name="reportViewer"/>

@@ -24,13 +24,73 @@ namespace cntrl
             set { SetValue(ReportTitleProperty, value); }
         }
 
-        public string ReportDescription { get; set; }
+        public static DependencyProperty ReportDescriptionProperty = DependencyProperty.Register("ReportDescription", typeof(string), typeof(ReportPanel));
+        public string ReportDescription
+        {
+            get { return (string)GetValue(ReportDescriptionProperty); }
+            set { SetValue(ReportDescriptionProperty, value); }
+        }
 
-        public bool ShowBranch { get; set; }
-        public bool ShowTag { get; set; }
-        public bool ShowProduct { get; set; }
-        public bool ShowSupplier { get; set; }
-        public bool ShowCustomer { get; set; }
+        public static DependencyProperty ShowBranchProperty = DependencyProperty.Register("ShowBranch", typeof(bool), typeof(ReportPanel));
+        public bool ShowBranch
+        {
+            get { return (bool)GetValue(ShowBranchProperty); }
+            set { SetValue(ShowBranchProperty, value); }
+        }
+
+        public static DependencyProperty ShowTagProperty = DependencyProperty.Register("ShowTag", typeof(bool), typeof(ReportPanel));
+        public bool ShowTag
+        {
+            get { return (bool)GetValue(ShowTagProperty); }
+            set { SetValue(ShowTagProperty, value); }
+        }
+
+        public static DependencyProperty ShowProductProperty = DependencyProperty.Register("ShowProduct", typeof(bool), typeof(ReportPanel));
+        public bool ShowProduct
+        {
+            get { return (bool)GetValue(ShowProductProperty); }
+            set { SetValue(ShowProductProperty, value); }
+        }
+
+        public static DependencyProperty ShowSupplierProperty = DependencyProperty.Register("ShowSupplier", typeof(bool), typeof(ReportPanel));
+        public bool ShowSupplier
+        {
+            get { return (bool)GetValue(ShowSupplierProperty); }
+            set { SetValue(ShowSupplierProperty, value); }
+        }
+
+        public static DependencyProperty ShowCustomerProperty = DependencyProperty.Register("ShowCustomer", typeof(bool), typeof(ReportPanel));
+        public bool ShowCustomer
+        {
+            get { return (bool)GetValue(ShowCustomerProperty); }
+            set { SetValue(ShowCustomerProperty, value); }
+        }
+
+        public DateTime StartDate
+        {
+            get 
+            {
+                _StartDate = Convert.ToDateTime(_StartDate.Date.ToString() + " 00:00:00");
+                return _StartDate; 
+            }
+            set 
+            { 
+                _StartDate = value; 
+            }
+        }
+        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
+
+        public DateTime EndDate
+        {
+            get 
+            {
+                _EndDate = Convert.ToDateTime(_EndDate.Date.ToString() + " 23:59:59");
+                return _EndDate; 
+            }
+            set { _EndDate = value; }
+        }
+        private DateTime _EndDate = DateTime.Now;
+
 
         public entity.app_branch Branch
         { 
@@ -87,23 +147,20 @@ namespace cntrl
 
         private void cbxBranch_Checked(object sender, RoutedEventArgs e)
         {
-            cbxBranch.DataContext = entity.CurrentSession.Get_Branch();
+            cbBranch.ItemsSource = entity.CurrentSession.Get_Branch();
         }
 
         private void cbxTag_Checked(object sender, RoutedEventArgs e)
         {
             using (entity.db db = new entity.db())
             {
-                cbxTag.DataContext = db.item_tag.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_active);
+                cbTag.ItemsSource = db.item_tag.Where(x => x.id_company == entity.CurrentSession.Id_Company && x.is_active);
             }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (true)
-            {
-                
-            }
+            Data_Update(null, null);
         }
     }
 }

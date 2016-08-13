@@ -22,26 +22,13 @@ namespace Cognitivo.Reporting.Views
     /// </summary>
     public partial class SalesByBrand : Page
     {
-        public DateTime StartDate 
-        {
-            get { return _StartDate; }
-            set { _StartDate = value; }
-        }
-        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
-        public DateTime EndDate 
-        {
-            get { return _EndDate; }
-            set { _EndDate = value; }
-        }
-        private DateTime _EndDate = DateTime.Now.AddDays(+1);
-
         public SalesByBrand()
         {
             InitializeComponent();
             Fill(null, null);
         }
 
-        public void Fill(object sender, EventArgs e)
+        public void Fill(object sender, RoutedEventArgs e)
         {
             if (ReportPanel.Branch != null)
             {
@@ -56,7 +43,7 @@ namespace Cognitivo.Reporting.Views
 
                 //fill data
                 SalesByBrandTableAdapter.ClearBeforeFill = true;
-                DataTable dt = SalesByBrandTableAdapter.GetData(StartDate, EndDate, ReportPanel.Branch.id_branch);
+                DataTable dt = SalesByBrandTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
 
                 reportDataSource1.Name = "SalesByBrand"; //Name of the report dataset in our .RDLC file
                 reportDataSource1.Value = dt;

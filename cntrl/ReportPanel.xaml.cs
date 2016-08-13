@@ -40,11 +40,11 @@ namespace cntrl
             }
         }
 
-        public int TagID
+        public entity.item_tag ItemTag
         {
             get
             {
-                return (cbTag.SelectedItem as entity.item_tag).id_tag;
+                return (cbTag.SelectedItem as entity.item_tag);
             }
         }
 
@@ -81,6 +81,7 @@ namespace cntrl
 
         public ReportPanel()
         {
+            ShowBranch = false;
             InitializeComponent();
         }
 

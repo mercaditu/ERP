@@ -43,9 +43,7 @@ namespace Cognitivo.Reporting.Views
 
         public void Fill(object sender, EventArgs e)
         {
-            app_branch app_branch = cbxBranch.SelectedItem as app_branch;
-
-            if (app_branch != null)
+            if (ReportPanel.Branch != null)
             {
                 this.reportViewer.Reset();
 
@@ -58,7 +56,7 @@ namespace Cognitivo.Reporting.Views
 
                 //fill data
                 SalesByBrandTableAdapter.ClearBeforeFill = true;
-                DataTable dt = SalesByBrandTableAdapter.GetData(StartDate, EndDate, app_branch.id_branch);
+                DataTable dt = SalesByBrandTableAdapter.GetData(StartDate, EndDate, ReportPanel.Branch.id_branch);
 
                 reportDataSource1.Name = "SalesByBrand"; //Name of the report dataset in our .RDLC file
                 reportDataSource1.Value = dt;

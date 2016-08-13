@@ -32,11 +32,11 @@ namespace cntrl
         public bool ShowSupplier { get; set; }
         public bool ShowCustomer { get; set; }
 
-        public int BranchID 
+        public entity.app_branch Branch
         { 
             get
             {
-                return (Branch.SelectedItem as entity.app_branch).id_branch;
+                return (cbBranch.SelectedItem as entity.app_branch);
             }
         }
 
@@ -44,7 +44,7 @@ namespace cntrl
         {
             get
             {
-                return (Tag.SelectedItem as entity.item_tag).id_tag;
+                return (cbTag.SelectedItem as entity.item_tag).id_tag;
             }
         }
 
@@ -52,7 +52,7 @@ namespace cntrl
         {
             get
             {
-                return (Tag.SelectedItem as entity.item_tag).id_tag;
+                return sbxItem.ItemID;
             }
         }
 
@@ -60,7 +60,7 @@ namespace cntrl
         {
             get
             {
-                return (Tag.SelectedItem as entity.item_tag).id_tag;
+                return sbxSupplier.ContactID;
             }
         }
 
@@ -68,7 +68,7 @@ namespace cntrl
         {
             get
             {
-                return (Tag.SelectedItem as entity.item_tag).id_tag;
+                return sbxCustomer.ContactID;
             }
         }
 

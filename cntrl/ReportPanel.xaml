@@ -30,12 +30,12 @@
 
         <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=_ReportPanel, Path=ShowBranch, Converter={StaticResource Bool2Visibility}}">
             <CheckBox Content="Branch" x:Name="cbxBranch" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxBranch_Checked"/>
-            <ComboBox x:Name="Branch" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
+            <ComboBox x:Name="cbBranch" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                       Visibility="{Binding ElementName=cbxBranch, Path=IsChecked, Converter={StaticResource Bool2Visibility}}" Margin="4" Width="128"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=_ReportPanel, Path=ShowTag, Converter={StaticResource Bool2Visibility}}">
             <CheckBox Content="Tag" x:Name="cbxTag" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxTag_Checked"/>
-            <ComboBox x:Name="Tag" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
+            <ComboBox x:Name="cbTag" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                       Visibility="{Binding ElementName=cbxTag, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       Margin="4" Width="128"/>
         </StackPanel>

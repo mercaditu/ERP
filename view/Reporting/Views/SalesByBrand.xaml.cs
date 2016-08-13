@@ -38,13 +38,6 @@ namespace Cognitivo.Reporting.Views
         public SalesByBrand()
         {
             InitializeComponent();
-
-            using (db db = new db())
-            {
-                db.app_branch.Where(x => x.id_company == CurrentSession.Id_Company && x.is_active).OrderBy(y => y.name).ToList();
-                cbxBranch.ItemsSource = db.app_branch.Local;
-            }
-
             Fill(null, null);
         }
 

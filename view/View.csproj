@@ -18,7 +18,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
-    <TargetFrameworkProfile/>
+    <TargetFrameworkProfile />
     <PublishUrl>C:\Users\abhi\Desktop\ERP604\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -598,9 +598,6 @@
     </Compile>
     <Compile Include="Reporting\Views\ProjectExecution.xaml.cs">
       <DependentUpon>ProjectExecution.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Reporting\Views\SalesViewer.xaml.cs">
-      <DependentUpon>SalesViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\StockFlow.xaml.cs">
       <DependentUpon>StockFlow.xaml</DependentUpon>
@@ -1739,10 +1736,6 @@
     <Page Include="Reporting\Views\ProjectExecution.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\SalesViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Reporting\Views\StockFlow.xaml">
       <Generator>MSBuild:Compile</Generator>

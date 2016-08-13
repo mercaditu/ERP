@@ -4,29 +4,24 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
+      xmlns:Cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="Sales By Brand">
 
     <Grid Background="Gainsboro">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-            <StackPanel>
-                <Label Content="StartDate" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding ElementName=_SalesByBrand, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource input_datepicker}"/>
-            </StackPanel>
-            <StackPanel>
-                <Label Content="EndDate" Style="{StaticResource input_label}"/>
-                <DatePicker SelectedDate="{Binding ElementName=_SalesByBrand, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource input_datepicker}"/>
-            </StackPanel>
-            <StackPanel>
-                <Label Content="Branch" Style="{StaticResource input_label}"/>
-                <ComboBox x:Name="cbxBranch" SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_branch" DisplayMemberPath="name" Style="{StaticResource input_combobox}" Width="128"/>
-            </StackPanel>
-            <Button Content="Filter" VerticalAlignment="Center" Click="Fill"/>
-        </StackPanel>
-        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,58,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Cntrl:ReportPanel 
+            x:Name="ReportPanel"
+            ReportTitle="{Binding ElementName=_SalesByBrand, Path=Title, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
+            ReportDescription="Get List of Sales per Brand. Helps calculate which brand offer the best returns."
+            ShowBranch="True"
+            
+            Grid.Column="0"/>
+        <WindowsFormsHost Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <rv:ReportViewer x:Name="reportViewer"/>
         </WindowsFormsHost>
     </Grid>

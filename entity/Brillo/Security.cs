@@ -20,7 +20,7 @@
             approve = true;
             annul = true;
 
-            if (CurrentSession.User.security_role.is_master != true)
+            if (CurrentSession.UserRole.is_master == false)
             {
                 if (CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault() != null)
                 {
@@ -32,7 +32,7 @@
                     delete = security_curd.can_delete;
                     approve = security_curd.can_approve;
                     annul = security_curd.can_annul;
-                }
+                }   
             }
         }
 

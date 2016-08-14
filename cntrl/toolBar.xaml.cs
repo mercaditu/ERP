@@ -148,28 +148,6 @@ namespace cntrl
             set { SetValue(Annul_IsEnabledProperty, value); }
         }
 
-       // private static readonly DependencyProperty CanUserDiscountByPercentProperty
-       //   = DependencyProperty.Register("CanUserDiscountByPercent", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
-       // public bool CanUserDiscountByPercent
-       // {
-       //     get { return (bool)GetValue(CanUserDiscountByPercentProperty); }
-       //     set { SetValue(CanUserDiscountByPercentProperty, value); }
-       // }
-       // private static readonly DependencyProperty CanUserDiscountByValueProperty
-       // = DependencyProperty.Register("CanUserDiscountByValue", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
-       // public bool CanUserDiscountByValue
-       // {
-       //     get { return (bool)GetValue(CanUserDiscountByValueProperty); }
-       //     set { SetValue(CanUserDiscountByValueProperty, value); }
-       // }
-       // private static readonly DependencyProperty CanUserUpdatePriceProperty
-       //= DependencyProperty.Register("CanUserUpdatePrice", typeof(bool), typeof(toolBar), new UIPropertyMetadata(true));
-       // public bool CanUserUpdatePrice
-       // {
-       //     get { return (bool)GetValue(CanUserUpdatePriceProperty); }
-       //     set { SetValue(CanUserUpdatePriceProperty, value); }
-       // }
-
         #region "Status Properties & Events"
         public static readonly DependencyProperty StatusProperty 
             = DependencyProperty.Register("Status", typeof(string), typeof(toolBar), 
@@ -273,28 +251,6 @@ namespace cntrl
         public App.Names appName { get; set; }
 
         #region "Events"
-
-        ////GridView Click
-        //public event btnGridView_ClickedEventHandler btnGridView_Click;
-        //public delegate void btnGridView_ClickedEventHandler(object sender);
-        //public void btnGridView_MouseUp(object sender, EventArgs e)
-        //{
-        //    if (btnGridView_Click != null)
-        //    {
-        //        btnGridView_Click(this);
-        //    }
-        //}
-
-        ////FormView Click
-        //public event btnFormView_ClickedEventHandler btnFormView_Click;
-        //public delegate void btnFormView_ClickedEventHandler(object sender);
-        //public void btnFormView_MouseUp(object sender, EventArgs e)
-        //{
-        //    if (btnFormView_Click != null)
-        //    {
-        //        btnFormView_Click(this);
-        //    }
-        //}
 
         //NEW
         public event btnNew_ClickedEventHandler btnNew_Click;
@@ -538,19 +494,6 @@ namespace cntrl
                 child.IsEnabled = true;
             }
         }
-
-        /// <summary>
-        /// Simple Done message to warn user that action has sucessfully finished. 
-        /// Done can be anything that is not saved, such as Deleting, Uploading File, etc.
-        /// </summary>
-        /// <param name="msg">Optional Done Message</param>
-        /// <remarks>Automatic shutdown of MessageBox after few seconds</remarks>
-        //public void msgDone(string msg = null)
-        //{
-        //    toolMessage popupMsg = new toolMessage(toolMessage.msgType.msgDone);
-        //    popupMsg.btnClose_Click += popupMsg.closeMsgBox;
-        //    add_Message(popupMsg);
-        //}
 
         /// <summary>
         /// Error messages are used when you have a Fatal Error Message for the user. 

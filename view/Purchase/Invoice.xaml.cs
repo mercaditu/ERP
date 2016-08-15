@@ -16,7 +16,7 @@ using System.Windows.Documents;
 
 namespace Cognitivo.Purchase
 {
-    public partial class Invoice : Page
+    public partial class Invoice : Page, IDisposable
     {
         CollectionViewSource purchase_invoiceViewSource;
         CollectionViewSource purchase_invoicepurchase_invoice_detailViewSource;
@@ -66,9 +66,6 @@ namespace Cognitivo.Purchase
 
         private async void load_SecondaryDataThread()
         {
-           
-
-
             PurchaseInvoiceDB.app_department.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -369,16 +366,11 @@ namespace Cognitivo.Purchase
                     {
                         contact = PurchaseInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                     }
-
                 }
             }
 
             Task Thread = Task.Factory.StartNew(() => SelectProduct_Thread(sender, e, purchase_invoice, item, contact));
         }
-
-
-
-
 
         private void SelectProduct_Thread(object sender, EventArgs e, purchase_invoice purchase_invoice, item item, contact contact)
         {
@@ -428,9 +420,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_dimension.purchase_invoice_detail = purchase_invoice_detail;
                     purchase_invoice_dimension.value = item_dimension.value;
                     purchase_invoice_detail.purchase_invoice_dimension.Add(purchase_invoice_dimension);
-                
                 }
-             
             }
             else
             {
@@ -759,6 +749,25 @@ namespace Cognitivo.Purchase
             {
                 decimal TrailingDecimals = purchase_invoice.GrandTotal - Math.Floor(purchase_invoice.GrandTotal);
                 purchase_invoice.DiscountWithoutPercentage += TrailingDecimals;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (PurchaseInvoiceDB != null)
+            {
+                if (disposing)
+                {
+                    PurchaseInvoiceDB.Dispose();
+                    // Dispose other managed resources.
+                }
+                //release unmanaged resources.
             }
         }
     }

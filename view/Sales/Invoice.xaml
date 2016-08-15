@@ -11,6 +11,7 @@
       xmlns:converter="clr-namespace:Cognitivo.Converters"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       xmlns:Controls="clr-namespace:cntrl.Controls;assembly=cntrl"  
+      
           xmlns:lex="http://wpflocalizeextension.codeplex.com"        
           lex:LocalizeDictionary.DesignCulture="en-US"
           lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 

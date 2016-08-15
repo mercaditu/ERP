@@ -9,7 +9,7 @@
               <Width>1.83333in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.19792in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -64,7 +64,7 @@
                               <Value>Invoice Date</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -100,7 +100,7 @@
                               <Value>Customer</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -136,7 +136,7 @@
                               <Value>Invoice</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -172,13 +172,15 @@
                               <Value>Quantity</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox5</rd:DefaultName>
@@ -205,16 +207,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total VAT</Value>
+                              <Value>Total VAT</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox7</rd:DefaultName>
@@ -241,16 +245,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total Discount VAT</Value>
+                              <Value>Total Discount</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox9</rd:DefaultName>
@@ -277,16 +283,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total Cost VAT</Value>
+                              <Value>Total Cost VAT</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox11</rd:DefaultName>
@@ -313,16 +321,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>VAT Sub Total</Value>
+                              <Value>VAT Total</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox13</rd:DefaultName>
@@ -349,16 +359,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total Cost</Value>
+                              <Value>Total Cost</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox15</rd:DefaultName>
@@ -385,16 +397,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sub Total</Value>
+                              <Value>Tota Sales</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox17</rd:DefaultName>
@@ -421,16 +435,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Payment Balance</Value>
+                              <Value> Acc. Balance</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox19</rd:DefaultName>
@@ -460,13 +476,15 @@
                               <Value>Mark Up</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox21</rd:DefaultName>
@@ -475,7 +493,7 @@
                           <Color>#7292cc</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#4c68a2</BackgroundColor>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -496,13 +514,15 @@
                               <Value>Margin</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox23</rd:DefaultName>
@@ -511,7 +531,7 @@
                           <Color>#7292cc</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#4c68a2</BackgroundColor>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -532,13 +552,15 @@
                               <Value>Profit</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox25</rd:DefaultName>
@@ -547,7 +569,7 @@
                           <Color>#7292cc</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#4c68a2</BackgroundColor>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -570,9 +592,14 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Status.Value</Value>
+                              <Value>=Switch(
+    Fields!Status.Value = 1, "Pending", 
+    Fields!Status.Value = 2, "Approved",
+	Fields!Status.Value = 3, "Annulled"
+    )</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -608,6 +635,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -643,6 +671,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -678,12 +707,16 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox58</rd:DefaultName>
@@ -713,12 +746,16 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox59</rd:DefaultName>
@@ -748,12 +785,16 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox60</rd:DefaultName>
@@ -783,12 +824,16 @@
                               <Value>=Sum(Fields!SubTotalCostVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox61</rd:DefaultName>
@@ -818,12 +863,16 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox62</rd:DefaultName>
@@ -853,12 +902,16 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox63</rd:DefaultName>
@@ -888,12 +941,16 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox64</rd:DefaultName>
@@ -923,12 +980,16 @@
                               <Value>=Sum(Fields!PaymentBalance.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox65</rd:DefaultName>
@@ -958,12 +1019,15 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#465678</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox66</rd:DefaultName>
@@ -972,7 +1036,7 @@
                           <Color>#c6daf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#9eb6e4</BackgroundColor>
+                        <BackgroundColor>Gray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -993,12 +1057,15 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#465678</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox67</rd:DefaultName>
@@ -1007,7 +1074,7 @@
                           <Color>#c6daf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#9eb6e4</BackgroundColor>
+                        <BackgroundColor>Gray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1028,12 +1095,15 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#465678</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox68</rd:DefaultName>
@@ -1042,7 +1112,7 @@
                           <Color>#c6daf8</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#9eb6e4</BackgroundColor>
+                        <BackgroundColor>Gray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1068,6 +1138,7 @@
                               <Value>=Fields!Branch.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1104,6 +1175,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1139,6 +1211,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1174,12 +1247,16 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox74</rd:DefaultName>
@@ -1209,12 +1286,16 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox75</rd:DefaultName>
@@ -1244,12 +1325,16 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox76</rd:DefaultName>
@@ -1279,12 +1364,16 @@
                               <Value>=Sum(Fields!SubTotalCostVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox77</rd:DefaultName>
@@ -1314,12 +1403,16 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox78</rd:DefaultName>
@@ -1349,12 +1442,16 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox79</rd:DefaultName>
@@ -1384,12 +1481,16 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox80</rd:DefaultName>
@@ -1419,12 +1520,16 @@
                               <Value>=Sum(Fields!PaymentBalance.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox81</rd:DefaultName>
@@ -1454,12 +1559,15 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4c68a2</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox82</rd:DefaultName>
@@ -1468,7 +1576,7 @@
                           <Color>#e6eefc</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#c6daf8</BackgroundColor>
+                        <BackgroundColor>Silver</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1489,12 +1597,15 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4c68a2</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox83</rd:DefaultName>
@@ -1503,7 +1614,7 @@
                           <Color>#e6eefc</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#c6daf8</BackgroundColor>
+                        <BackgroundColor>Silver</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1524,12 +1635,15 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4c68a2</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox84</rd:DefaultName>
@@ -1538,7 +1652,7 @@
                           <Color>#e6eefc</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#c6daf8</BackgroundColor>
+                        <BackgroundColor>Silver</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1564,6 +1678,7 @@
                               <Value>=Fields!InvoiceDate.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1600,6 +1715,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1635,6 +1751,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1670,12 +1787,16 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox89</rd:DefaultName>
@@ -1705,12 +1826,16 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox90</rd:DefaultName>
@@ -1740,12 +1865,16 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox91</rd:DefaultName>
@@ -1775,12 +1904,16 @@
                               <Value>=Sum(Fields!SubTotalCostVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox92</rd:DefaultName>
@@ -1810,12 +1943,16 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox93</rd:DefaultName>
@@ -1845,12 +1982,16 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox94</rd:DefaultName>
@@ -1880,12 +2021,16 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox95</rd:DefaultName>
@@ -1915,12 +2060,16 @@
                               <Value>=Sum(Fields!PaymentBalance.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>#4c68a2</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox96</rd:DefaultName>
@@ -1950,12 +2099,15 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4c68a2</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox97</rd:DefaultName>
@@ -1964,7 +2116,7 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#e6eefc</BackgroundColor>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -1985,12 +2137,15 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4c68a2</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox98</rd:DefaultName>
@@ -1999,7 +2154,7 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#e6eefc</BackgroundColor>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2020,12 +2175,15 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Color>#4c68a2</Color>
+                                <Format>N2</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox99</rd:DefaultName>
@@ -2034,7 +2192,7 @@
                           <Color>White</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#e6eefc</BackgroundColor>
+                        <BackgroundColor>LightGrey</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2060,6 +2218,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -2093,6 +2252,7 @@
                               <Value>=Fields!Customer.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -2126,6 +2286,7 @@
                               <Value>=Fields!Invoice.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -2159,11 +2320,15 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Quantity</rd:DefaultName>
@@ -2192,11 +2357,15 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>SubTotalVAT</rd:DefaultName>
@@ -2225,11 +2394,15 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>SubTotalDiscountVAT</rd:DefaultName>
@@ -2258,11 +2431,15 @@
                               <Value>=Sum(Fields!SubTotalCostVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>SubTotalCostVAT</rd:DefaultName>
@@ -2291,11 +2468,15 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>VAT_SubTotal</rd:DefaultName>
@@ -2324,11 +2505,15 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>SubTotalCost</rd:DefaultName>
@@ -2357,11 +2542,15 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>SubTotal</rd:DefaultName>
@@ -2390,11 +2579,15 @@
                               <Value>=Sum(Fields!PaymentBalance.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>PaymentBalance</rd:DefaultName>
@@ -2423,11 +2616,15 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>MarkUp</rd:DefaultName>
@@ -2456,11 +2653,15 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Margin</rd:DefaultName>
@@ -2489,11 +2690,15 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Profit</rd:DefaultName>
@@ -2527,6 +2732,7 @@
                               <Value>Total</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -2562,6 +2768,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -2597,6 +2804,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>White</Color>
                               </Style>
@@ -2632,12 +2840,16 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox41</rd:DefaultName>
@@ -2667,12 +2879,16 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox42</rd:DefaultName>
@@ -2702,12 +2918,16 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox43</rd:DefaultName>
@@ -2737,12 +2957,16 @@
                               <Value>=Sum(Fields!SubTotalCostVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox44</rd:DefaultName>
@@ -2772,12 +2996,16 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox45</rd:DefaultName>
@@ -2807,12 +3035,16 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox46</rd:DefaultName>
@@ -2842,12 +3074,16 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox47</rd:DefaultName>
@@ -2877,12 +3113,16 @@
                               <Value>=Sum(Fields!PaymentBalance.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox48</rd:DefaultName>
@@ -2912,12 +3152,16 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox49</rd:DefaultName>
@@ -2926,7 +3170,7 @@
                           <Color>#9eb6e4</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#7292cc</BackgroundColor>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2947,12 +3191,16 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox50</rd:DefaultName>
@@ -2961,7 +3209,7 @@
                           <Color>#9eb6e4</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#7292cc</BackgroundColor>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -2982,12 +3230,16 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox51</rd:DefaultName>
@@ -2996,7 +3248,7 @@
                           <Color>#9eb6e4</Color>
                           <Style>Solid</Style>
                         </Border>
-                        <BackgroundColor>#7292cc</BackgroundColor>
+                        <BackgroundColor>DimGray</BackgroundColor>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -3015,16 +3267,48 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowVATTotal.Value, true, false)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowVATTotal.Value, true, false)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowVATTotal.Value, true, false)</Hidden>
+              </Visibility>
+            </TablixMember>
             <TablixMember />
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowVATTotal.Value, false, true)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowVATTotal.Value, false, true)</Hidden>
+              </Visibility>
+            </TablixMember>
             <TablixMember />
-            <TablixMember />
-            <TablixMember />
-            <TablixMember />
-            <TablixMember />
-            <TablixMember />
-            <TablixMember />
-            <TablixMember />
-            <TablixMember />
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowMarkup, true, false)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowMarkup, true, false)</Hidden>
+              </Visibility>
+            </TablixMember>
+            <TablixMember>
+              <Visibility>
+                <Hidden>=iif(Parameters!ShowProfit, true, false)</Hidden>
+              </Visibility>
+            </TablixMember>
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -3098,9 +3382,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>SalesInvoiceSummary</DataSetName>
-        <Top>1.03125in</Top>
+        <Top>2.47222in</Top>
         <Height>1.5in</Height>
-        <Width>14.83333in</Width>
+        <Width>15.03125in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -3189,7 +3473,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Axis Title</Caption>
+                  <Caption>Dates</Caption>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
@@ -3264,7 +3548,7 @@
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartAxisTitle>
-                  <Caption>Axis Title</Caption>
+                  <Caption>Sales</Caption>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
@@ -3342,22 +3626,8 @@
               <BackgroundGradientType>None</BackgroundGradientType>
               <FontSize>8pt</FontSize>
             </Style>
-            <ChartLegendTitle>
-              <Caption />
-              <Style>
-                <FontSize>8pt</FontSize>
-                <FontWeight>Bold</FontWeight>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </ChartLegendTitle>
-            <HeaderSeparatorColor>Black</HeaderSeparatorColor>
-            <ColumnSeparatorColor>Black</ColumnSeparatorColor>
-          </ChartLegend>
-          <ChartLegend Name="Legend1">
-            <Style>
-              <BackgroundGradientType>None</BackgroundGradientType>
-              <FontSize>8pt</FontSize>
-            </Style>
+            <Position>TopCenter</Position>
+            <DockOutsideChartArea>true</DockOutsideChartArea>
             <ChartLegendTitle>
               <Caption />
               <Style>
@@ -3370,17 +3640,6 @@
             <ColumnSeparatorColor>Black</ColumnSeparatorColor>
           </ChartLegend>
         </ChartLegends>
-        <ChartTitles>
-          <ChartTitle Name="Default">
-            <Caption>Chart Title</Caption>
-            <Style>
-              <BackgroundGradientType>None</BackgroundGradientType>
-              <FontWeight>Bold</FontWeight>
-              <TextAlign>General</TextAlign>
-              <VerticalAlign>Top</VerticalAlign>
-            </Style>
-          </ChartTitle>
-        </ChartTitles>
         <Palette>SemiTransparent</Palette>
         <ChartBorderSkin>
           <Style>
@@ -3401,8 +3660,8 @@
         <PageBreak>
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
-        <Height>2.03125in</Height>
-        <Width>14.83333in</Width>
+        <Height>2.45833in</Height>
+        <Width>15.03125in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -3414,25 +3673,92 @@
         </Style>
       </Chart>
     </ReportItems>
-    <Height>2.53125in</Height>
+    <Height>3.97222in</Height>
     <Style />
   </Body>
-  <Width>14.83333in</Width>
+  <Width>15.03125in</Width>
   <Page>
     <PageHeader>
-      <Height>0.47917in</Height>
+      <Height>0.5in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Sales Invoice Summary</Value>
+                  <Style>
+                    <FontSize>14pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.125in</Top>
+          <Left>0.51438in</Left>
+          <Height>0.30556in</Height>
+          <Width>3.07812in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="ExecutionTime">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!ExecutionTime</Value>
+                  <Style>
+                    <Format>D</Format>
+                    <Color>Silver</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>ExecutionTime</rd:DefaultName>
+          <Top>0.125in</Top>
+          <Left>12.46403in</Left>
+          <Height>0.30556in</Height>
+          <Width>2.3693in</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
       <Style>
         <Border>
           <Style>None</Style>
         </Border>
       </Style>
     </PageHeader>
-    <LeftMargin>1in</LeftMargin>
-    <RightMargin>1in</RightMargin>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
+    <PageHeight>8.27in</PageHeight>
+    <PageWidth>11.69in</PageWidth>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -3527,6 +3853,32 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="ShowVAT">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ShowProfit">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ShowMarkup">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ShowMargin">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ShowCost">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ShowVATTotal">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>0998c8e5-e256-4552-b626-542205543399</rd:ReportID>
 </Report>

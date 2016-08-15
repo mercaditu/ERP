@@ -225,13 +225,13 @@
 
                             Detail = Detail
                                 + "-------------------------------" + "\n"
-                            + Qty.ToString() + ItemCode + "\n"
+                            + Qty.ToString() + "\t" + ItemCode + "\n"
                             + ItemName;
 
                             if (d.item_transfer_dimension.Count() > 0)
                             {
                                 Detail = Detail +
-                             ""
+                               "-------------------------------" + "\n"
                              + "Dimension, Value, Measurement" + "\n";
                             }
                             foreach (item_transfer_dimension item_transfer_dimension in d.item_transfer_dimension)
@@ -239,7 +239,7 @@
 
                                 decimal value = item_transfer_dimension.value;
                                 string name = item_transfer_dimension.app_dimension != null ? item_transfer_dimension.app_dimension.name : "";
-                                string dimension = "-------------------------------" + "\n"
+                                string dimension = "\n"
                                 + name + "\t" + value + "\n";
                                 Detail = Detail + dimension + "\n";
 
@@ -250,23 +250,24 @@
 
                 }
 
-                Footer = "-------------------------------\n";
-                if (i.employee != null)
-                {
-                    Footer += "RETIRADO: " + i.employee.name + "\n";
-                }
-                if (i.user_given != null)
-                {
-                    Footer += "APRORADO: " + i.user_given.name_full + "\n";
-                }
-
-
-                Footer += "-------------------------------";
-
-                string Text = Header + Detail + Footer;
-                return Text;
+              
             }
-            return "";
+            Footer = "-------------------------------\n";
+            if (i.employee != null)
+            {
+                Footer += "RETIRADO: " + i.employee.name + "\n";
+            }
+            if (i.user_given != null)
+            {
+                Footer += "APRORADO: " + i.user_given.name_full + "\n";
+            }
+
+
+            Footer += "-------------------------------";
+
+            string Text = Header + Detail + Footer;
+            return Text;
+          
         }
 
         public string SalesReturn(sales_return sales_return)

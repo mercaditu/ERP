@@ -17,7 +17,7 @@ using cntrl.Controls;
 
 namespace Cognitivo.Product
 {
-    public partial class Item : Page, Menu.ApplicationWindow.ICanClose
+    public partial class Item : Page, Menu.ApplicationWindow.ICanClose, IDisposable
     {
         ItemDB ItemDB = null;
 
@@ -777,6 +777,25 @@ namespace Cognitivo.Product
             foreach (item_template_detail item_template_detail in item_template.item_template_detail)
             {
                 item.name = item.name + item_template_detail.value;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (ItemDB != null)
+            {
+                if (disposing)
+                {
+                    ItemDB.Dispose();
+                    // Dispose other managed resources.
+                }
+                //release unmanaged resources.
             }
         }
     }

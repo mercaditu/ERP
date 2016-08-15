@@ -20,8 +20,6 @@ namespace Cognitivo.Product
         CollectionViewSource item_transferViewSource;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
 
-      //  item_movement Selecteditem_movement;
-
         public Movement()
         {
             InitializeComponent();

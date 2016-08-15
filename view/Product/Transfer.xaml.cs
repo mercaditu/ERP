@@ -128,10 +128,6 @@ namespace Cognitivo.Product
                 }
                 else
                 {
-
-                   
-                    
-
                     if (item != null &&
                         item.item_product != null &&
                         item_transfer != null &&
@@ -144,7 +140,9 @@ namespace Cognitivo.Product
                         item_transfer_detail.status = Status.Documents_General.Pending;
                         item_transfer_detail.quantity_origin = 1;
 
-                        item_transfer_detail.Quantity_InStock =StockCalculations.CalculateStock_ByBranch((int)id_branch_originComboBox.SelectedValue,DateTime.Now).FirstOrDefault().Quantity ;
+                        int BranchID = (int)id_branch_originComboBox.SelectedValue;
+
+                        item_transfer_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch(BranchID, item.id_item, DateTime.Now);
                         item_transfer_detail.timestamp = DateTime.Now;
                         item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                         item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
@@ -314,7 +312,7 @@ namespace Cognitivo.Product
                     item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
                     item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
-                    item_transfer_detail.Quantity_InStock = StockCalculations.CalculateProduct_InItemBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now).FirstOrDefault().Quantity;
+                    item_transfer_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now);
                     item_transfer_detail.RaisePropertyChanged("item_product");
                     foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                     {

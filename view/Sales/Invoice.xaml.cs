@@ -16,8 +16,10 @@ using System.Linq.Expressions;
 
 namespace Cognitivo.Sales
 {
-    public partial class Invoice : INotifyPropertyChanged
+    public partial class Invoice : INotifyPropertyChanged, IDisposable
     {
+        private bool _disposed;
+
         //Global Variables
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource sales_invoicesales_invoice_detailViewSource;
@@ -882,6 +884,26 @@ namespace Cognitivo.Sales
         private void lblCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             crud_modalDuePaymnet.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    SalesInvoiceDB.Dispose();
+                    // Dispose other managed resources.
+                }
+                //release unmanaged resources.
+            }
+            _disposed = true;
         }
     }
 }

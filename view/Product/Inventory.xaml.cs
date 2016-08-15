@@ -112,15 +112,14 @@ namespace Cognitivo.Product
 
                             using (db db = new db())
                             {
-                                if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0).ToList().Count() > 0
-                                                                             )
+                                if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0).ToList().Count() > 0)
                                 {
-
                                     item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0)
-                                                                             .OrderByDescending(x => x.trans_date).FirstOrDefault();
-                                    if (item_movement.item_movement_value.FirstOrDefault() != null)
+                                                                             .OrderByDescending(x => x.trans_date).LastOrDefault();
+
+                                    if (item_movement.item_movement_value.LastOrDefault() != null)
                                     {
-                                        item_inventory_detail.unit_value = item_movement.item_movement_value.FirstOrDefault().unit_value;
+                                        item_inventory_detail.unit_value = item_movement.item_movement_value.Sum(x => x.unit_value);
                                         item_inventory_detail.currency = item_movement.item_movement_value.FirstOrDefault().app_currencyfx.app_currency.name;
                                     }
 

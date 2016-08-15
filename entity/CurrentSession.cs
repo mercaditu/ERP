@@ -212,10 +212,5 @@ namespace entity
         {
             return Currency;
         }
-
-        //public static app_currency Get_DefaultCurrency()
-        //{
-        //    return db.app_currency.Local.Where(x => x.is_priority).FirstOrDefault();
-        //}
     }
 }

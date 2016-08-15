@@ -23,7 +23,7 @@ namespace Cognitivo.Class
 
     public class StockCalculations
     {
-        public List<StockList> CalculateStock_ByBranch(int BranchID, DateTime TransDate)
+        public List<StockList> StockList_ByBranch(int BranchID, DateTime TransDate)
         {
 
             ProductDS ProductDS = new ProductDS();
@@ -33,13 +33,14 @@ namespace Cognitivo.Class
 
             //fill data
             Check_InStockTableAdapter.ClearBeforeFill = true;
-            DataTable dt = Check_InStockTableAdapter.GetData(entity.CurrentSession.Id_Company, BranchID, TransDate);
+            DataTable dt = Check_InStockTableAdapter.GetDataByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate);
 
             ProductDS.EndInit();
             return GenerateList(dt);
 
         }
-        public List<StockList> CalculateProduct_InLocation(int LocationID, DateTime TransDate)
+
+        public List<StockList> StockList_ByBranchLocation(int LocationID, DateTime TransDate)
         {
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
@@ -48,12 +49,13 @@ namespace Cognitivo.Class
 
             //fill data
             Check_InStockTableAdapter.ClearBeforeFill = true;
-            DataTable dt = Check_InStockTableAdapter.GetDataBy(entity.CurrentSession.Id_Company, LocationID, TransDate);
+            DataTable dt = Check_InStockTableAdapter.GetDataByBranchLocation(entity.CurrentSession.Id_Company, LocationID, TransDate);
 
             ProductDS.EndInit();
             return GenerateList(dt);
         }
-        public List<StockList> CalculateProduct_InItemBranch(int BranchID, int ProductID, DateTime TransDate)
+
+        public decimal StockCount_ByBranch(int BranchID, int ProductID, DateTime TransDate)
         {
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
@@ -62,12 +64,14 @@ namespace Cognitivo.Class
 
             //fill data
             Check_InStockTableAdapter.ClearBeforeFill = true;
-            DataTable dt = Check_InStockTableAdapter.GetDataByItemBranch(entity.CurrentSession.Id_Company, BranchID, TransDate, ProductID);
+            decimal i = (decimal)Check_InStockTableAdapter.ReturnQuantity_ByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate, ProductID);
 
             ProductDS.EndInit();
-            return GenerateList(dt);
+            
+            return i;
         }
-        public List<StockList> CalculateProduct_InItemLocation(int LocationID, int ProductID, DateTime TransDate)
+
+        public decimal StockCount_ByLocation(int LocationID, int ProductID, DateTime TransDate)
         {
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
@@ -76,25 +80,13 @@ namespace Cognitivo.Class
 
             //fill data
             Check_InStockTableAdapter.ClearBeforeFill = true;
-            DataTable dt = Check_InStockTableAdapter.GetDataByItemLocation(entity.CurrentSession.Id_Company, LocationID, TransDate, ProductID);
+            decimal i = (decimal)Check_InStockTableAdapter.ReturnQuantity_ByBranch(entity.CurrentSession.Id_Company, LocationID, TransDate, ProductID);
 
             ProductDS.EndInit();
-            return GenerateList(dt);
+
+            return i;
         }
-        public List<StockList> CalculateProduct_InItemLocationByDetail(int LocationID, int ProductID, DateTime TransDate)
-        {
-            ProductDS ProductDS = new ProductDS();
-            ProductDS.BeginInit();
 
-            Cognitivo.Reporting.Data.ProductDSTableAdapters.stockflowTableAdapter stockflowTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.stockflowTableAdapter();
-
-            //fill data
-            stockflowTableAdapter.ClearBeforeFill = true;
-            DataTable dt = stockflowTableAdapter.GetDataByItemLocation(ProductID, entity.CurrentSession.Id_Company, LocationID);
-
-            ProductDS.EndInit();
-            return GenerateList(dt);
-        }
         public List<StockList> GenerateList(DataTable dt)
         {
             List<StockList> StockList = new List<Class.StockList>();

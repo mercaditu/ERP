@@ -32,7 +32,8 @@ namespace entity
 
         public string item_description { get; set; }
 
-        public decimal quantity
+        [Required]
+        public new decimal quantity
         {
             get { return _quantity; }
             set
@@ -41,22 +42,23 @@ namespace entity
                 {
                     _quantity = value;
                     RaisePropertyChanged("quantity");
-
+                    //update quantity
                     update_SubTotal();
-                    if (purchase_tender_item != null)
+                    _quantity = value;
+
+                    if (purchase_tender_item!=null)
                     {
                         _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
                         RaisePropertyChanged("Quantity_Factored");
                     }
-
+                  
                 }
-
             }
         }
         private decimal _quantity;
 
         [NotMapped]
-        public decimal Quantity_Factored
+        public new decimal Quantity_Factored
         {
             get { return _Quantity_Factored; }
             set
@@ -65,10 +67,10 @@ namespace entity
                 {
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
+
                     if (purchase_tender_item != null)
                     {
-
-                        quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored, GetDimensionValue());
+                        _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(purchase_tender_item.item, Quantity_Factored, GetDimensionValue());
                         RaisePropertyChanged("quantity");
                     }
                 }

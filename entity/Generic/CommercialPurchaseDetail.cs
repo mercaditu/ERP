@@ -472,7 +472,7 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        private void update_SubTotal()
+        public void update_SubTotal()
         {
             SubTotal = _unit_cost * _quantity;
         }

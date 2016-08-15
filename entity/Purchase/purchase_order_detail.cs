@@ -24,8 +24,46 @@ namespace entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_purchase_order_detail { get; set; }
         public int id_purchase_order { get; set; }
-        public int? id_purchase_tender_detail { get; set; }     
+        public int? id_purchase_tender_detail { get; set; }
+        [Required]
+        public new decimal quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                if (_quantity != value)
+                {
+                    _quantity = value;
+                    RaisePropertyChanged("quantity");
+                    //update quantity
+                    update_SubTotal();
+                    _quantity = value;
 
+
+                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
+                    RaisePropertyChanged("Quantity_Factored");
+                }
+            }
+        }
+        private decimal _quantity;
+
+        [NotMapped]
+        public new decimal Quantity_Factored
+        {
+            get { return _Quantity_Factored; }
+            set
+            {
+                if (_Quantity_Factored != value)
+                {
+                    _Quantity_Factored = value;
+                    RaisePropertyChanged("Quantity_Factored");
+
+                    _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
+                    RaisePropertyChanged("quantity");
+                }
+            }
+        }
+        private decimal _Quantity_Factored;
         #region "Navigation Properties"
         
         public virtual purchase_order purchase_order

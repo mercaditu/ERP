@@ -531,8 +531,17 @@
 
             if (sales_invoice.id_sales_rep > 0)
             {
+                string SalesRep_Name = "";
+
+                if (sales_invoice.sales_rep == null)
+                {
+                    using (db db = new db())
+                    {
+                        SalesRep_Name = db.sales_rep.Where(x => x.id_sales_rep == (int)sales_invoice.id_sales_rep).FirstOrDefault().name;
+                    }
+                }
                 Footer += "\n";
-                Footer += "Vendedor/a : " + sales_invoice.sales_rep != null ? sales_invoice.sales_rep.name : "N/A";
+                Footer += "Vendedor/a : " + SalesRep_Name;
             }
             Footer += "\n";
             Footer += "Cajero/a : " + UserGiven;

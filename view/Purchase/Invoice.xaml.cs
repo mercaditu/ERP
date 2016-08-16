@@ -781,5 +781,7 @@ namespace Cognitivo.Purchase
                 purchase_invoice_detail.RaisePropertyChanged("Quantity_Factored");
             }
         }
+
+     
     }
 }

@@ -32,7 +32,7 @@
                     delete = security_curd.can_delete;
                     approve = security_curd.can_approve;
                     annul = security_curd.can_annul;
-                }   
+                }
             }
         }
 
@@ -41,10 +41,20 @@
             //If Master is true, jump if, and return True.
             if (CurrentSession.User.security_role.is_master == false)
             {
-                if (CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage).FirstOrDefault() != null)
+
+                if (Privilage>0)
                 {
-                    return CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage).FirstOrDefault().has_privilage;
+                    using (db db = new db())
+                    {
+                        security_privilage privilage = db.security_privilage.Where(x => x.name == Privilage).FirstOrDefault();
+                        if (CurrentSession.Security_role_privilageList.Where(x => x.id_privilage == privilage.id_privilage).FirstOrDefault() != null)
+                        {
+                            return CurrentSession.Security_role_privilageList.Where(x => x.security_privilage.name == Privilage).FirstOrDefault().has_privilage;
+                        }
+                    }
                 }
+
+
             }
             return true;
         }

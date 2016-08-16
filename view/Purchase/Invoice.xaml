@@ -376,8 +376,8 @@
 
                     <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Code}" Width="Auto" MinWidth="64"
                                         Binding="{Binding item.code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" MinWidth="128"
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Items}" Width="*" Binding="{Binding item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Decription}" Width="*" MinWidth="128"
                                         Binding="{Binding item_description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <!--

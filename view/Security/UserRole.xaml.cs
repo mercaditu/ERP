@@ -122,8 +122,6 @@ namespace Cognitivo.Security
             {
                 if (Names == entity.App.Names.SalesInvoice )
                 {
-
-
                     foreach (entity.Privilage.Privilages Privilage in Privilages)
                     {
                         if (dbContext.security_privilage.Where(x => x.name == Privilage).Count() == 0)
@@ -133,8 +131,6 @@ namespace Cognitivo.Security
                                 security_privilage security_privilage = new security_privilage();
                                 security_privilage.id_application = entity.App.Names.ProductionExecution;
                                 security_privilage.name = Privilage;
-
-
                                 dbContext.security_privilage.Add(security_privilage);
                             }
                             else
@@ -142,8 +138,6 @@ namespace Cognitivo.Security
                                 security_privilage security_privilage = new security_privilage();
                                 security_privilage.id_application = Names;
                                 security_privilage.name = Privilage;
-
-
                                 dbContext.security_privilage.Add(security_privilage);
 
                             }
@@ -153,21 +147,27 @@ namespace Cognitivo.Security
                 }
             }
             dbContext.SaveChanges();
+
+            List<entity.App.Names> PreferenceList = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<security_privilage> security_privilageList = dbContext.security_privilage.ToList();
+
+            List<security_role_privilage> security_role_privilage = new List<security_role_privilage>();
+            security_role_privilage = dbContext.security_role_privilage.Where(x => x.id_role == security_role.id_role).ToList();
+
             foreach (security_privilage security_privilage in security_privilageList)
             {
-                if (security_privilage.id_application == entity.App.Names.SalesInvoice || security_privilage.id_application == entity.App.Names.ProductionExecution)
+                if (security_privilage.id_application == entity.App.Names.SalesInvoice || 
+                    security_privilage.id_application == entity.App.Names.ProductionExecution)
                 {
-                    if (dbContext.security_role_privilage.Where(x => x.security_privilage.name == security_privilage.name && (x.security_privilage.id_application == security_privilage.id_application)).Count() == 0)
+                    if (security_role_privilage.Where(x => x.id_privilage == security_privilage.id_privilage).Count() == 0)
                     {
-                        security_role_privilage security_role_privilage = new security_role_privilage();
-                        security_role_privilage.id_privilage = security_privilage.id_privilage;
-                        security_role_privilage.security_privilage = security_privilage;
-                        security_role_privilage.id_role = security_role.id_role;
-                        security_role_privilage.security_role = security_role;
+                        security_role_privilage _security_role_privilage = new security_role_privilage();
+                        _security_role_privilage.id_privilage = security_privilage.id_privilage;
+                        _security_role_privilage.security_privilage = security_privilage;
+                        _security_role_privilage.id_role = security_role.id_role;
+                        _security_role_privilage.security_role = security_role;
 
-
-                        dbContext.security_role_privilage.Add(security_role_privilage);
+                        dbContext.security_role_privilage.Add(_security_role_privilage);
                     }
                 }
                
@@ -182,17 +182,7 @@ namespace Cognitivo.Security
             {
                 security_role security_role = (security_role)security_roleDataGrid.SelectedItem;
 
-                List<security_role_privilage> security_role_privilageList = dbContext.security_role_privilage.Where(x => x.id_role == security_role.id_role).ToList();
-                List<security_role_privilage> privalage = dbContext.security_role_privilage.ToList();
-                List<security_role_privilage> finalprivalage = privalage.Except(security_role_privilageList).ToList();
-
-                foreach (security_role_privilage item in finalprivalage)
-                {
-                    security_role_privilage _security_role_privilage = new security_role_privilage();
-                    _security_role_privilage.id_privilage = item.id_privilage;
-                    _security_role_privilage.has_privilage = false;
-                    security_role.security_role_privilage.Add(_security_role_privilage);
-                }
+             
 
                 List<security_curd> security_curd = dbContext.security_curd.Where(x => x.id_role == security_role.id_role).ToList();
                 List<entity.App.Names> _DbApplication = security_curd.Select(x => x.id_application).ToList();

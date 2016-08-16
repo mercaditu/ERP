@@ -25,19 +25,13 @@ namespace entity
             get
             { 
              
-                if (_purchase_invoice_detail != null)
-                {
-                    _purchase_invoice_detail.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_invoice_detail.item, _purchase_invoice_detail.quantity, _purchase_invoice_detail.GetDimensionValue(_purchase_invoice_detail.purchase_invoice_dimension));
-                }
+               
                 return _purchase_invoice_detail;
             } 
             set
             {
                 _purchase_invoice_detail = value;
-                if (_purchase_invoice_detail!=null)
-                {
-                    _purchase_invoice_detail.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_invoice_detail.item, _purchase_invoice_detail.quantity, _purchase_invoice_detail.GetDimensionValue(_purchase_invoice_detail.purchase_invoice_dimension));        
-                }
+              
              
             } 
         }

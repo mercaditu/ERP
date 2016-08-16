@@ -26,19 +26,13 @@ namespace entity
             get
             {
 
-                if (_purchase_order_detail != null)
-                {
-                    _purchase_order_detail.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_order_detail.item, _purchase_order_detail.quantity, _purchase_order_detail.GetDimensionValue());
-                }
+            
                 return _purchase_order_detail;
             }
             set
             {
                 _purchase_order_detail = value;
-                if (_purchase_order_detail != null)
-                {
-                    _purchase_order_detail.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_order_detail.item, _purchase_order_detail.quantity, _purchase_order_detail.GetDimensionValue());
-                }
+              
 
             }
         }

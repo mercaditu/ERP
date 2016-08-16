@@ -145,6 +145,15 @@
                             <TextBlock Text="{lex:Loc Project}" Style="{StaticResource text_Label}"/>
                             <TextBlock Text="{Binding project.name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Label}"/>
                         </StackPanel>
+                        <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left">
+
+                            <Label Content="" Style="{StaticResource ico_Label}"/>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
+                                <Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">
+                                    <Run Text="{lex:Loc Fraction}"/>
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
                         <StackPanel VerticalAlignment="Center" Margin="2">
                             <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
                             <TextBox x:Name="commentTextBox" Text="{Binding comment, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinHeight="64" 

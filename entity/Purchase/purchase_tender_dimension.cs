@@ -25,19 +25,13 @@ namespace entity
             get
             {
 
-                if (_purchase_tender_item != null)
-                {
-                    _purchase_tender_item.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_tender_item.item, _purchase_tender_item.quantity, _purchase_tender_item.GetDimensionValue());
-                }
+               
                 return _purchase_tender_item;
             }
             set
             {
                 _purchase_tender_item = value;
-                if (_purchase_tender_item != null)
-                {
-                    _purchase_tender_item.Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(_purchase_tender_item.item, _purchase_tender_item.quantity, _purchase_tender_item.GetDimensionValue());
-                }
+           
 
             }
         }

@@ -40,8 +40,6 @@ namespace entity
                     _quantity = value;
 
 
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue());
-                    RaisePropertyChanged("Quantity_Factored");
                 }
             }
         }

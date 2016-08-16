@@ -36,11 +36,10 @@ namespace entity
                     RaisePropertyChanged("quantity");
                     //update quantity
                     update_SubTotal();
-                    _quantity = value;
+               
 
 
-                    _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item, quantity, GetDimensionValue(purchase_invoice_dimension));
-                    RaisePropertyChanged("Quantity_Factored");
+                 
                 }
             }
         }
@@ -57,7 +56,7 @@ namespace entity
                     _Quantity_Factored = value;
                     RaisePropertyChanged("Quantity_Factored");
 
-                    _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue(purchase_invoice_dimension));
+                    _quantity = Brillo.ConversionFactor.Factor_Quantity_Back(item, Quantity_Factored, GetDimensionValue());
                     RaisePropertyChanged("quantity");
                 }
             }
@@ -159,7 +158,7 @@ namespace entity
         }
         #endregion
 
-        public decimal GetDimensionValue(ICollection<purchase_invoice_dimension> purchase_invoice_dimension)
+        public decimal GetDimensionValue()
         {
             decimal Dimension = 1M;
             if (purchase_invoice_dimension != null)

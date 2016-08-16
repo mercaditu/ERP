@@ -46,11 +46,7 @@ namespace entity
                     update_SubTotal();
                     _quantity = value;
 
-                    if (purchase_tender_item!=null)
-                    {
-                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
-                        RaisePropertyChanged("Quantity_Factored");
-                    }
+                 
                   
                 }
             }
@@ -223,15 +219,7 @@ namespace entity
             set
             {
                 _purchase_tender_item = value;
-                if (quantity > 0)
-                {
-                    if (purchase_tender_item != null)
-                    {
-                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item.item, quantity, GetDimensionValue());
-                        RaisePropertyChanged("Quantity_Factored");
-                    }
-
-                }
+              
 
             }
         }

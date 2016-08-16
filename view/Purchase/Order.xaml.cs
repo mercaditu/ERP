@@ -667,6 +667,16 @@ namespace Cognitivo.Purchase
             }
         }
 
+        private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            purchase_order purchase_order = purchase_orderDataGrid.SelectedItem as purchase_order;
+            foreach (purchase_order_detail purchase_order_detail in purchase_order.purchase_order_detail)
+            {
+                purchase_order_detail.Quantity_Factored = entity.Brillo.ConversionFactor.Factor_Quantity(purchase_order_detail.item, purchase_order_detail.quantity, purchase_order_detail.GetDimensionValue());
+                purchase_order_detail.RaisePropertyChanged("Quantity_Factored");
+            }
+        }
+
         
     }
 }

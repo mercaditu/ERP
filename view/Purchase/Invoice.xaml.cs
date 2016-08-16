@@ -407,7 +407,7 @@ namespace Cognitivo.Purchase
                     purchase_invoice_detail.id_item = item.id_item;
                     purchase_invoice_detail.item_description = item.name;
                     purchase_invoice_detail.quantity = 1;
-                    purchase_invoice_detail.RaisePropertyChanged("quantity");
+                  
                 }
 
                 foreach (item_dimension item_dimension in item.item_dimension)
@@ -768,6 +768,17 @@ namespace Cognitivo.Purchase
                     // Dispose other managed resources.
                 }
                 //release unmanaged resources.
+            }
+        }
+
+        private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            purchase_invoice purchase_invoice = purchase_invoiceViewSource.View.CurrentItem as purchase_invoice;
+
+            foreach (purchase_invoice_detail purchase_invoice_detail in purchase_invoice.purchase_invoice_detail)
+            {
+                purchase_invoice_detail.Quantity_Factored = entity.Brillo.ConversionFactor.Factor_Quantity(purchase_invoice_detail.item, purchase_invoice_detail.quantity, purchase_invoice_detail.GetDimensionValue());
+                purchase_invoice_detail.RaisePropertyChanged("Quantity_Factored");
             }
         }
     }

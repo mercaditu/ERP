@@ -487,6 +487,16 @@ namespace Cognitivo.Purchase
          
         }
 
+        private void Hyperlink_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
+            foreach (purchase_tender_item purchase_tender_item_detail in purchase_tender.purchase_tender_item_detail)
+            {
+                purchase_tender_item_detail.Quantity_Factored = entity.Brillo.ConversionFactor.Factor_Quantity(purchase_tender_item_detail.item, purchase_tender_item_detail.quantity, purchase_tender_item_detail.GetDimensionValue());
+                purchase_tender_item_detail.RaisePropertyChanged("Quantity_Factored");
+            }
+        }
+
         
 
       

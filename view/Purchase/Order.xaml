@@ -140,6 +140,15 @@
                     <Label Content="Z" Style="{StaticResource ico_Label}"/>
                     <CheckBox Content="{lex:Loc Details}" Checked="chbxRowDetail_Checked" Unchecked="chbxRowDetail_Checked"/>
                 </StackPanel>
+                <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Left">
+                                 
+                    <Label Content="" Style="{StaticResource ico_Label}"/>
+                    <TextBlock Margin="5,0" VerticalAlignment="Center" Style="{StaticResource text_Label}">
+                                <Hyperlink PreviewMouseUp="Hyperlink_PreviewMouseUp">
+                                    <Run Text="{lex:Loc Fraction}"/>
+                                </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
                 <Label Content="{lex:Loc QuickLook}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                 <StackPanel IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
                     <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">

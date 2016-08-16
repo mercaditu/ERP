@@ -16,6 +16,7 @@ using System.Web.Script.Serialization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Data.Entity;
 
 namespace Cognitivo.Accounting
 {
@@ -60,57 +61,59 @@ namespace Cognitivo.Accounting
         }
 
         #region LoadData
-        public void Get_SalesInvoice()
+        public async void Get_SalesInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            sales_invoiceViewSource.Source = db.sales_invoice.Where(x =>
+            sales_invoiceViewSource.Source = await db.sales_invoice.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToList();
+                x.status == entity.Status.Documents_General.Approved).ToListAsync();
         }
         
-        public void Get_Payment()
+        public async void Get_Payment()
         {
             //x.Is Head replace with Is_Accounted = True.
-            paymentViewSource.Source = db.payments.Where(x =>
+            paymentViewSource.Source = await db.payments.Where(x =>
                  x.id_company == entity.CurrentSession.Id_Company &&
                  x.is_accounted == false &&
-                 x.status == entity.Status.Documents_General.Approved).ToList();
+                 x.status == entity.Status.Documents_General.Approved).ToListAsync();
         }
 
-        public void Get_SalesReturn()
+        public async void Get_SalesReturn()
         {
             //x.Is Head replace with Is_Accounted = True.
-            sales_returnViewSource.Source = db.sales_return.Where(x =>
+            sales_returnViewSource.Source = await db.sales_return.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToList();
+                x.status == entity.Status.Documents_General.Approved).ToListAsync();
         }
 
-        public void Get_PurchaseReturnInvoice()
+        public async void Get_PurchaseReturnInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            purchase_returnViewSource.Source = db.purchase_return.Where(x =>
+            purchase_returnViewSource.Source = await db.purchase_return.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToList();
+                x.status == entity.Status.Documents_General.Approved).ToListAsync();
         }
 
-        public void Get_PurchaseInvoice()
+        public async void Get_PurchaseInvoice()
         {
             //x.Is Head replace with Is_Accounted = True.
-            purchase_invoiceViewSource.Source = db.purchase_invoice.Where(x =>
+            purchase_invoiceViewSource.Source = await db.purchase_invoice.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
                 x.is_accounted == false &&
-                x.status == entity.Status.Documents_General.Approved).ToList();
+                x.status == entity.Status.Documents_General.Approved).ToListAsync();
         }
-        public void Get_ItemAsset()
+
+        private async void Get_ItemAsset()
         {
-            //x.Is Head replace with Is_Accounted = True.
-            item_assetViewSource.Source = db.item_asset.Where(x =>
+            await db.item_asset.Where(x =>
                 x.id_company == entity.CurrentSession.Id_Company &&
-                x.item.is_active == true).ToList();
+                x.item.is_active == true).ToListAsync();
+            item_assetViewSource.Source = db.item_asset.Local;
         }
+
         #endregion
 
         private void btnData_Sync(object sender, RoutedEventArgs e)

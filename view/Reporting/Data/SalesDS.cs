@@ -2,6 +2,10 @@
     
     
     public partial class SalesDS {
+        partial class SalesBySalesRepDataTable
+        {
+        }
+    
         partial class DeliveryByZoneDataTable
         {
         }
@@ -30,6 +34,10 @@
 
 namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
 {
+    partial class CostOfGoodsSoldTableAdapter
+    {
+    }
+
     partial class SalesByTagTableAdapter
     {
     }

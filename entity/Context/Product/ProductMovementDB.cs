@@ -88,11 +88,15 @@ namespace entity
 
                 }
 
-                using (ImpexDB ImpexDB = new ImpexDB())
+                if (purchase.is_impex)
                 {
-                    ImpexDB.impex.Load();
-                    ImpexDB.ApproveImport();
+                    using (ImpexDB ImpexDB = new ImpexDB())
+                    {
+                        ImpexDB.impex.Load();
+                        ImpexDB.ApproveImport();
+                    }
                 }
+              
 
 
             }
@@ -107,10 +111,11 @@ namespace entity
                 ///Inventory
                 using (InventoryDB InventoryDB = new InventoryDB())
                 {
+
                     List<item_inventory> item_inventoryLIST = InventoryDB.item_inventory.Where(x =>
-                            x.id_company == CurrentSession.Id_Company && x.trans_date.Day == day.Day && x.trans_date.Month == day.Month &&
-                            x.status == Status.Documents.Issued).OrderBy(y => y.trans_date).ToList();
-                    foreach (item_inventory inventory in item_inventoryLIST)
+                            x.id_company == CurrentSession.Id_Company && x.trans_date == day.Date &&
+                            x.status == Status.Documents.Issued).ToList();
+                    foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
                     {
                         if (inventory.status == Status.Documents.Issued)
                         {
@@ -134,7 +139,7 @@ namespace entity
                 using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
                 {
                     List<item_transfer> item_transferLIST = ProductTransferDB.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company
-                        && x.trans_date.Day == day.Day && x.trans_date.Month == day.Month
+                        && x.trans_date == day.Date
                         && x.status == Status.Transfer.Approved).ToList();
                     foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
                     {

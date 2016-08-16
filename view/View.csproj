@@ -578,9 +578,6 @@
     <Compile Include="Reporting\Views\Project.xaml.cs">
       <DependentUpon>Project.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\SalesBudgetList.xaml.cs">
-      <DependentUpon>SalesBudgetList.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Views\DeliveryByCustomer.xaml.cs">
       <DependentUpon>DeliveryByCustomer.xaml</DependentUpon>
     </Compile>
@@ -593,17 +590,11 @@
     <Compile Include="Reporting\Views\SalesByDate.xaml.cs">
       <DependentUpon>SalesByDate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Views\SalesByBrand.xaml.cs">
-      <DependentUpon>SalesByBrand.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Views\ProjectExecution.xaml.cs">
       <DependentUpon>ProjectExecution.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\StockFlow.xaml.cs">
       <DependentUpon>StockFlow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Reporting\Views\SalesBySalesRep.xaml.cs">
-      <DependentUpon>SalesBySalesRep.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesByItem.xaml.cs">
       <DependentUpon>SalesByItem.xaml</DependentUpon>
@@ -1705,10 +1696,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Reporting\Views\SalesBudgetList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Reporting\Views\DeliveryByCustomer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1725,19 +1712,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Reporting\Views\SalesByBrand.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Reporting\Views\ProjectExecution.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\StockFlow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\SalesBySalesRep.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

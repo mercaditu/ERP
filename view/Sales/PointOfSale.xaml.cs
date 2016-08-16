@@ -20,7 +20,7 @@ namespace Cognitivo.Sales
         /// </summary>
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         PaymentDB PaymentDB = new PaymentDB();
-       entity.Brillo.Promotion.Start StartPromo= new entity.Brillo.Promotion.Start(true);
+        entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
         /// <summary>
         /// CollectionViewSource
         /// </summary>
@@ -176,12 +176,11 @@ namespace Cognitivo.Sales
 
             //PAYMENT TYPE
             SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
-
-            cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList(); //CurrentSession.Get_SalesRep();
-
             CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
             payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
+            cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList(); //CurrentSession.Get_SalesRep();
+            
             app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = CurrentSession.Get_Currency();
 

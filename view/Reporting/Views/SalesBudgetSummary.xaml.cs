@@ -36,25 +36,25 @@ namespace Cognitivo.Reporting.Views
 
             SalesDB.BeginInit();
 
-            Data.SalesDSTableAdapters.SalesOrderSummaryTableAdapter SalesOrderSummaryTableAdapter = new Data.SalesDSTableAdapters.SalesOrderSummaryTableAdapter();
+            Data.SalesDSTableAdapters.SalesBudgetSummaryTableAdapter SalesBudgetSummaryTableAdapter = new Data.SalesDSTableAdapters.SalesBudgetSummaryTableAdapter();
                 
             DataTable dt = new DataTable();
 
             if (ReportPanel.Branch != null)
             {
-                dt = SalesOrderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
+                dt = SalesBudgetSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
             }
             else
             {
-                dt = SalesOrderSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
+                dt = SalesBudgetSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             }
 
             //ReportParameter[] parameters = new ReportParameter[x+1];
 
-            reportDataSource1.Name = "SalesOrderSummary"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "SalesBudgetSummary"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesOrderSummary.rdlc";
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesBudgetSummary.rdlc";
             //parameters[0] = new ReportParameter("name1", value1);
             //parameters[0] = new ReportParameter("name1", value1);
             //parameters[0] = new ReportParameter("name1", value1);

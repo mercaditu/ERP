@@ -2,6 +2,9 @@
     
     
     public partial class PurchaseDS {
+        partial class PurchaseInvoiceSummaryDataTable
+        {
+        }
     }
 }
 

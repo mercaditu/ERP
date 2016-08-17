@@ -550,9 +550,9 @@ namespace Cognitivo.Sales
                         }
                     };
                 }
-                catch (Exception ex)
+                catch //(Exception ex)
                 {
-                    throw ex;
+                    //throw ex;
                 }
             }
             else

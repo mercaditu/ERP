@@ -1024,6 +1024,8 @@
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project_VS_Production.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\PurchaseInvoiceSummary.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\PurchaseOrderSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBudgetSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBySalesRep.rdlc" />

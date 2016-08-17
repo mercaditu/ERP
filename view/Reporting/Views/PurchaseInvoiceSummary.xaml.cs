@@ -42,11 +42,11 @@ namespace Cognitivo.Reporting.Views
 
             if (ReportPanel.Branch != null)
             {
-                dt = PurchaseInvoiceSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
+                dt = PurchaseInvoiceSummaryTableAdapter.GetDataByBranch(ReportPanel.Branch.id_branch, ReportPanel.StartDate, ReportPanel.EndDate);
             }
             else
             {
-                dt = PurchaseInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
+                dt = PurchaseInvoiceSummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate);
             }
 
             //ReportParameter[] parameters = new ReportParameter[x+1];

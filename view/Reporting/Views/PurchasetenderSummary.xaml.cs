@@ -41,19 +41,10 @@ namespace Cognitivo.Reporting.Views
             DataTable dt = new DataTable();
             dt = PurchaseTenderSummaryTableAdapter.GetDataByDates(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
 
-
-            //ReportParameter[] parameters = new ReportParameter[x+1];
-
             reportDataSource1.Name = "PurchaseTenderSummary"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.PurchaseTenderSummary.rdlc";
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //this.reportViewer.LocalReport.SetParameters("EndDate", dtEndDate, false);
 
             PurchaseDB.EndInit();
 

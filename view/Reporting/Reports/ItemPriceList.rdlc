@@ -157,14 +157,14 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="PriceList1">
+                    <Textbox Name="Price">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!PriceList.Value</Value>
+                              <Value>=Sum(Fields!Price.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -179,7 +179,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>PriceList1</rd:DefaultName>
+                      <rd:DefaultName>Price</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>#e5e5e5</Color>

@@ -3102,10 +3102,8 @@ inner join items as item on prod.id_item = item.id_item
 where mov.id_company = @CompanyID and branch.id_branch
  = @BranchID and mov.trans_date <= @EndDate 
 
-
-group by prod.id_item_product
-  
-order by mov.trans_date, mov.id_movement ";
+ group by loc.id_location, prod.id_item_product 
+order by item.name";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@CompanyID";

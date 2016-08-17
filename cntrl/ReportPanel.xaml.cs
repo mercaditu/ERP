@@ -69,14 +69,14 @@ namespace cntrl
         public DateTime StartDate
         {
             get { return _StartDate; }
-            set { _StartDate = value; }
+            set { _StartDate = value; Data_Update(null, null); }
         }
         private DateTime _StartDate = AbsoluteDate.Start(DateTime.Now.AddMonths(-1));
 
         public DateTime EndDate
         {
             get { return _EndDate;  }
-            set { _EndDate = value; }
+            set { _EndDate = value; Data_Update(null, null); }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 

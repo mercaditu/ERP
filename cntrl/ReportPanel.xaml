@@ -21,13 +21,13 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
                         <Label Content="StartDate" Style="{StaticResource input_label}"/>
-                        <DatePicker Style="{StaticResource input_datepicker}" Width="123"
-                                    SelectedDate="{Binding ElementName=rptPanel, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DatePicker Style="{StaticResource input_datepicker}" Width="123" 
+                                    SelectedDate="{Binding ElementName=rptPanel, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                     </StackPanel>
                     <StackPanel>
                         <Label Content="EndDate" Style="{StaticResource input_label}"/>
-                        <DatePicker Style="{StaticResource input_datepicker}" Width="123"
-                                    SelectedDate="{Binding ElementName=rptPanel, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DatePicker Style="{StaticResource input_datepicker}" Width="123" 
+                                    SelectedDate="{Binding ElementName=rptPanel, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                     </StackPanel>
                 </StackPanel>
 

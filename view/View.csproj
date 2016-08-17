@@ -540,6 +540,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Data\PurchaseDS.cs">
+      <DependentUpon>PurchaseDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reporting\Data\PurchaseDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -584,8 +588,17 @@
     <Compile Include="Reporting\Views\DeliveryByZone.xaml.cs">
       <DependentUpon>DeliveryByZone.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\PurchaseTenderSummary.xaml.cs">
+      <DependentUpon>PurchaseTenderSummary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesBudgetSummary.xaml.cs">
       <DependentUpon>SalesBudgetSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\PurchaseInvoiceSummary.xaml.cs">
+      <DependentUpon>PurchaseInvoiceSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\PurchaseOrderSummary.xaml.cs">
+      <DependentUpon>PurchaseOrderSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesOrderSummary.xaml.cs">
       <DependentUpon>SalesOrderSummary.xaml</DependentUpon>
@@ -1710,7 +1723,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Reporting\Views\PurchaseTenderSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reporting\Views\SalesBudgetSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\PurchaseInvoiceSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\PurchaseOrderSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

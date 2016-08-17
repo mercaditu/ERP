@@ -540,6 +540,11 @@
                         SalesRep_Name = db.sales_rep.Where(x => x.id_sales_rep == (int)sales_invoice.id_sales_rep).FirstOrDefault().name;
                     }
                 }
+                else
+                {
+                    SalesRep_Name = sales_invoice.sales_rep.name;
+                }
+
                 Footer += "\n";
                 Footer += "Vendedor/a : " + SalesRep_Name;
             }

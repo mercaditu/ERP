@@ -661,6 +661,8 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnExecustionCost;
             
+            private global::System.Data.DataColumn columnItemName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ProductionStatusDataTable() {
@@ -752,6 +754,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItemNameColumn {
+                get {
+                    return this.columnItemName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -787,7 +797,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ProductionStatusRow AddProductionStatusRow(string ProjectName, string TaskName, string OrderNumber, string OrderName, decimal OrderQuantity, decimal ExecustionQuantity, decimal ExecustionCost) {
+            public ProductionStatusRow AddProductionStatusRow(string ProjectName, string TaskName, string OrderNumber, string OrderName, decimal OrderQuantity, decimal ExecustionQuantity, decimal ExecustionCost, string ItemName) {
                 ProductionStatusRow rowProductionStatusRow = ((ProductionStatusRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ProjectName,
@@ -796,7 +806,8 @@ namespace Cognitivo.Reporting.Data {
                         OrderName,
                         OrderQuantity,
                         ExecustionQuantity,
-                        ExecustionCost};
+                        ExecustionCost,
+                        ItemName};
                 rowProductionStatusRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowProductionStatusRow);
                 return rowProductionStatusRow;
@@ -826,6 +837,7 @@ namespace Cognitivo.Reporting.Data {
                 this.columnOrderQuantity = base.Columns["OrderQuantity"];
                 this.columnExecustionQuantity = base.Columns["ExecustionQuantity"];
                 this.columnExecustionCost = base.Columns["ExecustionCost"];
+                this.columnItemName = base.Columns["ItemName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -845,7 +857,10 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnExecustionQuantity);
                 this.columnExecustionCost = new global::System.Data.DataColumn("ExecustionCost", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnExecustionCost);
+                this.columnItemName = new global::System.Data.DataColumn("ItemName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItemName);
                 this.columnOrderQuantity.AllowDBNull = false;
+                this.columnItemName.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1268,6 +1283,17 @@ namespace Cognitivo.Reporting.Data {
                 }
                 set {
                     this[this.tableProductionStatus.ExecustionCostColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ItemName {
+                get {
+                    return ((string)(this[this.tableProductionStatus.ItemNameColumn]));
+                }
+                set {
+                    this[this.tableProductionStatus.ItemNameColumn] = value;
                 }
             }
             
@@ -1764,6 +1790,7 @@ order by c.name";
             tableMapping.ColumnMappings.Add("OrderQuantity", "OrderQuantity");
             tableMapping.ColumnMappings.Add("ExecustionQuantity", "ExecustionQuantity");
             tableMapping.ColumnMappings.Add("ExecustionCost", "ExecustionCost");
+            tableMapping.ColumnMappings.Add("ItemName", "ItemName");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1780,15 +1807,16 @@ order by c.name";
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select project.name as ProjectName,pt.item_description as TaskName,
-po.work_number as OrderNumber,po.name as OrderName,
-pod.quantity as OrderQuantity,ped.quantity as ExecustionQuantity,
+            this._commandCollection[0].CommandText = @"select project.name as ProjectName,pt.item_description as TaskName,i.name as ItemName,
+po.work_number as OrderNumber,po.name as OrderName,pod.quantity as OrderQuantity,ped.quantity as ExecustionQuantity,
 ped.unit_cost as ExecustionCost
 from production_order po inner join production_order_detail pod on po.id_production_order=pod.id_production_order
 left outer join production_execution_detail ped on pod.id_order_detail=ped.id_order_detail
 left join project_task pt on pod.id_project_task = pt.id_project_task
 left join projects as project on pt.id_project=project.id_project
-where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) ";
+inner join items i on pod.id_item=i.id_item
+where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate)  and po.id_company=@CompanyID 
+group by pod.id_order_detail";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -1804,16 +1832,25 @@ where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) ";
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@CompanyID";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_company";
+            this._commandCollection[0].Parameters.Add(param);
             this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"select project.name as ProjectName,pt.item_description as TaskName,
+            this._commandCollection[1].CommandText = @"select project.name as ProjectName,pt.item_description as TaskName,i.name as ItemName,
 po.work_number as OrderNumber,po.name as OrderName,pod.quantity as OrderQuantity,ped.quantity as ExecustionQuantity,
 ped.unit_cost as ExecustionCost
-from production_order po inner join production_order_detail pod on po.id_production_order=pod.id_production_order
-left outer join production_execution_detail ped on pod.id_order_detail=ped.id_order_detail
-left join project_task pt on pod.id_project_task = pt.id_project_task
-left join projects as project on pt.id_project=project.id_project
-where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) AND po.id_branch = @BranchID ";
+ from production_order po inner join production_order_detail pod on po.id_production_order=pod.id_production_order 
+left outer join production_execution_detail ped on pod.id_order_detail=ped.id_order_detail 
+left join project_task pt on pod.id_project_task = pt.id_project_task 
+left join projects as project on pt.id_project=project.id_project 
+inner join items i on pod.id_item=i.id_item 
+where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) AND po.id_branch = @BranchID AND po.id_company=@CompanyID 
+group by pod.id_order_detail";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -1836,16 +1873,24 @@ where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) AND po.id_br
             param.IsNullable = true;
             param.SourceColumn = "id_branch";
             this._commandCollection[1].Parameters.Add(param);
+            param = new global::MySql.Data.MySqlClient.MySqlParameter();
+            param.ParameterName = "@CompanyID";
+            param.DbType = global::System.Data.DbType.Int32;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
+            param.IsNullable = true;
+            param.SourceColumn = "id_company";
+            this._commandCollection[1].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillBy(ProductionDS.ProductionStatusDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int FillBy(ProductionDS.ProductionStatusDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -1857,10 +1902,11 @@ where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) AND po.id_br
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ProductionDS.ProductionStatusDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual ProductionDS.ProductionStatusDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             ProductionDS.ProductionStatusDataTable dataTable = new ProductionDS.ProductionStatusDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -1870,11 +1916,12 @@ where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) AND po.id_br
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByBranch(ProductionDS.ProductionStatusDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
+        public virtual int FillByBranch(ProductionDS.ProductionStatusDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
+            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(CompanyID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -1886,11 +1933,12 @@ where (po.trans_date >= @StartDate) AND (po.trans_date <= @EndDate) AND po.id_br
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ProductionDS.ProductionStatusDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
+        public virtual ProductionDS.ProductionStatusDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
             this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
+            this.Adapter.SelectCommand.Parameters[3].Value = ((int)(CompanyID));
             ProductionDS.ProductionStatusDataTable dataTable = new ProductionDS.ProductionStatusDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

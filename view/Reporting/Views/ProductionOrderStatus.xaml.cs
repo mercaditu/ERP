@@ -42,11 +42,11 @@ namespace Cognitivo.Reporting.Views
 
             if (ReportPanel.Branch != null)
             {
-                dt = ProductionStatusTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
+                dt = ProductionStatusTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch,CurrentSession.Id_Company);
             }
             else
             {
-                dt = ProductionStatusTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
+                dt = ProductionStatusTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
             }
 
             //ReportParameter[] parameters = new ReportParameter[x+1];

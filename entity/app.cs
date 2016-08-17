@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 120
+            /// Last Used : 121
             /// </summary>
 
 
@@ -165,6 +165,8 @@ namespace entity
             ProductionOrder = 20,
             [LocalizedDescription("ProductionTemplate")]
             ProductionTemplate = 21,
+            [LocalizedDescription("ProductionOrderStatus")]
+            ProductionOrderStatus = 121,
 
             //Project
             [LocalizedDescription("Template")]

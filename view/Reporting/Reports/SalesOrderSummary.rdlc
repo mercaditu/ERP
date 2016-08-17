@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>4.61667cm</Width>
+              <Width>4.14042cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>5.59563cm</Width>
@@ -129,7 +129,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Sales Order</Value>
+                              <Value>Order Number</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1027,7 +1027,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!MarkUp.Value)</Value>
+                              <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1569,7 +1569,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!MarkUp.Value)</Value>
+                              <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2109,7 +2109,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!MarkUp.Value)</Value>
+                              <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -2784,7 +2784,7 @@
         <DataSetName>SalesOrderSummary</DataSetName>
         <Top>0.10583cm</Top>
         <Height>3cm</Height>
-        <Width>37.11669cm</Width>
+        <Width>36.64044cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2796,10 +2796,10 @@
     <Height>1.22277in</Height>
     <Style />
   </Body>
-  <Width>14.61287in</Width>
+  <Width>14.42537in</Width>
   <Page>
     <PageHeader>
-      <Height>1.27cm</Height>
+      <Height>0.33333in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2838,8 +2838,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Height>0.5in</Height>
-          <Width>14.61286in</Width>
+          <Height>0.33333in</Height>
+          <Width>11.69in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2859,7 +2859,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.82021cm</Height>
+      <Height>0.32292in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <Style>
@@ -2868,13 +2868,13 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <PageHeight>8.27in</PageHeight>
+    <PageWidth>11.69in</PageWidth>
+    <LeftMargin>0.7874in</LeftMargin>
+    <RightMargin>0.7874in</RightMargin>
+    <TopMargin>0.7874in</TopMargin>
+    <BottomMargin>0.7874in</BottomMargin>
+    <ColumnSpacing>0.05118in</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -2973,6 +2973,6 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>50177d35-9014-483e-83dd-3e882d07a29f</rd:ReportID>
 </Report>

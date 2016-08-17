@@ -12,13 +12,13 @@
               <Width>3.61125cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.55833cm</Width>
+              <Width>2.84396cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.65333cm</Width>
+              <Width>1.94438cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.57396cm</Width>
+              <Width>1.99729cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.65333cm</Width>
@@ -64,6 +64,7 @@
                               <Value>Budget Date</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -97,6 +98,7 @@
                               <Value>Customer</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -130,6 +132,7 @@
                               <Value>Sales Budget</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -163,6 +166,7 @@
                               <Value>Quantity</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -198,6 +202,7 @@
                               <Value>Cost</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -233,6 +238,7 @@
                               <Value>Discount</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -268,6 +274,7 @@
                               <Value>Budget</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -303,6 +310,7 @@
                               <Value>CRM</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -338,6 +346,7 @@
                               <Value>VAT</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -373,6 +382,7 @@
                               <Value>Budget+VAT</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -408,6 +418,7 @@
                               <Value>CRM+VAT</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -443,6 +454,7 @@
                               <Value>Profit</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -478,6 +490,7 @@
                               <Value>Margin</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -513,6 +526,7 @@
                               <Value>Mark Up</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -557,6 +571,7 @@
     )</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -592,6 +607,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -627,6 +643,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#465678</Color>
                               </Style>
@@ -662,6 +679,7 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -700,6 +718,7 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -738,6 +757,7 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -776,6 +796,7 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -814,6 +835,7 @@
                               <Value>=Sum(Fields!Fullfilment.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -852,6 +874,7 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -890,6 +913,7 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -928,6 +952,7 @@
                               <Value>=Sum(Fields!FullfilmentVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -966,6 +991,7 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#465678</Color>
@@ -1004,6 +1030,7 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>P</Format>
                                 <Color>#465678</Color>
@@ -1042,6 +1069,7 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>P</Format>
                                 <Color>#465678</Color>
@@ -1085,6 +1113,7 @@
                               <Value>=Fields!Branch.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1121,6 +1150,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1156,6 +1186,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1191,6 +1222,7 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1229,6 +1261,7 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1267,6 +1300,7 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1305,6 +1339,7 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1343,6 +1378,7 @@
                               <Value>=Sum(Fields!Fullfilment.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1381,6 +1417,7 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1419,6 +1456,7 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1457,6 +1495,7 @@
                               <Value>=Sum(Fields!FullfilmentVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1495,6 +1534,7 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1533,6 +1573,7 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>P</Format>
                                 <Color>#4c68a2</Color>
@@ -1571,6 +1612,7 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>P</Format>
                                 <Color>#4c68a2</Color>
@@ -1614,6 +1656,7 @@
                               <Value>=Fields!BudgetDate.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1650,6 +1693,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1685,6 +1729,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Color>#4c68a2</Color>
                               </Style>
@@ -1720,6 +1765,7 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1758,6 +1804,7 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1796,6 +1843,7 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1834,6 +1882,7 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1872,6 +1921,7 @@
                               <Value>=Sum(Fields!Fullfilment.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1910,6 +1960,7 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1948,6 +1999,7 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -1986,6 +2038,7 @@
                               <Value>=Sum(Fields!FullfilmentVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -2024,6 +2077,7 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>N2</Format>
                                 <Color>#4c68a2</Color>
@@ -2062,6 +2116,7 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>P</Format>
                                 <Color>#4c68a2</Color>
@@ -2100,6 +2155,7 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>P</Format>
                                 <Color>#4c68a2</Color>
@@ -2143,6 +2199,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -2176,6 +2233,7 @@
                               <Value>=Fields!Customer.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -2209,6 +2267,7 @@
                               <Value>=Fields!SalesBudget.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -2242,6 +2301,7 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2278,6 +2338,7 @@
                               <Value>=Sum(Fields!SubTotalCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2314,6 +2375,7 @@
                               <Value>=Sum(Fields!SubTotalDiscountVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2350,6 +2412,7 @@
                               <Value>=Sum(Fields!SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2386,6 +2449,7 @@
                               <Value>=Sum(Fields!Fullfilment.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2422,6 +2486,7 @@
                               <Value>=Sum(Fields!VAT_SubTotal.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2458,6 +2523,7 @@
                               <Value>=Sum(Fields!SubTotalVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2494,6 +2560,7 @@
                               <Value>=Sum(Fields!FullfilmentVAT.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2530,6 +2597,7 @@
                               <Value>=Sum(Fields!Profit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2566,6 +2634,7 @@
                               <Value>=Avg(Fields!Margin.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>P</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2602,6 +2671,7 @@
                               <Value>=Avg(Fields!MarkUp.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <Format>P</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
@@ -2720,7 +2790,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Left>0.0551cm</Left>
         <Height>3cm</Height>
-        <Width>37.11667cm</Width>
+        <Width>37.11668cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2728,13 +2798,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.3061in</Height>
+    <Height>1.1811in</Height>
     <Style />
   </Body>
   <Width>14.63456in</Width>
   <Page>
     <PageHeader>
-      <Height>1.45521cm</Height>
+      <Height>0.39583in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2773,8 +2843,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Height>0.5in</Height>
-          <Width>14.61286in</Width>
+          <Height>0.39583in</Height>
+          <Width>11.69in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2794,7 +2864,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.635cm</Height>
+      <Height>0.25in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2851,7 +2921,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Left>11.98572in</Left>
+          <Left>9.12278in</Left>
           <Height>0.25in</Height>
           <Width>2.56722in</Width>
           <ZIndex>1</ZIndex>
@@ -2872,13 +2942,13 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
-    <ColumnSpacing>0.13cm</ColumnSpacing>
+    <PageHeight>8.27in</PageHeight>
+    <PageWidth>11.69in</PageWidth>
+    <LeftMargin>0.7874in</LeftMargin>
+    <RightMargin>0.7874in</RightMargin>
+    <TopMargin>0.7874in</TopMargin>
+    <BottomMargin>0.7874in</BottomMargin>
+    <ColumnSpacing>0.05118in</ColumnSpacing>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -2977,6 +3047,6 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
-  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>9c1e7213-a3dd-40ba-a862-1a73be847825</rd:ReportID>
 </Report>

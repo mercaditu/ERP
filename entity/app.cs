@@ -251,8 +251,8 @@ namespace entity
             [LocalizedDescription("CostCenter")]
             CostCenter = 77,
 
-            [LocalizedDescription("SalesbyDate")]
-            SalesbyDate = 83,
+            [LocalizedDescription("SalesInvoiceSummary")]
+            SalesInvoiceSummary = 83,
             [LocalizedDescription("CurrentAccountCustomer")]
             CurrentAccountCustomer = 86,
             [LocalizedDescription("SalesByItem")]
@@ -280,7 +280,19 @@ namespace entity
             [LocalizedDescription("DebeHaberIntegration")]
             DebeHaberIntegration = 102,
             [LocalizedDescription("DeliveryByCustomer")]
-            DeliveryByCustomer = 105
+            DeliveryByCustomer = 105,
+
+            [LocalizedDescription("SalesOrderSummary")]
+            SalesOrderSummary = 113,
+            [LocalizedDescription("SalesBudgetSummary")]
+            SalesBudgetSummary = 114,
+            [LocalizedDescription("PurchaseTenderSummary")]
+            PurchaseTenderSummary = 114,
+            [LocalizedDescription("PurchaseOrderSummary")]
+            PurchaseOrderSummary = 114,
+            [LocalizedDescription("PurchaseInvoiceSummary")]
+            PurchaseInvoiceSummary = 114,
+
         }
     }
 }

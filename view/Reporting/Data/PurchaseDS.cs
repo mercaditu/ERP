@@ -2,6 +2,10 @@
     
     
     public partial class PurchaseDS {
+        partial class PurchaseTenderSummaryDataTable
+        {
+        }
+    
         partial class PurchaseInvoiceSummaryDataTable
         {
         }

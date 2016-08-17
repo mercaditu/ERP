@@ -1740,13 +1740,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseTenderSummaryRow FindByid_purchase_tender(int id_purchase_tender) {
-                return ((PurchaseTenderSummaryRow)(this.Rows.Find(new object[] {
-                            id_purchase_tender})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
                 PurchaseTenderSummaryDataTable cln = ((PurchaseTenderSummaryDataTable)(base.Clone()));
                 cln.InitVars();
@@ -1803,14 +1796,11 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnItemDescription);
                 this.columnCost = new global::System.Data.DataColumn("Cost", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCost);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnid_purchase_tender}, true));
                 this.columnQuantity.AllowDBNull = false;
                 this.columnid_purchase_tender.AutoIncrement = true;
                 this.columnid_purchase_tender.AutoIncrementSeed = -1;
                 this.columnid_purchase_tender.AutoIncrementStep = -1;
                 this.columnid_purchase_tender.AllowDBNull = false;
-                this.columnid_purchase_tender.Unique = true;
                 this.columnstatus.AllowDBNull = false;
                 this.columnSupplier.AllowDBNull = false;
                 this.columnPurchaseCondition.AllowDBNull = false;

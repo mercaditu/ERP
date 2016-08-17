@@ -76,7 +76,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -110,7 +110,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -144,7 +144,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -180,7 +180,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -216,7 +216,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -252,7 +252,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -288,7 +288,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -324,7 +324,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -360,7 +360,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -396,7 +396,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -432,7 +432,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -468,7 +468,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -504,7 +504,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -540,7 +540,7 @@
                       <Style>
                         <Border>
                           <Color>#7292cc</Color>
-                          <Style>Solid</Style>
+                          <Style>None</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -2870,10 +2870,6 @@
     </PageFooter>
     <PageHeight>8.27in</PageHeight>
     <PageWidth>11.69in</PageWidth>
-    <LeftMargin>0.7874in</LeftMargin>
-    <RightMargin>0.7874in</RightMargin>
-    <TopMargin>0.7874in</TopMargin>
-    <BottomMargin>0.7874in</BottomMargin>
     <ColumnSpacing>0.05118in</ColumnSpacing>
     <Style />
   </Page>

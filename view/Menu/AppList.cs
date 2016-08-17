@@ -61,13 +61,15 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Financial, "Commercial.AccountsRecievable", entity.App.Names.AccountsReceivable, "Money", Version.Basic);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Inventory, "Sales.PackingList", entity.App.Names.PackingList, "ProductSend", Version.Medium);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Inventory, "Sales.Packing", entity.App.Names.PackingList, "", Version.Medium);
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByDate", entity.App.Names.SalesbyDate, "Reports", Version.Lite);
+
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesBudgetSummary", entity.App.Names.SalesBudgetSummary, "Reports", Version.Full);
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesOrderSummary", entity.App.Names.SalesOrderSummary, "Reports", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesInvoiceSummary", entity.App.Names.SalesInvoiceSummary, "Reports", Version.Lite);
+
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByItem", entity.App.Names.SalesByItem, "Reports", Version.Lite);
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesByBrand", entity.App.Names.SalesByBrand, "Reports", Version.Lite);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.CostOfGoodsSold", entity.App.Names.CostOfGoodsSold, "Reports", Version.Lite);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.Contacts", entity.App.Names.Contact, "Reports", Version.Lite);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesBySalesRep", entity.App.Names.SalesbySalesman, "Reports", Version.Lite);
-            dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesBudgetList", entity.App.Names.SalesBudget, "Reports", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.DeliveryByCustomer", entity.App.Names.DeliveryByCustomer, "Reports", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.Sales, Namespace.Reports, "Reporting.Views.SalesReturnDetail", entity.App.Names.SalesReturn, "Reports", Version.Full);
 
@@ -80,16 +82,16 @@ namespace Cognitivo.Menu
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Transaction, "Purchase.Return", entity.App.Names.PurchaseReturn, "PurchaseReturn", Version.Basic);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Financial, "Configs.AccountUtility", entity.App.Names.AccountUtility, "Accounts", Version.Basic);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Financial, "Commercial.AccountsPayable", entity.App.Names.AccountsPayable, "Money", Version.Basic);
+
+            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Reports, "Reporting.Views.PurchaseTenderSummary", entity.App.Names.PurchaseTenderSummary, "Reports", Version.Full);
+            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Reports, "Reporting.Views.PurchaseOrderSummary", entity.App.Names.PurchaseOrderSummary, "Reports", Version.Medium);
+            dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Reports, "Reporting.Views.PurchaseInvoiceSummary", entity.App.Names.PurchaseInvoiceSummary, "Reports", Version.Lite);
             dtApp.Rows.Add(entity.App.Modules.Purchase, Namespace.Reports, "Reporting.Views.Contacts", entity.App.Names.Contact, "Reports", Version.Lite);
 
             //Human Resources        //Module                 //Namespace      //App                 //Name                   //Img
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Transaction, "HumanResource.Clock", "Clock", "Clock", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Transaction, "HumanResource.Interview", "EmployeeTalent", "EmployeeTalent", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Transaction, "HumanResource.Talent", entity.App.Names.Talent, "EmployeeTalent", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Form, "HumanResource.Employee", entity.App.Names.Employee, "EmployeeID", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "HumanResource.Payroll", "Payroll", "Money", Version.Full);
             dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Configs.Hr_coefficient", entity.App.Names.Hr_coefficient, "EntryExit", Version.Full);
-            dtApp.Rows.Add(entity.App.Modules.HumanResources, Namespace.Financial, "Commercial.EmpRecievable", entity.App.Names.AccountsReceivable, "Money", Version.Full);
 
             //Stock
             dtApp.Rows.Add(entity.App.Modules.Stock, Namespace.Form, "Product.Item", entity.App.Names.Items, "Item", Version.Lite);

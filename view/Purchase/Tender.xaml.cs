@@ -179,9 +179,34 @@ namespace Cognitivo.Purchase
 
                 if (purchase_tenderViewSource.View != null)
                 {
-                    purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
 
+                    purchase_tender purchase_tender = purchase_tenderViewSource.View.CurrentItem as purchase_tender;
                     purchase_tender_contact purchase_tender_contact = new purchase_tender_contact();
+
+
+                    if (cbxContract.SelectedItem != null)
+                    {
+                        purchase_tender_contact.id_contract = (cbxContract.SelectedItem as app_contract).id_contract;
+                        purchase_tender_contact.id_condition = (cbxCondition.SelectedItem as app_condition).id_condition;
+                        purchase_tender_contact.app_contract = (cbxContract.SelectedItem as app_contract);
+                        purchase_tender_contact.app_condition = (cbxCondition.SelectedItem as app_condition);
+                    }
+                    else if (contact.app_contract != null)
+                    {
+                        purchase_tender_contact.id_contract = (int)contact.id_contract;
+                        purchase_tender_contact.id_condition = contact.app_contract.id_condition;
+                        purchase_tender_contact.app_contract = contact.app_contract;
+                        purchase_tender_contact.app_condition = contact.app_contract.app_condition;
+                    }
+                    else
+                    {
+                        toolBar.msgWarning("Please select Contract...");
+                        return;
+
+                    }
+
+
+               
                     purchase_tender_contact.contact = contact;
                     purchase_tender_contact.id_contact = contact.id_contact;
 
@@ -208,8 +233,8 @@ namespace Cognitivo.Purchase
                         purchase_tender_contact.recieve_date_est = DateTime.Now.AddDays((double)contact.lead_time);
                     }
 
-                    purchase_tender_contact.id_contract = (cbxContract.SelectedItem as app_contract).id_contract;
-                    purchase_tender_contact.id_condition = (cbxCondition.SelectedItem as app_condition).id_condition;
+                  
+                    
 
                     if (purchase_tender != null)
                     {

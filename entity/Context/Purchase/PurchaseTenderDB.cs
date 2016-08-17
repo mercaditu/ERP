@@ -83,13 +83,6 @@ namespace entity
                         purchase_order.id_currencyfx = purchase_tender_contact.id_currencyfx;
                         purchase_order.recieve_date_est = purchase_tender_contact.recieve_date_est;
 
-                        if (base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault() != null)
-                        {
-                            purchase_order.id_range = base.app_document_range.Where(x => x.app_document.id_application == App.Names.PurchaseOrder).FirstOrDefault().id_range;
-                            app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == purchase_order.id_range).FirstOrDefault();
-                            purchase_order.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
-                            purchase_order.RaisePropertyChanged("number");
-                        }
 
                         purchase_order.id_contact = purchase_tender_contact.id_contact;
                         purchase_order.contact = purchase_tender_contact.contact;

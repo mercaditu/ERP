@@ -161,6 +161,27 @@ namespace entity
 
 
         public bool is_input { get; set; }
+        [NotMapped]
+        public bool is_request
+        {
+            get
+            {
+                if (item_request_detail!=null)
+                {
+                    if (item_request_detail.Count()>0)
+                    {
+                        _is_request = true;
+                    }
+                    else
+                    {
+                        _is_request = false;
+                    }
+                } 
+                return _is_request;
+            }
+            set { _is_request=value; }
+        }
+        bool _is_request;
 
         [Required]
         public DateTime trans_date { get; set; }

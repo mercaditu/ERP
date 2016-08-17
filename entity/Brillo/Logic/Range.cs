@@ -11,17 +11,17 @@ namespace entity.Brillo.Logic
         public static string user_Code { get; set; }
         public static string project_Code { get; set; }
 
-        public static string calc_Range(app_document_range app_document_range, bool is_generated)
+        public static string calc_Range(app_document_range original_app_document_range, bool is_generated)
         {
             string prefix = string.Empty;
 
-            if (app_document_range != null)
+            if (original_app_document_range != null)
             {
-                int current_value = app_document_range.range_current;
-                int end_value = app_document_range.range_end;
+                int current_value = original_app_document_range.range_current;
+                int end_value = original_app_document_range.range_end;
 
                 //Range Calculator
-                prefix = app_document_range.range_template;
+                prefix = original_app_document_range.range_template;
                 prefix = return_Prefix(prefix);
 
                 if (prefix != null & current_value <= end_value)
@@ -29,33 +29,32 @@ namespace entity.Brillo.Logic
                     ///Get latest Current Value to be sure we don't use the same value somebody else has already used.
                     using (db db = new db())
                     {
-                        app_document_range _app_document_range = db.app_document_range.Where(x => x.id_range == app_document_range.id_range).FirstOrDefault();
+                        app_document_range _app_document_range = db.app_document_range.Where(x => x.id_range == original_app_document_range.id_range).FirstOrDefault();
 
                         //Range
                         if (prefix.Contains("#Range"))
                         {
                             //Add Padding filler
                             _app_document_range.range_current += 1;
-                            string str = _app_document_range.range_current.ToString(app_document_range.range_padding);
+                            string str = _app_document_range.range_current.ToString(original_app_document_range.range_padding);
                             prefix = prefix.Replace("#Range", str);
                         }
                         else
                         {
                             _app_document_range.range_current += 1;
-                            prefix = prefix + _app_document_range.range_current.ToString(app_document_range.range_padding);
+                            prefix = prefix + _app_document_range.range_current.ToString(original_app_document_range.range_padding);
                         }
 
                         if (is_generated)
                         {
-                         //  app_document_range.range_current += 1;
+                            original_app_document_range.range_current = _app_document_range.range_current;
+                            if (original_app_document_range.range_current == end_value)
+                            {
+                                original_app_document_range.is_active = false;
+                            }
+
                             //Save new number into database, as quick as possible.
                             db.SaveChangesAsync();
-                            //Send new number back to original entity
-                            app_document_range.range_current = _app_document_range.range_current;
-                            if (app_document_range.range_current == end_value)
-                            {
-                                app_document_range.is_active = false;
-                            }
                         }
                     }
                 }

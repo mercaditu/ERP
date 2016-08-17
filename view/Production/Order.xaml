@@ -351,7 +351,7 @@
                                                              VerticalAlignment="Top" HorizontalAlignment="Center"/>
                                 <DataGrid x:Name="itemDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"
                 		                  CanUserAddRows="False" RowDetailsVisibilityMode="VisibleWhenSelected" 
-                                          LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" IsEnabled="{Binding is_request,ElementName=Productionorder,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                                          LoadingRowDetails="item_ProductDataGrid_LoadingRowDetails" IsEnabled="{Binding is_request,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                                     <DataGrid.Columns>
                                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                                 ElementStyle="{DynamicResource MetroDataGridCheckBox}" Width="24" 

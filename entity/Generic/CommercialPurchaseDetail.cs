@@ -442,7 +442,7 @@ namespace entity
                     using (db db= new db())
                     {
                         app_currencyfx app_currencyfx = Currency.get_DefaultFX(db);
-                        unit_cost = Currency.convert_Values((decimal)item.unit_cost, app_currencyfx.id_currencyfx, id_currecyfx, App.Modules.Purchase);
+                        _unit_cost = Currency.convert_Values((decimal)item.unit_cost, app_currencyfx.id_currencyfx, id_currecyfx, App.Modules.Purchase);
                         
                     }
                  
@@ -456,7 +456,7 @@ namespace entity
         /// </summary>
         private void update_UnitPrice_WithoutVAT()
         {
-            unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
+            _unit_cost = Vat.return_ValueWithoutVAT((int)id_vat_group, UnitCost_Vat);
             RaisePropertyChanged("unit_cost");
         }
 
@@ -465,7 +465,7 @@ namespace entity
         /// </summary>
         private void update_UnitPriceVAT()
         {
-            UnitCost_Vat = Vat.return_ValueWithVAT((int)id_vat_group, _unit_cost);
+            _UnitCost_Vat = Vat.return_ValueWithVAT((int)id_vat_group, _unit_cost);
             RaisePropertyChanged("UnitCost_Vat");
         }
 

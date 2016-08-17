@@ -256,7 +256,7 @@
 
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="*"
 					                                Binding="{Binding app_condition.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
-                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Condition}" Width="*"
+                                <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Contract}" Width="*"
 					                                Binding="{Binding app_contract.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
 
                                 <DataGridComboBoxColumn Header="{lex:Loc Cognitivo:local:Currency}" Width="auto"

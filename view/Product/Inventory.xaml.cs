@@ -115,7 +115,7 @@ namespace Cognitivo.Product
                                 if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0).ToList().Count() > 0)
                                 {
                                     item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0)
-                                                                             .OrderByDescending(x => x.trans_date).LastOrDefault();
+                                                                             .OrderBy(x => x.trans_date).FirstOrDefault();
 
                                     if (item_movement.item_movement_value.LastOrDefault() != null)
                                     {

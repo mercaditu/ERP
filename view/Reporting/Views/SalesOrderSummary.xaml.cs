@@ -19,9 +19,9 @@ using Microsoft.Reporting.WinForms.Internal.Soap.ReportingServices2005.Execution
 
 namespace Cognitivo.Reporting.Views
 {
-    public partial class SalesByDate : Page
+    public partial class SalesOrderSummary : Page
     {
-        public SalesByDate()
+        public SalesOrderSummary()
         {
             InitializeComponent();            
             Fill(null, null);
@@ -36,25 +36,25 @@ namespace Cognitivo.Reporting.Views
 
             SalesDB.BeginInit();
 
-            Data.SalesDSTableAdapters.SalesInvoiceSummaryTableAdapter SalesInvoiceSummaryTableAdapter = new Data.SalesDSTableAdapters.SalesInvoiceSummaryTableAdapter();
+            Data.SalesDSTableAdapters.SalesOrderSummaryTableAdapter SalesOrderSummaryTableAdapter = new Data.SalesDSTableAdapters.SalesOrderSummaryTableAdapter();
                 
             DataTable dt = new DataTable();
 
             if (ReportPanel.Branch != null)
             {
-                dt = SalesInvoiceSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
+                dt = SalesOrderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
             }
             else
             {
-                dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
+                dt = SalesOrderSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             }
 
             //ReportParameter[] parameters = new ReportParameter[x+1];
 
-            reportDataSource1.Name = "SalesInvoiceSummary"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "SalesOrderSummary"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesInvoiceSummary.rdlc";
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesOrderSummary.rdlc";
             //parameters[0] = new ReportParameter("name1", value1);
             //parameters[0] = new ReportParameter("name1", value1);
             //parameters[0] = new ReportParameter("name1", value1);

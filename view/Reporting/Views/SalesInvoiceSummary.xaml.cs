@@ -49,18 +49,10 @@ namespace Cognitivo.Reporting.Views
                 dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             }
 
-            //ReportParameter[] parameters = new ReportParameter[x+1];
-
             reportDataSource1.Name = "SalesInvoiceSummary"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesInvoiceSummary.rdlc";
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //parameters[0] = new ReportParameter("name1", value1);
-            //this.reportViewer.LocalReport.SetParameters("EndDate", dtEndDate, false);
 
             SalesDB.EndInit();
 

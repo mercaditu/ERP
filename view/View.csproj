@@ -573,6 +573,9 @@
     <Compile Include="Reporting\Views\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\ItemPriceList.xaml.cs">
+      <DependentUpon>ItemPriceList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\PendingSalesDocs.xaml.cs">
       <DependentUpon>PendingSalesDocs.xaml</DependentUpon>
     </Compile>
@@ -1015,6 +1018,7 @@
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project_VS_Production.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBudgetSummary.rdlc" />
@@ -1700,6 +1704,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\Inventory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\ItemPriceList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

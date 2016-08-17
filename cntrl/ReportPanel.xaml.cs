@@ -66,6 +66,13 @@ namespace cntrl
             set { SetValue(ShowCustomerProperty, value); }
         }
 
+        public static DependencyProperty ShowCurrencyProperty = DependencyProperty.Register("ShowCurrency", typeof(bool), typeof(ReportPanel));
+        public bool ShowCurrency
+        {
+            get { return (bool)GetValue(ShowCurrencyProperty); }
+            set { SetValue(ShowCurrencyProperty, value); }
+        }
+
         public DateTime StartDate
         {
             get { return _StartDate; }
@@ -117,6 +124,14 @@ namespace cntrl
             get
             {
                 return sbxCustomer.ContactID;
+            }
+        }
+
+        public entity.app_currency Currency
+        {
+            get
+            {
+                return (cbCurrency.SelectedItem as entity.app_currency);
             }
         }
 

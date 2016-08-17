@@ -65,10 +65,18 @@
                       Visibility="{Binding ElementName=cbxCustomer, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       Margin="4" Width="128"/>
                 </StackPanel>
-                
+                <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=rptPanel, Path=ShowCurrency, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                    <CheckBox Content="Currency" x:Name="cbxCurrency" Style="{StaticResource input_checkbox}" Width="auto"/>
+                    <ComboBox x:Name="cbCurrency" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
+                              Visibility="{Binding ElementName=cbxCurrency, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
+                              SelectedValue="{Binding id_currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_currency" DisplayMemberPath="name"
+                              Margin="4" Width="128"/>
+                </StackPanel>
+
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 
                 <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
+                
                 <StackPanel>
                     <Label Content="Columns" Style="{StaticResource input_label}"/>
                 </StackPanel>

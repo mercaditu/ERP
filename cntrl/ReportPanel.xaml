@@ -17,8 +17,9 @@
                    Text="{Binding ElementName=this, Path=ReportTitle, Mode=OneWay}"/>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
                    Margin="5,-4,5,4" Text="{Binding ElementName=this, Path=ReportDescription, Mode=OneWay}"/>
-                <Rectangle Style="{StaticResource line_Bar}"/>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowDates, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                    <Rectangle Style="{StaticResource line_Bar}"/>
+
                     <StackPanel>
                         <Label Content="StartDate" Style="{StaticResource input_label}"/>
                         <DatePicker Style="{StaticResource input_datepicker}" Width="123" 

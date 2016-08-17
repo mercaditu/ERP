@@ -301,9 +301,7 @@ namespace entity
             [LocalizedDescription("ItemPriceList")]
             ItemPriceList = 120,
             [LocalizedDescription("StockFlow")]
-            StockFlow = 121,
-            //[LocalizedDescription("ItemPriceList")]
-            //ItemPriceList = 122,
+            StockFlow = 121
         }
     }
 }

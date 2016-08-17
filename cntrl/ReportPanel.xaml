@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="cntrl.ReportPanel" x:Name="rptPanel"
+﻿<UserControl x:Class="cntrl.ReportPanel" x:Name="this"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,58 +14,58 @@
         <Border CornerRadius="3" Margin="8">
             <StackPanel Background="White">
                 <TextBlock Style="{StaticResource TextAreaH2}" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="5"
-                   Text="{Binding ElementName=rptPanel, Path=ReportTitle, Mode=OneWay}"/>
+                   Text="{Binding ElementName=this, Path=ReportTitle, Mode=OneWay}"/>
                 <TextBlock Style="{StaticResource text_Label}" HorizontalAlignment="Stretch" TextWrapping="Wrap" Foreground="Gray"
-                   Margin="5,-4,5,4" Text="{Binding ElementName=rptPanel, Path=ReportDescription, Mode=OneWay}"/>
+                   Margin="5,-4,5,4" Text="{Binding ElementName=this, Path=ReportDescription, Mode=OneWay}"/>
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
                         <Label Content="StartDate" Style="{StaticResource input_label}"/>
                         <DatePicker Style="{StaticResource input_datepicker}" Width="123" 
-                                    SelectedDate="{Binding ElementName=rptPanel, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                                    SelectedDate="{Binding ElementName=this, Path=StartDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                     </StackPanel>
                     <StackPanel>
                         <Label Content="EndDate" Style="{StaticResource input_label}"/>
                         <DatePicker Style="{StaticResource input_datepicker}" Width="123" 
-                                    SelectedDate="{Binding ElementName=rptPanel, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                                    SelectedDate="{Binding ElementName=this, Path=EndDate, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                     </StackPanel>
                 </StackPanel>
 
                 <Rectangle Style="{StaticResource line_Bar}"/>
 
                 <StackPanel Orientation="Horizontal" 
-                    Visibility="{Binding ElementName=rptPanel, Path=ShowBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                    Visibility="{Binding ElementName=this, Path=ShowBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Branch" x:Name="cbxBranch" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxBranch_Checked"/>
                     <ComboBox x:Name="cbBranch" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                       SelectedValue="{Binding id_branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_branch" DisplayMemberPath="name"
                       Visibility="{Binding ElementName=cbxBranch, Path=IsChecked, Converter={StaticResource Bool2Visibility}}" Margin="4" Width="128"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=rptPanel, Path=ShowTag, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowTag, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Tag" x:Name="cbxTag" Style="{StaticResource input_checkbox}" Width="auto" Checked="cbxTag_Checked"/>
                     <ComboBox x:Name="cbTag" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                       Visibility="{Binding ElementName=cbxTag, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       SelectedValue="{Binding id_tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="id_tag" DisplayMemberPath="name"
                       Margin="4" Width="128"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=rptPanel, Path=ShowProduct, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=this, Path=ShowProduct, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Product" x:Name="cbxProduct" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Item x:Name="sbxItem" Select="Data_Update" 
                       Visibility="{Binding ElementName=cbxProduct, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       Margin="4" Width="128"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=rptPanel, Path=ShowSupplier, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                <StackPanel Orientation="Horizontal" Visibility="{Binding ElementName=this, Path=ShowSupplier, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Supplier" x:Name="cbxSupplier" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Contact x:Name="sbxSupplier" Select="Data_Update"
                       Visibility="{Binding ElementName=cbxSupplier, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       Margin="4" Width="128"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=rptPanel, Path=ShowCustomer, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=this, Path=ShowCustomer, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Customer" x:Name="cbxCustomer" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <Controls:SmartBox_Contact x:Name="sbxCustomer" Select="Data_Update"
                       Visibility="{Binding ElementName=cbxCustomer, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"
                       Margin="4" Width="128"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=rptPanel, Path=ShowCurrency, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
+                <StackPanel Orientation="Horizontal"  Visibility="{Binding ElementName=this, Path=ShowCurrency, Mode=OneWay, FallbackValue=Collapsed, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}">
                     <CheckBox Content="Currency" x:Name="cbxCurrency" Style="{StaticResource input_checkbox}" Width="auto"/>
                     <ComboBox x:Name="cbCurrency" Style="{StaticResource input_combobox}" SelectionChanged="ComboBox_SelectionChanged"
                               Visibility="{Binding ElementName=cbxCurrency, Path=IsChecked, Converter={StaticResource Bool2Visibility}}"

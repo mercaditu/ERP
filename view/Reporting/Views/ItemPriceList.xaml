@@ -13,7 +13,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <cntrl:ReportPanel x:Name="rptPanel" Update="Fill"/>
-        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
             <rv:ReportViewer x:Name="reportViewer"/>
         </WindowsFormsHost>
     </Grid>

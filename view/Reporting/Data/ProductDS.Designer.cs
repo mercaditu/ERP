@@ -3485,25 +3485,17 @@ where mov.id_company = @CompanyID and loc.id_location = @LocationID and mov.tran
  left join item_price as pi on item.id_item = pi.id_item
  left join item_price_list as pl on pi.id_price_list = pl.id_price_list
  inner join app_currency as currency on pi.id_currency = currency.id_currency
- where currency.id_currency = @CurrencyID
+ 
  order by item.name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@CurrencyID";
-            param.DbType = global::System.Data.DbType.Int32;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
-            param.IsNullable = true;
-            param.SourceColumn = "id_currency";
-            this._commandCollection[0].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillByCurrency(ProductDS.PriceListDataTable dataTable, int CurrencyID) {
+        public virtual int FillBy(ProductDS.PriceListDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(CurrencyID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -3515,9 +3507,8 @@ where mov.id_company = @CompanyID and loc.id_location = @LocationID and mov.tran
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ProductDS.PriceListDataTable GetDataByCurrency(int CurrencyID) {
+        public virtual ProductDS.PriceListDataTable GetDataBy() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(CurrencyID));
             ProductDS.PriceListDataTable dataTable = new ProductDS.PriceListDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

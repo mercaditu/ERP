@@ -73,6 +73,13 @@ namespace cntrl
             set { SetValue(ShowCurrencyProperty, value); }
         }
 
+        public static DependencyProperty ShowDatesProperty = DependencyProperty.Register("ShowDates", typeof(bool), typeof(ReportPanel));
+        public bool ShowDates
+        {
+            get { return (bool)GetValue(ShowDatesProperty); }
+            set { SetValue(ShowDatesProperty, value); }
+        }
+
         public DateTime StartDate
         {
             get { return _StartDate; }

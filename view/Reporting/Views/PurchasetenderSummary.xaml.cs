@@ -39,15 +39,8 @@ namespace Cognitivo.Reporting.Views
             Data.PurchaseDSTableAdapters.PurchaseTenderSummaryTableAdapter PurchaseTenderSummaryTableAdapter = new Data.PurchaseDSTableAdapters.PurchaseTenderSummaryTableAdapter();
                 
             DataTable dt = new DataTable();
+            dt = PurchaseTenderSummaryTableAdapter.GetDataByDates(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
 
-            if (ReportPanel.Branch != null)
-            {
-                dt = PurchaseTenderSummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, ReportPanel.Branch.id_branch);
-            }
-            else
-            {
-                dt = PurchaseTenderSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
-            }
 
             //ReportParameter[] parameters = new ReportParameter[x+1];
 

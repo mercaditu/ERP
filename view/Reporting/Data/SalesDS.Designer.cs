@@ -1322,7 +1322,6 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnCost);
                 this.columnMargin = new global::System.Data.DataColumn("Margin", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMargin);
-                this.columnTag.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5415,7 +5414,12 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Tag {
                 get {
-                    return ((string)(this[this.tableSalesByItem.TagColumn]));
+                    try {
+                        return ((string)(this[this.tableSalesByItem.TagColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Tag\' in table \'SalesByItem\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableSalesByItem.TagColumn] = value;
@@ -5512,6 +5516,18 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDiscountNull() {
                 this[this.tableSalesByItem.DiscountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTagNull() {
+                return this.IsNull(this.tableSalesByItem.TagColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTagNull() {
+                this[this.tableSalesByItem.TagColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8614,10 +8630,12 @@ LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_de
  LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco
  ON vatco.id_vat_group = sd.id_vat_group
  
-right join item_tag_detail as itd 
+left join (select distinct id_item,id_tag,id_item_tag_detail,id_company,id_user,is_head from item_tag_detail
+ group by id_item
+) as itd 
 on itd.id_item = i.id_item
  
-right join item_tag as tag 
+left join item_tag as tag 
 on tag.id_tag = itd.id_tag  
 where s.status = 2 and s.trans_date >= @StartDate and s.trans_date <= @EndDate and s.id_branch = @BranchID 
  
@@ -8668,10 +8686,12 @@ LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_de
  LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco
  ON vatco.id_vat_group = sd.id_vat_group
  
-right join item_tag_detail as itd 
+left join (select distinct id_item,id_tag,id_item_tag_detail,id_company,id_user,is_head from item_tag_detail
+ group by id_item
+) as itd 
 on itd.id_item = i.id_item
  
-right join item_tag as tag 
+left join item_tag as tag 
 on tag.id_tag = itd.id_tag  
 where s.status = 2 and s.trans_date >= @StartDate and s.trans_date <= @EndDate and s.id_branch = @BranchID and tag.id_tag = @TagID
  
@@ -8729,10 +8749,12 @@ LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_de
  LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco
  ON vatco.id_vat_group = sd.id_vat_group
  
-right join item_tag_detail as itd 
+left join (select distinct id_item,id_tag,id_item_tag_detail,id_company,id_user,is_head from item_tag_detail 
+group by id_item
+) as itd 
 on itd.id_item = i.id_item
  
-right join item_tag as tag 
+left join item_tag as tag 
 on tag.id_tag = itd.id_tag  
 where s.status = 2 and s.trans_date >= @StartDate and s.trans_date <= @EndDate
  
@@ -8776,10 +8798,12 @@ LEFT JOIN app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_de
  LEFT JOIN app_vat ON app_vat_group_details.id_vat = app_vat.id_vat GROUP BY app_vat_group.id_vat_group) as vatco
  ON vatco.id_vat_group = sd.id_vat_group
  
-right join item_tag_detail as itd 
+left join (select distinct id_item,id_tag,id_item_tag_detail,id_company,id_user,is_head from item_tag_detail
+ group by id_item
+) as itd 
 on itd.id_item = i.id_item
  
-right join item_tag as tag 
+left join item_tag as tag 
 on tag.id_tag = itd.id_tag  
 where s.status = 2 and s.trans_date >= @StartDate and s.trans_date <= @EndDate and tag.id_tag = @TagID
  

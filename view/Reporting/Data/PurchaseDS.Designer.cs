@@ -1534,11 +1534,23 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnProjectName;
             
-            private global::System.Data.DataColumn columnItemName;
-            
             private global::System.Data.DataColumn columnQuantity;
             
             private global::System.Data.DataColumn columnOrdered;
+            
+            private global::System.Data.DataColumn columnid_purchase_tender;
+            
+            private global::System.Data.DataColumn columnstatus;
+            
+            private global::System.Data.DataColumn columnSupplier;
+            
+            private global::System.Data.DataColumn columnPurchaseCondition;
+            
+            private global::System.Data.DataColumn columnContract;
+            
+            private global::System.Data.DataColumn columnItemDescription;
+            
+            private global::System.Data.DataColumn columnCost;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1599,14 +1611,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ItemNameColumn {
-                get {
-                    return this.columnItemName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn QuantityColumn {
                 get {
                     return this.columnQuantity;
@@ -1618,6 +1622,62 @@ namespace Cognitivo.Reporting.Data {
             public global::System.Data.DataColumn OrderedColumn {
                 get {
                     return this.columnOrdered;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn id_purchase_tenderColumn {
+                get {
+                    return this.columnid_purchase_tender;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn statusColumn {
+                get {
+                    return this.columnstatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SupplierColumn {
+                get {
+                    return this.columnSupplier;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PurchaseConditionColumn {
+                get {
+                    return this.columnPurchaseCondition;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ContractColumn {
+                get {
+                    return this.columnContract;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItemDescriptionColumn {
+                get {
+                    return this.columnItemDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CostColumn {
+                get {
+                    return this.columnCost;
                 }
             }
             
@@ -1658,18 +1718,31 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseTenderSummaryRow AddPurchaseTenderSummaryRow(string TenderName, string TenderNumber, string ProjectName, string ItemName, decimal Quantity, decimal Ordered) {
+            public PurchaseTenderSummaryRow AddPurchaseTenderSummaryRow(string TenderName, string TenderNumber, string ProjectName, decimal Quantity, decimal Ordered, int status, string Supplier, string PurchaseCondition, string Contract, string ItemDescription, decimal Cost) {
                 PurchaseTenderSummaryRow rowPurchaseTenderSummaryRow = ((PurchaseTenderSummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         TenderName,
                         TenderNumber,
                         ProjectName,
-                        ItemName,
                         Quantity,
-                        Ordered};
+                        Ordered,
+                        null,
+                        status,
+                        Supplier,
+                        PurchaseCondition,
+                        Contract,
+                        ItemDescription,
+                        Cost};
                 rowPurchaseTenderSummaryRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPurchaseTenderSummaryRow);
                 return rowPurchaseTenderSummaryRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PurchaseTenderSummaryRow FindByid_purchase_tender(int id_purchase_tender) {
+                return ((PurchaseTenderSummaryRow)(this.Rows.Find(new object[] {
+                            id_purchase_tender})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1692,9 +1765,15 @@ namespace Cognitivo.Reporting.Data {
                 this.columnTenderName = base.Columns["TenderName"];
                 this.columnTenderNumber = base.Columns["TenderNumber"];
                 this.columnProjectName = base.Columns["ProjectName"];
-                this.columnItemName = base.Columns["ItemName"];
                 this.columnQuantity = base.Columns["Quantity"];
                 this.columnOrdered = base.Columns["Ordered"];
+                this.columnid_purchase_tender = base.Columns["id_purchase_tender"];
+                this.columnstatus = base.Columns["status"];
+                this.columnSupplier = base.Columns["Supplier"];
+                this.columnPurchaseCondition = base.Columns["PurchaseCondition"];
+                this.columnContract = base.Columns["Contract"];
+                this.columnItemDescription = base.Columns["ItemDescription"];
+                this.columnCost = base.Columns["Cost"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1706,14 +1785,37 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnTenderNumber);
                 this.columnProjectName = new global::System.Data.DataColumn("ProjectName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProjectName);
-                this.columnItemName = new global::System.Data.DataColumn("ItemName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnItemName);
                 this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnQuantity);
                 this.columnOrdered = new global::System.Data.DataColumn("Ordered", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnOrdered);
+                this.columnid_purchase_tender = new global::System.Data.DataColumn("id_purchase_tender", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid_purchase_tender);
+                this.columnstatus = new global::System.Data.DataColumn("status", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnstatus);
+                this.columnSupplier = new global::System.Data.DataColumn("Supplier", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSupplier);
+                this.columnPurchaseCondition = new global::System.Data.DataColumn("PurchaseCondition", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPurchaseCondition);
+                this.columnContract = new global::System.Data.DataColumn("Contract", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContract);
+                this.columnItemDescription = new global::System.Data.DataColumn("ItemDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItemDescription);
+                this.columnCost = new global::System.Data.DataColumn("Cost", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCost);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnid_purchase_tender}, true));
                 this.columnQuantity.AllowDBNull = false;
-                this.columnOrdered.AllowDBNull = false;
+                this.columnid_purchase_tender.AutoIncrement = true;
+                this.columnid_purchase_tender.AutoIncrementSeed = -1;
+                this.columnid_purchase_tender.AutoIncrementStep = -1;
+                this.columnid_purchase_tender.AllowDBNull = false;
+                this.columnid_purchase_tender.Unique = true;
+                this.columnstatus.AllowDBNull = false;
+                this.columnSupplier.AllowDBNull = false;
+                this.columnPurchaseCondition.AllowDBNull = false;
+                this.columnContract.AllowDBNull = false;
+                this.columnCost.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2685,22 +2787,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ItemName {
-                get {
-                    try {
-                        return ((string)(this[this.tablePurchaseTenderSummary.ItemNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ItemName\' in table \'PurchaseTenderSummary\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablePurchaseTenderSummary.ItemNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal Quantity {
                 get {
                     return ((decimal)(this[this.tablePurchaseTenderSummary.QuantityColumn]));
@@ -2714,10 +2800,98 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal Ordered {
                 get {
-                    return ((decimal)(this[this.tablePurchaseTenderSummary.OrderedColumn]));
+                    try {
+                        return ((decimal)(this[this.tablePurchaseTenderSummary.OrderedColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Ordered\' in table \'PurchaseTenderSummary\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tablePurchaseTenderSummary.OrderedColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int id_purchase_tender {
+                get {
+                    return ((int)(this[this.tablePurchaseTenderSummary.id_purchase_tenderColumn]));
+                }
+                set {
+                    this[this.tablePurchaseTenderSummary.id_purchase_tenderColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int status {
+                get {
+                    return ((int)(this[this.tablePurchaseTenderSummary.statusColumn]));
+                }
+                set {
+                    this[this.tablePurchaseTenderSummary.statusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Supplier {
+                get {
+                    return ((string)(this[this.tablePurchaseTenderSummary.SupplierColumn]));
+                }
+                set {
+                    this[this.tablePurchaseTenderSummary.SupplierColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PurchaseCondition {
+                get {
+                    return ((string)(this[this.tablePurchaseTenderSummary.PurchaseConditionColumn]));
+                }
+                set {
+                    this[this.tablePurchaseTenderSummary.PurchaseConditionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Contract {
+                get {
+                    return ((string)(this[this.tablePurchaseTenderSummary.ContractColumn]));
+                }
+                set {
+                    this[this.tablePurchaseTenderSummary.ContractColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ItemDescription {
+                get {
+                    try {
+                        return ((string)(this[this.tablePurchaseTenderSummary.ItemDescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ItemDescription\' in table \'PurchaseTenderSummary\' is DBNull" +
+                                ".", e);
+                    }
+                }
+                set {
+                    this[this.tablePurchaseTenderSummary.ItemDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Cost {
+                get {
+                    return ((decimal)(this[this.tablePurchaseTenderSummary.CostColumn]));
+                }
+                set {
+                    this[this.tablePurchaseTenderSummary.CostColumn] = value;
                 }
             }
             
@@ -2759,14 +2933,26 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsItemNameNull() {
-                return this.IsNull(this.tablePurchaseTenderSummary.ItemNameColumn);
+            public bool IsOrderedNull() {
+                return this.IsNull(this.tablePurchaseTenderSummary.OrderedColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetItemNameNull() {
-                this[this.tablePurchaseTenderSummary.ItemNameColumn] = global::System.Convert.DBNull;
+            public void SetOrderedNull() {
+                this[this.tablePurchaseTenderSummary.OrderedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsItemDescriptionNull() {
+                return this.IsNull(this.tablePurchaseTenderSummary.ItemDescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetItemDescriptionNull() {
+                this[this.tablePurchaseTenderSummary.ItemDescriptionColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -3916,9 +4102,15 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             tableMapping.ColumnMappings.Add("TenderName", "TenderName");
             tableMapping.ColumnMappings.Add("TenderNumber", "TenderNumber");
             tableMapping.ColumnMappings.Add("ProjectName", "ProjectName");
-            tableMapping.ColumnMappings.Add("ItemName", "ItemName");
             tableMapping.ColumnMappings.Add("Quantity", "Quantity");
             tableMapping.ColumnMappings.Add("Ordered", "Ordered");
+            tableMapping.ColumnMappings.Add("id_purchase_tender", "id_purchase_tender");
+            tableMapping.ColumnMappings.Add("status", "status");
+            tableMapping.ColumnMappings.Add("Supplier", "Supplier");
+            tableMapping.ColumnMappings.Add("PurchaseCondition", "PurchaseCondition");
+            tableMapping.ColumnMappings.Add("Contract", "Contract");
+            tableMapping.ColumnMappings.Add("ItemDescription", "ItemDescription");
+            tableMapping.ColumnMappings.Add("Cost", "Cost");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -3932,17 +4124,28 @@ group by s.id_purchase_invoice, vatco.id_vat_group
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
+            this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select pt.name as TenderName,pt.number AS TenderNumber,projects.name AS ProjectName,
-items.name as ItemName,pti.quantity as Quantity,ptd.quantity as Ordered
-from purchase_tender pt
-inner join purchase_tender_item pti on pt.id_purchase_tender=pti.id_purchase_tender
-inner join purchase_tender_detail ptd on ptd.id_purchase_tender_item=pti.id_purchase_tender_item
-left outer join items on pti.id_item=items.id_item
-left outer join projects on pt.id_project=projects.id_project
-where (pt.trans_date >= @StartDate) AND (pt.trans_date <= @EndDate)";
+            this._commandCollection[0].CommandText = @" select pt.id_purchase_tender, pt.status, pt.name as TenderName, pt.number AS TenderNumber, projects.name AS ProjectName,
+
+ c.name as Supplier, condi.name as PurchaseCondition, contract.name as Contract, 
+ pti.item_description as ItemDescription, ptd.unit_cost as Cost,
+ pti.quantity as Quantity, pod.quantity as Ordered 
+
+ from purchase_tender pt
+ inner join purchase_tender_contact as ptc on pt.id_purchase_tender = ptc.id_purchase_tender 
+ 
+ inner join contacts as c on ptc.id_contact = c.id_contact
+ inner join app_contract as contract on ptc.id_contract = contract.id_contract
+ inner join app_condition as condi on contract.id_condition = condi.id_condition
+
+ inner join purchase_tender_detail as ptd on ptd.id_purchase_tender_contact = ptc.id_purchase_tender_contact
+ left join purchase_order_detail as pod on ptd.id_purchase_tender_detail = pod.id_purchase_tender_detail
+ inner join purchase_tender_item as pti on ptd.id_purchase_tender_item = pti.id_purchase_tender_item
+ left join items as i on pti.id_item = i.id_item
+ left outer join projects on pt.id_project = projects.id_project
+ where pt.trans_date >= @StartDate and pt.trans_date <= @EndDate and pt.id_company = @CompanyID";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -3958,50 +4161,24 @@ where (pt.trans_date >= @StartDate) AND (pt.trans_date <= @EndDate)";
             param.IsNullable = true;
             param.SourceColumn = "trans_date";
             this._commandCollection[0].Parameters.Add(param);
-            this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"select pt.name as TenderName,pt.number AS TenderNumber,projects.name AS ProjectName,
-items.name as ItemName,pti.quantity as Quantity,ptd.quantity as Ordered
-from purchase_tender pt
-inner join purchase_tender_item pti on pt.id_purchase_tender=pti.id_purchase_tender
-inner join purchase_tender_detail ptd on ptd.id_purchase_tender_item=pti.id_purchase_tender_item
-left outer join items on pti.id_item=items.id_item
-left outer join projects on pt.id_project=projects.id_project
-where (pt.trans_date >= @StartDate) AND (pt.trans_date <= @EndDate) AND pt.id_branch = @BranchID
-
-";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@StartDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@EndDate";
-            param.DbType = global::System.Data.DbType.DateTime;
-            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.DateTime;
-            param.IsNullable = true;
-            param.SourceColumn = "trans_date";
-            this._commandCollection[1].Parameters.Add(param);
-            param = new global::MySql.Data.MySqlClient.MySqlParameter();
-            param.ParameterName = "@BranchID";
+            param.ParameterName = "@CompanyID";
             param.DbType = global::System.Data.DbType.Int32;
             param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Int32;
             param.IsNullable = true;
-            param.SourceColumn = "id_branch";
-            this._commandCollection[1].Parameters.Add(param);
+            param.SourceColumn = "id_company";
+            this._commandCollection[0].Parameters.Add(param);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillBy(PurchaseDS.PurchaseTenderSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual int FillByDates(PurchaseDS.PurchaseTenderSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -4013,40 +4190,11 @@ where (pt.trans_date >= @StartDate) AND (pt.trans_date <= @EndDate) AND pt.id_br
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual PurchaseDS.PurchaseTenderSummaryDataTable GetDataBy(System.DateTime StartDate, System.DateTime EndDate) {
+        public virtual PurchaseDS.PurchaseTenderSummaryDataTable GetDataByDates(System.DateTime StartDate, System.DateTime EndDate, int CompanyID) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
             this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            PurchaseDS.PurchaseTenderSummaryDataTable dataTable = new PurchaseDS.PurchaseTenderSummaryDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByBranch(PurchaseDS.PurchaseTenderSummaryDataTable dataTable, System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual PurchaseDS.PurchaseTenderSummaryDataTable GetDataByBranch(System.DateTime StartDate, System.DateTime EndDate, int BranchID) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(StartDate));
-            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(EndDate));
-            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(BranchID));
+            this.Adapter.SelectCommand.Parameters[2].Value = ((int)(CompanyID));
             PurchaseDS.PurchaseTenderSummaryDataTable dataTable = new PurchaseDS.PurchaseTenderSummaryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

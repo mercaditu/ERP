@@ -9,7 +9,7 @@
     <Shape ID="DesignTable:PurchaseVatReport" ZOrder="3" X="27" Y="22" Height="94" Width="300" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="0" OldDataTableHeight="178" SplitterPosition="24" />
     <Shape ID="DesignTable:PurchaseInvoiceSummary" ZOrder="1" X="477" Y="25" Height="94" Width="206" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="24" OldDataTableHeight="235" SplitterPosition="24" />
     <Shape ID="DesignTable:PurchaseOrderSummary" ZOrder="4" X="697" Y="25" Height="94" Width="300" AdapterExpanded="true" DataTableExpanded="false" OldAdapterHeight="24" OldDataTableHeight="254" SplitterPosition="25" />
-    <Shape ID="DesignTable:PurchaseTenderSummary" ZOrder="2" X="28" Y="129" Height="111" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="21" />
+    <Shape ID="DesignTable:PurchaseTenderSummary" ZOrder="2" X="28" Y="129" Height="305" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

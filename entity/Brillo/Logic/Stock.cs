@@ -86,7 +86,7 @@ namespace entity.Brillo.Logic
                                                      detail.app_location,
                                                      detail.quantity,
                                                      sales_invoice.trans_date,
-                                                     comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact.name)
+                                                     comment_Generator(App.Names.SalesInvoice, sales_invoice.number, sales_invoice.contact != null ? sales_invoice.contact.name : "")
                                                      ));
                         }
                     }

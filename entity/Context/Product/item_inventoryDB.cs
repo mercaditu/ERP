@@ -114,10 +114,10 @@ namespace entity
 
                 foreach (item_inventory_detail item_inventory_detail in item_inventory.item_inventory_detail)
                 {
-                    if (item_inventory_detail.item_product.item.name.Contains("KIT KAT 4 FINGER"))
-                    {
-                        NumberOfRecords = NumberOfRecords;
-                    }
+                    //if (item_inventory_detail.item_product.item.name.Contains("KIT KAT 4 FINGER"))
+                    //{
+                    //    NumberOfRecords = NumberOfRecords;
+                    //}
 
                     if (item_inventory_detail.item_inventory_dimension.Count() > 0)
                     {
@@ -146,7 +146,6 @@ namespace entity
                             item_movement_dimension item_movement_dimension = new item_movement_dimension();
                             item_movement_dimension.value = item_inventory_dimension.value;
                             item_movement_dimension.id_dimension = item_inventory_dimension.id_dimension;
-                            //item_movement_dimension.id_measurement = item_inventory_dimension.id_measurement;
                             item_movement.item_movement_dimension.Add(item_movement_dimension);
                         }
 

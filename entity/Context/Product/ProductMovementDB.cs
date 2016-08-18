@@ -84,8 +84,6 @@ namespace entity
                 {
                     PurchaseDB.Insert_Items_2_Movement(purchase);
                     PurchaseDB.SaveChanges();
-
-
                 }
 
                 if (purchase.is_impex)
@@ -96,9 +94,6 @@ namespace entity
                         ImpexDB.ApproveImport();
                     }
                 }
-              
-
-
             }
 
 
@@ -108,53 +103,58 @@ namespace entity
 
             foreach (DateTime day in EachDay(StartDate, EndDate))
             {
-                ///Inventory
-                using (InventoryDB InventoryDB = new InventoryDB())
+                if (base.item_inventory.Any(x => x.trans_date == day.Date))
                 {
-
-                    List<item_inventory> item_inventoryLIST = InventoryDB.item_inventory.Where(x =>
-                            x.id_company == CurrentSession.Id_Company && x.trans_date == day.Date &&
-                            x.status == Status.Documents.Issued).ToList();
-                    foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
+                    ///Inventory
+                    using (InventoryDB InventoryDB = new InventoryDB())
                     {
-                        if (inventory.status == Status.Documents.Issued)
+                        List<item_inventory> item_inventoryLIST = InventoryDB.item_inventory.Where(x =>
+                                x.id_company == CurrentSession.Id_Company
+                                && x.trans_date.Day == day.Day && x.trans_date.Month == day.Month &&
+                                x.status == Status.Documents.Issued).ToList();
+                        foreach (item_inventory inventory in item_inventoryLIST.OrderBy(y => y.trans_date))
                         {
-                            inventory.status = Status.Documents.Pending;
-                            inventory.IsSelected = true;
-                        }
-
-                        foreach (item_inventory_detail item_inventory_detail in inventory.item_inventory_detail)
-                        {
-                            if (item_inventory_detail.value_counted > 0)
+                            if (inventory.status == Status.Documents.Issued)
                             {
-                                item_inventory_detail.IsSelected = true;
+                                inventory.status = Status.Documents.Pending;
+                                inventory.IsSelected = true;
                             }
+
+                            foreach (item_inventory_detail item_inventory_detail in inventory.item_inventory_detail)
+                            {
+                                if (item_inventory_detail.value_counted > 0)
+                                {
+                                    item_inventory_detail.IsSelected = true;
+                                }
+                            }
+                            InventoryDB.Approve();
                         }
-                        InventoryDB.Approve();
                     }
                 }
 
-
-                ///Transfers & Movement
-                using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
+                if (base.item_transfer.Any(x => x.trans_date == day.Date))
                 {
-                    List<item_transfer> item_transferLIST = ProductTransferDB.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company
-                        && x.trans_date == day.Date
-                        && x.status == Status.Transfer.Approved).ToList();
-                    foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
+                    ///Transfers & Movement
+                    using (ProductTransferDB ProductTransferDB = new ProductTransferDB())
                     {
-                        transfer.IsSelected = true;
-                        foreach (item_transfer_detail detail in transfer.item_transfer_detail)
+                        List<item_transfer> item_transferLIST = ProductTransferDB.item_transfer.Where(x => x.id_company == CurrentSession.Id_Company
+                            && x.trans_date.Day == day.Day && x.trans_date.Month == day.Month
+                            && x.status == Status.Transfer.Approved).ToList();
+                        foreach (item_transfer transfer in item_transferLIST.OrderBy(y => y.trans_date))
                         {
-                            detail.status = Status.Documents_General.Pending;
-                            detail.IsSelected = true;
+                            transfer.IsSelected = true;
+                            foreach (item_transfer_detail detail in transfer.item_transfer_detail)
+                            {
+                                detail.status = Status.Documents_General.Pending;
+                                detail.IsSelected = true;
+                            }
+
+                            ProductTransferDB.SaveChanges();
+                            ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+                            ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
+
+                            transfer.IsSelected = false;
                         }
-
-                        ProductTransferDB.SaveChanges();
-                        ProductTransferDB.ApproveOrigin(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
-                        ProductTransferDB.ApproveDestination(transfer.app_branch_origin.id_branch, transfer.app_branch_destination.id_branch, false);
-
-                        transfer.IsSelected = false;
                     }
                 }
             }

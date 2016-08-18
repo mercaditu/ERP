@@ -8311,17 +8311,17 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "oice, \n\tsum(sd.quantity) AS Quantity, \n    \n    round(sum(sd.quantity * sd.unit_" +
                 "price * vatco.coef),4) as SubTotalVAT,\n\tround(sum(sd.quantity * sd.discount * va" +
                 "tco.coef),4) as SubTotalDiscountVAT,\n    round(sum(sd.quantity * sd.unit_cost * " +
-                "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_cost * vatco" +
-                ".vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as S" +
-                "ubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\tround((su" +
-                "m(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum(s" +
+                "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_price * vatc" +
+                "o.vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as " +
+                "SubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\tround((s" +
+                "um(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum(" +
+                "sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vat" +
+                "co.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum(" +
+                "sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vat" +
+                "co.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(s" +
                 "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
-                "o.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum(s" +
-                "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
-                "o.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(sd" +
-                ".quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco" +
-                ".coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contacts as con" +
-                "tact ON s.id_contact = contact.id_contact \n         INNER JOIN \n         app_bra" +
+                "o.coef)) as Profit\n   \n\nfrom  sales_invoice s inner join\n         contacts as co" +
+                "ntact ON s.id_contact = contact.id_contact \n         inner join\n         app_bra" +
                 "nch as branch on s.id_branch = branch.id_branch\n         inner join \n         sa" +
                 "les_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n         LEFT" +
                 " OUTER JOIN \n         items i ON i.id_item = sd.id_item \n         left outer joi" +
@@ -8364,29 +8364,29 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "oice, \n\tsum(sd.quantity) AS Quantity, \n    \n    round(sum(sd.quantity * sd.unit_" +
                 "price * vatco.coef),4) as SubTotalVAT,\n\tround(sum(sd.quantity * sd.discount * va" +
                 "tco.coef),4) as SubTotalDiscountVAT,\n    round(sum(sd.quantity * sd.unit_cost * " +
-                "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_cost * vatco" +
-                ".vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as S" +
-                "ubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\tround((su" +
-                "m(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum(s" +
+                "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_price * vatc" +
+                "o.vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as " +
+                "SubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\tround((s" +
+                "um(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum(" +
+                "sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vat" +
+                "co.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum(" +
+                "sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vat" +
+                "co.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(s" +
                 "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
-                "o.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum(s" +
-                "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
-                "o.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(sd" +
-                ".quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco" +
-                ".coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contacts as con" +
-                "tact ON s.id_contact = contact.id_contact \n         INNER JOIN \n         app_bra" +
-                "nch as branch on s.id_branch = branch.id_branch\n         inner join \n         sa" +
-                "les_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n         LEFT" +
-                " OUTER JOIN \n         items i ON i.id_item = sd.id_item \n         left outer joi" +
-                "n\n         payment_schedual as schedual on s.id_sales_invoice = schedual.id_sale" +
-                "s_invoice\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_gr" +
-                "oup, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n     " +
-                "       FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_d" +
-                "etails ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT O" +
-                "UTER JOIN \n                     app_vat ON app_vat_group_details.id_vat = app_va" +
-                "t.id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_" +
-                "group = sd.id_vat_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <=" +
-                " @EndDate) \ngroup by s.id_sales_invoice\norder by s.trans_date";
+                "o.coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contacts as co" +
+                "ntact ON s.id_contact = contact.id_contact \n         INNER JOIN \n         app_br" +
+                "anch as branch on s.id_branch = branch.id_branch\n         inner join \n         s" +
+                "ales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n         LEF" +
+                "T OUTER JOIN \n         items i ON i.id_item = sd.id_item \n         left outer jo" +
+                "in\n         payment_schedual as schedual on s.id_sales_invoice = schedual.id_sal" +
+                "es_invoice\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_g" +
+                "roup, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n    " +
+                "        FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_" +
+                "details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT " +
+                "OUTER JOIN \n                     app_vat ON app_vat_group_details.id_vat = app_v" +
+                "at.id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat" +
+                "_group = sd.id_vat_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <" +
+                "= @EndDate) \ngroup by s.id_sales_invoice\norder by s.trans_date";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";

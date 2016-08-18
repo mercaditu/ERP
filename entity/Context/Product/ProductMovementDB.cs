@@ -103,7 +103,7 @@ namespace entity
 
             foreach (DateTime day in EachDay(StartDate, EndDate))
             {
-                if (base.item_inventory.Any(x => x.trans_date == day.Date))
+                if (base.item_inventory.Any(x => x.trans_date.Day == day.Day && x.trans_date.Month == day.Month))
                 {
                     ///Inventory
                     using (InventoryDB InventoryDB = new InventoryDB())
@@ -132,7 +132,7 @@ namespace entity
                     }
                 }
 
-                if (base.item_transfer.Any(x => x.trans_date == day.Date))
+                if (base.item_transfer.Any(x => x.trans_date.Day == day.Day && x.trans_date.Month == day.Month))
                 {
                     ///Transfers & Movement
                     using (ProductTransferDB ProductTransferDB = new ProductTransferDB())

@@ -18,17 +18,14 @@ namespace Cognitivo.Sales
         /// <summary>
         /// Context
         /// </summary>
-        ICollection<sales_invoice> SalesInvoiceList { get; set; }
-        ICollection<payment> PaymentList { get; set; }
-
+        SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
+        PaymentDB PaymentDB = new PaymentDB();
         entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
-
         /// <summary>
         /// CollectionViewSource
         /// </summary>
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource paymentViewSource;
-        CollectionViewSource payment_typeViewSource;
         CollectionViewSource app_currencyViewSource;
 
         public PointOfSale()
@@ -69,11 +66,10 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
-
             /// VALIDATIONS...
             /// 
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
-            if (sales_invoice.id_contact == 0)
+            if (sales_invoice.contact == null)
             {
                 tabContact.Focus();
                 return;
@@ -96,59 +92,40 @@ namespace Cognitivo.Sales
             }
 
             /// If all validation is met, then we can start Sales Process.
-           
+            if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
+            {
                 ///Approve Sales Invoice.
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
-                using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
-                {
-                    sales_invoice.status = Status.Documents_General.Pending;
-                    sales_invoice.State = EntityState.Added;
-                    sales_invoice.IsSelected = true;
-                    SalesInvoiceDB.sales_invoice.Add(sales_invoice);
-                    SalesInvoiceDB.Approve(true);
-                }
+                SalesInvoiceDB.Approve(true);
 
-                using (PaymentDB PaymentDB = new PaymentDB())
-                {
-                    int id_payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault().id_payment_schedual;
-                    PaymentDB.Approve(id_payment_schedual, (bool)chkreceipt.IsChecked);
-                }
+                payment_schedual payment_schedual = SalesInvoiceDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault();
+                PaymentDB.Approve(payment_schedual.id_payment_schedual, (bool)chkreceipt.IsChecked);
 
                 //Start New Sale
-                NewSale();
-            
+                New_Sale_Payment();
+            }
         }
 
-        private void NewSale()
+        private void New_Sale_Payment()
         {
             ///Creating new SALES INVOICE for upcomming sale. 
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
+            sales_invoice sales_invoice = SalesInvoiceDB.New(0, false);
+            SalesInvoiceDB.sales_invoice.Add(sales_invoice);
 
-            sales_invoice sales_invoice = new sales_invoice();
-
-            using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
-            {
-                sales_invoice = SalesInvoiceDB.New(0, false);
-            }
-
-            SalesInvoiceList.Add(sales_invoice);
-
-            sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
-            sales_invoiceViewSource.Source = SalesInvoiceList;
+            sales_invoiceViewSource = ((CollectionViewSource)(FindResource("sales_invoiceViewSource")));
+            sales_invoiceViewSource.Source = SalesInvoiceDB.sales_invoice.Local;
             sales_invoiceViewSource.View.MoveCurrentTo(sales_invoice);
 
+            PaymentDB = new PaymentDB();
             ///Creating new PAYMENT for upcomming sale. 
-            payment payment = new payment();
-            using (PaymentDB PaymentDB = new PaymentDB())
-            {
-                payment = PaymentDB.New(true);
-                payment.id_currencyfx = sales_invoice.id_currencyfx;
-                PaymentList.Add(payment);
-            }
+            payment payment = PaymentDB.New(true);
+            payment.id_currencyfx = sales_invoice.id_currencyfx;
+            PaymentDB.payments.Add(payment);
 
-            paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
-            paymentViewSource.Source = PaymentList;
+            paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
+            paymentViewSource.Source = PaymentDB.payments.Local;
             paymentViewSource.View.MoveCurrentTo(payment);
 
             tabContact.Focus();
@@ -163,17 +140,11 @@ namespace Cognitivo.Sales
         {
             if (sbxContact.ContactID > 0)
             {
-                contact contact = new contact();
-
-                using (db db = new db())
-                {
-                    contact = db.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
-                }
-
-                sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                contact contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                payment payment = (payment)paymentViewSource.View.CurrentItem as payment;
                 sales_invoice.id_contact = contact.id_contact;
-
-                payment payment = paymentViewSource.View.CurrentItem as payment;
+                sales_invoice.contact = contact;
                 payment.id_contact = contact.id_contact;
             }
         }
@@ -184,15 +155,9 @@ namespace Cognitivo.Sales
             {
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
 
-                if (sales_invoice != null)
-                {
-                    item item = new item();
-                    using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
-                    {
-                        item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
-                        SalesInvoiceDB.Select_Item(ref sales_invoice, item, false);
-                    }
-                }
+                item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
+
+                SalesInvoiceDB.Select_Item(ref sales_invoice, item, false);
 
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
@@ -206,33 +171,28 @@ namespace Cognitivo.Sales
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            SalesInvoiceList = new List<sales_invoice>();
-            PaymentList = new List<payment>();
-
             ///This code will create a new Sale & Payment Information.
-            NewSale();
-
-            payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
+            New_Sale_Payment();
 
             //PAYMENT TYPE
-            using (db db = new db())
-            {
-                if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
-                {
-                    if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
-                    {
-                        btnAccount_Click(sender, e);
-                        frmaccount.Refresh();
-                    }
-                }
+            SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
+            CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
+            payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
 
-                db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
-                payment_typeViewSource.Source = db.payment_type.Local;
-            }
+            cbxSalesRep.ItemsSource = SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList(); //CurrentSession.Get_SalesRep();
 
-            cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep(); //SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList(); //
             app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = CurrentSession.Get_Currency();
+
+            int Id_Account = CurrentSession.Id_Account;
+            if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+            {
+                if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
+                {
+                    btnAccount_Click(sender, e);
+                    frmaccount.Refresh();
+                }
+            }
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -261,19 +221,10 @@ namespace Cognitivo.Sales
 
         private void Cancel_MouseDown(object sender, EventArgs e)
         {
-            sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            if (sales_invoice != null)
-            {
-                SalesInvoiceList.Remove(sales_invoice);
-            }
+            SalesInvoiceDB.CancelAllChanges();
+            PaymentDB.CancelAllChanges();
 
-            payment payment = paymentViewSource.View.CurrentItem as payment;
-            if (payment != null)
-            {
-                PaymentList.Remove(payment);
-            }
-
-            NewSale();
+            New_Sale_Payment();
 
             //Clean up Contact Data.
             sbxContact.Text = "";

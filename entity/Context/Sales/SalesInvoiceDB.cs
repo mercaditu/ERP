@@ -21,7 +21,7 @@ namespace entity
             
             //Navigation Properties
             sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
-            sales_invoice.id_currencyfx = Brillo.Currency.get_DefaultFX(this).id_currencyfx;
+        
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
 
             //This is to skip query code in case of Migration. Helps speed up migrations.

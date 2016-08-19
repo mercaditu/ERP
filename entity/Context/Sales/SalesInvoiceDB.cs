@@ -268,9 +268,10 @@ namespace entity
                 sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
                 _sales_invoice_detail.State = EntityState.Added;
                 _sales_invoice_detail.sales_invoice = sales_invoice;
-                
+
+                _sales_invoice_detail.CurrencyFX_ID = sales_invoice.id_currencyfx;
                 _sales_invoice_detail.Contact = sales_invoice.contact;
-                _sales_invoice_detail.item_description = item.description;
+                _sales_invoice_detail.item_description = item.name;
                 _sales_invoice_detail.item = item;
                 _sales_invoice_detail.id_item = item.id_item;
 

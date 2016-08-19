@@ -37,7 +37,7 @@ namespace cntrl.Curd
             paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
             payment_schedualList = _payment_schedualList;
-            payment payment = PaymentDB.New();
+            payment payment = PaymentDB.New(true);
             PaymentDB.payments.Add(payment);
             paymentViewSource.Source = PaymentDB.payments.Local;
             if (Mode == Modes.Recievable)

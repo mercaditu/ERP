@@ -35,18 +35,22 @@ namespace cntrl.Curd
             paymentViewSource = (CollectionViewSource)this.FindResource("paymentViewSource");
             paymentpayment_detailViewSource = (CollectionViewSource)this.FindResource("paymentpayment_detailViewSource");
             payment_schedualList = _payment_schedualList;
-            payment payment = PaymentDB.New();
-            PaymentDB.payments.Add(payment);
-            paymentViewSource.Source = PaymentDB.payments.Local;
-            
+
+            payment payment = new payment();
+
             if (Mode == Modes.Recievable)
             {
+                payment = PaymentDB.New(true);
                 payment.GrandTotal = payment_schedualList.Sum(x => x.AccountReceivableBalance);
             }
             else
             {
+                payment = PaymentDB.New(false);
                 payment.GrandTotal = payment_schedualList.Sum(x => x.AccountPayableBalance);
             }
+
+            PaymentDB.payments.Add(payment);
+            paymentViewSource.Source = PaymentDB.payments.Local;
 
             int id_contact = payment_schedualList.FirstOrDefault().id_contact;
             

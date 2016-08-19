@@ -21,7 +21,7 @@ namespace entity.Brillo.Promotion
             }
         }
 
-        public void Calculate_SalesInvoice(ref sales_invoice SalesInvoice, ref SalesInvoiceDB SalesInvoiceDB)
+        public void Calculate_SalesInvoice(ref sales_invoice SalesInvoice)
         {
             Invoice Invoice = new Invoice();
             Invoice.Contact = SalesInvoice.contact;
@@ -66,10 +66,13 @@ namespace entity.Brillo.Promotion
                                 }
 
                                 sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
-                                //sales_invoice_detail.CurrencyFX_ID = SalesInvoice.id_currencyfx;
-                                //sales_invoice_detail.Contact = SalesInvoice.contact;
-                                sales_invoice_detail.id_vat_group = SalesInvoiceDB.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault().id_vat_group;
-                                sales_invoice_detail.item = SalesInvoiceDB.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+
+                                using (db db = new db())
+                                {
+                                    sales_invoice_detail.id_vat_group = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault().id_vat_group;
+                                    sales_invoice_detail.item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                                }
+
                                 sales_invoice_detail.id_item = Promo.reference_bonus;
                                 sales_invoice_detail.item_description = sales_invoice_detail.item.name;
                                 sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);

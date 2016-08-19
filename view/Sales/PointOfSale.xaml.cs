@@ -18,16 +18,17 @@ namespace Cognitivo.Sales
         /// <summary>
         /// Context
         /// </summary>
-
-        List<sales_invoice> SalesInvoiceList = new List<sales_invoice>();
-        List<payment> PaymentsList = new List<payment>();
+        ICollection<sales_invoice> SalesInvoiceList { get; set; }
+        ICollection<payment> PaymentList { get; set; }
 
         entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
+        
         /// <summary>
         /// CollectionViewSource
         /// </summary>
         CollectionViewSource sales_invoiceViewSource;
         CollectionViewSource paymentViewSource;
+        CollectionViewSource payment_typeViewSource;
         CollectionViewSource app_currencyViewSource;
 
         public PointOfSale()
@@ -68,6 +69,7 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
+            
             /// VALIDATIONS...
             /// 
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
@@ -99,10 +101,9 @@ namespace Cognitivo.Sales
                 ///Approve Sales Invoice.
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
-
                 using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
                 {
-                    SalesInvoiceDB.sales_invoice.Add();
+                    SalesInvoiceDB.sales_invoice.Add(sales_invoice);
                     SalesInvoiceDB.Approve(true); 
                 }
 
@@ -139,11 +140,11 @@ namespace Cognitivo.Sales
             {
                 payment = PaymentDB.New(true);
                 payment.id_currencyfx = sales_invoice.id_currencyfx;
-                PaymentsList.Add(payment);
+                PaymentList.Add(payment);
             }
            
             paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
-            paymentViewSource.Source = PaymentsList;
+            paymentViewSource.Source = PaymentList;
             paymentViewSource.View.MoveCurrentTo(payment);
 
             tabContact.Focus();
@@ -201,28 +202,33 @@ namespace Cognitivo.Sales
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            SalesInvoiceList = new List<sales_invoice>();
+            PaymentList = new List<payment>();
+
             ///This code will create a new Sale & Payment Information.
             NewSale();
 
+            payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
+
             //PAYMENT TYPE
-            SalesInvoiceDB.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
-            CollectionViewSource payment_typeViewSource = (CollectionViewSource)this.FindResource("payment_typeViewSource");
-            payment_typeViewSource.Source = SalesInvoiceDB.payment_type.Local;
+            using (db db = new db())
+            {
+                if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
+                {
+                    if (db.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
+                    {
+                        btnAccount_Click(sender, e);
+                        frmaccount.Refresh();
+                    }
+                }
+
+                db.payment_type.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company && a.payment_behavior == payment_type.payment_behaviours.Normal).Load();
+                payment_typeViewSource.Source = db.payment_type.Local;
+            }
 
             cbxSalesRep.ItemsSource = CurrentSession.Get_SalesRep(); //SalesInvoiceDB.sales_rep.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company).ToList(); //
-            
             app_currencyViewSource = (CollectionViewSource)this.FindResource("app_currencyViewSource");
             app_currencyViewSource.Source = CurrentSession.Get_Currency();
-
-            int Id_Account = CurrentSession.Id_Account;
-            if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault() != null)
-            {
-                if (SalesInvoiceDB.app_account.Where(x => x.id_account == CurrentSession.Id_Account).FirstOrDefault().is_active == false)
-                {
-                    btnAccount_Click(sender, e);
-                    frmaccount.Refresh();
-                }
-            }
         }
 
         private void Page_KeyDown(object sender, KeyEventArgs e)
@@ -260,7 +266,7 @@ namespace Cognitivo.Sales
             payment payment = paymentViewSource.View.CurrentItem as payment;
             if (payment != null)
             {
-                PaymentsList.Remove(payment);
+                PaymentList.Remove(payment);
             }
 
             NewSale();
@@ -439,7 +445,7 @@ namespace Cognitivo.Sales
         private void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            StartPromo.Calculate_SalesInvoice(ref sales_invoice, ref SalesInvoiceDB);
+            StartPromo.Calculate_SalesInvoice(ref sales_invoice);
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
 
             sales_invoicesales_invoice_detailViewSource.View.Refresh();

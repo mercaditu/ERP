@@ -72,7 +72,7 @@ namespace Cognitivo.Reporting.Views
                 item_tag item_tag = cbxTag.SelectedItem as item_tag;
                 if (app_branch != null && item_tag != null)
                 {
-                    dt = SalesByItemTableAdapter.GetDataByBranchNTag(StartDate, EndDate, app_branch.id_branch, item_tag.id_tag);
+                    dt = SalesByItemTableAdapter.GetDataByBranchNTag(StartDate, EndDate, app_branch.id_branch,CurrentSession.Id_Company, item_tag.id_tag);
                 }   
             }
             else if (chbxBranch.IsChecked == false && chbxTag.IsChecked == true)
@@ -80,7 +80,7 @@ namespace Cognitivo.Reporting.Views
                 item_tag item_tag = cbxTag.SelectedItem as item_tag;
                 if (item_tag != null)
                 {
-                    dt = SalesByItemTableAdapter.GetDataByTag(StartDate, EndDate, item_tag.id_tag);
+                    dt = SalesByItemTableAdapter.GetDataByTag(StartDate, EndDate,CurrentSession.Id_Company, item_tag.id_tag);
                 }   
             }
             else if (chbxBranch.IsChecked == true && chbxTag.IsChecked == false)
@@ -88,12 +88,12 @@ namespace Cognitivo.Reporting.Views
                 app_branch app_branch = cbxBranch.SelectedItem as app_branch;
                 if (app_branch != null)
                 {
-                    dt = SalesByItemTableAdapter.GetDataByBranch(StartDate, EndDate, app_branch.id_branch);
+                    dt = SalesByItemTableAdapter.GetDataByBranch(StartDate, EndDate, CurrentSession.Id_Company, app_branch.id_branch);
                 }
             }  
             else
             {
-                dt = SalesByItemTableAdapter.GetDataByGeneral(StartDate, EndDate);
+                dt = SalesByItemTableAdapter.GetDataByGeneral(StartDate, EndDate, CurrentSession.Id_Company);
             }
 
             reportDataSource1.Name = "SalesByItem"; //Name of the report dataset in our .RDLC file

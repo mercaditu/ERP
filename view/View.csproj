@@ -770,26 +770,8 @@
     <Compile Include="HumanResource\Clock.xaml.cs">
       <DependentUpon>Clock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HumanResource\Contract.xaml.cs">
-      <DependentUpon>Contract.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HumanResource\CurrentAccount.xaml.cs">
-      <DependentUpon>CurrentAccount.xaml</DependentUpon>
-    </Compile>
     <Compile Include="HumanResource\Employee.xaml.cs">
       <DependentUpon>Employee.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HumanResource\Liquidate.xaml.cs">
-      <DependentUpon>Liquidate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HumanResource\Payroll.xaml.cs">
-      <DependentUpon>Payroll.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HumanResource\Position.xaml.cs">
-      <DependentUpon>Position.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HumanResource\Training.xaml.cs">
-      <DependentUpon>Training.xaml</DependentUpon>
     </Compile>
     <Compile Include="Menu\ApplicationWindow.xaml.cs">
       <DependentUpon>ApplicationWindow.xaml</DependentUpon>
@@ -1877,31 +1859,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HumanResource\Contract.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HumanResource\CurrentAccount.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="HumanResource\Employee.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HumanResource\Liquidate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HumanResource\Payroll.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HumanResource\Position.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HumanResource\Training.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

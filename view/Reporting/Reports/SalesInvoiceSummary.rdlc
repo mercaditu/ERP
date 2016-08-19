@@ -2654,7 +2654,7 @@
         <Top>2.47222in</Top>
         <Left>0.3175cm</Left>
         <Height>1.25in</Height>
-        <Width>11.53125in</Width>
+        <Width>11.53124in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -2707,6 +2707,8 @@
                   </ChartDataPointValues>
                   <ChartDataLabel>
                     <Style />
+                    <UseValueAsLabel>true</UseValueAsLabel>
+                    <Visible>true</Visible>
                   </ChartDataLabel>
                   <Style />
                   <ChartMarker>
@@ -2715,8 +2717,6 @@
                   <DataElementOutput>Output</DataElementOutput>
                 </ChartDataPoint>
               </ChartDataPoints>
-              <Type>Area</Type>
-              <Subtype>Smooth</Subtype>
               <Style />
               <ChartEmptyPoints>
                 <Style />

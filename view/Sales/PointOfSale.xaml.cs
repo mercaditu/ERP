@@ -22,7 +22,7 @@ namespace Cognitivo.Sales
         ICollection<payment> PaymentList { get; set; }
 
         entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
-        
+
         /// <summary>
         /// CollectionViewSource
         /// </summary>
@@ -69,11 +69,11 @@ namespace Cognitivo.Sales
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceViewSource.View.CurrentItem as sales_invoice;
             payment payment = paymentViewSource.View.CurrentItem as payment;
-            
+
             /// VALIDATIONS...
             /// 
             /// Validates if Contact is not assigned, then it will take user to the Contact Tab.
-            if (sales_invoice.contact == null)
+            if (sales_invoice.id_contact == 0)
             {
                 tabContact.Focus();
                 return;
@@ -96,39 +96,43 @@ namespace Cognitivo.Sales
             }
 
             /// If all validation is met, then we can start Sales Process.
-            if (sales_invoice.contact != null && sales_invoice.sales_invoice_detail.Count > 0)
-            {
+           
                 ///Approve Sales Invoice.
                 ///Note> Approve includes Save Logic. No need to seperately Save.
                 ///Plus we are passing True as default because in Point of Sale, we will always discount Stock.
                 using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
                 {
+                    sales_invoice.status = Status.Documents_General.Pending;
+                    sales_invoice.State = EntityState.Added;
+                    sales_invoice.IsSelected = true;
                     SalesInvoiceDB.sales_invoice.Add(sales_invoice);
-                    SalesInvoiceDB.Approve(true); 
+                    SalesInvoiceDB.Approve(true);
                 }
 
-                using(PaymentDB PaymentDB = new PaymentDB())
-	            {
-		            int id_payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault().id_payment_schedual;
+                using (PaymentDB PaymentDB = new PaymentDB())
+                {
+                    int id_payment_schedual = PaymentDB.payment_schedual.Where(x => x.id_sales_invoice == sales_invoice.id_sales_invoice && x.debit > 0).FirstOrDefault().id_payment_schedual;
                     PaymentDB.Approve(id_payment_schedual, (bool)chkreceipt.IsChecked);
-	            }
+                }
 
                 //Start New Sale
                 NewSale();
-            }
+            
         }
 
         private void NewSale()
         {
             ///Creating new SALES INVOICE for upcomming sale. 
             ///TransDate = 0 because in Point of Sale we are assuming sale will always be done today.
-            
+
             sales_invoice sales_invoice = new sales_invoice();
+
             using (SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB())
             {
                 sales_invoice = SalesInvoiceDB.New(0, false);
-                SalesInvoiceList.Add(sales_invoice);
             }
+
+            SalesInvoiceList.Add(sales_invoice);
 
             sales_invoiceViewSource = FindResource("sales_invoiceViewSource") as CollectionViewSource;
             sales_invoiceViewSource.Source = SalesInvoiceList;
@@ -142,7 +146,7 @@ namespace Cognitivo.Sales
                 payment.id_currencyfx = sales_invoice.id_currencyfx;
                 PaymentList.Add(payment);
             }
-           
+
             paymentViewSource = FindResource("paymentViewSource") as CollectionViewSource;
             paymentViewSource.Source = PaymentList;
             paymentViewSource.View.MoveCurrentTo(payment);
@@ -422,7 +426,7 @@ namespace Cognitivo.Sales
             payment.payment_detail.Add(payment_detail);
         }
 
-     
+
 
         private void Clear_MouseDown(object sender, EventArgs e)
         {
@@ -449,7 +453,7 @@ namespace Cognitivo.Sales
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
 
             sales_invoicesales_invoice_detailViewSource.View.Refresh();
-            
+
         }
     }
 }

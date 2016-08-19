@@ -742,8 +742,6 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnSubTotalDiscountVAT;
             
-            private global::System.Data.DataColumn columnPaymentBalance;
-            
             private global::System.Data.DataColumn columnSupplier;
             
             private global::System.Data.DataColumn columnInvoiceNumber;
@@ -829,14 +827,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PaymentBalanceColumn {
-                get {
-                    return this.columnPaymentBalance;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn SupplierColumn {
                 get {
                     return this.columnSupplier;
@@ -912,7 +902,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseInvoiceSummaryRow AddPurchaseInvoiceSummaryRow(string Branch, int Status, string InvoiceDate, decimal Quantity, decimal SubTotalDiscountVAT, decimal PaymentBalance, string Supplier, string InvoiceNumber, decimal Total, decimal TotalVAT, decimal VATTotal) {
+            public PurchaseInvoiceSummaryRow AddPurchaseInvoiceSummaryRow(string Branch, int Status, string InvoiceDate, decimal Quantity, decimal SubTotalDiscountVAT, string Supplier, string InvoiceNumber, decimal Total, decimal TotalVAT, decimal VATTotal) {
                 PurchaseInvoiceSummaryRow rowPurchaseInvoiceSummaryRow = ((PurchaseInvoiceSummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Branch,
@@ -920,7 +910,6 @@ namespace Cognitivo.Reporting.Data {
                         InvoiceDate,
                         Quantity,
                         SubTotalDiscountVAT,
-                        PaymentBalance,
                         Supplier,
                         InvoiceNumber,
                         Total,
@@ -953,7 +942,6 @@ namespace Cognitivo.Reporting.Data {
                 this.columnInvoiceDate = base.Columns["InvoiceDate"];
                 this.columnQuantity = base.Columns["Quantity"];
                 this.columnSubTotalDiscountVAT = base.Columns["SubTotalDiscountVAT"];
-                this.columnPaymentBalance = base.Columns["PaymentBalance"];
                 this.columnSupplier = base.Columns["Supplier"];
                 this.columnInvoiceNumber = base.Columns["InvoiceNumber"];
                 this.columnTotal = base.Columns["Total"];
@@ -974,8 +962,6 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnQuantity);
                 this.columnSubTotalDiscountVAT = new global::System.Data.DataColumn("SubTotalDiscountVAT", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSubTotalDiscountVAT);
-                this.columnPaymentBalance = new global::System.Data.DataColumn("PaymentBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPaymentBalance);
                 this.columnSupplier = new global::System.Data.DataColumn("Supplier", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSupplier);
                 this.columnInvoiceNumber = new global::System.Data.DataColumn("InvoiceNumber", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2224,23 +2210,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal PaymentBalance {
-                get {
-                    try {
-                        return ((decimal)(this[this.tablePurchaseInvoiceSummary.PaymentBalanceColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PaymentBalance\' in table \'PurchaseInvoiceSummary\' is DBNull" +
-                                ".", e);
-                    }
-                }
-                set {
-                    this[this.tablePurchaseInvoiceSummary.PaymentBalanceColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Supplier {
                 get {
                     return ((string)(this[this.tablePurchaseInvoiceSummary.SupplierColumn]));
@@ -2349,18 +2318,6 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetSubTotalDiscountVATNull() {
                 this[this.tablePurchaseInvoiceSummary.SubTotalDiscountVATColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPaymentBalanceNull() {
-                return this.IsNull(this.tablePurchaseInvoiceSummary.PaymentBalanceColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPaymentBalanceNull() {
-                this[this.tablePurchaseInvoiceSummary.PaymentBalanceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3509,7 +3466,6 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             tableMapping.ColumnMappings.Add("InvoiceDate", "InvoiceDate");
             tableMapping.ColumnMappings.Add("Quantity", "Quantity");
             tableMapping.ColumnMappings.Add("SubTotalDiscountVAT", "SubTotalDiscountVAT");
-            tableMapping.ColumnMappings.Add("PaymentBalance", "PaymentBalance");
             tableMapping.ColumnMappings.Add("Supplier", "Supplier");
             tableMapping.ColumnMappings.Add("InvoiceNumber", "InvoiceNumber");
             tableMapping.ColumnMappings.Add("Total", "Total");
@@ -3531,27 +3487,36 @@ group by s.id_purchase_invoice, vatco.id_vat_group
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[2];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT \n\tbranch.name as Branch,\n    p.status as Status,\n\tDATE_FORMAT(p.trans_date" +
-                ",\'%d %b %y\') as InvoiceDate, \n    contact.name as Supplier, \n    p.number as Inv" +
-                "oiceNumber, \n\tsum(pd.quantity) AS Quantity, \n\t\n    round(sum(pd.quantity * pd.un" +
-                "it_cost),4) as Total,\n    round(sum(pd.quantity * pd.unit_cost * vatco.coef),4) " +
-                "as TotalVAT,\n\tround(sum(pd.quantity * pd.discount * vatco.coef),4) as SubTotalDi" +
-                "scountVAT,\n\tround(sum(pd.quantity * pd.unit_cost * vatco.vat),4) as VATTotal,\n\n\t" +
-                "round((sum(schedual.credit) - sum(schedual.debit)),4) as PaymentBalance\n    \nFRO" +
-                "M purchase_invoice p INNER JOIN\n         contacts as contact ON p.id_contact = c" +
-                "ontact.id_contact \n         INNER JOIN \n         app_branch as branch on p.id_br" +
-                "anch = branch.id_branch\n         inner join \n         purchase_invoice_detail pd" +
-                " ON p.id_purchase_invoice = pd.id_purchase_invoice \n         LEFT OUTER JOIN \n  " +
-                "       items i ON i.id_item = pd.id_item \n         left outer join\n         paym" +
-                "ent_schedual as schedual on p.id_purchase_invoice = schedual.id_sales_invoice\n  " +
-                "       LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app" +
-                "_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM " +
-                " app_vat_group LEFT OUTER JOIN \n                     app_vat_group_details ON ap" +
-                "p_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n " +
-                "                    app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n   " +
-                "         GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = pd.i" +
-                "d_vat_group\n where (p.trans_date >= @StartDate) AND (p.trans_date <= @EndDate) \n" +
-                "group by p.id_purchase_invoice\norder by p.trans_date";
+            this._commandCollection[0].CommandText = @"SELECT 
+	branch.name as Branch,
+    p.status as Status,
+	DATE_FORMAT(p.trans_date,'%d %b %y') as InvoiceDate, 
+    contact.name as Supplier, 
+    p.number as InvoiceNumber, 
+	sum(pd.quantity) AS Quantity, 
+	
+    round(sum(pd.quantity * pd.unit_cost),4) as Total,
+    round(sum(pd.quantity * pd.unit_cost * vatco.coef),4) as TotalVAT,
+	round(sum(pd.quantity * pd.discount * vatco.coef),4) as SubTotalDiscountVAT,
+	round(sum(pd.quantity * pd.unit_cost * vatco.vat),4) as VATTotal
+    
+FROM purchase_invoice p INNER JOIN
+         contacts as contact ON p.id_contact = contact.id_contact 
+         INNER JOIN 
+         app_branch as branch on p.id_branch = branch.id_branch
+         inner join 
+         purchase_invoice_detail pd ON p.id_purchase_invoice = pd.id_purchase_invoice 
+         LEFT OUTER JOIN 
+         items i ON i.id_item = pd.id_item 
+                 LEFT OUTER JOIN 
+             (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef
+            FROM  app_vat_group LEFT OUTER JOIN 
+                     app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN 
+                     app_vat ON app_vat_group_details.id_vat = app_vat.id_vat
+            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = pd.id_vat_group
+ where (p.trans_date >= @StartDate) AND (p.trans_date <= @EndDate) 
+group by p.id_purchase_invoice
+order by p.trans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -3574,23 +3539,22 @@ group by s.id_purchase_invoice, vatco.id_vat_group
                 "oiceNumber, \n\tsum(pd.quantity) AS Quantity, \n\t\n    round(sum(pd.quantity * pd.un" +
                 "it_cost),4) as Total,\n    round(sum(pd.quantity * pd.unit_cost * vatco.coef),4) " +
                 "as TotalVAT,\n\tround(sum(pd.quantity * pd.discount * vatco.coef),4) as SubTotalDi" +
-                "scountVAT,\n\tround(sum(pd.quantity * pd.unit_cost * vatco.vat),4) as VATTotal,\n\n\t" +
-                "round((sum(schedual.credit) - sum(schedual.debit)),4) as PaymentBalance\n    \nFRO" +
-                "M purchase_invoice p INNER JOIN\n         contacts as contact ON p.id_contact = c" +
-                "ontact.id_contact \n         INNER JOIN \n         app_branch as branch on p.id_br" +
-                "anch = branch.id_branch\n         inner join \n         purchase_invoice_detail pd" +
-                " ON p.id_purchase_invoice = pd.id_purchase_invoice \n         LEFT OUTER JOIN \n  " +
-                "       items i ON i.id_item = pd.id_item \n         left outer join\n         paym" +
-                "ent_schedual as schedual on p.id_purchase_invoice = schedual.id_sales_invoice\n  " +
-                "       LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app" +
-                "_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM " +
-                " app_vat_group LEFT OUTER JOIN \n                     app_vat_group_details ON ap" +
-                "p_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n " +
-                "                    app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n   " +
-                "         GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = pd.i" +
-                "d_vat_group\n where p.id_branch = @BranchID and (p.trans_date >= @StartDate) AND " +
-                "(p.trans_date <= @EndDate) \ngroup by p.id_purchase_invoice\norder by p.trans_date" +
-                "";
+                "scountVAT,\n\tround(sum(pd.quantity * pd.unit_cost * vatco.vat),4) as VATTotal\n   " +
+                " \nFROM purchase_invoice p INNER JOIN\n         contacts as contact ON p.id_contac" +
+                "t = contact.id_contact \n         INNER JOIN \n         app_branch as branch on p." +
+                "id_branch = branch.id_branch\n         inner join \n         purchase_invoice_deta" +
+                "il pd ON p.id_purchase_invoice = pd.id_purchase_invoice \n         LEFT OUTER JOI" +
+                "N \n         items i ON i.id_item = pd.id_item \n         left outer join\n        " +
+                " payment_schedual as schedual on p.id_purchase_invoice = schedual.id_sales_invoi" +
+                "ce\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, su" +
+                "m(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            " +
+                "FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_details " +
+                "ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JO" +
+                "IN \n                     app_vat ON app_vat_group_details.id_vat = app_vat.id_va" +
+                "t\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group =" +
+                " pd.id_vat_group\n where p.id_branch = @BranchID and (p.trans_date >= @StartDate)" +
+                " AND (p.trans_date <= @EndDate) \ngroup by p.id_purchase_invoice\norder by p.trans" +
+                "_date";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@BranchID";

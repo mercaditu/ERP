@@ -655,8 +655,6 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnSubTotal;
             
-            private global::System.Data.DataColumn columnPaymentBalance;
-            
             private global::System.Data.DataColumn columnMarkUp;
             
             private global::System.Data.DataColumn columnProfit;
@@ -800,14 +798,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PaymentBalanceColumn {
-                get {
-                    return this.columnPaymentBalance;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn MarkUpColumn {
                 get {
                     return this.columnMarkUp;
@@ -859,23 +849,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesInvoiceSummaryRow AddSalesInvoiceSummaryRow(
-                        decimal Margin, 
-                        string Branch, 
-                        int Status, 
-                        string InvoiceDate, 
-                        string Customer, 
-                        string Invoice, 
-                        decimal Quantity, 
-                        decimal SubTotalVAT, 
-                        decimal SubTotalDiscountVAT, 
-                        decimal SubTotalCostVAT, 
-                        decimal VAT_SubTotal, 
-                        decimal SubTotalCost, 
-                        decimal SubTotal, 
-                        decimal PaymentBalance, 
-                        decimal MarkUp, 
-                        decimal Profit) {
+            public SalesInvoiceSummaryRow AddSalesInvoiceSummaryRow(decimal Margin, string Branch, int Status, string InvoiceDate, string Customer, string Invoice, decimal Quantity, decimal SubTotalVAT, decimal SubTotalDiscountVAT, decimal SubTotalCostVAT, decimal VAT_SubTotal, decimal SubTotalCost, decimal SubTotal, decimal MarkUp, decimal Profit) {
                 SalesInvoiceSummaryRow rowSalesInvoiceSummaryRow = ((SalesInvoiceSummaryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Margin,
@@ -891,7 +865,6 @@ namespace Cognitivo.Reporting.Data {
                         VAT_SubTotal,
                         SubTotalCost,
                         SubTotal,
-                        PaymentBalance,
                         MarkUp,
                         Profit};
                 rowSalesInvoiceSummaryRow.ItemArray = columnValuesArray;
@@ -929,7 +902,6 @@ namespace Cognitivo.Reporting.Data {
                 this.columnVAT_SubTotal = base.Columns["VAT_SubTotal"];
                 this.columnSubTotalCost = base.Columns["SubTotalCost"];
                 this.columnSubTotal = base.Columns["SubTotal"];
-                this.columnPaymentBalance = base.Columns["PaymentBalance"];
                 this.columnMarkUp = base.Columns["MarkUp"];
                 this.columnProfit = base.Columns["Profit"];
             }
@@ -963,8 +935,6 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnSubTotalCost);
                 this.columnSubTotal = new global::System.Data.DataColumn("SubTotal", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSubTotal);
-                this.columnPaymentBalance = new global::System.Data.DataColumn("PaymentBalance", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPaymentBalance);
                 this.columnMarkUp = new global::System.Data.DataColumn("MarkUp", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMarkUp);
                 this.columnProfit = new global::System.Data.DataColumn("Profit", typeof(decimal), null, global::System.Data.MappingType.Element);
@@ -5196,22 +5166,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal PaymentBalance {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableSalesInvoiceSummary.PaymentBalanceColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PaymentBalance\' in table \'SalesInvoiceSummary\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSalesInvoiceSummary.PaymentBalanceColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal MarkUp {
                 get {
                     try {
@@ -5360,18 +5314,6 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetSubTotalNull() {
                 this[this.tableSalesInvoiceSummary.SubTotalColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPaymentBalanceNull() {
-                return this.IsNull(this.tableSalesInvoiceSummary.PaymentBalanceColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPaymentBalanceNull() {
-                this[this.tableSalesInvoiceSummary.PaymentBalanceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8487,7 +8429,6 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             tableMapping.ColumnMappings.Add("VAT_SubTotal", "VAT_SubTotal");
             tableMapping.ColumnMappings.Add("SubTotalCost", "SubTotalCost");
             tableMapping.ColumnMappings.Add("SubTotal", "SubTotal");
-            tableMapping.ColumnMappings.Add("PaymentBalance", "PaymentBalance");
             tableMapping.ColumnMappings.Add("MarkUp", "MarkUp");
             tableMapping.ColumnMappings.Add("Profit", "Profit");
             this._adapter.TableMappings.Add(tableMapping);
@@ -8513,28 +8454,25 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "tco.coef),4) as SubTotalDiscountVAT,\n    round(sum(sd.quantity * sd.unit_cost * " +
                 "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_price * vatc" +
                 "o.vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as " +
-                "SubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\t round((" +
-                "sum(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum" +
-                "(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * va" +
-                "tco.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum" +
-                "(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * va" +
-                "tco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(" +
-                "sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vat" +
-                "co.coef)) as Profit\n   \n\nfrom  sales_invoice s inner join\n         contacts as c" +
-                "ontact ON s.id_contact = contact.id_contact \n         inner join\n         app_br" +
-                "anch as branch on s.id_branch = branch.id_branch\n         inner join \n         s" +
-                "ales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n         LEF" +
-                "T OUTER JOIN \n         items i ON i.id_item = sd.id_item \n   left outer join\n   " +
-                "      payment_schedual as schedual on s.id_sales_invoice = schedual.id_sales_inv" +
-                "oice          LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, " +
-                "sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n          " +
-                "  FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_detail" +
-                "s ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER " +
-                "JOIN \n                     app_vat ON app_vat_group_details.id_vat = app_vat.id_" +
-                "vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group" +
-                " = sd.id_vat_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <= @End" +
-                "Date) AND s.id_branch = @BranchID \ngroup by s.id_sales_invoice\norder by s.trans_" +
-                "date";
+                "SubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\t    \n   " +
+                " ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cos" +
+                "t * vatco.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n   " +
+                " ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cos" +
+                "t * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n    " +
+                " (sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost" +
+                " * vatco.coef)) as Profit\n   \n\nfrom  sales_invoice s inner join\n         contact" +
+                "s as contact ON s.id_contact = contact.id_contact \n         inner join\n         " +
+                "app_branch as branch on s.id_branch = branch.id_branch\n         inner join \n    " +
+                "     sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n      " +
+                "   LEFT OUTER JOIN \n         items i ON i.id_item = sd.id_item \n             LEF" +
+                "T OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat.coeff" +
+                "icient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app_vat_g" +
+                "roup LEFT OUTER JOIN \n                     app_vat_group_details ON app_vat_grou" +
+                "p.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n           " +
+                "          app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            G" +
+                "ROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_grou" +
+                "p\n where (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) AND s.id_br" +
+                "anch = @BranchID \ngroup by s.id_sales_invoice\norder by s.trans_date";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -8566,27 +8504,25 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "tco.coef),4) as SubTotalDiscountVAT,\n    round(sum(sd.quantity * sd.unit_cost * " +
                 "vatco.coef),4) as SubTotalCostVAT,\n\tround(sum(sd.quantity * sd.unit_price * vatc" +
                 "o.vat),4) as VAT_SubTotal,\n    \n    round(sum(sd.quantity * sd.unit_cost),4) as " +
-                "SubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\tround((s" +
-                "um(schedual.debit) - sum(schedual.credit)),4) as PaymentBalance,\n    \n    ((sum(" +
-                "sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vat" +
-                "co.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n    ((sum(" +
-                "sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vat" +
-                "co.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n     (sum(s" +
-                "d.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatc" +
-                "o.coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contacts as co" +
-                "ntact ON s.id_contact = contact.id_contact \n         INNER JOIN \n         app_br" +
-                "anch as branch on s.id_branch = branch.id_branch\n         inner join \n         s" +
-                "ales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n         LEF" +
-                "T OUTER JOIN \n         items i ON i.id_item = sd.id_item \n         left outer jo" +
-                "in\n         payment_schedual as schedual on s.id_sales_invoice = schedual.id_sal" +
-                "es_invoice\n         LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_g" +
-                "roup, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n    " +
-                "        FROM  app_vat_group LEFT OUTER JOIN \n                     app_vat_group_" +
-                "details ON app_vat_group.id_vat_group = app_vat_group_details.id_vat_group LEFT " +
-                "OUTER JOIN \n                     app_vat ON app_vat_group_details.id_vat = app_v" +
-                "at.id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat" +
-                "_group = sd.id_vat_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <" +
-                "= @EndDate) \ngroup by s.id_sales_invoice\norder by s.trans_date";
+                "SubTotalCost,\n\tround(sum(sd.quantity * sd.unit_price),4) as SubTotal,\n\n\t\n    \n  " +
+                "  ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_co" +
+                "st * vatco.coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin,\n  " +
+                "  ((sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_co" +
+                "st * vatco.coef)) / sum(sd.quantity * sd.unit_cost * vatco.coef)) as MarkUp,\n   " +
+                "  (sum(sd.quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cos" +
+                "t * vatco.coef)) as Profit\n   \n\nFROM  sales_invoice s INNER JOIN\n         contac" +
+                "ts as contact ON s.id_contact = contact.id_contact \n         INNER JOIN \n       " +
+                "  app_branch as branch on s.id_branch = branch.id_branch\n         inner join \n  " +
+                "       sales_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice \n    " +
+                "     LEFT OUTER JOIN \n         items i ON i.id_item = sd.id_item \n              " +
+                "   LEFT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat" +
+                ".coefficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app" +
+                "_vat_group LEFT OUTER JOIN \n                     app_vat_group_details ON app_va" +
+                "t_group.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n     " +
+                "                app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n       " +
+                "     GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_va" +
+                "t_group\n where (s.trans_date >= @StartDate) AND (s.trans_date <= @EndDate) \ngrou" +
+                "p by s.id_sales_invoice\norder by s.trans_date";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";

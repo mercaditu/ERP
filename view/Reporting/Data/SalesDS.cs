@@ -83,3 +83,11 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
     public partial class SalesByItemTableAdapter {
     }
 }
+
+namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
+{
+    
+    
+    public partial class SalesInvoiceSummaryTableAdapter {
+    }
+}

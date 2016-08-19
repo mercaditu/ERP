@@ -928,6 +928,9 @@
     <Compile Include="Setup\StartUp.xaml.cs">
       <DependentUpon>StartUp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Setup\Utilities.xaml.cs">
+      <DependentUpon>Utilities.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -2037,6 +2040,10 @@
     <Page Include="Setup\StartUp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Setup\Utilities.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

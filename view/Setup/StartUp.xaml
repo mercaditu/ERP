@@ -96,20 +96,11 @@
                     If you already have one or more companies setup, they will appear at the bottom.
                 </TextBlock>
                 <Button Content="Migrate from RIA" Padding="10,0" Click="migrate_Click"
-                        HorizontalAlignment="Center" Background="PaleGreen"/>
-                <Button Content="Migrate from My Sql" Padding="10,0" Click="migratesql_Click"
-                        HorizontalAlignment="Center" Background="PaleGreen"/>
-                <StackPanel HorizontalAlignment="Center" Visibility="{Binding ElementName=pageStartup, Path=three_Active, FallbackValue=Collapsed, Converter={StaticResource Bool2Visibility}}">
-                    <Label Content="Registered Companies" HorizontalAlignment="Center" FontWeight="Medium" FontSize="14" Margin="0,15,0,0"/>
-                    <Rectangle Fill="Black" HorizontalAlignment="Center" Height="2" Width="200"/>
-                    <Label Content="Indopar Enterprise EIRL" HorizontalAlignment="Center"/>
-                    <Label Content="Rumed Pharmaceutical SA" HorizontalAlignment="Center"/>    
-                    <Label Content="Casa Mahudi SRL" HorizontalAlignment="Center"/>
-                    <Label Content="Veer Pvt. Ltd." HorizontalAlignment="Center"/>
-                    <TextBlock Style="{StaticResource text_Instructions}">
-                    Click here if you wish to <Hyperlink>Use an existing Company</Hyperlink>.
-                    </TextBlock>
-                </StackPanel>
+                        HorizontalAlignment="Center" Background="WhiteSmoke"/>
+                <Rectangle Style="{StaticResource line_Bar}"/>
+                <Label Content="{lex:Loc Utilities}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <Image Margin="10" Source="/Cognitivo;component/Images/Application/128/Status.png" Width="64"/>
+                
             </StackPanel>
         </Grid>
     </Grid>

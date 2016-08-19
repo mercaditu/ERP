@@ -149,12 +149,12 @@ namespace entity
             ItemBarcode = 94,
             [LocalizedDescription("FootTraffic")]
             FootTraffic = 96,
-             [LocalizedDescription("ItemTemplate")]
+            [LocalizedDescription("ItemTemplate")]
             ItemTemplate = 108,
-             [LocalizedDescription("ItemProperty")]
-             Property = 109,
-             [LocalizedDescription("ItemAssetGroup")]
-             ItemAssetGroup = 112,
+            [LocalizedDescription("ItemProperty")]
+            Property = 109,
+            [LocalizedDescription("ItemAssetGroup")]
+            ItemAssetGroup = 112,
 
             //Production
             [LocalizedDescription("ProductionExecution")]
@@ -187,7 +187,7 @@ namespace entity
             PrintingPresstemplate = 40,
             [LocalizedDescription("ProjectFinance")]
             ProjectFinance = 53,
-             [LocalizedDescription("ProjectTag")]
+            [LocalizedDescription("ProjectTag")]
             ProjectTag = 111,
             
 
@@ -303,7 +303,9 @@ namespace entity
             [LocalizedDescription("ItemPriceList")]
             ItemPriceList = 120,
             [LocalizedDescription("StockFlow")]
-            StockFlow = 121
+            StockFlow = 121,
+            [LocalizedDescription("SalesByVAT")]
+            SalesByVAT = 122
         }
     }
 }

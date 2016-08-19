@@ -55,32 +55,30 @@ namespace Cognitivo.Class
             return GenerateList(dt);
         }
 
-        public decimal StockCount_ByBranch(int BranchID, int ProductID, DateTime TransDate)
+        public decimal? StockCount_ByBranch(int BranchID, int ItemID, DateTime TransDate)
         {
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
 
-            Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter Check_InStockTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter();
+            Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
 
             //fill data
-            Check_InStockTableAdapter.ClearBeforeFill = true;
-            decimal i = (decimal)Check_InStockTableAdapter.ReturnQuantity_ByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate, ProductID);
+            decimal? i = QueriesTableAdapter.GetStock_ByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate, ItemID);
 
             ProductDS.EndInit();
             
             return i;
         }
 
-        public decimal StockCount_ByLocation(int LocationID, int ProductID, DateTime TransDate)
+        public decimal? StockCount_ByLocation(int LocationID, int ProductID, DateTime TransDate)
         {
             ProductDS ProductDS = new ProductDS();
             ProductDS.BeginInit();
 
-            Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter Check_InStockTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter();
+            Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter QueriesTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.QueriesTableAdapter();
 
             //fill data
-            Check_InStockTableAdapter.ClearBeforeFill = true;
-            decimal i = (decimal)Check_InStockTableAdapter.ReturnQuantity_ByBranch(entity.CurrentSession.Id_Company, LocationID, TransDate, ProductID);
+            decimal? i = QueriesTableAdapter.GetStock_ByLocation(entity.CurrentSession.Id_Company, LocationID, TransDate, ProductID);
 
             ProductDS.EndInit();
 

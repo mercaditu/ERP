@@ -23,7 +23,8 @@ namespace Cognitivo.Product
         CollectionViewSource item_transferViewSource, transfercostViewSource, item_transferitem_transfer_detailViewSource;
         List<Class.transfercost> clsTotalGrid = null;
         Configs.itemMovement itemMovement = new Configs.itemMovement();
-      //  item_movement Selecteditem_movement;
+        
+        // item_movement Selecteditem_movement;
         public Transfer()
         {
             InitializeComponent();
@@ -85,7 +86,6 @@ namespace Cognitivo.Product
             ProductTransferDB.item_transfer.Where(a =>
                 a.id_company == CurrentSession.Id_Company &&
                 a.transfer_type == item_transfer.Transfer_type.transfer)
-                //.Include(i => i.item_transfer_detail)
                 .Load();
             item_transferViewSource.Source = ProductTransferDB.item_transfer.Local;
 
@@ -142,7 +142,17 @@ namespace Cognitivo.Product
 
                         int BranchID = (int)id_branch_originComboBox.SelectedValue;
 
-                        item_transfer_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch(BranchID, item.id_item, DateTime.Now);
+                        item_transfer_detail.Quantity_InStock = (decimal) StockCalculations.StockCount_ByBranch(BranchID, item.id_item, DateTime.Now);
+
+                        if (item_transfer_detail.quantity_origin < item_transfer_detail.Quantity_InStock)
+                        {
+                            item_transfer_detail.StockLevel = Status.Documents_General.Pending;
+                        }
+                        else
+                        {
+                            item_transfer_detail.StockLevel = Status.Documents_General.Annulled;
+                        }
+                        
                         item_transfer_detail.timestamp = DateTime.Now;
                         item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                         item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
@@ -159,8 +169,6 @@ namespace Cognitivo.Product
                     item_transferitem_transfer_detailViewSource.View.Refresh();
                 }
             }
-
-           
         }
 
         private void toolBar_btnApproveOrigin_Click(object sender)
@@ -177,8 +185,7 @@ namespace Cognitivo.Product
 
                 int NumberofRecords = ProductTransferDB.ApproveOrigin((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
                 toolBar.msgSaved(NumberofRecords);
-                item_transferViewSource.View.Refresh();
-                 
+                item_transferViewSource.View.Refresh(); 
             }
             catch (Exception ex)
             {
@@ -193,7 +200,6 @@ namespace Cognitivo.Product
             item_transfer item_transfer = (item_transfer)itemDataGrid.SelectedItem;
             item_transfer.IsSelected = true;
 
-            //clsTotalGrid = (List<Class.transfercost>)transfercostViewSource.Source;
             int NumberOfRecords = ProductTransferDB.ApproveDestination((int)id_branch_originComboBox.SelectedValue, (int)id_branch_destinComboBox.SelectedValue, TransferSetting.movebytruck);
             if (NumberOfRecords > 0)
             {
@@ -229,9 +235,7 @@ namespace Cognitivo.Product
                 if (item_transfer.app_document_range!=null)
                 {
                     entity.Brillo.Document.Start.Manual(item_transfer, item_transfer.app_document_range);
-                    
                 }
-                
             }
             else
             {
@@ -292,7 +296,7 @@ namespace Cognitivo.Product
          
             item item = ProductTransferDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
             item_transfer item_transfer = item_transferViewSource.View.CurrentItem as item_transfer;
-            //Selecteditem_movement = itemMovement.item_movement;
+
             if (crud_modal.Visibility == Visibility.Hidden)
             {
 
@@ -312,7 +316,7 @@ namespace Cognitivo.Product
                     item_transfer_detail.movement_id = (int)itemMovement.item_movement.id_movement;
                     item_transfer_detail.item_product = item.item_product.FirstOrDefault();
                     item_transfer_detail.id_item_product = item_transfer_detail.item_product.id_item_product;
-                    item_transfer_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now);
+                    item_transfer_detail.Quantity_InStock = (decimal)StockCalculations.StockCount_ByBranch((int)id_branch_originComboBox.SelectedValue, item_transfer_detail.item_product.id_item, DateTime.Now);
                     item_transfer_detail.RaisePropertyChanged("item_product");
                     foreach (item_movement_dimension item_movement_dimension in itemMovement.item_movement.item_movement_dimension)
                     {

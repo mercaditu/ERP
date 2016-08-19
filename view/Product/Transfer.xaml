@@ -9,6 +9,7 @@
       xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
       xmlns:control="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:converter="clr-namespace:Cognitivo.Converters"
+      xmlns:converters="clr-namespace:Cognitivo.Converters;assembly=cntrl"
       xmlns:cls ="clr-namespace:Cognitivo.Class"
       xmlns:customcmd="clr-namespace:Cognitivo.Class"
       mc:Ignorable="d" 
@@ -179,7 +180,7 @@
                                             <Label Content="" FontFamily="/Cognitivo;component/Resources/#cognitivo" >
                                                 <Label.Style>
                                                     <Style TargetType="{x:Type Label}">
-                                                        <Setter Property="Foreground" Value="{Binding item_transfer.status,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                                                        <Setter Property="Foreground" Value="{Binding item_transfer.status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
                                                     </Style>
                                                 </Label.Style>
                                             </Label>
@@ -190,12 +191,17 @@
                                 <DataGridTextColumn Binding="{Binding item_product.item.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     Header="{lex:Loc Cognitivo:local:Items}" Width="*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding quantity_origin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
-                                                    Header="{lex:Loc Cognitivo:local:Quantity}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
+                                                    Header="{lex:Loc Cognitivo:local:Quantity}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Foreground" Value="{Binding StockLevel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Binding="{Binding Quantity_InStock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N}}" 
                                                     Header="{lex:Loc Cognitivo:local:Stock}" Width="128" ElementStyle="{StaticResource RightAlignStyle}"/>
-                                
                                 <DataGridTextColumn Header="{lex:Loc Cognitivo:local:Movement}" IsReadOnly="True"
-                                                        Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
+                                                    Binding="{Binding movement_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Width="128"/>
                                 <DataGridTemplateColumn Width="Auto" Header="">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

@@ -24,6 +24,7 @@ namespace entity
         public int? id_project_task { get; set; }
         public int id_item_product { get; set; }
         public int? movement_id { get; set; }
+
         public decimal quantity_origin 
         {
             get { return _quantity_origin; }
@@ -43,6 +44,9 @@ namespace entity
 
         [NotMapped]
         public decimal Quantity_InStock { get; set; }
+
+        [NotMapped]
+        public Status.Documents_General StockLevel { get; set; }
 
         public decimal quantity_destination 
         {

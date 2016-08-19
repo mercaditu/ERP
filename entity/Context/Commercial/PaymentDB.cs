@@ -10,22 +10,27 @@ namespace entity
     public partial class PaymentDB : BaseDB
     {
         /// <summary>
-        /// Creates new Payment (Header)
+        /// Creates an instance of Payment entity with corresponding data needed.
         /// </summary>
-        /// <returns>Payment Entity</returns>
-        public payment New()
+        /// <param name="Is_PaymentRecievable">Specify if Payment being created is meant to Recieve (Sales) then True., Payable (Purchase) then False.</param>
+        /// <returns>Payment Instance ready for use.</returns>
+        public payment New(bool Is_PaymentRecievable)
         {
             payment payment = new entity.payment();
             payment.status = Status.Documents_General.Pending;
             payment.State = EntityState.Added;
-            payment.id_range = GetDefault.Return_RangeID(entity.App.Names.PaymentUtility);
-            if (app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
+
+            if (Is_PaymentRecievable)
             {
-                payment.app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
+                payment.id_range = GetDefault.Return_RangeID(entity.App.Names.PaymentUtility);
+
+                if (app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault() != null)
+                {
+                    payment.app_document_range = app_document_range.Where(x => x.id_range == payment.id_range).FirstOrDefault();
+                }
             }
 
             payment.IsSelected = true;
-
             return payment;
         }
 

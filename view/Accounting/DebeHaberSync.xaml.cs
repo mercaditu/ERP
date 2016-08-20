@@ -54,7 +54,7 @@ namespace Cognitivo.Accounting
                 e => btnData_Refresh(null, null),
                 null,
                 TimeSpan.Zero,
-                TimeSpan.FromMinutes(1));
+                TimeSpan.FromMinutes(15));
         }
 
         private void btnData_Refresh(object sender, RoutedEventArgs e)

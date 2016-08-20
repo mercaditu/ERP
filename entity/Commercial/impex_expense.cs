@@ -21,30 +21,16 @@ namespace entity
         public int? id_purchase_invoice { get; set; }
         public int id_incoterm_condition { get; set; }
         public decimal value { get; set; }
-        public int id_currencyfx { 
-            get {
-               return _id_currencyfx ;
-            }
-            set
-            {
-                if (_id_currencyfx != value)
-                {
-                    if (State != System.Data.Entity.EntityState.Unchanged && State > 0)
-                    {
-                        this.value = Currency.convert_Values(this.value, _id_currencyfx, value, App.Modules.Purchase);
-                        RaisePropertyChanged("value");
+        public int id_currencyfx { get; set; }
 
+        public int id_currency { get; set; }
+        public decimal currency_rate { get; set; }
 
-                    }
-                    _id_currencyfx = value;
-                }
-            }
-        }
-        int _id_currencyfx;
         [NotMapped]
         public int id_item { get; set; }
         public virtual impex impex { get; set; }
         public virtual impex_incoterm_condition impex_incoterm_condition { get; set; }
         public virtual purchase_invoice purchase_invoice { get; set; }
+        public virtual app_currency app_currency { get; set; }
     }
 }

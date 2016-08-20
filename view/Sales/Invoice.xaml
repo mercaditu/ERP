@@ -659,11 +659,9 @@
                                       RowEditEnding="sales_invoice_detailDataGrid_RowEditEnding" 
                                       CellEditEnding="sales_invoice_detailDataGrid_CellEditEnding">
                                 <DataGrid.RowStyle>
-                                    <Style TargetType="DataGridRow">
-                                        <Setter Property="Foreground" Value="Black"/>
-                                        <Setter Property="Background" Value="{Binding InStock,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Color}}"/>
+                                    <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">
+                                        <Setter Property="Foreground" Value="{Binding InStock, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Color}}"/>
                                     </Style>
-                                    
                                 </DataGrid.RowStyle>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding id_sales_invoice_detail, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"

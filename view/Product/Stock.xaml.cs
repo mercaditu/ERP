@@ -158,24 +158,5 @@ namespace Cognitivo.Product
                 }
             }
         }
-
-        private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
-            ProductMovementDB.Generate_ProductMovement();
-
-            //GenerateParentChildRel_Thread();
-            //Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
-        }
-
-        private void GenerateParentChildRel_Thread()
-        {
-            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
-
-            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
-            ProductMovementDB.Generate_ProductMovement();
-
-            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
-        }
     }
 }

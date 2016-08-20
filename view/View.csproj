@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>954e5719</NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\ABHI\Desktop\Cognitivo ERP V615\</PublishUrl>
+    <PublishUrl>C:\Users\abhi\Desktop\ERP615\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -613,9 +613,6 @@
     </Compile>
     <Compile Include="Reporting\Views\PurchaseOrderSummary.xaml.cs">
       <DependentUpon>PurchaseOrderSummary.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Reporting\Views\SalesByVAT.xaml.cs">
-      <DependentUpon>SalesByVAT.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\InventorySummary.xaml.cs">
       <DependentUpon>InventorySummary.xaml</DependentUpon>
@@ -1757,10 +1754,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\PurchaseOrderSummary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Reporting\Views\SalesByVAT.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

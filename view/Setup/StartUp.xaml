@@ -77,8 +77,8 @@
                 <Button Content="Generate the Database" Padding="10,0" Click="createDB_Click"
                         HorizontalAlignment="Center" Background="PaleGreen"/>
                 <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
-                    A DataBase is where we will store all your company's information, stuff like Accounting, Sales, and Inventory data.
-                    Cognitivo will automatically create the database as needed within the Server you specified in Step 1.
+                    A DataBase is where we store all your company's information, stuff like Accounting, Sales, and Inventory data.
+                    Cognitivo will automatically create the database as needed within the Server location you specified in Step 1.
                 </TextBlock>
                 <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
                     Note: You only need one Database per Server.
@@ -93,14 +93,20 @@
                 <TextBlock Style="{StaticResource text_Instructions}" TextAlignment="Justify" Foreground="Black">
                     Cognitivo allows you work with multiples companies. Click on the button above to create a new Company, 
                     and follow the easy on-screen instructions.
-                    If you already have one or more companies setup, they will appear at the bottom.
                 </TextBlock>
-                <Button Content="Migrate from RIA" Padding="10,0" Click="migrate_Click"
-                        HorizontalAlignment="Center" Background="WhiteSmoke"/>
+                <TextBlock>
+                    <Hyperlink Click="migrate_Click">Migrate from RIA</Hyperlink>
+                </TextBlock>
                 <Rectangle Style="{StaticResource line_Bar}"/>
-                <Label Content="{lex:Loc Utilities}" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
+                <Label Content="Utilities" HorizontalAlignment="Center" Style="{StaticResource H3}"/>
                 <Image Margin="10" Source="/Cognitivo;component/Images/Application/128/Status.png" Width="64"/>
-                
+                <Button IsDefault="True" Click="btnGenerateParentChildRel_Click" Background="Transparent" 
+                        BorderBrush="Transparent" VerticalAlignment="Bottom" Grid.Row="2" >
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="128">
+                        <ProgressBar x:Name="progBar" Margin="0" Width="{Binding}" Height="{Binding}" HorizontalAlignment="Stretch"/>
+                        <Label Content="Parent / Child Rel" FontSize="10" HorizontalContentAlignment="Center"/>
+                    </Grid>
+                </Button>
             </StackPanel>
         </Grid>
     </Grid>

@@ -212,6 +212,20 @@ namespace Cognitivo.Menu
             frameConfig.Navigate(new Setup.Migration.Cogent.MigrationGUI());
         }
 
-       
+        private void btnGenerateParentChildRel_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            //GenerateParentChildRel_Thread();
+            Task thread_SecondaryData = Task.Factory.StartNew(() => GenerateParentChildRel_Thread());
+        }
+
+        private void GenerateParentChildRel_Thread()
+        {
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
+
+            entity.ProductMovementDB ProductMovementDB = new ProductMovementDB();
+            ProductMovementDB.Generate_ProductMovement();
+
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
+        }
     }
 }

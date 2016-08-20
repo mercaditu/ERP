@@ -157,7 +157,10 @@ namespace Cognitivo.Sales
 
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                SalesInvoiceDB.Select_Item(ref sales_invoice, item, false);
+                sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, false);
+
+                Class.StockCalculations StockCalculations = new Cognitivo.Class.StockCalculations();
+                _sales_invoice_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch(CurrentSession.Id_Branch, item.id_item, DateTime.Now);
 
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();

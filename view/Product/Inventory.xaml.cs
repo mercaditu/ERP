@@ -121,28 +121,25 @@ namespace Cognitivo.Product
                                 item_inventory_detail.id_currencyfx = CurrencyID;
                             }
 
-                            /////Cost
-                            //using (db db = new db())
-                            //{
-                            //    if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0).ToList().Count() > 0)
-                            //    {
-                            //        item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.debit > 0)
-                            //                                                 .OrderBy(x => x.trans_date).FirstOrDefault();
+                            ///Cost
+                            using (db db = new db())
+                            {
+                                if (db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.credit > 0).Take(1).ToList().Count() > 0)
+                                {
+                                    item_movement item_movement = db.item_movement.Where(x => x.id_item_product == i.id_item_product && x.app_location.id_location == app_location.id_location && x.credit > 0)
+                                                                             .OrderBy(x => x.trans_date).Take(1).FirstOrDefault();
 
-                            //        if (item_movement.item_movement_value.LastOrDefault() != null)
-                            //        {
-                            //            item_inventory_detail.unit_value = item_movement.item_movement_value.Sum(x => x.unit_value);
-                            //        }
+                                    if (item_movement.item_movement_value.LastOrDefault() != null)
+                                    {
+                                        item_inventory_detail.unit_value = item_movement.item_movement_value.Sum(x => x.unit_value);
+                                    }
 
-                            //    }
-                            //    else
-                            //    {
-                            //        item_inventory_detail.unit_value = 0;
-                            //    }
-
-                            //}
-
-
+                                }
+                                else
+                                {
+                                    item_inventory_detail.unit_value = 0;
+                                }
+                            }
 
                             item_inventory.item_inventory_detail.Add(item_inventory_detail);
                         }

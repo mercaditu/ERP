@@ -32,21 +32,21 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.Reset();
 
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            Data.InventoryDS InvenotryDB = new Data.InventoryDS();
+            Data.ProductDS ProductDS = new Data.ProductDS();
 
-            InvenotryDB.BeginInit();
+            ProductDS.BeginInit();
 
-            Data.InventoryDSTableAdapters.InventoryTableAdapter InventoryTableAdapter = new Data.InventoryDSTableAdapters.InventoryTableAdapter();
+            Data.ProductDSTableAdapters.InventorySummaryTableAdapter InventorySummaryTableAdapter = new Data.ProductDSTableAdapters.InventorySummaryTableAdapter();
                 
             DataTable dt = new DataTable();
 
             if (ReportPanel.Branch != null)
             {
-                dt = InventoryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate,CurrentSession.Id_Company, ReportPanel.Branch.id_branch);
+                dt = InventorySummaryTableAdapter.GetDataByBranch(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company, ReportPanel.Branch.id_branch);
             }
             else
             {
-                dt = InventoryTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate,CurrentSession.Id_Company);
+                dt = InventorySummaryTableAdapter.GetDataByDate(ReportPanel.StartDate, ReportPanel.EndDate, CurrentSession.Id_Company);
             }
 
             reportDataSource1.Name = "InventorySummary"; //Name of the report dataset in our .RDLC file
@@ -54,7 +54,7 @@ namespace Cognitivo.Reporting.Views
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.InventorySummary.rdlc";
 
-            InvenotryDB.EndInit();
+            ProductDS.EndInit();
 
             this.reportViewer.Refresh();
             this.reportViewer.RefreshReport();

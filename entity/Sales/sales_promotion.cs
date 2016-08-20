@@ -12,14 +12,14 @@ namespace entity
     {
       public  enum Type
         {
-            Discount_onGrandTotal = 1,
-            Discount_onQuantityTotal = 2,
-            Discount_onQuantityRow = 3,
-            Discount_onTag = 4,
-            Discount_onBrand = 5,
-            Discount_onItem = 6,
+            //Discount_onGrandTotal = 1,
+            //Discount_onQuantityTotal = 2,
+            //Discount_onQuantityRow = 3,
+            //Discount_onTag = 4,
+            //Discount_onBrand = 5,
+            //Discount_onItem = 6,
             BuyThis_GetThat = 7,
-            BuyThis_Discount_OnSecond = 8
+            //BuyThis_Discount_OnSecond = 8
         }
    
         public sales_promotion()

@@ -525,15 +525,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FinanceDS.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Reporting\Data\InventoryDS.cs">
-      <DependentUpon>InventoryDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reporting\Data\InventoryDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InventoryDS.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -858,9 +849,6 @@
     </Compile>
     <Compile Include="Configs\PriceList.xaml.cs">
       <DependentUpon>PriceList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Product\Promotion.xaml.cs">
-      <DependentUpon>Promotion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Project\PrintingPress\Class\Accessories.cs" />
     <Compile Include="Project\PrintingPress\Costing.Designer.cs">
@@ -1330,17 +1318,6 @@
     </None>
     <None Include="Reporting\Data\FinanceDS.xss">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
-    </None>
-    <None Include="Reporting\Data\InventoryDS.xsc">
-      <DependentUpon>InventoryDS.xsd</DependentUpon>
-    </None>
-    <None Include="Reporting\Data\InventoryDS.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>InventoryDS.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Reporting\Data\InventoryDS.xss">
-      <DependentUpon>InventoryDS.xsd</DependentUpon>
     </None>
     <None Include="Reporting\Data\ProductDS.xsc">
       <DependentUpon>ProductDS.xsd</DependentUpon>
@@ -1984,10 +1961,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Configs\PriceList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Product\Promotion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

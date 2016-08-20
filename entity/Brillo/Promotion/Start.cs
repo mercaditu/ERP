@@ -93,42 +93,42 @@ namespace entity.Brillo.Promotion
         {
             foreach (var Promo in SalesPromotionLIST)
             {
-                if (Promo.types == sales_promotion.Type.Discount_onGrandTotal)
-                {
-                    if (Promo.quantity_max >= Invoice.GrandTotal && Promo.quantity_min <= Invoice.GrandTotal)
-                    {
-                        Promo _Promo = new Promo();
-                        _Promo.Type = sales_promotion.Type.Discount_onGrandTotal;
-                        _Promo.Shared = true;
-                        _Promo.DiscountValue = Invoice.GrandTotal - (Promo.is_percentage == false ? Promo.result_value : (Invoice.GrandTotal * (Promo.result_value)));
-                        Invoice.Promos.Add(_Promo);
-                    }
-                    else if (Math.Floor(Invoice.GrandTotal / Promo.quantity_step) >= 1)
-                    {
-                        int Step = (int)Math.Floor(Invoice.GrandTotal / Promo.quantity_step);
+                //if (Promo.types == sales_promotion.Type.Discount_onGrandTotal)
+                //{
+                //    if (Promo.quantity_max >= Invoice.GrandTotal && Promo.quantity_min <= Invoice.GrandTotal)
+                //    {
+                //        Promo _Promo = new Promo();
+                //        _Promo.Type = sales_promotion.Type.Discount_onGrandTotal;
+                //        _Promo.Shared = true;
+                //        _Promo.DiscountValue = Invoice.GrandTotal - (Promo.is_percentage == false ? Promo.result_value : (Invoice.GrandTotal * (Promo.result_value)));
+                //        Invoice.Promos.Add(_Promo);
+                //    }
+                //    else if (Math.Floor(Invoice.GrandTotal / Promo.quantity_step) >= 1)
+                //    {
+                //        int Step = (int)Math.Floor(Invoice.GrandTotal / Promo.quantity_step);
 
-                        Promo _Promo = new Promo();
-                        _Promo.Type = sales_promotion.Type.Discount_onGrandTotal;
-                        _Promo.Shared = true;
-                        _Promo.DiscountValue = Invoice.GrandTotal - (Promo.is_percentage == false ? (Promo.result_value * Step) : (Invoice.GrandTotal * (Promo.result_value * Step)));
-                        Invoice.Promos.Add(_Promo);
-                    }
-                }
+                //        Promo _Promo = new Promo();
+                //        _Promo.Type = sales_promotion.Type.Discount_onGrandTotal;
+                //        _Promo.Shared = true;
+                //        _Promo.DiscountValue = Invoice.GrandTotal - (Promo.is_percentage == false ? (Promo.result_value * Step) : (Invoice.GrandTotal * (Promo.result_value * Step)));
+                //        Invoice.Promos.Add(_Promo);
+                //    }
+                //}
 
-                if (Promo.types == sales_promotion.Type.Discount_onBrand)
-                {
-                    if (Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference).Count() > 0)
-                    {
-                        foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference))
-                        {
-                            Promo _Promo = new Promo();
-                            _Promo.Type = sales_promotion.Type.Discount_onBrand;
-                            _Promo.Shared = true;
-                            _Promo.DiscountValue = _Detail.PriceVAT - (Promo.is_percentage == false ? Promo.result_value : (_Detail.PriceVAT * (Promo.result_value)));
-                            _Detail.Promos.Add(_Promo);
-                        }
-                    }
-                }
+                //if (Promo.types == sales_promotion.Type.Discount_onBrand)
+                //{
+                //    if (Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference).Count() > 0)
+                //    {
+                //        foreach (Detail _Detail in Invoice.Details.Where(x => x.Item.item_brand.id_brand == Promo.reference))
+                //        {
+                //            Promo _Promo = new Promo();
+                //            _Promo.Type = sales_promotion.Type.Discount_onBrand;
+                //            _Promo.Shared = true;
+                //            _Promo.DiscountValue = _Detail.PriceVAT - (Promo.is_percentage == false ? Promo.result_value : (_Detail.PriceVAT * (Promo.result_value)));
+                //            _Detail.Promos.Add(_Promo);
+                //        }
+                //    }
+                //}
 
                 if (Promo.types == sales_promotion.Type.BuyThis_GetThat)
                 {

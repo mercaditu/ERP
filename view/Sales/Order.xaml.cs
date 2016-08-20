@@ -178,6 +178,8 @@ namespace Cognitivo.Sales
         {
             if (dbContext.Approve())
             {
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.SelectedIndex = 0;
                 toolBar.msgApproved(dbContext.NumberOfRecords);
             }
         }

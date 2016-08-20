@@ -1,5 +1,6 @@
 namespace entity
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -74,7 +75,7 @@ namespace entity
             }
         }
         decimal _value_system = 0;
-        public decimal value_counted
+        public decimal? value_counted
         {
             get
             {
@@ -82,19 +83,26 @@ namespace entity
             }
             set
             {
-                _value_counted = value;
-                RaisePropertyChanged("value_counted");
-                if (item_product != null)
+                if (_value_counted != value)
                 {
-                    if (item_product.item != null)
+                    _value_counted = value;
+                    RaisePropertyChanged("value_counted");
+                    if (item_product != null)
                     {
-                        _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, value_counted,GetDimensionValue());
-                        RaisePropertyChanged("_Quantity_Factored");
+                        if (item_product.item != null)
+                        {
+                            if (value_counted!=null)
+                            {
+                                _Quantity_Factored = Brillo.ConversionFactor.Factor_Quantity(item_product.item, Convert.ToDecimal(value_counted), GetDimensionValue());
+                                RaisePropertyChanged("_Quantity_Factored");
+                            }
+                       
+                        }
                     }
                 }
             }
         }
-        decimal _value_counted = 0;
+        decimal? _value_counted = 0;
         [NotMapped]
         public decimal Quantity_Factored
         {

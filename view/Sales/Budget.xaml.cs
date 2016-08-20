@@ -229,6 +229,8 @@ namespace Cognitivo.Sales
         {
             if (SalesBudgetDB.Approve())
 	        {
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.SelectedIndex = 0;
                 toolBar.msgApproved(SalesBudgetDB.NumberOfRecords);
 	        }
         }

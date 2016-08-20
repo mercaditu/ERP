@@ -96,14 +96,15 @@ namespace entity.Brillo.Logic
 
         public static List<app_document_range> List_Range(App.Names AppName, int BranchID, int TerminalID)
         {
-            List<app_document_range> RangeLIST= new List<app_document_range>();
-            db db = new db();
-           
+            List<app_document_range> RangeLIST = new List<app_document_range>();
+
+            using (db db = new db())
+            {
                 RangeLIST = db.app_document_range.Where(x => x.id_company == Properties.Settings.Default.company_ID
-                                                          && x.app_document.filterby_branch == false 
-                                                          && x.app_document.filterby_tearminal == false 
-                                                          && x.app_document.id_application == AppName && x.is_active)
-                                                 .ToList();
+                                          && x.app_document.filterby_branch == false
+                                          && x.app_document.filterby_tearminal == false
+                                          && x.app_document.id_application == AppName && x.is_active)
+                                 .ToList();
 
                 RangeLIST.AddRange(db.app_document_range.Where(x => x.id_company == Properties.Settings.Default.company_ID
                                                           && x.app_document.filterby_branch == true
@@ -112,11 +113,13 @@ namespace entity.Brillo.Logic
                                                           && x.id_terminal == TerminalID
                                                           && x.app_document.id_application == AppName && x.is_active)
                                                  .ToList());
+            }
 
-                return RangeLIST;
-            
 
-           // return null;
+            return RangeLIST;
+
+
+            // return null;
         }
     }
 }

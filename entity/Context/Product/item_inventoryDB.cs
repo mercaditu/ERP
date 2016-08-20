@@ -127,7 +127,7 @@ namespace entity
                         item_movement.comment = Brillo.Localize.Text<string>("Inventory") + ": " + item_inventory_detail.comment;
                         item_movement.status = Status.Stock.InStock;
                         item_movement.debit = 0;
-                        item_movement.credit = item_inventory_detail.value_counted;
+                        item_movement.credit =(decimal)item_inventory_detail.value_counted;
                         item_movement.trans_date = item_inventory.trans_date;
                         item_movement.id_inventory_detail = item_inventory_detail.id_inventory_detail;
                         item_movement.timestamp = DateTime.Now;
@@ -162,7 +162,7 @@ namespace entity
                             if (item_inventory_detail.value_system != item_inventory_detail.value_counted)
                             {
                                 //Negative
-                                delta = item_inventory_detail.value_counted - item_inventory_detail.value_system;
+                                delta = Convert.ToDecimal(item_inventory_detail.value_counted) - item_inventory_detail.value_system;
                             }
 
                             if (delta != 0)

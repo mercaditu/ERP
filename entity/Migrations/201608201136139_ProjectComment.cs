@@ -13,6 +13,7 @@ namespace entity.Migrations
             AddColumn("projects", "comment", c => c.String(unicode: false));
             AddColumn("impex_expense", "id_currency", c => c.Int());
             AddColumn("impex_expense", "currency_rate", c => c.Decimal(nullable: false, precision: 20, scale: 4));
+            AlterColumn("item_inventory_detail", "value_counted", c => c.Decimal(precision: 20, scale: 4));
             CreateIndex("impex_expense", "id_currency");
             AddForeignKey("impex_expense", "id_currency", "app_currency", "id_currency");
         }
@@ -21,6 +22,7 @@ namespace entity.Migrations
         {
             DropForeignKey("impex_expense", "id_currency", "app_currency");
             DropIndex("impex_expense", new[] { "id_currency" });
+            AlterColumn("item_inventory_detail", "value_counted", c => c.Decimal(nullable: false, precision: 20, scale: 4));
             DropColumn("impex_expense", "currency_rate");
             DropColumn("impex_expense", "id_currency");
             DropColumn("projects", "comment");

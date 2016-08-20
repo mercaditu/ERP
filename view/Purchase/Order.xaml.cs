@@ -221,6 +221,8 @@ namespace Cognitivo.Purchase
         {
             if (PurchaseOrderDB.Approve())
             {
+                cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cmbdocument.SelectedIndex = 0;
                 toolBar.msgApproved(PurchaseOrderDB.NumberOfRecords);   
             }
         }

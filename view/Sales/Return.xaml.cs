@@ -314,6 +314,8 @@ namespace Cognitivo.Sales
         private void toolBar_btnApprove_Click(object sender)
         {
             SalesReturnDB.Approve();
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.SelectedIndex = 0;
             foreach (sales_return sales_return in salesReturnViewSource.View.Cast<sales_return>().ToList())
             {
                 sales_return.IsSelected = false;

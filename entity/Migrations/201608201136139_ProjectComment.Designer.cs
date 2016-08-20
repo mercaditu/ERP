@@ -13,7 +13,7 @@ namespace entity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201608200859123_ProjectComment"; }
+            get { return "201608201136139_ProjectComment"; }
         }
         
         string IMigrationMetadata.Source

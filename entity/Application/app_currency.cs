@@ -13,7 +13,7 @@ namespace entity
         {
             app_currency_denomination = new List<app_currency_denomination>();
             app_currencyfx = new List<app_currencyfx>();
-
+            impex_expense = new List<impex_expense>();
             id_company = CurrentSession.Id_Company;
             id_user =  CurrentSession.Id_User;
             is_active = true;
@@ -37,6 +37,7 @@ namespace entity
         public virtual ICollection<app_currency_denomination> app_currency_denomination { get; set; }
         public virtual ICollection<app_currencyfx> app_currencyfx { get; set; }
         public virtual ICollection<item_request> item_request { get; set; }
+        public virtual ICollection<impex_expense> impex_expense { get; set; }
 
         public string Error
         {

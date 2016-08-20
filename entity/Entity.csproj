@@ -388,6 +388,10 @@
     <Compile Include="Migrations\201607301335565_UpdateTransferdetailandrequestdetail.Designer.cs">
       <DependentUpon>201607301335565_UpdateTransferdetailandrequestdetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608200558188_ProjectComment.cs" />
+    <Compile Include="Migrations\201608200558188_ProjectComment.Designer.cs">
+      <DependentUpon>201608200558188_ProjectComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Production\production_execution_dimension.cs" />
     <Compile Include="Production\production_order_dimension.cs" />
     <Compile Include="Project\project_tag.cs" />
@@ -1119,6 +1123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607301335565_UpdateTransferdetailandrequestdetail.resx">
       <DependentUpon>201607301335565_UpdateTransferdetailandrequestdetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608200558188_ProjectComment.resx">
+      <DependentUpon>201608200558188_ProjectComment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

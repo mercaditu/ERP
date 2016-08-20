@@ -32,17 +32,19 @@ namespace entity
         public string accountant_name { get; set; }
         public string accountant_gov_code { get; set; }
         public bool is_active { get; set; }
+        public string version { get; set; }
+        public string seats { get; set; }
 
         //public virtual geo_country geo_country { get; set; }
         public virtual ICollection<app_branch> app_branch { get; set; }
 
-        public virtual IEnumerable<accounting_chart> accounting_chart { get;set;}
-        public virtual IEnumerable<accounting_budget> accounting_budget { get;set;}
+        public virtual IEnumerable<accounting_chart> accounting_chart { get; set; }
+        public virtual IEnumerable<accounting_budget> accounting_budget { get; set; }
         public virtual IEnumerable<accounting_cycle> accounting_cycle { get; set; }
         public virtual IEnumerable<accounting_journal> accounting_journal { get; set; }
         public virtual IEnumerable<accounting_template> accounting_template { get; set; }
         public virtual IEnumerable<item_inventory_dimension> item_inventory_dimension { get; set; }
-       
+
         public virtual IEnumerable<app_account> app_account { get; set; }
         public virtual IEnumerable<app_account_detail> app_account_detail { get; set; }
         public virtual IEnumerable<app_condition> app_condition { get; set; }
@@ -101,7 +103,7 @@ namespace entity
         public virtual IEnumerable<item_product> item_product { get; set; }
         public virtual IEnumerable<item_movement> item_movement { get; set; }
         public virtual IEnumerable<item_transfer> item_transfer { get; set; }
-        public virtual IEnumerable<item_inventory> item_inventory { get; set;}
+        public virtual IEnumerable<item_inventory> item_inventory { get; set; }
 
         public string Error
         {

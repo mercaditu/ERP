@@ -6,6 +6,27 @@ namespace entity
 {
     public static class CurrentSession
     {
+        public enum Versions
+        {
+            Lite,       //  //     0 USD //   0 USD
+            Basic,      //  // 3,000 USD // 350 USD
+            Medium,     //  // 5,000 USD // 550 USD
+            Full,       //  // 8,000 USD // 750 USD
+            Enterprise, //  //12,000 USD //
+            PrintingPress,
+            EventManagement
+        }
+
+        public enum VersionsKey
+        {
+            Himayuddin_51,
+            Bathua_102,
+            Mankurad_153,
+            Dashehari_204,
+            Alphonso_255,
+            Gulabkhas_306,
+            Chausa_357
+        }
 
         public static int Id_Company
         {
@@ -67,6 +88,9 @@ namespace entity
             set { _Id_Account = value; }
         }
         static int _Id_Account;
+
+        public static Versions Version { get; set; }
+        public static int NumberOfSeats { get; set; }
 
         public static List<security_curd> Security_CurdList { get; set; }
         public static List<security_role_privilage> Security_role_privilageList { get; set; }

@@ -1,0 +1,59 @@
+﻿<Page x:Class="Cognitivo.Product.Promotions"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:cntrl;assembly=cntrl"
+      mc:Ignorable="d" 
+      xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+      xmlns:convert="clr-namespace:Cognitivo.Converters"
+      d:DesignHeight="600" d:DesignWidth="800"
+	  Title="Promotions">
+    <Page.Resources>
+        <convert:ActiveToStatusforitem x:Key="ActiveToStatusforitem"/>
+        
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        
+        <ListBox Background="{StaticResource AccentColor_Brush}" x:Name="itemDataGrid"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemContainerStyle="{StaticResource nav_ListSelection}" Style="{StaticResource nav_List}"
+                 ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList recordCode="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" recordSecondaryName="{Binding id_item_type}"
+                                   recordName="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                   State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                   Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                   IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Grid Grid.Row="1" Grid.Column="1" Background="White">
+            
+        </Grid>
+        
+        <local:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" IsEnabled="False"
+                       appName="ItemPromotion"
+                       btnNew_Click="toolBar_btnNew_Click"
+                       btnEdit_Click="toolBar_btnEdit_Click"
+                       btnSave_Click="toolBar_btnSave_Click"
+                       btnCancel_Click="toolBar_btnCancel_Click"
+                       btnApprove_Click="toolBar_btnApprove_Click"
+                       btnAnull_Click="toolBar_btnAnull_Click"
+                       
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+    </Grid>
+</Page>

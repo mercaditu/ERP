@@ -39,7 +39,7 @@ namespace entity
         public enum Names
         {
             /// <summary>
-            /// Last Used : 121
+            /// Last Used : 123
             /// </summary>
 
 
@@ -155,6 +155,8 @@ namespace entity
             Property = 109,
             [LocalizedDescription("ItemAssetGroup")]
             ItemAssetGroup = 112,
+            [LocalizedDescription("ItemPromotion")]
+            ItemPromotion = 123,
 
             //Production
             [LocalizedDescription("ProductionExecution")]

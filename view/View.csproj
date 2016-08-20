@@ -446,6 +446,9 @@
     <Compile Include="Product\ProductBarcode.xaml.cs">
       <DependentUpon>ProductBarcode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product\Promotions.xaml.cs">
+      <DependentUpon>Promotions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product\SuppliesRequest.xaml.cs">
       <DependentUpon>SuppliesRequest.xaml</DependentUpon>
     </Compile>
@@ -1620,6 +1623,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Product\ProductBarcode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Product\Promotions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -140,6 +140,18 @@ namespace entity
                 {
                     _id_range = value;
                     RaisePropertyChanged("NumberWatermark");
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                    {
+                        using (db db = new db())
+                        {
+                            app_document_range app_document_range = db.app_document_range.Where(x => x.id_range == value).FirstOrDefault();
+                            if (app_document_range != null)
+                            {
+                                code = app_document_range.code;
+                            }
+
+                        }
+                    }
                 }
             }
         }
@@ -189,7 +201,7 @@ namespace entity
         /// 
         /// </summary>
         [NotMapped]
-        public string NumberWatermark 
+        public string NumberWatermark
         {
             get
             {
@@ -301,7 +313,7 @@ namespace entity
         /// </summary>
         public Status.TransactionTypes trans_type { get; set; }
 
-      
+
 
         [NotMapped]
         public ICollection<CommercialVAT> CommercialVAT { get; set; }
@@ -309,7 +321,7 @@ namespace entity
 
         #region Navigation
 
-        public virtual app_currencyfx app_currencyfx 
+        public virtual app_currencyfx app_currencyfx
         {
             get { return _app_currencyfx; }
             set { _app_currencyfx = value; RaisePropertyChanged("app_currencyfx"); }

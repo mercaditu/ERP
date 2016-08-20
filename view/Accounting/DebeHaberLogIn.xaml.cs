@@ -52,7 +52,7 @@ namespace Cognitivo.Accounting
                     Company_Name = company.name;
                 }
 
-                if (company.domain != null)
+                if (company.hash_debehaber != null)
                 {
                     tabUpLoad.IsSelected = true;
                 }
@@ -111,7 +111,7 @@ namespace Cognitivo.Accounting
                 using (entity.db db = new entity.db())
                 {
                     entity.app_company company = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault();
-                    company.domain = Hash;
+                    company.hash_debehaber = Hash;
                     db.SaveChanges();
                 }
 

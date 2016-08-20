@@ -47,7 +47,7 @@ namespace Cognitivo.Accounting
             paymentViewSource = ((CollectionViewSource)(FindResource("paymentViewSource")));
             item_assetViewSource = ((CollectionViewSource)(FindResource("item_assetViewSource")));
 
-            RelationshipHash = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault().domain;
+            RelationshipHash = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
         }
 
         private void btnData_Refresh(object sender, RoutedEventArgs e)

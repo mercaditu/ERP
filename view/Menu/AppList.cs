@@ -15,11 +15,24 @@ namespace Cognitivo.Menu
 
         public enum Version
         {
-            Lite,       //     0 USD //   0 USD
-            Basic,      // 3,000 USD // 350 USD
-            Medium,     // 5,000 USD // 550 USD
-            Full,       // 8,000 USD // 750 USD
-            Enterprise  //12,000 USD //
+            Lite,       //  //     0 USD //   0 USD
+            Basic,      //  // 3,000 USD // 350 USD
+            Medium,     //  // 5,000 USD // 550 USD
+            Full,       //  // 8,000 USD // 750 USD
+            Enterprise, //  //12,000 USD //
+            PrintingPress,
+            EventManagement
+        }
+
+        public enum VersionKey
+        {
+            Himayuddin_51,
+            Bathua_102,
+            Mankurad_153,
+            Dashehari_204,
+            Chausa_255,
+            Gulabkhas_306,
+            Alphonso_357
         }
 
         enum Namespace

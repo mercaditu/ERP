@@ -362,6 +362,10 @@ namespace Cognitivo.Sales
                 cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;
             }
+            else
+            {
+                toolBar.msgWarning("Please check Customer's Credit");
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)
@@ -382,8 +386,9 @@ namespace Cognitivo.Sales
             {
                 contact contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
                 sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-                sales_invoice.id_contact = contact.id_contact;
                 sales_invoice.contact = contact;
+                sales_invoice.id_contact = contact.id_contact;
+         
 
                 if (sales_invoice.sales_order == null)
                 {
@@ -515,7 +520,9 @@ namespace Cognitivo.Sales
 
 
                 sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
-                _sales_invoice_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch(BranchID, item.id_item, DateTime.Now);
+               
+                    _sales_invoice_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch(BranchID, item.id_item, DateTime.Now);
+               
 
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoice.RaisePropertyChanged("GrandTotal");

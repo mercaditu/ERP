@@ -342,20 +342,27 @@ namespace entity
         /// </summary>
         protected void calc_credit(decimal GrandTotal)
         {
-            if (app_currencyfx != null && contact != null)
+            if (contact != null)
             {
-                decimal rate = app_currencyfx.buy_value;
-
                 if (contact.credit_availability != null)
                 {
                     if (contact.credit_availability > 0)
                     {
-                        CreditLimit = (decimal)contact.credit_availability * rate;
-                        CreditLimit = CreditLimit - GrandTotal;
-                        RaisePropertyChanged("CreditLimit");
+                        CreditLimit = (decimal)contact.credit_availability;
                     }
                 }
+
+                if (app_currencyfx != null)
+                {
+                    decimal rate = app_currencyfx.buy_value;
+                    CreditLimit = CreditLimit * rate;
+
+                }
+                CreditLimit = CreditLimit - GrandTotal;
+                RaisePropertyChanged("CreditLimit");
+
             }
+
         }
 
         /// <summary>

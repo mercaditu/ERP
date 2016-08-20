@@ -458,7 +458,7 @@
                                     Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=AvailableCredit, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                             <Label Content="X" Style="{StaticResource ico_Label}"/>
                                             <TextBlock Text="{lex:Loc AvailableCredit}" Style="{StaticResource text_Label}"/>
-                                            <TextBlock Text="{Binding /contact.credit_availability, IsAsync=True, Mode=TwoWay, 
+                                            <TextBlock Text="{Binding CreditLimit, IsAsync=True, Mode=TwoWay, 
                                        UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" Style="{StaticResource text_Data}"/>
                                         </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center"

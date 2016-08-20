@@ -44,28 +44,9 @@ namespace entity
         {
             get
             {
-                if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
-                {
-                    using (db db = new db())
-                    {
-                        if (db.item_movement.Where(x => x.id_item_product == id_item_product && x.app_location.id_location == id_location && x.status == Status.Stock.InStock).ToList().Count() > 0
-                                                                     )
-                        {
-                            return db.item_movement.Where(x => x.id_item_product == id_item_product && x.app_location.id_location == id_location && x.status == Status.Stock.InStock)
-                                                                     .Sum(y => y.credit - y.debit);
-                        }
-                        else
-                        {
-                            return 0;
-                        }
-
-                    }
-
-                }
-                else
-                {
+               
                     return _value_system;
-                }
+                
             }
             set
             {

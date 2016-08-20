@@ -18,10 +18,10 @@ namespace entity
             sales_invoice.trans_type = Status.TransactionTypes.Normal;
             sales_invoice.trans_date = DateTime.Now.AddDays(TransDate_OffSet);
             sales_invoice.timestamp = DateTime.Now;
-            
+
             //Navigation Properties
             sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
-        
+
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
 
             //This is to skip query code in case of Migration. Helps speed up migrations.
@@ -53,7 +53,7 @@ namespace entity
             {
                 return base.SaveChanges();
             }
-           catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -145,7 +145,7 @@ namespace entity
                                                 x.status != Status.Documents_General.Approved
                                                         && x.IsSelected && x.Error == null))
             {
-                if (invoice.CreditLimit >= 0)
+                if (Check_CreditLimit(invoice))
                 {
                     if (invoice.id_sales_invoice == 0)
                     {
@@ -168,7 +168,7 @@ namespace entity
                     {
                         payment_schedual.AddRange(payment_schedualList);
                     }
-                  
+
 
                     if ((invoice.number == null || invoice.number == string.Empty) && invoice.id_range > 0)
                     {
@@ -182,7 +182,7 @@ namespace entity
                         }
 
                         app_document_range app_document_range = base.app_document_range.Where(x => x.id_range == invoice.id_range).FirstOrDefault();
-                        
+
                         invoice.is_issued = true;
                         invoice.number = Brillo.Logic.Range.calc_Range(app_document_range, true);
                         invoice.RaisePropertyChanged("number");
@@ -196,7 +196,7 @@ namespace entity
                         }
 
                         //Generate BarCode
-                        
+
                         //Save Changes before Printing, so that all fields show up.
                         SaveChanges();
 
@@ -208,16 +208,17 @@ namespace entity
 
                         invoice.status = Status.Documents_General.Approved;
                         invoice.timestamp = DateTime.Now;
-                        
+
                         SaveChanges();
                     }
 
                     NumberOfRecords += 1;
                     invoice.IsSelected = false;
                 }
+                return true;
             }
 
-            return true;
+            return false;
         }
 
 
@@ -243,7 +244,7 @@ namespace entity
                     {
                         if (sales_detail.item_movement.FirstOrDefault().item_movement_value != null)
                         {
-                            sales_detail.unit_cost = 
+                            sales_detail.unit_cost =
                                 entity.Brillo.Currency.convert_Values(sales_detail.item_movement.FirstOrDefault().item_movement_value.Sum(x => x.unit_value),
                             sales_detail.item_movement.FirstOrDefault().item_movement_value.FirstOrDefault().id_currencyfx,
                             sales_detail.sales_invoice.id_currencyfx, App.Modules.Sales);
@@ -257,37 +258,41 @@ namespace entity
         {
             if (item != null && item.id_item > 0 && sales_invoice != null)
             {
-               return  select_Item(ref sales_invoice, item, AllowDuplicateItem);
+                return select_Item(ref sales_invoice, item, AllowDuplicateItem);
             }
             return null;
         }
 
         private sales_invoice_detail select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
         {
-            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
-            {
-                sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
-             
-                _sales_invoice_detail.State = EntityState.Added;
-                _sales_invoice_detail.sales_invoice = sales_invoice;
+            
 
-                _sales_invoice_detail.CurrencyFX_ID = sales_invoice.app_currencyfx.id_currencyfx;
-                _sales_invoice_detail.Contact = sales_invoice.contact;
-                _sales_invoice_detail.item_description = item.name;
-                _sales_invoice_detail.item = item;
-                _sales_invoice_detail.id_item = item.id_item;
 
-                _sales_invoice_detail.quantity += 1;
-                _sales_invoice_detail.app_vat_group = base.app_vat_group.Where(x => x.id_vat_group == _sales_invoice_detail.id_vat_group).FirstOrDefault();
-                sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
-                return _sales_invoice_detail;
-            }
-            else
-            {
-                sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                sales_invoice_detail.quantity += 1;
-                return sales_invoice_detail;
-            }
+                if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
+                {
+                    sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
+
+                    _sales_invoice_detail.State = EntityState.Added;
+                    _sales_invoice_detail.sales_invoice = sales_invoice;
+
+                    _sales_invoice_detail.CurrencyFX_ID = sales_invoice.app_currencyfx.id_currencyfx;
+                    _sales_invoice_detail.Contact = sales_invoice.contact;
+                    _sales_invoice_detail.item_description = item.name;
+                    _sales_invoice_detail.item = item;
+                    _sales_invoice_detail.id_item = item.id_item;
+
+                    _sales_invoice_detail.quantity += 1;
+                    _sales_invoice_detail.app_vat_group = base.app_vat_group.Where(x => x.id_vat_group == _sales_invoice_detail.id_vat_group).FirstOrDefault();
+                    sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
+                    return _sales_invoice_detail;
+                }
+                else
+                {
+                    sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                    sales_invoice_detail.quantity += 1;
+                    return sales_invoice_detail;
+                }
+           
         }
 
         /// <summary>
@@ -385,7 +390,7 @@ namespace entity
             {
                 if (sales_invoice.IsSelected && sales_invoice.Error == null)
                 {
-                    if (sales_invoice.sales_invoice_detail.Where(x => x.sales_return_detail == null).Count() > 0 
+                    if (sales_invoice.sales_invoice_detail.Where(x => x.sales_return_detail == null).Count() > 0
                         &&
                         sales_invoice.is_accounted == false)
                     {
@@ -411,6 +416,21 @@ namespace entity
                         SaveChanges();
                     }
                 }
+            }
+        }
+        public bool Check_CreditLimit(sales_invoice sales_invoice)
+        {
+
+            Decimal CreditLimit = sales_invoice.CreditLimit;
+            Decimal TotalSales=sales_invoice.GrandTotal;
+           
+            if (CreditLimit>TotalSales)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

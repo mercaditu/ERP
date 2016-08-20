@@ -171,7 +171,7 @@ namespace entity
         {
             get
             {
-                if (credit_limit > 0 && id_contact != 0 && State != 0)
+                if (credit_limit > 0 && id_contact != 0 )
                 {
                     using (db db = new db())
                     {

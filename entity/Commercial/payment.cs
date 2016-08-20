@@ -98,6 +98,7 @@ namespace entity
         {
             get
             {
+
                 return _GrandTotal;
             }
             set
@@ -114,7 +115,7 @@ namespace entity
             get
             {
                 _GrandTotalDetail = 0;
-                foreach (payment_detail _payment_detail in payment_detail.Where(x=>x.IsSelected))
+                foreach (payment_detail _payment_detail in payment_detail)
                 {
                     _GrandTotalDetail += _payment_detail.ValueInDefaultCurrency;
                 }

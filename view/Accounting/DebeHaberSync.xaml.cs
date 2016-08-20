@@ -17,6 +17,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Data.Entity;
+using System.Timers;
 
 namespace Cognitivo.Accounting
 {
@@ -48,6 +49,12 @@ namespace Cognitivo.Accounting
             item_assetViewSource = ((CollectionViewSource)(FindResource("item_assetViewSource")));
 
             RelationshipHash = db.app_company.Where(x => x.id_company == entity.CurrentSession.Id_Company).FirstOrDefault().hash_debehaber;
+
+            var timer = new System.Threading.Timer(
+                e => btnData_Refresh(null, null),
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromMinutes(1));
         }
 
         private void btnData_Refresh(object sender, RoutedEventArgs e)

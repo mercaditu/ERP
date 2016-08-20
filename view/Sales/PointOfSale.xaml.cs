@@ -21,6 +21,7 @@ namespace Cognitivo.Sales
         SalesInvoiceDB SalesInvoiceDB = new SalesInvoiceDB();
         PaymentDB PaymentDB = new PaymentDB();
         entity.Brillo.Promotion.Start StartPromo = new entity.Brillo.Promotion.Start(true);
+
         /// <summary>
         /// CollectionViewSource
         /// </summary>

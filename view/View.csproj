@@ -525,6 +525,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FinanceDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Data\InventoryDS.cs">
+      <DependentUpon>InventoryDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reporting\Data\InventoryDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Data\ProductDS.cs">
       <DependentUpon>ProductDS.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -616,6 +625,9 @@
     </Compile>
     <Compile Include="Reporting\Views\SalesByVAT.xaml.cs">
       <DependentUpon>SalesByVAT.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\Views\InventorySummary.xaml.cs">
+      <DependentUpon>InventorySummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporting\Views\SalesOrderSummary.xaml.cs">
       <DependentUpon>SalesOrderSummary.xaml</DependentUpon>
@@ -1017,6 +1029,7 @@
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project.rdlc" />
@@ -1317,6 +1330,17 @@
     </None>
     <None Include="Reporting\Data\FinanceDS.xss">
       <DependentUpon>FinanceDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\InventoryDS.xsc">
+      <DependentUpon>InventoryDS.xsd</DependentUpon>
+    </None>
+    <None Include="Reporting\Data\InventoryDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>InventoryDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reporting\Data\InventoryDS.xss">
+      <DependentUpon>InventoryDS.xsd</DependentUpon>
     </None>
     <None Include="Reporting\Data\ProductDS.xsc">
       <DependentUpon>ProductDS.xsd</DependentUpon>
@@ -1760,6 +1784,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\SalesByVAT.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\InventorySummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

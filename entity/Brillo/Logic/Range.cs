@@ -102,7 +102,7 @@ namespace entity.Brillo.Logic
                 RangeLIST = db.app_document_range.Where(x => x.id_company == Properties.Settings.Default.company_ID
                                                           && x.app_document.filterby_branch == false 
                                                           && x.app_document.filterby_tearminal == false 
-                                                          && x.app_document.id_application == AppName)
+                                                          && x.app_document.id_application == AppName && x.is_active)
                                                  .ToList();
 
                 RangeLIST.AddRange(db.app_document_range.Where(x => x.id_company == Properties.Settings.Default.company_ID
@@ -110,7 +110,7 @@ namespace entity.Brillo.Logic
                                                           && x.id_branch == BranchID
                                                           && x.app_document.filterby_tearminal == true
                                                           && x.id_terminal == TerminalID
-                                                          && x.app_document.id_application == AppName)
+                                                          && x.app_document.id_application == AppName && x.is_active)
                                                  .ToList());
 
                 return RangeLIST;

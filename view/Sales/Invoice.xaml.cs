@@ -359,6 +359,8 @@ namespace Cognitivo.Sales
             if (SalesInvoiceDB.Approve(SalesSettings.DiscountStock))
             {
                 filter_sales();
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.SelectedIndex = 0;
             }
         }
 

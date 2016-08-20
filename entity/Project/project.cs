@@ -75,6 +75,7 @@ namespace entity
         private string _name;
 
         public string code { get; set; }
+        public string comment { get; set; }
         public DateTime? est_start_date { get; set; }
         public DateTime? est_end_date { get; set; }
 

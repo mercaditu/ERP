@@ -26,6 +26,7 @@ namespace entity
         [Required]
         public string address { get; set; }
         public string domain { get; set; }
+        public string hash_debehaber { get; set; }
         public string representative_name { get; set; }
         public string representative_gov_code { get; set; }
         public string accountant_name { get; set; }

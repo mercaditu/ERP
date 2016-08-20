@@ -28,6 +28,10 @@ namespace entity
         [Required]
         public bool is_active { get; set; }
 
+        [NotMapped]
+        public decimal est_cost { get { return _est_cost; } set { _est_cost = value; RaisePropertyChanged("est_cost"); } }
+        private decimal _est_cost;
+
         public virtual item_recepie item_recepie { get; set; }
         public virtual item item{ get; set; }
 

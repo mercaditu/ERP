@@ -83,7 +83,7 @@ namespace entity
                 }
             }
         }
-        decimal? _value_counted = 0;
+        decimal? _value_counted;
         [NotMapped]
         public decimal Quantity_Factored
         {

@@ -89,10 +89,29 @@ namespace entity
                     RaisePropertyChanged("quantity");
 
                     update_SubTotal();
+
+                    if (Quantity_InStock!=null)
+                    {
+                        if (quantity>Quantity_InStock)
+                        {
+                            InStock = false;
+                            RaisePropertyChanged("InStock");
+                        }
+                        else
+                        { InStock = true; RaisePropertyChanged("InStock"); }
+                        
+                    }
                 }
             }
         }
         private decimal _quantity;
+
+        [NotMapped]
+        public decimal? Quantity_InStock { get; set; }
+
+
+        [NotMapped]
+        public bool InStock { get; set; }
 
         /// <summary>
         /// 

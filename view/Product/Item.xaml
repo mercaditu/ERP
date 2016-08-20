@@ -47,7 +47,7 @@
         <CollectionViewSource x:Key="itemitem_serviceViewSource" Source="{Binding item_service, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="itemitem_tagdetailViewSource" Source="{Binding item_tag_detail, Source={StaticResource itemViewSource}}"/>
         <CollectionViewSource x:Key="item_tagViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_tag}, CreateList=True}"/>
-        
+
         <CollectionViewSource x:Key="item_templateViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:item_template}, CreateList=True}"/>
         <CollectionViewSource x:Key="item_templateitem_template_detaildetailViewSource" Source="{Binding item_template_detail, Source={StaticResource item_templateViewSource}}"/>
 
@@ -137,9 +137,9 @@
                                             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
                                             NotifyOnValidationError=true, 
                                             ValidatesOnDataErrors=True}"  />
-                  
+
                 </AdornerDecorator>
-                
+
                 <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                 <AdornerDecorator>
                     <TextBox Grid.Column="1" Style="{StaticResource input_textbox}"
@@ -164,48 +164,48 @@
             <TabControl HorizontalAlignment="Stretch" metro:TabControlHelper.IsUnderlined="True" Margin="0,180,0,0">
                 <TabItem Header="{lex:Loc Tags}">
                     <StackPanel HorizontalAlignment="Center" Width="264" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
-                            <Grid>
-                                <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Label Content="+" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="AddBrand_PreviewMouseUp" />
-                                    <Label Content="e" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="EditBrand_PreviewMouseUp" />
-                                </StackPanel>
-                            </Grid>
+                        <Grid>
+                            <Label Content="{lex:Loc Brand}"  Style="{StaticResource input_label}"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Label Content="+" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="AddBrand_PreviewMouseUp" />
+                                <Label Content="e" HorizontalAlignment="Right" Style="{StaticResource btn_Label}" PreviewMouseUp="EditBrand_PreviewMouseUp" />
+                            </StackPanel>
+                        </Grid>
 
-                            <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}" 
+                        <ComboBox x:Name="cbxItemBrand" Grid.Column="1" Style="{StaticResource input_combobox}" 
                                       metro:ControlsHelper.FocusBorderBrush="RoyalBlue"
                                       metro:ControlsHelper.MouseOverBorderBrush="#FF94AFFE"
                                       DisplayMemberPath="name" SelectedValuePath="id_brand"
                                       ItemsSource="{Binding Source={StaticResource item_brandViewSource}}"
                                       SelectedValue="{Binding id_brand, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True}"/>
 
-                            <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
-                            <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
+                        <Label Content="{lex:Loc Tags}"  Style="{StaticResource input_label}"/>
+                        <cntrl:SearchableTextbox x:Name="cbxTag" Margin="2" HorizontalAlignment="Center" 
                                                  CollectionViewSource="{StaticResource item_tagViewSource}"
                                                  focusGrid="True" Height="27" Width="256" Visibility="{Binding ElementName=toolBar, Path=IsEditable, Mode=OneWay, Converter={StaticResource BoolToVisibility}}"
                                                  KeyDown="cbxTag_KeyDown" MouseDoubleClick="cbxTag_MouseDoubleClick">
-                                <cntrl:SearchableTextbox.Columns>
-                                    <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
+                            <cntrl:SearchableTextbox.Columns>
+                                <cntrl:SmartBoxColumn Header="{lex:Loc Cognitivo:local:Tags}" Width="Auto" ForProperty="name" 
                                                           Binding="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EnableSearch="True"/>
-                                </cntrl:SearchableTextbox.Columns>
-                            </cntrl:SearchableTextbox>
-                            <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
+                            </cntrl:SearchableTextbox.Columns>
+                        </cntrl:SearchableTextbox>
+                        <DataGrid x:Name="item_tag_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Margin="4"
                                       HeadersVisibility="None" IsReadOnly="{Binding ElementName=toolBar, Path=IsEditable, Converter={StaticResource TrueToFalse}}"
                                       ItemsSource="{Binding Source={StaticResource itemitem_tagdetailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
-                                         <DataGridTemplateColumn Width="Auto" Header="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Command="customcmd:CustomCommands.Delete"
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding item_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
+                                <DataGridTemplateColumn Width="Auto" Header="">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="customcmd:CustomCommands.Delete"
                                                     Style="{StaticResource btnDeleteChildStyle}"
                                                     CommandParameter="{Binding}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
                 </TabItem>
                 <TabItem Header="{lex:Loc Commercial}" >
                     <StackPanel>
@@ -472,6 +472,12 @@
                             </StackPanel>
                         </Border>
                     </Popup>
+                </StackPanel>
+                <StackPanel x:Name="stackpnlCost" Orientation="Horizontal" Margin="3,2,0,5" IsEnabled="{Binding ElementName=toolBar,Path=IsEditable}">
+                    <Label Content="A" Style="{StaticResource btn_Label}"/>
+                    <TextBlock x:Name="tbCost" VerticalAlignment="Center">
+                            <Hyperlink x:Name="hrefCost" Click="hrefCost_Click"><Run Text="{lex:Loc Cost}"/></Hyperlink></TextBlock>
+
                 </StackPanel>
             </StackPanel>
         </Grid>

@@ -11,10 +11,10 @@ namespace entity.Migrations
             AddColumn("app_company", "version", c => c.String(unicode: false));
             AddColumn("app_company", "seats", c => c.String(unicode: false));
             AddColumn("projects", "comment", c => c.String(unicode: false));
-            AddColumn("impex_expense", "id_currency", c => c.Int(nullable: false));
+            AddColumn("impex_expense", "id_currency", c => c.Int());
             AddColumn("impex_expense", "currency_rate", c => c.Decimal(nullable: false, precision: 20, scale: 4));
             CreateIndex("impex_expense", "id_currency");
-            AddForeignKey("impex_expense", "id_currency", "app_currency", "id_currency", cascadeDelete: true);
+            AddForeignKey("impex_expense", "id_currency", "app_currency", "id_currency");
         }
         
         public override void Down()

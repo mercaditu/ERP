@@ -440,7 +440,7 @@ namespace Cognitivo.Sales
         private void calculate_vat(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
-           
+
             if (sales_invoice != null)
             {
                 sales_invoice.RaisePropertyChanged("GrandTotal");
@@ -505,12 +505,15 @@ namespace Cognitivo.Sales
         {
             if (sbxItem.ItemID > 0)
             {
+                int BranchID = (int)cbxBranch.SelectedValue;
+                Class.StockCalculations StockCalculations = new Cognitivo.Class.StockCalculations();
                 Settings SalesSettings = new Settings();
                 sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                 item item = SalesInvoiceDB.items.Where(x => x.id_item == sbxItem.ItemID).FirstOrDefault();
 
-                SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
 
+                sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
+                _sales_invoice_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch(BranchID, item.id_item, DateTime.Now);
 
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoice.RaisePropertyChanged("GrandTotal");
@@ -593,9 +596,9 @@ namespace Cognitivo.Sales
         private void cbxCurrency_LostFocus(object sender, RoutedEventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            if (sales_invoice!=null)
+            if (sales_invoice != null)
             {
-                if (sales_invoice.id_currencyfx>0)
+                if (sales_invoice.id_currencyfx > 0)
                 {
                     if (SalesInvoiceDB.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault() != null)
                     {
@@ -690,7 +693,7 @@ namespace Cognitivo.Sales
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoicesales_invoice_detailViewSource.View.MoveCurrentToFirst();
-               
+
             }
             CollectionViewSource sales_invoicesales_invoice_detailsales_packinglist_relationViewSource = FindResource("sales_invoicesales_invoice_detailsales_packinglist_relationViewSource") as CollectionViewSource;
             if (sales_invoicesales_invoice_detailsales_packinglist_relationViewSource != null)
@@ -818,7 +821,7 @@ namespace Cognitivo.Sales
                 sales_invoicesales_invoice_detailsales_packinglist_relationViewSource.Source = null;
 
             }
-            calculate_vat(sender,e);
+            calculate_vat(sender, e);
         }
 
         private void btnRecivePayment_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -828,12 +831,12 @@ namespace Cognitivo.Sales
             {
                 entity.Brillo.Security Security = new entity.Brillo.Security(entity.App.Names.AccountsReceivable);
                 if (Security.create)
-	            {
+                {
                     crud_modal.Visibility = System.Windows.Visibility.Visible;
                     cntrl.Curd.receive_payment recive_payment = new cntrl.Curd.receive_payment();
                     recive_payment.sales_invoice = sales_invoice;
                     crud_modal.Children.Add(recive_payment);
-	            }
+                }
                 else
                 {
                     toolBar.msgWarning("Access Denied. Please contact your Administrator.");
@@ -872,7 +875,7 @@ namespace Cognitivo.Sales
 
         private void cbxBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbxBranch.SelectedItem!=null)
+            if (cbxBranch.SelectedItem != null)
             {
                 app_branch app_branch = cbxBranch.SelectedItem as app_branch;
                 cbxLocation.ItemsSource = app_branch.app_location.ToList();

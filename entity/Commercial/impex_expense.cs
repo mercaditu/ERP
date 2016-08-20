@@ -23,7 +23,7 @@ namespace entity
         public decimal value { get; set; }
         public int id_currencyfx { get; set; }
 
-        public int id_currency { get; set; }
+        public int? id_currency { get; set; }
         public decimal currency_rate { get; set; }
 
         [NotMapped]

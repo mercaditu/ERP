@@ -798,5 +798,16 @@ namespace Cognitivo.Product
                 //release unmanaged resources.
             }
         }
+
+       
+
+        private void hrefCost_Click(object sender, RoutedEventArgs e)
+        {
+            item item = itemViewSource.View.CurrentItem as item;
+            entity.Brillo.ProductCost ProductCost = new entity.Brillo.ProductCost();
+            ProductCost.calc_SingleCost(item.item_product.FirstOrDefault());
+            
+        }
+
     }
 }

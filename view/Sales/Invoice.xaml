@@ -24,6 +24,7 @@
                         Executed="DeleteCommandBinding_Executed"/>
     </Page.CommandBindings>
     <Page.Resources>
+        <converter:Bool2Color x:Key="Bool2Color"/>
         <converter:SecurityConverter x:Key="SecurityConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <converter:CustomStringFormatConverter x:Key="CustomStringFormat"/>
@@ -657,6 +658,13 @@
                                       InitializingNewItem="sales_invoice_detailDataGrid_InitializingNewItem" 
                                       RowEditEnding="sales_invoice_detailDataGrid_RowEditEnding" 
                                       CellEditEnding="sales_invoice_detailDataGrid_CellEditEnding">
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="Background" Value="{Binding InStock,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource Bool2Color}}"/>
+                                    </Style>
+                                    
+                                </DataGrid.RowStyle>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding id_sales_invoice_detail, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"
                                                         Header="{lex:Loc Cognitivo:local:Code}" IsReadOnly="True"/>

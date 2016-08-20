@@ -362,6 +362,7 @@
     <Compile Include="Configs\ItemTemplate.xaml.cs">
       <DependentUpon>ItemTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\Bool2Color.cs" />
     <Compile Include="Production\Fraction.xaml.cs">
       <DependentUpon>Fraction.xaml</DependentUpon>
     </Compile>

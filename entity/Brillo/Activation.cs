@@ -9,7 +9,87 @@ namespace entity.Brillo
 {
     public class Activation
     {
-        public int decrypt_Seats()
+        #region Version
+
+        /// <summary>
+        /// Decrypt will take the Version from the database and return the correct version.
+        /// </summary>
+        /// <returns>Version</returns>
+        public CurrentSession.Versions VersionDecrypt()
+        {
+            int i = 1;
+            string VersionKey = "";
+
+            using (db db = new db())
+            {
+                string _Passkey = "^%*@$^$";
+                string _Hash = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault().version;
+
+                VersionKey = StringCipher.Decrypt(_Hash, _Passkey);
+            }
+
+            if (CurrentSession.VersionsKey.Himayuddin_51.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Lite;
+            }
+            else if(CurrentSession.VersionsKey.Bathua_102.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Basic;
+            }
+            else if (CurrentSession.VersionsKey.Mankurad_153.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Medium;
+            }
+            else if (CurrentSession.VersionsKey.Dashehari_204.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Full;
+            }
+            else if (CurrentSession.VersionsKey.Alphonso_255.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.Enterprise;
+            }
+            else if (CurrentSession.VersionsKey.Gulabkhas_306.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.PrintingPress;
+            }
+            else if (CurrentSession.VersionsKey.Chausa_357.ToString() == VersionKey)
+            {
+                return CurrentSession.Versions.EventManagement;
+            }
+            else
+            {
+                return CurrentSession.Versions.Lite;
+            }
+        }
+
+        public bool VersionEncrypt(CurrentSession.Versions Version)
+        {
+            try
+            {
+                using (db db = new db())
+                {
+                    string _Seats = Version.ToString();
+                    string _Passkey = "^%*@$^$";
+
+                    string hash = StringCipher.Encrypt(_Seats, _Passkey);
+
+                    app_company app_company = db.app_company.Where(x => x.id_company == CurrentSession.Id_Company).FirstOrDefault();
+                    app_company.seats = hash;
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Seats
+
+        public int SeatsDecrypt()
         {
             int i = 1;
 
@@ -26,7 +106,7 @@ namespace entity.Brillo
             return i;
         }
 
-        public bool encrypt_Seats(int Seats)
+        public bool SeatsEncrypt(int Seats)
         {
             try
             {
@@ -48,8 +128,11 @@ namespace entity.Brillo
                 return false;
             }
         }
+        
+        #endregion
 
         #region Fibonacci
+
         private int Fibonacci(int n)
         {
             int a = 0;
@@ -63,6 +146,7 @@ namespace entity.Brillo
             }
             return a;
         }
+        
         private void calc_Fibonacci(int NroSeats)
         {
             int[] arrSeat = new int[150];
@@ -72,6 +156,7 @@ namespace entity.Brillo
                 arrSeat[i] = Fibonacci(i);
             }
         }
+        
         #endregion
     }
 }

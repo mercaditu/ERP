@@ -15,7 +15,7 @@ namespace Cognitivo.Converters
             if (value.ToString() == false.ToString())
                 return new SolidColorBrush(Colors.Pink);
             else
-                return null;
+                return new SolidColorBrush(Colors.Silver);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

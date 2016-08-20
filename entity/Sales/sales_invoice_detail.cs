@@ -18,6 +18,7 @@ namespace entity
             is_head = true;
             item_movement = new List<item_movement>();
             timestamp = DateTime.Now;
+            InStock = true;
         }
 
         [Key]

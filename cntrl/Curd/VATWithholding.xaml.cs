@@ -14,8 +14,7 @@ namespace cntrl
         List<object> _invoiceList = null;
         public List<object> invoiceList { get { return _invoiceList; } set { _invoiceList = value; } }
 
-        private PaymentDB _entity = null;
-        public PaymentDB objEntity { get { return _entity; } set { _entity = value; } }
+        public PaymentDB PaymentDB { get; set; }
 
         //Change to List. We will need to add multiple payment scheduals.
         public payment_schedual payment_schedual { get; set; }
@@ -33,7 +32,7 @@ namespace cntrl
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PaymentWithHolding, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, entity.App.Names.PaymentWithHolding, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
@@ -51,9 +50,6 @@ namespace cntrl
                         {
                             lbltotalvat.Content = Math.Round((((sales_invoice.TotalVat * payment_schedual.AccountReceivableBalance) / sales_invoice.GrandTotal)), 4);
                         }
-
-
-
                     }
                     else if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(purchase_invoice))
                     {
@@ -63,7 +59,6 @@ namespace cntrl
                             lbltotalvat.Content = Math.Round(((purchase_invoice.TotalVat * payment_schedual.AccountPayableBalance) / purchase_invoice.GrandTotal) * percentage, 4);
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -106,7 +101,7 @@ namespace cntrl
 
                 payment_withholding_tax.payment_withholding_details.Add(payment_withholding_details);
 
-                objEntity.payment_withholding_tax.Add(payment_withholding_tax);
+                PaymentDB.payment_withholding_tax.Add(payment_withholding_tax);
                 payment_schedual _payment_schedual = new payment_schedual();
 
                 if (_invoiceList.FirstOrDefault().GetType().BaseType == typeof(sales_invoice))
@@ -131,9 +126,9 @@ namespace cntrl
                 _payment_schedual.id_sales_return = payment_schedual.id_sales_return;
                 _payment_schedual.trans_date = (DateTime)DtpTransdate.SelectedDate;
 
-                objEntity.payment_schedual.Add(_payment_schedual);
+                PaymentDB.payment_schedual.Add(_payment_schedual);
 
-                objEntity.SaveChanges();
+                PaymentDB.SaveChanges();
 
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();
@@ -149,7 +144,7 @@ namespace cntrl
         {
             try
             {
-                objEntity.CancelAllChanges();
+                PaymentDB.CancelAllChanges();
 
                 Grid parentGrid = (Grid)this.Parent;
                 parentGrid.Children.Clear();

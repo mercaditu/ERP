@@ -60,7 +60,7 @@ namespace Cognitivo.Sales
                 }));
 
                 CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, entity.CurrentSession.Id_Branch, entity.CurrentSession.Id_Terminal);
+                app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, entity.CurrentSession.Id_Branch, entity.CurrentSession.Id_Terminal);
 
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
                 app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
@@ -229,7 +229,7 @@ namespace Cognitivo.Sales
         {
             if (SalesBudgetDB.Approve())
 	        {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesBudgetDB, entity.App.Names.SalesBudget, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;
                 toolBar.msgApproved(SalesBudgetDB.NumberOfRecords);
 	        }

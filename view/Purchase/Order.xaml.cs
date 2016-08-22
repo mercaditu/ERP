@@ -109,7 +109,7 @@ namespace Cognitivo.Purchase
             //                               && d.app_document.id_application == entity.App.Names.PurchaseOrder && d.id_company == CurrentSession.Id_Company).Include(i => i.app_document).ToList();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
-                cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseOrderDB, entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             }));
 
             //cmbdocument
@@ -221,7 +221,7 @@ namespace Cognitivo.Purchase
         {
             if (PurchaseOrderDB.Approve())
             {
-                cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cmbdocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PurchaseOrderDB, entity.App.Names.PurchaseOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cmbdocument.SelectedIndex = 0;
                 toolBar.msgApproved(PurchaseOrderDB.NumberOfRecords);   
             }

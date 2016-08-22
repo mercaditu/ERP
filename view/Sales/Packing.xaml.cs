@@ -39,7 +39,7 @@ namespace Cognitivo.Sales
             InitializeComponent();
             item_movementViewSource = ((CollectionViewSource)(FindResource("item_movementViewSource")));
             inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.PackingList, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             sales_packing sales_packing = new sales_packing();
             dbContext.sales_packing.Add(sales_packing);

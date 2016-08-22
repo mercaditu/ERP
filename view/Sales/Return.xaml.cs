@@ -42,7 +42,6 @@ namespace Cognitivo.Sales
                 //sales_invoiceViewSource.Source = SalesReturnDB.sales_invoice.Where(a => a.status == Status.Documents_General.Approved && a.id_company == CurrentSession.Id_Company).ToList();
 
                 CollectionViewSource currencyfxViewSource = (CollectionViewSource)FindResource("app_currencyfxViewSource");
-                //SalesReturnDB.app_currencyfx.Include("app_currency").Where(x => x.app_currency.id_company == CurrentSession.Id_Company).Load();
                 currencyfxViewSource.Source = CurrentSession.Get_Currency();
 
                 CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
@@ -50,7 +49,7 @@ namespace Cognitivo.Sales
 
                 cbxReturnType.ItemsSource = Enum.GetValues(typeof(Status.ReturnTypes));
 
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
                 CollectionViewSource app_branchViewSource = ((CollectionViewSource)(FindResource("app_branchViewSource")));
                 //SalesReturnDB.app_branch.Load();
@@ -314,7 +313,7 @@ namespace Cognitivo.Sales
         private void toolBar_btnApprove_Click(object sender)
         {
             SalesReturnDB.Approve();
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesReturnDB, entity.App.Names.SalesReturn, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             cbxDocument.SelectedIndex = 0;
             foreach (sales_return sales_return in salesReturnViewSource.View.Cast<sales_return>().ToList())
             {

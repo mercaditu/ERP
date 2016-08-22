@@ -129,7 +129,7 @@ namespace cntrl.Curd
 
             if (Mode == Modes.Recievable)
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
                 stackDocument.Visibility = System.Windows.Visibility.Visible;
             }
 

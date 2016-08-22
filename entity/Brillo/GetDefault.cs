@@ -7,14 +7,17 @@ namespace entity.Brillo
 
         public static int? Return_RangeID(App.Names AppName)
         {
-            //Returns Range from a Using Context. Do not Use Range as Is. Must convert into ID and then pass it on.
-            app_document_range app_document_range = entity.Brillo.Logic.Range.List_Range(AppName, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
-
-            if (app_document_range != null)
+            using (db db = new db())
             {
-                return app_document_range.id_range;
-            }
+                //Returns Range from a Using Context. Do not Use Range as Is. Must convert into ID and then pass it on.
+                app_document_range app_document_range = Logic.Range.List_Range(db, AppName, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
 
+                if (app_document_range != null)
+                {
+                    return app_document_range.id_range;
+                }
+
+            }
             return null;
         }
 

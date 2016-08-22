@@ -138,7 +138,7 @@ namespace Cognitivo.Production
             production_order_dimensionViewSource = FindResource("production_order_dimensionViewSource") as CollectionViewSource;
 
             cmbtype.ItemsSource = Enum.GetValues(typeof(production_order.ProductionOrderTypes)).Cast<production_order.ProductionOrderTypes>().ToList();
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(ExecutionDB, entity.App.Names.ProductionOrder, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             item_movementViewSource = FindResource("item_movementViewSource") as CollectionViewSource;
             item_movementrawViewSource = FindResource("item_movementrawViewSource") as CollectionViewSource;

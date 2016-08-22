@@ -101,7 +101,7 @@ namespace cntrl.Curd
             //payment_detailList.Add(payment_detail);
             //paymentpayment_detailViewSource.Source = payment_detailList;
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PaymentDB, App.Names.PaymentUtility, CurrentSession.Id_Branch, CurrentSession.Id_Company);
 
             //paymentpayment_detailViewSource.View.Refresh();
             //paymentpayment_detailViewSource.View.MoveCurrentToLast();

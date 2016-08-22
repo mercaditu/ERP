@@ -248,7 +248,7 @@ namespace Cognitivo.Commercial
 
                     VATWithholding.invoiceList = new List<object>();
                     VATWithholding.invoiceList.Add(sales_invoice);
-                    VATWithholding.objEntity = PaymentDB;
+                    VATWithholding.PaymentDB = PaymentDB;
                     VATWithholding.payment_schedual = PaymentSchedualList.FirstOrDefault();
                     VATWithholding.percentage = sales_invoice.vatwithholdingpercentage;
                     crud_modal.Visibility = System.Windows.Visibility.Visible;

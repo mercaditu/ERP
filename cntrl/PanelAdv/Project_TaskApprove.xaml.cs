@@ -40,9 +40,10 @@ namespace cntrl.PanelAdv
          public string code { get; set; }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.ActivityPlan, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
             using(db db= new db())
             {
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(db, entity.App.Names.ActivityPlan, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+
                 project_task project_task=db.project_task.FirstOrDefault();
              
                 project_task.id_range=id_range;
@@ -55,9 +56,6 @@ namespace cntrl.PanelAdv
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
-            
-
-
             if (Save_Click != null)
             {
                 Save_Click(sender);

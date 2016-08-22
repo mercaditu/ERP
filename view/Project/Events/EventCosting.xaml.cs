@@ -69,7 +69,7 @@ namespace Cognitivo.Project
 
 
             CollectionViewSource app_document_rangeViewSource = FindResource("app_document_rangeViewSource") as CollectionViewSource;
-            app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesBudget, _settings.branch_ID, _settings.terminal_ID);
+            app_document_rangeViewSource.Source = entity.Brillo.Logic.Range.List_Range(EventDB, entity.App.Names.SalesBudget, _settings.branch_ID, _settings.terminal_ID);
 
 
 

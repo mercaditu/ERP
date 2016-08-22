@@ -27,10 +27,11 @@ namespace entity
             //This is to skip query code in case of Migration. Helps speed up migrations.
             if (IsMigration == false)
             {
-                if (entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault() != null)
+                app_document_range app_document_range = entity.Brillo.Logic.Range.List_Range(this, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault();
+                if (app_document_range != null)
                 {
                     //Gets List of Ranges avaiable for this Document.
-                    sales_invoice.id_range = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal).FirstOrDefault().id_range;
+                    sales_invoice.id_range = app_document_range.id_range;
                 }
 
                 if (app_contract.Where(x => x.is_active && x.id_company == CurrentSession.Id_Company && x.is_default && x.app_contract_detail.Sum(y => y.coefficient) > 0).FirstOrDefault() != null)

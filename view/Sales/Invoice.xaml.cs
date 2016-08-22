@@ -253,7 +253,7 @@ namespace Cognitivo.Sales
 
             cbxCondition.ItemsSource = CurrentSession.Get_Condition();
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesInvoiceDB, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
 
             await Dispatcher.InvokeAsync(new Action(() =>
             {
@@ -366,7 +366,7 @@ namespace Cognitivo.Sales
             if (SalesInvoiceDB.Approve(SalesSettings.DiscountStock))
             {
                 filter_sales();
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(SalesInvoiceDB, entity.App.Names.SalesInvoice, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
                 cbxDocument.SelectedIndex = 0;
             }
             else

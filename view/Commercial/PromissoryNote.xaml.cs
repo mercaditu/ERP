@@ -85,7 +85,7 @@ namespace Cognitivo.Commercial
             payment_promissory_noteViewSource = ((CollectionViewSource)(FindResource("payment_promissory_noteViewSource")));
             payment_promissory_noteViewSource.Source = PromissoryNoteDB.payment_promissory_note.Where(x => x.id_company == CurrentSession.Id_Company).ToList();
 
-            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PromissoryNote, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
+            cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(PromissoryNoteDB, entity.App.Names.PromissoryNote, CurrentSession.Id_Branch, CurrentSession.Id_Terminal);
         }
 
         private void set_ContactPref(object sender, EventArgs e)

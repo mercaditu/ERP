@@ -45,7 +45,7 @@ namespace Cognitivo.Sales
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(entity.App.Names.PackingList, _setting.branch_ID, _setting.terminal_ID);
+                cbxDocument.ItemsSource = entity.Brillo.Logic.Range.List_Range(dbContext, entity.App.Names.PackingList, _setting.branch_ID, _setting.terminal_ID);
                 cbxPackingType.ItemsSource = Enum.GetValues(typeof(Status.PackingTypes));
             }));
         }

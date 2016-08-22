@@ -53,18 +53,30 @@ namespace Cognitivo.Accounting
             var timer = new System.Threading.Timer(
                 e => btnData_Refresh(null, null),
                 null,
-                TimeSpan.Zero,
+                TimeSpan.FromMinutes(1),
                 TimeSpan.FromMinutes(15));
+
+        }
+
+        private void fill()
+        {
+            //Dispatcher
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                Get_SalesInvoice();
+                Get_PurchaseInvoice();
+                Get_PurchaseReturnInvoice();
+                Get_SalesReturn();
+                Get_Payment();
+                Get_ItemAsset();
+            }));
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = false; }));
         }
 
         private void btnData_Refresh(object sender, RoutedEventArgs e)
         {
-            Get_SalesInvoice();
-            Get_PurchaseInvoice();
-            Get_PurchaseReturnInvoice();
-            Get_SalesReturn();
-            Get_Payment();
-            Get_ItemAsset();
+            Dispatcher.BeginInvoke((Action)(() => { progBar.IsIndeterminate = true; }));
+            Task taskAuth = Task.Factory.StartNew(() => fill());
         }
 
         #region LoadData
@@ -76,7 +88,7 @@ namespace Cognitivo.Accounting
                 x.is_accounted == false &&
                 x.status == entity.Status.Documents_General.Approved).ToListAsync();
         }
-        
+
         public async void Get_Payment()
         {
             //x.Is Head replace with Is_Accounted = True.
@@ -132,11 +144,11 @@ namespace Cognitivo.Accounting
 
             SalesReturn_Sync();
             PurchaseReturn_Sync();
-            
+
             PaymentSync();
-            
+
         }
-     
+
         private void Sales_Sync()
         {
             //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
@@ -571,7 +583,7 @@ namespace Cognitivo.Accounting
             }
         }
 
-        public void file_create(String Data,String filename)
+        public void file_create(String Data, String filename)
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Json.json";
             if (!System.IO.File.Exists(path))

@@ -5,25 +5,9 @@ namespace entity.Brillo
     public static class Currency
     {
         /// <summary>
-        /// 
+        /// Used Internally for this class.
         /// </summary>
-        public static decimal Rate_Previous { get; set; }
-
-        /// <summary>
-        /// Gets Default Currency for Company in Session.
-        /// </summary>
-        /// <param name="db"></param>
-        /// <returns>Currency Entity</returns>
-        public static app_currency get_Default(db db)
-        {
-            if (CurrentSession.Id_Company > 0)
-            {
-                return db.app_currency.Where(x => x.is_priority && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
-            }
-
-            //Returns Null if Nothing was found.
-            return null;
-        }
+        private static decimal Rate_Previous { get; set; }
 
         /// <summary>
         /// 
@@ -32,7 +16,7 @@ namespace entity.Brillo
         /// <returns>CurrencyFX Entity</returns>
         public static app_currencyfx get_DefaultFX(db db)
         {
-            if (CurrentSession.Id_Company > 0 && CurrentSession.Id_Company != null)
+            if (CurrentSession.Id_Company > 0)
             {
                 app_currency app_currency = db.app_currency.Where(x => x.is_priority && x.id_company == CurrentSession.Id_Company).FirstOrDefault();
                 if (app_currency != null)
@@ -84,7 +68,6 @@ namespace entity.Brillo
                         bool is_priority = true;
                         if (app_currencyfxold != null)
                         {
-
                             if (app_currencyfxold.app_currency.is_priority)
                             {
                                 is_priority = app_currencyfxold.app_currency.is_priority;
@@ -94,9 +77,9 @@ namespace entity.Brillo
                                 is_priority = false;
                             }
                         }
+
                         if (app_currencyfx.app_currency.is_priority == false && is_priority == false)
                         {
-
                             if (db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault() != null)
                             {
                                 //Convert Towards Defualt
@@ -104,13 +87,9 @@ namespace entity.Brillo
                                 //Convert Away from Default
                                 return convert_Values(Value_InPriority, db.app_currencyfx.Where(x => x.app_currency.is_priority).FirstOrDefault().id_currencyfx, id_app_currencyfx, App.Modules.Sales);
                             }
-
                         }
                         else if (app_currencyfx.app_currency.is_priority == true) //Towards Default
                         {
-
-
-
                             if (app_currencyfxold != null)
                             {
                                 if (Modules == App.Modules.Sales)

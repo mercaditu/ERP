@@ -439,14 +439,7 @@ namespace entity
             {
                 if (item != null && item.unit_cost != null)
                 {
-                    using (db db= new db())
-                    {
-                        app_currencyfx app_currencyfx = Currency.get_DefaultFX(db);
-                        _unit_cost = Currency.convert_Values((decimal)item.unit_cost, app_currencyfx.id_currencyfx, id_currecyfx, App.Modules.Purchase);
-                        
-                    }
-                 
-           
+                    _unit_cost = Currency.convert_Values((decimal)item.unit_cost, CurrentSession.CurrencyFX_Default.id_currencyfx, id_currecyfx, App.Modules.Purchase);
                 }
             }
         }

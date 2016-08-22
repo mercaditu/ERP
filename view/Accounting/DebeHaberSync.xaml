@@ -23,7 +23,8 @@
         <Image Source="/Cognitivo;component/Images/DebeHaber_Logo.png" Height="32" Margin="8"
                VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4">
-            <Button Content="Refresh Data" Margin="4" Padding="8,0" Click="btnData_Refresh"/>
+            <Button Content="Refresh" Margin="4" Padding="4,2" Click="btnData_Refresh"/>
+            <ProgressBar x:Name="progBar" Width="128" Height="16"/>
             <Button Content="Syncronize" Margin="4" Click="btnData_Sync" Style="{StaticResource btn_green}"/>
         </StackPanel>
         <TabControl Margin="0,38,0,0">

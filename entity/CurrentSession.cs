@@ -24,8 +24,8 @@ namespace entity
             Mankurad_153,  //Medium
             Dashehari_204, //Full
             Alphonso_255,  //Enterprise
-            Gulabkhas_306,
-            Chausa_357
+            Gulabkhas_306, //PrintingPress
+            Chausa_357     //EventManagement
         }
 
         public static int Id_Company
@@ -89,6 +89,9 @@ namespace entity
         }
         static int _Id_Account;
 
+        public static int Id_CurrencyDefault { get; set; }
+        public static int Id_CurrencyFXDefault { get; set; }
+
         public static Versions Version { get; set; }
         public static int NumberOfSeats { get; set; }
 
@@ -149,6 +152,9 @@ namespace entity
                                         .FirstOrDefault().id_terminal;
                     }
 
+                    //Default Currency
+                    Currency_Default = ctx.app_currency.Where(x => x.is_priority && x.id_company == Id_Company).FirstOrDefault();
+                    CurrencyFX_Default = Currency_Default.app_currencyfx.Where(x => x.is_active).FirstOrDefault();
 
                     //Setting Security, once CurrentSession Data is set.
                     Refresh_Security();
@@ -201,6 +207,9 @@ namespace entity
         private static List<entity.app_branch> Branch { get; set; }
         private static List<entity.app_terminal> Terminal { get; set; }
         private static List<entity.app_currency> Currency { get; set; }
+
+        public static app_currency Currency_Default { get; set; }
+        public static app_currencyfx CurrencyFX_Default { get; set; }
 
         public static List<sales_rep> Get_SalesRep()
         {

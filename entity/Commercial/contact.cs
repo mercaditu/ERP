@@ -167,33 +167,7 @@ namespace entity
 
         //Calculated Fields
         [NotMapped]
-        public decimal? credit_availability
-        {
-            get
-            {
-                if (credit_limit > 0 && id_contact != 0 )
-                {
-                    using (db db = new db())
-                    {
-                        decimal pending = db.payment_schedual
-                                            .Where(x => x.id_contact == id_contact)
-                                            .Sum(x => (decimal?)(x.debit - x.credit)) ?? 0;
-                        _credit_availability = (decimal)credit_limit - pending;
-                        RaisePropertyChanged("credit_availability");
-                        return _credit_availability;
-                    }
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                _credit_availability = (decimal)value;
-            }
-        }
-        decimal _credit_availability;
+        public decimal? credit_availability { get; set; }
 
         [NotMapped]
         public decimal GrandTotal
@@ -328,5 +302,23 @@ namespace entity
         }
 
         #endregion
+
+        public void Check_CreditAvailability()
+        {
+            if (credit_limit != null)
+            {
+                if (credit_limit > 0 && id_contact != 0)
+                {
+                    using (db db = new db())
+                    {
+                        decimal pending = db.payment_schedual
+                                            .Where(x => x.id_contact == id_contact)
+                                            .Sum(x => (decimal?)(x.debit - x.credit)) ?? 0;
+                        credit_availability = credit_limit - pending;
+                        RaisePropertyChanged("credit_availability");
+                    }
+                }
+            }
+        }
     }
 }

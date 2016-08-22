@@ -20,7 +20,7 @@ namespace entity
             sales_invoice.timestamp = DateTime.Now;
 
             //Navigation Properties
-            sales_invoice.app_currencyfx = Brillo.Currency.get_DefaultFX(this);
+            sales_invoice.id_currencyfx = Brillo.Currency.get_DefaultFX(this).id_currencyfx;
 
             sales_invoice.app_branch = app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
 
@@ -265,34 +265,34 @@ namespace entity
 
         private sales_invoice_detail select_Item(ref sales_invoice sales_invoice, item item, bool AllowDuplicateItem)
         {
-            
 
 
-                if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
-                {
-                    sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
 
-                    _sales_invoice_detail.State = EntityState.Added;
-                    _sales_invoice_detail.sales_invoice = sales_invoice;
+            if (sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault() == null || AllowDuplicateItem)
+            {
+                sales_invoice_detail _sales_invoice_detail = new sales_invoice_detail();
 
-                    _sales_invoice_detail.CurrencyFX_ID = sales_invoice.app_currencyfx.id_currencyfx;
-                    _sales_invoice_detail.Contact = sales_invoice.contact;
-                    _sales_invoice_detail.item_description = item.name;
-                    _sales_invoice_detail.item = item;
-                    _sales_invoice_detail.id_item = item.id_item;
+                _sales_invoice_detail.State = EntityState.Added;
+                _sales_invoice_detail.sales_invoice = sales_invoice;
 
-                    _sales_invoice_detail.quantity += 1;
-                    _sales_invoice_detail.app_vat_group = base.app_vat_group.Where(x => x.id_vat_group == _sales_invoice_detail.id_vat_group).FirstOrDefault();
-                    sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
-                    return _sales_invoice_detail;
-                }
-                else
-                {
-                    sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
-                    sales_invoice_detail.quantity += 1;
-                    return sales_invoice_detail;
-                }
-           
+                _sales_invoice_detail.CurrencyFX_ID = sales_invoice.app_currencyfx.id_currencyfx;
+                _sales_invoice_detail.Contact = sales_invoice.contact;
+                _sales_invoice_detail.item_description = item.name;
+                _sales_invoice_detail.item = item;
+                _sales_invoice_detail.id_item = item.id_item;
+
+                _sales_invoice_detail.quantity += 1;
+                _sales_invoice_detail.app_vat_group = base.app_vat_group.Where(x => x.id_vat_group == _sales_invoice_detail.id_vat_group).FirstOrDefault();
+                sales_invoice.sales_invoice_detail.Add(_sales_invoice_detail);
+                return _sales_invoice_detail;
+            }
+            else
+            {
+                sales_invoice_detail sales_invoice_detail = sales_invoice.sales_invoice_detail.Where(a => a.id_item == item.id_item).FirstOrDefault();
+                sales_invoice_detail.quantity += 1;
+                return sales_invoice_detail;
+            }
+
         }
 
         /// <summary>
@@ -418,20 +418,44 @@ namespace entity
                 }
             }
         }
+
+        /// <summary>
+        /// Checks for Credit Limit. 
+        /// </summary>
+        /// <param name="sales_invoice"></param>
+        /// <returns></returns>
         public bool Check_CreditLimit(sales_invoice sales_invoice)
         {
+            //If Contact Credit Limit is none, we will assume that Credit Limit is not enforced.
+            if (sales_invoice.contact.credit_limit != null)
+            {
+                //If Sales Contract is Cash. Credit Limit is not enforced.
+                if (sales_invoice.app_contract.app_contract_detail.Sum(x => x.interval) > 0)
+                {
+                    //Script that checks Contacts Credit Availability.
+                    sales_invoice.contact.Check_CreditAvailability();
 
-            Decimal CreditLimit = sales_invoice.CreditLimit;
-            Decimal TotalSales=sales_invoice.GrandTotal;
-           
-            if (CreditLimit>TotalSales)
-            {
-                return true;
+                    //Check if Availability is greater than 0.
+                    if (sales_invoice.contact.credit_availability > 0)
+                    {
+                        Decimal TotalSales = sales_invoice.GrandTotal;
+
+                        if (sales_invoice.app_currencyfx.id_currency != CurrentSession.Currency_Default.id_currency)
+                        {
+                            TotalSales = Brillo.Currency.convert_Values(TotalSales, sales_invoice.id_currencyfx, CurrentSession.CurrencyFX_Default.id_currencyfx, App.Modules.Sales);
+                        }
+
+                        Decimal CreditAvailability = (decimal)sales_invoice.contact.credit_availability;
+
+                        if (CreditAvailability < TotalSales)
+                        {
+                            return false;
+                        }
+                    }
+                }   
             }
-            else
-            {
-                return false;
-            }
+
+            return true;
         }
     }
 }

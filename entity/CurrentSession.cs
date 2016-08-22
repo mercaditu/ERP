@@ -89,9 +89,6 @@ namespace entity
         }
         static int _Id_Account;
 
-        public static int Id_CurrencyDefault { get; set; }
-        public static int Id_CurrencyFXDefault { get; set; }
-
         public static Versions Version { get; set; }
         public static int NumberOfSeats { get; set; }
 

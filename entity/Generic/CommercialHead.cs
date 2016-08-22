@@ -22,7 +22,7 @@ namespace entity
                 {
                     _id_contact = value;
                     RaisePropertyChanged("id_contact");
-                    calc_credit(_GrandTotal);
+                   //calc_credit(_GrandTotal);
                 }
             }
         }
@@ -164,8 +164,8 @@ namespace entity
         /// <summary>
         /// NotMapped. Sets the Credit Limit.
         /// </summary>
-        [NotMapped]
-        public decimal CreditLimit { get; set; }
+        //[NotMapped]
+        //public decimal CreditLimit { get; set; }
 
         /// <summary>
         /// 
@@ -289,7 +289,7 @@ namespace entity
                     _GrandTotal = value;
 
                     RaisePropertyChanged("GrandTotal");
-                    calc_credit(_GrandTotal);
+                    //calc_credit(_GrandTotal);
                 }
             }
         }
@@ -340,30 +340,30 @@ namespace entity
         /// <summary>
         /// 
         /// </summary>
-        protected void calc_credit(decimal GrandTotal)
-        {
-            if (contact != null)
-            {
-                if (contact.credit_availability != null)
-                {
-                    if (contact.credit_availability > 0)
-                    {
-                        CreditLimit = (decimal)contact.credit_availability;
-                    }
-                }
+        //protected void calc_credit(decimal GrandTotal)
+        //{
+        //    if (contact != null)
+        //    {
+        //        if (contact.credit_availability != null)
+        //        {
+        //            if (contact.credit_availability > 0)
+        //            {
+        //                CreditLimit = (decimal)contact.credit_availability;
+        //            }
+        //        }
 
-                if (app_currencyfx != null)
-                {
-                    decimal rate = app_currencyfx.buy_value;
-                    CreditLimit = CreditLimit * rate;
+        //        if (app_currencyfx != null)
+        //        {
+        //            decimal rate = app_currencyfx.buy_value;
+        //            CreditLimit = CreditLimit * rate;
 
-                }
-                CreditLimit = CreditLimit - GrandTotal;
-                RaisePropertyChanged("CreditLimit");
+        //        }
+        //        CreditLimit = CreditLimit - GrandTotal;
+        //        RaisePropertyChanged("CreditLimit");
 
-            }
+        //    }
 
-        }
+        //}
 
         /// <summary>
         /// Returns the Item Price marked as Default by the Company

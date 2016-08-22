@@ -544,6 +544,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductionDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Data\ProjectDS.cs">
+      <DependentUpon>ProjectDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reporting\Data\ProjectDS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1016,10 +1020,10 @@
     <EmbeddedResource Include="Reporting\Reports\CostOfGoodsSold.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CurrentAccount_Customer.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\CustomerList.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\EmployeesInProduction.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Inventory.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\InventorySummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ItemPriceList.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\ProductionEmployee.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\ProductionStatus.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\Project_VS_Production.rdlc" />

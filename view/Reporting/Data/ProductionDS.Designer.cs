@@ -314,19 +314,23 @@ namespace Cognitivo.Reporting.Data {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class EmployeesInProductionDataTable : global::System.Data.TypedTableBase<EmployeesInProductionRow> {
             
-            private global::System.Data.DataColumn columnname;
-            
             private global::System.Data.DataColumn columnitem_description;
-            
-            private global::System.Data.DataColumn columnname1;
-            
-            private global::System.Data.DataColumn columnPaid;
             
             private global::System.Data.DataColumn columnstart_date;
             
             private global::System.Data.DataColumn columnend_date;
             
-            private global::System.Data.DataColumn columnNormal;
+            private global::System.Data.DataColumn columnid_production_execution;
+            
+            private global::System.Data.DataColumn columnCoefficient;
+            
+            private global::System.Data.DataColumn columnHours;
+            
+            private global::System.Data.DataColumn columnComputeHours;
+            
+            private global::System.Data.DataColumn columnEmployee;
+            
+            private global::System.Data.DataColumn columnProject;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -363,33 +367,9 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn nameColumn {
-                get {
-                    return this.columnname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn item_descriptionColumn {
                 get {
                     return this.columnitem_description;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn name1Column {
-                get {
-                    return this.columnname1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PaidColumn {
-                get {
-                    return this.columnPaid;
                 }
             }
             
@@ -411,9 +391,49 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NormalColumn {
+            public global::System.Data.DataColumn id_production_executionColumn {
                 get {
-                    return this.columnNormal;
+                    return this.columnid_production_execution;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CoefficientColumn {
+                get {
+                    return this.columnCoefficient;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HoursColumn {
+                get {
+                    return this.columnHours;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ComputeHoursColumn {
+                get {
+                    return this.columnComputeHours;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EmployeeColumn {
+                get {
+                    return this.columnEmployee;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ProjectColumn {
+                get {
+                    return this.columnProject;
                 }
             }
             
@@ -454,16 +474,18 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EmployeesInProductionRow AddEmployeesInProductionRow(string name, string item_description, string name1, decimal Paid, System.DateTime start_date, System.DateTime end_date, decimal Normal) {
+            public EmployeesInProductionRow AddEmployeesInProductionRow(string item_description, System.DateTime start_date, System.DateTime end_date, int id_production_execution, string Coefficient, decimal Hours, decimal ComputeHours, string Employee, string Project) {
                 EmployeesInProductionRow rowEmployeesInProductionRow = ((EmployeesInProductionRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        name,
                         item_description,
-                        name1,
-                        Paid,
                         start_date,
                         end_date,
-                        Normal};
+                        id_production_execution,
+                        Coefficient,
+                        Hours,
+                        ComputeHours,
+                        Employee,
+                        Project};
                 rowEmployeesInProductionRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEmployeesInProductionRow);
                 return rowEmployeesInProductionRow;
@@ -486,34 +508,42 @@ namespace Cognitivo.Reporting.Data {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnname = base.Columns["name"];
                 this.columnitem_description = base.Columns["item_description"];
-                this.columnname1 = base.Columns["name1"];
-                this.columnPaid = base.Columns["Paid"];
                 this.columnstart_date = base.Columns["start_date"];
                 this.columnend_date = base.Columns["end_date"];
-                this.columnNormal = base.Columns["Normal"];
+                this.columnid_production_execution = base.Columns["id_production_execution"];
+                this.columnCoefficient = base.Columns["Coefficient"];
+                this.columnHours = base.Columns["Hours"];
+                this.columnComputeHours = base.Columns["ComputeHours"];
+                this.columnEmployee = base.Columns["Employee"];
+                this.columnProject = base.Columns["Project"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname);
                 this.columnitem_description = new global::System.Data.DataColumn("item_description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnitem_description);
-                this.columnname1 = new global::System.Data.DataColumn("name1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnname1);
-                this.columnPaid = new global::System.Data.DataColumn("Paid", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPaid);
                 this.columnstart_date = new global::System.Data.DataColumn("start_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnstart_date);
                 this.columnend_date = new global::System.Data.DataColumn("end_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnend_date);
-                this.columnNormal = new global::System.Data.DataColumn("Normal", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNormal);
+                this.columnid_production_execution = new global::System.Data.DataColumn("id_production_execution", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnid_production_execution);
+                this.columnCoefficient = new global::System.Data.DataColumn("Coefficient", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCoefficient);
+                this.columnHours = new global::System.Data.DataColumn("Hours", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHours);
+                this.columnComputeHours = new global::System.Data.DataColumn("ComputeHours", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnComputeHours);
+                this.columnEmployee = new global::System.Data.DataColumn("Employee", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmployee);
+                this.columnProject = new global::System.Data.DataColumn("Project", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProject);
                 this.columnstart_date.AllowDBNull = false;
                 this.columnend_date.AllowDBNull = false;
+                this.columnid_production_execution.AllowDBNull = false;
+                this.columnCoefficient.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1003,22 +1033,6 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string name {
-                get {
-                    try {
-                        return ((string)(this[this.tableEmployeesInProduction.nameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'name\' in table \'EmployeesInProduction\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEmployeesInProduction.nameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string item_description {
                 get {
                     try {
@@ -1031,38 +1045,6 @@ namespace Cognitivo.Reporting.Data {
                 }
                 set {
                     this[this.tableEmployeesInProduction.item_descriptionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string name1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableEmployeesInProduction.name1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'name1\' in table \'EmployeesInProduction\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEmployeesInProduction.name1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Paid {
-                get {
-                    try {
-                        return ((decimal)(this[this.tableEmployeesInProduction.PaidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Paid\' in table \'EmployeesInProduction\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableEmployeesInProduction.PaidColumn] = value;
                 }
             }
             
@@ -1090,30 +1072,88 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal Normal {
+            public int id_production_execution {
+                get {
+                    return ((int)(this[this.tableEmployeesInProduction.id_production_executionColumn]));
+                }
+                set {
+                    this[this.tableEmployeesInProduction.id_production_executionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Coefficient {
+                get {
+                    return ((string)(this[this.tableEmployeesInProduction.CoefficientColumn]));
+                }
+                set {
+                    this[this.tableEmployeesInProduction.CoefficientColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal Hours {
                 get {
                     try {
-                        return ((decimal)(this[this.tableEmployeesInProduction.NormalColumn]));
+                        return ((decimal)(this[this.tableEmployeesInProduction.HoursColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Normal\' in table \'EmployeesInProduction\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Hours\' in table \'EmployeesInProduction\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableEmployeesInProduction.NormalColumn] = value;
+                    this[this.tableEmployeesInProduction.HoursColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsnameNull() {
-                return this.IsNull(this.tableEmployeesInProduction.nameColumn);
+            public decimal ComputeHours {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableEmployeesInProduction.ComputeHoursColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ComputeHours\' in table \'EmployeesInProduction\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEmployeesInProduction.ComputeHoursColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetnameNull() {
-                this[this.tableEmployeesInProduction.nameColumn] = global::System.Convert.DBNull;
+            public string Employee {
+                get {
+                    try {
+                        return ((string)(this[this.tableEmployeesInProduction.EmployeeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Employee\' in table \'EmployeesInProduction\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEmployeesInProduction.EmployeeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Project {
+                get {
+                    try {
+                        return ((string)(this[this.tableEmployeesInProduction.ProjectColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Project\' in table \'EmployeesInProduction\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEmployeesInProduction.ProjectColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1130,38 +1170,50 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Isname1Null() {
-                return this.IsNull(this.tableEmployeesInProduction.name1Column);
+            public bool IsHoursNull() {
+                return this.IsNull(this.tableEmployeesInProduction.HoursColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void Setname1Null() {
-                this[this.tableEmployeesInProduction.name1Column] = global::System.Convert.DBNull;
+            public void SetHoursNull() {
+                this[this.tableEmployeesInProduction.HoursColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPaidNull() {
-                return this.IsNull(this.tableEmployeesInProduction.PaidColumn);
+            public bool IsComputeHoursNull() {
+                return this.IsNull(this.tableEmployeesInProduction.ComputeHoursColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPaidNull() {
-                this[this.tableEmployeesInProduction.PaidColumn] = global::System.Convert.DBNull;
+            public void SetComputeHoursNull() {
+                this[this.tableEmployeesInProduction.ComputeHoursColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNormalNull() {
-                return this.IsNull(this.tableEmployeesInProduction.NormalColumn);
+            public bool IsEmployeeNull() {
+                return this.IsNull(this.tableEmployeesInProduction.EmployeeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNormalNull() {
-                this[this.tableEmployeesInProduction.NormalColumn] = global::System.Convert.DBNull;
+            public void SetEmployeeNull() {
+                this[this.tableEmployeesInProduction.EmployeeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsProjectNull() {
+                return this.IsNull(this.tableEmployeesInProduction.ProjectColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetProjectNull() {
+                this[this.tableEmployeesInProduction.ProjectColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1563,13 +1615,15 @@ namespace Cognitivo.Reporting.Data.ProductionDSTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "EmployeesInProduction";
-            tableMapping.ColumnMappings.Add("name", "name");
             tableMapping.ColumnMappings.Add("item_description", "item_description");
-            tableMapping.ColumnMappings.Add("name1", "name1");
-            tableMapping.ColumnMappings.Add("Paid", "Paid");
             tableMapping.ColumnMappings.Add("start_date", "start_date");
             tableMapping.ColumnMappings.Add("end_date", "end_date");
-            tableMapping.ColumnMappings.Add("Normal", "Normal");
+            tableMapping.ColumnMappings.Add("id_production_execution", "id_production_execution");
+            tableMapping.ColumnMappings.Add("Coefficient", "Coefficient");
+            tableMapping.ColumnMappings.Add("Hours", "Hours");
+            tableMapping.ColumnMappings.Add("ComputeHours", "ComputeHours");
+            tableMapping.ColumnMappings.Add("Employee", "Employee");
+            tableMapping.ColumnMappings.Add("Project", "Project");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1586,26 +1640,30 @@ namespace Cognitivo.Reporting.Data.ProductionDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select 
-	c.name,
+            this._commandCollection[0].CommandText = @" select ped.id_production_execution,
+	c.name as Employee,
     pt.item_description,
-    p.name,
-    sum(quantity) as Paid,
+    p.name as Project,
+    
     start_date,
     end_date,
-	sum(time_to_sec(timediff(end_date,start_date)) / 3600) as Normal
+      htc.name as Coefficient,
+	sum(time_to_sec(timediff(end_date,start_date)) / 3600) as Hours,
+    sum(quantity)  as ComputeHours
+   
 from production_execution_detail as ped
+inner join hr_time_coefficient as htc on  ped.id_time_coefficient=htc.id_time_coefficient
 left join contacts as c
 on c.id_contact = ped.id_contact
-left join project_task as pt
+left join  project_task as pt
 on pt.id_project_task = ped.id_project_task
 left join projects as p
 on p.id_project = pt.id_project
-where ped.id_contact is not null
-and ped.id_company = @id_company
-and ped.trans_date >= @start_date
-and ped.trans_date <= @end_date
-group by ped.id_contact
+ where ped.id_contact is not null
+ and ped.id_company = @id_company
+ and ped.trans_date >= @start_date
+ and ped.trans_date <= @end_date
+ group by ped.id_contact
 order by c.name";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();

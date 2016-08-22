@@ -322,7 +322,7 @@ namespace entity
                         sales_invoice _invoice = new sales_invoice();
                         _invoice.code = invoice.code;
                         _invoice.comment = invoice.comment;
-                        _invoice.CreditLimit = invoice.CreditLimit;
+                       // _invoice.CreditLimit = invoice.CreditLimit;
                         _invoice.id_branch = invoice.id_branch;
                         _invoice.id_company = invoice.id_company;
                         _invoice.id_condition = invoice.id_condition;

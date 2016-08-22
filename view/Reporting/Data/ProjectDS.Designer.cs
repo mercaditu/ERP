@@ -753,6 +753,8 @@ namespace Cognitivo.Reporting.Data {
             
             private global::System.Data.DataColumn columnparent_id_project_task;
             
+            private global::System.Data.DataColumn columnID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ProjectDataTable() {
@@ -860,6 +862,14 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IDColumn {
+                get {
+                    return this.columnID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -895,7 +905,7 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ProjectRow AddProjectRow(string name, string name1, string code, string item_description, decimal quantity_est, decimal unit_cost_est, System.DateTime start_date_est, System.DateTime end_date_est, int parent_id_project_task) {
+            public ProjectRow AddProjectRow(string name, string name1, string code, string item_description, decimal quantity_est, decimal unit_cost_est, System.DateTime start_date_est, System.DateTime end_date_est, int parent_id_project_task, int ID) {
                 ProjectRow rowProjectRow = ((ProjectRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         name,
@@ -906,7 +916,8 @@ namespace Cognitivo.Reporting.Data {
                         unit_cost_est,
                         start_date_est,
                         end_date_est,
-                        parent_id_project_task};
+                        parent_id_project_task,
+                        ID};
                 rowProjectRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowProjectRow);
                 return rowProjectRow;
@@ -938,6 +949,7 @@ namespace Cognitivo.Reporting.Data {
                 this.columnstart_date_est = base.Columns["start_date_est"];
                 this.columnend_date_est = base.Columns["end_date_est"];
                 this.columnparent_id_project_task = base.Columns["parent_id_project_task"];
+                this.columnID = base.Columns["ID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -961,6 +973,8 @@ namespace Cognitivo.Reporting.Data {
                 base.Columns.Add(this.columnend_date_est);
                 this.columnparent_id_project_task = new global::System.Data.DataColumn("parent_id_project_task", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnparent_id_project_task);
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
                 this.columnname.AllowDBNull = false;
                 this.columnname1.AllowDBNull = false;
             }
@@ -1539,6 +1553,22 @@ namespace Cognitivo.Reporting.Data {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ID {
+                get {
+                    try {
+                        return ((int)(this[this.tableProject.IDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ID\' in table \'Project\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableProject.IDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IscodeNull() {
                 return this.IsNull(this.tableProject.codeColumn);
             }
@@ -1619,6 +1649,18 @@ namespace Cognitivo.Reporting.Data {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void Setparent_id_project_taskNull() {
                 this[this.tableProject.parent_id_project_taskColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsIDNull() {
+                return this.IsNull(this.tableProject.IDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetIDNull() {
+                this[this.tableProject.IDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2026,6 +2068,7 @@ from project_task as task
             tableMapping.ColumnMappings.Add("start_date_est", "start_date_est");
             tableMapping.ColumnMappings.Add("end_date_est", "end_date_est");
             tableMapping.ColumnMappings.Add("parent_id_project_task", "parent_id_project_task");
+            tableMapping.ColumnMappings.Add("ID", "ID");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -2042,7 +2085,7 @@ from project_task as task
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[1];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"select proj.name, item.name, task.code, task.item_description, task.quantity_est, task.unit_cost_est, task.start_date_est, task.end_date_est, task.parent_id_project_task 
+            this._commandCollection[0].CommandText = @"select proj.name, item.name, task.code, task.item_description, task.quantity_est, task.unit_cost_est, task.start_date_est, task.end_date_est, task.parent_id_project_task ,if(task.parent_id_project_task, task.parent_id_project_task, task.id_project_task) as ID
  
 from project_task as task
  
@@ -2050,7 +2093,8 @@ inner join projects as proj on proj.id_project = task.id_project
  
 inner join items as item on task.id_item = item.id_item
  
-where proj.id_project = @IDProject";
+where proj.id_project = @IDProject
+order by ID";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@IDProject";

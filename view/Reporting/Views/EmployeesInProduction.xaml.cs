@@ -55,10 +55,10 @@ namespace Cognitivo.Reporting.Views
             Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter EmployeesInProductionTableAdapter = new Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter();
             DataTable dt = EmployeesInProductionTableAdapter.GetData(CurrentSession.Id_Company, StartDate, EndDate);
 
-            reportDataSource1.Name = "EmployeesInProduction"; //Name of the report dataset in our .RDLC file
+            reportDataSource1.Name = "ProductionEmployee"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.EmployeesInProduction.rdlc";
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.ProductionEmployee.rdlc";
 
             ProductionDS.EndInit();
 

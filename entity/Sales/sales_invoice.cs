@@ -95,7 +95,7 @@ namespace entity
                         }
                     }
                     RaisePropertyChanged("GrandTotal");
-                    calc_credit(GrandTotal);   
+                    //calc_credit(GrandTotal);   
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace entity
             {
                 _GrandTotal = sales_invoice_detail.Sum(x => x.SubTotal_Vat);
 
-                calc_credit(_GrandTotal);
+                //calc_credit(_GrandTotal);
                 return _GrandTotal;
             }
             set

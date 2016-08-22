@@ -606,6 +606,9 @@
     <Compile Include="Reporting\Views\PurchaseTenderSummary.xaml.cs">
       <DependentUpon>PurchaseTenderSummary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Reporting\Views\StockFlowDimension.xaml.cs">
+      <DependentUpon>StockFlowDimension.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reporting\Views\SalesBudgetSummary.xaml.cs">
       <DependentUpon>SalesBudgetSummary.xaml</DependentUpon>
     </Compile>
@@ -1027,10 +1030,13 @@
     <EmbeddedResource Include="Reporting\Reports\SalesByItem.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesBySalesRep.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesByVAT.rdlc" />
-    <EmbeddedResource Include="Reporting\Reports\SalesInvoiceSummary.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\SalesInvoiceSummary.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reporting\Reports\SalesOrderSummary.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\SalesReturnDetail.rdlc" />
     <EmbeddedResource Include="Reporting\Reports\StockFlow.rdlc" />
+    <EmbeddedResource Include="Reporting\Reports\StockFlowDimension.rdlc" />
     <EmbeddedResource Include="Resources\local.ar.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1743,6 +1749,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Reporting\Views\PurchaseTenderSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reporting\Views\StockFlowDimension.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

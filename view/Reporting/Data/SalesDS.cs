@@ -91,3 +91,10 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
     public partial class SalesInvoiceSummaryTableAdapter {
     }
 }
+
+namespace Cognitivo.SalesDSTableAdapters {
+    
+    
+    public partial class SalesOrderSummaryTableAdapter {
+    }
+}

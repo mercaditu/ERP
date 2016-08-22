@@ -12,6 +12,10 @@ namespace Cognitivo.Reporting.Data {
 }
 
 namespace Cognitivo.Reporting.Data.ProductDSTableAdapters {
+    partial class StockFlowDimensionTableAdapter
+    {
+    }
+
     partial class stockflowTableAdapter
     {
     }

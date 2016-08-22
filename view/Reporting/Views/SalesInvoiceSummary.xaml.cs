@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 using entity;
 using Microsoft.Reporting.WinForms.Internal.Soap.ReportingServices2005.Execution;
+using System.Xml;
+using System.IO;
 
 namespace Cognitivo.Reporting.Views
 {
@@ -23,8 +25,10 @@ namespace Cognitivo.Reporting.Views
     {
         public SalesInvoiceSummary()
         {
+
             InitializeComponent();            
             Fill(null, null);
+
         }
 
         public void Fill(object sender, RoutedEventArgs e)
@@ -48,12 +52,12 @@ namespace Cognitivo.Reporting.Views
             {
                 dt = SalesInvoiceSummaryTableAdapter.GetDataBy(ReportPanel.StartDate, ReportPanel.EndDate);
             }
-
+            
             reportDataSource1.Name = "SalesInvoiceSummary"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.SalesInvoiceSummary.rdlc";
-
+           
             SalesDB.EndInit();
 
             this.reportViewer.Refresh();
@@ -64,5 +68,6 @@ namespace Cognitivo.Reporting.Views
         {
             Fill(null, null);
         }
+       
     }
 }

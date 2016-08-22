@@ -78,7 +78,7 @@
                 
                 <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
                 
-                <StackPanel>
+                <StackPanel Name="stpColumn">
                     <Label Content="Columns" Style="{StaticResource input_label}"/>
                 </StackPanel>
             </StackPanel>

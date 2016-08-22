@@ -15,6 +15,11 @@ using System.Windows.Shapes;
 
 namespace cntrl
 {
+    public class ReportColumns
+    {
+        public string Columname { get; set; }
+        public bool IsVisibility { get; set; }
+    }
     public partial class ReportPanel : UserControl
     {
         public static DependencyProperty ReportTitleProperty = DependencyProperty.Register("ReportTitle", typeof(string), typeof(ReportPanel));
@@ -31,6 +36,7 @@ namespace cntrl
             set { SetValue(ReportDescriptionProperty, value); }
         }
 
+       
         public static DependencyProperty ShowBranchProperty = DependencyProperty.Register("ShowBranch", typeof(bool), typeof(ReportPanel));
         public bool ShowBranch
         {
@@ -89,13 +95,13 @@ namespace cntrl
 
         public DateTime EndDate
         {
-            get { return _EndDate;  }
+            get { return _EndDate; }
             set { _EndDate = value; Data_Update(null, null); }
         }
         private DateTime _EndDate = AbsoluteDate.End(DateTime.Now);
 
         public entity.app_branch Branch
-        { 
+        {
             get
             {
                 return (cbBranch.SelectedItem as entity.app_branch);
@@ -141,7 +147,25 @@ namespace cntrl
                 return (cbCurrency.SelectedItem as entity.app_currency);
             }
         }
-
+        //public List<ReportColumns> ReportColumns
+        //{
+        //    get
+        //    {
+        //        return _ReportColumns;
+        //    }
+        //    set
+        //    {
+        //        _ReportColumns = value;
+        //        foreach (ReportColumns ReportColumns in _ReportColumns)
+        //        {
+        //            CheckBox chkbox = new CheckBox();
+        //            chkbox.Content = ReportColumns.Columname;
+        //            chkbox.IsChecked = ReportColumns.IsVisibility;
+        //            stpColumn.Children.Add(chkbox);
+        //        }
+        //    }
+        //}
+        //List<ReportColumns> _ReportColumns;
         public event RoutedEventHandler Update;
         private void Data_Update(object sender, RoutedEventArgs e)
         {
@@ -153,6 +177,11 @@ namespace cntrl
         {
             ShowBranch = false;
             InitializeComponent();
+           
+
+
+
+          
         }
 
         private void cbxBranch_Checked(object sender, RoutedEventArgs e)

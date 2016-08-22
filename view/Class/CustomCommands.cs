@@ -40,6 +40,21 @@ namespace Cognitivo.Class
         static ModifierKeys EditModifier = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), propGesture.EditModifier);
         public static RoutedUICommand EditAll =
             new RoutedUICommand("Edit", "Edit", typeof(CustomCommands), new InputGestureCollection() { new KeyGesture(EditKey, EditModifier) });
+        //Approve
+        static Key ApproveKey = (Key)Enum.Parse(typeof(Key), propGesture.EditKey);
+        static ModifierKeys ApproveModifier = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), propGesture.EditModifier);
+        public static RoutedUICommand Approve =
+            new RoutedUICommand("Approve", "Approve", typeof(CustomCommands), new InputGestureCollection() { new KeyGesture(EditKey, ApproveModifier) });
+        //anull
+        static Key AnullKey = (Key)Enum.Parse(typeof(Key), propGesture.EditKey);
+        static ModifierKeys AnullModifier = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), propGesture.EditModifier);
+        public static RoutedUICommand Anull =
+            new RoutedUICommand("Anull", "Anull", typeof(CustomCommands), new InputGestureCollection() { new KeyGesture(EditKey, AnullModifier) });
+        //Pending
+        static Key PendingKey = (Key)Enum.Parse(typeof(Key), propGesture.EditKey);
+        static ModifierKeys PendingModifier = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), propGesture.EditModifier);
+        public static RoutedUICommand Pending =
+            new RoutedUICommand("Pending", "Pending", typeof(CustomCommands), new InputGestureCollection() { new KeyGesture(EditKey, PendingModifier) });
 
     }
 }

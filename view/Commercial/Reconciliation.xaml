@@ -2,11 +2,36 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+          xmlns:entity="clr-namespace:entity;assembly=entity"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
+         xmlns:cntrl="clr-namespace:cntrl;assembly=cntrl"
+         xmlns:customcmd="clr-namespace:Cognitivo.Class"
+         xmlns:lex="http://wpflocalizeextension.codeplex.com"  
+        xmlns:converter="clr-namespace:Cognitivo.Converters"
+          lex:LocalizeDictionary.DesignCulture="en-US"
+          lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+          lex:ResxLocalizationProvider.DefaultDictionary="local"
+      mc:Ignorable="d"
+    
       d:DesignHeight="600" d:DesignWidth="800"
-	  Title="Reconciliation">
-    <Grid Background="{StaticResource winBackground}">
+	  Title="Reconciliation" Loaded="Page_Loaded">
+    <Page.CommandBindings>
+        <CommandBinding x:Name="ApproveCommand" Command="customcmd:CustomCommands.Approve" 
+                        CanExecute="ApproveCommand_CanExecute" 
+                        Executed="ApproveCommand_Executed"/>
+        <CommandBinding x:Name="AnullCommand" Command="customcmd:CustomCommands.Anull" 
+                        CanExecute="AnullCommand_CanExecute" 
+                        Executed="AnullCommand_Executed"/>
+        <CommandBinding x:Name="PendingCommand" Command="customcmd:CustomCommands.Pending" 
+                        CanExecute="PendingCommand_CanExecute" 
+                        Executed="PendingCommand_Executed"/>
+    </Page.CommandBindings>
+    <Page.Resources>
+        <converter:Status2ColorConverter x:Key="Status2ColorConverter"/>
+        <CollectionViewSource x:Key="app_accountViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_account}, CreateList=True}" />
+        <CollectionViewSource x:Key="app_accountapp_account_detailViewSource" Source="{Binding app_account_detail, Source={StaticResource app_accountViewSource}}"/>
+    </Page.Resources>
+    <Grid Background="{StaticResource winBackground}" DataContext="{StaticResource app_accountViewSource}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="1*"/>
@@ -15,22 +40,80 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        
+        <ListBox Background="{DynamicResource AccentColor_Brush}" x:Name="sales_invoiceDataGrid"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ItemContainerStyle="{StaticResource nav_ListSelection}"
+                             ItemsSource="{Binding}" Grid.Row="1" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <cntrl:navList VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                                               recordSecondaryName="{Binding code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                               recordName="{Binding name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
         <Grid Grid.Row="1" Grid.Column="1" Margin="0,50" Background="Azure">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Label Content="Bank" Style="{StaticResource H2}"/>
-                <Button Content="Import" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8"/>
-                <DataGrid Margin="0,50,0,0"/>
-            </Grid>
+                      
             <Grid Grid.Column="2">
                 <Label Content="System" Style="{StaticResource H2}"/>
-                <DataGrid Margin="0,50,0,0"/>
+                <DataGrid x:Name="dgvAccountDetail" Style="{StaticResource detail_Datagrid}" Margin="0,50,0,0" 
+                                     ItemsSource="{Binding Source={StaticResource app_accountapp_account_detailViewSource}}" 
+                                     >
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">
+                            <Setter Property="Background" Value="{Binding status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Status2ColorConverter}}"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        
+                        <DataGridTextColumn Binding="{Binding trans_date,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Binding="{Binding debit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Binding="{Binding credit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Binding="{Binding app_currencyfx.app_currency.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Binding="{Binding payment_type.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                        <DataGridTemplateColumn Width="Auto" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.Pending"
+                                                        Style="{StaticResource btnPendingChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="Auto" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.Approve"
+                                                        Style="{StaticResource btnApproveChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="Auto" Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="customcmd:CustomCommands.Anull"
+                                                        Style="{StaticResource btnAnullChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Grid>
+        <cntrl:toolBar x:Name="toolBar" appName="Account"
+			        
+                         btnEdit_Click="toolBar_btnEdit_Click"
+			           btnSave_Click="toolBar_btnSave_Click"
+                       State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                       Status="{Binding status, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                       
+                   
+			           VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
     </Grid>
 </Page>

@@ -30,7 +30,7 @@ namespace Cognitivo.Configs
         {
             //Main Account DataGrid.
             app_accountViewSource = (CollectionViewSource)this.FindResource("app_accountViewSource");
-            entity.db.app_account.Include("app_account_detail")
+            entity.db.app_account
                 .Where(a => a.id_company == CurrentSession.Id_Company).Load();
             app_accountViewSource.Source = entity.db.app_account.Local;
             app_accountapp_account_detailViewSource = this.FindResource("app_accountapp_account_detailViewSource") as CollectionViewSource;
@@ -47,7 +47,7 @@ namespace Cognitivo.Configs
 
             //CurrencyFx
             CollectionViewSource app_currencyfxViewSource = this.FindResource("app_currencyfxViewSource") as CollectionViewSource;
-            entity.db.app_currencyfx.Include("app_currency").Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
+            entity.db.app_currencyfx.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).Load();
             app_currencyfxViewSource.Source = entity.db.app_currencyfx.Local;
 
             //For Adjust Tab.

@@ -2715,14 +2715,17 @@ order by contacts.name asc";
             this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
             ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[1])).Connection = new global::MySql.Data.MySqlClient.MySqlConnection(global::Cognitivo.Properties.Settings.Default.MySQLconnString);
             ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[1])).CommandText = @" select 
- if(fx.is_reverse, 
+ (
+if(fx.is_reverse, 
+ ((cont.credit_limit * fx.sell_value) / @CurrencyFX),
+ ((cont.credit_limit / fx.sell_value) * @CurrencyFX)) -
+if(fx.is_reverse, 
  sum(((sch.debit * fx.sell_value) / @CurrencyFX) - ((sch.credit * fx.sell_value)) / @CurrencyFX),
- sum(((sch.debit / fx.sell_value) * @CurrencyFX) - ((sch.credit / fx.sell_value)) * @CurrencyFX) 
- ) - 
- if(fx.is_reverse, 
- sum((cont.credit_limit * fx.sell_value) / @CurrencyFX),
- sum((cont.credit_limit / fx.sell_value) * @CurrencyFX) 
- ) as Balance
+ sum(((sch.debit / fx.sell_value) * @CurrencyFX) - ((sch.credit / fx.sell_value)) * @CurrencyFX)) 
+ ) 
+as Balance
+
+
  from payment_schedual as sch
  inner join contacts as cont on sch.id_contact = cont.id_contact
  inner join app_currencyfx as fx on sch.id_currencyfx = fx.id_currencyfx

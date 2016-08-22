@@ -9,7 +9,7 @@
     <Shape ID="DesignTable:AccountsRecievable" ZOrder="4" X="59" Y="49" Height="335" Width="210" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="252" />
     <Shape ID="DesignTable:CurrentAccount_Customer" ZOrder="2" X="287" Y="51" Height="229" Width="203" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
     <Shape ID="DesignTable:sales_balance_analisys" ZOrder="3" X="1093" Y="545" Height="440" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="357" />
-    <Shape ID="DesignSources:ContactBalance" ZOrder="1" X="286" Y="287" Height="67" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="63" />
+    <Shape ID="DesignSources:ContactBalance" ZOrder="1" X="288" Y="296" Height="87" Width="203" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

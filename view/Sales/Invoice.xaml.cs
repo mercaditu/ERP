@@ -356,6 +356,13 @@ namespace Cognitivo.Sales
         private void btnApprove_Click(object sender)
         {
             Settings SalesSettings = new Settings();
+
+            Class.CreditLimit Limit = new Class.CreditLimit();
+            foreach (sales_invoice sales_invoice in SalesInvoiceDB.sales_invoice.Local.Where(x => x.IsSelected))
+            {
+                Limit.Check_CreditAvailability(sales_invoice);
+            }
+
             if (SalesInvoiceDB.Approve(SalesSettings.DiscountStock))
             {
                 filter_sales();
@@ -385,10 +392,13 @@ namespace Cognitivo.Sales
             if (sbxContact.ContactID > 0)
             {
                 contact contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();
+                
+                //Empty so that memory does not bring incorrect currency calculation
+                contact.credit_availability = 0;
+
                 sales_invoice sales_invoice = (sales_invoice)sales_invoiceDataGrid.SelectedItem;
                 sales_invoice.contact = contact;
                 sales_invoice.id_contact = contact.id_contact;
-         
 
                 if (sales_invoice.sales_order == null)
                 {
@@ -520,9 +530,9 @@ namespace Cognitivo.Sales
 
 
                 sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
-               
-                    _sales_invoice_detail.Quantity_InStock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
-               
+
+                _sales_invoice_detail.Quantity_InStock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
+
 
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();
                 sales_invoice.RaisePropertyChanged("GrandTotal");
@@ -912,6 +922,16 @@ namespace Cognitivo.Sales
                     // Dispose other managed resources.
                 }
                 //release unmanaged resources.
+            }
+        }
+
+        private void lblCheckCredit(object sender, RoutedEventArgs e)
+        {
+            if (sales_invoiceViewSource != null)
+            {
+                sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+                Class.CreditLimit Limit = new Class.CreditLimit();
+                Limit.Check_CreditAvailability(sales_invoice);
             }
         }
     }

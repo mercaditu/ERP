@@ -66,7 +66,7 @@ namespace cntrl.Curd
                 payment_detail.IsSelected = true;
                 payment_detail.payment = payment;
 
-                int id_currencyfx = _payment_schedualList.FirstOrDefault().id_currencyfx;
+                int id_currencyfx = payment_schedual.id_currencyfx;
 
                 if (PaymentDB.app_currencyfx.Where(x => x.id_currencyfx == id_currencyfx).FirstOrDefault() != null)
                 {

@@ -247,7 +247,8 @@ namespace entity
 
                 ///Code to specify Accounts.
                 ///
-                if (payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault().payment_behavior == entity.payment_type.payment_behaviours.Normal)
+                payment_type _payment_type=payment_type.Where(x => x.id_payment_type == payment_detail.id_payment_type).FirstOrDefault();
+                if (_payment_type.payment_behavior == entity.payment_type.payment_behaviours.Normal)
                 {
                     ///Creates new Account Detail for each Payment Detail.
                     app_account_detail app_account_detail = new app_account_detail();
@@ -257,6 +258,15 @@ namespace entity
                     app_account_detail.id_payment_type = payment_detail.id_payment_type;
                     app_account_detail.id_payment_detail = payment_detail.id_payment_detail;
                     app_account_detail.trans_date = payment_detail.trans_date;
+
+                    if (_payment_type.is_direct)
+                    {
+                        app_account_detail.status = Status.Documents_General.Approved;
+                    }
+                    else
+                    {
+                        app_account_detail.status = Status.Documents_General.Pending;
+                    }
 
                     ///Gets the Session ID necesary for cashier movement.
                     if (base.app_account_session.Where(x => x.id_account == payment_detail.id_account && x.is_active).FirstOrDefault() != null)
@@ -298,7 +308,7 @@ namespace entity
                     }
                     app_account_detail.comment = Brillo.Localize.StringText(ModuleName) + " " + number + " | " + Parent_Schedual.contact.name;
                     app_account_detail.tran_type = app_account_detail.tran_types.Transaction;
-                    base.app_account_detail.Add(app_account_detail);
+                     base.app_account_detail.Add(app_account_detail);
                 }
                 //pankeel
             }

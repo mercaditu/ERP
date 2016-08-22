@@ -440,10 +440,10 @@ namespace entity
                     {
                         Decimal TotalSales = sales_invoice.GrandTotal;
 
-                        if (sales_invoice.app_currencyfx.id_currency != CurrentSession.Currency_Default.id_currency)
-                        {
-                            TotalSales = Brillo.Currency.convert_Values(TotalSales, sales_invoice.id_currencyfx, CurrentSession.CurrencyFX_Default.id_currencyfx, App.Modules.Sales);
-                        }
+                        //if (sales_invoice.app_currencyfx.id_currency != CurrentSession.Currency_Default.id_currency)
+                        //{
+                        //    TotalSales = Brillo.Currency.convert_Values(TotalSales, sales_invoice.id_currencyfx, CurrentSession.CurrencyFX_Default.id_currencyfx, App.Modules.Sales);
+                        //}
 
                         Decimal CreditAvailability = (decimal)sales_invoice.contact.credit_availability;
 

@@ -54,6 +54,16 @@ namespace Cognitivo.Class
         //    return GenerateList(dt);
         //}
 
+        public void Check_CreditAvailability(entity.sales_invoice sales_invoice)
+        {
+            if (sales_invoice != null && sales_invoice.contact != null && sales_invoice.contact.credit_limit != null)
+            {
+                decimal Balance = (decimal)SpecialFXBalance_ByCustomer(sales_invoice.app_currencyfx.buy_value, sales_invoice.id_contact);
+                sales_invoice.contact.credit_availability = Balance;
+                sales_invoice.contact.RaisePropertyChanged("credit_availability");
+            }   
+        }
+
         /// <summary>
         /// Gets the Balance of the customer by the company's default currency.
         /// </summary>
@@ -75,16 +85,16 @@ namespace Cognitivo.Class
         /// <summary>
         /// Gets the Balance of the Customer by whichever FX Rate you wish to pass.
         /// </summary>
-        /// <param name="SpecialFXID">FX ID we want to use</param>
+        /// <param name="SpecialFXID">FX Rate we want to use</param>
         /// <param name="CustomerID">Customer ID we wantt o calculate for</param>
         /// <returns>The Balance in the Special Currency</returns>
-        public decimal? SpecialFXBalance_ByCustomer(int SpecialFXID, int CustomerID)
+        public decimal? SpecialFXBalance_ByCustomer(decimal SpecialFXRate, int CustomerID)
         {
             FinanceDS FinanceDS = new FinanceDS();
             FinanceDS.BeginInit();
 
             Cognitivo.Reporting.Data.FinanceDSTableAdapters.ContactBalance ContactBalance = new Cognitivo.Reporting.Data.FinanceDSTableAdapters.ContactBalance();
-            decimal i = Convert.ToDecimal(ContactBalance.SpecialBalance_ByContact_Currency(SpecialFXID, CustomerID));
+            decimal i = Convert.ToDecimal(ContactBalance.SpecialBalance_ByContact_Currency(SpecialFXRate, CustomerID));
 
             FinanceDS.EndInit();
 

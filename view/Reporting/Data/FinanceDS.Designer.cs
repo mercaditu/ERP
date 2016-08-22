@@ -2714,18 +2714,24 @@ order by contacts.name asc";
             ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[0])).Parameters.Add(param);
             this._commandCollection[1] = new global::MySql.Data.MySqlClient.MySqlCommand();
             ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[1])).Connection = new global::MySql.Data.MySqlClient.MySqlConnection(global::Cognitivo.Properties.Settings.Default.MySQLconnString);
-            ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[1])).CommandText = @"select 
-if(fx.is_reverse, 
-sum(((sch.debit * fx.sell_value) / @CurrencyFX) - ((sch.credit * fx.sell_value)) / @CurrencyFX),
-sum(((sch.debit / fx.sell_value) * @CurrencyFX) - ((sch.credit / fx.sell_value)) * @CurrencyFX) 
-) as Balance
-from payment_schedual as sch
-inner join app_currencyfx as fx on sch.id_currencyfx = fx.id_currencyfx
-where id_sales_invoice > 0 and sch.can_calculate = 1 and id_contact = @ContactID";
+            ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[1])).CommandText = @" select 
+ if(fx.is_reverse, 
+ sum(((sch.debit * fx.sell_value) / @CurrencyFX) - ((sch.credit * fx.sell_value)) / @CurrencyFX),
+ sum(((sch.debit / fx.sell_value) * @CurrencyFX) - ((sch.credit / fx.sell_value)) * @CurrencyFX) 
+ ) - 
+ if(fx.is_reverse, 
+ sum((cont.credit_limit * fx.sell_value) / @CurrencyFX),
+ sum((cont.credit_limit / fx.sell_value) * @CurrencyFX) 
+ ) as Balance
+ from payment_schedual as sch
+ inner join contacts as cont on sch.id_contact = cont.id_contact
+ inner join app_currencyfx as fx on sch.id_currencyfx = fx.id_currencyfx
+ where id_sales_invoice > 0 and sch.can_calculate = 1 and sch.id_contact = @ContactID";
             ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[1])).CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@CurrencyFX";
-            param.DbType = global::System.Data.DbType.Int32;
+            param.DbType = global::System.Data.DbType.Decimal;
+            param.MySqlDbType = global::MySql.Data.MySqlClient.MySqlDbType.Decimal;
             param.IsNullable = true;
             param.SourceColumn = "";
             ((global::MySql.Data.MySqlClient.MySqlCommand)(this._commandCollection[1])).Parameters.Add(param);
@@ -2770,9 +2776,9 @@ where id_sales_invoice > 0 and sch.can_calculate = 1 and id_contact = @ContactID
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual object SpecialBalance_ByContact_Currency(int CurrencyFX, int ContactID) {
+        public virtual object SpecialBalance_ByContact_Currency(decimal CurrencyFX, int ContactID) {
             global::MySql.Data.MySqlClient.MySqlCommand command = ((global::MySql.Data.MySqlClient.MySqlCommand)(this.CommandCollection[1]));
-            command.Parameters[0].Value = ((int)(CurrencyFX));
+            command.Parameters[0].Value = ((decimal)(CurrencyFX));
             command.Parameters[1].Value = ((int)(ContactID));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 

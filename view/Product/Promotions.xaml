@@ -73,7 +73,7 @@
                 <StackPanel Grid.Column="0">
                     <Label Content="Parameters" Style="{StaticResource H2}"/>
                     <Label Content="Item" Style="{StaticResource input_label}"/>
-                    <controls:SmartBox_Item x:Name="sbxRefItem" HorizontalAlignment="Left"/>
+                    <controls:SmartBox_Item x:Name="sbxRefItem" HorizontalAlignment="Left" Select="sbxRefItem_Select" />
                     <Label Content="Quantity Step" Style="{StaticResource input_label}"/>
                     <TextBox Text="{Binding quantity_step, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" HorizontalAlignment="Left" Width="120"/>
                 </StackPanel>
@@ -81,12 +81,12 @@
                 <StackPanel Grid.Column="1">
                     <Label Content="Output" Style="{StaticResource H2}"/>
                     <Label Content="Bonus Item" HorizontalAlignment="Left" Style="{StaticResource input_label}" Width="120"/>
-                    <controls:SmartBox_Item x:Name="sbxBonusItem" HorizontalAlignment="Left"/>
+                    <controls:SmartBox_Item x:Name="sbxBonusItem" HorizontalAlignment="Left" Select="sbxBonusItem_Select"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
         
-        <local:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" IsEnabled="False"
+        <local:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2"
                        appName="ItemPromotion"
                        btnNew_Click="toolBar_btnNew_Click"
                        btnEdit_Click="toolBar_btnEdit_Click"

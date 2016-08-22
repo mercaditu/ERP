@@ -521,7 +521,7 @@ namespace Cognitivo.Sales
 
                 sales_invoice_detail _sales_invoice_detail = SalesInvoiceDB.Select_Item(ref sales_invoice, item, SalesSettings.AllowDuplicateItem);
                
-                    _sales_invoice_detail.Quantity_InStock = StockCalculations.StockCount_ByBranch(BranchID, item.id_item, DateTime.Now);
+                    _sales_invoice_detail.Quantity_InStock = StockCalculations.Count_ByBranch(BranchID, item.id_item, DateTime.Now);
                
 
                 sales_invoicesales_invoice_detailViewSource.View.Refresh();

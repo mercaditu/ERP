@@ -94,7 +94,7 @@ namespace Cognitivo.Product
                     {
                         List<item_product> item_productLIST = InventoryDB.item_product.Where(x => x.id_company == CurrentSession.Id_Company && x.item.is_active).ToList();
                         Class.StockCalculations Stock = new Class.StockCalculations();
-                        List<Class.StockList> StockList = Stock.StockList_ByBranchLocation(app_location.id_location, DateTime.Now);
+                        List<Class.StockList> StockList = Stock.ByBranchLocation(app_location.id_location, DateTime.Now);
 
                         foreach (item_product i in item_productLIST)
                         {

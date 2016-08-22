@@ -260,7 +260,8 @@
     <Compile Include="Class\itemmovement.cs" />
     <Compile Include="Class\PasswordHelper.cs" />
     <Compile Include="Class\RichTextBoxHelper.cs" />
-    <Compile Include="Class\stock.cs" />
+    <Compile Include="Class\CreditLimit.cs" />
+    <Compile Include="Class\Stock.cs" />
     <Compile Include="Class\transfercost.cs" />
     <Compile Include="Commercial\AccountsPayable.xaml.cs">
       <DependentUpon>AccountsPayable.xaml</DependentUpon>

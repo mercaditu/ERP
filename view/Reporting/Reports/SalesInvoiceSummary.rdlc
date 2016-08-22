@@ -2521,6 +2521,8 @@
                   <DataElementOutput>Output</DataElementOutput>
                 </ChartDataPoint>
               </ChartDataPoints>
+              <Type>Area</Type>
+              <Subtype>Smooth</Subtype>
               <Style />
               <ChartEmptyPoints>
                 <Style />

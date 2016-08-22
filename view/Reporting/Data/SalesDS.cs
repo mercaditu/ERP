@@ -92,7 +92,8 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
     }
 }
 
-namespace Cognitivo.SalesDSTableAdapters {
+namespace Cognitivo.Reporting.Data.SalesDSTableAdapters
+{
     
     
     public partial class SalesOrderSummaryTableAdapter {

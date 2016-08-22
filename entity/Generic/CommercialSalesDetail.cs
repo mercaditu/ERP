@@ -424,10 +424,11 @@ namespace entity
             {
                 if (_discount != value)
                 {
-
-
-
-                    ApplyDiscount_UnitPrice(_discount, value, unit_price);
+                    if (State == System.Data.Entity.EntityState.Added || State == System.Data.Entity.EntityState.Modified)
+                    {
+                        ApplyDiscount_UnitPrice(_discount, value, unit_price);
+                    }
+                    
                     Calculate_UnitVatDiscount(value);
                     Calculate_SubTotalDiscount(value);
 

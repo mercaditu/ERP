@@ -51,7 +51,7 @@ namespace cntrl.Curd
                         if (app_currencyList.Count > 0)
                         {
                             CollectionViewSource app_currencyViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_currencyViewSource")));
-                            app_currencyViewSource.Source = db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                            app_currencyViewSource.Source = app_currencyList;
                         }
 
                         item_price_listList = _db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
@@ -86,14 +86,15 @@ namespace cntrl.Curd
             }
         }
 
-        public event btnSave_ClickedEventHandler btnSave_Click;
-        public delegate void btnSave_ClickedEventHandler(object sender);
+        //public event btnSave_ClickedEventHandler btnSave_Click;
+        //public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
-            if (btnSave_Click != null)
-            {
-                btnSave_Click(sender);
-            }
+            db.SaveChanges();
+            //if (btnSave_Click != null)
+            //{
+            //    btnSave_Click(sender);
+            //}
         }
 
         private void cmbitem_SelectionChanged(object sender, SelectionChangedEventArgs e)

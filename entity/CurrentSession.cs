@@ -89,6 +89,17 @@ namespace entity
         }
         static int _Id_Account;
 
+        public static string ConnectionString
+        {
+            get
+            {
+              
+                return _ConnectionString;
+            }
+            set { _ConnectionString = value; }
+        }
+        static string _ConnectionString;
+
         public static Versions Version { get; set; }
         public static int NumberOfSeats { get; set; }
 

@@ -167,7 +167,11 @@ namespace entity
                                         }
 
                                         item_movement_detail.comment = _impex_expense.impex_incoterm_condition.name;
-                                        item_movement.item_movement_value.Add(item_movement_detail);
+                                        if (item_movement!=null)
+                                        {
+                                            item_movement.item_movement_value.Add(item_movement_detail);
+                                        }
+                                      
                                     }
                                 }
                             }

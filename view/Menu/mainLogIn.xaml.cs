@@ -133,7 +133,9 @@ namespace Cognitivo.Menu
                     }
                 }
 
-                //CurrentSession.
+
+                Cognitivo.Properties.Settings ViewSettings = new Properties.Settings();
+                CurrentSession.ConnectionString = ViewSettings.MySQLconnString;
                 CurrentSession.Start(u, p);
 
                 if (CurrentSession.User != null)
@@ -176,5 +178,7 @@ namespace Cognitivo.Menu
         {
             myFrame.Navigate(new Configs.Settings());
         }
+
+       
     }
 }

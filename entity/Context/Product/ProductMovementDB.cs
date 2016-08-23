@@ -82,20 +82,32 @@ namespace entity
             {
                 using (PurchaseInvoiceDB PurchaseDB = new PurchaseInvoiceDB())
                 {
+                    purchase.IsSelected = true;
                     PurchaseDB.Insert_Items_2_Movement(purchase);
                     PurchaseDB.SaveChanges();
                 }
 
+               
+            }
+
+            foreach (purchase_invoice purchase in purchaseLIST.OrderBy(y => y.trans_date))
+            {
                 if (purchase.is_impex)
                 {
                     using (ImpexDB ImpexDB = new ImpexDB())
                     {
                         ImpexDB.impex.Load();
+
+                        foreach (impex impex in ImpexDB.impex.Local)
+                        {
+                            impex.status = Status.Documents_General.Pending;
+                        }
                         ImpexDB.ApproveImport();
                     }
                 }
-            }
 
+            }
+          
 
 
             DateTime StartDate = DateTime.Now.AddMonths(-6);

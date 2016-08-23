@@ -37,7 +37,7 @@ namespace entity.BrilloQuery
         }
     }
 
-    public class Tag
+    public class ContactTag
     {
         public string Name { get; set; }
         ICollection<Contact> Item { get; set; }

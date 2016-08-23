@@ -59,8 +59,9 @@ namespace entity.Brillo.Promotion
 
                                 _Detail.Promos.Add(_Promo);
 
+                                List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus).ToList();
                                 //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
-                                foreach (sales_invoice_detail _Detail_ in SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus))
+                                foreach (sales_invoice_detail _Detail_ in sid)
                                 {
                                     SalesInvoice.sales_invoice_detail.Remove(_Detail_);
                                 }

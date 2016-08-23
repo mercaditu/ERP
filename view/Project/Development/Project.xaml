@@ -55,12 +55,14 @@
         </ListBox>
 
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Background="White" Grid.ColumnSpan="2">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Background="White" Grid.ColumnSpan="2" HorizontalAlignment="Center">
             <StackPanel HorizontalAlignment="left" IsEnabled="{Binding ElementName=toolBar, Path=IsEditable}" Height="544" Margin="0,45,0,0" >
                 <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding name,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
-                <TextBox Text="{Binding code,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
+                <TextBox Text="{Binding comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Height="64"/>
                 <Label Content="{lex:Loc StartDate}" Style="{StaticResource input_label}"/>
                 <DatePicker  Style="{StaticResource input_datepicker}"
                                 metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

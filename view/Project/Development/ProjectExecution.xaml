@@ -94,18 +94,18 @@
                 </cntrl:ExtendedTreeView>
             </Grid>
             
-            <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+            <StackPanel Grid.Column="1" HorizontalAlignment="Center" DataContext="{StaticResource projectViewSource}">
                 <Label Content="{lex:Loc Name}" Style="{StaticResource input_label}"/>
                 <Label Content="{Binding name}" Style="{StaticResource generic_Label}"/>
                 <Label Content="{lex:Loc Code}" Style="{StaticResource input_label}"/>
                 <Label Content="{Binding code}" Style="{StaticResource generic_Label}"/>
                 <Label Content="{lex:Loc Comment}" Style="{StaticResource input_label}"/>
-                <Label Content="{Binding comment}" Style="{StaticResource generic_Label}"/>
+                <Label Content="{Binding comment, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource generic_Label}"/>
                 <Label Content="{lex:Loc Tags}" Style="{StaticResource input_label}"/>
-                <DataGrid AutoGenerateColumns="False" 
+                <DataGrid AutoGenerateColumns="False" IsReadOnly="True"
                           EnableRowVirtualization="True" Margin="4" HeadersVisibility="None" 
                           ItemsSource="{Binding Source={StaticResource Projectproject_tag_detail}}" 
-                          RowDetailsVisibilityMode="VisibleWhenSelected">
+                          RowDetailsVisibilityMode="Collapsed">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding project_tag.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto"/>
                     </DataGrid.Columns>

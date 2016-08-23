@@ -146,7 +146,7 @@ namespace Cognitivo.Accounting
             PurchaseReturn_Sync();
 
             PaymentSync();
-
+            FixedAsset();
         }
 
         private void Sales_Sync()
@@ -422,6 +422,54 @@ namespace Cognitivo.Accounting
                 catch (Exception)
                 {
                     payments.is_accounted = false;
+                }
+                finally
+                {
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        private void FixedAsset()
+        {
+            //entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+            entity.DebeHaber.Transactions FixedAssetError = new entity.DebeHaber.Transactions();
+
+            foreach (entity.item_asset_group item_asset_group in db.item_asset_group.Where(x => x.id_company == entity.CurrentSession.Id_Company).ToList())
+            {
+                entity.DebeHaber.Transactions Transactions = new entity.DebeHaber.Transactions();
+                Transactions.HashIntegration = RelationshipHash;
+
+                entity.DebeHaber.FixedAssetGroup FixedAssetGroup = new entity.DebeHaber.FixedAssetGroup();
+                FixedAssetGroup.Name = item_asset_group.name;
+                FixedAssetGroup.LifespanYears = (decimal)item_asset_group.depreciation_rate;
+
+                //Loop through
+                foreach (entity.item_asset item_asset in item_asset_group.item_asset.Where(x => x.IsSelected))
+                {
+                    entity.DebeHaber.FixedAsset FixedAsset = new entity.DebeHaber.FixedAsset();
+                    FixedAsset.Name = item_asset.item.name;
+                    FixedAsset.Code = item_asset.item.code;
+                    FixedAsset.CurrentCost = (decimal)item_asset.current_value;
+                    FixedAsset.PurchaseCost = (decimal)item_asset.purchase_value;
+                    FixedAsset.PurchaseDate = (DateTime)item_asset.purchase_date;
+                    FixedAsset.Quantity = 1;
+                    FixedAsset.CurrencyName = entity.CurrentSession.Currency_Default.name;
+
+                    FixedAssetGroup.FixedAssets.Add(FixedAsset);
+                }
+
+                Transactions.FixedAssetGroup.Add(FixedAssetGroup);
+
+                try
+                {
+                    var Json = new JavaScriptSerializer().Serialize(Transactions);
+                    Send2API(Json);
+                    //payments.is_accounted = true;
+                }
+                catch (Exception)
+                {
+                    //payments.is_accounted = false;
                 }
                 finally
                 {

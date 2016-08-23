@@ -16,12 +16,14 @@ namespace entity.DebeHaber
         {
             Commercial_Invoice = new List<Commercial_Invoice>();
             Payments = new List<Payments>();
+            FixedAssetGroup = new List<FixedAssetGroup>();
         }
 
         public string HashIntegration { get; set; }
 
         public virtual ICollection<Commercial_Invoice> Commercial_Invoice { get; set; }
         public virtual ICollection<Payments> Payments { get; set; }
+        public virtual ICollection<FixedAssetGroup> FixedAssetGroup { get; set; }
     }
 
     public class Commercial_Invoice
@@ -408,9 +410,12 @@ namespace entity.DebeHaber
     public class FixedAsset
     {
         public string Name { get; set; }
+        public string Code { get; set; }
         public int Quantity { get; set; }
         public DateTime PurchaseDate { get; set; }
         public decimal PurchaseCost { get; set; }
+        public decimal CurrentCost { get; set; }
+
         public string CurrencyName { get; set; }
         public virtual FixedAssetGroup FixedAssetGroup { get; set; }
     }
@@ -423,7 +428,7 @@ namespace entity.DebeHaber
         }
 
         public string Name { get; set; }
-        public string Lifespan { get; set; }
+        public decimal LifespanYears { get; set; }
 
         public virtual List<FixedAsset> FixedAssets {get;set;}
     }
@@ -435,16 +440,5 @@ namespace entity.DebeHaber
         public decimal ValueWVAT { get; set; }
         public string CostCenter { get; set; }
         public string CostCenterType { get; set; }
-    }
-
-    public class CreditNote
-    {
-        public CreditNote()
-        {
-            Commercial_Invoice = new List<Commercial_Invoice>();
-           
-        }
-         public virtual ICollection<Commercial_Invoice> Commercial_Invoice { get; set; }
-     
     }
 }

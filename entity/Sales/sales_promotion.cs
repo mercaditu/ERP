@@ -26,7 +26,9 @@ namespace entity
         {
             is_head = true;
             id_company = CurrentSession.Id_Company;
-            id_user = CurrentSession.Id_User;   
+            id_user = CurrentSession.Id_User;
+            date_start = DateTime.Now;
+            date_end = DateTime.Now.AddDays(10);
         }
 
         [Key]

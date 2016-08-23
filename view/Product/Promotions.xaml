@@ -92,8 +92,6 @@
                        btnEdit_Click="toolBar_btnEdit_Click"
                        btnSave_Click="toolBar_btnSave_Click"
                        btnCancel_Click="toolBar_btnCancel_Click"
-                       btnApprove_Click="toolBar_btnApprove_Click"
-                       btnAnull_Click="toolBar_btnAnull_Click"
                        State="{Binding State, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                        Status="{Binding is_active,Converter={StaticResource ActiveToStatusforitem},UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>

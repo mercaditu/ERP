@@ -78,16 +78,6 @@ namespace Cognitivo.Product
                 sales_promotionViewSource.View.MoveCurrentToLast();
             }
         }
-
-        private void toolBar_btnApprove_Click(object sender)
-        {
-
-        }
-
-        private void toolBar_btnAnull_Click(object sender)
-        {
-
-        }
         #endregion
 
         private void dgvPromotion_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,10 +99,13 @@ namespace Cognitivo.Product
 
         private void sbxRefItem_Select(object sender, RoutedEventArgs e)
         {
-            if (sbxRefItem.ItemID>0)
+            if (sbxRefItem.ItemID > 0)
             {
                    sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-                   sales_promotion.reference = sbxRefItem.ItemID;
+                   if (sales_promotion != null)
+                   {
+                       sales_promotion.reference = sbxRefItem.ItemID;
+                   }
             }
 
         }
@@ -121,9 +114,11 @@ namespace Cognitivo.Product
         {
             if (sbxBonusItem.ItemID > 0)
             {
-              
                 sales_promotion sales_promotion = sales_promotionViewSource.View.CurrentItem as sales_promotion;
-                sales_promotion.reference_bonus = sbxBonusItem.ItemID;
+                if (sales_promotion != null)
+                {
+                    sales_promotion.reference_bonus = sbxBonusItem.ItemID;
+                }
             }
         }
     }

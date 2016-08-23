@@ -92,7 +92,7 @@ namespace cntrl.Controls
                     if (Item != null)
                     {
                         ItemID = Item.id_item;
-                        ContactPopUp.IsOpen = false;
+                        ItemPopUp.IsOpen = false;
                         Text = Item.name;
                     }
                     else
@@ -257,7 +257,7 @@ namespace cntrl.Controls
                     itemViewSource.Source = results;
                     Item = itemViewSource.View.CurrentItem as entity.item;
 
-                    ContactPopUp.IsOpen = true;
+                    ItemPopUp.IsOpen = true;
                     progBar.IsActive = false;
                 }));
             }
@@ -268,31 +268,33 @@ namespace cntrl.Controls
             entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
             if (Sec.create)
             {
-                crudItem.itemobject = new entity.item();
-                crudItem.entity = db;
+                cntrl.Curd.item item = new Curd.item();
+                item.itemobject = new entity.item();
+                item.entity = db;
                 popCrud.IsOpen = true;
                 popCrud.Visibility = System.Windows.Visibility.Visible;
+                ContactPopUp.Children.Add(item);
             }
         }
 
-        private void crudItem_btnSave_Click(object sender)
-        {
-            db.db.items.Add(crudItem.itemobject);
-            db.SaveChanges();
-            popCrud.IsOpen = false;
-            popCrud.Visibility = System.Windows.Visibility.Collapsed;
-        }
+        //private void crudItem_btnSave_Click(object sender)
+        //{
+        //    db.db.items.Add(crudItem.itemobject);
+        //    db.SaveChanges();
+        //    popCrud.IsOpen = false;
+        //    popCrud.Visibility = System.Windows.Visibility.Collapsed;
+        //}
 
-        private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
-            if (Sec.edit)
-            {
-                crudItem.itemobject = new entity.item();
-                popCrud.IsOpen = true;
-                popCrud.Visibility = System.Windows.Visibility.Visible;
-            }
-        }
+        //private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Items);
+        //    if (Sec.edit)
+        //    {
+        //        crudItem.itemobject = new entity.item();
+        //        popCrud.IsOpen = true;
+        //        popCrud.Visibility = System.Windows.Visibility.Visible;
+        //    }
+        //}
 
         private void crudItem_btnCancel_Click(object sender)
         {
@@ -330,7 +332,6 @@ namespace cntrl.Controls
             {
                 Controls.smartBoxItemSetting.Default.SearchFilter.Add("Tag");
             }
-
 
             Controls.smartBoxItemSetting.Default.Save();
 

@@ -20,7 +20,8 @@
     </UserControl.Resources>
     <Grid Width="256">
         <Popup x:Name="popCrud" PopupAnimation="Slide" Placement="Right" Visibility="Collapsed">
-            <crud:item x:Name="crudItem" btnSave_Click="crudItem_btnSave_Click" btnCancel_Click="crudItem_btnCancel_Click"/>
+            <StackPanel x:Name="ContactPopUp"/>
+            <!--<crud:item x:Name="crudItem" btnSave_Click="crudItem_btnSave_Click" btnCancel_Click="crudItem_btnCancel_Click"/>-->
         </Popup>
         
         <!-- TextBox for Searching -->
@@ -64,15 +65,14 @@
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
                    PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
-
-            <Label Content="|" Foreground="Silver" VerticalAlignment="Center" 
+            <!--<Label Content="|" Foreground="Silver" VerticalAlignment="Center" 
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
                    Margin="0" FontSize="9"/>
 
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
                    Visibility="{Binding can_Edit, Mode=TwoWay, ElementName=_SmartBox_Item, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"                    
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                 Padding="4" FontWeight="Bold"/>
+                 Padding="4" FontWeight="Bold"/>-->
         </StackPanel>
         <!-- Progress Ring -->
         <metro:ProgressRing x:Name="progBar" Width="22" Height="22" HorizontalAlignment="Left"
@@ -80,7 +80,7 @@
         <!-- Search Icon -->
         <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="L" VerticalAlignment="Center" Margin="0,0,1,0" 
                HorizontalAlignment="Left" Foreground="{StaticResource Modal_BackgroundColor}"/>
-        <Popup x:Name="ContactPopUp" IsOpen="False" StaysOpen="False">
+        <Popup x:Name="ItemPopUp" IsOpen="False" StaysOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="1" Direction="270" Opacity="0.8"/>

@@ -730,7 +730,6 @@ namespace Cognitivo.Sales
 
         }
 
-
         private void btnSalesOrder_Click(object sender, RoutedEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;

@@ -12,7 +12,7 @@ namespace cntrl.Curd
 {
     public partial class item : UserControl
     {
-        public entity.dbContext entity { get; set; }
+        private db db = new db();
 
         private entity.item _itemobject = null;
         public entity.item itemobject { get { return _itemobject; } set { _itemobject = value; } }
@@ -23,54 +23,57 @@ namespace cntrl.Curd
         public item()
         {
             InitializeComponent();
+            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                if (entity != null)
+                if (db != null)
                 {
-                    if (entity.db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company) != null)
+                    List<app_vat_group> app_vat_groupList = new List<app_vat_group>();
+                    List<app_currency> app_currencyList = new List<app_currency>();
+                    List<item_price_list> item_price_listList = new List<item_price_list>();
+                    
+                    using (db _db = new db())
                     {
-                        CollectionViewSource item_brandViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_brandViewSource")));
-                        item_brandViewSource.Source = entity.db.item_brand.Where(a => a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-                    }
+                        _db.Configuration.AutoDetectChangesEnabled = false;
 
-                    if (entity.db.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
-                    {
-                        CollectionViewSource app_vat_groupViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vat_groupViewSource")));
-                        app_vat_groupViewSource.Source = entity.db.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-                    }
+                        app_vat_groupList = _db.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
+                        if (app_vat_groupList.Count > 0)
+                        {
+                            CollectionViewSource app_vat_groupViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_vat_groupViewSource")));
+                            app_vat_groupViewSource.Source = app_vat_groupList;
+                        }
 
-                    if (entity.db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
-                    {
-                        CollectionViewSource app_currencyViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_currencyViewSource")));
-                        app_currencyViewSource.Source = entity.db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-                    }
+                        app_currencyList = _db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
+                        if (app_currencyList.Count > 0)
+                        {
+                            CollectionViewSource app_currencyViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("app_currencyViewSource")));
+                            app_currencyViewSource.Source = db.app_currency.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                        }
 
-                    if (entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company) != null)
-                    {
-                        CollectionViewSource item_price_listViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_price_listViewSource")));
-                        item_price_listViewSource.Source = entity.db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+                        item_price_listList = _db.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).AsNoTracking().ToList();
+                        if (item_price_listList.Count > 0)
+                        {
+                            CollectionViewSource item_price_listViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("item_price_listViewSource")));
+                            item_price_listViewSource.Source = item_price_listList;
+                        }
                     }
-
 
                     cmbitem.ItemsSource = Enum.GetValues(typeof(entity.item.item_type));
 
-
-
                     if (itemobject != null)
                     {
-                        entity.db.items.Add(itemobject);
+                        db.items.Add(itemobject);
                     }
 
                     itemViewSource = (CollectionViewSource)this.FindResource("itemViewSource");
-                    itemViewSource.Source = entity.db.items.Local;
+                    itemViewSource.Source = db.items.Local;
                     itemViewSource.View.MoveCurrentTo(itemobject);
                 }
             }
-
         }
 
         public event btnCancel_ClickedEventHandler btnCancel_Click;
@@ -87,8 +90,6 @@ namespace cntrl.Curd
         public delegate void btnSave_ClickedEventHandler(object sender);
         public void btnSave_MouseUp(object sender, EventArgs e)
         {
-
-
             if (btnSave_Click != null)
             {
                 btnSave_Click(sender);
@@ -113,7 +114,7 @@ namespace cntrl.Curd
                         List<item_asset> records = item.item_asset.ToList();
                         foreach (var record in records)
                         {
-                            entity.db.item_asset.Remove(record);
+                            db.item_asset.Remove(record);
                         }
                     }
                 }
@@ -125,7 +126,7 @@ namespace cntrl.Curd
                         List<item_asset> records = item.item_asset.ToList();
                         foreach (var record in records)
                         {
-                            entity.db.item_asset.Remove(record);
+                            db.item_asset.Remove(record);
                         }
                     }
                     if (item.item_product.Count > 0)
@@ -133,7 +134,7 @@ namespace cntrl.Curd
                         List<item_product> records = item.item_product.ToList();
                         foreach (var record in records)
                         {
-                            entity.db.item_product.Remove(record);
+                            db.item_product.Remove(record);
                         }
                     }
                 }
@@ -150,7 +151,7 @@ namespace cntrl.Curd
                         List<item_product> records = item.item_product.ToList();
                         foreach (var record in records)
                         {
-                            entity.db.item_product.Remove(record);
+                            db.item_product.Remove(record);
                         }
                     }
                 }

@@ -61,7 +61,7 @@ namespace Cognitivo.Class
 
                                  group by loc.id_location, prod.id_item_product 
                                  order by item.name";
-            query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd"));
+            query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }

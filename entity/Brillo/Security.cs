@@ -19,7 +19,19 @@
             delete = true;
             approve = true;
             annul = true;
+            if (CurrentSession.UserRole == null)
+            {
+                db db = new entity.db();
+                security_role security_role = new security_role();
+                security_role.name = "Master";
+                security_role.is_active = true;
+                security_role.is_master = true;
+                db.security_role.Add(security_role);
+                db.SaveChanges();
+                CurrentSession.UserRole = security_role;
 
+
+            }
             if (CurrentSession.UserRole.is_master == false)
             {
                 if (CurrentSession.Security_CurdList.Where(x => x.id_application == AppName).FirstOrDefault() != null)
@@ -42,7 +54,7 @@
             if (CurrentSession.User.security_role.is_master == false)
             {
 
-                if (Privilage>0)
+                if (Privilage > 0)
                 {
                     using (db db = new db())
                     {

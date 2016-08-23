@@ -109,7 +109,7 @@ namespace entity.Brillo
             {
                 StockList Stock = new StockList();
                 Stock.MovementID = Convert.ToInt16(DataRow["MovementID"]);
-                Stock.TranDate = Convert.ToDateTime(DataRow["TranDate"]);
+                Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
                 Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
                 Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
 

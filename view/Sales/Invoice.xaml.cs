@@ -668,7 +668,7 @@ namespace Cognitivo.Sales
 
                 pnlPacking = new cntrl.PanelAdv.pnlPacking();
                 pnlPacking._entity = SalesInvoiceDB;
-                pnlPacking._contact = sbxContact.Contact as contact;
+                pnlPacking._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); //sbxContact.Contact as contact;
                 pnlPacking.Link_Click += Link_Click;
                 crud_modal.Children.Add(pnlPacking);
                 CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
@@ -694,7 +694,7 @@ namespace Cognitivo.Sales
                     {
                         sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
                         sales_invoice_detail.sales_invoice = _sales_invoice;
-                        sales_invoice_detail.Contact = sbxContact.Contact;
+                        sales_invoice_detail.Contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault();// sbxContact.Contact;
                         sales_invoice_detail.item = _sales_packing_detail.item;
                         sales_invoice_detail.id_item = _sales_packing_detail.id_item;
                         sales_invoice_detail.quantity = _sales_packing_detail.quantity;
@@ -736,7 +736,7 @@ namespace Cognitivo.Sales
             crud_modal.Visibility = Visibility.Visible;
             pnlSalesOrder = new cntrl.PanelAdv.pnlSalesOrder();
             pnlSalesOrder._entity = SalesInvoiceDB;
-            pnlSalesOrder._contact = sbxContact.Contact;
+            pnlSalesOrder._contact = SalesInvoiceDB.contacts.Where(x => x.id_contact == sbxContact.ContactID).FirstOrDefault(); // sbxContact.Contact;
             pnlSalesOrder.mode = cntrl.PanelAdv.pnlSalesOrder.module.sales_invoice;
             pnlSalesOrder.SalesOrder_Click += SalesOrder_Click;
             crud_modal.Children.Add(pnlSalesOrder);

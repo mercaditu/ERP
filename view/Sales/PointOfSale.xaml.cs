@@ -233,8 +233,7 @@ namespace Cognitivo.Sales
             //Clean up Contact Data.
             sbxContact.Text = "";
             sbxContact.ContactID = 0;
-            sbxContact.Contact = null;
-
+            
             sbxItem.Text = string.Empty;
             sbxItem.ItemID = 0;
             sbxItem.Item = null;

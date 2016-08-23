@@ -12,7 +12,7 @@ using System.Windows.Threading;
 
 namespace cntrl.Controls
 {
-    public partial class SmartBox_Contact : UserControl,INotifyPropertyChanged
+    public partial class SmartBox_Contact : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SmartBox_Contact));
         public string Text
@@ -68,14 +68,14 @@ namespace cntrl.Controls
         }
         bool _can_edit;
 
-        entity.dbContext db = new entity.dbContext();
+        //entity.dbContext db = new entity.dbContext();
 
         public event RoutedEventHandler Select;
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             if (contactViewSource.View != null)
             {
-                Contact = contactViewSource.View.CurrentItem as entity.contact;
+                entity.contact Contact = contactViewSource.View.CurrentItem as entity.contact;
 
                 if (Contact != null)
                 {
@@ -91,15 +91,13 @@ namespace cntrl.Controls
         }
 
         public int ContactID { get; set; }
+
         public bool Get_Customers { get; set; }
         public bool Get_Suppliers { get; set; }
         public bool Get_Employees { get; set; }
         public bool Get_Users { get; set; }
-       
 
-        public entity.contact Contact { get; set; }
-
-        //int company_ID = entity.Properties.Settings.Default.company_ID;
+        //public entity.contact Contact { get; set; }
 
         Task taskSearch;
         CancellationTokenSource tokenSource;
@@ -138,6 +136,7 @@ namespace cntrl.Controls
                 }
             }
         }
+
         void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == true)
@@ -275,51 +274,11 @@ namespace cntrl.Controls
                 Dispatcher.InvokeAsync(new Action(() =>
                 {
                     contactViewSource.Source = results;
-                    Contact = contactViewSource.View.CurrentItem as entity.contact;
+                    //Contact = contactViewSource.View.CurrentItem as entity.contact;
 
                     popContact.IsOpen = true;
                 }));
             }
-        }
-
-        private void Add_PreviewMouseUp(object sender, EventArgs e)
-        {
-            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
-            
-            if(Sec.create)
-            {
-                popCrud.IsOpen = true;
-                cntrl.Curd.contact contactCURD = new Curd.contact();
-                
-                if (Get_Customers)
-	            {
-                    contactCURD.IsCustomer = true;
-	            }
-                else if (Get_Suppliers)
-                {
-                    contactCURD.IsSupplier = true;
-                }
-                else if (Get_Employees)
-                {
-                    contactCURD.IsEmployee = true;
-                }
-                
-
-                stackCRUD.Children.Add(contactCURD);
-                popCrud.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void Edit_PreviewMouseUp_1(object sender, MouseButtonEventArgs e)
-        {
-            //entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
-            //if(Sec.edit)
-            //{
-            //    crudContact.Contact = Contact;
-            //    crudContact.ContactDB = db;
-            //    popCrud.IsOpen = true;
-            //    popCrud.Visibility = System.Windows.Visibility.Visible;
-            //}
         }
 
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -372,6 +331,30 @@ namespace cntrl.Controls
             popCrud.IsOpen = false;
         }
 
-       
+        private void openContactCRUD(object sender, MouseButtonEventArgs e)
+        {
+            entity.Brillo.Security Sec = new entity.Brillo.Security(entity.App.Names.Contact);
+
+            if (Sec.create)
+            {
+                cntrl.Curd.contact contactCURD = new Curd.contact();
+
+                if (Get_Customers)
+                {
+                    contactCURD.IsCustomer = true;
+                }
+                else if (Get_Suppliers)
+                {
+                    contactCURD.IsSupplier = true;
+                }
+                else if (Get_Employees)
+                {
+                    contactCURD.IsEmployee = true;
+                }
+
+                popCrud.IsOpen = true;
+                stackCRUD.Children.Add(contactCURD);
+            }
+        }       
     }
 }

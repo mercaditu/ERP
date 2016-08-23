@@ -20,7 +20,10 @@
     </UserControl.Resources>
     <Grid Width="256">
         <Popup x:Name="popCrud" PopupAnimation="Scroll" Placement="Relative" Visibility="Visible">
-            <crud:contact x:Name="crudContact"/>
+            <StackPanel x:Name="stackCRUD">
+                
+            </StackPanel>
+            <!--<crud:contact x:Name="crudContact"/>-->
         </Popup>
         
         <!-- TextBox for Searching -->
@@ -66,17 +69,8 @@
             </StackPanel>
             <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="+" FontSize="9" VerticalAlignment="Center" Margin="0" 
                    HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                   PreviewMouseUp="Add_PreviewMouseUp" Padding="4" FontWeight="Bold"
+                   PreviewMouseUp="openContactCRUD" Padding="4" FontWeight="Bold"
                    Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"/>
-
-            <Label Content="|" Foreground="Silver" VerticalAlignment="Center" 
-                   Visibility="{Binding can_New, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"
-                   Margin="0" FontSize="9"/>
-
-            <Label FontFamily="/cntrl;component/Resources/#cognitivo" Content="e" FontSize="9" VerticalAlignment="Center" Margin="0" 
-                   Visibility="{Binding can_Edit, Mode=TwoWay, ElementName=_SmartBox_Contact, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Bool2Visibility}}"                    
-                   HorizontalAlignment="Left" Foreground="{StaticResource AccentColor_Introvert}" Cursor="Hand"
-                   PreviewMouseUp="Edit_PreviewMouseUp_1" Padding="4" FontWeight="Bold"/>
         </StackPanel>
 
         <!-- Search Icon -->
@@ -85,7 +79,7 @@
 
         <Popup x:Name="popContact" IsOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="2">
-                <StackPanel x:Name="stackCRUD">
+                <StackPanel>
                     <TextBlock Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}" 
                                Style="{StaticResource text_Instructions}" Margin="4,0" />
                     <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" AutoGenerateColumns="False" 

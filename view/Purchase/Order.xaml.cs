@@ -375,53 +375,6 @@ namespace Cognitivo.Purchase
             popupCustomize.IsOpen = false;
         }
 
-        #region Add/Edit Config
-
-        private void hrefAddCust_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            sbxContact.Contact.State = EntityState.Added;
-            sbxContact.Contact.is_customer = true;
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.contact contact = new cntrl.Curd.contact();
-           // contact.btnSave_Click += ContactSave_Click;
-            //contact.Contact = sbxContact.Contact;
-            crud_modal.Children.Add(contact);
-
-        }
-
-        public void ContactSave_Click(object sender)
-        {
-            crud_modal.Children.Clear();
-            crud_modal.Visibility = Visibility.Collapsed;
-            load_PrimaryData();
-        }
-
-        private void EditContact_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            //dbContext entity = new dbContext();
-            //contact selectedcontact = (contact)contactComboBox.Data;
-            //_contact = ContactDB.contacts.Where(x => x.id_contact == selectedcontact.id_contact).FirstOrDefault();
-            //_contact.State = EntityState.Modified;
-            //ContactDB.contacts.Add(_contact);
-            //if (_contact != null)
-            //{
-            //    contactComboBox.Text = "";
-            //    contactComboBox.Data = null;
-            //    crud_modal.Visibility = Visibility.Visible;
-            //    contactComboBox.IsDisplayed = false;
-            //    cntrl.Curd.contact contact = new cntrl.Curd.contact();
-            //    contact.contactobject = _contact;
-            //    contact.btnSave_Click += ContactSave_Click;
-            //    crud_modal.Children.Add(contact);
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Please select contact first.", "Cognitivo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            //}
-        }
-
-        #endregion
-
         private void toolBar_btnSearch_Click(object sender, string query)
         {
             try

@@ -12,7 +12,7 @@ namespace cntrl.Curd
 {
     public partial class contact : UserControl, INotifyPropertyChanged
     {
-        private entity.ContactDB ContactDB { get; set;}
+        private entity.ContactDB ContactDB { get; set; }
         CollectionViewSource contactViewSource;
 
         #region NotifyPropertyChanged
@@ -85,7 +85,6 @@ namespace cntrl.Curd
         public contact()
         {
             InitializeComponent();
-
             ContactDB = new ContactDB();
         }
 
@@ -97,7 +96,6 @@ namespace cntrl.Curd
                 {
                     ///Get Role List.
                     cbxRole.ItemsSource = ContactDB.contact_role.Where(a => a.id_company == CurrentSession.Id_Company && a.is_active == true).OrderBy(a => a.name).AsNoTracking().ToList();
-
                     contactViewSource = (CollectionViewSource)this.FindResource("contactViewSource");
 
                     ///Check for ContactID to check if this form is in EDIT mode or NEW mode.
@@ -110,31 +108,34 @@ namespace cntrl.Curd
                     else
                     {
                         ///If ContactID is Null, then this form is in NEW MODE. Must create Contact and add into Context.
-
-
-                        if (ContactDB.contacts.Local.Where(x=>x.id_contact==0).Count()==0)
+                        if (ContactDB.contacts.Local.Where(x => x.id_contact == 0).Count() == 0)
                         {
                             _contact = ContactDB.New();
-                            ContactDB.contacts.Add(_contact);  
+                            ContactDB.contacts.Add(_contact);
                         }
-                      
                     }
 
                     if (IsCustomer)
                     {
                         cbPriceList.ItemsSource = ContactDB.item_price_list.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
                         _contact.is_customer = true;
+                        _contact.is_supplier = false;
+                        _contact.is_employee = false;
                     }
 
                     if (IsSupplier)
                     {
                         cbCostCenter.ItemsSource = ContactDB.app_cost_center.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
                         _contact.is_supplier = true;
+                        _contact.is_employee = false;
+                        _contact.is_customer = false;
                     }
 
                     if (IsEmployee)
                     {
                         _contact.is_employee = true;
+                        _contact.is_supplier = false;
+                        _contact.is_customer = false;
                     }
 
                     ///Bring only InMemoria Data.

@@ -16,15 +16,28 @@ namespace entity.Brillo
                                 parent.id_movement as MovementID, 
                                 parent.trans_date as TransDate, 
                                 parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance, 
-                                (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost2
+                                (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost
 
                                 from item_movement as parent
+                                inner join app_location as loc on parent.id_location = loc.id_location
                                 left join item_movement as child on child._parent_id_movement = parent.id_movement
 
-                                where parent.id_location = {0} and parent.id_item_product = {1} and parent.status = 2 and parent.debit = 0
+                                where {0} and parent.id_item_product = {1} and parent.status = 2 and parent.debit = 0
                                 group by parent.id_movement
                                 order by parent.trans_date";
-            query = String.Format(query, app_location.id_location, item_product.id_item_product);
+            string WhereQuery = "";
+
+            //This determins if we should bring cost of entire block of
+            if (app_location != null)
+            {
+                WhereQuery = String.Format("parent.id_location = {0}", app_location.id_location);
+            }
+            else
+            {
+                WhereQuery = String.Format("loc.id_branch = {0}", app_branch.id_branch);
+            }
+
+            query = String.Format(query, WhereQuery, app_location.id_location, item_product.id_item_product);
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }
@@ -52,7 +65,7 @@ namespace entity.Brillo
         private List<StockList> GenerateList(DataTable dt)
         {
             List<StockList> StockList = new List<StockList>();
-            foreach (DataRow DataRow in dt.Rows)
+            foreach (DataRow DataRow in dt.Select("QtyBalance > 0"))
             {
                 StockList Stock = new StockList();
                 Stock.MovementID = Convert.ToInt16(DataRow["MovementID"]);

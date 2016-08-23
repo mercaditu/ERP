@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cognitivo.Reporting.Data;
+using MySql.Data.MySqlClient;
 
 namespace Cognitivo.Class
 {
@@ -25,32 +26,43 @@ namespace Cognitivo.Class
         public List<StockList> ByBranch(int BranchID, DateTime TransDate)
         {
 
-            ProductDS ProductDS = new ProductDS();
-            ProductDS.BeginInit();
-
-            Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter Check_InStockTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter();
-
-            //fill data
-            Check_InStockTableAdapter.ClearBeforeFill = true;
-            DataTable dt = Check_InStockTableAdapter.GetDataByBranch(entity.CurrentSession.Id_Company, BranchID, TransDate);
-
-            ProductDS.EndInit();
+            string query = @"select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, 
+                             item.name as ItemName, prod.id_item_product as ProductID, 
+                             (sum(mov.credit) - sum(mov.debit)) as Quantity, 
+                             measure.name as Measurement,
+                             (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost
+                             from item_movement as mov
+                             inner join app_location as loc on mov.id_location = loc.id_location
+                             inner join app_branch as branch on loc.id_branch = branch.id_branch
+                             inner join item_product as prod on mov.id_item_product = prod.id_item_product 
+                             inner join items as item on prod.id_item = item.id_item
+                             left join app_measurement as measure on item.id_measurement = measure.id_measurement 
+                             where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
+                             group by loc.id_location, prod.id_item_product
+                             order by mov.trans_date, mov.id_movement";
+            query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd"));
+            DataTable dt = exeDT(query);
             return GenerateList(dt);
-
         }
 
         public List<StockList> ByBranchLocation(int LocationID, DateTime TransDate)
         {
-            ProductDS ProductDS = new ProductDS();
-            ProductDS.BeginInit();
+            string query = @" select loc.id_location as LocationID, loc.name as Location, item.code as ItemCode, item.name as ItemName, 
+                                 prod.id_item_product as ProductID, (sum(mov.credit) - sum(mov.debit)) as Quantity, measure.name as Measurement, 
+                                 (SELECT sum(val.unit_value) FROM item_movement_value as val WHERE val.id_movement = MAX(mov.id_movement)) AS Cost
+                                 from item_movement as mov
+                                 inner join item_movement_value as val on mov.id_movement = val.id_movement 
+                                 inner join app_location as loc on mov.id_location = loc.id_location
+                                 inner join app_branch as branch on loc.id_branch = branch.id_branch
+                                 inner join item_product as prod on mov.id_item_product = prod.id_item_product 
+                                 inner join items as item on prod.id_item = item.id_item
+                                 left join app_measurement as measure on item.id_measurement = measure.id_measurement 
+                                 where mov.id_company = {0} and mov.id_location = {1} and mov.trans_date <= '{2}'
 
-            Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter Check_InStockTableAdapter = new Cognitivo.Reporting.Data.ProductDSTableAdapters.Check_InStockTableAdapter();
-
-            //fill data
-            Check_InStockTableAdapter.ClearBeforeFill = true;
-            DataTable dt = Check_InStockTableAdapter.GetDataByBranchLocation(entity.CurrentSession.Id_Company, LocationID, TransDate);
-
-            ProductDS.EndInit();
+                                 group by loc.id_location, prod.id_item_product 
+                                 order by item.name";
+            query = String.Format(query, entity.CurrentSession.Id_Company, LocationID, TransDate.ToString("yyyy-MM-dd"));
+            DataTable dt = exeDT(query);
             return GenerateList(dt);
         }
 
@@ -82,6 +94,26 @@ namespace Cognitivo.Class
             ProductDS.EndInit();
 
             return i;
+        }
+
+        private DataTable exeDT(string sql)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                MySqlConnection sqlConn = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
+                sqlConn.Open();
+                MySqlCommand cmd = new MySqlCommand(sql, sqlConn);
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                dt = new DataTable();
+                da.Fill(dt);
+                sqlConn.Close();
+            }
+            catch
+            {
+                //MessageBox.Show("Unable to Connect to Database. Please Check your credentials.");
+            }
+            return dt;
         }
 
         private List<StockList> GenerateList(DataTable dt)

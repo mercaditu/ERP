@@ -53,7 +53,7 @@ namespace Cognitivo.Product
 
                 Class.StockCalculations StockCalculations = new Class.StockCalculations();
                 inventoryViewSource = ((CollectionViewSource)(FindResource("inventoryViewSource")));
-                inventoryViewSource.Source = StockCalculations.ByBranchLocation(id_branch, InventoryDate);
+                inventoryViewSource.Source = StockCalculations.ByBranch(id_branch, InventoryDate);
 
                 TextBox_TextChanged(null, null);
             }

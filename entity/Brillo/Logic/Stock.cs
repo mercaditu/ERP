@@ -163,8 +163,12 @@ namespace entity.Brillo.Logic
                 foreach (purchase_invoice_detail purchase_invoice_detail in Listpurchase_invoice_detail.Where(x => x.item.item_product.Count() > 0))
                 {
                     item_product item_product = FindNFix_ItemProduct(purchase_invoice_detail.item);
+
                     purchase_invoice_detail.id_location = FindNFix_Location(item_product, purchase_invoice_detail.app_location, purchase_invoice.app_branch);
-                    purchase_invoice_detail.app_location = db.app_location.Where(x => x.id_location == purchase_invoice_detail.id_location).FirstOrDefault();
+                    if (purchase_invoice_detail.app_location == null)
+                    {
+                        purchase_invoice_detail.app_location = db.app_location.Where(x => x.id_location == purchase_invoice_detail.id_location).FirstOrDefault();
+                    }
 
                     if (purchase_invoice.app_currencyfx == null)
                     {

@@ -90,22 +90,16 @@ namespace entity
                
             }
 
-            foreach (purchase_invoice purchase in purchaseLIST.OrderBy(y => y.trans_date))
+            using (ImpexDB ImpexDB = new ImpexDB())
             {
-                if (purchase.is_impex)
+                ImpexDB.impex.Load();
+
+                foreach (impex impex in ImpexDB.impex.Local.Where(x => x.status == Status.Documents_General.Approved))
                 {
-                    using (ImpexDB ImpexDB = new ImpexDB())
-                    {
-                        ImpexDB.impex.Load();
-
-                        foreach (impex impex in ImpexDB.impex.Local)
-                        {
-                            impex.status = Status.Documents_General.Pending;
-                        }
-                        ImpexDB.ApproveImport();
-                    }
-                }
-
+                    impex.IsSelected = true;
+                    impex.status = Status.Documents_General.Pending;
+                    ImpexDB.ApproveImport();
+                }   
             }
           
 

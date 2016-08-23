@@ -116,7 +116,7 @@ namespace entity
 
         public void ApproveImport()
         {
-            foreach (impex impex in base.impex.Local.Where(x => x.status != Status.Documents_General.Approved && x.impex_type == entity.impex._impex_type.Import))
+            foreach (impex impex in base.impex.Local.Where(x => x.status != Status.Documents_General.Approved && x.impex_type == entity.impex._impex_type.Import && x.IsSelected))
             {
                 if (impex.Error == null)
                 {

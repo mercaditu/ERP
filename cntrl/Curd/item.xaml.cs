@@ -16,7 +16,7 @@ namespace cntrl.Curd
 
         private entity.item _itemobject = null;
         public entity.item itemobject { get { return _itemobject; } set { _itemobject = value; } }
-        public List<entity.item> itemList { get; set; }
+        //public List<entity.item> itemList { get; set; }
 
         CollectionViewSource itemViewSource;
 
@@ -76,13 +76,22 @@ namespace cntrl.Curd
             }
         }
 
-        public event btnCancel_ClickedEventHandler btnCancel_Click;
-        public delegate void btnCancel_ClickedEventHandler(object sender);
         private void btnCancel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (btnCancel_Click != null)
+            if (this.Parent as StackPanel != null)
             {
-                btnCancel_Click(sender);
+                StackPanel parentGrid = this.Parent as StackPanel;
+                parentGrid.Children.RemoveAt(0);
+            }
+            else if (this.Parent as Grid != null)
+            {
+                Grid parentGrid = this.Parent as Grid;
+                parentGrid.Children.RemoveAt(0);
+            }
+            else if (this.Parent as System.Windows.Controls.Primitives.Popup != null)
+            {
+                System.Windows.Controls.Primitives.Popup parentPopUp = this.Parent as System.Windows.Controls.Primitives.Popup;
+                parentPopUp.IsOpen = false;
             }
         }
 

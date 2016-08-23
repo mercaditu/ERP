@@ -23,25 +23,28 @@ namespace entity.Brillo.Logic
                 sales_invoice sales_invoice = (sales_invoice)obj_entity;
                 foreach (sales_invoice_detail detail in sales_invoice.sales_invoice_detail)
                 {
+                    item_product item_product = FindNFix_ItemProduct(detail.item);
+
                     if (detail.item.is_autorecepie)
                     {
-                        item_product item_product = FindNFix_ItemProduct(detail.item);
                         if (detail.item.item_recepie.FirstOrDefault() != null)
                         {
                             foreach (item_recepie_detail item_recepie_detail in detail.item.item_recepie.FirstOrDefault().item_recepie_detail)
                             {
-                                item_product item_productSub = FindNFix_ItemProduct(item_recepie_detail.item);
-                                if (item_productSub != null)
+                                item_product item_productRecepie = FindNFix_ItemProduct(item_recepie_detail.item);
+                                if (item_productRecepie != null)
                                 {
+                                    //Check if Detail has Location
                                     if (detail.id_location == null)
                                     {
-                                        detail.id_location = FindNFix_Location(item_productSub, detail.app_location, sales_invoice.app_branch);
+                                        detail.id_location = FindNFix_Location(item_productRecepie, detail.app_location, sales_invoice.app_branch);
                                         detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
                                     }
 
                                     sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
                                     entity.Brillo.Stock stock = new Brillo.Stock();
-                                    List<entity.Brillo.StockList> Items_InStockLIST = stock.List(detail.app_location, item_productSub);
+
+                                    List<entity.Brillo.StockList> Items_InStockLIST = stock.List(detail.app_location, item_productRecepie);
                                    
 
                                     item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
@@ -49,7 +52,7 @@ namespace entity.Brillo.Logic
                                                              detail.id_sales_invoice,
                                                              (int)detail.id_sales_invoice_detail,
                                                              sales_invoice.app_currencyfx,
-                                                             item_productSub,
+                                                             item_productRecepie,
                                                              detail.app_location,
                                                              item_recepie_detail.quantity,
                                                              sales_invoice.trans_date,
@@ -61,7 +64,6 @@ namespace entity.Brillo.Logic
                     }
                     else
                     {
-                        item_product item_product = FindNFix_ItemProduct(detail.item);
                         if (item_product != null)
                         {
                             if (detail.id_location == null)
@@ -70,10 +72,13 @@ namespace entity.Brillo.Logic
                                 detail.app_location = db.app_location.Where(x => x.id_location == detail.id_location).FirstOrDefault();
                             }
 
-                            sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                            if (sales_invoice.app_currencyfx != null)
+                            {
+                                sales_invoice.app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                            }
+
                             entity.Brillo.Stock stock = new Brillo.Stock();
                             List<entity.Brillo.StockList> Items_InStockLIST = stock.List(detail.app_location, item_product);
-                           
 
                             item_movementList.AddRange(DebitOnly_MovementLIST(db, Items_InStockLIST, entity.Status.Stock.InStock,
                                                      App.Names.SalesInvoice,

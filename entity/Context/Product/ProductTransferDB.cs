@@ -168,8 +168,9 @@ namespace entity
 
             if (MoveByTruck)
             {
-                List<item_movement> Items_InStockLIST = base.item_movement.Where(x => x.id_transfer_detail == item_transfer_detail.id_transfer_detail &&
-                    x.id_item_product == item_transfer_detail.id_item_product && x.debit > 0).ToList();
+                List<entity.Brillo.StockList> Items_InStockLIST;
+                entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                Items_InStockLIST = stockBrillo.MovementForTransfer(item_transfer_detail.id_transfer_detail, item_transfer_detail.id_item_product); ;
 
                 List<item_movement> item_movement_LIST = new List<entity.item_movement>();
                 ///Discount From Destination. Because merchendice is returned to Origin, so it must be discounted from Destintation.
@@ -238,7 +239,7 @@ namespace entity
         /// <param name="invoice"></param>
         public void Discount_Items_Origin(item_transfer_detail item_transfer_detail, int ID_BranchOrigin, int ID_BranchDestination, bool movebytruck)
         {
-         
+
             entity.Brillo.Logic.Stock stock = new Brillo.Logic.Stock();
 
             if (item_transfer_detail.item_product != null)
@@ -247,28 +248,23 @@ namespace entity
                 {
                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                     app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
-                     List<item_movement> Items_InStockLIST;
+                    List<entity.Brillo.StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {
-                        Items_InStockLIST = new List<item_movement>();
-                        item_movement parent_movement = base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault();
-                        if (parent_movement!=null)
-                        {
-                            Items_InStockLIST.Add(parent_movement);
-                        }
+                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
+
                     }
                     else
                     {
+                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_transfer_detail.item_product);
 
 
-                        Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
-                                                                && x.id_item_product == item_transfer_detail.id_item_product
-                                                                && x.status == entity.Status.Stock.InStock
-                                                                && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                     }
 
                     List<item_movement> item_movement_originList;
-                    item_movement_originList = stock.DebitOnly_MovementLIST(this,Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
+                    item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
                             item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                     base.item_movement.AddRange(item_movement_originList);
@@ -297,30 +293,26 @@ namespace entity
                 {
                     app_currencyfx app_currencyfx = base.app_currencyfx.Where(x => x.app_currency.is_active).FirstOrDefault();
                     app_location app_location = base.app_location.Where(x => x.id_branch == ID_BranchOrigin && x.is_default).FirstOrDefault();
-                    List<item_movement> Items_InStockLIST;
+                    List<entity.Brillo.StockList> Items_InStockLIST;
                     if (item_transfer_detail.movement_id != null)
                     {
-                        Items_InStockLIST = new List<item_movement>();
-                        item_movement parent_movement = base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault();
-                        if (parent_movement != null)
-                        {
-                            Items_InStockLIST.Add(parent_movement);
-                        }
+                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Items_InStockLIST = stockBrillo.ScalarMovement(base.item_movement.Where(x => x.id_movement == item_transfer_detail.movement_id).FirstOrDefault());
+
                     }
                     else
                     {
+                        entity.Brillo.Stock stockBrillo = new Brillo.Stock();
+                        Items_InStockLIST = stockBrillo.List(app_location.app_branch, app_location, item_transfer_detail.item_product);
 
 
-                        Items_InStockLIST = base.item_movement.Where(x => x.id_location == app_location.id_location
-                                                                && x.id_item_product == item_transfer_detail.id_item_product
-                                                                && x.status == entity.Status.Stock.InStock
-                                                                && (x.credit - (x._child.Count() > 0 ? x._child.Sum(y => y.debit) : 0)) > 0).ToList();
                     }
 
-               
+
+
                     ///Debit Movement from Origin.
                     List<item_movement> item_movement_originList;
-                    item_movement_originList = stock.DebitOnly_MovementLIST(this,Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
+                    item_movement_originList = stock.DebitOnly_MovementLIST(this, Items_InStockLIST, Status.Stock.InStock, App.Names.Transfer, item_transfer_detail.id_transfer, item_transfer_detail.id_transfer_detail, app_currencyfx, item_transfer_detail.item_product, app_location,
                             item_transfer_detail.quantity_origin, item_transfer_detail.item_transfer.trans_date, stock.comment_Generator(App.Names.Transfer, item_transfer_detail.item_transfer.number != null ? item_transfer_detail.item_transfer.number.ToString() : "", ""));
 
                     base.item_movement.AddRange(item_movement_originList);

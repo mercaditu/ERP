@@ -197,6 +197,7 @@
     <Compile Include="Brillo\Document\Reciept.cs" />
     <Compile Include="Brillo\ProductCost.cs" />
     <Compile Include="Brillo\Promotion\Start.cs" />
+    <Compile Include="Brillo\Stock.cs" />
     <Compile Include="Class\clsBarcode.cs" />
     <Compile Include="Class\clsImpex.cs" />
     <Compile Include="Class\EnumDescriptionTypeConverter.cs" />

@@ -68,26 +68,36 @@ namespace entity.Brillo.Promotion
 
                                 sales_invoice_detail sales_invoice_detail = new sales_invoice_detail();
 
+                                //Needed to calculate the discounts and unit prices further on.
+                                sales_invoice_detail.State = System.Data.Entity.EntityState.Added;
+
                                 using (db db = new db())
                                 {
-                                    sales_invoice_detail.id_vat_group = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault().id_vat_group;
-                                    sales_invoice_detail.item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                                    item item = db.items.Where(x => x.id_item == Promo.reference_bonus).FirstOrDefault();
+                                    if (item != null)
+                                    {
+                                        sales_invoice_detail.id_vat_group = item.id_vat_group;
+                                        sales_invoice_detail.item = item;   
+                                    }
+
+                                    item_price item_price = item.item_price.Where(x => x.item_price_list.is_default == true).FirstOrDefault();
+                                    if (item_price != null)
+                                    {
+                                        sales_invoice_detail.unit_price = item_price.value;
+                                        sales_invoice_detail.discount = sales_invoice_detail.unit_price;
+                                    }
                                 }
 
+                                sales_invoice_detail.IsPromo = true;
                                 sales_invoice_detail.id_item = Promo.reference_bonus;
                                 sales_invoice_detail.item_description = sales_invoice_detail.item.name;
                                 sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
-                                sales_invoice_detail.discount = sales_invoice_detail.unit_price;
                                 SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
-                                
                             }
                         }
                     }
                 }
-                // }
             }
-
-
         }
 
         private void Calculate(ref Invoice Invoice)

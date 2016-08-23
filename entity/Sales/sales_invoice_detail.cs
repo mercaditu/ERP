@@ -28,6 +28,9 @@ namespace entity
         public int? movement_id { get; set; }
         public int? id_sales_order_detail { get; set; }
 
+        [NotMapped]
+        public bool IsPromo { get; set; }
+
         #region "Nav Properties"
         public virtual sales_invoice sales_invoice
         {

@@ -10,7 +10,7 @@ namespace entity.Brillo
 {
     public class Stock
     {
-        public List<StockList> List(app_branch app_branch, app_location app_location, item_product item_product)
+        public List<StockList> List(app_location app_location, item_product item_product)
         {
             string query = @"select 
                                 parent.id_movement as MovementID, 
@@ -38,6 +38,24 @@ namespace entity.Brillo
             }
 
             query = String.Format(query, WhereQuery, app_location.id_location, item_product.id_item_product);
+            DataTable dt = exeDT(query);
+            return GenerateList(dt);
+        }
+        public List<StockList> ScalarMovement(item_movement item_movement)
+        {
+            string query = @"select 
+                                parent.id_movement as MovementID, 
+                                parent.trans_date as TransDate, 
+                                parent.credit - if( sum(child.debit) > 0, sum(child.debit), 0 ) as QtyBalance, 
+                                (select sum(unit_value) from item_movement_value as parent_val where id_movement = parent.id_movement) as Cost2
+
+                                from item_movement as parent
+                                left join item_movement as child on child._parent_id_movement = parent.id_movement
+
+                                where parent.id_movement={0}
+                                group by parent.id_movement
+                                order by parent.trans_date";
+            query = String.Format(query, item_movement.id_movement);
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }

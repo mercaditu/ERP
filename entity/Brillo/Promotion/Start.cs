@@ -58,12 +58,13 @@ namespace entity.Brillo.Promotion
                                 _Promo.Shared = true;
 
                                 _Detail.Promos.Add(_Promo);
-                                
 
-                                List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus).ToList();
+
+                                List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus && x.IsPromo).ToList();
                                 //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
                                 foreach (sales_invoice_detail _Detail_ in sid)
                                 {
+
                                     SalesInvoice.sales_invoice_detail.Remove(_Detail_);
                                 }
 

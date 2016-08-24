@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace entity.BrilloQuery
 {
-    public class GetItems : IDisposable
+    public class GetItems
     {
         public ICollection<Item> List { get; set; }
         
@@ -33,27 +33,27 @@ namespace entity.BrilloQuery
 
             query = String.Format(query, entity.CurrentSession.Id_Company);
 
-            using (DataTable dt = QueryExecutor.DT(query))
-            {
-                foreach (DataRow DataRow in dt.Rows)
-                {
-                    Contact Contact = new Contact();
+            //using (DataTable dt = QueryExecutor.DT(query))
+            //{
+            //    foreach (DataRow DataRow in dt.Rows)
+            //    {
+            //        Contact Contact = new Contact();
 
-                    Contact.ID = Convert.ToInt16(DataRow["ID"]);
-                    Contact.Name = Convert.ToString(DataRow["Name"]);
-                    Contact.Alias = Convert.ToString(DataRow["Alias"]);
-                    Contact.Gov_Code = Convert.ToString(DataRow["Gov_Code"]);
-                    Contact.Code = Convert.ToString(DataRow["Code"]);
-                    Contact.Telephone = Convert.ToString(DataRow["Telephone"]);
-                    Contact.Email = Convert.ToString(DataRow["Email"]);
-                    Contact.Address = Convert.ToString(DataRow["Address"]);
-                    Contact.IsCustomer = Convert.ToBoolean(DataRow["IsCustomer"]);
-                    Contact.IsSupplier = Convert.ToBoolean(DataRow["IsSupplier"]);
-                    Contact.IsEmployee = Convert.ToBoolean(DataRow["IsEmployee"]);
+            //        Contact.ID = Convert.ToInt16(DataRow["ID"]);
+            //        Contact.Name = Convert.ToString(DataRow["Name"]);
+            //        Contact.Alias = Convert.ToString(DataRow["Alias"]);
+            //        Contact.Gov_Code = Convert.ToString(DataRow["Gov_Code"]);
+            //        Contact.Code = Convert.ToString(DataRow["Code"]);
+            //        Contact.Telephone = Convert.ToString(DataRow["Telephone"]);
+            //        Contact.Email = Convert.ToString(DataRow["Email"]);
+            //        Contact.Address = Convert.ToString(DataRow["Address"]);
+            //        Contact.IsCustomer = Convert.ToBoolean(DataRow["IsCustomer"]);
+            //        Contact.IsSupplier = Convert.ToBoolean(DataRow["IsSupplier"]);
+            //        Contact.IsEmployee = Convert.ToBoolean(DataRow["IsEmployee"]);
 
-                    List.Add(Contact);
-                }
-            }
+            //        List.Add(Contact);
+            //    }
+            //}
         }
     }
 

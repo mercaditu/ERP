@@ -305,7 +305,6 @@
                                     <Label Content="{lex:Loc Information}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <StackPanel Orientation="Horizontal" Margin="4,0" 
                                                 Visibility="{Binding ElementName=chkDiscountStock, Path=IsChecked, Converter={StaticResource BoolToVisibility}}">
-
                                         <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
                                         <TextBlock Text="{lex:Loc Stock}" Style="{StaticResource text_Label}"/>
                                     </StackPanel>
@@ -313,6 +312,10 @@
                                                 Visibility="{Binding is_accounted, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibility}}">
                                         <TextBlock Text="j" FontFamily="Cognitivo" VerticalAlignment="Center" Margin="6" Foreground="Green"/>
                                         <TextBlock Text="{lex:Loc Accounted}" Style="{StaticResource text_Label}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="U" Style="{StaticResource ico_Label}" Foreground="Green" FontSize="11" HorizontalContentAlignment="Center"/>
+                                        <TextBlock Text="{Binding security_user.name, FallbackValue=User, IsAsync=True, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Label}"/>
                                     </StackPanel>
                                     <Label Content="{lex:Loc QuickActions}" FontWeight="Medium" Foreground="{StaticResource Label_ImportantColor}"/>
                                     <StackPanel x:Name="stackpnlCustomize" Margin="3,2,0,5">
@@ -471,12 +474,8 @@
                                             <TextBlock Style="{StaticResource text_Label}" Text="{lex:Loc Telephone}"/>
                                             <TextBlock Text="{Binding contact.telephone, IsAsync=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="U" Style="{StaticResource ico_Label}"/>
-                                            <TextBlock Text="{Binding security_user.name, IsAsync=True, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource text_Data}"/>
-                                        </StackPanel>
                                         <StackPanel Margin="2" Orientation="Horizontal" VerticalAlignment="Center">
-                                            <Label Content="U" Style="{StaticResource ico_Label}"/>
+                                            <Label Content="R" Style="{StaticResource ico_Label}"/>
                                             <TextBlock Text="{lex:Loc Contact}" Style="{StaticResource text_Label}"/>
                                             <ComboBox x:Name="cbxContactRelation" Style="{StaticResource ComboToLabelStyle}"
                                           metro:ControlsHelper.FocusBorderBrush="RoyalBlue"

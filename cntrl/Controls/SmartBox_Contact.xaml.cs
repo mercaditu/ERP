@@ -109,45 +109,41 @@ namespace cntrl.Controls
         {
             InitializeComponent();
 
+            ///Exists code if in design view.
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
             }
-            
-            //RunQuery();
-            Task task = Task.Factory.StartNew(() => RunQuery());
+
+            contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
+
+            Task task = Task.Factory.StartNew(() => LoadData());
 
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
 
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            if (rbtnCode.IsChecked == true)
             {
-                contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
-
-                if (rbtnCode.IsChecked == true)
-                {
-                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
-                }
-                if (rbtnName.IsChecked == true)
-                {
-                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
-                }
-                if (rbtnGov_ID.IsChecked == true)
-                {
-                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
-                }
-                if (rbtnTel.IsChecked == true)
-                {
-                    Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
-                }
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Code");
+            }
+            if (rbtnName.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Name");
+            }
+            if (rbtnGov_ID.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("GovID");
+            }
+            if (rbtnTel.IsChecked == true)
+            {
+                Controls.smartBoxContactSetting.Default.SearchFilter.Add("Tel");
             }
         }
 
-        private void RunQuery()
+        private void LoadData()
         {
-            
             using (entity.BrilloQuery.GetContacts Execute = new entity.BrilloQuery.GetContacts())
             {
-                ContactList = Execute.List.AsQueryable();
+                contactViewSource.Source = Execute.List.AsQueryable();
             }
         }
 
@@ -170,7 +166,6 @@ namespace cntrl.Controls
             {
                 ContactGrid_MouseDoubleClick(sender, e);
             }
-
             else if (e.Key == Key.Up)
             {
                 if (contactViewSource != null)
@@ -191,9 +186,7 @@ namespace cntrl.Controls
                         contactViewSource.View.MoveCurrentToNext();
                         contactViewSource.View.Refresh();
                     }
-
                 }
-
             }
             else
             {
@@ -254,7 +247,6 @@ namespace cntrl.Controls
                 predicateOR
             );
 
-
             Dispatcher.InvokeAsync(new Action(() =>
             {
                 if (popContact.IsOpen == false)
@@ -267,7 +259,7 @@ namespace cntrl.Controls
                 }
                 catch (Exception)
                 {
-                    
+
                     throw;
                 }
 

@@ -127,9 +127,25 @@ namespace Cognitivo.Class
                 Stock.Location = DataRow["Location"].ToString();
                 Stock.LocationID = Convert.ToInt16(DataRow["LocationID"]);
                 Stock.Measurement = DataRow["Measurement"].ToString();
-                Stock.Quantity = Convert.ToDecimal(DataRow["Quantity"]);
                 Stock.ProductID = Convert.ToInt16(DataRow["ProductID"]);
-                Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
+                
+                if (!DataRow.IsNull("Quantity"))
+                {
+                    Stock.Quantity = Convert.ToDecimal(DataRow["Quantity"]);
+                }
+                else
+                {
+                    Stock.Quantity = 0;
+                }
+                if (!DataRow.IsNull("Cost"))
+                {
+                    Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);
+                }
+                else
+                {
+                    Stock.Cost = 0;
+                }
+
                 StockList.Add(Stock);
             }
             return StockList;

@@ -58,6 +58,7 @@ namespace entity.Brillo.Promotion
                                 _Promo.Shared = true;
 
                                 _Detail.Promos.Add(_Promo);
+                                
 
                                 List<sales_invoice_detail> sid = SalesInvoice.sales_invoice_detail.Where(x => x.id_item == Promo.reference_bonus).ToList();
                                 //Prevent double clicking button and adding extra bonus to sale. find better way to implement. Short term code.
@@ -93,6 +94,8 @@ namespace entity.Brillo.Promotion
                                 sales_invoice_detail.item_description = sales_invoice_detail.item.name;
                                 sales_invoice_detail.quantity = Math.Floor(_Detail.Quantity / Promo.quantity_step);
                                 SalesInvoice.sales_invoice_detail.Add(sales_invoice_detail);
+
+                             
                             }
                         }
                     }

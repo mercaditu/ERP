@@ -38,7 +38,7 @@ namespace entity.Brillo
                 WhereQuery = String.Format("loc.id_branch = {0}", app_branch.id_branch);
             }
 
-            query = String.Format(query, WhereQuery, app_location.id_location, item_product.id_item_product);
+            query = String.Format(query, WhereQuery, item_product.id_item_product);
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }
@@ -108,7 +108,7 @@ namespace entity.Brillo
             foreach (DataRow DataRow in dt.Select("QtyBalance > 0"))
             {
                 StockList Stock = new StockList();
-                Stock.MovementID = Convert.ToInt16(DataRow["MovementID"]);
+                Stock.MovementID = Convert.ToInt32(DataRow["MovementID"]);
                 Stock.TranDate = Convert.ToDateTime(DataRow["TransDate"]);
                 Stock.QtyBalance = Convert.ToDecimal(DataRow["QtyBalance"]);
                 Stock.Cost = Convert.ToDecimal(DataRow["Cost"]);

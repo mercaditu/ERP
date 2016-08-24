@@ -14,7 +14,7 @@ namespace entity
             sales_packing_relation = new List<sales_packing_relation>();
 
             id_company = CurrentSession.Id_Company;
-            id_user =  CurrentSession.Id_User;
+            id_user = CurrentSession.Id_User;
             is_head = true;
             item_movement = new List<item_movement>();
             timestamp = DateTime.Now;
@@ -30,6 +30,7 @@ namespace entity
 
         [NotMapped]
         public bool IsPromo { get; set; }
+      
 
         #region "Nav Properties"
         public virtual sales_invoice sales_invoice

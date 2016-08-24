@@ -168,6 +168,7 @@ namespace Cognitivo.Sales
 
                 sales_invoiceViewSource.View.Refresh();
                 paymentViewSource.View.Refresh();
+                btnPromotion_Click(sender, e);
             }
         }
 
@@ -233,7 +234,7 @@ namespace Cognitivo.Sales
             //Clean up Contact Data.
             sbxContact.Text = "";
             sbxContact.ContactID = 0;
-            
+
             sbxItem.Text = string.Empty;
             sbxItem.ItemID = 0;
             sbxItem.Item = null;
@@ -245,6 +246,7 @@ namespace Cognitivo.Sales
 
         private void dgvSalesDetail_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
+
             sales_invoiceViewSource.View.Refresh();
         }
 
@@ -293,6 +295,9 @@ namespace Cognitivo.Sales
                         sales_invoiceViewSource.View.Refresh();
                         CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();
+
+
+                        btnPromotion_Click(sender, e);
 
                     }
                     else if (e.Parameter as payment_detail != null)
@@ -400,14 +405,24 @@ namespace Cognitivo.Sales
                 }
             }
         }
+
         private void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+            SalesInvoiceDB.sales_invoice_detail.RemoveRange(sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList());
             StartPromo.Calculate_SalesInvoice(ref sales_invoice);
+
+
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
 
-            sales_invoicesales_invoice_detailViewSource.View.Refresh();
+            sales_invoicesales_invoice_detailViewSource.View.DeferRefresh();
+
+
 
         }
+
+
+
+
     }
 }

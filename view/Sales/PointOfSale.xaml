@@ -173,7 +173,7 @@
                     </Viewbox>
                     <DataGrid x:Name="dgvSalesDetail" Style="{StaticResource detail_Datagrid}" ScrollViewer.CanContentScroll="True"
                               Margin="64,155,64,15" CanUserAddRows="False" FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"
+                              ItemsSource="{Binding Source={StaticResource sales_invoicesales_invoice_detailViewSource}}"  CellEditEnding="dgvSalesDetail_CellEditEnding"
                               RowEditEnding="dgvSalesDetail_RowEditEnding">
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow" BasedOn="{StaticResource MetroDataGridRow}">

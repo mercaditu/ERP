@@ -244,6 +244,7 @@ namespace entity.Brillo.Logic
                 //Return List so we can save into context.
                 return item_movementList;
             }
+                //Inventory
             else if (obj_entity.GetType().BaseType == typeof(item_inventory) || obj_entity.GetType() == typeof(item_inventory))
             {
                 item_inventory item_inventory = (item_inventory)obj_entity;

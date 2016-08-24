@@ -29,6 +29,7 @@ namespace cntrl.Controls
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
             }
         }
+
         public bool can_New
         {
             get { return _can_new; }
@@ -68,8 +69,6 @@ namespace cntrl.Controls
         }
         bool _can_edit;
 
-        //entity.dbContext db = new entity.dbContext();
-
         public event RoutedEventHandler Select;
         private void ContactGrid_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
@@ -91,13 +90,14 @@ namespace cntrl.Controls
         }
 
         public int ContactID { get; set; }
+        public IQueryable<entity.BrilloQuery.Contact> ContactList { get; set; }
 
         public bool Get_Customers { get; set; }
         public bool Get_Suppliers { get; set; }
         public bool Get_Employees { get; set; }
         public bool Get_Users { get; set; }
 
-        //public entity.contact Contact { get; set; }
+
 
         Task taskSearch;
         CancellationTokenSource tokenSource;
@@ -107,13 +107,17 @@ namespace cntrl.Controls
 
         public SmartBox_Contact()
         {
+            InitializeComponent();
+
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 return;
             }
 
-            InitializeComponent();
+            Task task = Task.Factory.StartNew(() => RunQuery());
+
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
+
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 contactViewSource = ((CollectionViewSource)(FindResource("contactViewSource")));
@@ -137,6 +141,14 @@ namespace cntrl.Controls
             }
         }
 
+        private void RunQuery()
+        {
+            using (entity.BrilloQuery.GetContacts Execute = new entity.BrilloQuery.GetContacts())
+            {
+                ContactList = Execute.List.AsQueryable();
+            }
+        }
+
         void LoginControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == true)
@@ -148,7 +160,8 @@ namespace cntrl.Controls
                     tbxSearch.Focus();
                 }));
             }
-        }  
+        }
+
         private void StartSearch(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -158,16 +171,14 @@ namespace cntrl.Controls
 
             else if (e.Key == Key.Up)
             {
-                if (contactViewSource!=null)
+                if (contactViewSource != null)
                 {
-                    if (contactViewSource.View!=null)
+                    if (contactViewSource.View != null)
                     {
                         contactViewSource.View.MoveCurrentToPrevious();
                         contactViewSource.View.Refresh();
                     }
-                    
                 }
-          
             }
             else if (e.Key == Key.Down)
             {
@@ -180,7 +191,7 @@ namespace cntrl.Controls
                     }
 
                 }
-              
+
             }
             else
             {
@@ -203,52 +214,41 @@ namespace cntrl.Controls
             }
         }
 
-
-
         private void Search_OnThread(string SearchText)
         {
-
-            var param = smartBoxContactSetting.Default.SearchFilter;
-
-            var predicate = PredicateBuilder.True<entity.contact>();
-
-            predicate = (x => x.is_active && x.id_company == entity.CurrentSession.Id_Company);
+            var predicate = PredicateBuilder.True<entity.BrilloQuery.Contact>();
 
             if (Get_Customers)
             {
-                predicate = predicate.And(x => x.is_customer == true);
+                predicate = predicate.And(x => x.IsCustomer == true);
             }
 
             if (Get_Suppliers)
             {
-                predicate = predicate.And(x => x.is_supplier == true);
+                predicate = predicate.And(x => x.IsSupplier == true);
             }
 
-            if (Get_Employees)
-            {
-                predicate = predicate.And(x => x.is_employee == true);
-            }
+            var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();
+            var param = smartBoxContactSetting.Default.SearchFilter;
 
-            var predicateOR = PredicateBuilder.False<entity.contact>();
-            
             if (param.Contains("Code"))
             {
-                predicateOR = predicateOR.Or(x => x.code == SearchText);
+                predicateOR = predicateOR.Or(x => x.Code == SearchText);
             }
 
             if (param.Contains("Name"))
             {
-                predicateOR = predicateOR.Or(x => x.name.Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Name.Contains(SearchText));
             }
 
             if (param.Contains("GovID"))
             {
-                predicateOR = predicateOR.Or(x => x.gov_code.Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Gov_Code.Contains(SearchText));
             }
 
             if (param.Contains("Tel"))
             {
-                predicateOR = predicateOR.Or(x => x.telephone.Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Telephone.Contains(SearchText));
             }
 
             predicate = predicate.And
@@ -257,28 +257,15 @@ namespace cntrl.Controls
             );
 
 
-
-            predicate = predicate.And(x => x.contact_role.can_transact);
-
-            using (entity.db db = new entity.db())
+            Dispatcher.InvokeAsync(new Action(() =>
             {
-                db.Configuration.LazyLoadingEnabled = false;
-                db.Configuration.AutoDetectChangesEnabled = false;
+                contactViewSource.Source = ContactList.Where(predicate).ToList;
 
-                List<entity.contact> results = new List<entity.contact>();
-
-                //Getting the data based on Predicates
-                results.AddRange(db.contacts
-                    .Where(predicate).OrderBy(x => x.name).ToList());
-
-                Dispatcher.InvokeAsync(new Action(() =>
+                if (popContact.IsOpen == false)
                 {
-                    contactViewSource.Source = results;
-                    //Contact = contactViewSource.View.CurrentItem as entity.contact;
-
                     popContact.IsOpen = true;
-                }));
-            }
+                }
+            }));
         }
 
         private void Label_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -355,6 +342,6 @@ namespace cntrl.Controls
                 popCrud.IsOpen = true;
                 stackCRUD.Children.Add(contactCURD);
             }
-        }       
+        }
     }
 }

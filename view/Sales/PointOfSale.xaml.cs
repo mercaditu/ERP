@@ -415,7 +415,7 @@ namespace Cognitivo.Sales
 
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
 
-            sales_invoicesales_invoice_detailViewSource.View.DeferRefresh();
+            sales_invoicesales_invoice_detailViewSource.View.Refresh();
 
 
 

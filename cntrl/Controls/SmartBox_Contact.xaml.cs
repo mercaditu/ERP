@@ -74,12 +74,12 @@ namespace cntrl.Controls
         {
             if (contactViewSource.View != null)
             {
-                entity.contact Contact = contactViewSource.View.CurrentItem as entity.contact;
+                entity.BrilloQuery.Contact Contact = contactViewSource.View.CurrentItem as entity.BrilloQuery.Contact;
 
                 if (Contact != null)
                 {
-                    ContactID = Contact.id_contact;
-                    Text = Contact.name;
+                    ContactID = Contact.ID;
+                    Text = Contact.Name;
 
                     popContact.IsOpen = false;
 
@@ -141,9 +141,17 @@ namespace cntrl.Controls
 
         private void LoadData()
         {
+            ContactList = null;
             using (entity.BrilloQuery.GetContacts Execute = new entity.BrilloQuery.GetContacts())
             {
-                contactViewSource.Source = Execute.List.AsQueryable();
+                Dispatcher.BeginInvoke(
+               DispatcherPriority.ContextIdle,
+               new Action(delegate()
+               {
+
+                   ContactList = Execute.List.AsQueryable();
+               }));
+
             }
         }
 
@@ -211,35 +219,48 @@ namespace cntrl.Controls
 
         private void Search_OnThread(string SearchText)
         {
+            SearchText = SearchText.ToUpper();
             var predicate = PredicateBuilder.True<entity.BrilloQuery.Contact>();
 
             if (Get_Customers)
             {
                 predicate = (x => x.IsCustomer == true);
             }
-            else
+
+            if(Get_Suppliers)
             {
                 predicate = (x => x.IsSupplier == true);
             }
 
+
+            if (Get_Employees)
+            {
+                predicate = (x => x.IsEmployee == true);
+            }
+            else if (Get_Users)
+            {
+                predicate = (x => x.IsUser == true);
+            }
+          
+
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();
             var param = smartBoxContactSetting.Default.SearchFilter;
 
-            predicateOR = (x => x.Name.Contains(SearchText));
+            predicateOR = (x => x.Name.ToUpper().Contains(SearchText));
 
             if (param.Contains("Code"))
             {
-                predicateOR = predicateOR.Or(x => x.Code == SearchText);
+                predicateOR = predicateOR.Or(x => x.Code.ToUpper().Contains(SearchText));
             }
 
             if (param.Contains("GovID"))
             {
-                predicateOR = predicateOR.Or(x => x.Gov_Code.Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Gov_Code.ToUpper().Contains(SearchText));
             }
 
             if (param.Contains("Tel"))
             {
-                predicateOR = predicateOR.Or(x => x.Telephone.Contains(SearchText));
+                predicateOR = predicateOR.Or(x => x.Telephone.ToUpper().Contains(SearchText));
             }
 
             predicate = predicate.And
@@ -337,9 +358,18 @@ namespace cntrl.Controls
                     contactCURD.IsEmployee = true;
                 }
 
+                contactCURD.btnSave_Click += popCrud_Closed;
+
                 popCrud.IsOpen = true;
                 stackCRUD.Children.Add(contactCURD);
             }
         }
+
+        private void popCrud_Closed(object sender)
+        {
+            Task task = Task.Factory.StartNew(() => LoadData());
+        }
+
+
     }
 }

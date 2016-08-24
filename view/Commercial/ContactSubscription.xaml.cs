@@ -25,22 +25,22 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
-            ContactDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_customer).OrderBy(a => a.name).Load();
+            //contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
+            ContactDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_customer && a.contact_role.is_principal).OrderBy(a => a.name).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;
 
             contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
-            ContactDB.contact_subscription.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
+            //ContactDB.contact_subscription.Where(a => a.id_company == CurrentSession.Id_Company).Load();
+            //contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
 
             CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
-            appContractViewSource.Source = ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            appContractViewSource.Source = CurrentSession.Get_Contract(); // ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            FilterSubscription();
+            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();//ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
+            //FilterSubscription();
         }
         private void FilterSubscription()
         {

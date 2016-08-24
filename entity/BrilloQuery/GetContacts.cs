@@ -29,7 +29,8 @@ namespace entity.BrilloQuery
                                 address as Address,
                                 is_customer as IsCustomer,
                                 is_supplier as IsSupplier
-                              
+                                is_employee as IsEmployee,
+                                is_User as IsUser
                                 from contacts
                                 where id_company = {0} and is_active = 1
                                 order by name
@@ -53,7 +54,8 @@ namespace entity.BrilloQuery
                     Contact.Address = Convert.ToString(DataRow["Address"]);
                     Contact.IsCustomer = Convert.ToBoolean(DataRow["IsCustomer"]);
                     Contact.IsSupplier = Convert.ToBoolean(DataRow["IsSupplier"]);
-
+                    Contact.IsEmployee = Convert.ToBoolean(DataRow["IsEmployee"]);
+                    Contact.IsUser = Convert.ToBoolean(DataRow["IsUser"]);
                     List.Add(Contact);
                 }   
             }
@@ -61,7 +63,21 @@ namespace entity.BrilloQuery
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+           // Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this != null)
+            {
+                if (disposing)
+                {
+                    this.Dispose();
+                    // Dispose other managed resources.
+                }
+                //release unmanaged resources.
+            }
         }
     }
 
@@ -78,5 +94,7 @@ namespace entity.BrilloQuery
 
         public bool IsCustomer { get; set; }
         public bool IsSupplier { get; set; }
+        public bool IsEmployee { get; set; }
+        public bool IsUser { get; set; }
     }
 }

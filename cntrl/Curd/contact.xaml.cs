@@ -62,14 +62,21 @@ namespace cntrl.Curd
             }
         }
 
+        public event btnSave_ClickedEventHandler btnSave_Click;
+        public delegate void btnSave_ClickedEventHandler(object sender);
         private void btnSave_MouseUp(object sender, RoutedEventArgs e)
         {
-            entity.contact contact = contactViewSource.View as entity.contact;
+            entity.contact contact = contactViewSource.View.CurrentItem as entity.contact;
 
             //This is helpful when we want to Automate the search of contact when saving is done.
             if (contact != null)
             {
                 ContactName = contact.name;
+                
+                if (btnSave_Click != null)
+                {
+                    btnSave_Click(sender);
+                }
             }
 
             if (ContactDB.SaveChanges() == 0)

@@ -25,10 +25,8 @@ namespace Cognitivo.Reporting.Views
     {
         public SalesInvoiceSummary()
         {
-
             InitializeComponent();            
             Fill(null, null);
-
         }
 
         public void Fill(object sender, RoutedEventArgs e)

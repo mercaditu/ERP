@@ -9371,31 +9371,30 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
             this._commandCollection = new global::MySql.Data.MySqlClient.MySqlCommand[4];
             this._commandCollection[0] = new global::MySql.Data.MySqlClient.MySqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT \n\tbranch.name as Branch,\n    tag.name as TagName,\n\titem.code as ItemCode,\n" +
-                "    item.name as ItemName,\n    sd.quantity AS Quantity, \n    s.number as Invoice" +
-                ",s.trans_date as InvoiceDate,\n    round((sd.unit_cost * vatco.coef),4) as Cost,\n" +
-                "\tround(sd.quantity * sd.unit_cost * vatco.coef,4) as TotalCost,\n\tround(sd.unit_p" +
-                "rice * vatco.coef,4) as Retail,\n    round((round(sd.unit_price * vatco.coef,4)) " +
-                "* sd.quantity ,4)as TotalRetail,\n   round((sd.discount * vatco.coef) / ((sd.disc" +
-                "ount * vatco.coef) + (sd.unit_price * vatco.coef)),4) as Discountper,\n    round(" +
-                "sd.unit_price * vatco.coef,4) - round(sd.unit_cost * vatco.coef,4) as Profit,\n  " +
-                "  (((sd.quantity * sd.unit_price * vatco.coef) - (sd.quantity * sd.unit_cost * v" +
-                "atco.coef)) / (sd.quantity * sd.unit_price * vatco.coef)) as Margin\n\n   \nFROM  s" +
-                "ales_invoice s INNER JOIN\n         app_branch as branch on s.id_branch = branch." +
-                "id_branch\n         inner join \n         sales_invoice_detail sd ON s.id_sales_in" +
-                "voice = sd.id_sales_invoice LEFT OUTER JOIN \n         items as item ON item.id_i" +
-                "tem = sd.id_item \n         left join item_tag_detail as td on item.id_item = td." +
-                "id_item\n         left join item_tag as tag on td.id_tag = tag.id_tag\n         LE" +
-                "FT OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat.coef" +
-                "ficient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app_vat_" +
-                "group LEFT OUTER JOIN \n                     app_vat_group_details ON app_vat_gro" +
-                "up.id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n          " +
-                "           app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            " +
-                "GROUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_gro" +
-                "up\n            \nwhere (s.status = 2) and (s.trans_date >= @StartDate) AND (s.tra" +
-                "ns_date <= @EndDate) AND s.id_branch = @BranchID  and s.id_company=@CompanyID \ng" +
-                "roup by branch.id_branch, item.id_item,s.id_sales_invoice \norder by item.id_item" +
-                "";
+            this._commandCollection[0].CommandText = " SELECT \n\tbranch.name as Branch,\n    tag.name as TagName,\n\titem.code as ItemCode," +
+                "\n    item.name as ItemName,\n    sd.quantity AS Quantity, \n    s.number as Invoic" +
+                "e,s.trans_date as InvoiceDate,\n    round((sd.unit_cost * vatco.coef),4) as Cost," +
+                "\n\tround(sd.quantity * sd.unit_cost * vatco.coef,4) as TotalCost,\n\tround(sd.unit_" +
+                "price * vatco.coef,4) as Retail,\n    round((sd.unit_price * vatco.coef) * sd.qua" +
+                "ntity ,4)as TotalRetail,\n    round((sd.discount * vatco.coef) / ((sd.discount * " +
+                "vatco.coef) + (sd.unit_price * vatco.coef)),4) as Discountper,\n    round(sd.unit" +
+                "_price * vatco.coef,4) - round(sd.unit_cost * vatco.coef,4) as Profit,\n    (((sd" +
+                ".quantity * sd.unit_price * vatco.coef) - (sd.quantity * sd.unit_cost * vatco.co" +
+                "ef)) / (sd.quantity * sd.unit_price * vatco.coef)) as Margin\n\n   \n FROM  sales_i" +
+                "nvoice s INNER JOIN\n         app_branch as branch on s.id_branch = branch.id_bra" +
+                "nch\n         inner join \n         sales_invoice_detail sd ON s.id_sales_invoice " +
+                "= sd.id_sales_invoice LEFT OUTER JOIN \n         items as item ON item.id_item = " +
+                "sd.id_item \n         left join item_tag_detail as td on item.id_item = td.id_ite" +
+                "m\n         left join item_tag as tag on td.id_tag = tag.id_tag\n         LEFT OUT" +
+                "ER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficien" +
+                "t) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app_vat_group " +
+                "LEFT OUTER JOIN \n                     app_vat_group_details ON app_vat_group.id_" +
+                "vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n                " +
+                "     app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            GROUP " +
+                "BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group\n   " +
+                "         \n where (s.status = 2) and (s.trans_date >= @StartDate) AND (s.trans_da" +
+                "te <= @EndDate) AND s.id_branch = @BranchID  and s.id_company=@CompanyID \n group" +
+                " by branch.id_branch, item.id_item,s.id_sales_invoice \n order by item.id_item";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             global::MySql.Data.MySqlClient.MySqlParameter param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -9431,27 +9430,27 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "    item.name as ItemName,\n    sum(sd.quantity) AS Quantity, \n    \n    round(sum" +
                 "(sd.unit_cost * vatco.coef),4) as Cost,\n\tround(sum(sd.quantity * sd.unit_cost * " +
                 "vatco.coef),4) as TotalCost,\n\tround(sum(sd.unit_price * vatco.coef),4) as Retail" +
-                ",\n    round(round(sum(sd.unit_price * vatco.coef),4) * sum(sd.quantity) ,4)as To" +
-                "talRetail,\n    round((sd.discount * vatco.coef) / ((sd.discount * vatco.coef) + " +
-                "(sd.unit_price * vatco.coef)),4) as Discountper,\n    round(sum(sd.unit_price * v" +
-                "atco.coef),4) - round(sum(sd.unit_cost * vatco.coef),4) as Profit,\n    ((sum(sd." +
-                "quantity * sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco." +
-                "coef)) / sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin\n\n   \nFROM  sal" +
-                "es_invoice s INNER JOIN\n         app_branch as branch on s.id_branch = branch.id" +
-                "_branch\n         inner join \n         sales_invoice_detail sd ON s.id_sales_invo" +
-                "ice = sd.id_sales_invoice LEFT OUTER JOIN \n         items as item ON item.id_ite" +
-                "m = sd.id_item \n         left join item_tag_detail as td on item.id_item = td.id" +
-                "_item\n         left join item_tag as tag on td.id_tag = tag.id_tag\n         LEFT" +
-                " OUTER JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat.coeffi" +
-                "cient) as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app_vat_gr" +
-                "oup LEFT OUTER JOIN \n                     app_vat_group_details ON app_vat_group" +
-                ".id_vat_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n            " +
-                "         app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            GR" +
-                "OUP BY app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group" +
-                "\n           where (s.status = 2) and (s.trans_date >= @StartDate) AND (s.trans_d" +
-                "ate <= @EndDate) AND s.id_branch = @BranchID  and s.id_company=@CompanyID and ta" +
-                "g.id_tag = @TagID \ngroup by branch.id_branch, item.id_item,s.id_sales_invoice \no" +
-                "rder by item.id_item";
+                ",\n    round(sum(sd.unit_price * vatco.coef) * sum(sd.quantity) ,4)as TotalRetail" +
+                ",\n    round((sd.discount * vatco.coef) / ((sd.discount * vatco.coef) + (sd.unit_" +
+                "price * vatco.coef)),4) as Discountper,\n    round(sum(sd.unit_price * vatco.coef" +
+                "),4) - round(sum(sd.unit_cost * vatco.coef),4) as Profit,\n    ((sum(sd.quantity " +
+                "* sd.unit_price * vatco.coef) - sum(sd.quantity * sd.unit_cost * vatco.coef)) / " +
+                "sum(sd.quantity * sd.unit_price * vatco.coef)) as Margin\n\n   \nFROM  sales_invoic" +
+                "e s INNER JOIN\n         app_branch as branch on s.id_branch = branch.id_branch\n " +
+                "        inner join \n         sales_invoice_detail sd ON s.id_sales_invoice = sd." +
+                "id_sales_invoice LEFT OUTER JOIN \n         items as item ON item.id_item = sd.id" +
+                "_item \n         left join item_tag_detail as td on item.id_item = td.id_item\n   " +
+                "      left join item_tag as tag on td.id_tag = tag.id_tag\n         LEFT OUTER JO" +
+                "IN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient) as" +
+                " vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app_vat_group LEFT " +
+                "OUTER JOIN \n                     app_vat_group_details ON app_vat_group.id_vat_g" +
+                "roup = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n                     " +
+                "app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            GROUP BY ap" +
+                "p_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group\n        " +
+                "   where (s.status = 2) and (s.trans_date >= @StartDate) AND (s.trans_date <= @E" +
+                "ndDate) AND s.id_branch = @BranchID  and s.id_company=@CompanyID and tag.id_tag " +
+                "= @TagID \ngroup by branch.id_branch, item.id_item,s.id_sales_invoice \norder by i" +
+                "tem.id_item";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";
@@ -9494,26 +9493,26 @@ namespace Cognitivo.Reporting.Data.SalesDSTableAdapters {
                 "    item.name as ItemName,\n    sd.quantity AS Quantity, \n    s.number as Invoice" +
                 ",s.trans_date as InvoiceDate,\n    round((sd.unit_cost * vatco.coef),4) as Cost,\n" +
                 "\tround(sd.quantity * sd.unit_cost * vatco.coef,4) as TotalCost,\n\tround(sd.unit_p" +
-                "rice * vatco.coef,4) + round(sd.discount * vatco.coef,4) as Retail,\n    round((r" +
-                "ound(sd.unit_price * vatco.coef,4)) * sd.quantity ,4)as TotalRetail,\n    round((" +
-                "sd.discount * vatco.coef) / ((sd.discount * vatco.coef) + (sd.unit_price * vatco" +
-                ".coef)),4) as Discountper,\n    round(sd.unit_price * vatco.coef,4) - round(sd.un" +
-                "it_cost * vatco.coef,4) as Profit,\n    (((sd.quantity * sd.unit_price * vatco.co" +
-                "ef) - (sd.quantity * sd.unit_cost * vatco.coef)) / (sd.quantity * sd.unit_price " +
-                "* vatco.coef)) as Margin\n\n   \nFROM  sales_invoice s INNER JOIN\n         app_bran" +
-                "ch as branch on s.id_branch = branch.id_branch\n         inner join \n         sal" +
-                "es_invoice_detail sd ON s.id_sales_invoice = sd.id_sales_invoice LEFT OUTER JOIN" +
-                " \n         items as item ON item.id_item = sd.id_item \n         left join item_t" +
-                "ag_detail as td on item.id_item = td.id_item\n         left join item_tag as tag " +
-                "on td.id_tag = tag.id_tag\n         LEFT OUTER JOIN \n             (SELECT app_vat" +
-                "_group.id_vat_group, sum(app_vat.coefficient) as vat, sum(app_vat.coefficient) +" +
-                " 1 AS coef\n            FROM  app_vat_group LEFT OUTER JOIN \n                    " +
-                " app_vat_group_details ON app_vat_group.id_vat_group = app_vat_group_details.id_" +
-                "vat_group LEFT OUTER JOIN \n                     app_vat ON app_vat_group_details" +
-                ".id_vat = app_vat.id_vat\n            GROUP BY app_vat_group.id_vat_group) vatco " +
-                "ON vatco.id_vat_group = sd.id_vat_group\n           where (s.status = 2) and (s.t" +
-                "rans_date >= @StartDate) AND (s.trans_date <= @EndDate)  and s.id_company=@Compa" +
-                "nyID  \ngroup by  item.id_item,s.id_sales_invoice \norder by item.id_item";
+                "rice * vatco.coef,4) as Retail,\n    round((sd.unit_price * vatco.coef) * sd.quan" +
+                "tity ,4)as TotalRetail,\n    round((sd.discount * vatco.coef) / ((sd.discount * v" +
+                "atco.coef) + (sd.unit_price * vatco.coef)),4) as Discountper,\n    round(sd.unit_" +
+                "price * vatco.coef,4) - round(sd.unit_cost * vatco.coef,4) as Profit,\n    (((sd." +
+                "quantity * sd.unit_price * vatco.coef) - (sd.quantity * sd.unit_cost * vatco.coe" +
+                "f)) / (sd.quantity * sd.unit_price * vatco.coef)) as Margin\n\n   \nFROM  sales_inv" +
+                "oice s INNER JOIN\n         app_branch as branch on s.id_branch = branch.id_branc" +
+                "h\n         inner join \n         sales_invoice_detail sd ON s.id_sales_invoice = " +
+                "sd.id_sales_invoice LEFT OUTER JOIN \n         items as item ON item.id_item = sd" +
+                ".id_item \n         left join item_tag_detail as td on item.id_item = td.id_item\n" +
+                "         left join item_tag as tag on td.id_tag = tag.id_tag\n         LEFT OUTER" +
+                " JOIN \n             (SELECT app_vat_group.id_vat_group, sum(app_vat.coefficient)" +
+                " as vat, sum(app_vat.coefficient) + 1 AS coef\n            FROM  app_vat_group LE" +
+                "FT OUTER JOIN \n                     app_vat_group_details ON app_vat_group.id_va" +
+                "t_group = app_vat_group_details.id_vat_group LEFT OUTER JOIN \n                  " +
+                "   app_vat ON app_vat_group_details.id_vat = app_vat.id_vat\n            GROUP BY" +
+                " app_vat_group.id_vat_group) vatco ON vatco.id_vat_group = sd.id_vat_group\n     " +
+                "      where (s.status = 2) and (s.trans_date >= @StartDate) AND (s.trans_date <=" +
+                " @EndDate)  and s.id_company=@CompanyID  \ngroup by  item.id_item,s.id_sales_invo" +
+                "ice \norder by item.id_item";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             param = new global::MySql.Data.MySqlClient.MySqlParameter();
             param.ParameterName = "@StartDate";

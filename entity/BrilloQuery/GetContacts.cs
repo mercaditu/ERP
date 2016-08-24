@@ -9,7 +9,7 @@ namespace entity.BrilloQuery
 {
     public class GetContacts: IDisposable
     {
-        public List<Contact> List { get; set; }
+        public ICollection<Contact> List { get; set; }
 
         /// <summary>
         /// Generates DB Query for Contacts and loads it into "List".
@@ -19,6 +19,7 @@ namespace entity.BrilloQuery
             List = new List<Contact>();
 
             string query = @" select 
+                                id_contact as ID,
                                 name as Name,
                                 alias as Alias,
                                 gov_code as Gov_Code,
@@ -34,6 +35,8 @@ namespace entity.BrilloQuery
                                 order by name
                                 ";
 
+            query = String.Format(query, entity.CurrentSession.Id_Company);
+
             using (DataTable dt = QueryExecutor.DT(query))
             {
                 foreach (DataRow DataRow in dt.Rows)
@@ -41,6 +44,7 @@ namespace entity.BrilloQuery
                     Contact Contact = new Contact();
 
                     Contact.ID = Convert.ToInt16(DataRow["ID"]);
+                    Contact.Name = Convert.ToString(DataRow["Name"]);
                     Contact.Alias = Convert.ToString(DataRow["Alias"]);
                     Contact.Gov_Code = Convert.ToString(DataRow["Gov_Code"]);
                     Contact.Code = Convert.ToString(DataRow["Code"]);

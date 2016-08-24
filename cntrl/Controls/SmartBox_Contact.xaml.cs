@@ -113,7 +113,8 @@ namespace cntrl.Controls
             {
                 return;
             }
-
+            
+            //RunQuery();
             Task task = Task.Factory.StartNew(() => RunQuery());
 
             this.IsVisibleChanged += new DependencyPropertyChangedEventHandler(LoginControl_IsVisibleChanged);
@@ -143,6 +144,7 @@ namespace cntrl.Controls
 
         private void RunQuery()
         {
+            
             using (entity.BrilloQuery.GetContacts Execute = new entity.BrilloQuery.GetContacts())
             {
                 ContactList = Execute.List.AsQueryable();
@@ -220,25 +222,21 @@ namespace cntrl.Controls
 
             if (Get_Customers)
             {
-                predicate = predicate.And(x => x.IsCustomer == true);
+                predicate = (x => x.IsCustomer == true);
             }
-
-            if (Get_Suppliers)
+            else
             {
-                predicate = predicate.And(x => x.IsSupplier == true);
+                predicate = (x => x.IsSupplier == true);
             }
 
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();
             var param = smartBoxContactSetting.Default.SearchFilter;
 
+            predicateOR = (x => x.Name.Contains(SearchText));
+
             if (param.Contains("Code"))
             {
                 predicateOR = predicateOR.Or(x => x.Code == SearchText);
-            }
-
-            if (param.Contains("Name"))
-            {
-                predicateOR = predicateOR.Or(x => x.Name.Contains(SearchText));
             }
 
             if (param.Contains("GovID"))
@@ -259,12 +257,20 @@ namespace cntrl.Controls
 
             Dispatcher.InvokeAsync(new Action(() =>
             {
-                contactViewSource.Source = ContactList.Where(predicate).ToList;
-
                 if (popContact.IsOpen == false)
                 {
                     popContact.IsOpen = true;
                 }
+                try
+                {
+                    contactViewSource.Source = ContactList.Where(predicate).ToList();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+
             }));
         }
 

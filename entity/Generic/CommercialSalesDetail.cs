@@ -475,8 +475,6 @@ namespace entity
             {
                 if (_Discount_SubTotal != value)
                 {
-                    //  Calculate_UnitDiscount(_Discount_SubTotal);
-
                     _Discount_SubTotal = value;
                     RaisePropertyChanged("Discount_SubTotal");
                 }
@@ -495,14 +493,32 @@ namespace entity
             {
                 if (_Discount_SubTotal_Vat != value)
                 {
-                    // Calculate_UnitVatDiscount(value);
-
                     _Discount_SubTotal_Vat = value;
                     RaisePropertyChanged("Discount_SubTotal_Vat");
                 }
             }
         }
         private decimal _Discount_SubTotal_Vat;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [NotMapped]
+        public decimal DiscountPercentage_SubTotal_Vat
+        {
+            get { return _DiscountPercentage_SubTotal_Vat; }
+            set
+            {
+                if (_DiscountPercentage_SubTotal_Vat != value)
+                {
+                    Calculate_PercentageDiscount(value);
+
+                    _DiscountPercentage_SubTotal_Vat = value;
+                    RaisePropertyChanged("DiscountPercentage_SubTotal_Vat");
+                }
+            }
+        }
+        private decimal _DiscountPercentage_SubTotal_Vat;
 
         /// <summary>
         /// 
@@ -561,6 +577,12 @@ namespace entity
             RaisePropertyChanged("Discount_SubTotal_Vat");
         }
 
+
+        public void Calculate_PercentageDiscount(decimal Percentage)
+        {
+            discount = unit_price * Percentage;
+            RaisePropertyChanged("discount");
+        }
         #endregion
     }
 }

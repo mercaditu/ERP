@@ -200,7 +200,7 @@ namespace cntrl.Controls
             {
                 string SearchText = tbxSearch.Text;
 
-                if (SearchText.Count() >= 3)
+                if (SearchText.Count() >= 1)
                 {
                     if (taskSearch != null)
                     {
@@ -237,11 +237,7 @@ namespace cntrl.Controls
             {
                 predicate = (x => x.IsEmployee == true);
             }
-            else if (Get_Users)
-            {
-                predicate = (x => x.IsUser == true);
-            }
-          
+           
 
             var predicateOR = PredicateBuilder.False<entity.BrilloQuery.Contact>();
             var param = smartBoxContactSetting.Default.SearchFilter;

@@ -79,7 +79,7 @@
 
         <Popup x:Name="popContact" IsOpen="False">
             <Border Background="{StaticResource AccentColor_Brush}" BorderBrush="{StaticResource AccentColor_Introvert}" BorderThickness="2">
-                <Grid MaxHeight="128">
+                <Grid MaxHeight="256">
                     <TextBlock Text="{Binding ItemsSource.Count, ElementName=dgvDataGrid, Mode=OneWay}" 
                                Style="{StaticResource text_Instructions}" Margin="4,0" />
                     <DataGrid x:Name="dgvDataGrid" MinWidth="128" MaxWidth="512" Margin="0,16,0,0" AutoGenerateColumns="False" 

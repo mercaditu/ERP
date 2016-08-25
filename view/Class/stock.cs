@@ -40,7 +40,7 @@ namespace Cognitivo.Class
                              where mov.id_company = {0} and branch.id_branch = {1} and mov.trans_date <= '{2}'
                              group by loc.id_location, prod.id_item_product
                              order by mov.trans_date, mov.id_movement";
-            query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd"));
+            query = String.Format(query, entity.CurrentSession.Id_Company, BranchID, TransDate.ToString("yyyy-MM-dd 23:59:59"));
             DataTable dt = exeDT(query);
             return GenerateList(dt);
         }

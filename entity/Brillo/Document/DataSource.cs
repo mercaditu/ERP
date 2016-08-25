@@ -42,17 +42,17 @@ namespace entity.Brillo.Document
                 purchase_order purchase_order = (purchase_order)Document;
                 return PurchaseOrder(purchase_order);
             }
-            else if (Document.GetType().BaseType == typeof(purchase_return))
+            else if (Document.GetType().BaseType == typeof(purchase_return) || Document.GetType() == typeof(purchase_return))
             {
                 purchase_return purchase_return = (purchase_return)Document;
                 return PurchaseReturn(purchase_return);
             }
-            else if (Document.GetType().BaseType == typeof(payment_promissory_note))
+            else if (Document.GetType().BaseType == typeof(payment_promissory_note) || Document.GetType() == typeof(payment_promissory_note))
             {
                 payment_promissory_note payment_promissory_note = (payment_promissory_note)Document;
                 return PromissoryNote(payment_promissory_note);
             }
-            else if (Document.GetType().BaseType == typeof(purchase_tender_contact))
+            else if (Document.GetType().BaseType == typeof(purchase_tender_contact) || Document.GetType() == typeof(purchase_tender_contact))
             {
                 purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)Document;
                 return PurchaseTender(purchase_tender_contact);
@@ -62,12 +62,12 @@ namespace entity.Brillo.Document
                 item_transfer item_transfer = (item_transfer)Document;
                 return ItemTransfer(item_transfer);
             }
-            else if (Document.GetType() == typeof(payment))
+            else if (Document.GetType() == typeof(payment) || Document.GetType() == typeof(payment))
             {
                 payment payment = (payment)Document;
                 return Payment(payment);
             }
-            else if (Document.GetType().BaseType == typeof(project))
+            else if (Document.GetType().BaseType == typeof(project) || Document.GetType() == typeof(project))
             {
                 project project = (project)Document;
                 return Project(project);

@@ -188,15 +188,15 @@ namespace Cognitivo.Purchase
                     {
                         purchase_tender_contact.id_contract = (cbxContract.SelectedItem as app_contract).id_contract;
                         purchase_tender_contact.id_condition = (cbxCondition.SelectedItem as app_condition).id_condition;
-                        purchase_tender_contact.app_contract = (cbxContract.SelectedItem as app_contract);
-                        purchase_tender_contact.app_condition = (cbxCondition.SelectedItem as app_condition);
+                        //purchase_tender_contact.app_contract = (cbxContract.SelectedItem as app_contract);
+                        //purchase_tender_contact.app_condition = (cbxCondition.SelectedItem as app_condition);
                     }
                     else if (contact.app_contract != null)
                     {
                         purchase_tender_contact.id_contract = (int)contact.id_contract;
                         purchase_tender_contact.id_condition = contact.app_contract.id_condition;
-                        purchase_tender_contact.app_contract = contact.app_contract;
-                        purchase_tender_contact.app_condition = contact.app_contract.app_condition;
+                        //purchase_tender_contact.app_contract = contact.app_contract;
+                        //purchase_tender_contact.app_condition = contact.app_contract.app_condition;
                     }
                     else
                     {

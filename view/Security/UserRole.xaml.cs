@@ -146,7 +146,7 @@ namespace Cognitivo.Security
                     }
                 }
             }
-            dbContext.SaveChanges();
+        //    dbContext.SaveChanges();
 
             List<entity.App.Names> PreferenceList = Enum.GetValues(typeof(entity.App.Names)).Cast<entity.App.Names>().ToList();
             List<security_privilage> security_privilageList = dbContext.security_privilage.ToList();
@@ -173,14 +173,14 @@ namespace Cognitivo.Security
                
                 
             }
-            try
-            {
-                dbContext.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            //try
+            //{
+            //    dbContext.SaveChanges();
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
 
         }
         private void add_MissingRecords()

@@ -107,7 +107,7 @@ namespace Cognitivo.Product
             (
                 predicateOR
             );
-            ItemDB.items.Where(predicate).Load();
+            await ItemDB.items.Where(predicate).LoadAsync();
             await Dispatcher.InvokeAsync(new Action(() =>
             {
                 itemViewSource.Source = ItemDB.items.Local.OrderBy(x => x.name);
@@ -610,38 +610,6 @@ namespace Cognitivo.Product
             }
         }
 
-        private void AddVAT_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            crud_modal.Visibility = Visibility.Visible;
-            cntrl.Curd.vat_group _vat_group = new cntrl.Curd.vat_group();
-            _vat_group.app_vat_groupViewSource = app_vat_groupViewSource;
-            _vat_group.MainViewSource = itemViewSource;
-            _vat_group.curObject = itemViewSource.View.CurrentItem;
-            //_vat_group._entity = dbContext;
-            _vat_group.operationMode = cntrl.Class.clsCommon.Mode.Add;
-            _vat_group.isExternalCall = true;
-            crud_modal.Children.Add(_vat_group);
-        }
-
-        private void EditVAT_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            app_vat_group app_vat_group = cmbvat.SelectedItem as app_vat_group;
-            //app_vat_group app_vat_group = item_vat.app_vat_group;
-            if (app_vat_group != null)
-            {
-                crud_modal.Visibility = Visibility.Visible;
-                cntrl.Curd.vat_group _vat_group = new cntrl.Curd.vat_group();
-                _vat_group.app_vat_groupViewSource = app_vat_groupViewSource;
-                _vat_group.MainViewSource = itemViewSource;
-                _vat_group.curObject = itemViewSource.View.CurrentItem;
-                //_vat_group._entity = dbContext;
-                _vat_group.vat_groupObject = app_vat_group;
-                _vat_group.operationMode = cntrl.Class.clsCommon.Mode.Edit;
-                _vat_group.isExternalCall = true;
-                crud_modal.Children.Add(_vat_group);
-            }
-        }
-
         private void AddPricelist_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             crud_modal.Visibility = Visibility.Visible;
@@ -736,7 +704,6 @@ namespace Cognitivo.Product
                         item_tag_detail.item_tag = ((item_tag)cbxTag.Data);
                         item.item_tag_detail.Add(item_tag_detail);
                         itemitem_tagdetailViewSource.View.Refresh();
-
                     }
                 }
             }
@@ -745,12 +712,15 @@ namespace Cognitivo.Product
         private void btnadd_Click(object sender, RoutedEventArgs e)
         {
             item item = (item)itemViewSource.View.CurrentItem;
-            item_service item_service = new item_service();
-            item_service.hr_talent = (hr_talent)cmbtalent.SelectionBoxItem;
-            item_service.id_talent = (int)cmbtalent.SelectedValue;
-            item.item_service.Add(item_service);
-            itemitem_serviceViewSource.View.Refresh();
-            itemitem_serviceViewSource.View.MoveCurrentToLast();
+            if (item != null)
+            {
+                item_service item_service = new item_service();
+                item_service.hr_talent = (hr_talent)cmbtalent.SelectionBoxItem;
+                item_service.id_talent = (int)cmbtalent.SelectedValue;
+                item.item_service.Add(item_service);
+                itemitem_serviceViewSource.View.Refresh();
+                itemitem_serviceViewSource.View.MoveCurrentToLast();   
+            }
         }
 
         private void crud_modal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -773,10 +743,14 @@ namespace Cognitivo.Product
         private void popupName_Closed(object sender, EventArgs e)
         {
             item_template item_template = item_templateViewSource.View.CurrentItem as item_template;
-            item item = itemViewSource.View.CurrentItem as item;
-            foreach (item_template_detail item_template_detail in item_template.item_template_detail)
+            
+            if (item_template != null)
             {
-                item.name = item.name + item_template_detail.value;
+                item item = itemViewSource.View.CurrentItem as item;
+                foreach (item_template_detail item_template_detail in item_template.item_template_detail)
+                {
+                    item.name = item.name + item_template_detail.value;
+                }
             }
         }
 

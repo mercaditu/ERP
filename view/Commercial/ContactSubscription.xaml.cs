@@ -8,16 +8,14 @@ using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+
 namespace Cognitivo.Commercial
 {
-    /// <summary>
-    /// Interaction logic for ContactSubscription.xaml
-    /// </summary>
     public partial class ContactSubscription : Page
     {
         ContactDB ContactDB = new ContactDB();
-        CollectionViewSource contactChildListViewSource;
         CollectionViewSource contactViewSource, contact_subscriptionViewSource;
+
         public ContactSubscription()
         {
             InitializeComponent();
@@ -25,22 +23,18 @@ namespace Cognitivo.Commercial
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //contactChildListViewSource = (CollectionViewSource)FindResource("contactChildListViewSource");
             ContactDB.contacts.Where(a => a.id_company == CurrentSession.Id_Company && a.is_customer && a.contact_role.is_principal).OrderBy(a => a.name).Load();
 
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;
 
             contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
-            //ContactDB.contact_subscription.Where(a => a.id_company == CurrentSession.Id_Company).Load();
-            //contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
 
             CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
-            appContractViewSource.Source = CurrentSession.Get_Contract(); // ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
+            appContractViewSource.Source = CurrentSession.Get_Contract();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();//ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
-            //FilterSubscription();
+            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
         }
         private void FilterSubscription()
         {
@@ -116,6 +110,7 @@ namespace Cognitivo.Commercial
                 toolBar.msgWarning("Please Select a Contact");
             }
         }
+
         private void toolBar_btnSave_Click(object sender)
         {
             //Abhi> in Brillo, add logic to add for validations
@@ -126,6 +121,55 @@ namespace Cognitivo.Commercial
             }
         }
 
-        
+        private void toolBar_btnSearch_Click(object sender, string query)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(query))
+                {
+                    contactViewSource.View.Filter = i =>
+                    {
+                        contact contact = i as contact;
+                        string name = "";
+                        string code = "";
+                        string gov_code = "";
+
+                        if (contact.name != null)
+                        {
+                            name = contact.name.ToLower();
+                        }
+
+                        if (contact.code != null)
+                        {
+                            code = contact.code.ToLower();
+                        }
+
+                        if (contact.gov_code != null)
+                        {
+                            gov_code = contact.gov_code.ToLower();
+                        }
+
+                        if (name.Contains(query.ToLower())
+                            || code.Contains(query.ToLower())
+                            || gov_code.Contains(query.ToLower()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
+                }
+                else
+                {
+                    contactViewSource.View.Filter = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                toolBar.msgError(ex);
+            }
+        }
     }
 }

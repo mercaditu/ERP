@@ -141,7 +141,7 @@
             </StackPanel>
         </StackPanel>
           <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="Contact"
-			      
+			      btnSearch_Click="toolBar_btnSearch_Click"
 			           btnEdit_Click="toolBar_btnEdit_Click" 
                        btnSave_Click="toolBar_btnSave_Click" 
                     

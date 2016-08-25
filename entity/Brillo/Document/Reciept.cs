@@ -425,9 +425,9 @@
             {
                 using (db db = new db())
                 {
-                    if (db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault() != null)
-                    {
-                        app_branch app_branch = db.app_branch.Where(x => x.id_branch == CurrentSession.Id_Branch).FirstOrDefault();
+                    app_branch app_branch = db.app_branch.Where(x => x.id_branch == sales_invoice.id_branch).FirstOrDefault();
+                    if (app_branch != null)
+                    {                     
                         BranchName = app_branch.name;
                     }
                 }
@@ -442,10 +442,66 @@
             {
                 using (db db = new db())
                 {
-                    if (db.security_user.Where(x => x.id_user == sales_invoice.id_user).FirstOrDefault() != null)
+                    security_user security_user = db.security_user.Where(x => x.id_user == sales_invoice.id_user).FirstOrDefault();
+                    if (security_user != null)
                     {
-                        security_user security_user = db.security_user.Where(x => x.id_user == sales_invoice.id_user).FirstOrDefault();
+                      
                         UserGiven = security_user.name;
+                    }
+                }
+            }
+
+            string ContractName = "";
+            if (sales_invoice.app_contract != null)
+            {
+                ContractName = sales_invoice.app_contract.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    app_contract app_contract = db.app_contract.Where(x => x.id_contract == sales_invoice.id_contract).FirstOrDefault();
+                    if (app_contract != null)
+                    {
+                        ContractName = app_contract.name;
+                    }
+                }
+            }
+
+            string ConditionName = "";
+            if (sales_invoice.app_condition != null)
+            {
+                ConditionName = sales_invoice.app_condition.name;
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    app_condition app_condition = db.app_condition.Where(x => x.id_condition == sales_invoice.id_condition).FirstOrDefault();
+                    if (app_condition != null)
+                    {
+                        ConditionName = app_condition.name;
+                    }
+                }
+            }
+
+            string CurrencyName = "";
+            if (sales_invoice.app_currencyfx != null)
+            {
+                if (sales_invoice.app_currencyfx.app_currency!=null)
+                {
+                    CurrencyName = sales_invoice.app_currencyfx.app_currency.name;
+                }
+                
+            }
+            else
+            {
+                using (db db = new db())
+                {
+                    app_currencyfx app_currencyfx = db.app_currencyfx.Where(x => x.id_currencyfx == sales_invoice.id_currencyfx).FirstOrDefault();
+                    if (app_currencyfx != null)
+                    {
+                        CurrencyName = app_currencyfx.app_currency.name;
                     }
                 }
             }
@@ -482,7 +538,7 @@
             Footer = "--------------------------------" + "\n";
             Footer += "Total Bruto       : " + Math.Round((sales_invoice.GrandTotal + DiscountTotal), 2) + "\n";
             Footer += "Total Descuento   : -" + Math.Round(sales_invoice.sales_invoice_detail.Sum(x => x.Discount_SubTotal_Vat), 2) + "\n";
-            Footer += "Total " + sales_invoice.app_currencyfx.app_currency.name + " : " + Math.Round(sales_invoice.GrandTotal, 2) + "\n";
+            Footer += "Total " + CurrencyName + " : " + Math.Round(sales_invoice.GrandTotal, 2) + "\n";
             Footer += "Fecha & Hora      : " + sales_invoice.trans_date + "\n";
             Footer += "Numero de Factura : " + sales_invoice.number + "\n";
             Footer += "-------------------------------" + "\n";
@@ -516,7 +572,7 @@
                         {
                             Footer += item.vatname + "   : " + Math.Round(item.value, 2) + "\n";
                         }
-                        Footer += "Total IVA : " + sales_invoice.app_currencyfx.app_currency.name + " " + Math.Round(VAtList.Sum(x => x.value), 2) + "\n";
+                        Footer += "Total IVA : " + CurrencyName + " " + Math.Round(VAtList.Sum(x => x.value), 2) + "\n";
                     }
                 }
             }
@@ -524,10 +580,10 @@
             Footer += "-------------------------------";
             Footer += "Cliente    : " + sales_invoice.contact.name + "\n";
             Footer += "Documento  : " + sales_invoice.contact.gov_code + "\n";
-            Footer += "Condicion  : " + sales_invoice.app_condition.name + "\n";
+            Footer += "Condicion  : " + ConditionName + "\n";
             Footer += "-------------------------------";
-            Footer += "Sucursal   : " + sales_invoice.app_branch.name + "\n";
-            Footer += "Terminal   : " + sales_invoice.app_terminal.name;
+            Footer += "Sucursal   : " + BranchName + "\n";
+            Footer += "Terminal   : " + TerminalName;
 
             if (sales_invoice.id_sales_rep > 0)
             {

@@ -8,10 +8,7 @@
         <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
     </UserControl.Resources>
     <Grid>
-        <Image Margin="8,5" Height="32" Cursor="Hand" 
-               RenderOptions.BitmapScalingMode="HighQuality" UseLayoutRounding="True"
-               Source="{Binding Path=imgSource, ElementName=_moduleIcon}"/>
-        <Rectangle VerticalAlignment="Bottom" Height="2" Fill="Silver">
+        <Rectangle VerticalAlignment="Bottom" Height="4" Fill="#A34BA0FF">
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -24,6 +21,13 @@
             </Rectangle.Style>
         </Rectangle>
         <Rectangle x:Name="rectStatus" Visibility="{Binding ElementName=_moduleIcon, Path=IsChecked, Converter={StaticResource Bool2Visibility}, FallbackValue=Collapsed}"
-                   VerticalAlignment="Bottom" Height="2" Fill="#FF4BA0FF"/>
+                   VerticalAlignment="Bottom" Height="4" Fill="#FF4BA0FF">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="Azure" ShadowDepth="0" BlurRadius="15"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <Image Margin="8,5" Height="32" Cursor="Hand" 
+               RenderOptions.BitmapScalingMode="HighQuality" UseLayoutRounding="True"
+               Source="{Binding Path=imgSource, ElementName=_moduleIcon}"/>
     </Grid>
 </UserControl>

@@ -173,7 +173,14 @@ namespace Cognitivo.Security
                
                 
             }
-            dbContext.SaveChanges();
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
         private void add_MissingRecords()

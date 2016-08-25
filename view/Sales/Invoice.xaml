@@ -726,7 +726,7 @@
                                     <DataGridTextColumn Binding="{Binding Discount_SubTotal_Vat,Mode=TwoWay, StringFormat={}{0:N}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                                                         Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Discount}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}" IsReadOnly="True"
                                                         Visibility="{Binding Source={x:Static pref:Settings.Default}, Path=VATIncluded, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
-                                    <DataGridTextColumn Binding="{Binding DiscountPercentage_SubTotal_Vat,Mode=TwoWay, StringFormat={}{0:P}, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                                    <DataGridTextColumn Binding="{Binding DiscountPercentage_SubTotal_Vat,Mode=TwoWay, StringFormat={}{0:P}, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                                         Foreground="Crimson" Header="{lex:Loc Cognitivo:local:Percentage}" Width="Auto" ElementStyle="{StaticResource RightAlignStyle}"/>
                                     <DataGridTemplateColumn Width="Auto" Header="">
                                         <DataGridTemplateColumn.CellTemplate>

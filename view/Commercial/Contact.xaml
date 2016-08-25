@@ -306,7 +306,8 @@
                         <Label Content="{lex:Loc Currency}" Style="{StaticResource input_label}"/>
                         <ComboBox ItemsSource="{Binding Source={StaticResource app_currencyViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_currency"
                                       SelectedValue="{Binding id_currency, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                      Style="{StaticResource input_combobox}"/>
+                                  Custom:ComboBoxHelper.CharacterCasing="Normal"
+                                  Style="{StaticResource input_combobox}"/>
                         <Label Content="{lex:Loc Salesman}" Style="{StaticResource input_label}"/>
                         <ComboBox ItemsSource="{Binding Source={StaticResource salesRepViewSource}}" DisplayMemberPath="name" SelectedValuePath="id_sales_rep"
                                       SelectedValue="{Binding id_sales_rep, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

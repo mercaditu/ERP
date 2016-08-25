@@ -170,6 +170,9 @@
     <Compile Include="Controls\AttachmentViewer.xaml.cs">
       <DependentUpon>AttachmentViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ComboBoxKit.xaml.cs">
+      <DependentUpon>ComboBoxKit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImpexCurrencyBox.xaml.cs">
       <DependentUpon>ImpexCurrencyBox.xaml</DependentUpon>
     </Compile>
@@ -631,6 +634,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\AttachmentViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ComboBoxKit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

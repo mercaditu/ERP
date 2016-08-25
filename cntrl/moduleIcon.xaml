@@ -23,7 +23,7 @@
         <Rectangle x:Name="rectStatus" Visibility="{Binding ElementName=_moduleIcon, Path=IsChecked, Converter={StaticResource Bool2Visibility}, FallbackValue=Collapsed}"
                    VerticalAlignment="Bottom" Height="4" Fill="#FF4BA0FF">
             <Rectangle.Effect>
-                <DropShadowEffect Color="Azure" ShadowDepth="0" BlurRadius="15"/>
+                <DropShadowEffect Color="#FF4BA0FF" ShadowDepth="5" BlurRadius="15" Direction="270"/>
             </Rectangle.Effect>
         </Rectangle>
         <Image Margin="8,5" Height="32" Cursor="Hand" 

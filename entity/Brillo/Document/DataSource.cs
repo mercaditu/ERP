@@ -52,6 +52,11 @@ namespace entity.Brillo.Document
                 payment_promissory_note payment_promissory_note = (payment_promissory_note)Document;
                 return PromissoryNote(payment_promissory_note);
             }
+            else if (Document.GetType().BaseType == typeof(payment_detail) || Document.GetType() == typeof(payment_detail))
+            {
+                payment_detail payment_detail = (payment_detail)Document;
+                return PaymentDetail_Print(payment_detail);
+            }
             else if (Document.GetType().BaseType == typeof(purchase_tender_contact) || Document.GetType() == typeof(purchase_tender_contact))
             {
                 purchase_tender_contact purchase_tender_contact = (purchase_tender_contact)Document;
@@ -513,155 +518,164 @@ namespace entity.Brillo.Document
 
         public ReportDataSource ItemTransfer(item_transfer item_transfer)
         {
-            using (db db = new db())
-            {
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<item_transfer_detail> item_transfer_detail = item_transfer.item_transfer_detail.ToList();
+
+            reportDataSource.Value = item_transfer_detail
+                .Select(g => new
+                {
+                    transfer_number = g.item_transfer.number,
+                    location_origin_name = g.item_transfer.app_location_origin.name,
+                    location_destination_name = g.item_transfer.app_location_destination.name,
+                    item_code = g.item_product.item.code,
+                    quantity_origin = g.quantity_origin,
+                    item_name = g.item_product.item.name,
+                    trans_date = g.item_transfer.trans_date,
+                    comment = g.item_transfer.comment
+                }).ToList();
+
+            return reportDataSource;
+        }
+
+        public ReportDataSource PaymentDetail_Print(payment_detail payment_detail)
+        {
                 reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<item_transfer_detail> item_transfer_detail = item_transfer.item_transfer_detail.ToList();
 
-                reportDataSource.Value = item_transfer_detail
-                    .Select(g => new
+                List<payment_detail> payment_detailList = new List<payment_detail>();
+                payment_detailList.Add(payment_detail);
+
+                reportDataSource.Value = payment_detailList.Select(g => new
                     {
-                        transfer_number = g.item_transfer.number,
-                        location_origin_name = g.item_transfer.app_location_origin.name,
-                        location_destination_name = g.item_transfer.app_location_destination.name,
-                        item_code = g.item_product.item.code,
-                        quantity_origin = g.quantity_origin,
-                        item_name = g.item_product.item.name,
-                        trans_date = g.item_transfer.trans_date,
-                        comment = g.item_transfer.comment
-                    }).ToList();
+                        Payee = g.payment != null ? g.payment.contact != null ? g.payment.contact.name : "" : "",
+                        TransDate = g.payment != null ? g.payment.trans_date.ToLongDateString() : "",
+                        Memo = g.comment,
+                        AmountNumber = g.value,
+                        AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                        //Text -> Words
+                        NumToWords.IntToText(Convert.ToInt32(g != null ? g.value : 0))
+                        :
+                        NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.value : 0))) : "" : "" : "",
 
+                    }
+                    );
                 return reportDataSource;
-            }
         }
 
         public ReportDataSource PromissoryNote(payment_promissory_note payment_promissory_note)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                reportDataSource.Value = payment_promissory_note.payment_schedual
-                              .Select(g => new
-                              {
-                                  Customer = g.contact != null ? g.contact.name : "",
-                                  CustomerGovID = g.contact != null ? g.contact.gov_code : "",
-                                  CustomerAddress = g.contact != null ? g.contact.address : "",
-                                  CustomerTelephone = g.contact != null ? g.contact.telephone : "",
-                                  Value = g.payment_promissory_note.value,
-                                  Currency = g.app_currencyfx.app_currency.name,
-                                  TransDate = g.payment_promissory_note.trans_date,
-                                  ExpiryDate = g.payment_promissory_note.expiry_date,
-                                  Relation = g.contact != null ? GetRelation(g.contact.child.ToList()) : "",
-                                  SalesInvoiceNumber = g.sales_invoice != null ? g.sales_invoice.number : "",
-                                  PurchaseInvoiceNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
-                                  Number = g.payment_promissory_note.note_number,
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            reportDataSource.Value = payment_promissory_note.payment_schedual
+                            .Select(g => new
+                            {
+                                Customer = g.contact != null ? g.contact.name : "",
+                                CustomerGovID = g.contact != null ? g.contact.gov_code : "",
+                                CustomerAddress = g.contact != null ? g.contact.address : "",
+                                CustomerTelephone = g.contact != null ? g.contact.telephone : "",
+                                Value = g.payment_promissory_note.value,
+                                Currency = g.app_currencyfx.app_currency.name,
+                                TransDate = g.payment_promissory_note.trans_date,
+                                ExpiryDate = g.payment_promissory_note.expiry_date,
+                                Relation = g.contact != null ? GetRelation(g.contact.child.ToList()) : "",
+                                SalesInvoiceNumber = g.sales_invoice != null ? g.sales_invoice.number : "",
+                                PurchaseInvoiceNumber = g.purchase_invoice != null ? g.purchase_invoice.number : "",
+                                Number = g.payment_promissory_note.note_number,
 
-                                  AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
-                                      // Text -> Words
-                                        NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment_promissory_note.value : 0))
-                                        :
-                                        NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment_promissory_note.value : 0))) : "" : "" : "",
+                                AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+                                    // Text -> Words
+                                    NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment_promissory_note.value : 0))
+                                    :
+                                    NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment_promissory_note.value : 0))) : "" : "" : "",
 
-                                  CompanyName = g.app_company.name,
-                              }).ToList();
+                                CompanyName = g.app_company.name,
+                            }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
 
         public ReportDataSource Payment(payment payment)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<payment_detail> payment_detail = payment.payment_detail.ToList();
-                reportDataSource.Value = payment_detail
-                              .Select(g => new
-                              {
-                                  id_company = g.id_company,
-                                  payment_type = g.payment_type != null ? g.payment_type.name : "",
-                                  comments = g.comment,
-                                  company_name = g.app_company != null ? g.app_company.name : "",
-                                  amount = g.value,
-                                  contact_name = g.payment.contact != null ? g.payment.contact.name : "Not Ref",
-                                  gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
-                                  payment_name = g.payment_type != null ? g.payment_type.name : "",
-                                  trans_date = g.payment != null ? g.payment.trans_date : DateTime.Now,
-                                  currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
-                                  currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
-                                  number = g.payment != null ? g.payment.number : "Not Ref",
-                                  SalesNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().sales_invoice != null ? g.payment_schedual.FirstOrDefault().sales_invoice.number : "" : "",
-                                  AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<payment_detail> payment_detail = payment.payment_detail.ToList();
+            reportDataSource.Value = payment_detail
+                            .Select(g => new
+                            {
+                                id_company = g.id_company,
+                                payment_type = g.payment_type != null ? g.payment_type.name : "",
+                                comments = g.comment,
+                                company_name = g.app_company != null ? g.app_company.name : "",
+                                amount = g.value,
+                                contact_name = g.payment.contact != null ? g.payment.contact.name : "Not Ref",
+                                gov_id = g.payment.contact != null ? g.payment.contact.gov_code : "",
+                                payment_name = g.payment_type != null ? g.payment_type.name : "",
+                                trans_date = g.payment != null ? g.payment.trans_date : DateTime.Now,
+                                currency_name = g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.name : "" : "",
+                                currency_rate = g.app_currencyfx != null ? g.app_currencyfx.sell_value : 0,
+                                number = g.payment != null ? g.payment.number : "Not Ref",
+                                SalesNumber = g.payment_schedual.FirstOrDefault() != null ? g.payment_schedual.FirstOrDefault().sales_invoice != null ? g.payment_schedual.FirstOrDefault().sales_invoice.number : "" : "",
+                                AmountWords = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding ?
 
-                     // Text -> Words
-                     NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
-                     :
-                     NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "" : "",
+                    // Text -> Words
+                    NumToWords.IntToText(Convert.ToInt32(g != null ? g.payment.GrandTotal : 0))
+                    :
+                    NumToWords.DecimalToText((Convert.ToDecimal(g != null ? g.payment.GrandTotal : 0))) : "" : "" : "",
 
-                                  HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false : false
+                                HasRounding = g != null ? g.app_currencyfx != null ? g.app_currencyfx.app_currency != null ? g.app_currencyfx.app_currency.has_rounding != null ? g.app_currencyfx.app_currency.has_rounding : false : false : false : false
 
-                              }).ToList();
+                            }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
         public ReportDataSource Project(project project)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<project_task> project_task = project.project_task.ToList();
-                reportDataSource.Value = project_task.Select(g => new
-                              {
-                                  project_code = g.project.code,
-                                  project_est_end_date = g.project.est_end_date,
-                                  project_est_start_date = g.project.est_start_date,
-                                  task_trans_date = g.trans_date,
-                                  task_start_date_est = g.start_date_est,
-                                  task_end_date_est = g.end_date_est,
-                                  number = g.number,
-                                  id_company = g.id_company,
-                                  company_name = g.app_company != null ? g.app_company.name : "",
-                                  contact_name = g.project.contact != null ? g.project.contact.name : "",
-                                  contact_address = g.project.contact != null ? g.project.contact.address != null ? g.project.contact.address : "" : "",
-                                  contact_email = g.project.contact != null ? g.project.contact.email != null ? g.project.contact.email : "" : "",
-                                  contact_phone = g.project.contact != null ? g.project.contact.telephone != null ? g.project.contact.telephone : "" : "",
-                                  gov_id = g.project.contact != null ? g.project.contact.gov_code : "",
-                                  TagList = g.project.project_tag_detail != null ? GetTag(g.project.project_tag_detail.ToList()) : "",
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<project_task> project_task = project.project_task.ToList();
+            reportDataSource.Value = project_task.Select(g => new
+                            {
+                                project_code = g.project.code,
+                                project_est_end_date = g.project.est_end_date,
+                                project_est_start_date = g.project.est_start_date,
+                                task_trans_date = g.trans_date,
+                                task_start_date_est = g.start_date_est,
+                                task_end_date_est = g.end_date_est,
+                                number = g.number,
+                                id_company = g.id_company,
+                                company_name = g.app_company != null ? g.app_company.name : "",
+                                contact_name = g.project.contact != null ? g.project.contact.name : "",
+                                contact_address = g.project.contact != null ? g.project.contact.address != null ? g.project.contact.address : "" : "",
+                                contact_email = g.project.contact != null ? g.project.contact.email != null ? g.project.contact.email : "" : "",
+                                contact_phone = g.project.contact != null ? g.project.contact.telephone != null ? g.project.contact.telephone : "" : "",
+                                gov_id = g.project.contact != null ? g.project.contact.gov_code : "",
+                                TagList = g.project.project_tag_detail != null ? GetTag(g.project.project_tag_detail.ToList()) : "",
 
-                              }).ToList();
+                            }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
 
         public ReportDataSource Inventory(item_inventory item_inventory)
         {
-            using (db db = new db())
-            {
-                reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
-                List<item_inventory_detail> item_inventory_detail = item_inventory.item_inventory_detail.ToList();
+            reportDataSource.Name = "DataSet1"; // Name of the DataSet we set in .rdlc
+            List<item_inventory_detail> item_inventory_detail = item_inventory.item_inventory_detail.ToList();
 
-                reportDataSource.Value = item_inventory_detail
-                    .Select(g => new
-                    {
-                        date=g.item_inventory.trans_date,
-                        branch=g.item_inventory.app_branch.name,
-                        comment=g.item_inventory.comment,
-                        id_inventory_detail = g.id_inventory_detail,
-                        id_company = g.id_company,
-                        item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code != null ? g.item_product.item.code : "" : "" : "",
-                        item_description = g.item_product != null ? g.item_product.item != null ? g.item_product.item.name != null ? g.item_product.item.name : "" : "" : "",
-                        item_long_description = g.item_product != null ? g.item_product.item != null ? g.item_product.item.description != null ? g.item_product.item.description : "" : "" : "",
-                        quantity_system = g.value_system,
-                        quantity_counted = g.value_counted,
-                        unit_cost = g.unit_value,
-                        location = g.app_location != null ? g.app_location.name : "",
+            reportDataSource.Value = item_inventory_detail
+                .Select(g => new
+                {
+                    date=g.item_inventory.trans_date,
+                    branch=g.item_inventory.app_branch.name,
+                    comment=g.item_inventory.comment,
+                    id_inventory_detail = g.id_inventory_detail,
+                    id_company = g.id_company,
+                    item_code = g.item_product != null ? g.item_product.item != null ? g.item_product.item.code != null ? g.item_product.item.code : "" : "" : "",
+                    item_description = g.item_product != null ? g.item_product.item != null ? g.item_product.item.name != null ? g.item_product.item.name : "" : "" : "",
+                    item_long_description = g.item_product != null ? g.item_product.item != null ? g.item_product.item.description != null ? g.item_product.item.description : "" : "" : "",
+                    quantity_system = g.value_system,
+                    quantity_counted = g.value_counted,
+                    unit_cost = g.unit_value,
+                    location = g.app_location != null ? g.app_location.name : "",
 
-                    }).ToList();
+                }).ToList();
 
-                return reportDataSource;
-            }
+            return reportDataSource;
         }
         private string GetTag(List<project_tag_detail> project_tag_detail)
         {

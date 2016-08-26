@@ -622,8 +622,10 @@ namespace Cognitivo.Project.Development
                     {
                         project_task_dimension project_task_dimension = new project_task_dimension();
                         project_task_dimension.id_dimension = _item_dimension.id_app_dimension;
+                        project_task_dimension.app_dimension = _item_dimension.app_dimension;
                         project_task_dimension.value = _item_dimension.value;
                         project_task_dimension.id_measurement = _item_dimension.id_measurement;
+                        project_task_dimension.app_measurement = _item_dimension.app_measurement;
                         project_task_dimension.id_project_task = project_task_output.id_project_task;
                         project_task_dimension.project_task = project_task_output;
                         ProjectTaskDB.project_task_dimension.Add(project_task_dimension);

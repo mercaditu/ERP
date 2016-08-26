@@ -380,10 +380,9 @@ namespace entity
 
                     invoice.is_head = false;
                     invoice.status = Status.Documents_General.Approved;
+
+                    SaveChanges();
                 }
-
-                SaveChanges();
-
             }
         }
 

@@ -285,17 +285,18 @@ namespace Cognitivo.Sales
                 MessageBoxResult result = MessageBox.Show("Are you sure want to Delete?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    if (e.Parameter as sales_invoice_detail != null)
+                    sales_invoice_detail sales_invoice_detail = e.Parameter as sales_invoice_detail;
+                    if (sales_invoice_detail != null)
                     {
-                        sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
                         //DeleteDetailGridRow
                         dgvSalesDetail.CancelEdit();
-                        sales_invoice.sales_invoice_detail.Remove(e.Parameter as sales_invoice_detail);
 
+                        sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
+
+                        sales_invoice.sales_invoice_detail.Remove(sales_invoice_detail);
                         sales_invoiceViewSource.View.Refresh();
                         CollectionViewSource sales_invoicesales_invoice_detailViewSource = FindResource("sales_invoicesales_invoice_detailViewSource") as CollectionViewSource;
                         sales_invoicesales_invoice_detailViewSource.View.Refresh();
-
 
                         btnPromotion_Click(sender, e);
 
@@ -409,16 +410,17 @@ namespace Cognitivo.Sales
         private void btnPromotion_Click(object sender, EventArgs e)
         {
             sales_invoice sales_invoice = sales_invoiceViewSource.View.CurrentItem as sales_invoice;
-            SalesInvoiceDB.sales_invoice_detail.RemoveRange(sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList());
+            
+            List<sales_invoice_detail> promoList = sales_invoice.sales_invoice_detail.Where(x => x.IsPromo).ToList();
+            if (promoList.Count() > 0)
+            {
+                SalesInvoiceDB.sales_invoice_detail.RemoveRange(promoList);
+            }
+
             StartPromo.Calculate_SalesInvoice(ref sales_invoice);
 
-
             CollectionViewSource sales_invoicesales_invoice_detailViewSource = (CollectionViewSource)this.FindResource("sales_invoicesales_invoice_detailViewSource");
-
             sales_invoicesales_invoice_detailViewSource.View.Refresh();
-
-
-
         }
 
 

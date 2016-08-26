@@ -72,15 +72,15 @@ namespace entity.Brillo.Document
                 payment payment = (payment)Document;
                 return Payment(payment);
             }
-            else if (Document.GetType().BaseType == typeof(project) || Document.GetType() == typeof(project))
-            {
-                project project = (project)Document;
-                return Project(project);
-            }
             else if (Document.GetType() == typeof(item_inventory) || Document.GetType().BaseType == typeof(item_inventory))
             {
                 item_inventory item_inventory = (item_inventory)Document;
                 return Inventory(item_inventory);
+            }
+            else if (Document.GetType().BaseType == typeof(project) || Document.GetType() == typeof(project))
+            {
+                project project = (project)Document;
+                return Project(project);
             }
 
             return null;
@@ -525,13 +525,14 @@ namespace entity.Brillo.Document
                 .Select(g => new
                 {
                     transfer_number = g.item_transfer.number,
-                    location_origin_name = g.item_transfer.app_location_origin.name,
+                    location_origin_name = g.item_transfer != null ? g.item_transfer.app_location_origin != null ? g.item_transfer.app_location_origin.name : "" : "",
                     location_destination_name = g.item_transfer.app_location_destination.name,
                     item_code = g.item_product.item.code,
                     quantity_origin = g.quantity_origin,
                     item_name = g.item_product.item.name,
                     trans_date = g.item_transfer.trans_date,
-                    comment = g.item_transfer.comment
+                    comment = g.item_transfer.comment,
+                    UserName = g.security_user != null ? g.security_user.name : ""
                 }).ToList();
 
             return reportDataSource;

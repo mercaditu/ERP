@@ -37,7 +37,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ItemCode.Value - Fields!ItemName.Value</Value>
+                              <Value>=Fields!ItemCode.Value +  "-" +  Fields!ItemName.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
@@ -76,7 +76,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
@@ -114,7 +114,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
@@ -152,7 +152,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
@@ -190,7 +190,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
@@ -228,7 +228,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#465678</Color>
                               </Style>
                             </TextRun>
@@ -306,7 +306,7 @@
                               <Value>=Sum(Fields!Credit.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -342,7 +342,7 @@
                               <Value>=Sum(Fields!DebitChild.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -378,7 +378,7 @@
                               <Value>=Sum(Fields!UnitCost.Value)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>#4d4d4d</Color>
                               </Style>
                             </TextRun>
@@ -415,7 +415,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -453,7 +453,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -531,7 +531,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -569,7 +569,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -607,7 +607,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -645,7 +645,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>
@@ -683,7 +683,7 @@
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>d</Format>
+                                <Format>N2</Format>
                                 <Color>White</Color>
                               </Style>
                             </TextRun>

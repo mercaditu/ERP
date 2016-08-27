@@ -71,7 +71,7 @@ namespace Cognitivo.Class
             string query = @"   select branch.name as BranchName,
                                 item.code as ItemCode, item.name as ItemName,
                                 inv.credit as Credit, inv.DebitChild, inv.credit - inv.DebitChild as Balance,
-                                UnitCost, (UnitCost * (inv.credit - if(inv.DebitChild is null, 0, inv.DebitChild))) as TotalCost
+                                UnitCost, (UnitCost * (inv.credit - if(inv.DebitChild is null, 0, inv.DebitChild))) as TotalCost,inv.trans_date as TransDate
 
                                 from (
                                 select item_movement.*, sum(val.unit_value) as UnitCost,

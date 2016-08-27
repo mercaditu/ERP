@@ -28,14 +28,24 @@ namespace Cognitivo.Commercial
             contactViewSource = (CollectionViewSource)FindResource("contactViewSource");
             contactViewSource.Source = ContactDB.contacts.Local;
 
-            contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
-
             CollectionViewSource appContractViewSource = (CollectionViewSource)FindResource("appContractViewSource");
-            appContractViewSource.Source = CurrentSession.Get_Contract();
+            appContractViewSource.Source = CurrentSession.Get_Contract(); // ContactDB.app_contract.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).AsNoTracking().ToList();
 
             CollectionViewSource app_vat_groupViewSource = FindResource("app_vat_groupViewSource") as CollectionViewSource;
-            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();
+            app_vat_groupViewSource.Source = CurrentSession.Get_VAT_Group();//ContactDB.app_vat_group.Where(a => a.is_active == true && a.id_company == CurrentSession.Id_Company).OrderBy(a => a.name).ToList();
         }
+
+        private async void LoadChildOnthread(int ContactID)
+        {
+            await ContactDB.contact_subscription.Where(a => a.id_contact == ContactID).LoadAsync();
+            await Dispatcher.InvokeAsync(new Action(() =>
+            {
+                contact_subscriptionViewSource = (CollectionViewSource)FindResource("contact_subscriptionViewSource");
+                contact_subscriptionViewSource.Source = ContactDB.contact_subscription.Local;
+                FilterSubscription();
+            }));
+        }
+
         private void FilterSubscription()
         {
             try
@@ -67,7 +77,12 @@ namespace Cognitivo.Commercial
 
         private void listContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FilterSubscription();
+            contact contact = contactViewSource.View.CurrentItem as contact;
+            if (contact!=null)
+            {
+                LoadChildOnthread(contact.id_contact);
+                //Task Child = Task.Factory.StartNew(() => LoadChildOnthread(contact.id_contact));
+            }
         }
 
         private void item_select(object sender, EventArgs e)

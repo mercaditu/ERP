@@ -6,15 +6,17 @@
            xmlns:cntrls="clr-namespace:cntrl.Controls;assembly=cntrl"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
        xmlns:customcmd="clr-namespace:Cognitivo.Class"
-          xmlns:lex="http://wpflocalizeextension.codeplex.com" 
-         xmlns:entity="clr-namespace:entity;assembly=entity"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com" 
+        lex:ResxLocalizationProvider.DefaultAssembly="Cognitivo" 
+        lex:ResxLocalizationProvider.DefaultDictionary="local"
+        lex:LocalizeDictionary.DesignCulture="en-US"          xmlns:entity="clr-namespace:entity;assembly=entity"
       mc:Ignorable="d" 
      MinHeight="500" MinWidth="800"
 	Title="ContactSubscription" Loaded="Page_Loaded">
     <Page.Resources>
         <CollectionViewSource x:Key="contactViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
-        <CollectionViewSource x:Key="contact_subscriptionViewSource" Source="{Binding contact_subscription, Source={StaticResource contactViewSource}}"/>
-        <!--<CollectionViewSource x:Key="contact_subscriptionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_subscription}, CreateList=True}"/>-->
+        <!--<CollectionViewSource x:Key="contact_subscriptionViewSource" Source="{Binding contact_subscription, Source={StaticResource contactViewSource}}"/>-->
+        <CollectionViewSource x:Key="contact_subscriptionViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact_subscription}, CreateList=True}"/>
         <CollectionViewSource x:Key="contactChildListViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:contact}, CreateList=True}"/>
         <CollectionViewSource x:Key="appContractViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_contract}, CreateList=True}"/>
         <CollectionViewSource x:Key="app_vat_groupViewSource" d:DesignSource="{d:DesignInstance {x:Type entity:app_vat_group}, CreateList=True}"/>
@@ -137,7 +139,7 @@
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Label Content="{lex:Loc Total}" Style="{StaticResource H3}" Foreground="{StaticResource Label_ImportantColor}" HorizontalAlignment="Right"/>
-                <Label Content="{Binding GrandTotal, FallbackValue=0, StringFormat={}{0:N0}}" FontSize="18" Style="{StaticResource generic_Label}" />
+                <Label Content="{Binding GrandTotal, FallbackValue=0, StringFormat={}{0:N2}}" FontSize="18" Style="{StaticResource generic_Label}" ContentStringFormat="N2" />
             </StackPanel>
         </StackPanel>
           <cntrl:toolBar x:Name="toolBar" VerticalAlignment="Top" Grid.ColumnSpan="2" appName="Contact"

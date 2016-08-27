@@ -174,24 +174,28 @@ namespace entity
             get
             {
                 _GrandTotal = 0;
-                foreach (contact_subscription _contact_subscription in contact_subscription)
+                if (contact_subscription.Count() > 0)
                 {
-                    _GrandTotal += _contact_subscription.SubTotal_Vat;
-                }
-                if (child != null)
-                {
-                    foreach (contact contact in child)
+                    foreach (contact_subscription _contact_subscription in contact_subscription)
                     {
-                        if (contact != null)
+                        _GrandTotal += _contact_subscription.SubTotal_Vat;
+                    }
+
+                    if (child != null)
+                    {
+                        foreach (contact contact in child)
                         {
-                            foreach (contact_subscription _contact_subscription in contact.contact_subscription)
+                            if (contact != null)
                             {
-                                _GrandTotal += _contact_subscription.SubTotal_Vat;
+                                foreach (contact_subscription _contact_subscription in contact.contact_subscription)
+                                {
+                                    _GrandTotal += _contact_subscription.SubTotal_Vat;
+                                }
                             }
                         }
-
-                    }
+                    }   
                 }
+
                 return Math.Round(_GrandTotal, 2);
             }
             set

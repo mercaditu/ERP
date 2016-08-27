@@ -9,11 +9,11 @@ namespace entity.BrilloQuery
 {
     public class GetItems
     {
-        public ICollection<Item> List { get; set; }
+        public ICollection<GetItem> List { get; set; }
         
         public GetItems()
         {
-            List = new List<Item>();
+            List = new List<GetItem>();
             string query = @" select 
                              item.id_item as ID, 
                              item.code as ItemCode, 
@@ -59,15 +59,15 @@ namespace entity.BrilloQuery
 
     public class GetProducts
     {
-        ICollection<Item> List { get; set; }
+        ICollection<GetItem> List { get; set; }
 
         public GetProducts()
         {
-            List = new List<Item>();
+            List = new List<GetItem>();
         }
     }
 
-    public class Item
+    public class GetItem
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -80,7 +80,7 @@ namespace entity.BrilloQuery
         public decimal Cost { get; set; }
 
         ICollection<Tag> Tags { get; set; }
-        public Item()
+        public GetItem()
         {
             Tags = new List<Tag>();
         }
@@ -90,6 +90,6 @@ namespace entity.BrilloQuery
     {
         public string Name { get; set; }
 
-        ICollection<Item> Item { get; set; }
+        ICollection<GetItem> Item { get; set; }
     }
 }

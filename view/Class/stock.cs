@@ -66,6 +66,34 @@ namespace Cognitivo.Class
             return GenerateList(dt);
         }
 
+        public DataTable Inventory_OnDate(DateTime TransDate)
+        {
+            string query = @"   select branch.name as BranchName,
+                                item.code as ItemCode, item.name as ItemName,
+                                inv.credit as Credit, inv.DebitChild, inv.credit - inv.DebitChild as Balance,
+                                UnitCost, (UnitCost * (inv.credit - if(inv.DebitChild is null, 0, inv.DebitChild))) as TotalCost
+
+                                from (
+                                select item_movement.*, sum(val.unit_value) as UnitCost,
+                                (select sum(debit) from item_movement as mov where mov._parent_id_movement = item_movement.id_movement) as DebitChild
+
+                                from item_movement 
+                                left outer join item_movement_value as val on item_movement.id_movement = val.id_movement
+                                where item_movement.id_company = {0} and item_movement.trans_date <= '{1}'
+                                group by item_movement.id_movement
+                                ) as inv
+
+                                inner join item_product as prod on inv.id_item_product = prod.id_item_product
+                                inner join items as item on prod.id_item = item.id_item
+                                inner join app_location as loc on inv.id_location = loc.id_location
+                                inner join app_branch as branch on loc.id_branch = branch.id_branch
+                                where inv.credit  > 0
+                                group by inv.id_movement";
+
+            query = String.Format(query, entity.CurrentSession.Id_Company, TransDate.ToString("yyyy-MM-dd 23:59:59"));
+            return exeDT(query);
+        }
+
         public decimal? Count_ByBranch(int BranchID, int ItemID, DateTime TransDate)
         {
             ProductDS ProductDS = new ProductDS();

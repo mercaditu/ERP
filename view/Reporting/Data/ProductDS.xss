@@ -7,7 +7,7 @@
 <DiagramLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ex:showrelationlabel="False" ViewPortX="111" ViewPortY="-10" xmlns:ex="urn:schemas-microsoft-com:xml-msdatasource-layout-extended" xmlns="urn:schemas-microsoft-com:xml-msdatasource-layout">
   <Shapes>
     <Shape ID="DesignTable:inventory" ZOrder="6" X="167" Y="0" Height="210" Width="160" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
-    <Shape ID="DesignTable:stockflow" ZOrder="5" X="310" Y="352" Height="538" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="425" />
+    <Shape ID="DesignTable:stockflow" ZOrder="5" X="310" Y="352" Height="648" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="24" SplitterPosition="425" />
     <Shape ID="DesignTable:PriceList" ZOrder="4" X="572" Y="0" Height="172" Width="193" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:InventorySummary" ZOrder="2" X="367" Y="43" Height="248" Width="185" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
     <Shape ID="DesignTable:StockFlowDimension" ZOrder="1" X="750" Y="559" Height="324" Width="300" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />

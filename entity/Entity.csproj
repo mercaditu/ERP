@@ -175,7 +175,7 @@
     <Compile Include="Application\app_name_template_detail.cs" />
     <Compile Include="Application\app_name_template.cs" />
     <Compile Include="BrilloQuery\GetContacts.cs" />
-    <Compile Include="BrilloQuery\Item.cs" />
+    <Compile Include="BrilloQuery\GetItem.cs" />
     <Compile Include="BrilloQuery\QueryExecutor.cs" />
     <Compile Include="Brillo\Accounting\AccountingCycle.cs" />
     <Compile Include="Brillo\Accounting\Asset\ValueAddedTax.cs" />

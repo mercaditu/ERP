@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -39,17 +38,11 @@ namespace Cognitivo.Reporting.Views
         {
             this.reportViewer.Reset();
 
-            MySqlConnection con = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
-            con.Open();
-            string query = "call inventory('" + EndDate.ToString("s") + "', " + entity.CurrentSession.Id_Company + ")";
-            MySqlDataAdapter adpt = new MySqlDataAdapter(query, con);
-            DataTable dt = new DataTable();
-            adpt.Fill(dt);
-
+            Class.StockCalculations Stock = new Class.StockCalculations();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
             reportDataSource1.Name = "Inventory"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = dt;
+            reportDataSource1.Value = Stock.Inventory_OnDate(EndDate);
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.Inventory.rdlc";
 

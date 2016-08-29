@@ -147,25 +147,30 @@ namespace cntrl
                 return (cbCurrency.SelectedItem as entity.app_currency);
             }
         }
-        //public List<ReportColumns> ReportColumns
-        //{
-        //    get
-        //    {
-        //        return _ReportColumns;
-        //    }
-        //    set
-        //    {
-        //        _ReportColumns = value;
-        //        foreach (ReportColumns ReportColumns in _ReportColumns)
-        //        {
-        //            CheckBox chkbox = new CheckBox();
-        //            chkbox.Content = ReportColumns.Columname;
-        //            chkbox.IsChecked = ReportColumns.IsVisibility;
-        //            stpColumn.Children.Add(chkbox);
-        //        }
-        //    }
-        //}
-        //List<ReportColumns> _ReportColumns;
+        public List<ReportColumns> ReportColumn
+        {
+            get
+            {
+                return _ReportColumn;
+            }
+            set
+            {
+                _ReportColumn = value;
+                foreach (ReportColumns ReportColumns in _ReportColumn)
+                {
+                                    
+                        CheckBox chkbox = new CheckBox();
+                        chkbox.Content = ReportColumns.Columname;
+                        chkbox.IsChecked = ReportColumns.IsVisibility;
+                        stpColumn.Children.Add(chkbox);
+                        chkbox.Checked += CheckBox_Checked;
+                        chkbox.Unchecked += CheckBox_Checked;
+                    
+                  
+                }
+            }
+        }
+        List<ReportColumns> _ReportColumn;
         public event RoutedEventHandler Update;
         private void Data_Update(object sender, RoutedEventArgs e)
         {
@@ -182,6 +187,26 @@ namespace cntrl
 
 
           
+        }
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chk = sender as CheckBox;
+           
+            if (chk!=null)
+            {
+                string name = chk.Content.ToString();
+                ReportColumns ReportColumns = ReportColumn.Where(x => x.Columname.Contains(name)).FirstOrDefault();
+
+                if (chk.IsChecked==true)
+                {
+                    ReportColumns.IsVisibility = true;
+                }
+                else
+                {
+                    ReportColumns.IsVisibility = false;
+                }
+            }
+            Data_Update(null, null);
         }
 
         private void cbxBranch_Checked(object sender, RoutedEventArgs e)

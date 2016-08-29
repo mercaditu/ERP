@@ -2344,7 +2344,7 @@
             <TablixMember />
             <TablixMember>
               <Visibility>
-                <Hidden>=Parameters!ShowCost.Value</Hidden>
+                <Hidden>=iif(Parameters!ShowCost.Value=false,true,false)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
@@ -2359,27 +2359,27 @@
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=Parameters!ShowVAT.Value</Hidden>
+                <Hidden>=iif(Parameters!ShowVAT.Value=false,true,false)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=Parameters!ShowVATTotal.Value</Hidden>
+                <Hidden>=iif(Parameters!ShowVATTotal.Value=false,true,false)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=Parameters!ShowMarkup.Value</Hidden>
+                <Hidden>=iif(Parameters!ShowMarkup.Value=false,true,false)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=Parameters!ShowMargin.Value</Hidden>
+                <Hidden>=iif(Parameters!ShowMargin.Value=false,true,false)</Hidden>
               </Visibility>
             </TablixMember>
             <TablixMember>
               <Visibility>
-                <Hidden>=Parameters!ShowProfit.Value</Hidden>
+                <Hidden>=iif(Parameters!ShowProfit.Value=false,true,false)</Hidden>
               </Visibility>
             </TablixMember>
           </TablixMembers>
@@ -2738,6 +2738,7 @@
         <PageBreak>
           <BreakLocation>Start</BreakLocation>
         </PageBreak>
+        <Left>0.02012cm</Left>
         <Height>2.45833in</Height>
         <Width>11.69in</Width>
         <ZIndex>1</ZIndex>
@@ -2817,7 +2818,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.27778in</Height>
+      <Height>0.34597in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

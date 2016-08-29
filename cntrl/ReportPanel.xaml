@@ -77,9 +77,10 @@
                 <Rectangle Style="{StaticResource line_Bar}"/>
                 
                 <metro:ToggleSwitch Content="Advanced" HorizontalAlignment="Right"/>
-                
+
+                <Label Content="Columns" Style="{StaticResource input_label}"/>
                 <StackPanel Name="stpColumn">
-                    <Label Content="Columns" Style="{StaticResource input_label}"/>
+                  
                 </StackPanel>
             </StackPanel>
         </Border>

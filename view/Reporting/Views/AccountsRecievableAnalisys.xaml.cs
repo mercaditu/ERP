@@ -19,13 +19,7 @@ namespace Cognitivo.Reporting.Views
 {
     public partial class AccountsRecievableAnalisys : Page
     {
-        public DateTime EndDate
-        {
-            get { return _EndDate; }
-            set { _EndDate = value; }
-        }
-        private DateTime _EndDate = DateTime.Now.AddDays(+1);
-
+      
         public AccountsRecievableAnalisys()
         {
             InitializeComponent();
@@ -38,7 +32,7 @@ namespace Cognitivo.Reporting.Views
 
             MySqlConnection con = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
             con.Open();
-            string query = "call sales_balance_analisys('" + EndDate.AddDays(+1).ToString("s") + "')";
+            string query = "call sales_balance_analisys('" + ReportPanel.EndDate + "')";
             MySqlDataAdapter adpt = new MySqlDataAdapter(query, con);
             DataTable dt = new DataTable();
             adpt.Fill(dt);

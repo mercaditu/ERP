@@ -20,19 +20,7 @@ namespace Cognitivo.Reporting.Views
 {
     public partial class SalesReturnDetail : Page
     {
-        public DateTime StartDate 
-        {
-            get { return _StartDate; }
-            set { _StartDate = value; }
-        }
-        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
-
-        public DateTime EndDate 
-        {
-            get { return _EndDate; }
-            set { _EndDate = value; }
-        }
-        private DateTime _EndDate = DateTime.Now.AddDays(+1);
+      
 
         public SalesReturnDetail()
         {
@@ -51,7 +39,7 @@ namespace Cognitivo.Reporting.Views
                 SalesDB.BeginInit();
 
                 Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter SalesReturnDetailTableAdapter = new Data.SalesDSTableAdapters.SalesReturnDetailTableAdapter();
-                DataTable dt = SalesReturnDetailTableAdapter.GetData(StartDate, EndDate);
+                DataTable dt = SalesReturnDetailTableAdapter.GetData(ReportPanel.StartDate, ReportPanel.EndDate);
 
                 reportDataSource1.Name = "SalesReturnDetail"; //Name of the report dataset in our .RDLC file
                 reportDataSource1.Value = dt; //SalesDB.SalesByDate;

@@ -20,8 +20,7 @@ namespace Cognitivo.Reporting.Views
     /// </summary>
     public partial class CurrentAccount_Customer : Page
     {
-        public bool IsCustomer { get; set; }
-        public bool IsSupplier { get; set; }
+       
 
         public CurrentAccount_Customer()
         {

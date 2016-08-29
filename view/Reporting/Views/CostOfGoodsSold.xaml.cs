@@ -17,18 +17,7 @@ namespace Cognitivo.Reporting.Views
 {
     public partial class CostOfGoodsSold : Page
     {
-        public DateTime StartDate 
-        {
-            get { return _StartDate; }
-            set { _StartDate = value; }
-        }
-        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
-        public DateTime EndDate 
-        {
-            get { return _EndDate; }
-            set { _EndDate = value; }
-        }
-        private DateTime _EndDate = DateTime.Now.AddDays(+1);
+     
 
         public CostOfGoodsSold()
         {
@@ -56,7 +45,7 @@ namespace Cognitivo.Reporting.Views
             //fill data
             Data.SalesDSTableAdapters.CostOfGoodsSoldTableAdapter CostOfGoodsSoldTableAdapter = new Data.SalesDSTableAdapters.CostOfGoodsSoldTableAdapter();
             CostOfGoodsSoldTableAdapter.ClearBeforeFill = true;
-            CostOfGoodsSoldTableAdapter.Fill(SalesDB.CostOfGoodsSold, StartDate, EndDate, entity.CurrentSession.Id_Company);
+            CostOfGoodsSoldTableAdapter.Fill(SalesDB.CostOfGoodsSold, ReportPanel.StartDate, ReportPanel.EndDate, entity.CurrentSession.Id_Company);
 
             this.reportViewer.RefreshReport();
         }

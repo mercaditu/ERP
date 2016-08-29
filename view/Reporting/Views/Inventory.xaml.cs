@@ -21,12 +21,7 @@ namespace Cognitivo.Reporting.Views
     /// </summary>
     public partial class Inventory : Page
     {
-        public DateTime EndDate
-        {
-            get { return _EndDate; }
-            set { _EndDate = value; }
-        }
-        private DateTime _EndDate = DateTime.Now.AddDays(+1);
+      
 
         public Inventory()
         {
@@ -42,7 +37,7 @@ namespace Cognitivo.Reporting.Views
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
 
             reportDataSource1.Name = "Inventory"; //Name of the report dataset in our .RDLC file
-            reportDataSource1.Value = Stock.Inventory_OnDate(EndDate);
+            reportDataSource1.Value = Stock.Inventory_OnDate(ReportPanel.EndDate);
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Cognitivo.Reporting.Reports.Inventory.rdlc";
 

@@ -21,19 +21,7 @@ namespace Cognitivo.Reporting.Views
     public partial class EmployeesInProduction : Page
     {
         //
-        public DateTime StartDate 
-        {
-            get { return _StartDate; }
-            set { _StartDate = value; }
-        }
-        private DateTime _StartDate = DateTime.Now.AddMonths(-1);
-
-        public DateTime EndDate 
-        {
-            get { return _EndDate; }
-            set { _EndDate = value; }
-        }
-        private DateTime _EndDate = DateTime.Now.AddDays(+1);
+       
 
         public EmployeesInProduction()
         {
@@ -53,7 +41,7 @@ namespace Cognitivo.Reporting.Views
             ProductionDS.BeginInit();
 
             Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter EmployeesInProductionTableAdapter = new Data.ProductionDSTableAdapters.EmployeesInProductionTableAdapter();
-            DataTable dt = EmployeesInProductionTableAdapter.GetData(CurrentSession.Id_Company, StartDate, EndDate);
+            DataTable dt = EmployeesInProductionTableAdapter.GetData(CurrentSession.Id_Company, ReportPanel.StartDate, ReportPanel.EndDate);
 
             reportDataSource1.Name = "ProductionEmployee"; //Name of the report dataset in our .RDLC file
             reportDataSource1.Value = dt; //SalesDB.SalesByDate;

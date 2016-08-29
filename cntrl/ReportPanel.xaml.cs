@@ -180,9 +180,9 @@ namespace cntrl
 
         public ReportPanel()
         {
-            ShowBranch = false;
+         
             InitializeComponent();
-           
+            ShowBranch = false;
 
 
 

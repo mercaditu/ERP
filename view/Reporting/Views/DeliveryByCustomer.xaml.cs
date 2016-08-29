@@ -20,12 +20,7 @@ namespace Cognitivo.Reporting.Views
 {
     public partial class DeliveryByCustomer : Page
     {
-        public DateTime StartDate 
-        {
-            get { return _StartDate; }
-            set { _StartDate = value; }
-        }
-        private DateTime _StartDate = DateTime.Now;
+      
 
         public DeliveryByCustomer()
         {
@@ -54,7 +49,7 @@ namespace Cognitivo.Reporting.Views
                 SalesDB.BeginInit();
 
                 Data.SalesDSTableAdapters.DeliveryByCustomerTableAdapter DeliveryByCustomerTableAdapter = new Data.SalesDSTableAdapters.DeliveryByCustomerTableAdapter();
-                DataTable dt = DeliveryByCustomerTableAdapter.GetData(StartDate, StartDate, CurrentSession.Id_Company);
+                DataTable dt = DeliveryByCustomerTableAdapter.GetData(ReportPanel.StartDate,ReportPanel.EndDate, CurrentSession.Id_Company);
 
                 reportDataSource1.Name = " DeliveryByCustomer"; //Name of the report dataset in our .RDLC file
                 reportDataSource1.Value = dt; //SalesDB.SalesByDate;

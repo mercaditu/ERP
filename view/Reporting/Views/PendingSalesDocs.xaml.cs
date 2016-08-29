@@ -19,12 +19,7 @@ namespace Cognitivo.Reporting.Views
 {
     public partial class PendingSalesDocs : Page
     {
-        public DateTime EndDate
-        {
-            get { return _EndDate; }
-            set { _EndDate = value; }
-        }
-        private DateTime _EndDate = DateTime.Now.AddDays(+1);
+    
 
         public PendingSalesDocs()
         {
@@ -42,7 +37,7 @@ namespace Cognitivo.Reporting.Views
                 MySqlConnection con = new MySqlConnection(Properties.Settings.Default.MySQLconnString);
                 con.Open();
 
-                string query = "call pending_sales_receipts('" + EndDate.AddDays(1).ToString("s") + "')";
+                string query = "call pending_sales_receipts('" + ReportPanel.EndDate + "')";
                 MySqlDataAdapter adpt = new MySqlDataAdapter(query, con);
                 DataTable dt = new DataTable();
                 adpt.Fill(dt);

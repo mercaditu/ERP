@@ -75,8 +75,6 @@ namespace entity
                         payment.timestamp = DateTime.Now;
                         payment.State = EntityState.Unchanged;
                         Entry(payment).State = EntityState.Added;
-                      
-                     
                     }
                     else if (payment.State == EntityState.Modified)
                     {

@@ -51,8 +51,8 @@
                 <StackPanel x:Name="stpMain" HorizontalAlignment="Center" Width="265" DataContext="{StaticResource paymentViewSource}" >
 
                    
-                    <Label Content="{lex:Loc Contact}" Style="{DynamicResource input_label}"/>
-                    <Controls:SmartBox_Contact x:Name="sbxContact" Text="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,Source={StaticResource payment_schedualViewSource}}"/>
+                    <Label Content="{lex:Loc Supplier}" Style="{DynamicResource input_label}"/>
+                    <Label Content="{Binding contact.name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=SupplierName}" Style="{StaticResource H3}"/>
                     <StackPanel x:Name="stpDocument" Background="{StaticResource AccentColor_Brush}" Visibility="Collapsed">
                         <Label Content="{lex:Loc Document}" Style="{StaticResource input_label}"/>
                         <ComboBox Name="cbxDocument" DisplayMemberPath="app_document.name" SelectedValuePath="id_range" 

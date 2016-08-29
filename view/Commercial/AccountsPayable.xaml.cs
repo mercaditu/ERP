@@ -45,9 +45,15 @@ namespace Cognitivo.Commercial
         private void toolBar_btnApprove_Click(object sender)
         {
             payment_schedual payment_schedual = payment_schedualViewSource.View.CurrentItem as payment_schedual;
-            cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(payment_schedual);
-            crud_modal.Visibility = Visibility.Visible;
-            crud_modal.Children.Add(payment_quick);
+            if (payment_schedual != null)
+            {
+                List<payment_schedual> ListPayments = new List<entity.payment_schedual>();
+                ListPayments.Add(payment_schedual);
+
+                cntrl.Curd.payment_quick payment_quick = new cntrl.Curd.payment_quick(ListPayments);
+                crud_modal.Visibility = Visibility.Visible;
+                crud_modal.Children.Add(payment_quick);   
+            }
         }
 
         private void toolBar_btnAnull_Click(object sender)

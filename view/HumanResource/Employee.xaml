@@ -202,6 +202,15 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Binding="{Binding average,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="average" Width="SizeToHeader"/>
                             <DataGridTextColumn Binding="{Binding comment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="comment" Width="SizeToHeader"/>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete"
+                                                        Style="{StaticResource btnDeleteChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -282,6 +291,15 @@
                     <DataGrid x:Name="hr_talent_detailDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="200" ItemsSource="{Binding Source={StaticResource contacthr_talent_detailViewSource}}"  RowDetailsVisibilityMode="VisibleWhenSelected">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding hr_talent.name}" Header="{lex:Loc Cognitivo:local:Talent}" Width="SizeToHeader"/>
+                            <DataGridTemplateColumn Width="Auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Command="customcmd:CustomCommands.Delete"
+                                                        Style="{StaticResource btnDeleteChildStyle}"
+                                                        CommandParameter="{Binding}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 

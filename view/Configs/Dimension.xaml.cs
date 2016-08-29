@@ -43,6 +43,7 @@ namespace Cognitivo.Configs
         {
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             cntrl.Curd.dimension objdimension = new cntrl.Curd.dimension();
+         
             dimension_viewsource.View.MoveCurrentTo(entity.db.app_dimension.Where(x => x.id_dimension == intId).FirstOrDefault());
             objdimension.app_dimensionViewSource = dimension_viewsource;
             objdimension._entity = entity;
@@ -53,6 +54,7 @@ namespace Cognitivo.Configs
         {
             crud_modal.Visibility = System.Windows.Visibility.Visible;
             cntrl.Curd.dimension objdimension = new cntrl.Curd.dimension();
+       
             app_dimension app_dimension = new app_dimension();
             entity.db.app_dimension.Add(app_dimension);
             dimension_viewsource.View.MoveCurrentToLast();

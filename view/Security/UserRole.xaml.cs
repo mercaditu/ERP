@@ -58,7 +58,7 @@ namespace Cognitivo.Security
                 dbContext.SaveChanges();
                 entity.CurrentSession.Refresh_Security();
                 security_roleViewSource.View.Refresh();
-                security_roleViewSource.View.MoveCurrentToLast();
+            
             }
             catch (Exception ex)
             {

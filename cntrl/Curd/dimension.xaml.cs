@@ -45,6 +45,7 @@ namespace cntrl.Curd
             {
                 if (!isExternalCall)
                 {
+                
                     stackMain.DataContext = app_dimensionViewSource;
                 }
                 else

@@ -106,7 +106,10 @@ namespace Cognitivo.HumanResource
 
         private void toolBar_btnCancel_Click(object sender)
         {
+           
             dbContext.CancelAllChanges();
+            hr_talent hr_talent = (hr_talent)hr_talentDataGrid.SelectedItem;
+            hr_talent.State = EntityState.Unchanged;
         }
 
         private void New_Click(object sender)

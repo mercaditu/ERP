@@ -49,7 +49,7 @@
                     <DataTemplate>
                         <Grid>
                             <Panels:pnl_Curd x:Name="pnlDimension" Margin="5" DisplayName="{Binding name}" Status="PaleGreen"
-                                             Id="{Binding id_app_dimension}" linkEdit_click="pnlDimension_linkEdit_click"/>
+                                             Id="{Binding id_dimension}" linkEdit_click="pnlDimension_linkEdit_click"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
